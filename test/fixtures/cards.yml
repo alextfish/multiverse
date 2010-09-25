@@ -1,0 +1,35 @@
+# Read about fixtures at http://ar.rubyonrails.org/classes/Fixtures.html
+
+one:
+  code: MyString
+  name: MyString
+  cardset_id: 1
+  colour: MyString
+  rarity: MyString
+  cost: MyString
+  supertype: MyString
+  type: MyString
+  subtype: MyString
+  rulestext: MyText
+  flavourtext: MyText
+  power: 1
+  toughness: 1
+  image: MyString
+  active: false
+
+two:
+  code: MyString
+  name: MyString
+  cardset_id: 1
+  colour: MyString
+  rarity: MyString
+  cost: MyString
+  supertype: MyString
+  type: MyString
+  subtype: MyString
+  rulestext: MyText
+  flavourtext: MyText
+  power: 1
+  toughness: 1
+  image: MyString
+  active: false

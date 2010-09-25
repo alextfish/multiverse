@@ -1,0 +1,30 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <b>User:</b>
+  <%= @comment.user_id %>
+</p>
+
+<p>
+  <b>Card:</b>
+  <%= @comment.card_id %>
+</p>
+
+<p>
+  <b>Posttime:</b>
+  <%= @comment.posttime %>
+</p>
+
+<p>
+  <b>Comment:</b>
+  <%= @comment.comment %>
+</p>
+
+<p>
+  <b>Status:</b>
+  <%= @comment.status %>
+</p>
+
+
+<%= link_to 'Edit', edit_comment_path(@comment) %> |
+<%= link_to 'Back', comments_path %>

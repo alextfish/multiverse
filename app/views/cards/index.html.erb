@@ -1,0 +1,51 @@
+<h1>Listing cards</h1>
+
+<table>
+  <tr>
+    <th>Code</th>
+    <th>Name</th>
+    <th>Cardset</th>
+    <th>Colour</th>
+    <th>Rarity</th>
+    <th>Cost</th>
+    <th>Supertype</th>
+    <th>Type</th>
+    <th>Subtype</th>
+    <th>Rulestext</th>
+    <th>Flavourtext</th>
+    <th>Power</th>
+    <th>Toughness</th>
+    <th>Image</th>
+    <th>Active</th>
+    <th></th>
+    <th></th>
+    <th></th>
+  </tr>
+
+<% @cards.each do |card| %>
+  <tr>
+    <td><%= card.code %></td>
+    <td><%= card.name %></td>
+    <td><%= card.cardset_id %></td>
+    <td><%= card.colour %></td>
+    <td><%= card.rarity %></td>
+    <td><%= card.cost %></td>
+    <td><%= card.supertype %></td>
+    <td><%= card.cardtype %></td>
+    <td><%= card.subtype %></td>
+    <td><%= card.rulestext %></td>
+    <td><%= card.flavourtext %></td>
+    <td><%= card.power %></td>
+    <td><%= card.toughness %></td>
+    <td><%= card.image %></td>
+    <td><%= card.active %></td>
+    <td><%= link_to 'Show', card %></td>
+    <td><%= link_to 'Edit', edit_card_path(card) %></td>
+    <td><%= link_to 'Destroy', card, :confirm => 'Are you sure?', :method => :delete %></td>
+  </tr>
+<% end %>
+</table>
+
+<br />
+
+<%= link_to 'New Card', new_card_path %>

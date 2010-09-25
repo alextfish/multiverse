@@ -1,0 +1,39 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <b>Name:</b>
+  <%= @cardset.name %>
+</p>
+
+<p>
+  <b>User:</b>
+  <%= @cardset.user_id %>
+</p>
+
+<p>
+  <b>Description:</b>
+  <%= @cardset.description %>
+</p>
+
+
+<% @cardset.cards.each do |card| %>
+  <tr>
+    <td><%= card.name %></td>
+    <td><%= card.cost %></td>
+    <td><%= card.rarity %></td>
+    <td>
+      <%= card.supertype %>
+      <%= card.type %>
+      <% if !card.subtype.nil? %>
+        &ndash; <%= card.subtype %>
+      <% end %> </td>
+    <td><%= card.rarity %></td>
+    <td><%= cardset.description %></td>
+    <td><%= link_to 'Show', card %></td>
+    <td><%= link_to 'Edit', edit_card_path(card) %></td>
+    <td><%= link_to 'Destroy', card, :confirm => 'Are you sure?', :method => :delete %></td>
+  </tr>
+<% end %>
+
+<%= link_to 'Edit', edit_cardset_path(@cardset) %> |
+<%= link_to 'Back', cardsets_path %>
