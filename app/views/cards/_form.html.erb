@@ -11,67 +11,75 @@
     </div>
   <% end %>
 
-  <div class="field">
-    <%= f.label :code %><br />
-    <%= f.text_field :code %>
-  </div>
-  <div class="field">
-    <%= f.label :name %><br />
-    <%= f.text_field :name %>
-  </div>
-  <div class="field">
-    <%= f.label :cardset_id %><br />
-    <%= f.text_field :cardset_id %>
-  </div>
-  <div class="field">
-    <%= f.label :colour %><br />
-    <%= f.text_field :colour %>
-  </div>
-  <div class="field">
-    <%= f.label :rarity %><br />
-    <%= f.text_field :rarity %>
-  </div>
-  <div class="field">
-    <%= f.label :cost %><br />
-    <%= f.text_field :cost %>
-  </div>
-  <div class="field">
-    <%= f.label :supertype %><br />
-    <%= f.text_field :supertype %>
-  </div>
-  <div class="field">
-    <%= f.label :cardtype %><br />
-    <%= f.text_field :cardtype %>
-  </div>
-  <div class="field">
-    <%= f.label :subtype %><br />
-    <%= f.text_field :subtype %>
-  </div>
-  <div class="field">
-    <%= f.label :rulestext %><br />
-    <%= f.text_area :rulestext %>
-  </div>
-  <div class="field">
-    <%= f.label :flavourtext %><br />
-    <%= f.text_area :flavourtext %>
-  </div>
-  <div class="field">
-    <%= f.label :power %><br />
-    <%= f.text_field :power %>
-  </div>
-  <div class="field">
-    <%= f.label :toughness %><br />
-    <%= f.text_field :toughness %>
-  </div>
-  <div class="field">
-    <%= f.label :image %><br />
-    <%= f.text_field :image %>
-  </div>
-  <div class="field">
-    <%= f.label :active %><br />
-    <%= f.check_box :active %>
-  </div>
-  <div class="actions">
-    <%= f.submit %>
-  </div>
+
+<table border="0">         <!-- grouping table -->
+ <tr>
+  <td>                      <!-- card -->
+   <table class="card <%= @card.colour %>">
+    <tr class="cardtitle">
+     <td class="cardname">
+      <div class="field">
+        <%= f.label :name %><br />
+        <%= f.text_field :name %>
+      </div>
+
+     <td class="cardcost" colspan="2">
+      <div class="field">
+        <%= f.label :cost %><br />
+        <%= f.text_field :cost %>
+      </div>
+    <tr>                   <!-- art -->
+     <td colspan="3" class="cardart">&nbsp;
+    <tr class="cardtypeline"> <!-- type line -->
+     <td class="minitext cardtype" colspan="2">
+        <%= f.text_field :supertype %>
+        <%= f.text_field :cardtype %> &ndash;
+        <%= f.text_field :subtype %>
+     <td class="cardrarity <%= @card.rarity %>" id="raritycell">
+      <%= f.select :rarity, card_rarities.map{|r| [r[0].chr.upcase, r]},
+        { :selected => @card.rarity },
+        { :onchange => "update_card_rarity(this.value)" } %>
+
+    <tr>                   <!-- text box -->
+     <td class="cardtext" colspan="3">
+      <%= f.text_area :rulestext,   :class => "rulestextfield"   %>
+      <div class="flavourtext">
+      <%= f.text_area :flavourtext, :class => "flavourtextfield" %>
+      </div>
+    <tr class="cardptline">
+     <td>&nbsp;
+     <td class="cardpt" colspan="2">
+      <%= f.text_field :power, :size => 5, :class => "powerfield" %>/<%= f.text_field :toughness, :size => 5, :class => "toughnessfield" %>
+   </table>
+  </td>                    <!-- end of card -->
+
+  <td>                     <!-- controls, comments etc -->
+   <table>
+    <tr>
+     <td><%= f.label :code %></td>
+     <td><%= f.text_field :code %></td>
+    </tr>
+    <tr>
+     <td><%= f.label :colour %></td>
+     <td><%= f.select :colour, card_colours.unshift("Auto") %></td>
+    </tr>
+    <!-- tr>
+     <td>< %= f.label :frame %></td>
+     <td>< %= f.select :frame, card_frames.unshift("Auto") %></td>
+    </tr -->
+    <tr>
+     <td><%= f.label :active %></td>
+     <td><%= f.check_box :active %></td>
+    </tr>
+    <tr>
+     <td colspan="2">
+      <%= f.hidden_field :cardset_id, :value => @card.cardset_id %>
+      <%= f.submit %>
+     </td>
+    </tr>
+   </table>
+  </td>
+ </tr>
+</table>
+
 <% end %>

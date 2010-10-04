@@ -1,3 +1,16 @@
+# == Schema Information
+# Schema version: 20100926114339
+#
+# Table name: cardsets
+#
+#  id          :integer         not null, primary key
+#  name        :string(255)
+#  user_id     :integer
+#  description :text
+#  created_at  :datetime
+#  updated_at  :datetime
+#
+
 # Read about fixtures at http://ar.rubyonrails.org/classes/Fixtures.html
 
 one:

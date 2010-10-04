@@ -6,8 +6,9 @@
 </p>
 
 <p>
-  <b>User:</b>
-  <%= @cardset.user_id %>
+  <b>Creator:</b>
+  <% @owner = User.find_by_id(@cardset.user_id) %>
+  <%= link_to @owner.name, @owner %>
 </p>
 
 <p>
@@ -15,25 +16,32 @@
   <%= @cardset.description %>
 </p>
 
-
+<table>
+ <tr>
+   <th>Name</th>
+   <th>Rarity</th>
+   <th>Cost</th>
+   <th>Type</th>
+   <th colspan="2">P/T</th>
+   <th colspan="3">&nbsp;</th>
 <% @cardset.cards.each do |card| %>
   <tr>
-    <td><%= card.name %></td>
+    <td><%= link_to card.name, card %></td>
+    <td><%= card.rarity.capitalize %></td>
     <td><%= card.cost %></td>
-    <td><%= card.rarity %></td>
     <td>
       <%= card.supertype %>
-      <%= card.type %>
+      <%= card.cardtype %>
       <% if !card.subtype.nil? %>
         &ndash; <%= card.subtype %>
       <% end %> </td>
-    <td><%= card.rarity %></td>
-    <td><%= cardset.description %></td>
-    <td><%= link_to 'Show', card %></td>
+    <td><%= card.power %></td>
+    <td><%= card.toughness %></td>
     <td><%= link_to 'Edit', edit_card_path(card) %></td>
-    <td><%= link_to 'Destroy', card, :confirm => 'Are you sure?', :method => :delete %></td>
+    <td><%= link_to 'Delete', card, :confirm => 'Are you sure?', :method => :delete %></td>
   </tr>
 <% end %>
-
-<%= link_to 'Edit', edit_cardset_path(@cardset) %> |
-<%= link_to 'Back', cardsets_path %>
+</table>
+<br><br>
+<%= link_to 'Edit set description', edit_cardset_path(@cardset) %> |
+<%= link_to 'All cardsets', cardsets_path %>

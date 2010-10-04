@@ -10,7 +10,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20100925015537) do
+ActiveRecord::Schema.define(:version => 20100930004247) do
 
   create_table "cards", :force => true do |t|
     t.string   "code"
@@ -41,11 +41,32 @@ ActiveRecord::Schema.define(:version => 20100925015537) do
   end
 
   create_table "comments", :force => true do |t|
-    t.integer  "user_id"
     t.integer  "card_id"
+    t.text     "user"
     t.datetime "posttime"
     t.text     "comment"
     t.integer  "status"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "comments", ["card_id"], :name => "index_comments_on_card_id"
+
+  create_table "old_cards", :force => true do |t|
+    t.integer  "card_id"
+    t.string   "name"
+    t.integer  "cardset_id"
+    t.string   "colour"
+    t.string   "rarity"
+    t.string   "cost"
+    t.string   "supertype"
+    t.string   "cardtype"
+    t.string   "subtype"
+    t.text     "rulestext"
+    t.text     "flavourtext"
+    t.integer  "power"
+    t.integer  "toughness"
+    t.datetime "posttime"
     t.datetime "created_at"
     t.datetime "updated_at"
   end
@@ -55,6 +76,11 @@ ActiveRecord::Schema.define(:version => 20100925015537) do
     t.string   "email"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.string   "encrypted_password"
+    t.string   "salt"
+    t.boolean  "admin",              :default => false
   end
+
+  add_index "users", ["email"], :name => "index_users_on_email", :unique => true
 
 end

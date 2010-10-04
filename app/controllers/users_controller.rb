@@ -1,8 +1,14 @@
 class UsersController < ApplicationController
+  before_filter :authenticate, :only => [:edit, :update, :destroy]
+  before_filter :correct_user, :only => [:edit, :update, :destroy]
+  before_filter :admin_user,   :only => :destroy
+  before_filter :not_signed_in,:only => [:new, :create]
+
   # GET /users
   # GET /users.xml
   def index
-    @users = User.all
+    @title = "All users"
+    @users = User.paginate(:page => params[:page], :per_page => 10 )
 
     respond_to do |format|
       format.html # index.html.erb
@@ -14,6 +20,7 @@ class UsersController < ApplicationController
   # GET /users/1.xml
   def show
     @user = User.find(params[:id])
+    @title = @user.name
 
     respond_to do |format|
       format.html # show.html.erb
@@ -34,7 +41,8 @@ class UsersController < ApplicationController
 
   # GET /users/1/edit
   def edit
-    @user = User.find(params[:id])
+    # @user defined by the correct_user check
+    @title = "Edit profile"
   end
 
   # POST /users
@@ -44,11 +52,12 @@ class UsersController < ApplicationController
 
     respond_to do |format|
       if @user.save
-        format.html { redirect_to(@user, :notice => 'User was successfully created.') }
-        format.xml  { render :xml => @user, :status => :created, :location => @user }
+        sign_in @user
+        flash[:success] = "Welcome to Multiverse. You're now signed in and can create cardsets!"
+        redirect_to @user
       else
-        format.html { render :action => "new" }
-        format.xml  { render :xml => @user.errors, :status => :unprocessable_entity }
+        @title = "Sign up"
+        render 'new'
       end
     end
   end
@@ -56,7 +65,7 @@ class UsersController < ApplicationController
   # PUT /users/1
   # PUT /users/1.xml
   def update
-    @user = User.find(params[:id])
+    # @user defined by the current_user check
 
     respond_to do |format|
       if @user.update_attributes(params[:user])
@@ -74,10 +83,27 @@ class UsersController < ApplicationController
   def destroy
     @user = User.find(params[:id])
     @user.destroy
+    flash[:success] = "User destroyed."
 
     respond_to do |format|
       format.html { redirect_to(users_url) }
       format.xml  { head :ok }
     end
   end
+
+  private
+
+    def correct_user
+      @user = User.find(params[:id])
+      redirect_to(root_path) unless @user == current_user
+    end
+
+    def admin_user
+      redirect_to(root_path) unless current_user.admin?
+    end
+
+    def not_signed_in
+      redirect_to(root_path) if signed_in?
+    end
+
 end

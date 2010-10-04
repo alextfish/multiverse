@@ -13,7 +13,7 @@
 <% @cardsets.each do |cardset| %>
   <tr>
     <td><%= cardset.name %></td>
-    <td><%= cardset.user_id %></td>
+    <td><%= User.find_by_id(cardset.user_id).name %></td>
     <td><%= cardset.description %></td>
     <td><%= link_to 'Show', cardset %></td>
     <td><%= link_to 'Edit', edit_cardset_path(cardset) %></td>

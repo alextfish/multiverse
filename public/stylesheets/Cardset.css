@@ -1,3 +1,9 @@
+/***** Site layout *****/
+
+a > img { border: 0px; }
+
+/***** Card display *****/
+
 .card { width: 250px; height: 300px; border: 3px black ridge; text-align: left; margin-bottom: 5px; }
 /* boxes */
 .cardtitle { width: 190px; height: 30px; border: 1px black ridge; text-align: left; font-size: 12pt; font-weight: bold; }
@@ -65,3 +71,11 @@
 .greenaligned .cardpt, .greenaligned .cardtitle, .greenaligned .cardtypeline { background-color: #dfd; }
 .greenaligned .cardtext { background-color: #cfc; }
 
+/***** Card editing *****/
+
+.flavourtextfield { font-style: italic;
+                  width: 98%; }
+.rulestextfield { width: 98%; }
+
+/***** Comment display *****/
+li.comment > p { margin: 0px; }

@@ -1,4 +1,6 @@
 class CardsetsController < ApplicationController
+  before_filter :authenticate, :only => [:new, :create, :edit, :update, :destroy]
+
   # GET /cardsets
   # GET /cardsets.xml
   def index

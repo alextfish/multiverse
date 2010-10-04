@@ -14,6 +14,7 @@ class CardsController < ApplicationController
   # GET /cards/1.xml
   def show
     @card = Card.find(params[:id])
+    @comment = Comment.new(:card => @card)
 
     respond_to do |format|
       format.html # show.html.erb

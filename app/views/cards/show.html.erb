@@ -27,20 +27,20 @@
 
   <td> <!-- controls, comments etc -->
    <p>
-     <b>Cardset:</b>
-     <%= Cardset.find(@card.cardset_id).name %>
+     <b>Set:</b>
+     <% @cardset = Cardset.find(@card.cardset_id).name %>
+     <%= link_to @cardset, cardset_path(@card.cardset_id) %>
    </p>
 
    <p>
      <b>Comments:</b>
+     <div class="cardhistory">
      <ul>
-     <% @card.comments.each do |comment| %>
-       <li><%= User.find(comment.user_id).name %>
-       <%= comment.posttime %>
-       <%= comment.comment %>
-       <!-- %= comment.status % -->
-     <% end %>
+     <%= render :partial => 'comment', :collection => @card.comments %> <!-- uses views/cards/_comment.html.erb -->
      </ul>
+     </div>
+     <b>Add your comments:</b>
+     <%= render 'shared/comment_form' %>
    </p>
 
 
@@ -50,9 +50,8 @@
    </p>
 
 
-   <%= link_to 'Edit', edit_card_path(@card) %>
+   <%= link_to 'Edit card', edit_card_path(@card) %>
   </td>
  </tr>
 </table>
 
-<%= link_to 'Back', cards_path %>
