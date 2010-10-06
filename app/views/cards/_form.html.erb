@@ -61,7 +61,7 @@
     </tr>
     <tr>
      <td><%= f.label :colour %></td>
-     <td><%= f.select :colour, card_colours.unshift("Auto") %></td>
+     <td><%= f.select :colour, card_colours.unshift("Auto").map{|c| [c.capitalize, c]} %></td>
     </tr>
     <!-- tr>
      <td>< %= f.label :frame %></td>

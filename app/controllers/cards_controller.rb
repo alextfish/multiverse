@@ -25,7 +25,7 @@ class CardsController < ApplicationController
   # GET /cards/new
   # GET /cards/new.xml
   def new
-    @card = Card.new
+    @card = Card.new(:cardset_id => params[:cardset_id])
 
     respond_to do |format|
       format.html # new.html.erb

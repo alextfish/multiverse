@@ -1,5 +1,5 @@
 Multiverse::Application.routes.draw do
-  # You can have the root of your site routed with "root"
+  # You can have the root of your site routed with 'root'
   # just remember to delete public/index.html.
   root :to => 'pages#home'
   # also defines root_path => '/' and root_url  => 'http://localhost:3000/'
@@ -9,10 +9,10 @@ Multiverse::Application.routes.draw do
   # match '/about',   :to => 'pages#about'
   # match '/help',    :to => 'pages#help'
 
-  get "pages/home"
-  get "pages/contact"
+  get 'pages/home'
+  get 'pages/contact'
 
-  get "sessions/new"
+  get 'sessions/new'
 
   resources :old_cards, :only => [:create, :destroy]
 
@@ -21,7 +21,20 @@ Multiverse::Application.routes.draw do
 
   resources :cards, :has_many => [:comments, :old_cards]
 
-  resources :cardsets
+  # The cards/cardsets relation should probably be written as...
+  #   resources :cardsets do
+  #     resources :cards
+  #   end
+  # This would provide cardset_cards_path(@cardset), etc.
+  # But I don't want the faff of refactoring to deal with that, so instead I'll create my own route:
+  resources :cardsets do
+    member do
+      get 'cardlist' # in addition to /cardsets/:id which goes to cardsets#show
+      get 'import', 'export'
+      post 'import_data'
+    end
+  end
+
 
   resources :users
 
@@ -30,6 +43,7 @@ Multiverse::Application.routes.draw do
   match '/signup',  :to => 'users#new'
   match '/signin',  :to => 'sessions#new'
   match '/signout', :to => 'sessions#destroy'
+  match '/profile', :to => 'users#show'
 
 
   # The priority is based upon order of creation:
@@ -79,7 +93,7 @@ Multiverse::Application.routes.draw do
   #     resources :products
   #   end
 
-  # See how all your routes lay out with "rake routes"
+  # See how all your routes lay out with 'rake routes'
 
   # This is a legacy wild controller route that's not recommended for RESTful applications.
   # Note: This route will make all actions in every controller accessible via GET requests.

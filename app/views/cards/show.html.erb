@@ -4,25 +4,7 @@
 <table border="0"> <!-- grouping table -->
  <tr>
   <td> <!-- card -->
-   <table class="card <%= @card.colour %>">
-    <tr class="cardtitle">
-     <td class="cardname">
-      <span title="<%= @card.code %>"><%= @card.name %></span>
-     <td class="cardcost"><%= @card.cost %>
-    <tr>
-     <td colspan="2" class="cardart">&nbsp;
-    <tr class="cardtypeline">
-     <td class="minitext cardtype"><%= @card.supertype %> <%= @card.cardtype %> &ndash; <%= @card.subtype %>
-     <td class="cardrarity <%= @card.rarity %>"><%= @card.rarity[0].chr.upcase %>
-    <tr>
-     <td class="cardtext" colspan="2"><%= @card.rulestext %>
-      <div class="flavourtext"><%= @card.flavourtext %></div>
-    <tr class="cardptline">
-     <td>&nbsp;
-     <% if !@card.power.nil? %>
-     <td class="cardpt"><%= @card.power %>/<%= @card.toughness %>
-     <% end %>
-   </table>
+   <%= render :partial => 'shared/prettycard' %>
   </td> <!-- end of card -->
 
   <td> <!-- controls, comments etc -->

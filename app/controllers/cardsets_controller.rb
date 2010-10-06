@@ -23,6 +23,41 @@ class CardsetsController < ApplicationController
     end
   end
 
+  # GET /cardsets/1/cardlist
+  # GET /cardsets/1/cardlist.xml
+  def cardlist
+    @cardset = Cardset.find(params[:id])
+
+    respond_to do |format|
+      format.html # cardlist.html.erb
+      format.xml  { render :xml => @cardset }   # ??
+    end
+  end
+
+  # GET /cardsets/1/import
+  def import
+    @cardset = Cardset.find(params[:id])
+    # import.html.erb
+  end
+
+  # GET /cardsets/1/export
+  def export
+    @cardset = Cardset.find(params[:id])
+    respond_to do |format|
+      format.html # export.html.erb
+      format.xml  { render :xml => @cardset }
+    end
+  end
+
+  # POST /cardsets/1/import_data
+  def import_data
+    if @cardset.import_data(params)
+      redirect_to(@cardset, :notice => 'Cardset was successfully updated.')
+    else
+      render :action => "import"
+    end
+  end
+
   # GET /cardsets/new
   # GET /cardsets/new.xml
   def new
