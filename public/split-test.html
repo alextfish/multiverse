@@ -1,0 +1,25 @@
+<html>
+<head>
+<style type="text/css">
+div.container { position: relative; background-color: lime; height:100%; }
+div.bghalf { position: absolute; width: 50%; height:100%; bottom: 0; top: 0;}
+div.red { background-color: red; }
+div.yellow { background-color: yellow; }
+div.content { position: relative; z-index: 1; 
+   background: #f90; /* for non-css3 browsers */
+   filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#ff0000', endColorstr='#ffff00', GradientType=1); /* for IE */
+  background: -webkit-gradient(linear, left top, right top, from(#f00), to(#ff0)); /* for webkit browsers */
+  background: -moz-linear-gradient(left,  #f00,  #ff0); /* for firefox 3.6+ */
+   height: 100%; 
+}
+div.left { left: 0; }
+div.right { right: 0; }
+</style>
+</head>
+<body>
+<h2>Test stuff</h2>
+<div class="container" style="width: 200px; height: 100px;">
+  <div class="content">Some text on a mixed background with fancy gradientness</div>
+  <div class="bghalf left yellow"></div>
+  <div class="bghalf right red"></div>
+</div>

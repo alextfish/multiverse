@@ -1,0 +1,2 @@
+todo:
+define attr_accessible for every model

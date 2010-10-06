@@ -1,0 +1,16 @@
+<li class="comment">
+  <i><%=h comment.user %> at <%= comment.created_at.to_s %>:</i>
+  <% if signed_in? %><!-- TODO authenticate this - set admin? (comments don't have UserID authors now -->
+    (<%= link_to 'delete', comment,
+      :confirm => 'Are you sure?',
+      :method => :delete %>)
+    <!-- Admin users can set comment status, and see highlights on unaddressed comments and highlighted comments;
+         non-admin users can't set comment status, and see highlights on highlighted comments -->
+    <% commentclass = comment.status %>
+    (SET STATUS - via ajax? or embedded comment update form?)
+  <% else %>
+    <% commentclass = (comment.status == Comment.UNADDRESSED ? Comment.NORMAL : comment.status) %>
+  <% end %>
+  <br />
+  <%= simple_format h(comment.comment), :class => commentclass %>
+</li>

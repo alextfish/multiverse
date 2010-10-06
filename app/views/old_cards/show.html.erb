@@ -1,0 +1,70 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <b>Card:</b>
+  <%= @old_card.card_id %>
+</p>
+
+<p>
+  <b>Name:</b>
+  <%= @old_card.name %>
+</p>
+
+<p>
+  <b>Cardset:</b>
+  <%= @old_card.cardset_id %>
+</p>
+
+<p>
+  <b>Colour:</b>
+  <%= @old_card.colour %>
+</p>
+
+<p>
+  <b>Rarity:</b>
+  <%= @old_card.rarity %>
+</p>
+
+<p>
+  <b>Cost:</b>
+  <%= @old_card.cost %>
+</p>
+
+<p>
+  <b>Supertype:</b>
+  <%= @old_card.supertype %>
+</p>
+
+<p>
+  <b>Cardtype:</b>
+  <%= @old_card.cardtype %>
+</p>
+
+<p>
+  <b>Subtype:</b>
+  <%= @old_card.subtype %>
+</p>
+
+<p>
+  <b>Rulestext:</b>
+  <%= @old_card.rulestext %>
+</p>
+
+<p>
+  <b>Flavourtext:</b>
+  <%= @old_card.flavourtext %>
+</p>
+
+<p>
+  <b>Power:</b>
+  <%= @old_card.power %>
+</p>
+
+<p>
+  <b>Toughness:</b>
+  <%= @old_card.toughness %>
+</p>
+
+
+<%= link_to 'Edit', edit_old_card_path(@old_card) %> |
+<%= link_to 'Back', old_cards_path %>

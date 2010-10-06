@@ -1,0 +1,32 @@
+<table class="card <%= @card.colour %>">
+  <tr class="cardtitle">
+   <td class="cardname">
+    <span title="<%= @card.code %>"><%= @card.name %></span>
+   </td>
+   <td class="cardcost"><%= @card.cost %>
+   </td>
+  </tr>
+  <tr>
+   <td colspan="2" class="cardart">&nbsp;
+   </td>
+  </tr>
+  <tr class="cardtypeline">
+   <td class="minitext cardtype"><%= @card.supertype %> <%= @card.cardtype %> &ndash; <%= @card.subtype %>
+   </td>
+   <td class="cardrarity <%= @card.rarity %>"><%= @card.rarity[0].chr.upcase %>
+   </td>
+  </tr>
+  <tr>
+   <td class="cardtext" colspan="2"><%= @card.rulestext %>
+    <div class="flavourtext"><%= @card.flavourtext %></div>
+   </td>
+  </tr>
+  <tr class="cardptline">
+   <td>&nbsp;
+   </td>
+   <% if !@card.power.nil? %>
+   <td class="cardpt"><%= @card.power %>/<%= @card.toughness %>
+   </td>
+   <% end %>
+  </tr>
+</table>

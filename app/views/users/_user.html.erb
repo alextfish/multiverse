@@ -1,0 +1,11 @@
+<%= link_to user.name, user %> (<%= user.email %>)
+
+<% @cardsets = Cardset.find_all_by_user_id(user.id) %>
+<%= pluralize(  (@cardsets ? @cardsets.length : 0), "set") %><% if @cardsets.any? %>:
+  <%= raw(cardset_links(@cardsets).join(', ')) %>
+<% end %>
+  <% if current_user && current_user.admin? %>
+  | <%= link_to "Delete user", user, :method => :delete, :confirm => "You sure?",
+                                :title => "Delete #{user.name}" %>
+  <% end %>
+<br>

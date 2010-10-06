@@ -1,0 +1,38 @@
+<p id="notice"><%= notice %></p>
+
+<h1>
+  <%= link_to @cardset.name, @cardset %>
+</h1>
+
+<p id="notice"><%= notice %></p>
+
+
+<table>
+ <tr>
+   <th>Name</th>
+   <th>Rarity</th>
+   <th>Cost</th>
+   <th>Type</th>
+   <th colspan="2">P/T</th>
+   <th colspan="3">&nbsp;</th>
+<% @cardset.cards.each do |card| %>
+  <tr>
+    <td><%= link_to card.name, card %></td>
+    <td><%= card.rarity.capitalize %></td>
+    <td><%= card.cost %></td>
+    <td>
+      <%= card.supertype %>
+      <%= card.cardtype %>
+      <% if !card.subtype.nil? %>
+        &ndash; <%= card.subtype %>
+      <% end %> </td>
+    <td><%= card.power %></td>
+    <td><%= card.toughness %></td>
+    <td><%= link_to 'Edit', edit_card_path(card) %></td>
+    <td><%= link_to 'Delete', card, :confirm => 'Are you sure?', :method => :delete %></td>
+  </tr>
+<% end %>
+</table>
+<%= link_to 'New card', new_card_path(:cardset_id => @cardset.id) %>
+<br><br>
+<%= link_to 'All cardsets', cardsets_path %>

@@ -1,0 +1,69 @@
+<%= form_for(@old_card) do |f| %>
+  <% if @old_card.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(@old_card.errors.count, "error") %> prohibited this old_card from being saved:</h2>
+
+      <ul>
+      <% @old_card.errors.full_messages.each do |msg| %>
+        <li><%= msg %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="field">
+    <%= f.label :card_id %><br />
+    <%= f.text_field :card_id %>
+  </div>
+  <div class="field">
+    <%= f.label :name %><br />
+    <%= f.text_field :name %>
+  </div>
+  <div class="field">
+    <%= f.label :cardset_id %><br />
+    <%= f.text_field :cardset_id %>
+  </div>
+  <div class="field">
+    <%= f.label :colour %><br />
+    <%= f.text_field :colour %>
+  </div>
+  <div class="field">
+    <%= f.label :rarity %><br />
+    <%= f.text_field :rarity %>
+  </div>
+  <div class="field">
+    <%= f.label :cost %><br />
+    <%= f.text_field :cost %>
+  </div>
+  <div class="field">
+    <%= f.label :supertype %><br />
+    <%= f.text_field :supertype %>
+  </div>
+  <div class="field">
+    <%= f.label :cardtype %><br />
+    <%= f.text_field :cardtype %>
+  </div>
+  <div class="field">
+    <%= f.label :subtype %><br />
+    <%= f.text_field :subtype %>
+  </div>
+  <div class="field">
+    <%= f.label :rulestext %><br />
+    <%= f.text_area :rulestext %>
+  </div>
+  <div class="field">
+    <%= f.label :flavourtext %><br />
+    <%= f.text_area :flavourtext %>
+  </div>
+  <div class="field">
+    <%= f.label :power %><br />
+    <%= f.text_field :power %>
+  </div>
+  <div class="field">
+    <%= f.label :toughness %><br />
+    <%= f.text_field :toughness %>
+  </div>
+  <div class="actions">
+    <%= f.submit %>
+  </div>
+<% end %>
