@@ -1,0 +1,19 @@
+/***** Site layout *****/
+
+a > img { border: 0px; }
+
+.flash  { margin-left: 2px; width: 50%; }
+.error  { color: #600; background-color: #f99; border: 1px solid #600; }
+.notice { color: #006; background-color: #99f; border: 1px solid #006; }
+
+/***** Comment display *****/
+
+li.comment > p { margin: 0px; }
+
+/***** Data import / export *****/
+
+code { background-color: #eee; }
+input#separator       { width: 2em; }
+input#formatting_line { width: 600px; }
+textarea#import_data  { width: 600px; height: 15em; }
+

@@ -51,9 +51,12 @@ class CardsetsController < ApplicationController
 
   # POST /cardsets/1/import_data
   def import_data
-    if @cardset.import_data(params)
-      redirect_to(@cardset, :notice => 'Cardset was successfully updated.')
+    @cardset = Cardset.find(params[:id])
+    error = @cardset.import_data(params)
+    if error.nil?
+      redirect_to(@cardset, :notice => 'Data was successfully imported!')
     else
+      flash.now[:error] = error
       render :action => "import"
     end
   end

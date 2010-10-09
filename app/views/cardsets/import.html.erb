@@ -1,0 +1,58 @@
+<h1>
+  <%= link_to @cardset %>
+</h1>
+
+<p id="notice"><%= notice %></p>
+
+<h2>Import Data Into Cardset</h2>
+
+<p>
+If you've designed your cards elsewhere, you can import them into Multiverse with this page.
+</p>
+<p>
+You should export your set data in a Character-Separated Values format, where field values are separated by a comma or other single character. You must specify the separating character, and provide a formatting line to tell us which order your fields are in. The formatting line must contain only your separating character and the following field names:
+<br><code>name, manacost, supertype, type, subtype, rarity, rulestext, flavourtext, power, toughness, loyalty, code, colour, comment</code>
+<br>Accepted aliases:
+<code>cardtype</code> for <code>type</code>;
+<code>cost</code> for <code>manacost</code>;
+<code>text</code> for <code>rulestext</code>;
+<code>flavortext</code> for <code>flavourtext</code>;
+<code>color</code> for <code>colour</code>;
+<code>notes</code> for <code>comment</code>. A field may not be repeated, nor may it and its alias both be present.
+</p>
+<p>Any fields may be omitted. If the <code>colour</code> field is omitted, the colour will then be deduced from each card's mana cost. The <code>comment</code> field will be used to create an initial comment on the card.
+<br>Every line in the data must contain the same number of the separating character, or be entirely blank.
+</p>
+<p>An example formatting line, using the separating character <code>%</code>:
+<br><code>name%code%cost%supertype%type%subtype%power%toughness%loyalty%rulestext</code>
+<br>In this example, for each card, the colour will be deduced from the mana cost, the rarity will default to common, the flavour text will default to empty, and no initial comments will be created.
+</p>
+<p>You can specify what action should be taken if imported cards have the same <code>name</code> or <code>code</code> as existing cards in the cardset. "Replace with new" will overwrite the old card with the new data; "Preserve old" will abandon the imported card and leave the old card unchanged; "Duplicate" will create a new card in the database with the same name and/or code as the old card, which will be left unchanged.
+<br>If an existing card in your cardset before the import has the same (nonempty) <code>code</code> as an imported card, and the same <code>name</code> as a <i>different</i> imported card, the <code>code</code> rather than the <code>name</code> will be used to determine the "old card".
+</p>
+<hr>
+<%= form_tag "/cardsets/#{@cardset.id}/import_data" do %>
+  <p><b>Separating character:</b>
+  <%= text_field_tag "separator", "", :maxlength => 1 %>
+  </p>
+  <p><b>Formatting line:</b>
+  <br>
+  <%= text_field_tag "formatting_line" %>
+  </p>
+  <p><b>Action on duplicate names/codes:</b>
+  <br><%= radio_button_tag "duplicates", "duplicate" %> Add duplicate
+  <br><%= radio_button_tag "duplicates", "replace", true %> Replace with new
+  <br><%= radio_button_tag "duplicates", "preserve" %> Preserve old
+  </p>
+  <p><b>Character-separated data:</b>
+  <br>
+  <%= text_area_tag "data", "", :id => "import_data" %>
+  </p>
+  <p>
+  <!-- %= hidden_field_tag "cardset_id", @cardset.id % -->
+  <%= submit_tag "Import", :disabled_with => "Importing..." %>
+  </p>
+<% end %>
+
+<%= link_to 'View cardlist in HTML', cardlist_cardset_path(@cardset) %> |
+<%= link_to 'See other cardsets', cardsets_path %>
