@@ -1,0 +1,4 @@
+GR11%5311%5%G6%1.8%mega %Saga of Atine%Green%M%E%Enchantment %%3GGG%6%%%Whenever a permanent ETBs under your control, creatures you control get +1/+1 UEOT.%"Mine is a symphony where each enchanted leaf plays its part."
+ZU01%8201%4%Z2%%%Technical Insight%Gold%U%A%Sorcery %%WU%2%%%Search your library for an artifact card, reveal it, and put it into your hand. Then shuffle your library.%"You seek a tool. Perhaps you feel unconfident in your own abilities?"
+ZR05%8301%5%Z3%%%Erack the Outcast %Gold%R%AEL%Legendary Creature %Human Druid%1GW%3%2%2%Artifact creatures you control have +1/+1. // Enchantment creatures you control have +1/+1. // Land creatures you control have +1/+1.%
+AC01 %6101%4%A3%1.2%%Ralatine Sentinel%Artifact%C%AE%Artifact Creature %Bird%3%3%1%2%Flying // ~ has shroud as long as it's enchanted.%Atine's daughter sculpts filigree falcons. Atine enjoys bringing them to life to patrol the skies around her mansion.

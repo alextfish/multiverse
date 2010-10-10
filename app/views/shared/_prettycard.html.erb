@@ -20,8 +20,9 @@
    </td>
   </tr>
   <tr>
-   <td class="cardtext" colspan="2"><%= @card.rulestext %>
-    <div class="flavourtext"><%= @card.flavourtext %></div>
+   <td class="cardtext" colspan="2">
+     <%= render :partial => 'shared/rulestext' %>
+    <div class="flavourtext"><%= render :partial => 'shared/flavourtext' %></div>
    </td>
   </tr>
   <tr class="cardptline">
