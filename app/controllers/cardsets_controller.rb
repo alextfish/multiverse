@@ -52,11 +52,11 @@ class CardsetsController < ApplicationController
   # POST /cardsets/1/import_data
   def import_data
     @cardset = Cardset.find(params[:id])
-    error = @cardset.import_data(params)
-    if error.nil?
-      redirect_to(@cardset, :notice => 'Data was successfully imported!')
+    success, message = @cardset.import_data(params)
+    if success
+      redirect_to(@cardset, :notice => message)
     else
-      flash.now[:error] = error
+      flash.now[:error] = message
       render :action => "import"
     end
   end
@@ -65,6 +65,7 @@ class CardsetsController < ApplicationController
   # GET /cardsets/new.xml
   def new
     @cardset = Cardset.new
+    #@cardset.user_id = current_user.id
 
     respond_to do |format|
       format.html # new.html.erb
@@ -81,6 +82,7 @@ class CardsetsController < ApplicationController
   # POST /cardsets.xml
   def create
     @cardset = Cardset.new(params[:cardset])
+    @cardset.user_id = current_user.id
 
     respond_to do |format|
       if @cardset.save

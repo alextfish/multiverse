@@ -2,8 +2,6 @@
   <%= @cardset.name %>
 </h1>
 
-<p id="notice"><%= notice %></p>
-
 <p>
   <%= @cardset.description %>
 </p>
@@ -40,7 +38,7 @@
 <p>Recently updated cards:
  <table>
   <tr>
-   <% Card.order("updated_at").find_all_by_cardset_id(@cardset.id, :limit => 5).each do |@card| %>
+   <% Card.order("updated_at DESC").find_all_by_cardset_id(@cardset.id, :limit => 5).each do |@card| %>
     <td>
      <%= render :partial => 'shared/prettycard' %>
      <%= link_to "Comments (#{@card.comments.count})", @card %>

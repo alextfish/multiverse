@@ -1,8 +1,6 @@
 <h1>
-  <%= link_to @cardset %>
+  <%= link_to @cardset.name, @cardset %>
 </h1>
-
-<p id="notice"><%= notice %></p>
 
 <h2>Import Data Into Cardset</h2>
 
@@ -40,9 +38,12 @@ You should export your set data in a Character-Separated Values format, where fi
   <%= text_field_tag "formatting_line" %>
   </p>
   <p><b>Action on duplicate names/codes:</b>
-  <br><%= radio_button_tag "duplicates", "duplicate" %> Add duplicate
-  <br><%= radio_button_tag "duplicates", "replace", true %> Replace with new
-  <br><%= radio_button_tag "duplicates", "preserve" %> Preserve old
+  <br><%= radio_button_tag "duplicates", "duplicate" %>
+  <%= label :duplicates, :duplicate, "Add duplicate" %>
+  <br><%= radio_button_tag "duplicates", "replace", true %>
+  <%= label :duplicates, :replace, "Replace with new" %>
+  <br><%= radio_button_tag "duplicates", "preserve" %>
+  <%= label :duplicates, :preserve, "Preserve old" %>
   </p>
   <p><b>Character-separated data:</b>
   <br>

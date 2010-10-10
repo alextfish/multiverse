@@ -53,9 +53,9 @@
 .artifact .cardpt, .artifact .cardtitle, .artifact .cardtypeline { background-color: #eef3f3; }
 .artifact .cardtext { background-color: #f6fbfb; }
 
-.gold { background-color: #dd5; }
-.gold .cardpt, .gold .cardtitle, .gold .cardtypeline { background-color: #eeee99; }
-.gold .cardtext { background-color: #eec; }
+.multicolour { background-color: #dd5; }
+.multicolour .cardpt, .multicolour .cardtitle, .multicolour .cardtypeline { background-color: #eeee99; }
+.multicolour .cardtext { background-color: #eec; }
 
 .land { background-color: #cb9; }
 .land .cardpt, .land .cardtitle, .land .cardtypeline { background-color: #f0e8e2; }

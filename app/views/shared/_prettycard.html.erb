@@ -11,7 +11,10 @@
    </td>
   </tr>
   <tr class="cardtypeline">
-   <td class="minitext cardtype"><%= @card.supertype %> <%= @card.cardtype %> &ndash; <%= @card.subtype %>
+   <td class="minitext cardtype"><%= @card.supertype %> <%= @card.cardtype %>
+   <% if !@card.subtype.blank? %>
+     &ndash; <%= @card.subtype %>
+   <% end %>
    </td>
    <td class="cardrarity <%= @card.rarity %>"><%= @card.rarity[0].chr.upcase %>
    </td>
