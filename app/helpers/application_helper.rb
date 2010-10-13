@@ -21,4 +21,7 @@ module ApplicationHelper
     ["common", "uncommon", "rare", "mythic"]
   end
 
+  def comments_status
+    out_hash = {:normal => 0, :unaddressed => 1, :highlighted => 2}
+  end
 end

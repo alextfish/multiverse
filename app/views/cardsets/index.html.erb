@@ -1,4 +1,4 @@
-<h1>Listing cardsets</h1>
+<h1>All cardsets</h1>
 
 <table>
   <tr>
@@ -6,7 +6,6 @@
     <th>Creator</th>
     <th>Cards</th>
     <th>Description</th>
-    <th></th>
   </tr>
 
 <% @cardsets.each do |cardset| %>
@@ -15,7 +14,6 @@
     <td><%= User.find_by_id(cardset.user_id).name %></td>
     <td><%= cardset.cards.count %></td>
     <td><%= cardset.description %></td>
-    <td><%= link_to 'Destroy', cardset, :confirm => 'Are you sure?', :method => :delete %></td>
   </tr>
 <% end %>
 </table>

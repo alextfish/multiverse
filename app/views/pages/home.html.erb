@@ -14,6 +14,13 @@
   <% end %>
 </p>
 <p>
+  <% if signed_in? %>
+    You can <%= link_to "create your own cardset now", new_cardset_path %>!
+  <% else %>
+    To create your own cardset, you must first <%= link_to "sign in", signin_path %> or <%= link_to "sign up", signup_path %>.
+  <% end %>
+</p>
+<p>
   <% numcards = Card.count; numtoshow = [numcards, 3].min %>
   There are <%= numcards %> cards in Multiverse right now<% if numcards > 0 %>, including:
     <table>

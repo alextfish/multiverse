@@ -1,4 +1,6 @@
-<p>
+<h1>Profile</h1>
+
+<!-- p>
   <b>Name:</b>
   <%= @user.name %>
 </p>
@@ -6,9 +8,10 @@
 <p>
   <b>Email:</b>
   <%= @user.email %>
-</p>
+</p -->
 
 <%= render @user %>
 
-<%= link_to 'Edit', edit_user_path(@user) %> |
-<%= link_to 'Back', users_path %>
+<p><%= link_to "Create new cardset", new_cardset_path %> |
+<%= link_to 'Edit profile', edit_user_path(@user) %> |
+<%= link_to 'All users', users_path %>

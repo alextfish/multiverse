@@ -1,16 +1,39 @@
-<li class="comment">
-  <i><%=h comment.user %> at <%= comment.created_at.to_s %>:</i>
-  <% if signed_in? %><!-- TODO authenticate this - set admin? (comments don't have UserID authors now -->
-    (<%= link_to 'delete', comment,
-      :confirm => 'Are you sure?',
-      :method => :delete %>)
-    <!-- Admin users can set comment status, and see highlights on unaddressed comments and highlighted comments;
-         non-admin users can't set comment status, and see highlights on highlighted comments -->
-    <% commentclass = comment.status %>
-    (SET STATUS - via ajax? or embedded comment update form?)
-  <% else %>
-    <% commentclass = (comment.status == Comment.UNADDRESSED ? Comment.NORMAL : comment.status) %>
-  <% end %>
-  <br />
-  <%= simple_format h(comment.comment), :class => commentclass %>
-</li>
+<% if signed_in_as_admin?(@card.cardset) %>
+  <% commentclass = comment.admin_status_string  %>
+<% else %>
+  <% commentclass = comment.public_status_string  %>
+<% end %>
+
+<div class="comment <%= commentclass %>">
+  <div class="commentdetails">
+    <%= comment.user %> at <%= comment.created_at.to_s %>:
+     <% if signed_in_as_admin?(@card.cardset) %>
+      (<%= link_to "delete", comment,
+        :confirm => "Really delete this comment?",
+        :method => :delete %>)
+      <!-- Admin users can set comment status, and see highlights on unaddressed comments and highlighted comments;
+           non-admin users can't set comment status, and see highlights on highlighted comments -->
+      <% if comment.unaddressed? %>
+        <%= form_for comment do |f| %>
+          <%= f.hidden_field :status, :value => comments_status[:normal] %>
+          (<%= f.submit "mark addressed" %>)
+        <% end %>
+      <% elsif comment.highlighted? %>
+        <%= form_for comment do |f| %>
+          <%= f.hidden_field :status, :value => comments_status[:normal] %>
+          (<%= f.submit "unhighlight" %>)
+        <% end %>
+      <% else %>
+        <%= form_for comment do |f| %>
+          <%= f.hidden_field :status, :value => comments_status[:unaddressed] %>
+          (<%= f.submit "mark unaddressed" %>)
+        <% end %>
+        <%= form_for comment do |f| %>
+          <%= f.hidden_field :status, :value => comments_status[:highlighted] %>
+          (<%= f.submit "highlight" %>)
+        <% end %>
+      <% end %>
+    <% end %>
+  </div>
+  <%= simple_format h(comment.comment), :class => "commentbody" %>
+</div>

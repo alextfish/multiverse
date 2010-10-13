@@ -8,7 +8,13 @@ a > img { border: 0px; }
 
 /***** Comment display *****/
 
-li.comment > p { margin: 0px; }
+.commentdetails { font-style: italic; margin: 0px; }
+.commentbody    { margin-top: 0px; }
+
+.comment.unaddressed { background-color: #fcc; }
+.comment.highlighted { background-color: #ff9; }
+
+form { display: inline; }
 
 /***** Data import / export *****/
 

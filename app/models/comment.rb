@@ -25,4 +25,26 @@ class Comment < ActiveRecord::Base
   UNADDRESSED = 1
   HIGHLIGHTED = 2
 
+  def addressed?
+    status != UNADDRESSED
+  end
+  def unaddressed?
+    status == UNADDRESSED
+  end
+  def highlighted?
+    status == HIGHLIGHTED
+  end
+  def admin_status_string
+    case self.status
+      when UNADDRESSED: "unaddressed"
+      when HIGHLIGHTED: "highlighted"
+      else              "normal"
+    end
+  end
+  def public_status_string
+    case self.status
+      when HIGHLIGHTED: "highlighted"
+      else              "normal"
+    end
+  end
 end

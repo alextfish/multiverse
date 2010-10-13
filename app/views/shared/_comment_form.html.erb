@@ -11,6 +11,7 @@
     </div>
   <% end %>
   <%= f.hidden_field :card_id %>
+  <%= f.hidden_field :status, :value => comments_status[:unaddressed] %>
 
   <p>
   <%= f.label :user %><br />

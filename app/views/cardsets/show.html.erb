@@ -1,17 +1,20 @@
 <h1>
-  <%= @cardset.name %>
+  <%= @title = @cardset.name %>
 </h1>
 
 <p>
   <%= @cardset.description %>
 </p>
 
-<% if signed_in? %>
+<% if signed_in_as_admin?(@cardset) %>
   <p><!-- style="display: inline-block; margin-left: 200px;"> -->
     Admin actions:
     <%= link_to "Edit description", edit_cardset_path(@cardset) %>;
     <%= link_to "New card", new_card_path(:cardset_id => @cardset.id) %>;
-    <%= link_to "Import data", import_cardset_path(@cardset) %>
+    <%= link_to "Import data", import_cardset_path(@cardset) %>;
+    <%= link_to "Delete entire cardset", @cardset,
+      :confirm => "Really delete this whole cardset and all cards in it?",
+      :method => :delete %>
   </p>
 <% end %>
 
@@ -45,7 +48,7 @@
     <td>
      <%= render :partial => 'shared/prettycard', :locals => { :link => true } %>
      <%= link_to "Comments (#{@card.comments.count})", @card %>
-     <% if signed_in? %>
+     <% if signed_in_as_admin?(@cardset) %>
       | <%= link_to "Edit", edit_card_path(@card) %>
      <% end %>
     </td>

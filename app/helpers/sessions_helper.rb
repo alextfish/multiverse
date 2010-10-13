@@ -11,6 +11,9 @@ module SessionsHelper
   def signed_in?
     !current_user.nil?
   end
+  def signed_in_as_admin?(cardset)
+    current_user && current_user.id == cardset.user_id
+  end
 
 
   def current_user=(user) # the setter for current_user

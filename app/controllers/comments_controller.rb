@@ -24,14 +24,10 @@ class CommentsController < ApplicationController
   def update
     @comment = Comment.find(params[:id])
 
-    respond_to do |format|
-      if @comment.update_attributes(params[:comment])
-        format.html { redirect_to(@comment.card) }
-        format.xml  { head :ok }
-      else
-        format.html { render :action => "edit" }
-        format.xml  { render :xml => @comment.errors, :status => :unprocessable_entity }
-      end
+    if @comment.update_attributes(params[:comment])
+      redirect_to(@comment.card)
+    else
+      redirect_to(@comment.card)
     end
   end
 
@@ -41,9 +37,6 @@ class CommentsController < ApplicationController
     @comment = Comment.find(params[:id])
     @comment.destroy
 
-    respond_to do |format|
-      format.html { redirect_to(@comment.card) }
-      format.xml  { head :ok }
-    end
+    redirect_to(@comment.card)
   end
 end
