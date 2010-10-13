@@ -28,30 +28,6 @@ class Card < ActiveRecord::Base
   has_many :comments, :dependent => :destroy
   has_many :old_cards, :dependent => :destroy
 
-  FORMAT_SUBSTITUTIONS = {
-    "\n" => "<br>",
-    /\bUEOT\b/i => "until end of turn",
-    /\bETBs\b/ => "enters the battlefield",
-    /\bETB\b/ => "enter the battlefield",
-    /\bCIPs\b/ => "comes into play",
-    /\bCIP\b/ => "come into play",
-  }
-  CARDNAME_ALIASES = ['CARDNAME', '~this~', '~']
-
-  def format(text)
-    # Output is marked as HTML_safe - this is a SECURITY RISK unless input text is html_escape'd.
-    # I'd do that myself, but this function's in the card model, and html_escape is only available in ERB...
-    if text
-      out = FORMAT_SUBSTITUTIONS.reduce(text) do |memo, (match, replace)|
-        memo.gsub(match, replace)
-      end
-      CARDNAME_ALIASES.each do |string|
-        out.gsub!(string, name)
-      end
-      return out.html_safe
-    end
-  end
-
   def formatted_rules_text
     format(rulestext)
   end

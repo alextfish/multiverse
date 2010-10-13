@@ -16,7 +16,7 @@ require 'csv'
 class Cardset < ActiveRecord::Base
   attr_accessible :name, :description
   belongs_to :user
-  has_many :cards
+  has_many :cards, :dependent => :destroy
   has_many :admins, :class_name => "User"
 
   ALIASES = {
@@ -33,7 +33,7 @@ class Cardset < ActiveRecord::Base
   ENUM_ALIASES = {
     "colour" => {  # keys need to be strings, not symbols
       "w" => "white", "u" => "blue", "b" => "black", "r" => "red", "g" => "green", "a" => "artifact", "z" => "multicolour", "l" => "land",
-      "gold" => "multicolour", "multi" => "multicolour", "multicolor" => "multicolour", "multicolored" => "multicolour"
+      "gold" => "multicolour", "multi" => "multicolour", "multicolor" => "multicolour", "multicolored" => "multicolour", "multicoloured" => "multicolour"
     },
     "rarity" => {
       "c" => "common", "u" => "uncommon", "r" => "rare", "m" => "mythic",
@@ -66,7 +66,7 @@ class Cardset < ActiveRecord::Base
 
     # Validate the supplied formatting line
     inputfields = params[:formatting_line].downcase.split(params[:separator])
-    canonfields = inputfields.map{ |f| ALIASES.has_key?(f) ? ALIASES[f] : f }
+    canonfields = inputfields.map{ |f| ALIASES.has_key?(f) ? ALIASES[f] : f.strip }
     validfields = canonfields.select{ |f| FIELDS.include?(f) }
     if validfields != canonfields
       return false, "The following fields were not recognised: " + (canonfields - validfields).join(", ")
@@ -122,7 +122,7 @@ class Cardset < ActiveRecord::Base
           carddatahash["cardtype"].slice!(regexp)
         end
       end
-      # Trim whitespace
+      # Strip whitespace
       STRING_FIELDS.each do |field|
         carddatahash[field] && carddatahash[field].strip!
       end

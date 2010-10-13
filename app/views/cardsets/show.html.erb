@@ -24,9 +24,12 @@
 <% @allmycards = @cardset.cards %>
 <% @myactivecards = @allmycards.map{ |card| card.active? } %>
 <p><%= @allmycards.length %> cards in Multiverse
-<% if ! @myactivecards.all? %>
-  (<%= @myactivecards.length %> active)
-<% end %>
+  <% if ! @myactivecards.all? %>
+    (<%= @myactivecards.length %> active)
+  <% end %>
+</p>
+
+<%= render 'setviews' %>
 
 <!-- something to do with highlighted cards
   <p>The set creator would like to draw your attention to these comments:
@@ -40,7 +43,7 @@
   <tr>
    <% Card.order("updated_at DESC").find_all_by_cardset_id(@cardset.id, :limit => 5).each do |@card| %>
     <td>
-     <%= render :partial => 'shared/prettycard' %>
+     <%= render :partial => 'shared/prettycard', :locals => { :link => true } %>
      <%= link_to "Comments (#{@card.comments.count})", @card %>
      <% if signed_in? %>
       | <%= link_to "Edit", edit_card_path(@card) %>
@@ -56,5 +59,4 @@
   <###% Comment.order("updated_at").find(:cafind_by_cardset_id(:last, :card_id => @c  :limit => 10)
   @allmycards
   -->
-<%= link_to 'Full cardlist', cardlist_cardset_path(@cardset) %> |
 <%= link_to 'See other cardsets', cardsets_path %>

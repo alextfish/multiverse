@@ -2,6 +2,8 @@
   <%= link_to @cardset.name, @cardset %>
 </h1>
 
+<%= render 'setviews' %>
+
 <table>
  <tr>
    <th>Name</th>
@@ -28,6 +30,5 @@
   </tr>
 <% end %>
 </table>
-<%= link_to 'New card', new_card_path(:cardset_id => @cardset.id) %>
-<br><br>
-<%= link_to 'All cardsets', cardsets_path %>
+
+<%= render 'setviews' %>

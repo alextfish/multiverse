@@ -2,21 +2,19 @@
 
 <table>
   <tr>
-    <th>Name</th>
-    <th>User</th>
+    <th>Set name</th>
+    <th>Creator</th>
+    <th>Cards</th>
     <th>Description</th>
-    <th></th>
-    <th></th>
     <th></th>
   </tr>
 
 <% @cardsets.each do |cardset| %>
   <tr>
-    <td><%= cardset.name %></td>
+    <td><%= link_to cardset.name, cardset %></td>
     <td><%= User.find_by_id(cardset.user_id).name %></td>
+    <td><%= cardset.cards.count %></td>
     <td><%= cardset.description %></td>
-    <td><%= link_to 'Show', cardset %></td>
-    <td><%= link_to 'Edit', edit_cardset_path(cardset) %></td>
     <td><%= link_to 'Destroy', cardset, :confirm => 'Are you sure?', :method => :delete %></td>
   </tr>
 <% end %>

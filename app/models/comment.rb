@@ -24,4 +24,5 @@ class Comment < ActiveRecord::Base
   NORMAL = 0
   UNADDRESSED = 1
   HIGHLIGHTED = 2
+
 end

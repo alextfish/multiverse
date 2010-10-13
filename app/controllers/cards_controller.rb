@@ -1,4 +1,5 @@
 class CardsController < ApplicationController
+  helper CardsHelper
 
   # GET /cards/1
   # GET /cards/1.xml

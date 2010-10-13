@@ -6,7 +6,7 @@ Multiverse::Application.routes.draw do
 
   match '/contact', :to => 'pages#contact'
   # also defines contact_path => '/contact' and contact_url => 'http://localhost:3000/contact'
-  # match '/about',   :to => 'pages#about'
+  match '/about',   :to => 'pages#about'
   # match '/help',    :to => 'pages#help'
 
   get 'pages/home'
@@ -30,6 +30,7 @@ Multiverse::Application.routes.draw do
   resources :cardsets do
     member do
       get 'cardlist' # in addition to /cardsets/:id which goes to cardsets#show
+      get 'visualspoiler'
       get 'import', 'export'
       post 'import_data'
     end

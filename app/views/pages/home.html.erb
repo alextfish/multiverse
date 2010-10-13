@@ -1,4 +1,29 @@
 <h1>Multiverse</h1>
 <p>
   Multiverse is a database for custom <b>Magic: the Gathering</b> card sets.
+  <br><%= link_to "Find out more", about_path %>
+</p>
+<p>
+  <% numsets = Cardset.count; numtoshow = [numsets, 3].min %>
+  There are <%= link_to "#{numsets} cardsets", cardsets_path %> in Multiverse right now<% if numsets > 0 %>, including:
+    <ul>
+    <% Cardset.all.permutation(numtoshow).to_a.choice.each do |cardset| %>
+      <li><%= link_to cardset.name, cardset %> (<%= cardset.cards.count %> cards): <%= cardset.description %>
+    <% end %>
+    </ul>
+  <% end %>
+</p>
+<p>
+  <% numcards = Card.count; numtoshow = [numcards, 3].min %>
+  There are <%= numcards %> cards in Multiverse right now<% if numcards > 0 %>, including:
+    <table>
+     <tr>
+       <% Card.all.permutation(numtoshow).to_a.choice.each do |@card| %>
+         <td><%= link_to @card.name, @card %> from <%= link_to @card.cardset.name, @card.cardset %>
+         <%= render :partial => 'shared/prettycard', :locals => { :link => false } %>
+         <%= link_to "Comments (#{@card.comments.count})", @card %>
+       <% end %>
+    </tr>
+   </table>
+  <% end %>
 </p>

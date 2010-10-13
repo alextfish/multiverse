@@ -34,6 +34,11 @@ class CardsetsController < ApplicationController
     end
   end
 
+  # GET /cardsets/1/visualspoiler
+  def visualspoiler
+    @cardset = Cardset.find(params[:id])
+  end
+
   # GET /cardsets/1/import
   def import
     @cardset = Cardset.find(params[:id])
