@@ -16,6 +16,8 @@ a > img { border: 0px; }
 
 form { display: inline; }
 
+ul.commentlist { margin-left: 20px; }
+
 /***** Data import / export *****/
 
 code { background-color: #eee; }

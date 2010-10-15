@@ -16,7 +16,7 @@
      <b>Comments:</b>
      <div class="cardhistory">
      <ul>
-     <%= render :partial => 'comment', :collection => @card.comments %> <!-- uses views/cards/_comment.html.erb -->
+     <%= render :partial => 'shared/comment', :collection => @card.comments %> <!-- uses views/cards/_comment.html.erb -->
      </ul>
      </div>
      <b>Add your comments:</b>
@@ -34,4 +34,3 @@
   </td>
  </tr>
 </table>
-

@@ -1,4 +1,5 @@
 Multiverse::Application.routes.draw do
+
   # You can have the root of your site routed with 'root'
   # just remember to delete public/index.html.
   root :to => 'pages#home'
@@ -19,7 +20,8 @@ Multiverse::Application.routes.draw do
   resources :comments, :only => [:create, :destroy, :update]
   match '/newcomment', :to => 'comments#create'
 
-  resources :cards, :has_many => [:comments, :old_cards]
+  resources :cards, :only => [:new, :create, :destroy, :edit, :update, :show]
+  #, :has_many => [:comments, :old_cards]
 
   # The cards/cardsets relation should probably be written as...
   #   resources :cardsets do

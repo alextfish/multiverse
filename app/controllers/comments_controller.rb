@@ -23,11 +23,11 @@ class CommentsController < ApplicationController
   # PUT /comments/1.xml
   def update
     @comment = Comment.find(params[:id])
+    @comment.update_attributes(params[:comment])
 
-    if @comment.update_attributes(params[:comment])
-      redirect_to(@comment.card)
-    else
-      redirect_to(@comment.card)
+    respond_to do |format|
+      format.html { redirect_to(@comment.card) }
+      format.js { render :layout => false }
     end
   end
 

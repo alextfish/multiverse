@@ -1,0 +1,57 @@
+<% if signed_in_as_admin?(@card.cardset) %>
+  <% commentclass = comment.admin_status_string  %>
+<% else %>
+  <% commentclass = comment.public_status_string  %>
+<% end %>
+
+<div class="comment <%= commentclass %>">
+  <div class="commentdetails">
+    <%= comment.user %> at <%= comment.created_at.to_s %>:
+     <% if signed_in_as_admin?(@card.cardset) %>
+      (<%= link_to "delete", comment,
+        :confirm => "Really delete this comment?",
+        :method => :delete %>)
+      <!-- Admin users can set comment status, and see highlights on unaddressed comments and highlighted comments;
+           non-admin users can't set comment status, and see highlights on highlighted comments -->
+      <% comment_actions = [:address, :unaddress, :highlight, :unhighlight]
+         comment_descriptions = {
+           :address => "mark addressed",
+           :unaddress => "mark unaddressed",
+           :highlight => "highlight",
+           :unhighlight => "unhighlight",
+         }
+         comment_values = {
+           :address => comments_status[:normal],
+           :unaddress => comments_status[:unaddressed],
+           :highlight => comments_status[:highlighted],
+           :unhighlight => comments_status[:normal],
+         }
+
+         if comment.unaddressed?
+           visible_buttons = [:address]
+         elsif comment.highlighted?
+           visible_buttons = [:unhighlight]
+         else
+           visible_buttons = [:unaddress, :highlight]
+         end
+         visibility = Hash[ comment_actions.map {
+                       |b| visible_buttons.include?(b) ? [b, 'inline'] : [b, 'none']
+                      } ]
+         %>
+      <% comment_actions.each do |action| %>
+        <% formid = "#{action.to_s}_comment_#{comment.id}" %>
+        <%= form_for comment,
+                              # :remote => true, :with => "action = #{action}", :dataType => 'script',
+                :html => {
+                  :id => formid,
+                  :style => "display: #{visibility[action]}"
+                } do |f| %>
+          <%= f.hidden_field :status, :value => comment_values[action] %>
+          (<%= f.submit comment_descriptions[action] %>)
+        <% end %>
+
+      <% end %>
+  <% end %>
+  </div>
+  <%= simple_format h(comment.comment), :class => "commentbody" %>
+</div>
