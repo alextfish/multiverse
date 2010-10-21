@@ -1,5 +1,9 @@
 class CardsetsController < ApplicationController
-  before_filter :authenticate, :only => [:new, :create, :edit, :update, :destroy]
+  before_filter :require_login, :only => [:new, :create]
+  before_filter :only => [:edit, :update, :destroy] do
+    @cardset = Cardset.find(params[:id])
+    require_login_as_admin(@cardset)
+  end
 
   # GET /cardsets
   # GET /cardsets.xml

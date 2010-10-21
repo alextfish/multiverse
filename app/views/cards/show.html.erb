@@ -16,7 +16,7 @@
      <b>Comments:</b>
      <div class="cardhistory">
      <ul>
-     <%= render :partial => 'shared/comment', :collection => @card.comments %> <!-- uses views/cards/_comment.html.erb -->
+     <%= render :partial => 'shared/comment', :collection => @card.comments %>
      </ul>
      </div>
      <b>Add your comments:</b>
@@ -29,8 +29,11 @@
      <%= @card.active %>
    </p>
 
-
-   <%= link_to 'Edit card', edit_card_path(@card) %>
+   <% if signed_in_as_admin?(@card.cardset) %>
+     <%= link_to 'Edit card', edit_card_path(@card) %>
+     |
+     <%= link_to 'Delete card', @card, :confirm => "Really DELETE #{@card.name}?", :method => :delete %>
+   <% end %>
   </td>
  </tr>
 </table>

@@ -15,7 +15,7 @@
 <table border="0">         <!-- grouping table -->
  <tr>
   <td>                      <!-- card -->
-   <table class="card <%= @card.colour %>">
+   <table class="card <%= @render_frame %>">
     <tr class="cardtitle">
      <td class="cardname">
       <div class="field">
@@ -59,14 +59,14 @@
      <td><%= f.label :code %></td>
      <td><%= f.text_field :code %></td>
     </tr>
-    <tr>
-     <td><%= f.label :colour %></td>
-     <td><%= f.select :colour, card_colours.unshift("Auto").map{|c| [c.capitalize, c]} %></td>
-    </tr>
     <!-- tr>
-     <td>< %= f.label :frame %></td>
-     <td>< %= f.select :frame, card_frames.unshift("Auto") %></td>
+     <td><##%= f.label :colour %></td>
+     <td><##%= f.select :colour, card_colours.unshift("Auto").map{|c| [c.capitalize, c]} %></td>
     </tr -->
+    <tr>
+     <td><%= f.label :frame %></td>
+     <td><%= f.select :frame, card_frames.unshift("Auto") %></td>
+    </tr>
     <tr>
      <td><%= f.label :active %></td>
      <td><%= f.check_box :active %></td>

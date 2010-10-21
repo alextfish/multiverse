@@ -6,13 +6,28 @@ a > img { border: 0px; }
 .error  { color: #600; background-color: #f99; border: 1px solid #600; }
 .notice { color: #006; background-color: #99f; border: 1px solid #006; }
 
+.infobox { float: right;
+           border: 2px solid #666;
+           margin-right: 10px;
+           padding-left: 2px;
+           padding-right: 2px;
+           padding-top: 6px;
+           padding-bottom: 6px;
+           background-color: #eee; }
+.infobox h1 { font-size: inherit;
+              margin-top: 0px; }
+.infobox p { margin: 2px; }
+
 /***** Comment display *****/
 
-.commentdetails { font-style: italic; margin: 0px; }
+.commentdetails { font-style: italic; margin: 0px; line-height: 2em; }
 .commentbody    { margin-top: 0px; }
 
 .comment.unaddressed { background-color: #fcc; }
 .comment.highlighted { background-color: #ff9; }
+
+.commentdetails img { vertical-align: middle; }
+.commentdetails input { vertical-align: middle; }
 
 form { display: inline; }
 

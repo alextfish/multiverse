@@ -8,17 +8,23 @@
   <div class="commentdetails">
     <%= comment.user %> at <%= comment.created_at.to_s %>:
      <% if signed_in_as_admin?(@card.cardset) %>
-      (<%= link_to "delete", comment,
+      <%= link_to delete_image, comment,
         :confirm => "Really delete this comment?",
-        :method => :delete %>)
+        :method => :delete %>
       <!-- Admin users can set comment status, and see highlights on unaddressed comments and highlighted comments;
            non-admin users can't set comment status, and see highlights on highlighted comments -->
       <% comment_actions = [:address, :unaddress, :highlight, :unhighlight]
+         comment_images = {
+           :address => "address.png",         # "mark addressed",
+           :unaddress => "unaddress.png",     # "mark unaddressed",
+           :highlight => "highlight.png",     # "highlight",
+           :unhighlight => "unhighlight.png", # "unhighlight",
+         }
          comment_descriptions = {
-           :address => "mark addressed",
-           :unaddress => "mark unaddressed",
-           :highlight => "highlight",
-           :unhighlight => "unhighlight",
+           :address => "Mark this comment addressed",
+           :unaddress => "Mark this comment unaddressed",
+           :highlight => "Highlight this comment",
+           :unhighlight => "Unhighlight this comment",
          }
          comment_values = {
            :address => comments_status[:normal],
@@ -47,7 +53,8 @@
                   :style => "display: #{visibility[action]}"
                 } do |f| %>
           <%= f.hidden_field :status, :value => comment_values[action] %>
-          (<%= f.submit comment_descriptions[action] %>)
+          <%= image_submit_tag comment_images[action], :alt => comment_descriptions[action],
+                                                     :title => comment_descriptions[action] %>
         <% end %>
 
       <% end %>

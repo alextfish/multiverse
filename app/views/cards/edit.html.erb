@@ -1,6 +1,7 @@
 <h1>Editing card</h1>
+<% @title = "Editing #{@card.name}" %>
 
 <%= render 'form' %>
 
-<%= link_to 'Show', @card %> |
-<%= link_to 'Back', cards_path %>
+<%= link_to 'Back to card', @card %> |
+<%= link_to 'Back to cardset', @card.cardset %>

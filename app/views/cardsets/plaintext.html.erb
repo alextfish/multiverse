@@ -1,0 +1,17 @@
+<h1>
+  <%= link_to @cardset %>
+</h1>
+<% @title = "#{@cardset.name}: Plain-Text Spoiler" %>
+
+<%= render 'setviews' unless @cardset.cards.empty? %>
+
+<h2>Plain-Text Spoiler</h2>
+
+<p class="plaintext">
+
+<%= render :partial => 'shared/plaincard', :collection => @cardset.cards %>
+
+</p>
+
+<%= link_to 'View cardlist in HTML', cardlist_cardset_path(@cardset) %> |
+<%= link_to 'See other cardsets', cardsets_path %>

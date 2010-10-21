@@ -1,0 +1,96 @@
+
+.panel {
+  clear: both;
+  display: none;
+  border: 3px solid #00adef;
+  padding: 1em;
+  background-color: #FFF;
+  margin: 0;
+}
+.panel.active-tab-body {
+  display: block;
+}
+#tabs {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+#tabs li {
+  position: relative;
+  float: left;
+}
+#tabs a {
+  float: left;
+  padding: 5px 8px;
+  margin-right: 6px;
+  border: 1px solid #00adef;
+  border-width: 1px 1px 0 1px;
+  text-decoration: none;
+  color: #000;
+}
+#tabs a:hover {
+  background-color: #8dd8f8;
+  color: #FFF;
+}
+#tabs a.active-tab {
+  background-color: #00adef;
+  color: #FFF;
+}
+table.sortable {
+  border-collapse: collapse;
+  table-layout: fixed;
+}
+
+table.sortable td, table.sortable th {
+  padding: 0.5em;
+  border: 1px solid #CCC;
+  /*white-space: nowrap;
+  overflow: hidden;*/
+}
+
+/*th {
+   white-space: pre;
+}*/
+
+thead, tfoot {
+  background-color: #DDD;
+}
+
+tr.rowodd {
+  background-color: #FFF;
+}
+
+tr.roweven {
+  background-color: #F2F2F2;
+}
+
+.sortcol {
+  cursor: pointer;
+  padding-right: 20px;
+  background-repeat: no-repeat;
+  background-position: right center;
+}
+.sortasc {
+  background-color: #DDFFAC;
+  background-image: url(up.gif);
+}
+.sortdesc {
+  background-color: #B9DDFF;
+  background-image: url(down.gif);
+}
+.nosort {
+  cursor: default;
+}
+
+th.resize-handle-active {
+  cursor: e-resize;
+}
+
+div.resize-handle {
+  cursor: e-resize;
+  width: 2px;
+  border-right: 1px dashed #1E90FF;
+  position:absolute;
+  top:0;
+  left:0;
+}

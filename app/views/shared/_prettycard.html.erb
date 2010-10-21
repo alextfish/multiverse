@@ -1,7 +1,7 @@
 <% # prettycard helper takes boolean param "link?"
 #link = false if local_assigns[:link].nil?
 %>
-<table class="card <%= @card.colour %>">
+<table class="card <%= @card.frame %>">
   <tr class="cardtitle">
    <td class="cardname">
     <% if link %>
@@ -42,9 +42,9 @@
   <tr class="cardptline">
    <td>&nbsp;
    </td>
-   <% if !@card.power.nil? %>
-   <td class="cardpt"><%= @card.power %>/<%= @card.toughness %>
-   </td>
+   <% if @card.power || @card.toughness %>
+   <td class="cardpt"
+     ><%= @card.power %><% if @card.power && @card.toughness %>/<% end %><%= @card.toughness %></td>
    <% end %>
   </tr>
 </table>

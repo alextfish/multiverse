@@ -19,6 +19,18 @@ class Cardset < ActiveRecord::Base
   has_many :cards, :dependent => :destroy
   has_many :admins, :class_name => "User"
 
+  def get_stats
+    out = {}
+    out[:by_colour] = Hash.new(0)
+    out[:by_rarity] = Hash.new(0)
+    cards.each do |card|
+      out[:by_colour][card.colour] += 1
+      out[:by_rarity][card.rarity] += 1
+    end
+    out
+  end
+
+
   ALIASES = {
     "type" => "cardtype",
     "manacost" => "cost",
@@ -50,6 +62,7 @@ class Cardset < ActiveRecord::Base
     # Returns [success, message]
 
     # Initial informative error messages
+    @cardset = Cardset.find(params[:id])
     if params[:separator].blank?
       return false, "Separator character is required"
     end
@@ -62,7 +75,6 @@ class Cardset < ActiveRecord::Base
     if params[:id].blank?
       return false, "No cardset ID supplied - please re-navigate to this page via the cardset"
     end
-    @cardset = Cardset.find(params[:id])
 
     # Validate the supplied formatting line
     inputfields = params[:formatting_line].downcase.split(params[:separator])

@@ -38,4 +38,57 @@ class Card < ActiveRecord::Base
   def formatted_flavour_text
     format(flavourtext)
   end
+
+  def calculated_frame
+    colour_regexps = [/w/i, /u/i, /b/i, /r/i, /g/i]
+    nonhybrid_colour_regexps = [/(^|[^\/{(])w/i,  # match w either at the start ^, or after anything other than / { (
+                                /(^|[^\/{(])u/i,
+                                /(^|[^\/{(])b/i,
+                                /(^|[^\/{(])r/i,
+                                /(^|[^\/{(])g/i]
+
+    colours_in_cost = colour_regexps.map do |re|
+      re.match(cost) ? true : false
+    end
+    num_colours = colours_in_cost.count{|x|x}
+
+    case num_colours
+      when 1:     # Monocolour is the simplest case
+        case cost
+          when /w/i: return "White"
+          when /u/i: return "Blue"
+          when /b/i: return "Black"
+          when /r/i: return "Red"
+          when /g/i: return "Green"
+        end
+      when 2:     # Two-colour: distinguish between gold and hybrid
+                  # We say a card for 1W(W/U)U is gold, but 1W(W/G) is hybrid
+        # Count the number of colours present outside hybrid symbols
+        colours_present = nonhybrid_colour_regexps.reduce(0) do |total, re|
+          re.match(cost) ? total+1 : total
+        end
+        if colours_present >= 2
+          return "Multicoloured"
+        else
+          colour_strings_present = (colour_regexps.zip(card_colours)).map do |re, colour|
+            re.match(cost) ? colour : nil
+          end
+          return "Hybrid " + colour_strings_present.compact.join("-")
+        end
+      when 3..5:  # Multicolour is easy
+        return "Multicoloured"
+      when 0:     # Colourless is either artifact, land, or neither, based on type
+        if /artifact/i.match(cardtype)
+          return "Artifact"
+        elsif !/land/i.match(cardtype)
+          return "Colourless"
+        else      # Land
+          # Could try to detect the text box here, but that's really fiddly to get right
+          # Consider Coastal Tower, Arcane Sanctum, Hallowed Fountain, Flooded Strand, and Vivid Creek
+          # So we just let them override it
+          return "Land (colourless)"
+        end
+    end
+  end
+
 end

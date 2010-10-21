@@ -3,7 +3,7 @@
 </h1>
 
 <h2>Import Data Into <%= @cardset.name %></h2>
-<% @title = "Import data" %>
+<% @title = "Import into #{@cardset.name}" %>
 <p>
 If you've designed your cards elsewhere, you can import them into Multiverse with this page.
 </p>
@@ -26,7 +26,7 @@ You should export your set data in a Character-Separated Values format, where fi
 <br>In this example, for each card, the colour will be deduced from the mana cost, the rarity will default to common, the flavour text will default to empty, and no initial comments will be created.
 </p>
 <p>You can specify what action should be taken if imported cards have the same <code>name</code> or <code>code</code> as existing cards in the cardset. "Replace with new" will overwrite the old card with the new data; "Preserve old" will abandon the imported card and leave the old card unchanged; "Duplicate" will create a new card in the database with the same name and/or code as the old card, which will be left unchanged.
-<br>If an existing card in your cardset before the import has the same (nonempty) <code>code</code> as an imported card, and the same <code>name</code> as a <i>different</i> imported card, the <code>code</code> rather than the <code>name</code> will be used to determine the "old card".
+<br>If a card being imported has the same (nonempty) <code>code</code> as an existing card in your cardset before the import, and the same <code>name</code> as a <i>different</i> existing card in your cardset, the <code>code</code> rather than the <code>name</code> will be used to determine the "old card".
 </p>
 <hr>
 <%= form_tag "/cardsets/#{@cardset.id}/import_data" do %>

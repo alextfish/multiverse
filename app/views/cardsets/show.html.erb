@@ -2,6 +2,39 @@
   <%= @title = @cardset.name %>
 </h1>
 
+<% @allmycards = @cardset.cards %>
+<% @myactivecards = @allmycards.map{ |card| card.active? } %>
+<% @owner = User.find_by_id(@cardset.user_id) %>
+<% sortedcomments = Comment.find(:all, :include => :card,
+     :conditions => ["cards.cardset_id = ?", @cardset.id],
+     :order => "comments.updated_at DESC")                 %>
+<% highlightedcomments = sortedcomments.select { |c| c.highlighted? } %>
+<% stats = @cardset.get_stats %>
+
+<div class="infobox">
+  <h1>
+    <%= @cardset.name %> by <%= link_to @owner.name, @owner %>
+  </h1>
+  <p>
+    <%= @allmycards.length %> cards in Multiverse
+    <!-- <% if ! @myactivecards.all? %>
+      (<%= @myactivecards.length %> active)
+    <% end %> -->
+  </p>
+  <p>
+    <% rarity_stats = stats[:by_rarity].map { |rarity, count| pluralize(count, rarity) } %>
+    <%= rarity_stats.join(", ") %>
+  </p>
+  <p>
+    <% colour_stats = stats[:by_colour].map { |colour, count| "#{count} #{colour}" } %>
+    <%= colour_stats.join(", ") %>
+  </p>
+  <p>
+    <%= sortedcomments.count %> comments total
+  </p>
+
+</div>
+
 <p>
   <%= @cardset.description %>
 </p>
@@ -9,37 +42,44 @@
 <% if signed_in_as_admin?(@cardset) %>
   <p><!-- style="display: inline-block; margin-left: 200px;"> -->
     Admin actions:
-    <%= link_to "Edit description", edit_cardset_path(@cardset) %>;
+    <%= link_to "Edit description", edit_cardset_path %>;
     <%= link_to "New card", new_card_path(:cardset_id => @cardset.id) %>;
-    <%= link_to "Import data", import_cardset_path(@cardset) %>;
+    <%= link_to "Import data", import_cardset_path %>;
     <%= link_to "Delete entire cardset", @cardset,
       :confirm => "Really delete this whole cardset and all cards in it?",
       :method => :delete %>
   </p>
 <% end %>
 
-<p>
+<!-- p>
   <b>Creator:</b>
-  <% @owner = User.find_by_id(@cardset.user_id) %>
   <%= link_to @owner.name, @owner %>
+</p -->
+
+<p>
 </p>
 
-<% @allmycards = @cardset.cards %>
-<% @myactivecards = @allmycards.map{ |card| card.active? } %>
-<p><%= @allmycards.length %> cards in Multiverse
-  <% if ! @myactivecards.all? %>
-    (<%= @myactivecards.length %> active)
-  <% end %>
-</p>
+<%= render 'setviews' unless @allmycards.empty? %>
 
-<%= render 'setviews' %>
 
-<!-- something to do with highlighted cards
+<% if !highlightedcomments.empty? %>
   <p>The set creator would like to draw your attention to these comments:
-  all highlighted comments.do
-    On <###%= link_to @comment.card %###>: <###%= @comment.comment %###>
+    <table>
+    <% highlightedcomments.each_slice(5) do |comments_slice| %>
+      <tr>
+      <% comments_slice.each do |comment| %>
+        <td>
+        <% @card = comment.card %>
+        On <%= link_to @card.name, @card %>:
+        <%= render :partial => 'shared/comment', :locals => { :comment => comment } %>
+        </td>
+      <% end %>
+      </tr>
+    <% end %>
+    </table>
+  </p>
+<% end %>
 
-  -->
 
 <% recentcards = Card.order("updated_at DESC").find_all_by_cardset_id(@cardset.id, :limit => 5) %>
 
@@ -61,7 +101,10 @@
     </table>
   <% else %>
     <% if signed_in_as_admin?(@cardset) %>
-      There are no cards in this cardset. Why not <%= link_to "add a card", cardset_new_card_path %> or <%= link_to "import some", cardset_import_path %>?
+      There are no cards in this cardset. Why not
+      <%= link_to "add a card", new_card_path(:cardset_id => @cardset.id) %>
+      or
+      <%= link_to "import some", import_cardset_path %>?
     <% else %>
       The cardset owner, <%= link_to @owner.name, @owner %>, has not added any cards to this cardset yet.
     <% end %>
@@ -69,14 +112,11 @@
 </p>
 
 <div>
-  <% recentcomments = Comment.find(:all, :include => :card,
-       :conditions => ["cards.cardset_id = ?", @cardset.id],
-       :order => "comments.updated_at DESC") %>
-  <% if recentcomments.empty? %>
+  <% if sortedcomments.empty? %>
     There are no comments on any cards in the cardset.
     <% if !recentcards.empty? %>
       <% if signed_in_as_admin?(@cardset) %>
-        Why not ask for some feedback on a few cards from visitors?
+        Why not ask for some feedback on a few cards from visitors, by posting some comments and highlighted them?
       <% else %>
         Why not browse the cards and add your thoughts?
       <% end %>
@@ -84,7 +124,7 @@
   <% else %>
     Recent comments:
     <ul class="commentlist">
-      <% recentcomments.take(3).each do |comment| %>
+      <% sortedcomments.take(3).each do |comment| %>
         <% if comment.nil? %>
           <% if Rails.env.development? %>
             NIL

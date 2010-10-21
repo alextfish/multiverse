@@ -23,11 +23,18 @@ module SessionsHelper
     @current_user ||= user_from_remember_token
   end
 
-  def authenticate
-    deny_access unless signed_in?
+  def require_login
+    request_login unless signed_in?
+  end
+  def require_login_as_admin(cardset)
+    if !signed_in?
+      request_login
+    elsif !signed_in_as_admin?(cardset)
+      redirect_to(cardset, :notice => "Only admins of #{cardset.name} are permitted to access that page")
+    end
   end
 
-  def deny_access
+  def request_login
     store_location
     redirect_to signin_path, :notice => "Please sign in to access this page."
   end

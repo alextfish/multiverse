@@ -1,4 +1,13 @@
 class CardsController < ApplicationController
+  before_filter :except => [:show] do
+    if params[:cardset_id].nil?
+      @card = Card.find(params[:id])
+      @cardset = Cardset.find(@card.cardset_id)
+    else
+      @cardset = Cardset.find(params[:cardset_id])
+    end
+    require_login_as_admin(@cardset)
+  end
   helper CardsHelper
 
   # GET /cards/1
@@ -28,12 +37,23 @@ class CardsController < ApplicationController
   # GET /cards/1/edit
   def edit
     @card = Card.find(params[:id])
+    @render_frame = @card.frame
+    if @card.calculated_frame == @card.frame
+      @card.frame = "Auto"
+    end
+  end
+
+  def process_card
+    if @card.frame == "Auto"
+      @card.frame = @card.calculated_frame
+    end
   end
 
   # POST /cards
   # POST /cards.xml
   def create
     @card = Card.new(params[:card])
+    process_card
 
     respond_to do |format|
       if @card.save
@@ -53,6 +73,8 @@ class CardsController < ApplicationController
 
     respond_to do |format|
       if @card.update_attributes(params[:card])
+        process_card
+        @card.save!
         format.html { redirect_to(@card, :notice => 'Card was successfully updated.') }
         format.xml  { head :ok }
       else

@@ -29,43 +29,43 @@
 .rare   { background-color: #e0d060; }
 .mythic { background-color: #993333; color: #ffffff; }
 
-.white { background-color: #fcf9f0; }
-.white .cardpt, .white .cardtitle, .white .cardtypeline { background-color: #fffff9; }
-.white .cardtext { background-color: #ffffff; }
+.White { background-color: #fcf9f0; }
+.White .cardpt, .White .cardtitle, .White .cardtypeline { background-color: #fffff9; }
+.White .cardtext { background-color: #ffffff; }
 
-.blue { background-color: #5bf; }
-.blue .cardpt, .blue .cardtitle, .blue .cardtypeline { background-color: #cef; }
-.blue .cardtext { background-color: #f0faff; }
+.Blue { background-color: #5bf; }
+.Blue .cardpt, .Blue .cardtitle, .Blue .cardtypeline { background-color: #cef; }
+.Blue .cardtext { background-color: #f0faff; }
 
-.black { background-color: #333; }
-.black .cardpt, .black .cardtitle, .black .cardtypeline { background-color: #ddd; }
-.black .cardtext { background-color: #eee; }
+.Black { background-color: #333; }
+.Black .cardpt, .Black .cardtitle, .Black .cardtypeline { background-color: #ddd; }
+.Black .cardtext { background-color: #eee; }
 
-.red { background-color: #f76; }
-.red .cardpt, .red .cardtitle, .red .cardtypeline { background-color: #ffe7dc; }
-.red .cardtext { background-color: #ffefe9; }
+.Red { background-color: #f76; }
+.Red .cardpt, .Red .cardtitle, .Red .cardtypeline { background-color: #ffe7dc; }
+.Red .cardtext { background-color: #ffefe9; }
 
-.green { background-color: #483; }
-.green .cardpt, .green .cardtitle, .green .cardtypeline { background-color: #dfd; }
-.green .cardtext { background-color: #efe; }
+.Green { background-color: #483; }
+.Green .cardpt, .Green .cardtitle, .Green .cardtypeline { background-color: #dfd; }
+.Green .cardtext { background-color: #efe; }
 
-.artifact { background-color: #d3e3e3; }
-.artifact .cardpt, .artifact .cardtitle, .artifact .cardtypeline { background-color: #eef3f3; }
-.artifact .cardtext { background-color: #f6fbfb; }
+.Artifact { background-color: #d3e3e3; }
+.Artifact .cardpt, .Artifact .cardtitle, .Artifact .cardtypeline { background-color: #eef3f3; }
+.Artifact .cardtext { background-color: #f6fbfb; }
 
-.multicolour { background-color: #dd5; }
-.multicolour .cardpt, .multicolour .cardtitle, .multicolour .cardtypeline { background-color: #eeee99; }
-.multicolour .cardtext { background-color: #eec; }
+.Multicolour { background-color: #dd5; }
+.Multicolour .cardpt, .Multicolour .cardtitle, .Multicolour .cardtypeline { background-color: #eeee99; }
+.Multicolour .cardtext { background-color: #eec; }
 
-.land { background-color: #cb9; }
-.land .cardpt, .land .cardtitle, .land .cardtypeline { background-color: #f0e8e2; }
-.land .cardtext { background-color: #eee6df; }
+.Land { background-color: #cb9; }
+.Land .cardpt, .Land .cardtitle, .Land .cardtypeline { background-color: #f0e8e2; }
+.Land .cardtext { background-color: #eee6df; }
 
-.redaligned .cardpt, .redaligned .cardtitle, .redaligned .cardtypeline { background-color: #ffd7cc; }
-.redaligned .cardtext { background-color: #f98; }
+.Red.Land .cardpt, .Red.Land .cardtitle, .Red.Land .cardtypeline { background-color: #ffd7cc; }
+.Red.Land .cardtext { background-color: #f98; }
 
-.greenaligned .cardpt, .greenaligned .cardtitle, .greenaligned .cardtypeline { background-color: #dfd; }
-.greenaligned .cardtext { background-color: #cfc; }
+.Green.Land .cardpt, .Green.Land .cardtitle, .Green.Land .cardtypeline { background-color: #dfd; }
+.Green.Land .cardtext { background-color: #cfc; }
 
 
 /***** Card editing *****/
