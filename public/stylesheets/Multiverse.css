@@ -21,6 +21,11 @@ a > img { border: 0px; }
 .cardcell { vertical-align: top;
             padding-top: 10px; }
 
+.setviews { border: 1px solid #aaa;
+             margin: 2px;
+           padding: 6px;
+           background-color: #eee; }
+
 /***** Comment display *****/
 
 .commentdetails { font-style: italic; margin: 0px; line-height: 2em; }

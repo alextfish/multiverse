@@ -1,6 +1,8 @@
 <h1>
-  <%= @title = @cardset.name %>
+  <%= @title = "#{@cardset.name}: Recent Activity" %>
 </h1>
+
+<%= render 'setviews' %>
 
 <% @allmycards = @cardset.cards %>
 <% @myactivecards = @allmycards.map{ |card| card.active? } %>
@@ -10,48 +12,6 @@
      :order => "comments.created_at DESC")                 %>
 <% highlightedcomments = sortedcomments.select { |c| c.highlighted? } %>
 <% stats = @cardset.get_stats %>
-
-<div class="infobox">
-  <h1>
-    <%= @cardset.name %> by <%= link_to @owner.name, @owner %>
-  </h1>
-  <p>
-    <%= @allmycards.length %> cards in Multiverse
-    <!-- <% if ! @myactivecards.all? %>
-      (<%= @myactivecards.length %> active)
-    <% end %> -->
-  </p>
-  <p>
-    <% rarity_stats = stats[:by_rarity].map { |rarity, count| pluralize(count, rarity) } %>
-    <%= rarity_stats.join(", ") %>
-  </p>
-  <p>
-    <% colour_stats = stats[:by_colour].map { |colour, count| "#{count} #{colour}" } %>
-    <%= colour_stats.join(", ") %>
-  </p>
-  <p>
-    <%= sortedcomments.count %> comments total
-  </p>
-
-</div>
-
-<p>
-  <%= @cardset.description %>
-</p>
-
-<%= render 'setviews' unless @allmycards.empty? %>
-
-<% if signed_in_as_admin?(@cardset) %>
-  <p><!-- style="display: inline-block; margin-left: 200px;"> -->
-    Admin actions:
-    <%= link_to "Edit description", edit_cardset_path %>;
-    <%= link_to "New card", new_card_path(:cardset_id => @cardset.id) %>;
-    <%= link_to "Import data", import_cardset_path %>;
-    <%= link_to "Delete entire cardset", @cardset,
-      :confirm => "Really delete this whole cardset and all cards in it?",
-      :method => :delete %>
-  </p>
-<% end %>
 
 <p>
 </p>
