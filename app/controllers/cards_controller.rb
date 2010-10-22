@@ -1,10 +1,14 @@
 class CardsController < ApplicationController
   before_filter :except => [:show] do
-    if params[:cardset_id].nil?
+    if !params[:cardset_id].nil?
+      @cardset = Cardset.find(params[:cardset_id])
+    elsif !params[:id].nil?
       @card = Card.find(params[:id])
       @cardset = Cardset.find(@card.cardset_id)
+    elsif !params[:card][:cardset_id].nil?
+      @cardset = Cardset.find(params[:card][:cardset_id])
     else
-      @cardset = Cardset.find(params[:cardset_id])
+      raise "Couldn't find cardset id"
     end
     require_login_as_admin(@cardset)
   end
@@ -38,6 +42,7 @@ class CardsController < ApplicationController
   def edit
     @card = Card.find(params[:id])
     @render_frame = @card.frame
+    Rails.logger.info "render_frame is #{@render_frame}, calculated frame is #{@card.calculated_frame}"
     if @card.calculated_frame == @card.frame
       @card.frame = "Auto"
     end

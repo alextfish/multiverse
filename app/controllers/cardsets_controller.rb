@@ -1,7 +1,11 @@
 class CardsetsController < ApplicationController
-  before_filter :require_login, :only => [:new, :create]
-  before_filter :only => [:edit, :update, :destroy] do
+  before_filter :except => [:index, :new, :create] do
     @cardset = Cardset.find(params[:id])
+  end
+  before_filter :only => [:new, :create] do
+    :require_login
+  end
+  before_filter :only => [:edit, :update, :destroy] do
     require_login_as_admin(@cardset)
   end
 
@@ -34,7 +38,7 @@ class CardsetsController < ApplicationController
 
     respond_to do |format|
       format.html # cardlist.html.erb
-      format.xml  { render :xml => @cardset }   # ??
+      format.xml  { render :xml => @cardset.cards }   # ??
     end
   end
 

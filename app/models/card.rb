@@ -68,7 +68,7 @@ class Card < ActiveRecord::Base
           re.match(cost) ? total+1 : total
         end
         if colours_present >= 2
-          return "Multicoloured"
+          return "Multicolour"
         else
           colour_strings_present = (colour_regexps.zip(card_colours)).map do |re, colour|
             re.match(cost) ? colour : nil
@@ -76,7 +76,7 @@ class Card < ActiveRecord::Base
           return "Hybrid " + colour_strings_present.compact.join("-")
         end
       when 3..5:  # Multicolour is easy
-        return "Multicoloured"
+        return "Multicolour"
       when 0:     # Colourless is either artifact, land, or neither, based on type
         if /artifact/i.match(cardtype)
           return "Artifact"

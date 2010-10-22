@@ -1,15 +1,17 @@
 <% @title = @card.name %>
 <table border="0"> <!-- grouping table -->
  <tr>
-  <td> <!-- card -->
+  <td class="cardcell"> <!-- card -->
    <%= render :partial => 'shared/prettycard', :locals => { :link => false } %>
   </td> <!-- end of card -->
 
   <td> <!-- controls, comments etc -->
    <p>
      <b>Set:</b>
-     <% @cardset = Cardset.find(@card.cardset_id).name %>
-     <%= link_to @cardset, cardset_path(@card.cardset_id) %>
+     <% @cardset = Cardset.find(@card.cardset_id) %>
+     <%= link_to @cardset.name, cardset_path(@card.cardset_id) %>
+     &ndash;
+     <%= render 'cardsets/setviewsinline' %>
    </p>
 
    <p>

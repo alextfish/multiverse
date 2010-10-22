@@ -1,7 +1,4 @@
 <p>
   Views:
-    <%= link_to "Full cardlist", cardlist_cardset_path(@cardset) %> |
-    <%= link_to "Visual spoiler", visualspoiler_cardset_path(@cardset) %> |
-    <%= link_to "Plain text spoiler", plaintext_cardset_path(@cardset) %> |
-    <%= link_to "XML", xml_cardset_path(@cardset) %>
+  <%= render 'setviewsinline' %>
 </p>
