@@ -106,9 +106,13 @@ class Cardset < ActiveRecord::Base
     cardsdata = CSV.parse(params[:data], params[:separator]);
     cards = []
     cardsdata.each_with_index do |carddata, index|
+      # Allow completely blank lines
+      if carddata.nil? || carddata == [nil]
+        next
+      end
       if carddata.length != fields.length
         # Give a nice error message, with 1-based indexing
-        return false, "Line #{index+1} of data had #{carddata.length} fields when expecting #{fields.length}"
+        return false, "Line #{index+1} of data - #{carddata.class} - had #{carddata.length} fields when expecting #{fields.length}"
       end
 
       carddatahash = Hash[fields.zip(carddata)]
@@ -139,8 +143,6 @@ class Cardset < ActiveRecord::Base
         carddatahash[field] && carddatahash[field].strip!
       end
 
-      debug += "Fields are now: #{carddatahash.inspect}\n"
-
 
       if got_comment
         comment = carddatahash.delete[:comment]
@@ -158,6 +160,7 @@ class Cardset < ActiveRecord::Base
     # We've not returned so far, so the whole data must be good
     cards.each do |cardandcomment|
       card = cardandcomment[0]
+      card.frame = card.calculated_frame
       commenttext = cardandcomment[1]
       card.save!
       if !commenttext.nil?

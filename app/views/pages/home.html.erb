@@ -20,17 +20,3 @@
     To create your own cardset, you must first <%= link_to "sign in", signin_path %> or <%= link_to "sign up", signup_path %>.
   <% end %>
 </p>
-<p>
-  <% numcards = Card.count; numtoshow = [numcards, 3].min %>
-  There are <%= numcards %> cards in Multiverse right now<% if numcards > 0 %>, including:
-    <table>
-     <tr>
-       <% Card.all.permutation(numtoshow).to_a.choice.each do |@card| %>
-         <td><%= link_to @card.name, @card %> from <%= link_to @card.cardset.name, @card.cardset %>
-         <%= render :partial => 'shared/prettycard', :locals => { :link => false } %>
-         <%= link_to "Comments (#{@card.comments.count})", @card %>
-       <% end %>
-    </tr>
-   </table>
-  <% end %>
-</p>

@@ -3,8 +3,8 @@
   <nav class="round">
     <ul>
       <li class="first"><%= link_to "Home", root_path %></li>
-      <!-- li><!--%= link_to "Contact", contact_path % --></li -->
-      <!-- li><!-- %= link_to "Help", help_path % --></li -->
+      <!-- li class="subsequent"><!--%= link_to "Contact", contact_path % --></li -->
+      <li class="subsequent"><%= link_to "About", about_path %></li>
       <% if signed_in? %>
       <li class="subsequent">Signed in as <%= link_to current_user.name, current_user %></li>
       <li class="subsequent"><%= link_to "Sign out", signout_path, :method => :delete %></li>

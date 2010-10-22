@@ -9,6 +9,7 @@
 <table class="sortable resizable">
   <tr>
     <th class="sortfirstasc">Name</th>
+    <th>Colour</th>
     <th id="rarity">Rarity</th>
     <th>Cost</th>
     <th>Type</th>
@@ -25,6 +26,7 @@
   <% all_cards.each do |card| %>
     <tr>
       <td><%= link_to card.name, card %></td>
+      <td><%= card.frame %></td>
       <td><%= card.rarity.capitalize %></td>
       <td><%= card.cost %></td>
       <td>

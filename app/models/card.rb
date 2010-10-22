@@ -52,6 +52,11 @@ class Card < ActiveRecord::Base
     end
     num_colours = colours_in_cost.count{|x|x}
 
+
+    def card_colours
+      ["White", "Blue", "Black", "Red", "Green"]
+    end
+
     case num_colours
       when 1:     # Monocolour is the simplest case
         case cost
