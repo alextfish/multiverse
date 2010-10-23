@@ -65,7 +65,11 @@
     </tr -->
     <tr>
      <td><%= f.label :frame %></td>
-     <td><%= f.select :frame, card_frames.unshift("Auto") %></td>
+     <% frames_keys = card_frames %>
+     <% frames_values = frames_keys.map { |frame| frame.gsub(/[()-]/, '') } %>
+     <% frames = frames_keys.zip(frames_values) %>
+     <% Rails.logger.info frames.inspect %>
+     <td><%= f.select :frame, frames.unshift(["Auto", "Auto"]) %></td>
     </tr>
     <tr>
      <td><%= f.label :active %></td>

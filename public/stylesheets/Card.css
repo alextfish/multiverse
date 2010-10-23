@@ -61,11 +61,11 @@
 .Land .cardpt, .Land .cardtitle, .Land .cardtypeline { background-color: #f0e8e2; }
 .Land .cardtext { background-color: #eee6df; }
 
-.Red.Land .cardpt, .Red.Land .cardtitle, .Red.Land .cardtypeline { background-color: #ffd7cc; }
-.Red.Land .cardtext { background-color: #f98; }
+.Land.red .cardpt, .Land.red .cardtitle, .Land.red .cardtypeline { background-color: #ffd7cc; }
+.Land.red .cardtext { background-color: #f98; }
 
-.Green.Land .cardpt, .Green.Land .cardtitle, .Green.Land .cardtypeline { background-color: #dfd; }
-.Green.Land .cardtext { background-color: #cfc; }
+.Land.green .cardpt, .Land.green .cardtitle, .Land.green .cardtypeline { background-color: #dfd; }
+.Land.green .cardtext { background-color: #cfc; }
 
 
 /***** Card editing *****/

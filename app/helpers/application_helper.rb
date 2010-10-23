@@ -23,25 +23,12 @@ module ApplicationHelper
   end
 
   def card_frames
-    # Returns a hash: {"white" => "White", "hybrid whiteblue" => "Hybrid white-blue", "land red" => "Land (red)", ...}
-    self_named_frames_array = card_colours + ["Artifact", "Multicolour", "Colourless"]
-    self_named_frames = self_named_frames_array.map { |f| f.downcase }.zip(self_named_frames_array)
-
-    hybrid_frames = colour_pairs.map { |pair| ["hybrid #{pair.join.downcase}", "Hybrid #{pair.join("-").downcase}"] }
-
-    land_frames =
-      [ ["land colourless", "Land (colourless)"] ] +
-      card_colours.map { |col| ["land #{col.downcase}", "Land (#{col.downcase})"] } +
-      colour_pairs.map { |pair| ["land #{pair.join.downcase}", "Land (#{pair.join('-').downcase})"] } +
-      [ ["land multicolour", "Land (multicolour)"] ]
-
-    all_frames_hash = SequencedHash[self_named_frames + hybrid_frames + land_frames]
+    card_colours + ["Artifact", "Multicolour", "Colourless"] +
+    colour_pairs.map { |pair| "Hybrid #{pair.join("-").downcase}" } +
+    ["Land (colourless)"] + card_colours.map { |col| "Land (#{col.downcase})" } +
+    colour_pairs.map { |pair| "Land (#{pair.join('-').downcase})" } +
+    ["Land (multicolour)"]
   end
-  def card_frame_dropdowns
-    f = card_frames
-    f.invert.to_a.unshift(["Auto", "Auto"])
-  end
-
   def colour_pairs
     card_colours.combination(2).to_a
   end
