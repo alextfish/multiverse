@@ -961,3 +961,10 @@ TableKit.Sortable.addSortType(new TableKit.Sortable.Type('rarity', {
     }
   }
 ));
+TableKit.Sortable.addSortType(new TableKit.Sortable.Type('manacost', {
+    pattern : /^[0-9A-Z(){}/]*$/i,
+    normal : function(v) {
+      return v;
+    }
+  }
+));

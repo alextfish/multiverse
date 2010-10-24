@@ -3,7 +3,7 @@ class CardsetsController < ApplicationController
     @cardset = Cardset.find(params[:id])
   end
   before_filter :only => [:new, :create] do
-    :require_login
+    require_login
   end
   before_filter :only => [:edit, :update, :destroy] do
     require_login_as_admin(@cardset)

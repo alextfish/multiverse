@@ -9,10 +9,11 @@
 <div>
 <table class="sortable resizable">
   <tr>
-    <th class="sortfirstasc">Name</th>
+    <th class="sortfirstasc">#</th>
+    <th>Name</th>
     <th>Colour</th>
     <th id="rarity">Rarity</th>
-    <th>Cost</th>
+    <th class="string">Cost</th>
     <th>Type</th>
     <th>P</th>
     <th>T</th>
@@ -24,10 +25,11 @@
   </tr>
 <% all_cards = Card.find_all_by_cardset_id(@cardset.id, :include => :comments) %>
 <% if all_cards && !all_cards.empty? %>
-  <% all_cards.each do |card| %>
+  <% all_cards.sort.each_with_index do |card, index| %>
     <tr>
+      <td><%= index %></td>
       <td><%= link_to card.name, card %></td>
-      <td><%= card.frame %></td>
+      <td><%= card.category %></td>
       <td><%= card.rarity.capitalize %></td>
       <td><%= card.cost %></td>
       <td>
@@ -49,7 +51,7 @@
       </td>
       <% if signed_in_as_admin?(@cardset) %>
         <td><%= link_to 'Edit', edit_card_path(card) %></td>
-        <td><%= link_to 'Delete', card, :confirm => "Really DELETE #{card.name}?", :method => :delete %></td>
+        <td><%= link_to 'Delete', card, :confirm => "Really DELETE #{card.name}?", :method => :delete, :remote => true %></td>
       <% end %>
     </tr>
   <% end %>

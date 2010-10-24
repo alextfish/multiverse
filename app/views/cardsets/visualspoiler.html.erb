@@ -8,7 +8,7 @@
 <p>Showing all <%= @cardset.cards.count %> cards
 </p>
 <table>
-  <% @cardset.cards.each_slice(5) do |cards| %>
+  <% @cardset.cards.sort.each_slice(5) do |cards| %>
     <tr>
       <% cards.each do |@card| %>
         <td>

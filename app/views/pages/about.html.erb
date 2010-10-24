@@ -12,11 +12,7 @@
 
 <h3>As a set designer</h3>
 If you
-<<<<<<< HEAD:app/views/pages/about.html
-  <%= link_to_if !signed_in, "create a user account", signup_path %>[create a user account] and <%= link_to_if !signed_in, "sign in", signin_path %>[sign in], you can add your own custom cardsets to Multiverse. After <%= link_to "creating a cardset", new_cardset_path %>[creating a cardset], you can:
-=======
   <%= link_to_if !signed_in?, "create a user account", signup_path %> and <%= link_to_if !signed_in?, "sign in", signin_path %>, you can add your own custom cardsets to Multiverse. After <%= link_to "creating a cardset", new_cardset_path %>, you can:
->>>>>>> 423dcea6ee0ad333d0b31e57228016e09ce9e9c1:app/views/pages/about.html.erb
 <ul>
 <li><b>Import data</b> from CSV format
 <li><b>Add and edit cards</b> with a semi-WYSIWYG editor

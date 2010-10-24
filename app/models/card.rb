@@ -39,23 +39,70 @@ class Card < ActiveRecord::Base
     format(flavourtext)
   end
 
-  def calculated_frame
-    colour_regexps = [/w/i, /u/i, /b/i, /r/i, /g/i]
-    nonhybrid_colour_regexps = [/(^|[^\/{(])w/i,  # match w either at the start ^, or after anything other than / { (
-                                /(^|[^\/{(])u/i,
-                                /(^|[^\/{(])b/i,
-                                /(^|[^\/{(])r/i,
-                                /(^|[^\/{(])g/i]
 
-    colours_in_cost = colour_regexps.map do |re|
+  @@card_colours = ["White", "Blue", "Black", "Red", "Green"]
+  @@colour_regexps = [/w/i, /u/i, /b/i, /r/i, /g/i]
+  @@nonhybrid_colour_regexps = [
+      /(^|[^\/{(])w/i,  # match w either at the start ^, or after anything other than / { (
+      /(^|[^\/{(])u/i,
+      /(^|[^\/{(])b/i,
+      /(^|[^\/{(])r/i,
+      /(^|[^\/{(])g/i]
+
+  def colours_in_cost
+    out = @@colour_regexps.map do |re|
       re.match(cost) ? true : false
     end
-    num_colours = colours_in_cost.count{|x|x}
+  end
+  def num_colours
+    colours_in_cost.count{|x|x}
+  end
+  def colour_strings_present
+    out = (@@colour_regexps.zip(@@card_colours)).map do |re, colour|
+      re.match(cost) ? colour : nil
+    end.compact
+  end
 
-
-    def card_colours
-      ["White", "Blue", "Black", "Red", "Green"]
+  def category
+    f = calculated_frame
+    case f
+      when /^(White|Blue|Black|Red|Green|Multicolour|Artifact|Colourless)$/:
+        return f
+      when /^Hybrid/
+        return "Hybrid"
+      when /^Land/
+        return "Land"
     end
+  end
+
+  def <=>(c2)
+    if category != c2.category
+      # Sort by category
+      category_order = ["Colourless", "White", "Blue", "Black", "Red", "Green", "Multicolour", "Hybrid", "Artifact", "Land"]
+      return category_order.find_index(category) <=> category_order.find_index(c2.category)
+    else
+      if ["Multicolour", "Hybrid"].include?(category)
+        # Within a category, sort by colour-pair (hybrid / gold), then name
+        if num_colours == c2.num_colours
+          pair1 = colour_strings_present.join
+          pair2 = c2.colour_strings_present.join
+          pair_order = ["WhiteBlue", "BlueBlack", "BlackRed", "RedGreen", "WhiteGreen",
+            "WhiteBlack", "BlackGreen", "BlueGreen", "BlueRed", "WhiteRed"
+            ]
+          return pair_order.find_index(pair1) <=> pair_order.find_index(pair2)
+        else
+          # Higher number of colours goes later
+          return num_colours <=> c2.num_colours
+        end
+      else
+        # Within a category other than multicolour, just sort by name
+        return name <=> c2.name
+      end
+    end
+  end
+
+
+  def calculated_frame
 
     case num_colours
       when 1:     # Monocolour is the simplest case
@@ -69,16 +116,13 @@ class Card < ActiveRecord::Base
       when 2:     # Two-colour: distinguish between gold and hybrid
                   # We say a card for 1W(W/U)U is gold, but 1W(W/G) is hybrid
         # Count the number of colours present outside hybrid symbols
-        colours_present = nonhybrid_colour_regexps.reduce(0) do |total, re|
+        colours_present = @@nonhybrid_colour_regexps.reduce(0) do |total, re|
           re.match(cost) ? total+1 : total
         end
         if colours_present >= 2
           return "Multicolour"
         else
-          colour_strings_present = (colour_regexps.zip(card_colours)).map do |re, colour|
-            re.match(cost) ? colour : nil
-          end
-          return "Hybrid " + colour_strings_present.compact.join("-")
+          return "Hybrid " + colour_strings_present.join("").downcase
         end
       when 3..5:  # Multicolour is easy
         return "Multicolour"

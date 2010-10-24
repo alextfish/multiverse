@@ -62,16 +62,16 @@
 .Land .cardpt, .Land .cardtitle, .Land .cardtypeline { background-color: #f0e8e2; }
 .Land .cardtext { background-color: #eee6df; }
 
-.Land.white .cardpt, .Land.white .cardtitle, .Land.white .cardtypeline { background-color: #fffff9; }
-.Land.white .cardtext { background-color: #fff; }
+.Land.white .cardpt, .Land.white .cardtitle, .Land.white .cardtypeline { background-color: #fffff6; }
+.Land.white .cardtext { background-color: #ffc; }
 
-.Land.blue .cardpt, .Land.blue .cardtitle, .Land.blue .cardtypeline { background-color: #cef; }
-.Land.blue .cardtext { background-color: #f0faff; }
+.Land.blue .cardpt, .Land.blue .cardtitle, .Land.blue .cardtypeline { background-color: #afcfff; }
+.Land.blue .cardtext { background-color: #99c5ff; }
 
-.Land.black .cardpt, .Land.black .cardtitle, .Land.black .cardtypeline { background-color: #ddd; }
-.Land.black .cardtext { background-color: #eee; }
+.Land.black .cardpt, .Land.black .cardtitle, .Land.black .cardtypeline { background-color: #cfc9c3; }
+.Land.black .cardtext { background-color: #bbb; }
 
-.Land.red .cardpt, .Land.red .cardtitle, .Land.red .cardtypeline { background-color: #ffd7cc; }
+.Land.red .cardpt, .Land.red .cardtitle, .Land.red .cardtypeline { background-color: #ffd0c0; }
 .Land.red .cardtext { background-color: #f98; }
 
 .Land.green .cardpt, .Land.green .cardtitle, .Land.green .cardtypeline { background-color: #dfd; }
@@ -79,12 +79,12 @@
 
 
 .Land.whiteblue .cardtext {
-  filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#ffdfdd', endColorstr='#99ccff', GradientType=1);
+  filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#ffffdd', endColorstr='#99ccff', GradientType=1);
   background: -webkit-gradient(linear, left top, right top, from(#ffd), to(#9cf));
   background: -moz-linear-gradient(left,  #ffd,  #9cf);
 }
 .Land.whiteblack .cardtext {
-  filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#ffdfdd', endColorstr='#bbbbbb', GradientType=1);
+  filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#ffffdd', endColorstr='#bbbbbb', GradientType=1);
   background: -webkit-gradient(linear, left top, right top, from(#ffd), to(#bbb));
   background: -moz-linear-gradient(left,  #ffd,  #bbb);
 }
@@ -114,7 +114,7 @@
   background: -moz-linear-gradient(left,  #ff9988,  #cfc);
 }
 .Land.whitered .cardtext { /* actually red>white */
-  filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#ff9988', endColorstr='#ffdfdd', GradientType=1);
+  filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#ff9988', endColorstr='#ffffdd', GradientType=1);
   background: -webkit-gradient(linear, left top, right top, from(#ff9988), to(#ffd));
   background: -moz-linear-gradient(left,  #ff9988,  #ffd);
 }
@@ -124,7 +124,7 @@
   background: -moz-linear-gradient(left,  #cfc,  #9cf);
 }
 .Land.whitegreen .cardtext { /* actually green->white */
-  filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#ccffcc', endColorstr='#ffdfdd', GradientType=1);
+  filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#ccffcc', endColorstr='#ffffdd', GradientType=1);
   background: -webkit-gradient(linear, left top, right top, from(#cfc), to(#ffd));
   background: -moz-linear-gradient(left,  #cfc,  #ffd);
 }
@@ -146,14 +146,14 @@
   background: -moz-linear-gradient(left,  #cef,  #bbb);
 }
 .Hybrid.bluered .cardtext {
-  filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#cceeff', endColorstr='#ffd7cc', GradientType=1);
-  background: -webkit-gradient(linear, left top, right top, from(#cef), to(#ffd7cc));
-  background: -moz-linear-gradient(left,  #cef,  #ffd7cc);
+  filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#cceeff', endColorstr='#ffd0c0', GradientType=1);
+  background: -webkit-gradient(linear, left top, right top, from(#cef), to(#ffd0c0));
+  background: -moz-linear-gradient(left,  #cef,  #ffd0c0);
 }
 .Hybrid.blackred .cardtext {
-  filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#bbbbbb', endColorstr='#ffd7cc', GradientType=1);
-  background: -webkit-gradient(linear, left top, right top, from(#bbb), to(#ffd7cc));
-  background: -moz-linear-gradient(left,  #bbb,  #ffd7cc);
+  filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#bbbbbb', endColorstr='#ffd0c0', GradientType=1);
+  background: -webkit-gradient(linear, left top, right top, from(#bbb), to(#ffd0c0));
+  background: -moz-linear-gradient(left,  #bbb,  #ffd0c0);
 }
 .Hybrid.blackgreen .cardtext {
   filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#bbbbbb', endColorstr='#ccffcc', GradientType=1);
@@ -161,14 +161,14 @@
   background: -moz-linear-gradient(left,  #bbb,  #cfc);
 }
 .Hybrid.redgreen .cardtext {
-  filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#ffd7cc', endColorstr='#ccffcc', GradientType=1);
-  background: -webkit-gradient(linear, left top, right top, from(#ffd7cc), to(#cfc));
-  background: -moz-linear-gradient(left,  #ffd7cc,  #cfc);
+  filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#ffd0c0', endColorstr='#ccffcc', GradientType=1);
+  background: -webkit-gradient(linear, left top, right top, from(#ffd0c0), to(#cfc));
+  background: -moz-linear-gradient(left,  #ffd0c0,  #cfc);
 }
 .Hybrid.whitered .cardtext { /* actually red>white */
-  filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#ffd7cc', endColorstr='#ffffff', GradientType=1);
-  background: -webkit-gradient(linear, left top, right top, from(#ffd7cc), to(#fff));
-  background: -moz-linear-gradient(left,  #ffd7cc,  #fff);
+  filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#ffd0c0', endColorstr='#ffffff', GradientType=1);
+  background: -webkit-gradient(linear, left top, right top, from(#ffd0c0), to(#fff));
+  background: -moz-linear-gradient(left,  #ffd0c0,  #fff);
 }
 .Hybrid.bluegreen .cardtext {  /* actually green->blue */
   filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#ccffcc', endColorstr='#cceeff', GradientType=1);
