@@ -94,14 +94,14 @@
   background: -moz-linear-gradient(left,  #9cf,  #bbb);
 }
 .Land.bluered .cardtext {
-  filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#99ccff', endColorstr='#ffd7cc', GradientType=1);
-  background: -webkit-gradient(linear, left top, right top, from(#9cf), to(#ffd7cc));
-  background: -moz-linear-gradient(left,  #9cf,  #ffd7cc);
+  filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#99ccff', endColorstr='#ff9988', GradientType=1);
+  background: -webkit-gradient(linear, left top, right top, from(#9cf), to(#ff9988));
+  background: -moz-linear-gradient(left,  #9cf,  #ff9988);
 }
 .Land.blackred .cardtext {
-  filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#bbbbbb', endColorstr='#ffd7cc', GradientType=1);
-  background: -webkit-gradient(linear, left top, right top, from(#bbb), to(#ffd7cc));
-  background: -moz-linear-gradient(left,  #bbb,  #ffd7cc);
+  filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#bbbbbb', endColorstr='#ff9988', GradientType=1);
+  background: -webkit-gradient(linear, left top, right top, from(#bbb), to(#ff9988));
+  background: -moz-linear-gradient(left,  #bbb,  #ff9988);
 }
 .Land.blackgreen .cardtext {
   filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#bbbbbb', endColorstr='#ccffcc', GradientType=1);
@@ -109,14 +109,14 @@
   background: -moz-linear-gradient(left,  #bbb,  #cfc);
 }
 .Land.redgreen .cardtext {
-  filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#ffd7cc', endColorstr='#ccffcc', GradientType=1);
-  background: -webkit-gradient(linear, left top, right top, from(#ffd7cc), to(#cfc));
-  background: -moz-linear-gradient(left,  #ffd7cc,  #cfc);
+  filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#ff9988', endColorstr='#ccffcc', GradientType=1);
+  background: -webkit-gradient(linear, left top, right top, from(#ff9988), to(#cfc));
+  background: -moz-linear-gradient(left,  #ff9988,  #cfc);
 }
 .Land.whitered .cardtext { /* actually red>white */
-  filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#ffd7cc', endColorstr='#ffdfdd', GradientType=1);
-  background: -webkit-gradient(linear, left top, right top, from(#ffd7cc), to(#ffd));
-  background: -moz-linear-gradient(left,  #ffd7cc,  #ffd);
+  filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#ff9988', endColorstr='#ffdfdd', GradientType=1);
+  background: -webkit-gradient(linear, left top, right top, from(#ff9988), to(#ffd));
+  background: -moz-linear-gradient(left,  #ff9988,  #ffd);
 }
 .Land.bluegreen .cardtext {  /* actually green->blue */
   filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#ccffcc', endColorstr='#99ccff', GradientType=1);
