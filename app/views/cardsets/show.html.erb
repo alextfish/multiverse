@@ -41,16 +41,11 @@
 
 <%= render 'setviews' unless @allmycards.empty? %>
 
+
 <% if signed_in_as_admin?(@cardset) %>
-  <p><!-- style="display: inline-block; margin-left: 200px;"> -->
-    Admin actions:
-    <%= link_to "Edit description", edit_cardset_path %>;
-    <%= link_to "New card", new_card_path(:cardset_id => @cardset.id) %>;
-    <%= link_to "Import data", import_cardset_path %>;
     <%= link_to "Delete entire cardset", @cardset,
       :confirm => "Really delete this whole cardset and all cards in it?",
       :method => :delete %>
-  </p>
 <% end %>
 
 <p>

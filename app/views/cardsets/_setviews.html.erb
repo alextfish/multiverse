@@ -1,3 +1,11 @@
 <table class="setviews"><tr><td>
   <%= render 'cardsets/setviewsinline' %>
-</td></tr></table>
+</td></tr>
+<% if signed_in_as_admin?(@cardset) %>
+<tr><td>Admin actions:
+    <%= link_to "Edit description", edit_cardset_path %>;
+    <%= link_to "New card", new_card_path(:cardset_id => @cardset.id) %>;
+    <%= link_to "Import data", import_cardset_path %>
+</td></tr>
+<% end %>
+</table>
