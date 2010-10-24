@@ -86,13 +86,23 @@ class Card < ActiveRecord::Base
         if num_colours == c2.num_colours
           pair1 = colour_strings_present.join
           pair2 = c2.colour_strings_present.join
-          pair_order = ["WhiteBlue", "BlueBlack", "BlackRed", "RedGreen", "WhiteGreen",
-            "WhiteBlack", "BlackGreen", "BlueGreen", "BlueRed", "WhiteRed"
-            ]
-          return pair_order.find_index(pair1) <=> pair_order.find_index(pair2)
+          if pair1 != pair2
+            pair_order = ["WhiteBlue", "BlueBlack", "BlackRed", "RedGreen", "WhiteGreen",
+              "WhiteBlack", "BlackGreen", "BlueGreen", "BlueRed", "WhiteRed"
+              ]
+            return pair_order.find_index(pair1) <=> pair_order.find_index(pair2)
+          else
+            # Just sort by name
+            return name <=> c2.name
+          end
         else
           # Higher number of colours goes later
-          return num_colours <=> c2.num_colours
+          if num_colours != c2.num_colours
+            return num_colours <=> c2.num_colours
+          else
+            # Just sort by name
+            return name <=> c2.name
+          end
         end
       else
         # Within a category other than multicolour, just sort by name
