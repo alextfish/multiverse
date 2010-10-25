@@ -66,12 +66,12 @@ class Card < ActiveRecord::Base
   def category
     f = calculated_frame
     case f
+      when /^Land/
+        return "Land"
       when /^(White|Blue|Black|Red|Green|Multicolour|Artifact|Colourless)$/:
         return f
       when /^Hybrid/
         return "Hybrid"
-      when /^Land/
-        return "Land"
     end
   end
 
@@ -137,15 +137,15 @@ class Card < ActiveRecord::Base
       when 3..5:  # Multicolour is easy
         return "Multicolour"
       when 0:     # Colourless is either artifact, land, or neither, based on type
-        if /artifact/i.match(cardtype)
-          return "Artifact"
-        elsif !/land/i.match(cardtype)
-          return "Colourless"
-        else      # Land
+        if /land/i.match(cardtype) # Land
           # Could try to detect the text box here, but that's really fiddly to get right
           # Consider Coastal Tower, Arcane Sanctum, Hallowed Fountain, Flooded Strand, and Vivid Creek
           # So we just let them override it
           return "Land (colourless)"
+        elsif /artifact/i.match(cardtype)
+          return "Artifact"
+        else
+          return "Colourless"
         end
     end
   end
