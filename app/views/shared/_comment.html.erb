@@ -6,7 +6,7 @@
 
 <div class="comment <%= commentclass %>">
   <div class="commentdetails">
-    <%= comment.user %> at <%= comment.created_at.to_s %>:
+    <%= comment.user %> at <%= format_datetime comment.created_at %>:
      <% if signed_in_as_admin?(@card.cardset) %>
       <%= link_to delete_image, comment,
         :confirm => "Really delete this comment?",

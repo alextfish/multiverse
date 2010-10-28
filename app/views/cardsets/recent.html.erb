@@ -18,14 +18,15 @@
 
     <ul class="commentlist compact">
       <% comments_and_cards.take(200).each do |object| %>
-        <li>
-            <%= object.recency %>
+        <li class="recent_item">
+            <%= format_datetime object.recency %>
             <% if object.kind_of?(Card) %>
               <%= link_to object.name, object %> was updated
             <% else %>
               <% @card = object.card %>
-              Comment on <%= link_to @card.name, @card %>:
-              <%= render :partial => 'shared/comment', :locals => { :comment => object } %>
+              <%= object.user %> commented on <%= link_to @card.name, @card %>:
+              <%= simple_format h(object.comment), :class => "commentbody" %>
+              <!-- %= render :partial => 'shared/comment', :locals => { :comment => object } % -->
             <% end %>
       <% end %>
     </ul>
