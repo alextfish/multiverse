@@ -112,7 +112,7 @@
     <ul class="commentlist">
       <% num_comments_to_show = 10
          first_index = [0, sortedcomments.length - num_comments_to_show].max
-         comments_to_show = sortedcomments[first_index..-1] %>
+         comments_to_show = sortedcomments[first_index..-1].reverse %>
       <% comments_to_show.each do |comment| %>
         <% if comment.nil? %>
           <% if Rails.env.development? %>
