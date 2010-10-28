@@ -6,8 +6,7 @@
 <% @myactivecards = @allmycards.map{ |card| card.active? } %>
 <% @owner = User.find_by_id(@cardset.user_id) %>
 <% sortedcomments = Comment.find(:all, :include => :card,
-     :conditions => ["cards.cardset_id = ?", @cardset.id],
-     :order => "comments.created_at DESC")                 %>
+     :conditions => ["cards.cardset_id = ?", @cardset.id])  %>
 <% highlightedcomments = sortedcomments.select { |c| c.highlighted? } %>
 <% stats = @cardset.get_stats %>
 
@@ -81,10 +80,7 @@
       <% recentcards.each do |@card| %>
        <td>
         <%= render :partial => 'shared/prettycard', :locals => { :link => true } %>
-        <%= link_to "Comments (#{@card.comments.count})", @card %>
-        <% if signed_in_as_admin?(@cardset) %>
-         | <%= link_to "Edit", edit_card_path(@card) %>
-        <% end %>
+        <%= render :partial => 'shared/cardcommentcount' %>
        </td>
       <% end %>
      </tr>

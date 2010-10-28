@@ -40,13 +40,13 @@
         <% end %> </td>
       <td><%= card.power %></td>
       <td><%= card.toughness %></td>
-      <td><%= card.comments.count %></td>
+      <% card_comments_sorted = Comment.find(:all,
+           :conditions => ["card_id = ?", card.id],
+           :order => "comments.updated_at DESC") %>
+      <td><%= card_comments_sorted.count %></td>
       <td>
-        <% if !card.comments.empty? %>
-          <% sortedcomments = Comment.find(:all,
-               :conditions => ["card_id = ?", card.id],
-               :order => "comments.updated_at DESC") %>
-          <%= sortedcomments[0].created_at %> by <%= sortedcomments[0].user %>
+        <% if !card_comments_sorted.empty? %>
+          <%= card_comments_sorted[0].created_at %> by <%= card_comments_sorted[0].user %>
         <% end %>
       </td>
       <% if signed_in_as_admin?(@cardset) %>

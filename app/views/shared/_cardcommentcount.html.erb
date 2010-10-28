@@ -1,0 +1,6 @@
+  <%= link_to "Comments (#{@card.comments.count})", @card
+  # Could alternatively be pluralize(@card.comments.count, "comment")
+  %>
+  <% if signed_in_as_admin?(@cardset) %>
+   | <%= link_to "Edit", edit_card_path(@card) %>
+  <% end %>

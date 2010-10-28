@@ -17,6 +17,8 @@ class Comment < ActiveRecord::Base
   belongs_to :card
   #belongs_to :user
 
+  default_scope order("comments.created_at")
+
 #   validates_presence_of :name
 #   validates_length_of :name, :within => 2..20
   validates_presence_of :comment

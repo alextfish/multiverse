@@ -16,18 +16,13 @@
      <b>Comments:</b>
      <div class="cardhistory">
      <ul>
-     <%= render :partial => 'shared/comment', :collection => @card.comments %>
+     <%= render :partial => 'shared/comment', :collection => @card.comments # .sort_by(&:created_at) %>
      </ul>
      </div>
      <b>Add your comments:</b>
      <%= render 'shared/comment_form' %>
    </p>
 
-
-   <p>
-     <b>Active:</b>
-     <%= @card.active %>
-   </p>
 
    <% if signed_in_as_admin?(@card.cardset) %>
      <%= link_to 'Edit card', edit_card_path(@card) %>

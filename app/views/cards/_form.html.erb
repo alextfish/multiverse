@@ -72,10 +72,6 @@
      <td><%= f.select :frame, frames.unshift(["Auto", "Auto"]) %></td>
     </tr>
     <tr>
-     <td><%= f.label :active %></td>
-     <td><%= f.check_box :active %></td>
-    </tr>
-    <tr>
      <td colspan="2">
       <%= f.hidden_field :cardset_id, :value => @card.cardset_id %>
       <%= f.submit %>

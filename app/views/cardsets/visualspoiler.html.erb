@@ -12,12 +12,14 @@
     <tr>
       <% cards.each do |@card| %>
         <td>
-          <!-- %= link_to @card.name, @card % -->
           <%= render :partial => 'shared/prettycard', :locals => {:link => true} %>
+          <%= render :partial => 'shared/cardcommentcount' %>
         </td>
       <% end %>
     </tr>
   <% end %>
 </table>
 
-<%= render 'setviews' %>
+<p><br>
+  <%= render 'setviews' %>
+</p>
