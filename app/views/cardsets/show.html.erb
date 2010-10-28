@@ -74,7 +74,7 @@
 
 <p>
   <% if !recentcards.empty? %>
-    Recently updated cards:
+    Recently updated cards: (<%= link_to "all recent activity", recent_cardset_path %>)
     <table>
      <tr>
       <% recentcards.each do |@card| %>
@@ -108,7 +108,7 @@
       <% end %>
     <% end %>
   <% else %>
-    Recent comments:
+    Recent comments: (<%= link_to "all recent activity", recent_cardset_path %>)
     <ul class="commentlist">
       <% num_comments_to_show = 10
          first_index = [0, sortedcomments.length - num_comments_to_show].max
