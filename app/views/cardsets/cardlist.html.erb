@@ -27,7 +27,7 @@
 <% if all_cards && !all_cards.empty? %>
   <% all_cards.sort.each_with_index do |card, index| %>
     <tr>
-      <td><%= index %></td>
+      <td><%= index+1 %></td>
       <td><%= link_to card.name, card %></td>
       <td><%= card.category %></td>
       <td><%= card.rarity.capitalize %></td>

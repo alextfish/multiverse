@@ -32,7 +32,7 @@ Multiverse::Application.routes.draw do
   resources :cardsets do
     member do
       get 'cardlist' # in addition to /cardsets/:id which goes to cardsets#show
-      get 'visualspoiler'
+      get 'visualspoiler', 'recent'
       get 'import', 'plaintext'
       post 'import_data'
     end

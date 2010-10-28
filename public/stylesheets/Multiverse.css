@@ -33,6 +33,8 @@ a > img { border: 0px; }
 .commentdetails { font-style: italic; margin: 0px; line-height: 2em; }
 .commentbody    { margin-top: 0px; }
 
+.compact p.commentbody { margin-bottom: 0px; }
+
 .comment.unaddressed { background-color: #fcc; }
 .comment.highlighted { background-color: #ff9; }
 

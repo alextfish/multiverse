@@ -39,6 +39,9 @@ class Card < ActiveRecord::Base
     format(flavourtext)
   end
 
+  def recency  # For a card, its order in recency is when it was updated
+    updated_at
+  end
 
   @@card_colours = ["White", "Blue", "Black", "Red", "Green"]
   @@colour_regexps = [/w/i, /u/i, /b/i, /r/i, /g/i]

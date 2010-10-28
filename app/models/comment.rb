@@ -20,8 +20,12 @@ class Comment < ActiveRecord::Base
   default_scope order("comments.created_at")
 
 #   validates_presence_of :name
-#   validates_length_of :name, :within => 2..20
+  validates_length_of :user, :within => 1..40
   validates_presence_of :comment
+
+  def recency  # For a comment, its order in recency is when it was posted; we ignore updates to its statu
+    created_at
+  end
 
   NORMAL = 0
   UNADDRESSED = 1

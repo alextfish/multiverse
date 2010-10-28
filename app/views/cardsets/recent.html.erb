@@ -4,93 +4,33 @@
 
 <%= render 'setviews' %>
 
-<% @allmycards = @cardset.cards %>
-<% @myactivecards = @allmycards.map{ |card| card.active? } %>
 <% @owner = User.find_by_id(@cardset.user_id) %>
-<% sortedcomments = Comment.find(:all, :include => :card,
-     :conditions => ["cards.cardset_id = ?", @cardset.id],
-     :order => "comments.created_at DESC")                 %>
-<% highlightedcomments = sortedcomments.select { |c| c.highlighted? } %>
-<% stats = @cardset.get_stats %>
+<% comments = Comment.find(:all, :include => :card,
+     :conditions => ["cards.cardset_id = ?", @cardset.id])  %>
+<% comments_and_cards = comments + @cardset.cards %>
+<% comments_and_cards.sort! { |x, y| y.recency <=> x.recency }  # sort most recent items highest
+   # TODO: Also remember cardset itself's properties
+%>
 
 <p>
-</p>
+  <% if !comments_and_cards.empty? %>
+    Recent updates to <%= @cardset.name %>:
 
-
-<% if !highlightedcomments.empty? %>
-  <p>The set creator would like to draw your attention to these comments:
-    <table>
-    <% highlightedcomments.each_slice(5) do |comments_slice| %>
-      <tr>
-      <% comments_slice.each do |comment| %>
-        <td>
-        <% @card = comment.card %>
-        On <%= link_to @card.name, @card %> (<%= link_to "reply", @card %>):
-        <%= render :partial => 'shared/comment', :locals => { :comment => comment } %>
-        </td>
-      <% end %>
-      </tr>
-    <% end %>
-    </table>
-  </p>
-<% end %>
-
-
-<% recentcards = Card.order("updated_at DESC").find_all_by_cardset_id(@cardset.id, :limit => 5) %>
-
-<p>
-  <% if !recentcards.empty? %>
-    Recently updated cards:
-    <table>
-     <tr>
-      <% recentcards.each do |@card| %>
-       <td>
-        <%= render :partial => 'shared/prettycard', :locals => { :link => true } %>
-        <%= link_to "Comments (#{@card.comments.count})", @card %>
-        <% if signed_in_as_admin?(@cardset) %>
-         | <%= link_to "Edit", edit_card_path(@card) %>
-        <% end %>
-       </td>
-      <% end %>
-     </tr>
-    </table>
-  <% else %>
-    <% if signed_in_as_admin?(@cardset) %>
-      There are no cards in this cardset. Why not
-      <%= link_to "add a card", new_card_path(:cardset_id => @cardset.id) %>
-      or
-      <%= link_to "import some", import_cardset_path %>?
-    <% else %>
-      The cardset owner, <%= link_to @owner.name, @owner %>, has not added any cards to this cardset yet.
-    <% end %>
-  <% end %>
-</p>
-
-<div>
-  <% if sortedcomments.empty? %>
-    There are no comments on any cards in the cardset.
-    <% if !recentcards.empty? %>
-      <% if signed_in_as_admin?(@cardset) %>
-        Why not ask for some feedback on a few cards from visitors, by posting some comments and highlighted them?
-      <% else %>
-        Why not browse the cards and add your thoughts?
-      <% end %>
-    <% end %>
-  <% else %>
-    Recent comments:
-    <ul class="commentlist">
-      <% sortedcomments.take(10).each do |comment| %>
-        <% if comment.nil? %>
-          <% if Rails.env.development? %>
-            NIL
-          <% end %>
-        <% else %>
-          <% @card = comment.card %>
-          <li>On <%= link_to @card.name, @card %>:
-          <%= render :partial => 'shared/comment', :locals => { :comment => comment } %>
-        <% end %>
+    <ul class="commentlist compact">
+      <% comments_and_cards.take(200).each do |object| %>
+        <li>
+            <%= object.recency %>
+            <% if object.kind_of?(Card) %>
+              <%= link_to object.name, object %> was updated
+            <% else %>
+              <% @card = object.card %>
+              Comment on <%= link_to @card.name, @card %>:
+              <%= render :partial => 'shared/comment', :locals => { :comment => object } %>
+            <% end %>
       <% end %>
     </ul>
+  <% else %>
+    There are no cards in <%= @cardset.name %>. There's been no activity.
   <% end %>
 </div>
 

@@ -23,8 +23,6 @@ class CardsetsController < ApplicationController
   # GET /cardsets/1
   # GET /cardsets/1.xml
   def show
-    @cardset = Cardset.find(params[:id])
-
     respond_to do |format|
       format.html # show.html.erb
       format.xml  { render :xml => @cardset }
@@ -44,18 +42,18 @@ class CardsetsController < ApplicationController
 
   # GET /cardsets/1/visualspoiler
   def visualspoiler
-    @cardset = Cardset.find(params[:id])
+  end
+
+  # GET /cardsets/1/recent
+  def recent
   end
 
   # GET /cardsets/1/import
   def import
-    @cardset = Cardset.find(params[:id])
-    # import.html.erb
   end
 
   # GET /cardsets/1/export
   def export
-    @cardset = Cardset.find(params[:id])
     respond_to do |format|
       format.html # export.html.erb
       format.xml  { render :xml => @cardset }
@@ -64,7 +62,6 @@ class CardsetsController < ApplicationController
 
   # POST /cardsets/1/import_data
   def import_data
-    @cardset = Cardset.find(params[:id])
     success, message = @cardset.import_data(params)
     if success
       redirect_to(@cardset, :notice => message)
@@ -88,7 +85,6 @@ class CardsetsController < ApplicationController
 
   # GET /cardsets/1/edit
   def edit
-    @cardset = Cardset.find(params[:id])
   end
 
   # POST /cardsets
@@ -111,8 +107,6 @@ class CardsetsController < ApplicationController
   # PUT /cardsets/1
   # PUT /cardsets/1.xml
   def update
-    @cardset = Cardset.find(params[:id])
-
     respond_to do |format|
       if @cardset.update_attributes(params[:cardset])
         format.html { redirect_to(@cardset, :notice => 'Cardset was successfully updated.') }
@@ -127,7 +121,6 @@ class CardsetsController < ApplicationController
   # DELETE /cardsets/1
   # DELETE /cardsets/1.xml
   def destroy
-    @cardset = Cardset.find(params[:id])
     @cardset.destroy
 
     respond_to do |format|
