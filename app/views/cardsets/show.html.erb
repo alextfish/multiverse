@@ -110,7 +110,10 @@
   <% else %>
     Recent comments:
     <ul class="commentlist">
-      <% sortedcomments.take(10).each do |comment| %>
+      <% num_comments_to_show = 10
+         first_index = [0, sortedcomments.length - num_comments_to_show].max
+         comments_to_show = sortedcomments[first_index..-1] %>
+      <% comments_to_show.each do |comment| %>
         <% if comment.nil? %>
           <% if Rails.env.development? %>
             NIL
