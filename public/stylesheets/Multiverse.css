@@ -21,6 +21,8 @@ a > img { border: 0px; }
 .cardcell { vertical-align: top;
             padding-top: 10px; }
 
+.card_controls_below { text-align: center; }
+
 .setviews { border: 1px solid #aaa;
              margin: 2px;
            padding: 6px;
@@ -38,6 +40,8 @@ a > img { border: 0px; }
 .commentdetails input { vertical-align: middle; }
 
 form { display: inline; }
+
+#comment_comment { height: 6em; width: 500px; }
 
 ul.commentlist { margin-left: 20px; }
 

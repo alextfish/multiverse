@@ -3,6 +3,13 @@
  <tr>
   <td class="cardcell"> <!-- card -->
    <%= render :partial => 'shared/prettycard', :locals => { :link => false } %>
+   <div class="card_controls_below">
+     <% if signed_in_as_admin?(@card.cardset) %>
+       <%= link_to 'Edit card', edit_card_path(@card) %>
+       |
+       <%= link_to 'Delete card', @card, :confirm => "Really DELETE #{@card.name}?", :method => :delete %>
+     <% end %>
+   </div>
   </td> <!-- end of card -->
 
   <td> <!-- controls, comments etc -->
@@ -23,12 +30,6 @@
      <%= render 'shared/comment_form' %>
    </p>
 
-
-   <% if signed_in_as_admin?(@card.cardset) %>
-     <%= link_to 'Edit card', edit_card_path(@card) %>
-     |
-     <%= link_to 'Delete card', @card, :confirm => "Really DELETE #{@card.name}?", :method => :delete %>
-   <% end %>
   </td>
  </tr>
 </table>

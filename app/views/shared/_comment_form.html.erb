@@ -18,7 +18,7 @@
   <%= f.text_field :user, :value => (signed_in? ? current_user.name : "" ) %>
   </p>
   <div class="field">
-    <%= f.text_area :comment %>
+    <%= f.text_area :comment, :rows => "6" %>
   </div>
   <div class="actions">
     <%= f.submit "Post comment" %>
