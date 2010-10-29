@@ -21,7 +21,7 @@
         <li class="recent_item">
             <%= format_datetime object.recency %>
             <% if object.kind_of?(Card) %>
-              <%= link_to object.name, object %> was updated
+              <%= link_to object.name, object %> was <% if object.created_at == object.updated_at %>created<% else %>updated<% end %>
             <% else %>
               <% @card = object.card %>
               <%= object.user %> commented on <%= link_to @card.name, @card %>:
