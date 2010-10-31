@@ -1,0 +1,11 @@
+# Read about fixtures at http://ar.rubyonrails.org/classes/Fixtures.html
+
+one:
+  cardset_id: 1
+  title: MyString
+  body: MyText
+
+two:
+  cardset_id: 1
+  title: MyString
+  body: MyText

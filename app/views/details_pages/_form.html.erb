@@ -1,0 +1,25 @@
+<%= form_for([@cardset, @details_page]) do |f| %>
+  <% if @details_page.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(@details_page.errors.count, "error") %> prohibited this details_page from being saved:</h2>
+
+      <ul>
+      <% @details_page.errors.full_messages.each do |msg| %>
+        <li><%= msg %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="field">
+    <%= f.label :title %>:     <%= f.text_field :title %>
+  </div>
+  <div class="field">
+    <%= f.label :body, "Content" %><br />
+    <%= f.text_area :body %>
+  </div>
+  <div class="actions">
+    <%= f.hidden_field :cardset_id, :value => @cardset.id %>
+    <%= f.submit %>
+  </div>
+<% end %>

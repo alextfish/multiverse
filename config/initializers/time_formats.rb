@@ -1,0 +1,1 @@
+  Time::DATE_FORMATS[:multiverse] = "%H:%M:%S "

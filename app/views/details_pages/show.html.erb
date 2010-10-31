@@ -1,0 +1,16 @@
+<h1>
+  <%= @title = @cardset.name + ": " + @details_page.title %>
+</h1>
+
+<%= render 'cardsets/setviews' %>
+
+<p>
+  <%= @details_page.body %>
+</p>
+
+<% if signed_in_as_admin?(@cardset) %>
+  <%= link_to 'Edit', edit_cardset_details_page_path(@cardset, @details_page) %> |
+  <%= link_to 'Destroy', cardset_details_page_path(@cardset.id, @details_page),
+          :confirm => "Are you sure you want to permanently delete the #{@details_page.title} page?",
+          :method => :delete %></td>
+<% end %>

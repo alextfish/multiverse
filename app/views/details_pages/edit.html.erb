@@ -1,0 +1,7 @@
+<h1>
+  <%= @title = @cardset.name + ": Editing " + @details_page.title %>
+</h1>
+
+<%= render 'form' %>
+
+<%= link_to 'Back', [@cardset, @details_page] %>
