@@ -18,6 +18,7 @@ class Cardset < ActiveRecord::Base
   belongs_to :user
   has_many :cards, :dependent => :destroy
   has_many :admins, :class_name => "User"
+  has_many :details_pages, :dependent => :destroy
 
   def get_stats
     out = {}

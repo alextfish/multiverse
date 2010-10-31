@@ -1,5 +1,7 @@
 <header>
-  <%= link_to logo, root_path %>
+  <%= link_to_unless_current logo, root_path do
+    image_tag("multiverse_logo_big.png", :alt => "Multiverse", :class => "square")
+  end %>
   <nav class="round">
     <ul>
       <li class="first"><%= link_to "Home", root_path %></li>

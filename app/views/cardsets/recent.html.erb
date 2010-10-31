@@ -7,22 +7,24 @@
 <% @owner = User.find_by_id(@cardset.user_id) %>
 <% comments = Comment.find(:all, :include => :card,
      :conditions => ["cards.cardset_id = ?", @cardset.id])  %>
-<% comments_and_cards = comments + @cardset.cards %>
-<% comments_and_cards.sort! { |x, y| y.recency <=> x.recency }  # sort most recent items highest
+<% recent_items = comments + @cardset.cards + @cardset.details_pages %>
+<% recent_items.sort! { |x, y| y.recency <=> x.recency }  # sort most recent items highest
    # TODO: Also remember cardset itself's properties
 %>
 
 <p>
-  <% if !comments_and_cards.empty? %>
+  <% if !recent_items.empty? %>
     Recent updates to <%= @cardset.name %>:
 
     <ul class="commentlist compact">
-      <% comments_and_cards.take(200).each do |object| %>
+      <% recent_items.take(200).each do |object| %>
         <li class="recent_item">
             <%= format_datetime object.recency %>
             <% if object.kind_of?(Card) %>
               <%= link_to object.name, object %> was <% if object.created_at == object.updated_at %>created<% else %>updated<% end %>
-            <% else %>
+            <% elsif object.kind_of?(DetailsPage) %>
+              Page <%= link_to object.title, [@cardset, object] %> was <% if object.created_at == object.updated_at %>created<% else %>updated<% end %>
+            <% elsif object.kind_of?(Comment) %>
               <% @card = object.card %>
               <%= object.user %> commented on <%= link_to @card.name, @card %>:
               <%= simple_format h(object.comment), :class => "commentbody" %>

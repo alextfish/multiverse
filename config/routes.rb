@@ -30,11 +30,12 @@ Multiverse::Application.routes.draw do
   # This would provide cardset_cards_path(@cardset), etc.
   # But I don't want the faff of refactoring to deal with that, so instead I'll create my own route:
   resources :cardsets do
+    resources :details_pages, :only => [:new, :create, :destroy, :edit, :update, :show]
     member do
       get 'cardlist' # in addition to /cardsets/:id which goes to cardsets#show
-      get 'visualspoiler', 'recent'
+      get 'visualspoiler', 'recent'  #, 'comment'
       get 'import', 'plaintext'
-      post 'import_data'
+      post 'import_data'             #, 'add_comment'
     end
   end
 

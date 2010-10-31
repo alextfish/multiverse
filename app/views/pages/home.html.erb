@@ -1,16 +1,19 @@
-<h1>Multiverse</h1>
+<!-- h1>Multiverse</h1 -->
 <p>
   Multiverse is a database for custom <b>Magic: the Gathering</b> card sets.
   <br><%= link_to "Find out more", about_path %>
 </p>
 <p>
-  <% numsets = Cardset.count; numtoshow = [numsets, 3].min %>
+  <% numsets = Cardset.count; numtoshow = [numsets, 10].min %>
   There are <%= link_to "#{numsets} cardsets", cardsets_path %> in Multiverse right now<% if numsets > 0 %>, including:
     <ul>
     <% Cardset.all.permutation(numtoshow).to_a.choice.each do |cardset| %>
       <li><%= link_to cardset.name, cardset %> (<%= cardset.cards.count %> cards): <%= cardset.description %>
     <% end %>
     </ul>
+    <% if numtoshow < numsets %>
+      (<%= link_to "see all", cardsets_path %>)
+    <% end %>
   <% end %>
 </p>
 <p>

@@ -1,11 +1,22 @@
 <table class="setviews"><tr><td>
-  <%= render 'cardsets/setviewsinline' %>
+    <b><%= link_to_unless_current @cardset.name, @cardset %></b>:
+    <%= link_to_unless_current "Full cardlist", cardlist_cardset_path(@cardset) %> |
+    <%= link_to_unless_current "Visual spoiler", visualspoiler_cardset_path(@cardset) %> |
+    <%= link_to_unless_current "Plain text spoiler", plaintext_cardset_path(@cardset) %> |
+    <%= link_to "XML", :action=>"cardlist", :controller=>"cardsets", :id=>@cardset.id, :format => :xml %> |
+    <%= link_to_unless_current "Recent activity", recent_cardset_path(@cardset) %>
 </td></tr>
+<% if !@cardset.details_pages.empty? %>
+  <tr><td>
+    <%= @cardset.details_pages.reject(&:new_record?).map { |p| link_to_unless_current p.title, url_for([@cardset, p]) }.join(" | ").html_safe %>
+  </td></tr>
+<% end %>
 <% if signed_in_as_admin?(@cardset) %>
 <tr><td>Admin actions:
-    <%= link_to "Edit description", edit_cardset_path %>;
-    <%= link_to "New card", new_card_path(:cardset_id => @cardset.id) %>;
-    <%= link_to "Import data", import_cardset_path %>
+    <%= link_to "Edit cardset description", edit_cardset_path(@cardset) %> |
+    <%= link_to "New card", new_card_path(:cardset_id => @cardset.id) %> |
+    <%= link_to "Import data", import_cardset_path(@cardset) %> |
+    <%= link_to "Add details page", new_cardset_details_page_path(@cardset) %>
 </td></tr>
 <% end %>
 </table>

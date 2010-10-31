@@ -15,20 +15,17 @@
   <td> <!-- controls, comments etc -->
      <% @cardset = Cardset.find(@card.cardset_id) %>
      <%= render 'cardsets/setviews' %>
-   <!-- p>
-     <b>Set:</b>
-   </p -->
 
-   <p>
-     <b>Comments:</b>
-     <div class="cardhistory">
-     <ul>
-     <%= render :partial => 'shared/comment', :collection => @card.comments %>
-     </ul>
-     </div>
-     <b>Add your comments:</b>
-     <%= render 'shared/comment_form' %>
-   </p>
+     <p>
+       <b>Comments:</b>
+       <div class="cardhistory">
+       <ul>
+       <%= render :partial => 'shared/comment', :collection => @card.comments %>
+       </ul>
+       </div>
+       <b>Add your comments:</b>
+       <%= render 'shared/comment_form' %>
+     </p>
 
   </td>
  </tr>
