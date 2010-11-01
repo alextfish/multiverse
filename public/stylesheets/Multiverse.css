@@ -63,3 +63,7 @@ textarea#import_data  { width: 600px; height: 15em; }
 p.plaintext_wrapper { white-space: pre;
                       font-family: monospace;
                       width: 600px; }
+
+/***** Cardset details pages *****/
+
+textarea#details_page_body { width: 1024px; height: 30em; }
