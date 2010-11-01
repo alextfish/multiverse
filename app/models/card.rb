@@ -51,6 +51,11 @@ class Card < ActiveRecord::Base
       /(^|[^\/{(])b/i,
       /(^|[^\/{(])r/i,
       /(^|[^\/{(])g/i]
+  @@category_order = ["Colourless", "White", "Blue", "Black", "Red", "Green", "Multicolour", "Hybrid", "Artifact", "Land"]
+
+  def category_order
+    @@category_order
+  end
 
   def colours_in_cost
     out = @@colour_regexps.map do |re|
@@ -81,8 +86,7 @@ class Card < ActiveRecord::Base
   def <=>(c2)
     if category != c2.category
       # Sort by category
-      category_order = ["Colourless", "White", "Blue", "Black", "Red", "Green", "Multicolour", "Hybrid", "Artifact", "Land"]
-      return category_order.find_index(category) <=> category_order.find_index(c2.category)
+      return @@category_order.find_index(category) <=> @@category_order.find_index(c2.category)
     else
       if ["Multicolour", "Hybrid"].include?(category)
         # Within a category, sort by colour-pair (hybrid / gold), then name

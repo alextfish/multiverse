@@ -22,10 +22,10 @@ class Cardset < ActiveRecord::Base
 
   def get_stats
     out = {}
-    out[:by_colour] = Hash.new(0)
+    out[:by_category] = Hash.new(0)
     out[:by_rarity] = Hash.new(0)
     cards.each do |card|
-      out[:by_colour][card.colour] += 1
+      out[:by_category][card.category] += 1
       out[:by_rarity][card.rarity] += 1
     end
     out

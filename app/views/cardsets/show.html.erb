@@ -9,6 +9,7 @@
      :conditions => ["cards.cardset_id = ?", @cardset.id])  %>
 <% highlightedcomments = sortedcomments.select { |c| c.highlighted? } %>
 <% stats = @cardset.get_stats %>
+<% @category_order = Card.first.category_order %>
 
 <div class="infobox">
   <h1>
@@ -25,8 +26,12 @@
     <%= rarity_stats.join(", ") %>
   </p>
   <p>
-    <% colour_stats = stats[:by_colour].map { |colour, count| "#{count} #{colour}" } %>
-    <%= colour_stats.join(", ") %>
+    <% category_stats = stats[:by_category].map { |category, count| [category, count] } %>
+    <%= category_stats.sort { |pair1, pair2|
+          @category_order.index(pair1[0]) <=> @category_order.index(pair2[0])
+        }.map { |category, count|
+          "#{count} #{category}"
+        }.join(", ").downcase %>
   </p>
   <p>
     <%= sortedcomments.count %> comments total
