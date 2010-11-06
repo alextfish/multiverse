@@ -37,11 +37,14 @@ module ApplicationHelper
     ["common", "uncommon", "rare", "mythic"]
   end
 
-  def comments_status
-    out_hash = {:normal => 0, :unaddressed => 1, :highlighted => 2}
-  end
-
   def format_datetime(dt)
     dt.to_formatted_s(:long_ordinal)
+  end
+
+  def comment_status   # also defined in comment.rb :(
+    { :normal => 0,
+      :unaddressed => 1,
+      :highlighted => 2
+    }
   end
 end

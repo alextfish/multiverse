@@ -15,6 +15,36 @@ module SessionsHelper
     current_user && current_user.id == cardset.user_id
   end
 
+  def require_permission_to_view
+    if !permission_to_view(@cardset)
+      redirect_to signin_path, :notice => @cardset.visibility_permission_message
+    end
+  end
+
+  def permission_to_view(cardset)
+    case cardset.configuration.visibility
+      when "anyone"
+        return true
+      when "signedin"
+        return signed_in?
+      when "admins"
+        return signed_in_as_admin?(cardset)
+      when "selected"
+        return signed_in_as_admin?(cardset) || cardset.configuration.view_permitted_users.include?(current_user.name)
+    end
+  end
+  def permission_to_comment(cardset)
+    case cardset.configuration.commentability
+      when "anyone"
+        return true
+      when "signedin"
+        return signed_in?
+      when "admins"
+        return signed_in_as_admin?(cardset)
+      when "selected"
+        return signed_in_as_admin?(cardset) || cardset.configuration.comment_permitted_users.include?(current_user.name)
+    end
+  end
 
   def current_user=(user) # the setter for current_user
     @current_user = user

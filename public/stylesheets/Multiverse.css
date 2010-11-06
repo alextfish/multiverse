@@ -4,7 +4,7 @@ a > img { border: 0px; }
 
 .flash  { margin-left: 2px; width: 50%; }
 .error  { color: #600; background-color: #f99; border: 1px solid #600; }
-.notice { color: #006; background-color: #99f; border: 1px solid #006; }
+.notice { color: #00a; background-color: #bbf; border: 1px solid #00a; }
 
 .infobox { float: right;
            border: 2px solid #666;
@@ -67,3 +67,9 @@ p.plaintext_wrapper { white-space: pre;
 /***** Cardset details pages *****/
 
 textarea#details_page_body { width: 1024px; height: 30em; }
+
+/***** Cardset configuration *****/
+
+div.helptext { font-size: smaller; margin: 0px; color: #888; }
+div.config_section { margin: 4px; }
+input#cardset_description { width: 30em; }

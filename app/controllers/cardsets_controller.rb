@@ -1,6 +1,7 @@
 class CardsetsController < ApplicationController
   before_filter :except => [:index, :new, :create] do
     @cardset = Cardset.find(params[:id])
+    require_permission_to_view
   end
   before_filter :only => [:new, :create] do
     require_login
@@ -72,15 +73,9 @@ class CardsetsController < ApplicationController
   end
 
   # GET /cardsets/new
-  # GET /cardsets/new.xml
   def new
     @cardset = Cardset.new
-    #@cardset.user_id = current_user.id
-
-    respond_to do |format|
-      format.html # new.html.erb
-      format.xml  { render :xml => @cardset }
-    end
+    @cardset.build_configuration
   end
 
   # GET /cardsets/1/edit
@@ -93,28 +88,27 @@ class CardsetsController < ApplicationController
     @cardset = Cardset.new(params[:cardset])
     @cardset.user_id = current_user.id
 
-    respond_to do |format|
-      if @cardset.save
-        format.html { redirect_to(@cardset, :notice => 'Cardset was successfully created.') }
-        format.xml  { render :xml => @cardset, :status => :created, :location => @cardset }
-      else
-        format.html { render :action => "new" }
-        format.xml  { render :xml => @cardset.errors, :status => :unprocessable_entity }
-      end
+    configuration = @cardset.build_configuration(params[:cardset][:configuration])
+    ok = @cardset.save!
+    ok &= configuration.save!
+
+    if ok
+      redirect_to(@cardset, :notice => 'Cardset was successfully created.')
+    else
+      render :action => "new"
     end
   end
 
   # PUT /cardsets/1
-  # PUT /cardsets/1.xml
   def update
-    respond_to do |format|
-      if @cardset.update_attributes(params[:cardset])
-        format.html { redirect_to(@cardset, :notice => 'Cardset was successfully updated.') }
-        format.xml  { head :ok }
-      else
-        format.html { render :action => "edit" }
-        format.xml  { render :xml => @cardset.errors, :status => :unprocessable_entity }
-      end
+    Rails.logger.info "Config's use_addressing is #{@cardset.configuration.use_addressing}"
+    ok = @cardset.update_attributes(params[:cardset])
+    ok &= @cardset.configuration.update_attributes(params[:configuration])
+    Rails.logger.info "After update, config's use_addressing is #{@cardset.configuration.use_addressing}"
+    if ok
+      redirect_to(@cardset, :notice => 'Cardset was successfully updated.')
+    else
+      render :action => "edit"
     end
   end
 

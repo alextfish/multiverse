@@ -1,0 +1,4 @@
+<%= form_for([@cardset, @comment]) do |@f| %>
+  <%= @f.hidden_field :cardset_id %>
+  <%= render 'shared/common_comment_form' %>
+<% end %>

@@ -12,6 +12,12 @@ class CardsController < ApplicationController
     end
     require_login_as_admin(@cardset)
   end
+  before_filter :only => [:show] do
+    @card = Card.find(params[:id])
+    @cardset = Cardset.find(@card.cardset_id)
+  end
+
+  before_filter :require_permission_to_view
   helper CardsHelper
 
   # GET /cards/1

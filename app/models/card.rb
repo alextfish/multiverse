@@ -29,8 +29,8 @@ class Card < ActiveRecord::Base
   has_many :old_cards, :dependent => :destroy
 
 
-  #has_many :highlighted_comments, :class_name => 'Comment', :conditions => ['status = ?', Comment.HIGHLIGHTED]
-  #has_many :unaddressed_comments, :class_name => 'Comment', :conditions => ['status = ?', Comment.UNADDRESSED]
+  #has_many :highlighted_comments, :class_name => 'Comment', :conditions => ['status = ?', COMMENT_HIGHLIGHTED]
+  #has_many :unaddressed_comments, :class_name => 'Comment', :conditions => ['status = ?', COMMENT_UNADDRESSED]
 
   def formatted_rules_text
     format(rulestext)

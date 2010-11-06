@@ -55,10 +55,18 @@
 
   <td>                     <!-- controls, comments etc -->
    <table>
+    <% if @card.cardset.configuration.card_show_code %>
     <tr>
      <td><%= f.label :code %></td>
      <td><%= f.text_field :code %></td>
     </tr>
+    <% end %>
+    <% if @card.cardset.configuration.card_show_active %>
+    <tr>
+     <td><%= f.label :active, "Active?" %></td>
+     <td><%= f.check_box :active %></td>
+    </tr>
+    <% end %>
     <!-- tr>
      <td><##%= f.label :colour %></td>
      <td><##%= f.select :colour, card_colours.unshift("Auto").map{|c| [c.capitalize, c]} %></td>

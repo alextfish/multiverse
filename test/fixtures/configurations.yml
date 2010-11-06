@@ -1,0 +1,27 @@
+# Read about fixtures at http://ar.rubyonrails.org/classes/Fixtures.html
+
+one:
+  frame: MyString
+  use_highlighting: false
+  use_addressing: false
+  default_comment_state: MyString
+  cardlist_show_comments: false
+  cardlist_show_code: false
+  cardlist_show_active: false
+  card_show_code: false
+  card_show_active: false
+  visibility: MyString
+  commentability: MyString
+
+two:
+  frame: MyString
+  use_highlighting: false
+  use_addressing: false
+  default_comment_state: MyString
+  cardlist_show_comments: false
+  cardlist_show_code: false
+  cardlist_show_active: false
+  card_show_code: false
+  card_show_active: false
+  visibility: MyString
+  commentability: MyString

@@ -19,6 +19,8 @@ class Cardset < ActiveRecord::Base
   has_many :cards, :dependent => :destroy
   has_many :admins, :class_name => "User"
   has_many :details_pages, :dependent => :destroy
+  has_one :configuration, :dependent => :destroy
+  has_many :comments, :dependent => :destroy
 
   def get_stats
     out = {}
@@ -31,6 +33,27 @@ class Cardset < ActiveRecord::Base
     out
   end
 
+  @@permitted_users = {
+    # DB entry => Text
+    "anyone" => "All users",
+    "signedin" => "Only signed-in users",
+    "admins" => "Only cardset administrators",
+    "selected" => "Only users specified by the cardset administrators",
+  }
+  def comment_permission_message
+    @@permitted_users[configuration.commentability] + " are permitted to comment on this cardset."
+  end
+  def visibility_permission_message
+    @@permitted_users[configuration.visibility] + " are permitted to see this cardset."
+  end
+
+  def cards_per_line
+    case configuration.frame
+      when "prettycard": 5
+      when "plain": 2
+      when "image": 3
+    end
+  end
 
   ALIASES = {
     "type" => "cardtype",

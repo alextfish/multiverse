@@ -15,6 +15,7 @@
 
 class Comment < ActiveRecord::Base
   belongs_to :card
+  belongs_to :cardset
   #belongs_to :user
 
   default_scope order("comments.created_at")
@@ -23,34 +24,47 @@ class Comment < ActiveRecord::Base
   validates_length_of :user, :within => 1..40
   validates_presence_of :comment
 
-  def recency  # For a comment, its order in recency is when it was posted; we ignore updates to its statu
+  def comment_status  # also defined in application_helper :(
+    { :normal => 0,
+      :unaddressed => 1,
+      :highlighted => 2
+    }
+  end
+
+  def set_default_status!
+    self.status = (get_cardset.configuration.default_comment_state == "Unaddressed") ? comment_status[:unaddressed] : comment_status[:normal]
+  end
+
+  def get_cardset
+    cardset || card.cardset
+  end
+  def recency  # For a comment, its order in recency is when it was posted; we ignore updates to its status
     created_at
   end
 
-  NORMAL = 0
-  UNADDRESSED = 1
-  HIGHLIGHTED = 2
-
   def addressed?
-    status != UNADDRESSED
+    status != comment_status[:unaddressed]
   end
   def unaddressed?
-    status == UNADDRESSED
+    status == comment_status[:unaddressed]
   end
   def highlighted?
-    status == HIGHLIGHTED
+    status == comment_status[:highlighted]
   end
   def admin_status_string
-    case self.status
-      when UNADDRESSED: "unaddressed"
-      when HIGHLIGHTED: "highlighted"
-      else              "normal"
+    if self.status == comment_status[:unaddressed] && self.card.cardset.configuration.use_addressing
+      "unaddressed"
+    elsif self.status == comment_status[:highlighted] && self.card.cardset.configuration.use_highlighting
+      "highlighted"
+    else
+      "normal"
     end
   end
   def public_status_string
-    case self.status
-      when HIGHLIGHTED: "highlighted"
-      else              "normal"
+    if self.status == comment_status[:highlighted] && self.card.cardset.configuration.use_highlighting
+      "highlighted"
+    else
+      "normal"
     end
   end
 end

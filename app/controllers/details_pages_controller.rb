@@ -1,20 +1,10 @@
 class DetailsPagesController < ApplicationController
   before_filter do # :except => [:index, :new, :create] do
     @cardset = Cardset.find(params[:cardset_id])
+    require_permission_to_view
   end
   before_filter :only => [:new, :create, :edit, :update, :destroy] do
     require_login_as_admin(@cardset)
-  end
-
-  # GET /details_pages
-  # GET /details_pages.xml
-  def index
-    @details_pages = DetailsPage.all
-
-    respond_to do |format|
-      format.html # index.html.erb
-      format.xml  { render :xml => @details_pages }
-    end
   end
 
   # GET /details_pages/1

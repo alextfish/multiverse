@@ -1,5 +1,6 @@
-<h1>Editing cardset</h1>
-<% @title = "Editing #{@cardset.name}" %>
+<h1><%= @title = "#{@cardset.name}: Edit configuration" %></h1>
+
+<%= render 'setviews' %>
 
 <%= render "form" %>
 

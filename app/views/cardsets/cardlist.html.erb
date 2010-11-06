@@ -17,8 +17,16 @@
     <th>Type</th>
     <th>P</th>
     <th>T</th>
-    <th>Comments</th>
-    <th>Recent comment</th>
+    <% if @cardset.configuration.cardlist_show_code %>
+      <th>Code</th>
+    <% end %>
+    <% if @cardset.configuration.cardlist_show_active %>
+      <th>Active?</th>
+    <% end %>
+    <% if @cardset.configuration.cardlist_show_comments %>
+      <th>Comments</th>
+      <th>Recent comment</th>
+    <% end %>
     <% if signed_in_as_admin?(@cardset) %>
       <th colspan="3" class="nosort">&nbsp;</th>
     <% end %>
@@ -40,15 +48,23 @@
         <% end %> </td>
       <td><%= card.power %></td>
       <td><%= card.toughness %></td>
-      <% card_comments_sorted = Comment.find(:all,
-           :conditions => ["card_id = ?", card.id],
-           :order => "comments.updated_at DESC") %>
-      <td><%= card_comments_sorted.count %></td>
-      <td>
-        <% if !card_comments_sorted.empty? %>
-          <%= card_comments_sorted[0].created_at %> by <%= card_comments_sorted[0].user %>
-        <% end %>
-      </td>
+      <% if @cardset.configuration.cardlist_show_code %>
+        <td><%= card.code %></td>
+      <% end %>
+      <% if @cardset.configuration.cardlist_show_active %>
+        <td><%= card.active %></td>
+      <% end %>
+      <% if @cardset.configuration.cardlist_show_comments %>
+        <% card_comments_sorted = Comment.find(:all,
+             :conditions => ["card_id = ?", card.id],
+             :order => "comments.updated_at DESC") %>
+        <td><%= card_comments_sorted.count %></td>
+        <td>
+          <% if !card_comments_sorted.empty? %>
+            <%= card_comments_sorted[0].created_at %> by <%= card_comments_sorted[0].user %>
+          <% end %>
+        </td>
+      <% end %>
       <% if signed_in_as_admin?(@cardset) %>
         <td><%= link_to 'Edit', edit_card_path(card) %></td>
         <td><%= link_to 'Delete', card, :confirm => "Really DELETE #{card.name}?", :method => :delete, :remote => true %></td>

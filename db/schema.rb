@@ -10,7 +10,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20101030150001) do
+ActiveRecord::Schema.define(:version => 20101103224310) do
 
   create_table "cards", :force => true do |t|
     t.string   "code"
@@ -56,6 +56,23 @@ ActiveRecord::Schema.define(:version => 20101030150001) do
 
   add_index "comments", ["card_id"], :name => "index_comments_on_card_id"
   add_index "comments", ["cardset_id"], :name => "index_comments_on_cardset_id"
+
+  create_table "configurations", :force => true do |t|
+    t.string   "frame"
+    t.boolean  "use_highlighting"
+    t.boolean  "use_addressing"
+    t.string   "default_comment_state"
+    t.boolean  "cardlist_show_comments"
+    t.boolean  "cardlist_show_code"
+    t.boolean  "cardlist_show_active"
+    t.boolean  "card_show_code"
+    t.boolean  "card_show_active"
+    t.string   "visibility"
+    t.string   "commentability"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+    t.integer  "cardset_id"
+  end
 
   create_table "details_pages", :force => true do |t|
     t.integer  "cardset_id"

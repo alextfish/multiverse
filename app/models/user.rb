@@ -21,14 +21,15 @@ class User < ActiveRecord::Base
   email_regex = /\A[\w+\-.]+@[a-z\d\-.]+\.[a-z]+\z/i
 
   validates :name,  :presence => true,
-                    :length   => { :maximum => 50 }
+                    :length   => { :maximum => 50 },
+                    :uniqueness => { :case_sensitive => false }
   validates :email, :presence => true,
                     :format   => { :with => email_regex },
                     :uniqueness => { :case_sensitive => false }
   # Automatically create the virtual attribute 'password_confirmation'.
   validates :password, :presence     => true,
                        :confirmation => true,
-                       :length       => { :within => 4..40 }
+                       :length       => { :within => 4..140 }
 
   has_many :cardsets
   #has_many :comments

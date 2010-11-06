@@ -13,10 +13,10 @@
 <% end %>
 <% if signed_in_as_admin?(@cardset) %>
 <tr><td>Admin actions:
-    <%= link_to "Edit cardset description", edit_cardset_path(@cardset) %> |
-    <%= link_to "New card", new_card_path(:cardset_id => @cardset.id) %> |
-    <%= link_to "Import data", import_cardset_path(@cardset) %> |
-    <%= link_to "Add details page", new_cardset_details_page_path(@cardset) %>
+    <%= link_to_unless_current "Edit cardset configuration", edit_cardset_path(@cardset) %> |
+    <%= link_to_unless_current "New card", new_card_path(:cardset_id => @cardset.id) %> |
+    <%= link_to_unless_current "Import data", import_cardset_path(@cardset) %> |
+    <%= link_to_unless_current "Add details page", new_cardset_details_page_path(@cardset) %>
 </td></tr>
 <% end %>
 </table>

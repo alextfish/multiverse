@@ -13,15 +13,76 @@
 
   <div>Admin user for this cardset will be: <%= link_to current_user.name, current_user %>
   </div>
-  <div class="field">
-    <%= f.label :name, "Cardset name" %><br />
-    <%= f.text_field :name %>
-  </div>
-    <%= f.hidden_field :user_id, :value => current_user.id %>
-  <div class="field">
-    <%= f.label :description, "Short description" %><br />
-    <%= f.text_area :description %>
-  </div>
+  <table>
+   <tr>
+    <td><!-- Cardset properties -->
+      <div class="field">
+        <%= f.label :name, "Cardset name" %><br />
+        <%= f.text_field :name %>
+      </div>
+        <!-- %= f.hidden_field :user_id, :value => current_user.id % -->
+      <div class="field">
+        <%= f.label :description, "Short description" %><br />
+        <%= f.text_field :description, :width => "50em" %>
+          <div class="helptext">This is a short sentence that will be displayed alongside your set's name in lists.
+          <br>You can add more elaborate description using <%= link_to "details pages", new_cardset_details_page_path(@cardset) %>.</div>
+      </div>
+    </td>
+    <td><!-- Cardset configuration -->
+    <%= fields_for @cardset.configuration do |config_fields| %>
+      <div class="config_section">
+        Allow to view:
+          <%= config_fields.select :visibility, @cardset.configuration.legal_values[:visibility].invert.to_a %>
+      </div>
+
+      <div class="config_section">
+        Allow comments by:
+          <%= config_fields.select :commentability, @cardset.configuration.legal_values[:visibility].invert.to_a %>
+      </div>
+
+      <div class="config_section">
+        <%= config_fields.label :use_highlighting, "Enable comment highlighting" %>
+          <%= config_fields.check_box :use_highlighting %>
+          <div class="helptext">This is used to highlight certain comments to draw their attention to visitors.
+          Highlighted comments will be shown near the top of your cardset's front page.</div>
+
+        <%= config_fields.label :use_addressing, "Enable comment addressing" %>
+          <%= config_fields.check_box :use_addressing %>
+          <div class="helptext">This is used to keep track of whether action is still needed on comments.
+          Unaddressed comments are highlighted in red, <i>only to admins</i>. A comment's
+          addressed/unaddressed status is invisible to non-admin users.</div>
+       </div>
+
+      <div class="config_section">
+        Default comment state:
+          <%= config_fields.select :default_comment_state, @cardset.configuration.legal_values[:default_comment_state].invert.to_a %>
+      </div>
+
+      <div class="config_section">
+        Display cards:
+          <%= config_fields.select :frame, @cardset.configuration.legal_values[:frame].invert.to_a %>
+      </div>
+
+      <div class="config_section">
+        On <%= link_to_unless @cardset.new_record?, "cardlist", cardlist_cardset_path(@cardset) %>:
+          <%= config_fields.label :cardlist_show_comments, "Show comments" %>
+            <%= config_fields.check_box :cardlist_show_comments %>
+          <%= config_fields.label :cardlist_show_active, "Show active" %>
+            <%= config_fields.check_box :cardlist_show_active %>
+      </div>
+
+      <div class="config_section">
+        On <%= link_to_if !@cardset.new_record? && !@cardset.cards.empty?, "single card view", @cardset.cards.first %>:
+          <%= config_fields.label :card_show_code, "Show code" %>
+            <%= config_fields.check_box :card_show_code %>
+          <%= config_fields.label :card_show_active, "Show active" %>
+            <%= config_fields.check_box :card_show_active %>
+      </div>
+
+    <% end %>
+    </td>
+   </tr>
+  </table>
   <div class="actions">
     <%= f.submit %>
   </div>

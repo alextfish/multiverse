@@ -7,7 +7,7 @@
 <% @owner = User.find_by_id(@cardset.user_id) %>
 <% comments = Comment.find(:all, :include => :card,
      :conditions => ["cards.cardset_id = ?", @cardset.id])  %>
-<% recent_items = comments + @cardset.cards + @cardset.details_pages %>
+<% recent_items = comments + @cardset.cards + @cardset.details_pages + @cardset.comments %>
 <% recent_items.sort! { |x, y| y.recency <=> x.recency }  # sort most recent items highest
    # TODO: Also remember cardset itself's properties
 %>
@@ -25,8 +25,14 @@
             <% elsif object.kind_of?(DetailsPage) %>
               Page <%= link_to object.title, [@cardset, object] %> was <% if object.created_at == object.updated_at %>created<% else %>updated<% end %>
             <% elsif object.kind_of?(Comment) %>
-              <% @card = object.card %>
-              <%= object.user %> commented on <%= link_to @card.name, @card %>:
+              <% if !object.card.nil? %>
+                <% @target = object.card %>
+              <% elsif !object.cardset.nil? %>
+                <% @target = object.cardset %>
+              <% else %>
+                <% raise "Comment on an unidentifiable object" %>
+              <% end %>
+              <%= object.user %> commented on <%= link_to @target.name, @target %>:
               <%= simple_format h(object.comment), :class => "commentbody" %>
               <!-- %= render :partial => 'shared/comment', :locals => { :comment => object } % -->
             <% end %>

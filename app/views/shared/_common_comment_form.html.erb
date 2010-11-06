@@ -1,4 +1,3 @@
-<%= form_for @comment do |f| %>
   <% if @comment.errors.any? %>
     <div id="error_explanation">
       <h2><%= pluralize(@comment.errors.count, "error") %> prohibited this card from being saved:</h2>
@@ -10,17 +9,14 @@
       </ul>
     </div>
   <% end %>
-  <%= f.hidden_field :card_id %>
-  <%= f.hidden_field :status, :value => comments_status[:unaddressed] %>
 
   <p>
-  <%= f.label :user %><br />
-  <%= f.text_field :user, :value => (signed_in? ? current_user.name : "" ) %>
+  <%= @f.label :user %><br />
+  <%= @f.text_field :user, :value => (signed_in? ? current_user.name : "" ) %>
   </p>
   <div class="field">
-    <%= f.text_area :comment, :rows => "6" %>
+    <%= @f.text_area :comment, :rows => "6" %>
   </div>
   <div class="actions">
-    <%= f.submit "Post comment" %>
+    <%= @f.submit "Post comment" %>
   </div>
-<% end %>

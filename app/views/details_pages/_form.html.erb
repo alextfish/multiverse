@@ -15,7 +15,8 @@
     <%= f.label :title %>:     <%= f.text_field :title %>
   </div>
   <div class="field">
-    <%= f.label :body, "Content" %> (use <%= link_to "Markdown", "http://stackoverflow.com/editing-help" %> such as _<i>italic</i>_, **<b>bold</b>**, ## headings ##)<br />
+    <%= f.label :body, "Content" %> (use
+      <%= render :partial => 'shared/markdown_short' %>)<br />
     <%= f.text_area :body, :rows=>"", :cols=>"" %>
   </div>
   <div class="actions">

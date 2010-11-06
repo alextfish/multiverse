@@ -1,0 +1,10 @@
+<% if @card.cardset.configuration.frame == "prettycard" %>
+   <%= render :partial => 'shared/prettycard', :locals => { :link => link } %>
+<% elsif @card.cardset.configuration.frame == "image" %>
+   TODO - CARD IMAGE HERE
+<% elsif @card.cardset.configuration.frame == "plain" %>
+   <%= render :partial => 'shared/plaincard' %>
+<% else %>
+  I'm sorry, somehow this card's frame has got into a state that Multiverse can't display.
+  Its frame setting is: <%= @card.cardset.configuration.frame %> which is a <%= @card.cardset.configuration.frame.class %>
+<% end %>

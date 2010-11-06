@@ -2,7 +2,7 @@
 <table border="0"> <!-- grouping table -->
  <tr>
   <td class="cardcell"> <!-- card -->
-   <%= render :partial => 'shared/prettycard', :locals => { :link => false } %>
+   <%= render :partial => 'shared/card', :locals => { :link => false } %>
    <div class="card_controls_below">
      <% if signed_in_as_admin?(@card.cardset) %>
        <%= link_to 'Edit card', edit_card_path(@card) %>
@@ -16,6 +16,12 @@
      <% @cardset = Cardset.find(@card.cardset_id) %>
      <%= render 'cardsets/setviews' %>
 
+     <% if @card.cardset.configuration.card_show_code %>
+       <p><b>Code:</b> <%= @card.code %></p>
+     <% end %>
+     <% if @card.cardset.configuration.card_show_active %>
+       <p><b>Active?:</b> <%= @card.active %></p>
+     <% end %>
      <p>
        <b>Comments:</b>
        <div class="cardhistory">
@@ -23,10 +29,16 @@
        <%= render :partial => 'shared/comment', :collection => @card.comments %>
        </ul>
        </div>
-       <b>Add your comments:</b>
-       <%= render 'shared/comment_form' %>
+       <% if permission_to_comment(@card.cardset) %>
+         <b>Add your comments:</b>
+         <%= render 'shared/card_comment_form' %>
+       <% else %>
+         <%= @cardset.comment_permission_message %>
+         <% if !signed_in? %>
+           Would you like to <%= link_to "sign in", signin_path %>?
+         <% end %>
+       <% end %>
      </p>
-
   </td>
  </tr>
 </table>
