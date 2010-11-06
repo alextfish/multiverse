@@ -5,9 +5,12 @@
 <% @allmycards = @cardset.cards %>
 <% @myactivecards = @allmycards.map{ |card| card.active? } %>
 <% @owner = User.find_by_id(@cardset.user_id) %>
-<% sortedcomments = Comment.find(:all, :include => :card,
+<% card_comments = Comment.find(:all, :include => :card,
      :conditions => ["cards.cardset_id = ?", @cardset.id])  %>
-<% highlightedcomments = sortedcomments.select { |c| c.highlighted? } %>
+<% cardset_comments = Comment.find(:all,
+     :conditions => ["cardset_id = ?", @cardset.id])  %>
+<% sorted_comments = (card_comments + cardset_comments).sort { |c1,c2| c2.recency <=> c1.recency } %>
+<% highlightedcomments = sorted_comments.select { |c| c.highlighted? } %>
 <% stats = @cardset.get_stats %>
 <% @category_order = Card.first.category_order %>
 
@@ -17,9 +20,9 @@
   </h1>
   <p>
     <%= @allmycards.length %> cards in Multiverse
-    <!-- <% if ! @myactivecards.all? %>
+    <% if @myactivecards.any? && !@myactivecards.all? %>
       (<%= @myactivecards.length %> active)
-    <% end %> -->
+    <% end %>
   </p>
   <p>
     <% rarity_stats = stats[:by_rarity].map { |rarity, count| pluralize(count, rarity) } %>
@@ -34,7 +37,7 @@
         }.join(", ").downcase %>
   </p>
   <p>
-    <%= sortedcomments.count %> comments total
+    <%= sorted_comments.count %> comments total
   </p>
 
 </div>
@@ -110,7 +113,7 @@
 </p>
 
 <div>
-  <% if sortedcomments.empty? %>
+  <% if sorted_comments.empty? %>
     There are no comments on any cards in the cardset.
     <% if !recentcards.empty? %>
       <% if signed_in_as_admin?(@cardset) %>
@@ -122,18 +125,16 @@
   <% else %>
     Recent comments: (<%= link_to "all recent activity", recent_cardset_path %>)
     <ul class="commentlist">
-      <% num_comments_to_show = 10
-         first_index = [0, sortedcomments.length - num_comments_to_show].max
-         comments_to_show = sortedcomments[first_index..-1].reverse %>
-      <% comments_to_show.each do |comment| %>
-        <% if comment.nil? %>
+      <% num_comments_to_show = 10 %>
+      <% sorted_comments.take(num_comments_to_show).each do |@comment| %>
+        <% if @comment.nil? %>
           <% if Rails.env.development? %>
             NIL
           <% end %>
         <% else %>
-          <% @card = comment.card %>
-          <li>On <%= link_to @card.name, @card %>:
-          <%= render :partial => 'shared/comment', :locals => { :comment => comment } %>
+          <% object = @comment.card || @comment.cardset %>
+          <li>On <%= link_to object.name, object %>:
+          <%= render :partial => 'shared/comment', :locals => { :buttons => true } %>
         <% end %>
       <% end %>
     </ul>

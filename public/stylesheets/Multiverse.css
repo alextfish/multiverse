@@ -53,6 +53,8 @@ form { display: inline; }
 
 ul.commentlist { margin-left: 20px; }
 
+.commentbody > p { margin-top: 0px; }
+
 /***** Data import / export *****/
 
 code { background-color: #eee; }

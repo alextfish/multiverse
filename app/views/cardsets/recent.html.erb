@@ -5,9 +5,9 @@
 <%= render 'setviews' %>
 
 <% @owner = User.find_by_id(@cardset.user_id) %>
-<% comments = Comment.find(:all, :include => :card,
+<% card_comments = Comment.find(:all, :include => :card,
      :conditions => ["cards.cardset_id = ?", @cardset.id])  %>
-<% recent_items = comments + @cardset.cards + @cardset.details_pages + @cardset.comments %>
+<% recent_items = card_comments + @cardset.cards + @cardset.details_pages + @cardset.comments %>
 <% recent_items.sort! { |x, y| y.recency <=> x.recency }  # sort most recent items highest
    # TODO: Also remember cardset itself's properties
 %>
@@ -30,11 +30,14 @@
               <% elsif !object.cardset.nil? %>
                 <% @target = object.cardset %>
               <% else %>
-                <% raise "Comment on an unidentifiable object" %>
+                <% raise "Comment on an unidentifiable object: #{object.inspect}" %>
               <% end %>
               <%= object.user %> commented on <%= link_to @target.name, @target %>:
-              <%= simple_format h(object.comment), :class => "commentbody" %>
-              <!-- %= render :partial => 'shared/comment', :locals => { :comment => object } % -->
+              <!-- %= simple_format h(object.comment), :class => "commentbody" % -->
+              <% @comment = object %>
+              <%= render :partial => 'shared/comment', :locals => { :buttons => false } %>
+            <% else %>
+              <% raise "Unknown object in recent items list: #{object.inspect}" %>
             <% end %>
       <% end %>
     </ul>

@@ -1,69 +1,14 @@
 <% if signed_in_as_admin?(@cardset) %>
-  <% commentclass = comment.admin_status_string  %>
+  <% commentclass = @comment.admin_status_string  %>
 <% else %>
-  <% commentclass = comment.public_status_string  %>
+  <% commentclass = @comment.public_status_string  %>
 <% end %>
 
 <div class="comment <%= commentclass %>">
-  <div class="commentdetails">
-    <%= comment.user %> at <%= format_datetime comment.created_at %>:
-     <% if signed_in_as_admin?(@cardset) %>
-      <%= link_to delete_image, comment,
-        :confirm => "Really delete this comment?",
-        :method => :delete %>
-      <!-- Admin users can set comment status, and see highlights on unaddressed comments and highlighted comments;
-           non-admin users can't set comment status, and see highlights on highlighted comments -->
-      <% comment_actions = [:address, :unaddress, :highlight, :unhighlight]
-         comment_images = {
-           :address => "address.png",         # "mark addressed",
-           :unaddress => "unaddress.png",     # "mark unaddressed",
-           :highlight => "highlight.png",     # "highlight",
-           :unhighlight => "unhighlight.png", # "unhighlight",
-         }
-         comment_descriptions = {
-           :address => "Mark this comment addressed",
-           :unaddress => "Mark this comment unaddressed",
-           :highlight => "Highlight this comment",
-           :unhighlight => "Unhighlight this comment",
-         }
-         comment_values = {
-           :address => comment_status[:normal],
-           :unaddress => comment_status[:unaddressed],
-           :highlight => comment_status[:highlighted],
-           :unhighlight => comment_status[:normal],
-         }
-
-
-         if comment.unaddressed? && @cardset.configuration.use_addressing
-           visible_buttons = [:address]
-         elsif comment.highlighted? && @cardset.configuration.use_highlighting
-           visible_buttons = [:unhighlight]
-         else
-           visible_buttons = (@cardset.configuration.use_highlighting ? [:highlight] : []) +
-               (@cardset.configuration.use_addressing ? [:unaddress ] : [])
-         end
-         visibility = Hash[ comment_actions.map {
-                       |b| visible_buttons.include?(b) ? [b, 'inline'] : [b, 'none']
-                      } ]
-         %>
-      <% comment_actions.each do |action| %>
-        <% formid = "#{action.to_s}_comment_#{comment.id}" %>
-        <% target_of_form = (comment.cardset_id ? [@cardset, comment] : comment) %>
-        <%= form_for target_of_form,
-                              # :remote => true, :with => "action = #{action}", :dataType => 'script',
-                :html => {
-                  :id => formid,
-                  :style => "display: #{visibility[action]}"
-                } do |f| %>
-          <%= f.hidden_field :status, :value => comment_values[action] %>
-          <%= image_submit_tag comment_images[action], :alt => comment_descriptions[action],
-                                                     :title => comment_descriptions[action] %>
-        <% end %>
-
-      <% end %>
+  <% if buttons %>
+    <%= render :partial => 'shared/comment_buttons' %>
   <% end %>
-  </div>
   <div class="commentbody">
-    <%= Maruku.new(sanitize(comment.comment)).to_html.html_safe %>
+    <%= Maruku.new(sanitize(@comment.comment)).to_html.html_safe %>
   </div>
 </div>

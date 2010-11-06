@@ -1,4 +1,5 @@
 <% @title = @card.name %>
+<% new_comment = @comment %>
 <table border="0"> <!-- grouping table -->
  <tr>
   <td class="cardcell"> <!-- card -->
@@ -26,11 +27,14 @@
        <b>Comments:</b>
        <div class="cardhistory">
        <ul>
-       <%= render :partial => 'shared/comment', :collection => @card.comments %>
+         <% @card.comments.each do |@comment| %>
+           <%= render :partial => 'shared/comment', :locals => { :buttons => true } %>
+         <% end %>
        </ul>
        </div>
        <% if permission_to_comment(@card.cardset) %>
          <b>Add your comments:</b>
+         <% @comment = new_comment %>
          <%= render 'shared/card_comment_form' %>
        <% else %>
          <%= @cardset.comment_permission_message %>
