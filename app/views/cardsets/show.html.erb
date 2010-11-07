@@ -68,11 +68,12 @@
       <table>
       <% highlightedcomments.each_slice(5) do |comments_slice| %>
         <tr>
-        <% comments_slice.each do |comment| %>
+        <% comments_slice.each do |@comment| %>
           <td>
-          <% @card = comment.card %>
-          On <%= link_to @card.name, @card %> (<%= link_to "reply", @card %>):
-          <%= render :partial => 'shared/comment', :locals => { :comment => comment } %>
+          <% target = @comment.card || @comment.cardset %>
+          <% reply_link = @comment.card || new_cardset_comment_path(@comment.cardset) %>
+          On <%= link_to target.name, target %> (<%= link_to "reply", reply_link %>):
+          <%= render :partial => 'shared/comment', :locals => { :buttons => true } %>
           </td>
         <% end %>
         </tr>
