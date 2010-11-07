@@ -76,6 +76,7 @@ class CardsetsController < ApplicationController
   def new
     @cardset = Cardset.new
     @cardset.build_configuration
+    @cardset.configuration.set_default_values!
   end
 
   # GET /cardsets/1/edit
@@ -88,9 +89,9 @@ class CardsetsController < ApplicationController
     @cardset = Cardset.new(params[:cardset])
     @cardset.user_id = current_user.id
 
-    configuration = @cardset.build_configuration(params[:cardset][:configuration])
-    ok = @cardset.save!
-    ok &= configuration.save!
+    configuration = @cardset.build_configuration(params[:configuration])
+    ok = @cardset.save
+    ok &= configuration.save
 
     if ok
       redirect_to(@cardset, :notice => 'Cardset was successfully created.')

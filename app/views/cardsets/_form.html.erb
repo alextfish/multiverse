@@ -25,7 +25,13 @@
         <%= f.label :description, "Short description" %><br />
         <%= f.text_field :description, :width => "50em" %>
           <div class="helptext">This is a short sentence that will be displayed alongside your set's name in lists.
-          <br>You can add more elaborate description using <%= link_to "details pages", new_cardset_details_page_path(@cardset) %>.</div>
+          <br>You can add more elaborate description using
+          <% if !@cardset.new_record?  # Can't use link_to_unless, because n_c_d_p_p(@c) will *error* if @c.new_record. %>
+            <%= link_to "details pages", new_cardset_details_page_path(@cardset) %>.
+          <% else %>
+            details pages.
+          <% end %>
+          </div>
       </div>
     </td>
     <td><!-- Cardset configuration -->
@@ -64,7 +70,12 @@
       </div>
 
       <div class="config_section">
-        On <%= link_to_unless @cardset.new_record?, "cardlist", cardlist_cardset_path(@cardset) %>:
+        On
+        <% if !@cardset.new_record? %>
+          <%= link_to "cardlist", cardlist_cardset_path(@cardset) %>:
+        <% else %>
+          cardlist:
+        <% end %>
           <%= config_fields.label :cardlist_show_comments, "Show comments" %>
             <%= config_fields.check_box :cardlist_show_comments %>
           <%= config_fields.label :cardlist_show_active, "Show active" %>

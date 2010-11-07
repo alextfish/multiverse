@@ -1,5 +1,5 @@
 # == Schema Information
-# Schema version: 20100926114339
+# Schema version: 20101103224310
 #
 # Table name: cardsets
 #
@@ -9,6 +9,7 @@
 #  description :text
 #  created_at  :datetime
 #  updated_at  :datetime
+#
 
 
 require 'csv'
@@ -80,7 +81,7 @@ class Cardset < ActiveRecord::Base
   SUPERTYPES_AND_REGEXPS = SUPERTYPES.map do |supertype|
     [supertype, Regexp.new(supertype, true)]   # true -> case-insensitive
   end
-
+  SUBTYPE_DELIMITERS = [" -- ", " - ", "--", "-"]
 
   def import_data(params)
     # Returns [success, message]
@@ -128,7 +129,9 @@ class Cardset < ActiveRecord::Base
     # Read the CSV
     # Use CSV.parse, which takes care of quoting and newlines for us
     cardsdata = CSV.parse(params[:data], params[:separator]);
-    cards = []
+    cards_and_comments = []
+    skipped_cards = overwritten_cards = new_cards = 0
+
     cardsdata.each_with_index do |carddata, index|
       # Allow completely blank lines
       if carddata.nil? || carddata == [nil]
@@ -146,7 +149,7 @@ class Cardset < ActiveRecord::Base
       end
       # Default rarity to common
       if !got_rarity
-        carddatahash[:rarity] = DEFAULT_RARITY
+        carddatahash["rarity"] = DEFAULT_RARITY
       end
       # Translate "R" -> "Rare", etc
       ENUM_ALIASES.keys.each do |field|
@@ -162,30 +165,68 @@ class Cardset < ActiveRecord::Base
           carddatahash["cardtype"].slice!(regexp)
         end
       end
+      # Move subtypes to correct places
+      SUBTYPE_DELIMITERS.each do |delimiter|
+        if carddatahash["cardtype"].include?(delimiter) && carddatahash["subtype"].blank?
+          carddatahash["cardtype"], carddatahash["subtype"] = carddatahash["cardtype"].split(delimiter)
+        end
+      end
       # Strip whitespace
       STRING_FIELDS.each do |field|
         carddatahash[field] && carddatahash[field].strip!
       end
 
-
+      # Remove the comment from the card data, as we do something different with the comment
       if got_comment
         comment = carddatahash.delete[:comment]
       end
-      card = @cardset.cards.build(carddatahash)
+
+      # Obtain the existing card
+      if params[:duplicates] == "duplicate"
+        # Always just create a new card
+        new_cards+=1
+        card = @cardset.cards.build(carddatahash)
+      else
+        # See if there's an existing card
+        existing_card = carddatahash["code"] && @cardset.cards.find_by_code(carddatahash["code"])
+        if existing_card.nil?
+          existing_card = carddatahash["name"] && @cardset.cards.find_by_name(carddatahash["name"])
+        end
+        if existing_card.nil?
+          # Just create a new card
+          new_cards+=1
+          card = @cardset.cards.build(carddatahash)
+        else
+          if params[:duplicates] == "preserve"
+            skipped_cards+=1
+            next # Skip this loop iteration and ignore this card completely
+          elsif params[:duplicates] == "replace"
+            # Overwrite this card with the new card
+            overwritten_cards+=1
+            Rails.logger.info "Overwriting #{carddatahash['name']} with its new version"
+            card = existing_card
+            # Don't use update_attributes, because we don't want to save! the card yet
+            card.attributes = carddatahash
+          else
+            raise "Unknown option for 'duplicates' parameter: #{params[:duplicates]}"
+          end
+        end
+      end
 
       # Don't save the card yet, since there may be a parse error on later lines
       if got_comment && !comment.blank?
-        cards << [card, comment]
+        cards_and_comments << [card, comment]
       else
-        cards << [card, nil]
+        cards_and_comments << [card, nil]
       end
+      Rails.logger.info "Imported card #{card.name}"
     end
 
     # We've not returned so far, so the whole data must be good
-    cards.each do |cardandcomment|
-      card = cardandcomment[0]
+    cards_and_comments.each do |card_and_comment|
+      card = card_and_comment[0]
       card.frame = card.calculated_frame
-      commenttext = cardandcomment[1]
+      commenttext = card_and_comment[1]
       card.save!
       if !commenttext.nil?
         comment = card.comments.build(:user => current_user, :comment => commenttext)
@@ -193,6 +234,10 @@ class Cardset < ActiveRecord::Base
       end
     end
 
-    return true, 'Data was successfully imported!' + (Rails.env.development? ? debug : '')
+    message = "Data was successfully imported! "
+    skipped_cards>0 && message << "#{skipped_cards} cards were left unchanged. "
+    overwritten_cards>0 && message << "#{overwritten_cards} cards were updated. "
+    new_cards>0 && message << "#{new_cards} new cards were added. "
+    return true, message
   end
 end

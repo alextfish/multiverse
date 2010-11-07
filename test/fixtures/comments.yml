@@ -1,5 +1,5 @@
 # == Schema Information
-# Schema version: 20100930004247
+# Schema version: 20101103224310
 #
 # Table name: comments
 #
@@ -11,6 +11,7 @@
 #  status     :integer
 #  created_at :datetime
 #  updated_at :datetime
+#  cardset_id :integer
 #
 
 # Read about fixtures at http://ar.rubyonrails.org/classes/Fixtures.html

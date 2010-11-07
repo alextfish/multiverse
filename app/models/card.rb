@@ -1,5 +1,5 @@
 # == Schema Information
-# Schema version: 20100926114339
+# Schema version: 20101103224310
 #
 # Table name: cards
 #
@@ -21,6 +21,7 @@
 #  active      :boolean
 #  created_at  :datetime
 #  updated_at  :datetime
+#  frame       :string(255)
 #
 
 class Card < ActiveRecord::Base

@@ -1,3 +1,16 @@
+# == Schema Information
+# Schema version: 20101103224310
+#
+# Table name: details_pages
+#
+#  id         :integer         not null, primary key
+#  cardset_id :integer
+#  title      :string(255)
+#  body       :text
+#  created_at :datetime
+#  updated_at :datetime
+#
+
 class DetailsPage < ActiveRecord::Base
   belongs_to :cardset
   validates_presence_of :title

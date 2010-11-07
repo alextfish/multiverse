@@ -1,10 +1,11 @@
 # == Schema Information
-# Schema version: 20100930004247
+# Schema version: 20101103224310
 #
 # Table name: comments
 #
 #  id         :integer         not null, primary key
 #  card_id    :integer
+#  cardset_id :integer
 #  user       :text
 #  posttime   :datetime
 #  comment    :text
@@ -32,7 +33,7 @@ class Comment < ActiveRecord::Base
   end
 
   def set_default_status!
-    self.status = (get_cardset.configuration.default_comment_state == "Unaddressed") ? comment_status[:unaddressed] : comment_status[:normal]
+    self.status = (get_cardset.configuration.default_comment_state == "unaddressed") ? comment_status[:unaddressed] : comment_status[:normal]
   end
 
   def get_cardset
@@ -52,16 +53,16 @@ class Comment < ActiveRecord::Base
     status == comment_status[:highlighted]
   end
   def admin_status_string
-    if self.status == comment_status[:unaddressed] && self.card.cardset.configuration.use_addressing
+    if self.status == comment_status[:unaddressed] && get_cardset.configuration.use_addressing
       "unaddressed"
-    elsif self.status == comment_status[:highlighted] && self.card.cardset.configuration.use_highlighting
+    elsif self.status == comment_status[:highlighted] && get_cardset.configuration.use_highlighting
       "highlighted"
     else
       "normal"
     end
   end
   def public_status_string
-    if self.status == comment_status[:highlighted] && self.card.cardset.configuration.use_highlighting
+    if self.status == comment_status[:highlighted] && get_cardset.configuration.use_highlighting
       "highlighted"
     else
       "normal"

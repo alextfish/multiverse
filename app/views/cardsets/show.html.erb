@@ -46,7 +46,7 @@
   <%= @cardset.description %>
 </p>
 
-<%= render 'setviews' unless @allmycards.empty? %>
+<%= render 'setviews' %>
 
 
 <% if signed_in_as_admin?(@cardset) %>
