@@ -36,7 +36,9 @@ class CardsController < ApplicationController
   # GET /cards/new.xml
   def new
     @card = Card.new(:cardset_id => params[:cardset_id])
-    @cardset = Cardset.find(params[:cardset_id])
+    unless @cardset && @cardset.new_record?
+      @cardset = Cardset.find(params[:cardset_id])
+    end
 
     respond_to do |format|
       format.html # new.html.erb

@@ -1,5 +1,5 @@
 <% @title = @card.name %>
-<% new_comment = @comment %>
+<% new_comment = @comment # store, because we'll be overwriting "@comment" to show previous comments %>
 <table border="0"> <!-- grouping table -->
  <tr>
   <td class="cardcell"> <!-- card -->
@@ -34,7 +34,7 @@
        </div>
        <% if permission_to_comment(@card.cardset) %>
          <b>Add your comments:</b>
-         <% @comment = new_comment %>
+         <% @comment = new_comment # restore the value stored at the top %>
          <%= render 'shared/card_comment_form' %>
        <% else %>
          <%= @cardset.comment_permission_message %>

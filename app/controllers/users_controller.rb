@@ -1,5 +1,4 @@
 class UsersController < ApplicationController
-  before_filter :authenticate, :only => [:edit, :update, :destroy]
   before_filter :correct_user, :only => [:edit, :update, :destroy]
   before_filter :admin_user,   :only => :destroy
   before_filter :not_signed_in,:only => [:new, :create]
@@ -8,7 +7,7 @@ class UsersController < ApplicationController
   # GET /users.xml
   def index
     @title = "All users"
-    @users = User.paginate(:page => params[:page], :per_page => 10 )
+    @users = User.paginate(:page => params[:page], :per_page => 50 )
 
     respond_to do |format|
       format.html # index.html.erb

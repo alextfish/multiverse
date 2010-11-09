@@ -46,7 +46,7 @@ class CommentsController < ApplicationController
   # Doubles up for creation of card comments and cardset comments
   def create
     if !permission_to_comment(@cardset)
-      redirect_to where_you_were, :notice => @cardset.comment_permission_message
+      redirect_to :back, :notice => @cardset.comment_permission_message
     else
       @comment = Comment.new(params[:comment])
       @comment.set_default_status!

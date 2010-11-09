@@ -63,12 +63,12 @@ class CardsetsController < ApplicationController
 
   # POST /cardsets/1/import_data
   def import_data
-    success, message = @cardset.import_data(params)
+    success, message = @cardset.import_data(params, current_user)
     if success
       redirect_to(@cardset, :notice => message)
     else
       flash.now[:error] = message
-      render :action => "import"
+      render :import
     end
   end
 

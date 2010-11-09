@@ -4,6 +4,8 @@
 
 <h2>Import Data Into <%= @cardset.name %></h2>
 <% @title = "Import into #{@cardset.name}" %>
+
+
 <p>
 If you've designed your cards elsewhere, you can import them into Multiverse with this page.
 </p>
@@ -29,7 +31,7 @@ You should export your set data in a Character-Separated Values format, where fi
 <br>If a card being imported has the same (nonempty) <code>code</code> as an existing card in your cardset before the import, and the same <code>name</code> as a <i>different</i> existing card in your cardset, the <code>code</code> rather than the <code>name</code> will be used to determine the "old card".
 </p>
 <hr>
-<%= form_tag "/cardsets/#{@cardset.id}/import_data" do %>
+<%= form_tag :action => :import_data, :id => @cardset do %>
   <p><b>Separating character:</b>
   <%= text_field_tag "separator", "", :maxlength => 1 %>
   </p>

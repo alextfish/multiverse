@@ -83,7 +83,7 @@ class Cardset < ActiveRecord::Base
   end
   SUBTYPE_DELIMITERS = [" -- ", " - ", "--", "-"]
 
-  def import_data(params)
+  def import_data(params, current_user)
     # Returns [success, message]
 
     # Initial informative error messages
@@ -125,6 +125,9 @@ class Cardset < ActiveRecord::Base
     fields = uniqfields
     got_rarity = fields.include?("rarity")
     got_comment = fields.include?("comment")
+    got_type = fields.include?("type")
+    got_loyalty = fields.include?("loyalty")
+    got_colour = fields.include?("colour")
 
     # Read the CSV
     # Use CSV.parse, which takes care of quoting and newlines for us
@@ -139,7 +142,7 @@ class Cardset < ActiveRecord::Base
       end
       if carddata.length != fields.length
         # Give a nice error message, with 1-based indexing
-        return false, "Line #{index+1} of data - #{carddata.class} - had #{carddata.length} fields when expecting #{fields.length}"
+        return false, "Line #{index+1} of data had #{carddata.length} fields when expecting #{fields.length}"
       end
 
       carddatahash = Hash[fields.zip(carddata)]
@@ -158,17 +161,19 @@ class Cardset < ActiveRecord::Base
           carddatahash[field] = ENUM_ALIASES[field].has_key?(inputval) ? ENUM_ALIASES[field][inputval] : inputval
         end
       end
-      # Move supertypes to correct places
-      SUPERTYPES_AND_REGEXPS.each do |supertype, regexp|
-        if carddatahash["cardtype"].downcase =~ regexp
-          carddatahash["supertype"] =  (carddatahash["supertype"] || "") + " " + supertype
-          carddatahash["cardtype"].slice!(regexp)
+      if got_type
+        # Move supertypes to correct places
+        SUPERTYPES_AND_REGEXPS.each do |supertype, regexp|
+          if carddatahash["cardtype"].downcase =~ regexp
+            carddatahash["supertype"] =  (carddatahash["supertype"] || "") + " " + supertype
+            carddatahash["cardtype"].slice!(regexp)
+          end
         end
-      end
-      # Move subtypes to correct places
-      SUBTYPE_DELIMITERS.each do |delimiter|
-        if carddatahash["cardtype"].include?(delimiter) && carddatahash["subtype"].blank?
-          carddatahash["cardtype"], carddatahash["subtype"] = carddatahash["cardtype"].split(delimiter)
+        # Move subtypes to correct places
+        SUBTYPE_DELIMITERS.each do |delimiter|
+          if carddatahash["cardtype"].include?(delimiter) && carddatahash["subtype"].blank?
+            carddatahash["cardtype"], carddatahash["subtype"] = carddatahash["cardtype"].split(delimiter)
+          end
         end
       end
       # Strip whitespace
@@ -178,7 +183,18 @@ class Cardset < ActiveRecord::Base
 
       # Remove the comment from the card data, as we do something different with the comment
       if got_comment
-        comment = carddatahash.delete[:comment]
+        comment = carddatahash.delete("comment")
+      end
+      # Loyalty is stored internally as toughness, so if a card has loyalty but no toughness, move loyalty to toughness
+      if got_loyalty
+        if carddatahash["toughness"].blank? && !carddatahash["loyalty"].blank?
+          carddatahash["toughness"] = carddatahash["loyalty"]
+        end
+        carddatahash.delete("loyalty")
+      end
+      # Capitalize frame/colour
+      if got_colour
+        carddatahash["colour"] && carddatahash["colour"].capitalize!
       end
 
       # Obtain the existing card
@@ -225,11 +241,11 @@ class Cardset < ActiveRecord::Base
     # We've not returned so far, so the whole data must be good
     cards_and_comments.each do |card_and_comment|
       card = card_and_comment[0]
-      card.frame = card.calculated_frame
+      card.frame = card.colour || card.calculated_frame
       commenttext = card_and_comment[1]
       card.save!
       if !commenttext.nil?
-        comment = card.comments.build(:user => current_user, :comment => commenttext)
+        comment = card.comments.build(:user => current_user.name, :comment => commenttext)
         comment.save!
       end
     end
