@@ -36,7 +36,7 @@
         <%= f.text_field :cardtype %> &ndash;
         <%= f.text_field :subtype %>
      <td class="cardrarity <%= @card.rarity %>" id="raritycell">
-      <%= f.select :rarity, card_rarities.map{|r| [r[0].chr.upcase, r]},
+      <%= f.select :rarity, Card.rarities.map{|r| [r[0].chr.upcase, r]},
         { :selected => @card.rarity },
         { :onchange => "update_card_rarity(this.value)" } %>
 
@@ -69,14 +69,13 @@
     <% end %>
     <!-- tr>
      <td><##%= f.label :colour %></td>
-     <td><##%= f.select :colour, card_colours.unshift("Auto").map{|c| [c.capitalize, c]} %></td>
+     <td><##%= f.select :colour, Card.colours.unshift("Auto").map{|c| [c.capitalize, c]} %></td>
     </tr -->
     <tr>
      <td><%= f.label :frame %></td>
-     <% frames_keys = card_frames %>
+     <% frames_keys = Card.frames %>
      <% frames_values = frames_keys.map { |frame| frame.gsub(/[()-]/, '') } %>
      <% frames = frames_keys.zip(frames_values) %>
-     <% Rails.logger.info frames.inspect %>
      <td><%= f.select :frame, frames.unshift(["Auto", "Auto"]) %></td>
     </tr>
     <tr>

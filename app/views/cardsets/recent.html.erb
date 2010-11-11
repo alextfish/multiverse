@@ -11,13 +11,16 @@
 <% recent_items.sort! { |x, y| y.recency <=> x.recency }  # sort most recent items highest
    # TODO: Also remember cardset itself's properties
 %>
+<% items_to_show = recent_items.paginate :page => params[:page] || 1, :per_page => 50 %>
 
 <p>
   <% if !recent_items.empty? %>
     Recent updates to <%= @cardset.name %>:
 
+    <%= will_paginate items_to_show  %>
+
     <ul class="commentlist compact">
-      <% recent_items.take(200).each do |object| %>
+      <% items_to_show.each do |object| %>
         <li class="recent_item">
             <%= format_datetime object.recency %>
             <% if object.kind_of?(Card) %>
@@ -41,6 +44,8 @@
             <% end %>
       <% end %>
     </ul>
+
+    <%= will_paginate items_to_show %>
   <% else %>
     There are no cards in <%= @cardset.name %>. There's been no activity.
   <% end %>

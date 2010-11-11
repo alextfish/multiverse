@@ -14,29 +14,6 @@ module ApplicationHelper
     end
   end
 
-  def card_colour_values
-    ["white", "blue", "black", "red", "green", "colourless", "multicolour"]
-  end
-
-  def card_colours
-    ["White", "Blue", "Black", "Red", "Green"]
-  end
-
-  def card_frames
-    card_colours + ["Artifact", "Multicolour", "Colourless"] +
-    colour_pairs.map { |pair| "Hybrid #{pair.join("-").downcase}" } +
-    ["Land (colourless)"] + card_colours.map { |col| "Land (#{col.downcase})" } +
-    colour_pairs.map { |pair| "Land (#{pair.join('-').downcase})" } +
-    ["Land (multicolour)"]
-  end
-  def colour_pairs
-    card_colours.combination(2).to_a
-  end
-
-  def card_rarities
-    ["common", "uncommon", "rare", "mythic"]
-  end
-
   def format_datetime(dt)
     dt.to_formatted_s(:long_ordinal)
   end

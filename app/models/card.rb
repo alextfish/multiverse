@@ -44,7 +44,31 @@ class Card < ActiveRecord::Base
     updated_at
   end
 
-  @@card_colours = ["White", "Blue", "Black", "Red", "Green"]
+  def self.colours
+    ["White", "Blue", "Black", "Red", "Green"]
+  end
+
+  def self.frames
+    Card.colours + ["Artifact", "Multicolour", "Colourless"] +
+    Card.colour_pairs.map { |pair| "Hybrid #{pair.join("-").downcase}" } +
+    ["Land (colourless)"] +
+    Card.colours.map { |col| "Land (#{col.downcase})" } +
+    Card.colour_pairs.map { |pair| "Land (#{pair.join('-').downcase})" } +
+    ["Land (multicolour)"]
+  end
+  def self.colour_pairs
+    Card.colours.combination(2).to_a
+  end
+
+  def self.rarities
+    ["common", "uncommon", "rare", "mythic"]
+  end
+  def self.supertypes
+    ["Legendary", "Basic", "World", "Snow"]
+  end
+  def self.category_order
+    ["Colourless", "White", "Blue", "Black", "Red", "Green", "Multicolour", "Hybrid", "Artifact", "Land"]
+  end
   @@colour_regexps = [/w/i, /u/i, /b/i, /r/i, /g/i]
   @@nonhybrid_colour_regexps = [
       /(^|[^\/{(])w/i,  # match w either at the start ^, or after anything other than / { (
@@ -52,11 +76,6 @@ class Card < ActiveRecord::Base
       /(^|[^\/{(])b/i,
       /(^|[^\/{(])r/i,
       /(^|[^\/{(])g/i]
-  @@category_order = ["Colourless", "White", "Blue", "Black", "Red", "Green", "Multicolour", "Hybrid", "Artifact", "Land"]
-
-  def category_order
-    @@category_order
-  end
 
   def colours_in_cost
     out = @@colour_regexps.map do |re|
@@ -67,7 +86,7 @@ class Card < ActiveRecord::Base
     colours_in_cost.count{|x|x}
   end
   def colour_strings_present
-    out = (@@colour_regexps.zip(@@card_colours)).map do |re, colour|
+    out = (@@colour_regexps.zip(Card.colours)).map do |re, colour|
       re.match(cost) ? colour : nil
     end.compact
   end
@@ -87,7 +106,7 @@ class Card < ActiveRecord::Base
   def <=>(c2)
     if category != c2.category
       # Sort by category
-      return @@category_order.find_index(category) <=> @@category_order.find_index(c2.category)
+      return Card.category_order.find_index(category) <=> Card.category_order.find_index(c2.category)
     else
       if ["Multicolour", "Hybrid"].include?(category)
         # Within a category, sort by colour-pair (hybrid / gold), then name

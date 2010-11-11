@@ -77,8 +77,7 @@ class Cardset < ActiveRecord::Base
       "mythic rare" => "mythic", "mystic" => "mythic", "mythicrare" => "mythic"
     }
   }
-  SUPERTYPES = ["Legendary", "Basic", "World", "Snow"]
-  SUPERTYPES_AND_REGEXPS = SUPERTYPES.map do |supertype|
+  SUPERTYPES_AND_REGEXPS = Card.supertypes.map do |supertype|
     [supertype, Regexp.new(supertype, true)]   # true -> case-insensitive
   end
   SUBTYPE_DELIMITERS = [" -- ", " - ", "--", "-"]
@@ -150,10 +149,6 @@ class Cardset < ActiveRecord::Base
       if carddatahash.has_key?("")
         carddatahash.delete("")
       end
-      # Default rarity to common
-      if !got_rarity
-        carddatahash["rarity"] = DEFAULT_RARITY
-      end
       # Translate "R" -> "Rare", etc
       ENUM_ALIASES.keys.each do |field|
         if !carddatahash[field].nil?
@@ -175,6 +170,10 @@ class Cardset < ActiveRecord::Base
             carddatahash["cardtype"], carddatahash["subtype"] = carddatahash["cardtype"].split(delimiter)
           end
         end
+      end
+      # Enforce rarity; Default rarity to common
+      if (!got_rarity) || !Card.rarities.include?(carddatahash["rarity"])
+        carddatahash["rarity"] = DEFAULT_RARITY
       end
       # Strip whitespace
       STRING_FIELDS.each do |field|
