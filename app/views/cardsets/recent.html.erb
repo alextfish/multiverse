@@ -35,7 +35,9 @@
               <% else %>
                 <% raise "Comment on an unidentifiable object: #{object.inspect}" %>
               <% end %>
-              <%= object.user %> commented on <%= link_to @target.name, @target %>:
+              <%= link_to_unless object.user.nil?, object.display_user, object.user %>
+              commented on
+              <%= link_to @target.name, @target %>:
               <!-- %= simple_format h(object.comment), :class => "commentbody" % -->
               <% @comment = object %>
               <%= render :partial => 'shared/comment', :locals => { :buttons => false } %>

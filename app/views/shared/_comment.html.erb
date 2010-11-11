@@ -9,7 +9,6 @@
     <%= render :partial => 'shared/comment_buttons' %>
   <% end %>
   <div class="commentbody">
-    <% Rails.logger.info Maruku.new(sanitize(format_links(@comment.body))).to_html %>
     <%= Maruku.new(sanitize(format_links(@comment.body))).to_html.html_safe %>
   </div>
 </div>
