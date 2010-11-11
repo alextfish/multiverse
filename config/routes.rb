@@ -16,7 +16,7 @@ Multiverse::Application.routes.draw do
 
   resources :old_cards, :only => [:create, :destroy]
 
-  resources :comments, :only => [:create, :destroy, :update]
+  resources :comments, :only => [:create, :destroy, :edit, :update]
   match '/newcomment', :to => 'comments#create'
 
   resources :cards, :only => [:new, :create, :destroy, :edit, :update, :show]

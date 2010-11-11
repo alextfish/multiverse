@@ -32,7 +32,7 @@ class User < ActiveRecord::Base
                        :length       => { :within => 4..140 }
 
   has_many :cardsets
-  #has_many :comments
+  has_many :comments
 
   before_save :encrypt_password
 

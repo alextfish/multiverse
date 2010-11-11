@@ -12,7 +12,10 @@ module SessionsHelper
     !current_user.nil?
   end
   def signed_in_as_admin?(cardset)
-    current_user && current_user.id == cardset.user_id
+    signed_in? && current_user.id == cardset.user_id
+  end
+  def signed_in_as_moderator?
+    signed_in? && current_user.id == 1
   end
 
   def require_permission_to_view
@@ -40,10 +43,13 @@ module SessionsHelper
       when "signedin"
         return signed_in?
       when "admins"
-        return signed_in_as_admin?(cardset)
+        return signed_in_as_moderator? || signed_in_as_admin?(cardset)
       when "selected"
-        return signed_in_as_admin?(cardset) || cardset.configuration.comment_permitted_users.include?(current_user.name)
+        return signed_in_as_moderator? || signed_in_as_admin?(cardset) || cardset.configuration.comment_permitted_users.include?(current_user.name)
     end
+  end
+  def permission_to_edit(comment)
+    signed_in_as_moderator? || (signed_in? && current_user.id == comment.user.id)
   end
 
   def current_user=(user) # the setter for current_user

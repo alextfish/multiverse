@@ -1,17 +1,27 @@
 <div class="commentdetails">
-  <%= @comment.user %> at <%= format_datetime @comment.created_at %>:
-   <% if signed_in_as_admin?(@cardset) %>
-    <%= link_to delete_image, @comment,
-      :confirm => "Really delete this comment?",
-      :method => :delete %>
+  <%= link_to_unless @comment.user.nil?, @comment.display_user, @comment.user %>
+   at
+  <%= format_datetime @comment.created_at %>:
+  <% target_of_links = (@comment.cardset_id ? [@cardset, @comment] : @comment) %>
+  <% if signed_in_as_admin?(@cardset) %>
+    <%= link_to image_tag("delete.png", :alt => "Delete this comment",
+                          :title => "Delete this comment"),
+                @comment,
+                :confirm => "Really delete this comment?",
+                :method => :delete %>
     <!-- Admin users can set comment status, and see highlights on unaddressed comments and highlighted comments;
          non-admin users can't set comment status, and see highlights on highlighted comments -->
-    <% comment_actions = [:address, :unaddress, :highlight, :unhighlight]
+    <% comment_actions = [
+         :address,
+         :unaddress,
+         :highlight,
+         :unhighlight,
+       ]
        comment_images = {
-         :address => "address.png",         # "mark addressed",
-         :unaddress => "unaddress.png",     # "mark unaddressed",
-         :highlight => "highlight.png",     # "highlight",
-         :unhighlight => "unhighlight.png", # "unhighlight",
+         :address => "address.png",
+         :unaddress => "unaddress.png",
+         :highlight => "highlight.png",
+         :unhighlight => "unhighlight.png",
        }
        comment_descriptions = {
          :address => "Mark this comment addressed",
@@ -41,8 +51,7 @@
        %>
     <% comment_actions.each do |action| %>
       <% formid = "#{action.to_s}_comment_#{@comment.id}" %>
-      <% target_of_form = (@comment.cardset_id ? [@cardset, @comment] : @comment) %>
-      <%= form_for target_of_form,
+      <%= form_for target_of_links,
                             # :remote => true, :with => "action = #{action}", :dataType => 'script',
               :html => {
                 :id => formid,
@@ -54,5 +63,13 @@
       <% end %>
 
     <% end %>
-<% end %>
+  <% end %>
+  <% if permission_to_edit(@comment) %>
+    <% Rails.logger.info "target is #{target_of_links.inspect}" %>
+    <%= link_to image_tag("edit.png",
+                          :alt => "Edit this comment",
+                          :title => "Edit this comment"),
+                edit_comment_path(target_of_links) %>
+  <% end %>
+
 </div>

@@ -26,17 +26,6 @@ class CommentsController < ApplicationController
     end
   end
 
-  def redirect_to_comment_parent
-    # Redirect to the card if this was a card comment, or the cardset if it was a cardset comment
-    if !@comment.card.nil?
-      redirect_to(@comment.card)
-    elsif !@comment.cardset.nil?
-      redirect_to(@comment.cardset)
-    else
-      redirect_to(root_path, :error => "Unexpected type of comment")
-    end
-  end
-
   # NEW: only exists for cardset comments
   def new
     @comment = @cardset.comments.build
@@ -55,7 +44,7 @@ class CommentsController < ApplicationController
       if !ok
         flash[:notice] = "Error creating comment: #{@comment.errors}"
       end
-      redirect_to_comment_parent
+      redirect_to @comment.parent
     end
   end
 
@@ -65,7 +54,7 @@ class CommentsController < ApplicationController
     @comment.update_attributes(params[:comment])
 
     respond_to do |format|
-      format.html { redirect_to_comment_parent }
+      format.html { redirect_to @comment.parent }
       format.js { render :layout => false }
     end
   end
@@ -75,6 +64,6 @@ class CommentsController < ApplicationController
     @comment = Comment.find(params[:id])
     @comment.destroy
 
-    redirect_to_comment_parent
+    redirect_to @comment.parent
   end
 end
