@@ -32,6 +32,10 @@
 .rare   { background-color: #e0d060; }
 .mythic { background-color: #993333; color: #ffffff; }
 
+.Colourless { background-color: #ccc6cc; }
+.Colourless .cardpt, .Colourless .cardtitle, .Colourless .cardtypeline { background-color: #eee9ee; }
+.Colourless .cardtext { background-color: #f2ecf2; }
+
 .White { background-color: #fcf9f0; }
 .White .cardpt, .White .cardtitle, .White .cardtypeline { background-color: #fffff9; }
 .White .cardtext { background-color: #ffffff; }
@@ -78,6 +82,9 @@
 
 .Land.green .cardpt, .Land.green .cardtitle, .Land.green .cardtypeline { background-color: #dfd; }
 .Land.green .cardtext { background-color: #cfc; }
+
+.Land.multicolour .cardpt, .Land.multicolour .cardtitle, .Land.multicolour .cardtypeline { background-color: #eea; }
+.Land.multicolour .cardtext { background-color: #ffd; }
 
 
 .Land.whiteblue .cardtext {
