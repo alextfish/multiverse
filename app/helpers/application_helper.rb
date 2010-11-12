@@ -20,14 +20,21 @@ module ApplicationHelper
     }
   end
 
+  def format_all_markup(text)
+    # Translate [[[ into {{{
+    pre_formatted_text = text.gsub('[[[', '{{{').gsub(']]]', '}}}')
+    markdown_text = Maruku.new(sanitize(pre_formatted_text)).to_html
+    formatted_text = format_links(markdown_text).html_safe
+  end
+
   def format_links(text)
     cardset_card_regexp = /\(\(\(([^)]*)\)\)\)/
-    wizards_card_regexp = /\[\[\[([^\]]*)\]\]\]/
-    remove_brackets_regexp = /([(\[])\1\1(.*)([)\]])\3\3/
+    wizards_card_regexp = /\{\{\{([^\}]*)\}\}\}/
+    remove_brackets_regexp = /([(\{])\1\1(.*)([)\}])\3\3/
     cardset_card_block = lambda { cardset_card_link(@cardset, "$1") }
     wizards_card_block = lambda { wizards_card_link("$1") }
 
-    text.gsub(cardset_card_regexp) { |cardname|
+    text_out = text.gsub(cardset_card_regexp) { |cardname|
       cardset_card_link(@cardset, cardname.gsub(remove_brackets_regexp, '\2'))
     }.gsub(wizards_card_regexp) { |cardname|
       wizards_card_link(cardname.gsub(remove_brackets_regexp, '\2'))

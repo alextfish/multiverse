@@ -5,7 +5,7 @@
 <%= render 'cardsets/setviews' %>
 
 <p>
-  <%= Maruku.new(sanitize(@details_page.body)).to_html.html_safe %>
+  <%= format_all_markup(@details_page.body) %>
 </p>
 
 <% if signed_in_as_admin?(@cardset) %>
