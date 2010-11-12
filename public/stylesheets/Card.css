@@ -12,7 +12,7 @@
 .cardrarity { border: none; text-align: center; margin-left: 4px; margin-right: 4px; width: 30px; }
 .cardname   { border: none; text-align: left; }
 .cardtype   { border: none; text-align: left; }
-.cardart { width: 185px; height: 150px; border: 1px solid black; text-align: center; }
+.cardart { width: 185px; height: 100px; border: 1px solid black; text-align: center; }
 .cardtext { width: 185px; height: 130px; border: 1px solid black; text-align: left; font-size: 11pt; line-height: 99%; }
 .cardtext br { margin-bottom: 0.25em; }
 
