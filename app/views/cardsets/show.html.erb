@@ -29,11 +29,19 @@
   </p>
   <p>
     <% category_stats = stats[:by_category].map { |category, count| [category, count] } %>
-    <%= category_stats.sort { |pair1, pair2|
+    <% num_second_row = category_stats.length > 5 ? category_stats.length/2 : 0 %>
+    <% num_first_row = category_stats.length - num_second_row %>
+    <% sorted_cats = category_stats.sort { |pair1, pair2|
           Card.category_order.index(pair1[0]) <=> Card.category_order.index(pair2[0])
-        }.map { |category, count|
+        } %>
+    <%= sorted_cats.take(num_first_row).map { |category, count|
           "#{count} #{category}"
-        }.join(", ").downcase %>
+        }.join(", ").downcase %><% if num_second_row > 0 %>,
+      <br>
+      <%= sorted_cats[num_first_row..sorted_cats.length].map { |category, count|
+            "#{count} #{category}"
+          }.join(", ").downcase %>
+    <% end %>
   </p>
   <p>
     <%= sorted_comments.count %> comments total
