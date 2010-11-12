@@ -4,7 +4,7 @@
   <% commentclass = @comment.public_status_string  %>
 <% end %>
 
-<div class="comment <%= commentclass %>">
+<div class="comment <%= commentclass %>" id="comment_<%= @comment.id %>">
   <% if buttons %>
     <%= render :partial => 'shared/comment_buttons' %>
   <% end %>

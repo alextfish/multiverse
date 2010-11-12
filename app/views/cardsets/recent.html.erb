@@ -35,7 +35,7 @@
               <% else %>
                 <% raise "Comment on an unidentifiable object: #{object.inspect}" %>
               <% end %>
-              <%= link_to_unless object.user.nil?, object.display_user, object.user %>
+              <%= comment_user_link(object) %>
               commented on
               <%= link_to @target.name, @target %>:
               <!-- %= simple_format h(object.comment), :class => "commentbody" % -->

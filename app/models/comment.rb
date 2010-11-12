@@ -37,15 +37,18 @@ class Comment < ActiveRecord::Base
     end
   end
 
-  def comment_status  # also defined in application_helper :(
+  # Class methods
+  def self.status
     { :normal => 0,
       :unaddressed => 1,
       :highlighted => 2
     }
   end
 
+
+  # Instance methods
   def set_default_status!
-    self.status = (get_cardset.configuration.default_comment_state == "unaddressed") ? comment_status[:unaddressed] : comment_status[:normal]
+    self.status = (get_cardset.configuration.default_comment_state == "unaddressed") ? Comment.status[:unaddressed] : Comment.status[:normal]
   end
 
   def get_cardset
@@ -55,7 +58,6 @@ class Comment < ActiveRecord::Base
     cardset || card
   end
   def display_user
-    Rails.logger.info "user is #{user}, user_name is #{user_name}"
     user ? user.name : user_name
   end
   def recency  # For a comment, its order in recency is when it was posted; we ignore updates to its status
@@ -63,25 +65,25 @@ class Comment < ActiveRecord::Base
   end
 
   def addressed?
-    status != comment_status[:unaddressed]
+    status != Comment.status[:unaddressed]
   end
   def unaddressed?
-    status == comment_status[:unaddressed]
+    status == Comment.status[:unaddressed]
   end
   def highlighted?
-    status == comment_status[:highlighted]
+    status == Comment.status[:highlighted]
   end
   def admin_status_string
-    if self.status == comment_status[:unaddressed] && get_cardset.configuration.use_addressing
+    if self.status == Comment.status[:unaddressed] && get_cardset.configuration.use_addressing
       "unaddressed"
-    elsif self.status == comment_status[:highlighted] && get_cardset.configuration.use_highlighting
+    elsif self.status == Comment.status[:highlighted] && get_cardset.configuration.use_highlighting
       "highlighted"
     else
       "normal"
     end
   end
   def public_status_string
-    if self.status == comment_status[:highlighted] && get_cardset.configuration.use_highlighting
+    if self.status == Comment.status[:highlighted] && get_cardset.configuration.use_highlighting
       "highlighted"
     else
       "normal"

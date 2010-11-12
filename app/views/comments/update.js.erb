@@ -1,4 +1,4 @@
-page.call "update_comment_forms", commentid, action
-
-# receives "action" = :address etc, "commentid" = 13 etc
-# page << escape_javascript("update_comment_forms(#{commentid}, #{action});")
+# page.call "update_comment_forms", commentid, action %>
+alert("Boo!")
+$("New").update('Updated!')
+page << escape_javascript(<%= "update_comment_forms(#{params[:id]}, #{params[:comment][:status]});" %>)

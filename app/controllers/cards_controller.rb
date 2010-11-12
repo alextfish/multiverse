@@ -106,7 +106,8 @@ class CardsController < ApplicationController
 
     respond_to do |format|
       format.html { redirect_to(@cardset) }
-      format.xml  { head :ok }
+      # Horrible MVC violation, but I just can't get .js.erb files to render
+      format.js   { render :text => "$('card_row_#{params[:id]}').visualEffect('Fade', {'queue':'parallel'})" }
     end
   end
 end

@@ -34,7 +34,7 @@
 <% all_cards = Card.find_all_by_cardset_id(@cardset.id, :include => :comments) %>
 <% if all_cards && !all_cards.empty? %>
   <% all_cards.sort.each_with_index do |card, index| %>
-    <tr>
+    <tr id="card_row_<%= card.id %>">
       <td><%= index+1 %></td>
       <td><%= link_to card.name, card %></td>
       <td><%= card.category %></td>
@@ -61,7 +61,7 @@
         <td><%= card_comments_sorted.count %></td>
         <td>
           <% if !card_comments_sorted.empty? %>
-            <%= card_comments_sorted[0].created_at %> by <%= card_comments_sorted[0].user %>
+            <%= card_comments_sorted[0].created_at %> by <%= comment_user_link(card_comments_sorted[0]) %>
           <% end %>
         </td>
       <% end %>

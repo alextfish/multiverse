@@ -1,5 +1,5 @@
 <div class="commentdetails">
-  <%= link_to_unless @comment.user.nil?, @comment.display_user, @comment.user %>
+  <%= comment_user_link(@comment) %>
    at
   <%= format_datetime @comment.created_at %>:
   <% target_of_links = @comment # (@comment.cardset_id ? [@cardset, @comment] : @comment) %>
@@ -30,10 +30,10 @@
          :unhighlight => "Unhighlight this comment",
        }
        comment_values = {
-         :address => comment_status[:normal],
-         :unaddress => comment_status[:unaddressed],
-         :highlight => comment_status[:highlighted],
-         :unhighlight => comment_status[:normal],
+         :address => Comment.status[:normal],
+         :unaddress => Comment.status[:unaddressed],
+         :highlight => Comment.status[:highlighted],
+         :unhighlight => Comment.status[:normal],
        }
 
 
@@ -52,7 +52,7 @@
     <% comment_actions.each do |action| %>
       <% formid = "#{action.to_s}_comment_#{@comment.id}" %>
       <%= form_for target_of_links,
-                            # :remote => true, :with => "action = #{action}", :dataType => 'script',
+                             :remote => true, :dataType => 'script', :with => "action = update", #"#{action}",
               :html => {
                 :id => formid,
                 :style => "display: #{visibility[action]}"

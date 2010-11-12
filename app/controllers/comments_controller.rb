@@ -55,7 +55,9 @@ class CommentsController < ApplicationController
 
     respond_to do |format|
       format.html { redirect_to @comment.parent }
-      format.js { render :layout => false }
+      format.js  { render :text => "update_comment_status(#{params[:id]}, #{params[:comment][:status]})" } # this works!
+                 # { render }
+                 # { render :layout => false }
     end
   end
 

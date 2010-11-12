@@ -13,13 +13,6 @@ module ApplicationHelper
     dt.to_formatted_s(:long_ordinal)
   end
 
-  def comment_status   # also defined in comment.rb :(
-    { :normal => 0,
-      :unaddressed => 1,
-      :highlighted => 2
-    }
-  end
-
   def format_all_markup(text)
     # Translate [[[ into {{{
     pre_formatted_text = text.gsub('[[[', '{{{').gsub(']]]', '}}}')
@@ -50,5 +43,9 @@ module ApplicationHelper
   end
   def wizards_card_link(cardname)
     link_to cardname, "http://gatherer.wizards.com/Pages/Search/Default.aspx?name=+[%22#{URI.escape(cardname)}%22]"
+  end
+
+  def comment_user_link(comment)
+    link_to_unless comment.user.nil?, comment.display_user, comment.user
   end
 end
