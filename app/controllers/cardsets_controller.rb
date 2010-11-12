@@ -102,10 +102,8 @@ class CardsetsController < ApplicationController
 
   # PUT /cardsets/1
   def update
-    Rails.logger.info "Config's use_addressing is #{@cardset.configuration.use_addressing}"
     ok = @cardset.update_attributes(params[:cardset])
     ok &= @cardset.configuration.update_attributes(params[:configuration])
-    Rails.logger.info "After update, config's use_addressing is #{@cardset.configuration.use_addressing}"
     if ok
       redirect_to(@cardset, :notice => 'Cardset was successfully updated.')
     else

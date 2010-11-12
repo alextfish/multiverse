@@ -62,10 +62,11 @@ class Cardset < ActiveRecord::Base
     "text" => "rulestext",
     "flavortext" => "flavourtext",
     "color" => "colour",
-    "notes" => "comment"
+    "notes" => "comment",
+    "art" => "art_url"
   }
-  FIELDS = ["","name","cost","supertype","cardtype","subtype","rarity","rulestext","flavourtext","power","toughness","loyalty","code","colour","comment"]
-  STRING_FIELDS = ["name","cost","supertype","cardtype","subtype","rarity","rulestext","flavourtext","code","colour","comment"]
+  FIELDS = ["","name","cost","supertype","cardtype","subtype","rarity","rulestext","flavourtext","power","toughness","loyalty","code","colour","art_url","artist","comment"]
+  STRING_FIELDS = ["name","cost","supertype","cardtype","subtype","rarity","rulestext","flavourtext","code","colour","art_url","artist","comment"]
   DEFAULT_RARITY = "common"
   ENUM_ALIASES = {
     "colour" => {  # keys need to be strings, not symbols
@@ -124,7 +125,7 @@ class Cardset < ActiveRecord::Base
     fields = uniqfields
     got_rarity = fields.include?("rarity")
     got_comment = fields.include?("comment")
-    got_type = fields.include?("type")
+    got_type = fields.include?("cardtype")
     got_loyalty = fields.include?("loyalty")
     got_colour = fields.include?("colour")
 
@@ -157,6 +158,7 @@ class Cardset < ActiveRecord::Base
         end
       end
       if got_type
+        Rails.logger.info "cardtype is #{carddatahash['cardtype']}"
         # Move supertypes to correct places
         SUPERTYPES_AND_REGEXPS.each do |supertype, regexp|
           if carddatahash["cardtype"].downcase =~ regexp

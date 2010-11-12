@@ -14,7 +14,10 @@
    </td>
   </tr>
   <tr>
-   <td colspan="2" class="cardart">&nbsp;
+   <td colspan="2" class="cardart">
+   <% if !@card.art_url.blank? %>
+     <img src="<%= @card.art_url %>">
+   <% end %>
    </td>
   </tr>
   <tr class="cardtypeline">
@@ -40,8 +43,11 @@
    </td>
   </tr>
   <tr class="cardptline">
-   <td>&nbsp;
-   </td>
+   <% if !@card.artist.blank? %>
+   <td>Illus. <%= @card.artist %>
+   <% else %>
+   <td>&nbsp;</td>
+   <% end %>
    <% if @card.power || @card.toughness %>
    <td class="cardpt"
      ><%= @card.power %><% if @card.power && @card.toughness %>/<% end %><%= @card.toughness %></td>

@@ -29,7 +29,9 @@
         <%= f.text_field :cost %>
       </div>
     <tr>                   <!-- art -->
-     <td colspan="3" class="cardart">&nbsp;
+     <td colspan="3" class="cardart">
+       <%= f.label :art_url, "URL for art" %>
+        <%= f.text_field :art_url, :class => "art_url_field" %>
     <tr class="cardtypeline"> <!-- type line -->
      <td class="minitext cardtype" colspan="2">
         <%= f.text_field :supertype %>
@@ -47,7 +49,8 @@
       <%= f.text_area :flavourtext, :class => "flavourtextfield" %>
       </div>
     <tr class="cardptline">
-     <td>&nbsp;
+     <td>
+        <%= f.text_field :artist %>
      <td class="cardpt" colspan="2">
       <%= f.text_field :power, :size => 5, :class => "powerfield" %>/<%= f.text_field :toughness, :size => 5, :class => "toughnessfield" %>
    </table>

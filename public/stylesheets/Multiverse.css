@@ -55,6 +55,8 @@ ul.commentlist { margin-left: 20px; }
 
 .commentbody > p { margin-top: 0px; }
 
+#formatting_info { margin-top: 2px; margin-bottom: 6px; }
+
 /***** Data import / export *****/
 
 code { background-color: #eee; }

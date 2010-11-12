@@ -10,19 +10,23 @@
     </div>
   <% end %>
 
-  <p>
-  <% if signed_in? %>
-    Comment by: <%= @comment.user || @comment.user_name || current_user.name %>
-    <%= @f.hidden_field :user_id, :value => @comment.user ? @comment.user.id :
-      @comment.new_record? ? current_user.id : @comment.user_id %>
-  <% else   # Can only be posting a new anonymous comment %>
-    <%= @f.label :user_name, "Post comment in the name of:" %><br />
-    <%= @f.text_field :user_name, :value => "Visitor" %>
-    <br/>(You won't be able to edit your comments unless you <%= link_to "sign in", signin_path %> before posting)
-  <% end %>
-  <br>You can use <%= render :partial => 'shared/markdown_short' %>
-  <br>Link to [[[Official Magic Cards]]] or (((Card In This Cardset)))
-  </p>
+  <div>
+    <% if signed_in? %>
+      Comment by: <%= @comment.user || @comment.user_name || current_user.name %>
+      <%= @f.hidden_field :user_id, :value => @comment.user ? @comment.user.id :
+        @comment.new_record? ? current_user.id : @comment.user_id %>
+    <% else   # Can only be posting a new anonymous comment %>
+      <%= @f.label :user_name, "Post comment in the name of:" %><br />
+      <%= @f.text_field :user_name, :value => "Visitor" %>
+      <br/>(You won't be able to edit your comments unless you <%= link_to "sign in", signin_path %> before posting)
+    <% end %>
+    <%= link_to_function "(?)",
+        visual_effect(:toggle_blind, :formatting_info, :duration => 0.5) %>
+  <div id="formatting_info" style="display: none;">
+    You can use <%= render :partial => 'shared/markdown_short' %>
+    <br>Link to [[[Official Magic card]]] or (((Card in this cardset)))
+  </div>
+  </div>
   <div class="field">
     <%= @f.text_area :body, :rows => "6" %>
   </div>

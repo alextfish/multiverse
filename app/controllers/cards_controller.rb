@@ -50,7 +50,6 @@ class CardsController < ApplicationController
   def edit
     @card = Card.find(params[:id])
     @render_frame = @card.frame
-    Rails.logger.info "render_frame is #{@render_frame}, calculated frame is #{@card.calculated_frame}"
     if @card.calculated_frame == @card.frame
       @card.frame = "Auto"
     end

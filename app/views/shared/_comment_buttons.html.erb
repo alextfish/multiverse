@@ -65,7 +65,6 @@
     <% end %>
   <% end %>
   <% if permission_to_edit(@comment) %>
-    <% Rails.logger.info "target is #{target_of_links.inspect}" %>
     <%= link_to image_tag("edit.png",
                           :alt => "Edit this comment",
                           :title => "Edit this comment"),
