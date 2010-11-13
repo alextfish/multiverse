@@ -111,12 +111,23 @@ class Card < ActiveRecord::Base
       if ["Multicolour", "Hybrid"].include?(category)
         # Within a category, sort by colour-pair (hybrid / gold), then name
         if num_colours == c2.num_colours
+          case num_colours
+            when 2
+              pair_order = ["WhiteBlue", "BlueBlack", "BlackRed", "RedGreen", "WhiteGreen",
+                "WhiteBlack", "BlackGreen", "BlueGreen", "BlueRed", "WhiteRed"
+                ]
+            when 3
+              pair_order = [ # allied triples sorted by Shard order
+                "WhiteBlueBlack", "BlueBlackRed", "BlackRedGreen", "WhiteRedGreen", "WhiteBlueGreen",
+                # enemy triples sorted by the mutual enemy
+                "WhiteBlackRed", "BlueRedGreen", "WhiteBlackGreen", "WhiteBlueRed", "BlueBlackGreen"
+                ]
+            when 4
+              pair_order = [ "WhiteBlueBlackRed", "BlueBlackRedGreen", "WhiteBlackRedGreen", "WhiteBlueRedGreen", "WhiteBlueBlackGreen" ]
+          end
           pair1 = colour_strings_present.join
           pair2 = c2.colour_strings_present.join
           if pair1 != pair2
-            pair_order = ["WhiteBlue", "BlueBlack", "BlackRed", "RedGreen", "WhiteGreen",
-              "WhiteBlack", "BlackGreen", "BlueGreen", "BlueRed", "WhiteRed"
-              ]
             return pair_order.find_index(pair1) <=> pair_order.find_index(pair2)
           else
             # Just sort by name
