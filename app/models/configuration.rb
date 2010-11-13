@@ -33,8 +33,8 @@ class Configuration < ActiveRecord::Base
     }
   @@legal_values_internal = {
     :frame => {
-      # "image" => "Card image",
-      "prettycard" => "Coloured card layout",
+      "image" => "Supplied image",
+      "prettycard" => "Coloured card mockup",
       "plain" => "Plain text",
     },
     :default_comment_state => {

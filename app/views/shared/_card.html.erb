@@ -1,5 +1,5 @@
 <% if @card.cardset.configuration.frame == "image" && !@card.image_url.blank? %>
-   <img src="<%= @card.image_url %>">
+   <div><img src="<%= @card.image_url %>"></div>
 <% elsif @card.cardset.configuration.frame == "prettycard" || @card.cardset.configuration.frame == "image" %>
    <%= render :partial => 'shared/prettycard', :locals => { :link => link } %>
 <% elsif @card.cardset.configuration.frame == "plain" %>
