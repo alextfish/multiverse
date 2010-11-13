@@ -1,15 +1,3 @@
-  <% if @comment.errors.any? %>
-    <div id="error_explanation">
-      <h2><%= pluralize(@comment.errors.count, "error") %> prohibited this card from being saved:</h2>
-
-      <ul>
-      <% @comment.errors.full_messages.each do |msg| %>
-        <li><%= msg %></li>
-      <% end %>
-      </ul>
-    </div>
-  <% end %>
-
   <div>
     <% if signed_in? %>
       Comment by: <%= @comment.user || @comment.user_name || current_user.name %>
@@ -28,7 +16,7 @@
   </div>
   </div>
   <div class="field">
-    <%= @f.text_area :body, :rows => "6" %>
+    <%= @f.text_area :body, :value => params[:data], :rows => "6" %>
   </div>
   <div class="actions">
     <% submit_text = @comment.new_record? ? "Post comment" : "Update comment" %>

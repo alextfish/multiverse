@@ -26,14 +26,15 @@ class Comment < ActiveRecord::Base
   attr_accessor :by_signed_in_user
   #validates_length_of :user_name, :within => 1..40, :unless => :by_signed_in_user
   validates_presence_of :body
-  def validate_on_create
+  validate :comment_validation, :on => :create
+  def comment_validation
     if body.blank?
-      errors.add(:body, "cannot be empty.")
+      errors.add(:body, " cannot be empty.")
     end
     if user_id.nil? && user_name.blank?
-      errors.add(:user_name, "cannot be empty.")
+      errors.add(:user_name, " cannot be empty.")
     elsif user_id.nil? && !User.find_by_name(user_name).blank?
-      errors.add(:user_name, "is the name of an existing Multiverse user. Please choose a different name.")
+      errors.add(:user_name, " #{user_name} is the name of an existing Multiverse user. Please choose a different name.")
     end
   end
 

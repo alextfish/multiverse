@@ -15,6 +15,14 @@
 <table border="0">         <!-- grouping table -->
  <tr>
   <td>                      <!-- card -->
+   <!-- div class="cardtabs" id="tabs">
+    <a href="#cardimage">Image</a>
+    <a href="#mockup">Mockup</a>
+   </div>
+   <div class="onetab" id="cardimage"><a name="cardimage"></a>
+     <img src="">
+   </div>
+   <div class="onetab" id="prettycard"><a name="mockup"></a -->
    <table class="card <%= @render_frame %>">
     <tr class="cardtitle">
      <td class="cardname">
@@ -31,7 +39,7 @@
     <tr>                   <!-- art -->
      <td colspan="3" class="cardart">
        <%= f.label :art_url, "URL for art" %>
-        <%= f.text_field :art_url, :class => "art_url_field" %>
+       <%= f.text_field :art_url, :class => "art_url_field" %>
     <tr class="cardtypeline"> <!-- type line -->
      <td class="minitext cardtype" colspan="2">
         <%= f.text_field :supertype %>
@@ -58,6 +66,11 @@
 
   <td>                     <!-- controls, comments etc -->
    <table>
+    <tr>
+     <td><%= f.label :image_url, "URL for whole card image" %>
+     <td><%= f.text_field :image_url, :class => "image_url_field" %>
+     </td>
+    </tr>
     <% if @card.cardset.configuration.card_show_code %>
     <tr>
      <td><%= f.label :code %></td>

@@ -7,7 +7,7 @@ a > img { border: 0px; }
 .notice { color: #00a; background-color: #bbf; border: 1px solid #00a; }
 
 .infobox { float: right;
-           border: 2px solid #666;
+           border: 2px solid #aaa;
            margin-right: 10px;
            padding-left: 2px;
            padding-right: 2px;
@@ -24,9 +24,9 @@ a > img { border: 0px; }
 .card_controls_below { text-align: center; }
 
 .setviews { border: 1px solid #aaa;
-             margin: 2px;
-           padding: 6px;
-           background-color: #eee; }
+            margin: 2px;
+            padding: 6px;
+            background-color: #eee; }
 
 /***** Comment display *****/
 
@@ -77,3 +77,40 @@ textarea#details_page_body { width: 1024px; height: 30em; }
 div.helptext { font-size: smaller; margin: 0px; color: #888; }
 div.config_section { margin: 4px; }
 input#cardset_description { width: 30em; }
+
+/***** Card display *****/
+
+.cardtabs {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+.cardtabs li {
+  position: relative;
+  float: left;
+}
+.cardtabs a {
+  float: left;
+  padding: 5px 8px;
+  /* margin-right: 6px; */
+  border: 1px solid #aaa;
+  border-width: 1px 1px 0 1px;
+  text-decoration: none;
+  color: #000;
+}
+.cardtabs a:hover {
+  background-color: #666;
+  color: #FFF;
+}
+.cardtabs a.active-tab {
+  background-color: #aaa;
+  color: #000;
+}
+.onetab {
+  display: none;
+  clear: both;
+}
+.onetab.active-tab-body {
+  display: block;
+  clear: both;
+}

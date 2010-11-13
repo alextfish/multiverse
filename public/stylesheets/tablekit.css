@@ -10,6 +10,7 @@
 .panel.active-tab-body {
   display: block;
 }
+/*
 #tabs {
   list-style: none;
   padding: 0;
@@ -36,6 +37,7 @@
   background-color: #00adef;
   color: #FFF;
 }
+*/
 table.sortable {
   border-collapse: collapse;
   table-layout: fixed;
