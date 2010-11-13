@@ -8,10 +8,10 @@
   <td class="cardcell"> <!-- card -->
    <ul class="cardtabs" id="tabs">
     <% if !@card.image_url.blank? %>
-      <li><a href="#cardimage">Image</a></li>
+      <li><a href="#cardimage" id="cardimage_link">Image</a></li>
     <% end %>
-    <li><a href="#mockup">Mockup</a></li>
-    <li><a href="#plaincard">Plain</a></li>
+    <li><a href="#mockup"      id="mockup_link"   >Mockup</a></li>
+    <li><a href="#plaincard"   id="plaincard_link">Plain</a></li>
    </ul>
    <% if signed_in_as_admin?(@cardset) %>
      <ul class="cardtabs">
@@ -70,16 +70,14 @@
   </td>
  </tr>
 </table>
-   <% case @card.cardset.configuration.frame
-        when "image":      desired_tab = "cardimage"
-        when "plain":      desired_tab = "plaincard"
-        when "prettycard": desired_tab = "mockup"
+   <% if @card.cardset.configuration.frame == "image" && !@card.image_url.blank?
+          desired_tab = "cardimage"
+      elsif @card.cardset.configuration.frame == "plain"
+          desired_tab = "plaincard"
+      else # "prettycard", and also "image" with no image
+          desired_tab = "mockup"
       end
     %>
    <script type="text/javascript">
-     if(String(document.location).split('#').length == 1) {
-       // No anchor: choose one according to the configuration frame
-       document.location += "#<%= desired_tab %>";
-     }
-     new Fabtabs('tabs');
+     new Fabtabs("tabs", "<%= desired_tab %>_link");
    </script>
