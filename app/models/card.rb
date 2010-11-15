@@ -29,9 +29,18 @@ class Card < ActiveRecord::Base
   has_many :comments, :dependent => :destroy
   has_many :old_cards, :dependent => :destroy
 
-
   #has_many :highlighted_comments, :class_name => 'Comment', :conditions => ['status = ?', COMMENT_HIGHLIGHTED]
   #has_many :unaddressed_comments, :class_name => 'Comment', :conditions => ['status = ?', COMMENT_UNADDRESSED]
+
+  before_create :enforce_rarity
+
+  DEFAULT_RARITY = "common"
+  def enforce_rarity
+    # Enforce rarity; Default rarity to common
+    if (self.rarity.blank?) || !Card.rarities.include?(self.rarity)
+      self.rarity = DEFAULT_RARITY
+    end
+  end
 
   def formatted_rules_text
     format(rulestext)

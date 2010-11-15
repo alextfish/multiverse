@@ -68,7 +68,6 @@ class Cardset < ActiveRecord::Base
   }
   FIELDS = ["","name","cost","supertype","cardtype","subtype","rarity","rulestext","flavourtext","power","toughness","loyalty","code","colour","art_url","artist","image_url","comment"]
   STRING_FIELDS = ["name","cost","supertype","cardtype","subtype","rarity","rulestext","flavourtext","code","colour","art_url","artist","image_url","comment"]
-  DEFAULT_RARITY = "common"
   ENUM_ALIASES = {
     "colour" => {  # keys need to be strings, not symbols
       "w" => "white", "u" => "blue", "b" => "black", "r" => "red", "g" => "green", "a" => "artifact", "z" => "multicolour", "l" => "land",
@@ -173,10 +172,6 @@ class Cardset < ActiveRecord::Base
             carddatahash["cardtype"], carddatahash["subtype"] = carddatahash["cardtype"].split(delimiter)
           end
         end
-      end
-      # Enforce rarity; Default rarity to common
-      if (!got_rarity) || !Card.rarities.include?(carddatahash["rarity"])
-        carddatahash["rarity"] = DEFAULT_RARITY
       end
       # Strip whitespace
       STRING_FIELDS.each do |field|
