@@ -1,0 +1,34 @@
+<h1>
+  <%= @title = "#{@cardset.name}: Unaddressed Comments" %>
+</h1>
+
+<%= render 'setviews' %>
+
+<% @allmycards = @cardset.cards %>
+<% card_comments = Comment.find(:all, :include => :card,
+     :conditions => ["cards.cardset_id = ?", @cardset.id])  %>
+<% cardset_comments = Comment.find(:all,
+     :conditions => ["cardset_id = ?", @cardset.id])  %>
+<% sorted_comments = (card_comments + cardset_comments).sort { |c1,c2| c2.recency <=> c1.recency } %>
+<% unaddressed_comments = sorted_comments.select { |c| c.unaddressed? } %>
+
+  <% if unaddressed_comments.empty? %>
+    <p>There are no unaddressed comments on this cardset.</p>
+  <% else %>
+    <p>Listing all unaddressed comments:
+      <table>
+      <% unaddressed_comments.each_slice(5) do |comments_slice| %>
+        <tr>
+        <% comments_slice.each do |@comment| %>
+          <td>
+          <% target = @comment.parent %>
+          <% reply_link = @comment.card || new_cardset_comment_path(@comment.cardset) %>
+          On <%= link_to target.name, target %> (<%= link_to "reply", reply_link %>):
+          <%= render :partial => 'shared/comment', :locals => { :buttons => true } %>
+          </td>
+        <% end %>
+        </tr>
+      <% end %>
+      </table>
+    </p>
+  <% end %>

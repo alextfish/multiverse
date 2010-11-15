@@ -33,9 +33,10 @@ Multiverse::Application.routes.draw do
     resources :comments, :only => [:new, :create, :destroy, :edit, :update]
     member do
       get 'cardlist' # in addition to /cardsets/:id which goes to cardsets#show
-      get 'visualspoiler', 'recent'  #, 'comment'
+      get 'visualspoiler', 'recent'
       get 'import', 'plaintext'
-      post 'import_data'             #, 'add_comment'
+      get 'todo'
+      post 'import_data'
     end
   end
 

@@ -4,7 +4,7 @@
 
 <% @allmycards = @cardset.cards %>
 <% @myactivecards = @allmycards.map{ |card| card.active? } %>
-<% @owner = User.find_by_id(@cardset.user_id) %>
+<% @owner = @cardset.user %>
 <% card_comments = Comment.find(:all, :include => :card,
      :conditions => ["cards.cardset_id = ?", @cardset.id])  %>
 <% cardset_comments = Comment.find(:all,
@@ -77,7 +77,7 @@
         <tr>
         <% comments_slice.each do |@comment| %>
           <td>
-          <% target = @comment.card || @comment.cardset %>
+          <% target = @comment.parent %>
           <% reply_link = @comment.card || new_cardset_comment_path(@comment.cardset) %>
           On <%= link_to target.name, target %> (<%= link_to "reply", reply_link %>):
           <%= render :partial => 'shared/comment', :locals => { :buttons => true } %>
@@ -140,7 +140,7 @@
             NIL
           <% end %>
         <% else %>
-          <% object = @comment.card || @comment.cardset %>
+          <% object = @comment.parent %>
           <li>On <%= link_to object.name, object %>:
           <%= render :partial => 'shared/comment', :locals => { :buttons => true } %>
         <% end %>

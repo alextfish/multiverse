@@ -10,7 +10,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20101112212000) do
+ActiveRecord::Schema.define(:version => 20101114214000) do
 
   create_table "cards", :force => true do |t|
     t.string   "code"
@@ -85,6 +85,7 @@ ActiveRecord::Schema.define(:version => 20101112212000) do
     t.text     "body"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.integer  "order"
   end
 
   add_index "details_pages", ["cardset_id"], :name => "index_details_pages_on_cardset_id"

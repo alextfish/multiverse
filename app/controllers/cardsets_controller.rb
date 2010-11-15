@@ -6,7 +6,7 @@ class CardsetsController < ApplicationController
   before_filter :only => [:new, :create] do
     require_login
   end
-  before_filter :only => [:edit, :update, :destroy] do
+  before_filter :only => [:edit, :update, :destroy, :todo] do
     require_login_as_admin(@cardset)
   end
 
@@ -47,6 +47,10 @@ class CardsetsController < ApplicationController
 
   # GET /cardsets/1/recent
   def recent
+  end
+
+  # GET /cardsets/1/todo
+  def todo
   end
 
   # GET /cardsets/1/import

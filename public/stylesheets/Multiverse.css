@@ -71,6 +71,7 @@ p.plaintext_wrapper { white-space: pre;
 /***** Cardset details pages *****/
 
 textarea#details_page_body { width: 1024px; height: 30em; }
+.image_submit { vertical-align: middle; }
 
 /***** Cardset configuration *****/
 

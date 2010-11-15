@@ -6,6 +6,10 @@ function update_card_rarity(new_rarity) {
   cell.className = "cardrarity " + new_rarity.toLowerCase();
 }
 
+function update_details_pages(new_text) {
+  $( "details_pages" ).update(new_text);
+}
+
 function update_comment_status(commentid, action) {
   // Find the whole row to set the style
   commentdiv = document.getElementById("comment_" + commentid);

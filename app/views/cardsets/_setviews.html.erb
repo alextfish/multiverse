@@ -7,16 +7,17 @@
     <%= link_to_unless_current "Recent activity", recent_cardset_path(@cardset) %>
 </td></tr>
 <% if !@cardset.details_pages.empty? %>
-  <tr><td>
-    <%= @cardset.details_pages.reject(&:new_record?).map { |p| link_to_unless_current p.title, url_for([@cardset, p]) }.join(" | ").html_safe %>
+  <tr><td id="details_pages">
+    <%= render 'cardsets/details_pages' %>
   </td></tr>
 <% end %>
 <% if signed_in_as_admin?(@cardset) %>
 <tr><td>Admin actions:
-    <%= link_to_unless_current "Edit cardset configuration", edit_cardset_path(@cardset) %> |
+    <%= link_to_unless_current "Cardset options", edit_cardset_path(@cardset) %> |
     <%= link_to_unless_current "New card", new_card_path(:cardset_id => @cardset.id) %> |
     <%= link_to_unless_current "Import data", import_cardset_path(@cardset) %> |
-    <%= link_to_unless_current "Add details page", new_cardset_details_page_path(@cardset) %>
+    <%= link_to_unless_current "Add details page", new_cardset_details_page_path(@cardset) %> |
+    <%= link_to_unless_current "Unaddressed comments", todo_cardset_path(@cardset) %>
 </td></tr>
 <% end %>
 </table>

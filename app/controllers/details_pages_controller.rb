@@ -55,13 +55,22 @@ class DetailsPagesController < ApplicationController
   def update
     @details_page = DetailsPage.find(params[:id])
 
-    respond_to do |format|
-      if @details_page.update_attributes(params[:details_page])
-        format.html { redirect_to([@cardset, @details_page], :notice => 'Details page was successfully updated.') }
-        format.xml  { head :ok }
-      else
-        format.html { render :action => "edit" }
-        format.xml  { render :xml => @details_page.errors, :status => :unprocessable_entity }
+    if params[:details_page][:order]
+      # Do something completely different for reorderings
+      @details_page.set_order(params[:details_page][:order])
+      respond_to do |format|
+        format.js { }
+        format.html { redirect_to([@cardset, @details_page]) }
+      end
+
+    else
+      # Normal update
+      respond_to do |format|
+        if @details_page.update_attributes(params[:details_page])
+          format.html { redirect_to([@cardset, @details_page], :notice => 'Details page was successfully updated.') }
+        else
+          format.html { render :action => "edit" }
+        end
       end
     end
   end

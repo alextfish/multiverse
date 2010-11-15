@@ -63,10 +63,11 @@ class Cardset < ActiveRecord::Base
     "flavortext" => "flavourtext",
     "color" => "colour",
     "notes" => "comment",
-    "art" => "art_url"
+    "art" => "art_url",
+    "image" => "image_url",
   }
-  FIELDS = ["","name","cost","supertype","cardtype","subtype","rarity","rulestext","flavourtext","power","toughness","loyalty","code","colour","art_url","artist","comment"]
-  STRING_FIELDS = ["name","cost","supertype","cardtype","subtype","rarity","rulestext","flavourtext","code","colour","art_url","artist","comment"]
+  FIELDS = ["","name","cost","supertype","cardtype","subtype","rarity","rulestext","flavourtext","power","toughness","loyalty","code","colour","art_url","artist","image_url","comment"]
+  STRING_FIELDS = ["name","cost","supertype","cardtype","subtype","rarity","rulestext","flavourtext","code","colour","art_url","artist","image_url","comment"]
   DEFAULT_RARITY = "common"
   ENUM_ALIASES = {
     "colour" => {  # keys need to be strings, not symbols
