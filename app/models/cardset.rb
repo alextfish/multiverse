@@ -34,18 +34,65 @@ class Cardset < ActiveRecord::Base
     out
   end
 
-  @@permitted_users = {
+  @@permitted_users_are = {
     # DB entry => Text
-    "anyone" => "All users",
-    "signedin" => "Only signed-in users",
-    "admins" => "Only cardset administrators",
-    "selected" => "Only users specified by the cardset administrators",
+    "anyone" => "All users are",
+    "signedin" => "Only signed-in users are",
+    "admins" => "Only cardset administrators are",
+    "selected" => "Only users specified by the cardset administrators are",
+    "justme" => "Only the cardset owner is",
   }
-  def comment_permission_message
-    @@permitted_users[configuration.commentability] + " are permitted to comment on this cardset."
+
+  def permission_message(action)
+    case action
+      when :comment
+        verb = "comment on"
+        perm = configuration.commentability
+      when :view
+        verb = "view"
+        perm = configuration.visibility
+      when :edit
+        verb = "edit"
+        perm = configuration.editability
+      when :delete
+        verb = "delete cards in"
+        perm = configuration.adminability
+      when :admin
+        verb = "take admin actions on"
+        perm = configuration.adminability
+      else
+        raise "Bad input to permission_message #{action}"
+    end
+    @@permitted_users_are[perm] + " permitted to #{verb} this cardset."
   end
-  def visibility_permission_message
-    @@permitted_users[configuration.visibility] + " are permitted to see this cardset."
+
+  def permission_to?(action)
+    case action
+      when :comment
+        permitted_people = configuration.commentability
+      when :view
+        permitted_people = configuration.visibility
+      when :edit
+        permitted_people = configuration.editability
+      when [:admin, :delete]
+        permitted_people = configuration.adminability
+      else
+        raise "Bad input to permission_to?(#{action})"
+    end
+    case permitted_people.to_s
+      when "anyone"
+        out = true
+      when "signedin"
+        out = signed_in?
+      when "admins"
+        out = signed_in_as_admin?(self)
+      when "justme"
+        out = signed_in_as_owner?(self)
+      when "selected"
+        return configuration.permitted_users(action).include?(current_user.name) # Won't work - current_user not available
+      else
+        raise "Unexpected value of configuration property in action #{action}: #{permitted_people}"
+    end
   end
 
   def cards_per_line
@@ -67,7 +114,6 @@ class Cardset < ActiveRecord::Base
     "image" => "image_url",
   }
   FIELDS = ["","name","cost","supertype","cardtype","subtype","rarity","rulestext","flavourtext","power","toughness","loyalty","code","colour","art_url","artist","image_url","comment"]
-  STRING_FIELDS = ["name","cost","supertype","cardtype","subtype","rarity","rulestext","flavourtext","code","colour","art_url","artist","image_url","comment"]
   ENUM_ALIASES = {
     "colour" => {  # keys need to be strings, not symbols
       "w" => "white", "u" => "blue", "b" => "black", "r" => "red", "g" => "green", "a" => "artifact", "z" => "multicolour", "l" => "land",
@@ -83,7 +129,7 @@ class Cardset < ActiveRecord::Base
   end
   SUBTYPE_DELIMITERS = [" -- ", " - ", "--", "-"]
 
-  def import_data(params, current_user)
+  def import_data(params, current_user_in)
     # Returns [success, message]
 
     # Initial informative error messages
@@ -173,10 +219,6 @@ class Cardset < ActiveRecord::Base
           end
         end
       end
-      # Strip whitespace
-      STRING_FIELDS.each do |field|
-        carddatahash[field] && carddatahash[field].strip!
-      end
 
       # Remove the comment from the card data, as we do something different with the comment
       if got_comment
@@ -238,11 +280,18 @@ class Cardset < ActiveRecord::Base
     # We've not returned so far, so the whole data must be good
     cards_and_comments.each do |card_and_comment|
       card = card_and_comment[0]
-      card.frame = card.colour || card.calculated_frame
+      card.frame = card.colour.blank? ? card.calculated_frame : card.colour
       commenttext = card_and_comment[1]
+      card.last_edit_by = current_user_in.id
+      Rails.logger.info "Set last editor of #{card.name} to #{current_user_in}"
       card.save!
-      if !commenttext.nil?
-        comment = card.comments.build(:user => current_user.name, :comment => commenttext)
+
+      if !commenttext.blank?
+        if current_user_in
+          comment = card.comments.build(:user => current_user_in, :body => commenttext)
+        else # In certain circumstances a non-signed-in user may be permitted to import data
+          comment = card.comments.build(:user_name => Comment.DEFAULT_USER_NAME, :body => commenttext)
+        end
         comment.save!
       end
     end

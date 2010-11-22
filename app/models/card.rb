@@ -32,13 +32,23 @@ class Card < ActiveRecord::Base
   #has_many :highlighted_comments, :class_name => 'Comment', :conditions => ['status = ?', COMMENT_HIGHLIGHTED]
   #has_many :unaddressed_comments, :class_name => 'Comment', :conditions => ['status = ?', COMMENT_UNADDRESSED]
 
-  before_create :enforce_rarity
+  before_create :regularise_fields
+  #after_save do  - Can't do this, as we don't have access to session methods in model callbacks :/
+  #  set_last_edit(self)
+  #end
 
   DEFAULT_RARITY = "common"
-  def enforce_rarity
+  STRING_FIELDS = ["name","cost","supertype","cardtype","subtype","rarity","rulestext","flavourtext","code","colour","art_url","artist","image_url"]
+  def regularise_fields
     # Enforce rarity; Default rarity to common
     if (self.rarity.blank?) || !Card.rarities.include?(self.rarity)
       self.rarity = DEFAULT_RARITY
+    end
+    # Strip whitespace
+    STRING_FIELDS.each do |field|
+      if self.attributes[field]
+        self.attributes[field].strip!
+      end
     end
   end
 

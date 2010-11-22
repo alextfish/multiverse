@@ -3,14 +3,14 @@
    at
   <%= format_datetime @comment.created_at %>:
   <% target_of_links = @comment # (@comment.cardset_id ? [@cardset, @comment] : @comment) %>
-  <% if signed_in_as_admin?(@cardset) %>
+  <% if permission_to?(:admin, @cardset) %>
     <%= link_to image_tag("delete.png", :alt => "Delete this comment",
                           :title => "Delete this comment"),
                 @comment,
                 :confirm => "Really delete this comment?",
                 :method => :delete %>
-    <!-- Admin users can set comment status, and see highlights on unaddressed comments and highlighted comments;
-         non-admin users can't set comment status, and see highlights on highlighted comments -->
+  <% end %>
+  <% if permission_to?(:edit, @cardset)   # Editors can set comment status %>
     <% comment_actions = [
          :address,
          :unaddress,
@@ -64,7 +64,7 @@
 
     <% end %>
   <% end %>
-  <% if permission_to_edit(@comment) %>
+  <% if permission_to_edit?(@comment) %>
     <%= link_to image_tag("edit.png",
                           :alt => "Edit this comment",
                           :title => "Edit this comment"),

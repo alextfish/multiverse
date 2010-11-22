@@ -27,11 +27,14 @@ class DetailsPage < ActiveRecord::Base
   def set_order(new_order)
     other_page = self.cardset.details_pages.find_by_order(new_order)
     my_old_order = self.order
+
     Rails.logger.info "Trying to set my (#{self.title}) order to #{new_order} and #{other_page && other_page.title}'s order to #{my_old_order}"
     self.order = new_order
     other_page.order = my_old_order
-    self.save!
-    other_page.save!
+
+    # Don't change timestamps for this
+    self.save_without_timestamping!
+    other_page.save_without_timestamping!
   end
 
   def recency  # For a details page, its order in recency is when it was updated

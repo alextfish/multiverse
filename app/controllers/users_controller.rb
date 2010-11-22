@@ -1,12 +1,17 @@
 class UsersController < ApplicationController
-  before_filter :correct_user, :only => [:edit, :update, :destroy]
-  before_filter :admin_user,   :only => :destroy
-  before_filter :not_signed_in,:only => [:new, :create]
+  before_filter :only => [:edit, :update, :destroy] do
+    @user = User.find(params[:id])
+    redirect_to :back unless @user == current_user
+  end
+  before_filter :require_login_as_moderator,   :only => :destroy
+  before_filter :only => [:new, :create] do
+    redirect_to :back if signed_in?
+  end
+
 
   # GET /users
   # GET /users.xml
   def index
-    @title = "All users"
     @users = User.paginate(:page => params[:page], :per_page => 50 )
 
     respond_to do |format|
@@ -19,7 +24,6 @@ class UsersController < ApplicationController
   # GET /users/1.xml
   def show
     @user = User.find(params[:id])
-    @title = @user.name
 
     respond_to do |format|
       format.html # show.html.erb
@@ -40,8 +44,6 @@ class UsersController < ApplicationController
 
   # GET /users/1/edit
   def edit
-    # @user defined by the correct_user check
-    @title = "Edit profile"
   end
 
   # POST /users
@@ -87,20 +89,5 @@ class UsersController < ApplicationController
       format.xml  { head :ok }
     end
   end
-
-  private
-
-    def correct_user
-      @user = User.find(params[:id])
-      redirect_to(root_path) unless @user == current_user
-    end
-
-    def admin_user
-      redirect_to(root_path) unless current_user.admin?
-    end
-
-    def not_signed_in
-      redirect_to(root_path) if signed_in?
-    end
 
 end

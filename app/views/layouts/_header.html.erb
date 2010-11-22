@@ -2,9 +2,18 @@
   <%= link_to_unless_current logo, root_path do
     image_tag("multiverse_logo_big.png", :alt => "Multiverse", :class => "square")
   end %>
-  <nav class="round">
+  <nav>
     <ul>
-      <li class="first"><%= link_to "Home", root_path %></li>
+      <li class="first"><%= # link_to "Home", root_path
+      %></li>
+      <li class="first drops_parent"><%= link_to "Cardsets", cardsets_path #, :class => "drops"
+      %>
+        <ul id="cardsets_dropdown" style="display:none;"><!-- class="licious" -->
+          <% Cardset.all.each do |cardset| %>
+            <li><%= link_to cardset.name, cardset %></li>
+          <% end %>
+        </ul>
+      </li>
       <li class="subsequent"><%= link_to "About", about_path %></li>
       <li class="subsequent"><%= link_to "Help", help_path %></li>
       <li class="subsequent"><%= link_to "Contact", contact_path %></li>

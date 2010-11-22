@@ -1,24 +1,29 @@
 class CardsController < ApplicationController
-  before_filter :except => [:show] do
+  before_filter :find_cardset
+  before_filter :only => [:new, :create, :edit, :update] do
+    require_permission_to_edit(@cardset)
+  end
+  before_filter :only => :destroy do
+    require_permission_to(:delete, @cardset)
+  end
+  before_filter do
+    require_permission_to_view(@cardset)
+  end
+
+  helper CardsHelper
+
+  def find_cardset
     if !params[:cardset_id].nil?
       @cardset = Cardset.find(params[:cardset_id])
     elsif !params[:id].nil?
       @card = Card.find(params[:id])
-      @cardset = Cardset.find(@card.cardset_id)
+      @cardset = @card.cardset
     elsif !params[:card][:cardset_id].nil?
       @cardset = Cardset.find(params[:card][:cardset_id])
     else
       raise "Couldn't find cardset id"
     end
-    require_login_as_admin(@cardset)
   end
-  before_filter :only => [:show] do
-    @card = Card.find(params[:id])
-    @cardset = Cardset.find(@card.cardset_id)
-  end
-
-  before_filter :require_permission_to_view
-  helper CardsHelper
 
   # GET /cards/1
   # GET /cards/1.xml
@@ -33,16 +38,10 @@ class CardsController < ApplicationController
   end
 
   # GET /cards/new
-  # GET /cards/new.xml
   def new
     @card = Card.new(:cardset_id => params[:cardset_id])
     unless @cardset && @cardset.new_record?
       @cardset = Cardset.find(params[:cardset_id])
-    end
-
-    respond_to do |format|
-      format.html # new.html.erb
-      format.xml  { render :xml => @card }
     end
   end
 
@@ -58,46 +57,38 @@ class CardsController < ApplicationController
   def process_card
     if @card.frame == "Auto"
       @card.frame = @card.calculated_frame
+      @card.save!
     end
   end
 
   # POST /cards
-  # POST /cards.xml
   def create
     @card = Card.new(params[:card])
     process_card
+    set_last_edit(@card)
 
-    respond_to do |format|
-      if @card.save
-        format.html { redirect_to(@card, :notice => 'Card was successfully created.') }
-        format.xml  { render :xml => @card, :status => :created, :location => @card }
-      else
-        format.html { render :action => "new" }
-        format.xml  { render :xml => @card.errors, :status => :unprocessable_entity }
-      end
+    if @card.save
+      redirect_to(@card, :notice => "#{@card.name} was successfully created.")
+    else
+      render :action => "new"
     end
   end
 
   # PUT /cards/1
-  # PUT /cards/1.xml
   def update
     @card = Card.find(params[:id])
 
-    respond_to do |format|
-      if @card.update_attributes(params[:card])
-        process_card
-        @card.save!
-        format.html { redirect_to(@card, :notice => 'Card was successfully updated.') }
-        format.xml  { head :ok }
-      else
-        format.html { render :action => "edit" }
-        format.xml  { render :xml => @card.errors, :status => :unprocessable_entity }
-      end
+    if @card.update_attributes(params[:card])
+      process_card
+      set_last_edit(@card)
+
+      redirect_to @card   #, :notice => 'Card was successfully updated.'
+    else
+      render :action => "edit"
     end
   end
 
   # DELETE /cards/1
-  # DELETE /cards/1.xml
   def destroy
     @card = Card.find(params[:id])
     @cardset = @card.cardset
@@ -106,6 +97,7 @@ class CardsController < ApplicationController
     respond_to do |format|
       format.html { redirect_to(@cardset) }
       # Horrible MVC violation, but I just can't get .js.erb files to render
+      # Can only destroy cards via JS from the cardlist view
       format.js   { render :text => "$('card_row_#{params[:id]}').visualEffect('Fade', {'queue':'parallel'})" }
     end
   end

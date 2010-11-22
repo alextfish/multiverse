@@ -9,8 +9,33 @@ module ApplicationHelper
     end
   end
 
+  def get_last_edit_user_and_string(object)
+    uid = object.last_edit_by
+    case
+      when uid == User.NON_SIGNED_IN_USER
+        [nil, "a non-signed-in user"]
+      when uid && !(user = User.find(uid)).nil?     # define user if we can
+        [user, user.name]
+      else # an edit from before edits were logged (uid==nil) or a user that no longer exists
+        [nil, "someone"]
+    end
+  end
+  def link_to_last_edit_user(object)
+    user, user_name = get_last_edit_user_and_string(object)
+    if user.nil?
+      user_name
+    else
+      link_to user_name, user
+    end
+  end
+
   def format_datetime(dt)
-    dt.to_formatted_s(:long_ordinal)
+    if dt < 1.week.ago
+      # Show older dates in absolute time
+      out = "on " + dt.to_date.to_formatted_s(:rfc822)
+    else
+      time_ago_in_words(dt, :seconds => true) + " ago"
+    end
   end
 
   def format_all_markup(text)

@@ -1,4 +1,4 @@
-<% if signed_in_as_admin?(@cardset) %>
+<% if permission_to?(:edit, @cardset) %>
   <% commentclass = @comment.admin_status_string  %>
 <% else %>
   <% commentclass = @comment.public_status_string  %>

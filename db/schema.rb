@@ -10,13 +10,12 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20101114214000) do
+ActiveRecord::Schema.define(:version => 20101122224800) do
 
   create_table "cards", :force => true do |t|
     t.string   "code"
     t.string   "name"
     t.integer  "cardset_id"
-    t.string   "colour"
     t.string   "rarity"
     t.string   "cost"
     t.string   "supertype"
@@ -34,6 +33,7 @@ ActiveRecord::Schema.define(:version => 20101114214000) do
     t.string   "art_url"
     t.string   "artist"
     t.string   "image_url"
+    t.integer  "last_edit_by"
   end
 
   add_index "cards", ["cardset_id"], :name => "index_cards_on_cardset_id"
@@ -44,6 +44,7 @@ ActiveRecord::Schema.define(:version => 20101114214000) do
     t.text     "description"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.integer  "last_edit_by"
   end
 
   create_table "comments", :force => true do |t|
@@ -77,6 +78,9 @@ ActiveRecord::Schema.define(:version => 20101114214000) do
     t.datetime "created_at"
     t.datetime "updated_at"
     t.integer  "cardset_id"
+    t.string   "editability"
+    t.string   "adminability"
+    t.integer  "last_edit_by"
   end
 
   create_table "details_pages", :force => true do |t|
@@ -86,6 +90,7 @@ ActiveRecord::Schema.define(:version => 20101114214000) do
     t.datetime "created_at"
     t.datetime "updated_at"
     t.integer  "order"
+    t.integer  "last_edit_by"
   end
 
   add_index "details_pages", ["cardset_id"], :name => "index_details_pages_on_cardset_id"

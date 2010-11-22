@@ -1,13 +1,13 @@
 class CardsetsController < ApplicationController
   before_filter :except => [:index, :new, :create] do
     @cardset = Cardset.find(params[:id])
-    require_permission_to_view
+    require_permission_to_view(@cardset)
   end
   before_filter :only => [:new, :create] do
-    require_login
+    require_any_login
   end
   before_filter :only => [:edit, :update, :destroy, :todo] do
-    require_login_as_admin(@cardset)
+    require_permission_to_admin(@cardset)
   end
 
   # GET /cardsets
@@ -67,6 +67,7 @@ class CardsetsController < ApplicationController
 
   # POST /cardsets/1/import_data
   def import_data
+    Rails.logger.info "User #{current_user} importing data"
     success, message = @cardset.import_data(params, current_user)
     if success
       redirect_to(@cardset, :notice => message)
@@ -109,6 +110,7 @@ class CardsetsController < ApplicationController
     ok = @cardset.update_attributes(params[:cardset])
     ok &= @cardset.configuration.update_attributes(params[:configuration])
     if ok
+      set_last_edit(@cardset)
       redirect_to(@cardset, :notice => 'Cardset was successfully updated.')
     else
       render :action => "edit"
@@ -116,13 +118,9 @@ class CardsetsController < ApplicationController
   end
 
   # DELETE /cardsets/1
-  # DELETE /cardsets/1.xml
   def destroy
     @cardset.destroy
 
-    respond_to do |format|
-      format.html { redirect_to(cardsets_url) }
-      format.xml  { head :ok }
-    end
+    redirect_to(cardsets_url)
   end
 end

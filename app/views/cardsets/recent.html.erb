@@ -22,12 +22,16 @@
     <ul class="commentlist compact">
       <% items_to_show.each do |object| %>
         <li class="recent_item">
-            <%= format_datetime object.recency %>
-            <% if object.kind_of?(Card) %>
-              <%= link_to object.name, object %> was <% if object.created_at == object.updated_at %>created<% else %>updated<% end %>
-            <% elsif object.kind_of?(DetailsPage) %>
-              Page <%= link_to object.title, [@cardset, object] %> was <% if object.created_at == object.updated_at %>created<% else %>updated<% end %>
-            <% elsif object.kind_of?(Comment) %>
+          <span class="timestamp"><%= format_datetime object.recency %>:</span>
+          <% if object.kind_of?(Card) %>
+              <%= link_to_last_edit_user(object) %>
+              <% if object.created_at == object.updated_at %>created<% else %>updated<% end %>
+              <%= link_to object.name, object %>
+          <% elsif object.kind_of?(DetailsPage) %>
+              <%= link_to_last_edit_user(object) %>
+              <% if object.created_at == object.updated_at %>created<% else %>updated<% end %>
+              page <%= link_to object.title, [@cardset, object] %>
+          <% elsif object.kind_of?(Comment) %>
               <% if !object.card.nil? %>
                 <% @target = object.card %>
               <% elsif !object.cardset.nil? %>
@@ -41,9 +45,9 @@
               <!-- %= simple_format h(object.comment), :class => "commentbody" % -->
               <% @comment = object %>
               <%= render :partial => 'shared/comment', :locals => { :buttons => false } %>
-            <% else %>
+          <% else %>
               <% raise "Unknown object in recent items list: #{object.inspect}" %>
-            <% end %>
+          <% end %>
       <% end %>
     </ul>
 

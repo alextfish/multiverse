@@ -1,5 +1,21 @@
 class CommentsController < ApplicationController
   before_filter :define_card_or_cardset
+  before_filter :only => [:show, :new, :create] do
+    require_permission_to_view(@cardset)
+  end
+  before_filter :only => [:edit, :destroy] do
+    require_permission_to_edit_comment(@comment)
+  end
+  before_filter :only => :update do
+    if params[:comment][:body]
+      Rails.logger.info "Requiring permission to edit comment"
+      require_permission_to_edit_comment(@comment)
+    else # changing status of a comment
+      Rails.logger.info "Requiring permission to edit card"
+      require_permission_to_edit(@cardset)
+    end
+  end
+
 
   def define_card_or_cardset
     # Define @comment if available
@@ -34,8 +50,8 @@ class CommentsController < ApplicationController
   # POST /comments
   # Doubles up for creation of card comments and cardset comments
   def create
-    if !permission_to_comment(@cardset)
-      redirect_to :back, :error => @cardset.comment_permission_message
+    if !permission_to?(:comment, @cardset)
+      redirect_to :back, :error => @cardset.permission_message(:comment)
     else
       @comment = Comment.new(params[:comment])
       @comment.set_default_status!
@@ -52,6 +68,9 @@ class CommentsController < ApplicationController
   def update
     @comment = Comment.find(params[:id])
     @comment.update_attributes(params[:comment])
+    if params[:comment][:body]
+      # set_last_edit(@comment) - comments don't have an editor stored right now
+    end
 
     respond_to do |format|
       format.html { redirect_to @comment.parent }

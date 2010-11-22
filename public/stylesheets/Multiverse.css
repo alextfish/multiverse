@@ -13,7 +13,9 @@ a > img { border: 0px; }
            padding-right: 2px;
            padding-top: 6px;
            padding-bottom: 6px;
-           background-color: #eee; }
+           background-color: #eee;
+           position: relative; /* to stop interference from dropdown */
+           }
 .infobox h1 { font-size: inherit;
               margin-top: 0px; }
 .infobox p { margin: 2px; }
@@ -114,4 +116,9 @@ input#cardset_description { width: 30em; }
 .onetab.active-tab-body {
   display: block;
   clear: both;
+}
+.timestamp {
+  font-size: smaller;
+  font-style: italic;
+  color: #999;
 }

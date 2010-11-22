@@ -45,6 +45,20 @@ class User < ActiveRecord::Base
     encrypted_password == encrypt(submitted_password)
   end
 
+  def self.NON_SIGNED_IN_USER
+    -1
+  end
+  def self.name_for(id)
+    if id == User.NON_SIGNED_IN_USER
+      "a non-signed-in user"
+    elsif id == nil
+      "someone"
+    else
+      User.find(id).name
+    end
+  end
+
+
   # Static method - could be written as def User.authenticate
   def self.authenticate(email, submitted_password)
     user = find_by_email(email)

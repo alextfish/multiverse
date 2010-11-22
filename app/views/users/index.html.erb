@@ -1,10 +1,8 @@
-<h1>Listing users</h1>
+<h1><%= @title = "All users" %></h1>
 
 <%= will_paginate %>
 
 <%= render @users %>
 
 <%= will_paginate %>
-<br />
 
-<%= link_to 'New User', new_user_path %>

@@ -23,11 +23,12 @@
     <% if @cardset.configuration.cardlist_show_active %>
       <th>Active?</th>
     <% end %>
+    <th class="date">Updated</th>
     <% if @cardset.configuration.cardlist_show_comments %>
       <th>Comments</th>
-      <th>Recent comment</th>
+      <th class="date">Recent comment</th>
     <% end %>
-    <% if signed_in_as_admin?(@cardset) %>
+      <% if permission_to?(:edit, @cardset) || permission_to?(:delete, @cardset) %>
       <th colspan="3" class="nosort">&nbsp;</th>
     <% end %>
   </tr>
@@ -54,6 +55,9 @@
       <% if @cardset.configuration.cardlist_show_active %>
         <td><%= card.active %></td>
       <% end %>
+      <td>
+        <%= format_datetime(card.updated_at) %> by <%= link_to_last_edit_user(card) %>
+      </td>
       <% if @cardset.configuration.cardlist_show_comments %>
         <% card_comments_sorted = Comment.find(:all,
              :conditions => ["card_id = ?", card.id],
@@ -61,12 +65,14 @@
         <td><%= card_comments_sorted.count %></td>
         <td>
           <% if !card_comments_sorted.empty? %>
-            <%= card_comments_sorted[0].created_at %> by <%= comment_user_link(card_comments_sorted[0]) %>
+            <%= format_datetime(card_comments_sorted[0].created_at) %> by <%= comment_user_link(card_comments_sorted[0]) %>
           <% end %>
         </td>
       <% end %>
-      <% if signed_in_as_admin?(@cardset) %>
+      <% if permission_to?(:edit, @cardset) %>
         <td><%= link_to 'Edit', edit_card_path(card) %></td>
+      <% end %>
+      <% if permission_to?(:delete, @cardset) %>
         <td><%= link_to 'Delete', card, :confirm => "Really DELETE #{card.name}?", :method => :delete, :remote => true %></td>
       <% end %>
     </tr>

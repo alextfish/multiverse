@@ -11,7 +11,7 @@
     </div>
   <% end %>
 
-  <div>Admin user for this cardset will be: <%= link_to current_user.name, current_user %>
+  <div>Owner of this cardset is: <%= link_to @cardset.user.name, @cardset.user %>
   </div>
   <table>
    <tr>
@@ -43,7 +43,17 @@
 
       <div class="config_section">
         Allow comments by:
-          <%= config_fields.select :commentability, @cardset.configuration.legal_values[:visibility].invert.to_a %>
+          <%= config_fields.select :commentability, @cardset.configuration.legal_values[:commentability].invert.to_a %>
+      </div>
+
+      <div class="config_section">
+        Allow new cards and card editing by:
+          <%= config_fields.select :editability, @cardset.configuration.legal_values[:editability].invert.to_a %>
+      </div>
+
+      <div class="config_section">
+        Grant admin privileges to:
+          <%= config_fields.select :adminability, @cardset.configuration.legal_values[:adminability].invert.to_a %>
       </div>
 
       <div class="config_section">

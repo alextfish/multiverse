@@ -39,6 +39,8 @@ module CardsHelper
         out.gsub!(string, card.name)
       end
       return out.html_safe
+    else
+      ""  # Required so that we can word_wrap the output
     end
   end
 end

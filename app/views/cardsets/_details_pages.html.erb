@@ -3,7 +3,7 @@
   <%= link_to_unless_current p.title, url_for([@cardset, p]) do %>
     <% # This entire block is only evaluated for the current details page (if any) %>
     <% current_order = p.order %>
-    <% if signed_in_as_admin?(@cardset) && current_order > 0 %>
+    <% if permission_to?(:admin, @cardset) && current_order > 0 %>
       <%= form_for [@cardset, p], :remote => true, :dataType => 'script' do |f| %>
         <%= f.hidden_field :order, :value => p.order - 1 %>
         <%= image_submit_tag "moveleft.png", :alt => "Move this details page left",
@@ -12,7 +12,7 @@
       <% end %>
     <% end %>
     <%= p.title %>
-    <% if signed_in_as_admin?(@cardset) && current_order < dps_to_show.length-1 %>
+    <% if permission_to?(:admin, @cardset) && current_order < dps_to_show.length-1 %>
       <%= form_for [@cardset, p], :remote => true, :dataType => 'script' do |f| %>
         <%= f.hidden_field :order, :value => p.order + 1 %>
         <%= image_submit_tag "moveright.png", :alt => "Move this details page right",

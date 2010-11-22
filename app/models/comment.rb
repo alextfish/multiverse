@@ -45,6 +45,9 @@ class Comment < ActiveRecord::Base
       :highlighted => 2
     }
   end
+  def self.DEFAULT_USER_NAME
+    "Visitor"
+  end
 
 
   # Instance methods

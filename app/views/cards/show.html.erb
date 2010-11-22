@@ -13,7 +13,7 @@
     <li><a href="#mockup"      id="mockup_link"   >Mockup</a></li>
     <li><a href="#plaincard"   id="plaincard_link">Plain</a></li>
    </ul>
-   <% if signed_in_as_admin?(@cardset) %>
+   <% if permission_to?(:edit, @card.cardset) %>
      <ul class="cardtabs">
       <li><%= link_to 'Edit', edit_card_path(@card) %></li>
      </ul>
@@ -28,13 +28,22 @@
    <div class="onetab" id="mockup"><a name="mockup"></a>
      <%= render :partial => 'shared/prettycard', :locals => { :link => false } %>
    </div>
-   <div class="card_controls_below">
-     <% if signed_in_as_admin?(@card.cardset) %>
-       <%= link_to 'Edit card', edit_card_path(@card) %>
-       |
-       <%= link_to 'Delete card', @card, :confirm => "Really DELETE #{@card.name}?", :method => :delete %>
-     <% end %>
-   </div>
+   <% show_edit_link = permission_to?(:edit, @card.cardset) %>
+   <% show_delete_link = permission_to?(:delete, @card.cardset) %>
+   <% if show_edit_link || show_delete_link %>
+     <div class="card_controls_below">
+       <% if show_edit_link %>
+         <%= link_to 'Edit card', edit_card_path(@card) %>
+       <% end %>
+       <% if show_edit_link && show_delete_link %>
+         |
+       <% end %>
+       <% if show_delete_link %>
+         <%= link_to 'Delete card', @card, :confirm => "Really DELETE #{@card.name}?", :method => :delete %>
+       <% end %>
+     </div>
+   <% end %>
+   <%= render :partial => 'shared/updated_at', :locals => { :object => @card } %>
   </td> <!-- end of card -->
 
   <td> <!-- controls, comments etc -->
@@ -56,12 +65,12 @@
          <% end %>
        </ul>
        </div>
-       <% if permission_to_comment(@card.cardset) %>
+       <% if permission_to?(:comment, @card.cardset) %>
          <b>Add your comments:</b>
          <% @comment = new_comment # restore the value stored at the top %>
          <%= render 'shared/card_comment_form' %>
        <% else %>
-         <%= @cardset.comment_permission_message %>
+         <%= @cardset.permission_message(:comment) %>
          <% if !signed_in? %>
            Would you like to <%= link_to "sign in", signin_path %>?
          <% end %>

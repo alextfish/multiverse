@@ -8,7 +8,7 @@
   <%= format_all_markup(@details_page.body) %>
 </p>
 
-<% if signed_in_as_admin?(@cardset) %>
+<% if permission_to?(:admin, @cardset) %>
  <p>
   <%= link_to 'Edit', edit_cardset_details_page_path(@cardset, @details_page) %> |
   <%= link_to 'Destroy', cardset_details_page_path(@cardset.id, @details_page),
@@ -16,3 +16,4 @@
           :method => :delete %></td>
  </p>
 <% end %>
+<%= render :partial => 'shared/updated_at', :locals => { :object => @details_page } %>

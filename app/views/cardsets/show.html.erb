@@ -56,14 +56,14 @@
 <%= render 'setviews' %>
 
 
-<% if signed_in_as_admin?(@cardset) %>
+<% if permission_to?(:admin, @cardset) %>
     <%= link_to "Delete entire cardset", @cardset,
       :confirm => "Really delete this whole cardset and all cards in it?",
       :method => :delete %>
 <% end %>
 
 <p>
-  <% if permission_to_comment(@cardset) %>
+  <% if permission_to?(:comment, @cardset) %>
     <%= link_to "Add a comment on this cardset", new_cardset_comment_path( @cardset) %>
   <% end %>
 </p>
@@ -109,13 +109,12 @@
      <% end %>
     </table>
   <% else %>
-    <% if signed_in_as_admin?(@cardset) %>
-      There are no cards in this cardset. Why not
+    There are no cards in this cardset.
+    <% if permission_to?(:edit, @cardset) %>
+      Why not
       <%= link_to "add a card", new_card_path(:cardset_id => @cardset.id) %>
       or
       <%= link_to "import some", import_cardset_path %>?
-    <% else %>
-      The cardset owner, <%= link_to @owner.name, @owner %>, has not added any cards to this cardset yet.
     <% end %>
   <% end %>
 </p>
@@ -124,7 +123,7 @@
   <% if sorted_comments.empty? %>
     There are no comments on any cards in the cardset.
     <% if !recentcards.empty? %>
-      <% if signed_in_as_admin?(@cardset) %>
+      <% if permission_to?(:edit, @cardset) %>
         Why not ask for some feedback on a few cards from visitors, by posting some comments and highlighting them?
       <% else %>
         Why not browse the cards and add your thoughts?

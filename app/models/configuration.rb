@@ -25,12 +25,17 @@ class Configuration < ActiveRecord::Base
 
   belongs_to :cardset
 
-    people_options = {
-      :anyone => "Anyone",
-      :signedin => "Signed-in users",
-      :admins => "Admins only",
-      # :selected => "Selected users:"
-    }
+  people_options = {
+    :anyone => "Anyone",
+    :signedin => "Signed-in users",
+    :admins => "Admins only",
+    # :selected => "Selected users:"
+  }
+  admin_options = {
+    :signedin => "Signed-in users",
+    :justme => "Just owner",
+    # :selected => "Selected users:"
+  }
   @@legal_values_internal = {
     :frame => {
       "image" => "Supplied image",
@@ -43,6 +48,8 @@ class Configuration < ActiveRecord::Base
     },
     :visibility => people_options,
     :commentability => people_options,
+    :editability => people_options,
+    :adminability => admin_options,
   }
   validators = Hash[ @@legal_values_internal.map do |prop, values_hash|
     [prop, Regexp.new( values_hash.keys.join('|') )]
@@ -57,20 +64,34 @@ class Configuration < ActiveRecord::Base
     @@legal_values_internal
   end
 
+  DEFAULT_VALUES = {
+    :frame                  => 'prettycard',
+    :use_highlighting       => true,
+    :use_addressing         => true,
+    :default_comment_state  => 'unaddressed',
+    :cardlist_show_comments => true,
+    :cardlist_show_code     => false,
+    :cardlist_show_active   => false,
+    :card_show_code         => false,
+    :card_show_active       => false,
+    :visibility             => 'anyone',
+    :commentability         => 'anyone',
+    :editability            => 'admins',
+    :adminability           => 'justme',
+  }
+
   def set_default_values!
-    self.attributes = {
-      :frame                  => 'prettycard',
-      :use_highlighting       => true,
-      :use_addressing         => true,
-      :default_comment_state  => 'unaddressed',
-      :cardlist_show_comments => true,
-      :cardlist_show_code     => false,
-      :cardlist_show_active   => false,
-      :card_show_code         => false,
-      :card_show_active       => false,
-      :visibility             => 'anyone',
-      :commentability         => 'anyone',
-    }
+    self.attributes = DEFAULT_VALUES
+  end
+
+  def set_blank_values!
+    if self.editability.blank?
+      self.editability = DEFAULT_VALUES[:editability]
+    end
+    if self.adminability.blank?
+      self.adminability = DEFAULT_VALUES[:adminability]
+    end
+    self.save!
   end
 
 end

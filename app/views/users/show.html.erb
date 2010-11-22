@@ -1,4 +1,4 @@
-<h1>Profile</h1>
+<h1><%= @title = @user.name %></h1>
 
 <!-- p>
   <b>Name:</b>
@@ -13,5 +13,7 @@
 <%= render @user %>
 
 <p><%= link_to "Create new cardset", new_cardset_path %> |
-<%= link_to 'Edit profile', edit_user_path(@user) %> |
+<% if @user == current_user %>
+  <%= link_to 'Edit profile', edit_user_path(@user) %> |
+<% end %>
 <%= link_to 'All users', users_path %>

@@ -4,6 +4,6 @@ class AddCardsetIdToConfiguration < ActiveRecord::Migration
   end
 
   def self.down
-    add_column :configurations, :cardset_id
+    remove_column :configurations, :cardset_id
   end
 end
