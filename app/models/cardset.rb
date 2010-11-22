@@ -114,6 +114,11 @@ class Cardset < ActiveRecord::Base
     "image" => "image_url",
   }
   FIELDS = ["","name","cost","supertype","cardtype","subtype","rarity","rulestext","flavourtext","power","toughness","loyalty","code","colour","art_url","artist","image_url","comment"]
+<<<<<<< HEAD
+=======
+  STRING_FIELDS = ["name","cost","supertype","cardtype","subtype","rarity","rulestext","flavourtext","code","colour","art_url","artist","image_url","comment"]
+  DEFAULT_RARITY = "common"
+>>>>>>> parent of 234dee4... Don't reset rarity when partial-importing
   ENUM_ALIASES = {
     "colour" => {  # keys need to be strings, not symbols
       "w" => "white", "u" => "blue", "b" => "black", "r" => "red", "g" => "green", "a" => "artifact", "z" => "multicolour", "l" => "land",
@@ -219,6 +224,17 @@ class Cardset < ActiveRecord::Base
           end
         end
       end
+<<<<<<< HEAD
+=======
+      # Enforce rarity; Default rarity to common
+      if (!got_rarity) || !Card.rarities.include?(carddatahash["rarity"])
+        carddatahash["rarity"] = DEFAULT_RARITY
+      end
+      # Strip whitespace
+      STRING_FIELDS.each do |field|
+        carddatahash[field] && carddatahash[field].strip!
+      end
+>>>>>>> parent of 234dee4... Don't reset rarity when partial-importing
 
       # Remove the comment from the card data, as we do something different with the comment
       if got_comment
