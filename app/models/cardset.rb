@@ -280,7 +280,7 @@ class Cardset < ActiveRecord::Base
     # We've not returned so far, so the whole data must be good
     cards_and_comments.each do |card_and_comment|
       card = card_and_comment[0]
-      card.frame = card.colour.blank? ? card.calculated_frame : card.colour.blank
+      card.frame = card.colour.blank? ? card.calculated_frame : card.colour
       commenttext = card_and_comment[1]
       card.save!
       if !commenttext.blank?
