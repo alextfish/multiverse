@@ -27,8 +27,11 @@
     <% if @cardset.configuration.cardlist_show_comments %>
       <th>Comments</th>
       <th class="date">Recent comment</th>
+      <% if permission_to?(:edit, @cardset) && @cardset.configuration.use_addressing %>
+        <th>Unaddressed</th>
+      <% end %>
     <% end %>
-      <% if permission_to?(:edit, @cardset) || permission_to?(:delete, @cardset) %>
+    <% if permission_to?(:edit, @cardset) || permission_to?(:delete, @cardset) %>
       <th colspan="3" class="nosort">&nbsp;</th>
     <% end %>
   </tr>
@@ -68,6 +71,9 @@
             <%= format_datetime(card_comments_sorted[0].created_at) %> by <%= comment_user_link(card_comments_sorted[0]) %>
           <% end %>
         </td>
+        <% if permission_to?(:edit, @cardset) && @cardset.configuration.use_addressing %>
+          <td><%= card_comments_sorted.select { |c| c.unaddressed? }.count %></td>
+        <% end %>
       <% end %>
       <% if permission_to?(:edit, @cardset) %>
         <td><%= link_to 'Edit', edit_card_path(card) %></td>
