@@ -29,11 +29,9 @@ class Card < ActiveRecord::Base
   has_many :comments, :dependent => :destroy
   has_many :old_cards, :dependent => :destroy
 
-
   #has_many :highlighted_comments, :class_name => 'Comment', :conditions => ['status = ?', COMMENT_HIGHLIGHTED]
   #has_many :unaddressed_comments, :class_name => 'Comment', :conditions => ['status = ?', COMMENT_UNADDRESSED]
 
-<<<<<<< HEAD
   before_create :regularise_fields
   #after_save do  - Can't do this, as we don't have access to session methods in model callbacks :/
   #  set_last_edit(self)
@@ -54,8 +52,6 @@ class Card < ActiveRecord::Base
     end
   end
 
-=======
->>>>>>> parent of 234dee4... Don't reset rarity when partial-importing
   def formatted_rules_text
     format(rulestext)
   end

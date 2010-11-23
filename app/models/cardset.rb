@@ -89,7 +89,7 @@ class Cardset < ActiveRecord::Base
       when "justme"
         out = signed_in_as_owner?(self)
       when "selected"
-        return configuration.permitted_users(action).include?(current_user.name) # Won't work - current_user not available
+        return configuration.permitted_users(action).include?(current_user.name)
       else
         raise "Unexpected value of configuration property in action #{action}: #{permitted_people}"
     end
@@ -114,11 +114,6 @@ class Cardset < ActiveRecord::Base
     "image" => "image_url",
   }
   FIELDS = ["","name","cost","supertype","cardtype","subtype","rarity","rulestext","flavourtext","power","toughness","loyalty","code","colour","art_url","artist","image_url","comment"]
-<<<<<<< HEAD
-=======
-  STRING_FIELDS = ["name","cost","supertype","cardtype","subtype","rarity","rulestext","flavourtext","code","colour","art_url","artist","image_url","comment"]
-  DEFAULT_RARITY = "common"
->>>>>>> parent of 234dee4... Don't reset rarity when partial-importing
   ENUM_ALIASES = {
     "colour" => {  # keys need to be strings, not symbols
       "w" => "white", "u" => "blue", "b" => "black", "r" => "red", "g" => "green", "a" => "artifact", "z" => "multicolour", "l" => "land",
@@ -134,7 +129,7 @@ class Cardset < ActiveRecord::Base
   end
   SUBTYPE_DELIMITERS = [" -- ", " - ", "--", "-"]
 
-  def import_data(params, current_user_in)
+  def import_data(params, current_user)
     # Returns [success, message]
 
     # Initial informative error messages
@@ -224,17 +219,6 @@ class Cardset < ActiveRecord::Base
           end
         end
       end
-<<<<<<< HEAD
-=======
-      # Enforce rarity; Default rarity to common
-      if (!got_rarity) || !Card.rarities.include?(carddatahash["rarity"])
-        carddatahash["rarity"] = DEFAULT_RARITY
-      end
-      # Strip whitespace
-      STRING_FIELDS.each do |field|
-        carddatahash[field] && carddatahash[field].strip!
-      end
->>>>>>> parent of 234dee4... Don't reset rarity when partial-importing
 
       # Remove the comment from the card data, as we do something different with the comment
       if got_comment
@@ -296,18 +280,11 @@ class Cardset < ActiveRecord::Base
     # We've not returned so far, so the whole data must be good
     cards_and_comments.each do |card_and_comment|
       card = card_and_comment[0]
-      card.frame = card.colour.blank? ? card.calculated_frame : card.colour
+      card.frame = card.colour.blank? ? card.calculated_frame : card.colour.blank
       commenttext = card_and_comment[1]
-      card.last_edit_by = current_user_in.id
-      Rails.logger.info "Set last editor of #{card.name} to #{current_user_in}"
       card.save!
-
       if !commenttext.blank?
-        if current_user_in
-          comment = card.comments.build(:user => current_user_in, :body => commenttext)
-        else # In certain circumstances a non-signed-in user may be permitted to import data
-          comment = card.comments.build(:user_name => Comment.DEFAULT_USER_NAME, :body => commenttext)
-        end
+        comment = card.comments.build(:user => current_user, :body => commenttext)
         comment.save!
       end
     end
