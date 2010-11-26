@@ -15,8 +15,10 @@
     <%= f.label :title %>:     <%= f.text_field :title %>
   </div>
   <div class="field">
-    <%= f.label :body, "Content" %> (use
-      <%= render :partial => 'shared/markdown_short' %>)<br />
+    <%= f.label :body, "Content" %>
+      <%= render :partial => 'shared/markdown_short' -%>
+  </div>
+  <div class="field">
     <%= f.text_area :body, :rows=>"", :cols=>"" %>
   </div>
   <div class="actions">

@@ -40,7 +40,7 @@
   <% all_cards.sort.each_with_index do |card, index| %>
     <tr id="card_row_<%= card.id %>">
       <td><%= index+1 %></td>
-      <td><%= link_to card.name, card %></td>
+      <td><%= link_to card.printable_name, card %></td>
       <td><%= card.category %></td>
       <td><%= card.rarity.capitalize %></td>
       <td><%= card.cost %></td>

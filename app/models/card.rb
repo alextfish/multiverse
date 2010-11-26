@@ -59,6 +59,17 @@ class Card < ActiveRecord::Base
     format(flavourtext)
   end
 
+  def printable_name
+    case
+      when !name.blank?
+        name
+      when !code.blank?
+        code
+      else
+        "Card#{id}"
+    end
+  end
+
   def recency  # For a card, its order in recency is when it was updated
     updated_at
   end
@@ -150,7 +161,7 @@ class Card < ActiveRecord::Base
             return pair_order.find_index(pair1) <=> pair_order.find_index(pair2)
           else
             # Just sort by name
-            return name <=> c2.name
+            return printable_name <=> c2.printable_name
           end
         else
           # Higher number of colours goes later
@@ -158,12 +169,12 @@ class Card < ActiveRecord::Base
             return num_colours <=> c2.num_colours
           else
             # Just sort by name
-            return name <=> c2.name
+            return printable_name <=> c2.printable_name
           end
         end
       else
         # Within a category other than multicolour, just sort by name
-        return name <=> c2.name
+        return printable_name <=> c2.printable_name
       end
     end
   end

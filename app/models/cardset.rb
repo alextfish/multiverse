@@ -108,15 +108,16 @@ class Cardset < ActiveRecord::Base
     "manacost" => "cost",
     "text" => "rulestext",
     "flavortext" => "flavourtext",
-    "color" => "colour",
+    "color" => "frame",
+    "colour" => "frame",
     "notes" => "comment",
     "art" => "art_url",
     "image" => "image_url",
   }
-  FIELDS = ["","name","cost","supertype","cardtype","subtype","rarity","rulestext","flavourtext","power","toughness","loyalty","code","colour","art_url","artist","image_url","comment"]
+  FIELDS = ["","name","cost","supertype","cardtype","subtype","rarity","rulestext","flavourtext","power","toughness","loyalty","code","frame","art_url","artist","image_url","comment"]
   ENUM_ALIASES = {
-    "colour" => {  # keys need to be strings, not symbols
-      "w" => "white", "u" => "blue", "b" => "black", "r" => "red", "g" => "green", "a" => "artifact", "z" => "multicolour", "l" => "land",
+    "frame" => {  # keys need to be strings, not symbols
+      "w" => "white", "u" => "blue", "b" => "black", "r" => "red", "g" => "green", "a" => "artifact", "z" => "multicolour", "l" => "land", "h" => "hybrid",
       "gold" => "multicolour", "multi" => "multicolour", "multicolor" => "multicolour", "multicolored" => "multicolour", "multicoloured" => "multicolour"
     },
     "rarity" => {
@@ -135,16 +136,16 @@ class Cardset < ActiveRecord::Base
     # Initial informative error messages
     @cardset = Cardset.find(params[:id])
     if params[:separator].blank?
-      return false, "Separator character is required"
+      return false, "Separator character is required", []
     end
     if params[:formatting_line].blank?
-      return false, "Formatting line is required"
+      return false, "Formatting line is required", []
     end
     if params[:data].blank?
-      return false, "No data supplied"
+      return false, "No data supplied", []
     end
     if params[:id].blank?
-      return false, "No cardset ID supplied - please re-navigate to this page via the cardset"
+      return false, "No cardset ID supplied - please re-navigate to this page via the cardset", []
     end
 
     # Validate the supplied formatting line
@@ -152,7 +153,7 @@ class Cardset < ActiveRecord::Base
     canonfields = inputfields.map{ |f| ALIASES.has_key?(f) ? ALIASES[f] : f.strip }
     validfields = canonfields.select{ |f| FIELDS.include?(f) }
     if validfields != canonfields
-      return false, "The following fields were not recognised: " + (canonfields - validfields).join(", ")
+      return false, "The following fields were not recognised: " + (canonfields - validfields).join(", "), []
     end
 
     # We need to detect and reject duplicates of any field, except "" which we allow in multiples
@@ -163,7 +164,7 @@ class Cardset < ActiveRecord::Base
     end
 
     if !rejectfields.empty?
-      return false, "The following fields were duplicated: " + rejectfields.uniq.join(", ")
+      return false, "The following fields were duplicated: " + rejectfields.uniq.join(", "), []
     end
 
     debug = ''
@@ -173,7 +174,7 @@ class Cardset < ActiveRecord::Base
     got_comment = fields.include?("comment")
     got_type = fields.include?("cardtype")
     got_loyalty = fields.include?("loyalty")
-    got_colour = fields.include?("colour")
+    got_frame = fields.include?("frame")
 
     # Read the CSV
     # Use CSV.parse, which takes care of quoting and newlines for us
@@ -188,7 +189,7 @@ class Cardset < ActiveRecord::Base
       end
       if carddata.length != fields.length
         # Give a nice error message, with 1-based indexing
-        return false, "Line #{index+1} of data had #{carddata.length} fields when expecting #{fields.length}"
+        return false, "Line #{index+1} of data had #{carddata.length} fields when expecting #{fields.length}", []
       end
 
       carddatahash = Hash[fields.zip(carddata)]
@@ -232,8 +233,8 @@ class Cardset < ActiveRecord::Base
         carddatahash.delete("loyalty")
       end
       # Capitalize frame/colour
-      if got_colour
-        carddatahash["colour"] && carddatahash["colour"].capitalize!
+      if got_frame
+        carddatahash["frame"] && carddatahash["frame"].capitalize!
       end
 
       # Obtain the existing card
@@ -280,7 +281,7 @@ class Cardset < ActiveRecord::Base
     # We've not returned so far, so the whole data must be good
     cards_and_comments.each do |card_and_comment|
       card = card_and_comment[0]
-      card.frame = card.colour.blank? ? card.calculated_frame : card.colour
+      card.frame = card.frame.blank? ? card.calculated_frame : card.frame
       commenttext = card_and_comment[1]
       card.save!
       if !commenttext.blank?
@@ -293,6 +294,6 @@ class Cardset < ActiveRecord::Base
     skipped_cards>0 && message << "#{skipped_cards} cards were left unchanged. "
     overwritten_cards>0 && message << "#{overwritten_cards} cards were updated. "
     new_cards>0 && message << "#{new_cards} new cards were added. "
-    return true, message
+    return true, message, cards_and_comments.map { |card, comment| card }
   end
 end

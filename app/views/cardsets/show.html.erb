@@ -76,7 +76,7 @@
       <% highlightedcomments.each_slice(5) do |comments_slice| %>
         <tr>
         <% comments_slice.each do |@comment| %>
-          <td>
+          <td class="highlighted_comment_cell">
           <% target = @comment.parent %>
           <% reply_link = @comment.card || new_cardset_comment_path(@comment.cardset) %>
           On <%= link_to target.name, target %> (<%= link_to "reply", reply_link %>):

@@ -5,35 +5,7 @@
 <h2>Import Data Into <%= @cardset.name %></h2>
 <% @title = "Import into #{@cardset.name}" %>
 
-
-<p>
-If you've designed your cards elsewhere, you can import them into Multiverse with this page.
-</p>
-<p>
-You should export your set data in a Character-Separated Values format, where field values are separated by a comma or other single character. You must specify the separating character, and provide a formatting line to tell us which order your fields are in. The formatting line must contain only your separating character and the following field names:
-<br><code>name, manacost, supertype, type, subtype, rarity, rulestext, flavourtext, power, toughness, loyalty, art_url, image_url, artist, code, colour, comment</code>
-<br>Accepted aliases:
-<code>cardtype</code> for <code>type</code>;
-<code>cost</code> for <code>manacost</code>;
-<code>text</code> for <code>rulestext</code>;
-<code>flavortext</code> for <code>flavourtext</code>;
-<code>color</code> for <code>colour</code>;
-<code>art</code> for <code>art_url</code>;
-<code>image</code> for <code>image_url</code>;
-<code>notes</code> for <code>comment</code>. A field may not be repeated, nor may it and its alias both be present.
-</p>
-<p>Any fields may be omitted. In conjunction with the "Replace with new" option, non-specified fields for existing cards will be left as they are. You can use this to make partial edits en masse.
-<br>If the <code>colour</code> field is omitted, the colour will then be deduced from each card's mana cost.
-<br>The <code>comment</code> field will be used to create an initial comment on the card.
-<br>Every line in the data must contain the same number of the separating character, or be entirely blank.
-</p>
-<p>An example formatting line, using the separating character <code>%</code>:
-<br><code>name%code%cost%supertype%type%subtype%power%toughness%loyalty%rulestext</code>
-<br>In this example, for each card, the colour will be deduced from the mana cost, the rarity will default to common, the flavour text will default to empty, and no initial comments will be created.
-</p>
-<p>You can specify what action should be taken if imported cards have the same <code>name</code> or <code>code</code> as existing cards in the cardset. "Replace with new" will overwrite the old card with the new data; "Preserve old" will abandon the imported card and leave the old card unchanged; "Duplicate" will create a new card in the database with the same name and/or code as the old card, which will be left unchanged.
-<br>If a card being imported has the same (nonempty) <code>code</code> as an existing card in your cardset before the import, and the same <code>name</code> as a <i>different</i> existing card in your cardset, the <code>code</code> rather than the <code>name</code> will be used to determine the "old card".
-</p>
+<%= render 'shared/import_help' %>
 <hr>
 <%= form_tag :action => :import_data, :id => @cardset do %>
   <p><b>Separating character:</b>

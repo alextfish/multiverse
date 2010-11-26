@@ -95,7 +95,7 @@ module SessionsHelper
       when "selected"
         return cardset.configuration.permitted_users(action).include?(current_user.name)
       else
-        raise "Unexpected value of configuration property in action #{action}: #{permitted_people}"
+        raise "Unexpected value of configuration property in action #{action}: \"#{permitted_people}\""
     end
   end
 
@@ -107,7 +107,7 @@ module SessionsHelper
   end
 
   def set_last_edit(object)
-    object.last_edit_by = signed_in? ? current_user.id : User.NON_SIGNED_IN_USER
+    object.last_edit_by = current_user ? current_user.id : User.NON_SIGNED_IN_USER
     object.save!
   end
 

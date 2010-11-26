@@ -8,12 +8,7 @@
       <%= @f.text_field :user_name, :value => Comment.DEFAULT_USER_NAME %>
       <br/>(You won't be able to edit your comments unless you <%= link_to "sign in", signin_path %> before posting)
     <% end %>
-    <%= link_to_function "(?)",
-        visual_effect(:toggle_blind, :formatting_info, :duration => 0.5) %>
-  <div id="formatting_info" style="display: none;">
-    You can use <%= render :partial => 'shared/markdown_short' %>
-    <br>Link to [[[Official Magic card]]] or (((Card in this cardset)))
-  </div>
+    <%= render :partial => 'shared/markdown_short' %>
   </div>
   <div class="field">
     <%= @f.text_area :body, :value => params[:data], :rows => "6" %>

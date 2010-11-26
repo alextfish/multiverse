@@ -5,7 +5,7 @@
   <tr class="cardtitle">
    <td class="cardname">
     <% if link %>
-      <%= link_to @card.name, @card, :title => @card.code %>
+      <%= link_to @card.printable_name, @card, :title => @card.code %>
     <% else %>
       <span title="<%= @card.code %>"><%= @card.name %></span>
     <% end %>

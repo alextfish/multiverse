@@ -68,8 +68,11 @@ class CardsetsController < ApplicationController
   # POST /cardsets/1/import_data
   def import_data
     Rails.logger.info "User #{current_user} importing data"
-    success, message = @cardset.import_data(params, current_user)
+    success, message, changed_cards = @cardset.import_data(params, current_user)
     if success
+      changed_cards.each do |card|
+        set_last_edit(card)
+      end
       redirect_to(@cardset, :notice => message)
     else
       flash.now[:error] = message

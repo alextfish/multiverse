@@ -39,16 +39,16 @@ module ApplicationHelper
   end
 
   def format_all_markup(text)
-    # Translate [[[ into {{{
-    pre_formatted_text = text.gsub('[[[', '{{{').gsub(']]]', '}}}')
-    markdown_text = Maruku.new(sanitize(pre_formatted_text)).to_html
-    formatted_text = format_links(markdown_text).html_safe
+    formatted_text = protect_smilies(format_links(text))
+
+    markdown_text = Maruku.new(sanitize(formatted_text)).to_html.html_safe
   end
 
   def format_links(text)
+    # Translate [[[-links and (((-links into Maruku links
     cardset_card_regexp = /\(\(\(([^)]*)\)\)\)/
-    wizards_card_regexp = /\{\{\{([^\}]*)\}\}\}/
-    remove_brackets_regexp = /([(\{])\1\1(.*)([)\}])\3\3/
+    wizards_card_regexp = /\[\[\[([^\]]*)\]\]\]/
+    remove_brackets_regexp = /([(\[])\1\1(.*)([)\]])\3\3/
     cardset_card_block = lambda { cardset_card_link(@cardset, "$1") }
     wizards_card_block = lambda { wizards_card_link("$1") }
 
@@ -61,13 +61,24 @@ module ApplicationHelper
 
   def cardset_card_link(cardset, cardname)
     if (card = cardset.cards.find_by_name(cardname))
-      link_to cardname, card
+      "[#{cardname}](#{url_for(card)})"
     else
       "(((#{cardname})))"
     end
   end
   def wizards_card_link(cardname)
-    link_to cardname, "http://gatherer.wizards.com/Pages/Search/Default.aspx?name=+[%22#{URI.escape(cardname)}%22]"
+    "[#{cardname}](http://gatherer.wizards.com/Pages/Search/Default.aspx?name=+[%22#{URI.escape(cardname)}%22])"
+  end
+
+  def protect_smilies(text)
+    text_array = text.split("\n")
+    text_array.map { |this_line|
+      if this_line[0] == ?:
+        this_line = "&#173;" + this_line
+      else
+        this_line
+      end
+    }.join("\n")
   end
 
   def comment_user_link(comment)
