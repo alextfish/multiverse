@@ -30,7 +30,7 @@ a > img { border: 0px; }
             padding: 6px;
             background-color: #eee; }
 
-.highlighted_comment_cell { width: 19%;
+.comment_cell { width: 19%;
             vertical-align: top; }
 
 /***** Comment display *****/

@@ -122,7 +122,7 @@ class Card < ActiveRecord::Base
   end
 
   def category
-    f = calculated_frame
+    f = frame || calculated_frame
     case f
       when /^Land/
         return "Land"

@@ -21,24 +21,24 @@ function update_comment_status(commentid, action) {
   switch (action) {
     case 0:  //  "address":   case "unhighlight":
       commentdiv.className = "comment normal";
-      addressform.style.display = "none";
-      unhighlightform.style.display = "none";
-      unaddressform.style.display = "inline";
       highlightform.style.display = "inline";
+      unhighlightform.style.display = "none";
+      addressform.style.display = "none";
+      unaddressform.style.display = "inline";
       break;
     case 1: // "unaddress":
       commentdiv.className = "comment unaddressed";
-      unaddressform.style.display = "none";
-      addressform.style.display = "inline";
-      highlightform.style.display = "none";
+      highlightform.style.display = "inline";
       unhighlightform.style.display = "none";
+      addressform.style.display = "inline";
+      unaddressform.style.display = "none";
       break;
     case 2: //  "highlight":
       commentdiv.className = "comment highlighted";
       highlightform.style.display = "none";
       unhighlightform.style.display = "inline";
       addressform.style.display = "none";
-      unaddressform.style.display = "none";
+      unaddressform.style.display = "inline";
       break;
   }
 }

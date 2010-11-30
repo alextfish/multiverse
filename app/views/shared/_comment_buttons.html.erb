@@ -38,9 +38,9 @@
 
 
        if @comment.unaddressed? && @cardset.configuration.use_addressing
-         visible_buttons = [:address]
+         visible_buttons = [:address, :highlight]
        elsif @comment.highlighted? && @cardset.configuration.use_highlighting
-         visible_buttons = [:unhighlight]
+         visible_buttons = [:unhighlight, :unaddress]
        else
          visible_buttons = (@cardset.configuration.use_highlighting ? [:highlight] : []) +
              (@cardset.configuration.use_addressing ? [:unaddress ] : [])
