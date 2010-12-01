@@ -28,6 +28,14 @@ module ApplicationHelper
       link_to user_name, user
     end
   end
+  def by_last_edit_user_if_available(object)
+    user, user_name = get_last_edit_user_and_string(object)
+    if user.nil?
+      ""
+    else
+      "by #{link_to user_name, user}".html_safe
+    end
+  end
 
   def format_datetime(dt)
     if dt < 1.week.ago

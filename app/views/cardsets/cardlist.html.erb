@@ -59,7 +59,7 @@
         <td><%= card.active %></td>
       <% end %>
       <td>
-        <%= format_datetime(card.updated_at) %> by <%= link_to_last_edit_user(card) %>
+        <%= format_datetime(card.updated_at) %> <%= by_last_edit_user_if_available card %>
       </td>
       <% if @cardset.configuration.cardlist_show_comments %>
         <% card_comments_sorted = Comment.find(:all,

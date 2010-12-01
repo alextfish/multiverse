@@ -1,4 +1,4 @@
  <div class="timestamp">Updated
    <%= format_datetime object.updated_at %>
-   by <%= link_to_last_edit_user object %>
+   <%= by_last_edit_user_if_available object %>
  </div>
