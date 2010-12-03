@@ -179,6 +179,13 @@ class Card < ActiveRecord::Base
     end
   end
 
+  def frame
+    if Card.frames.include?(attributes[:frame])
+      attributes[:frame]
+    else
+      calculated_frame
+    end
+  end
 
   def calculated_frame
 

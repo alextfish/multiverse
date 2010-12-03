@@ -27,10 +27,23 @@
 .flavourtext { font-style: italic; margin-top: 4px; }
 .microtext .flavourtext { margin-top: 2px; }
 
-.common { background-color: #ffffff; }
-.uncommon { background-color: #999999; }
-.rare   { background-color: #e0d060; }
-.mythic { background-color: #993333; color: #ffffff; }
+.common {  color: #fff; 
+  background-color: #000;}
+.uncommon {  color: #000; 
+  background-color: #999;
+  background: -webkit-gradient(linear, right top, left bottom, #999,  #ccd3d6, #999);
+  background: -moz-linear-gradient(right top, #999,  #ccd3d6, #999);
+ }
+.rare   {  color: #000; 
+  background-color: #e0d060;
+  background: -webkit-gradient(linear, right top, left bottom, #998044,  #e0d060, #998044);
+  background: -moz-linear-gradient(right top, #998044,  #e0d060, #998044);
+}
+.mythic { color: #fff; 
+  background-color: #933; 
+  background: -webkit-gradient(linear, right top, left bottom, #a43,  #e86, #a43);
+  background: -moz-linear-gradient(right top, #a43,  #e86, #a43);
+}
 
 .Colourless { background-color: #ccc6cc; }
 .Colourless .cardpt, .Colourless .cardtitle, .Colourless .cardtypeline { background-color: #eee9ee; }

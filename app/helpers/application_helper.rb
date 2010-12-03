@@ -69,13 +69,13 @@ module ApplicationHelper
 
   def cardset_card_link(cardset, cardname)
     if (card = cardset.cards.find_by_name(cardname))
-      "[#{cardname}](#{url_for(card)})"
+      "<a href=\"#{url_for(card)}\">#{cardname}</a>"
     else
       "(((#{cardname})))"
     end
   end
   def wizards_card_link(cardname)
-    "[#{cardname}](http://gatherer.wizards.com/Pages/Search/Default.aspx?name=+[%22#{URI.escape(cardname)}%22])"
+    "<a href=\"http://gatherer.wizards.com/Pages/Search/Default.aspx?name=+[%22#{URI.escape(cardname)}%22]\">#{cardname}</a>"
   end
 
   def protect_smilies(text)
