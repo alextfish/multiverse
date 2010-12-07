@@ -590,7 +590,7 @@
 .Hybrid .ptbox {
   background: #D2CCC0 !important; }
 
-.Hybrid .pinline_ptbox {
+.Hybrid .pinline_ptbox, .Land .pinline_ptbox {
   background: #e2dCd0 !important; }
 
 .Hybrid .cardart {

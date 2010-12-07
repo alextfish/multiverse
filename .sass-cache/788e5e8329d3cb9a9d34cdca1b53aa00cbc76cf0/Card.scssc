@@ -1,8 +1,8 @@
 3.0.24 (Classy Cassidy)
-2765d8fea23a18bf02e1769e00694627bf2800fb
+9222171aabb2fd60e28de028681416621067ebdf
 o:Sass::Tree::RootNode
 :
-@linei:@template"#;@mixin gradient_horz($start, $end) {
+@linei:@template"9;@mixin gradient_horz($start, $end) {
   filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#{$start}', endColorstr='#{$end}', GradientType=1);
   background: -webkit-gradient(linear, left top, right top, from($start), to($end));
   background: -moz-linear-gradient(left,  $start,  $end);
@@ -304,7 +304,7 @@ $Land_Green_Text: #cfc;
 .Hybrid .ptbox {
   background: #D2CCC0 !important;
 }
-.Hybrid .pinline_ptbox {
+.Hybrid .pinline_ptbox, .Land .pinline_ptbox {
   background: #e2dCd0 !important; 
 }
 .Hybrid .cardart {
@@ -731,7 +731,7 @@ color;-i o;
 ;i%;[ ;@;"gradient_horz_padded;/[o;	;;;i%;{ ;"Green_Texto;	;;;i%;@Œ
 ;"Blue_Text;5T;@;-i o;=;i);>["0.Hybrid .cardtitlebar, .Hybrid .cardtypebar;[o;
 ;i*;[ ;;;o;;;;;;"#D2CCC0;@;["background;-i ;5T;@;-i o;=;i,;>[".Hybrid .ptbox;[o;
-;i-;[ ;;;o;;;;;;"#D2CCC0 !important;@;["background;-i ;5T;@;-i o;=;i/;>[".Hybrid .pinline_ptbox;[o;
+;i-;[ ;;;o;;;;;;"#D2CCC0 !important;@;["background;-i ;5T;@;-i o;=;i/;>["1.Hybrid .pinline_ptbox, .Land .pinline_ptbox;[o;
 ;i0;[ ;;;o;;;;;;"#e2dCd0 !important;@;["background;-i ;5T;@;-i o;=;i2;>[".Hybrid .cardart;[o;
 ;i3;[ ;;;o;;;;;;"#eeeeee;@;["background-color;-i ;5T;@;-i o;:;i6;;0;[ ;"/***** Card editing *****/;@;<[ o;=;i8;>["3#card_supertype, #card_cardtype, #card_subtype;[o;
 ;i8;[ ;;;o;;;;;;"
