@@ -1,8 +1,8 @@
 3.0.24 (Classy Cassidy)
-84cf2b6e8eff98d769e66b95f812f5bf85d52432
+2765d8fea23a18bf02e1769e00694627bf2800fb
 o:Sass::Tree::RootNode
 :
-@linei:@template"°:@mixin gradient_horz($start, $end) {
+@linei:@template"#;@mixin gradient_horz($start, $end) {
   filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#{$start}', endColorstr='#{$end}', GradientType=1);
   background: -webkit-gradient(linear, left top, right top, from($start), to($end));
   background: -moz-linear-gradient(left,  $start,  $end);
@@ -301,6 +301,12 @@ $Land_Green_Text: #cfc;
 .Hybrid .cardtitlebar, .Hybrid .cardtypebar {
   background: #D2CCC0;
 }
+.Hybrid .ptbox {
+  background: #D2CCC0 !important;
+}
+.Hybrid .pinline_ptbox {
+  background: #e2dCd0 !important; 
+}
 .Hybrid .cardart {
   background-color: #eeeeee;
 }
@@ -315,7 +321,7 @@ $Land_Green_Text: #cfc;
 .rulestextfield { width: 98%; }
 .art_url_field  { width: 98%; }
 .image_url_field  { width: 400px; }
-:@children[Ão:Sass::Tree::MixinDefNode;i;[o:Sass::Tree::PropNode;i;[ :@prop_syntax:new:@valueo: Sass::Script::Interpolation:@aftero:Sass::Script::String
+:@children[Åo:Sass::Tree::MixinDefNode;i;[o:Sass::Tree::PropNode;i;[ :@prop_syntax:new:@valueo: Sass::Script::Interpolation:@aftero:Sass::Script::String
 :@context:default;i:
 @type:identifier;"', GradientType=1):@options{ :@originally_textF:	@mido:Sass::Script::Variable	;;;i;@:
 @name"end;@:@whitespace_afterF:@beforeo;;o;
@@ -724,22 +730,24 @@ color;-i o;
 ;"White_Text;5T;@;-i o;=;i%;>["/.greenblue .cardtext, .bluegreen .cardtext;[o;@
 ;i%;[ ;@;"gradient_horz_padded;/[o;	;;;i%;{ ;"Green_Texto;	;;;i%;@Œ
 ;"Blue_Text;5T;@;-i o;=;i);>["0.Hybrid .cardtitlebar, .Hybrid .cardtypebar;[o;
-;i*;[ ;;;o;;;;;;"#D2CCC0;@;["background;-i ;5T;@;-i o;=;i,;>[".Hybrid .cardart;[o;
-;i-;[ ;;;o;;;;;;"#eeeeee;@;["background-color;-i ;5T;@;-i o;:;i0;;0;[ ;"/***** Card editing *****/;@;<[ o;=;i2;>["3#card_supertype, #card_cardtype, #card_subtype;[o;
-;i2;[ ;;;o;;;;;;"
+;i*;[ ;;;o;;;;;;"#D2CCC0;@;["background;-i ;5T;@;-i o;=;i,;>[".Hybrid .ptbox;[o;
+;i-;[ ;;;o;;;;;;"#D2CCC0 !important;@;["background;-i ;5T;@;-i o;=;i/;>[".Hybrid .pinline_ptbox;[o;
+;i0;[ ;;;o;;;;;;"#e2dCd0 !important;@;["background;-i ;5T;@;-i o;=;i2;>[".Hybrid .cardart;[o;
+;i3;[ ;;;o;;;;;;"#eeeeee;@;["background-color;-i ;5T;@;-i o;:;i6;;0;[ ;"/***** Card editing *****/;@;<[ o;=;i8;>["3#card_supertype, #card_cardtype, #card_subtype;[o;
+;i8;[ ;;;o;;;;;;"
 100px;@;["
-width;-i ;5T;@;-i o;=;i3;>["#card_rarity;[o;
-;i3;[ ;;;o;;;;;;"8px;@;["margin-top;-i o;
-;i3;[ ;;;o;;;;;;"8px;@;["margin-bottom;-i ;5T;@;-i o;=;i4;>["!#card_power, #card_toughness;[o;
-;i4;[ ;;;o;;;;;;"	20px;@;["
-width;-i ;5T;@;-i o;=;i5;>[".flavourtextfield;[o;
-;i5;[ ;;;o;;;;;;"italic;@;["font-style;-i o;
-;i6;[ ;;;o;;;;;;"98%;@;["
-width;-i ;5T;@;-i o;=;i7;>[".rulestextfield;[o;
-;i7;[ ;;;o;;;;;;"98%;@;["
-width;-i ;5T;@;-i o;=;i8;>[".art_url_field;[o;
-;i8;[ ;;;o;;;;;;"98%;@;["
-width;-i ;5T;@;-i o;=;i9;>[".image_url_field;[o;
-;i9;[ ;;;o;;;;;;"
+width;-i ;5T;@;-i o;=;i9;>["#card_rarity;[o;
+;i9;[ ;;;o;;;;;;"8px;@;["margin-top;-i o;
+;i9;[ ;;;o;;;;;;"8px;@;["margin-bottom;-i ;5T;@;-i o;=;i:;>["!#card_power, #card_toughness;[o;
+;i:;[ ;;;o;;;;;;"	20px;@;["
+width;-i ;5T;@;-i o;=;i;;>[".flavourtextfield;[o;
+;i;;[ ;;;o;;;;;;"italic;@;["font-style;-i o;
+;i<;[ ;;;o;;;;;;"98%;@;["
+width;-i ;5T;@;-i o;=;i=;>[".rulestextfield;[o;
+;i=;[ ;;;o;;;;;;"98%;@;["
+width;-i ;5T;@;-i o;=;i>;>[".art_url_field;[o;
+;i>;[ ;;;o;;;;;;"98%;@;["
+width;-i ;5T;@;-i o;=;i?;>[".image_url_field;[o;
+;i?;[ ;;;o;;;;;;"
 400px;@;["
 width;-i ;5T;@;-i ;5T;@
