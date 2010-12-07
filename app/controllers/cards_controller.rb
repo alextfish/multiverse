@@ -51,11 +51,14 @@ class CardsController < ApplicationController
     @render_frame = @card.frame
     if @card.calculated_frame == @card.frame
       @card.frame = "Auto"
+      Rails.logger.info "Using Auto frame"
+    else
+      Rails.logger.info "Not using Auto frame as calculated_frame is '#{@card.calculated_frame}' but frame is '#{@card.frame}'..."
     end
   end
 
   def process_card
-    if @card.frame == "Auto"
+    if @card.attributes["frame"] == "Auto"
       @card.frame = @card.calculated_frame
       @card.save!
     end

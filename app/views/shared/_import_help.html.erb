@@ -27,5 +27,5 @@ You should export your set data in a Character-Separated Values format, where fi
 <br>If a card being imported has the same (nonempty) <code>code</code> as an existing card in your cardset before the import, and the same <code>name</code> as a <i>different</i> existing card in your cardset, the <code>code</code> rather than the <code>name</code> will be used to determine the "old card".
 </p>
 <p>The recognised values of the <code>colour</code> field are:
-<code><%= Card.frames.map { |f| f.gsub(/[()-]/,'') }.join("</code>, <code>").html_safe %></code>.
+<code><%= Card.frames.join("</code>, <code>").html_safe %></code>.
 <br>If the <code>colour</code> field is not specified, it will be deduced from the type and mana cost. However, the colour affiliation of lands will not be deduced; you must specify them (or edit the imported cards afterwards).

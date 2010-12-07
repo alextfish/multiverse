@@ -1,0 +1,313 @@
+@mixin gradient_horz($start, $end) {
+  filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#{$start}', endColorstr='#{$end}', GradientType=1);
+  background: -webkit-gradient(linear, left top, right top, from($start), to($end));
+  background: -moz-linear-gradient(left,  $start,  $end);
+}
+@mixin gradient_horz_highlight($startend, $middle) {
+  background: -webkit-gradient(linear, left top, right top, from($startend), color-stop(0.5, $middle), to($startend));
+  background: -moz-linear-gradient(left, $startend, $middle, $startend);
+}
+@mixin gradient_diag_highlight($startend, $middle) {
+  background: -webkit-gradient(linear, right top, left bottom, from($startend), color-stop(0.5, $middle), to($startend));
+  background: -moz-linear-gradient(right top, $startend, $middle, $startend);
+}
+@mixin gradient_vert_highlight($startend, $middle) {
+  background: -webkit-gradient(linear, left top, left bottom, from($startend), color-stop(0.5, $middle), to($startend));
+  background: -moz-linear-gradient(top, $startend, $middle, $startend);
+}
+@mixin gradient_horz_padded($start, $end) {
+  filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#{$start}', endColorstr='#{$end}', GradientType=1);
+  background: -webkit-gradient(linear, left top, right top, from($start), color-stop(0.4, $start), color-stop(0.6, $end), to($end));
+  background: -moz-linear-gradient(left, $start, $start, $end, $end);
+}
+
+/***** Card display *****/
+
+  .blackborder { border: 10px solid black; 
+      -moz-border-radius:    10px;
+      -webkit-border-radius: 10px;
+      -khtml-border-radius:  10px;
+      border-radius:         10px; }
+  .cardborder { width: 200px; /* height: 262px; */ }
+  .card { background: #0ff; padding-top: 4px; padding-left: 3px; padding-right: 3px; padding-bottom: 3px }
+  .pinline { }
+  .pinline_box { padding: 2px;}
+  .pinline_sides { padding-left: 2px; padding-right: 2px; }
+  .pinline_sidesbottom { padding-left: 2px; padding-right: 2px; padding-bottom: 2px; }
+  .pinline_box { 
+      border-left: 1px solid black; 
+      border-right: 1px solid black; 
+      border-bottom: 1px solid black; 
+      -moz-border-radius:    6px / 12px;
+      -webkit-border-radius: 6px / 12px;
+      -khtml-border-radius:  6px;
+      border-radius:         6px;
+      border-radius:         6px / 12px; } 
+  .pinline_box > div { border: 1px solid black; 
+      -moz-border-radius:    4px / 8px;
+      -webkit-border-radius: 4px / 8px;
+      -khtml-border-radius:  4px;
+      border-radius:         4px;
+      border-radius:         4px / 8px; 
+      padding-left: 3px; } 
+  /* Left side outer */
+  .pinline_sides, .pinline_sidesbottom {
+    border-left: 1px solid black; }
+  /* Left side inner */
+  .pinline_sides > div, .pinline_sidesbottom  > div {
+    border-left: none; }
+  /* Right side inner */
+  .pinline_sides > div, .pinline_sidesbottom  > div {
+    border-right: 1px solid black; }
+  /* Right side outer */
+  .pinline_sides, .pinline_sidesbottom {
+    border-right: none; }
+  /* Bottom inner */
+  .pinline_sidesbottom > div { 
+    border-bottom: none; }
+  /* Bottom outer */
+  .pinline_sidesbottom { 
+    border-bottom: 1px solid black; }
+  /* .pinline_sides, .pinline_sides > div { 
+     border-left: 1px solid black; border-right: 1px solid black; }
+  .pinline_sidesbottom, .pinline_sidesbottom > div { 
+     border-left: 1px solid black; border-right: 1px solid black; border-bottom: 1px solid black; } */
+  
+  .cardtitlebar, .cardtypebar { font: bold 9pt serif; padding-top: 1px; padding-bottom: 1px; }
+  .cardname { float: left; }
+  .cardmanacost { float: right; padding-right: 3px; }
+  .cardart_container, .cardtext_container { background: inherit; padding-left: 4px; padding-right: 4px; }
+  .cardart { /*width: *; */  min-height: 100px; }
+  .cardtypebar { padding-right: 0px !important; 
+                position: relative; }
+  .cardtype { }
+  .cardrarity { position: absolute; right: 0px; 
+              top: 0px;
+              padding-left: 3px;
+              padding-right: 3px;
+              margin-right: 2px; 
+              border: 1px solid black; }  
+  .cardtext { /*width: *; */ min-height: 105px; 
+              padding: 2px; }
+  .cardtext br { margin-bottom: 0.25em; }
+  .cardart img { height: 150px; }
+  .bottombox { background: inherit; 
+              margin-bottom: 4px; padding-right: 6px;
+              position: relative; 
+              font: 8pt serif; }
+  .ptbox_container { float: right; position: relative; height: 10px; width: 25%; }
+  .pinline_ptbox { float: right; 
+      position: absolute; top: -7px; left: 0px; 
+      width: 80%; 
+      text-align: center; 
+      padding-right: 0px; }
+  .ptbox { width: 90%; 
+          font: 11pt serif; 
+          padding: 0px  !important; }
+  .pinline_ptbox { 
+    border-right-color: #ccc;
+    border-top-color: #ccc;
+   }
+ .pinline_ptbox  div{ 
+    border-left-color: #ccc;
+    border-bottom-color: #ccc;
+   }
+  
+  /* .manacost { align: right; } */
+  .cardtext { font: 10pt serif; }
+  .minitext, .nameminitext  { font-size: 9pt; }
+  .microtext { font-size: 8pt; }
+  .nanotext  { font-size: 7.5pt; }
+  .condensedtypeline { font-size: 8pt; letter-spacing: -2px; }
+  .flavourtext { font-style: italic; margin-top: 4px; }
+  .microtext .flavourtext { margin-top: 2px; }
+  
+  
+.common {  color: #fff; 
+  background-color: #000;}
+.uncommon {  
+  background: #ccc;
+  @include gradient_diag_highlight(#999, #ccd3d6);
+ }
+.rare   {  color: #000; 
+  background: #e0d060;
+  @include gradient_diag_highlight(#998044, #e0d060);
+}
+.mythic { color: #fff; 
+  background: #933; 
+  @include gradient_diag_highlight(#a43, #e86);
+}
+
+
+.Colourless.card, .Colourless .cardart  { background-color: #ccc6cc; }
+.Colourless .pinline { background-color: #ddd; }
+.Colourless .cardtitlebar, .Colourless .cardtypebar { background-color: #eee9ee; }
+.Colourless .cardtext, .Colourless .pinline_ptbox { background-color: #f2ecf2 !important; }
+
+$White_Card: #FBF9EA;
+$White_Pinline: #F2EFEA;
+$White_Bar: #fffff9;
+$White_Text: #fff;
+$Blue_Card: #63ACDA;
+$Blue_Pinline: #197D9E; /* #195D7E; */
+$Blue_Bar: #C5DADF;
+$Blue_Text: #E1ECED;
+$Black_Card: #444;
+$Black_Pinline: #333;
+$Black_Bar: #bbb7b7;
+$Black_Text: #ddd9d3;
+$Red_Card: #E0664F;
+$Red_Pinline: #C23D34;
+$Red_Bar: #F9D5C0;
+$Red_Text: #F7E6DE;
+$Green_Card: #7ea17e;
+$Green_Pinline: #483;
+$Green_Bar: #cdc;
+$Green_Text: #DEEADE;
+$Land_White_Bar: #fffff6;
+$Land_White_Text: #ffc;
+$Land_Blue_Bar: #afcfff;
+$Land_Blue_Text: #99c5ff;
+$Land_Black_Bar: #cfc9c3;
+$Land_Black_Text: #bbb;
+$Land_Red_Bar: #ffd0c0;
+$Land_Red_Text: #f98;
+$Land_Green_Bar: #dfd;
+$Land_Green_Text: #cfc;
+
+.Artifact .pinline { background-color: #eee; }
+.Artifact .pinline_ptbox { background-color: #9CB7BE; }
+.Artifact .ptbox { background-color: #A8BFC7; }
+.Artifact .cardtitlebar, .Artifact .cardtypebar { 
+   background: #B0C4C8; 
+   background: -webkit-gradient(linear, left top, left bottom, from(#B0C4C8), color-stop(0.5, #D2D7DB), to(#B0C4C8));
+   background: -moz-linear-gradient(top, #B0C4C8, #D2D7DB, #B0C4C8);
+   }
+.Artifact .cardtext, .Artifact .pinline_ptbox { background-color: #D5DDE0; }
+.Artifact, .Artifact .cardart { background-color: #ABC1CE; }
+.Coloured_Artifact { background-color: #ABC1CE !important; }
+
+.White.card, .White .cardart  { background-color: $White_Card /* #fcf9f0; */ }
+.White .pinline, .Land.white .pinline { background-color: $White_Pinline; }
+.White .cardtitlebar, .White .cardtypebar { background-color: $White_Bar; }
+.White .cardtext, .White .pinline_ptbox { background-color: $White_Text !important; }
+
+.Blue.card, .Blue .cardart  { background-color: $Blue_Card; /* #5bf; */ }
+.Blue .pinline, .Land.blue .pinline { background-color: $Blue_Pinline; }
+.Blue .cardtitlebar, .Blue .cardtypebar { background-color: $Blue_Bar; 
+  @include gradient_horz_highlight(#B7CEDA, #C8DCE4);}
+.Blue .cardtext, .Blue .pinline_ptbox { background-color: $Blue_Text !important; }
+
+.Black.card, .Black .cardart  { background-color: $Black_Card; }
+.Black .pinline, .Land.black .pinline { background-color: $Black_Pinline; }
+.Black .cardtitlebar, .Black .cardtypebar { background-color: $Black_Bar; }
+.Black .cardtext, .Black .pinline_ptbox { background-color: $Black_Text !important; }
+
+.Red.card, .Red .cardart  { background-color: $Red_Card; /* #f76; */ }
+.Red .pinline, .Land.red .pinline { background-color: $Red_Pinline; }
+.Red .cardtitlebar, .Red .cardtypebar { background-color: $Red_Bar; }
+.Red .cardtext, .Red .pinline_ptbox { background-color: $Red_Text !important; }
+
+.Green.card, .Green .cardart { background-color: $Green_Card; /* #6b7 */}
+.Green .pinline, .Land.green .pinline { background-color: $Green_Pinline; }
+.Green .cardtitlebar, .Green .cardtypebar { background-color: $Green_Bar; }
+.Green .cardtext, .Green .pinline_ptbox { background-color: $Green_Text !important; /* #efe; */}
+
+.Multicolour, .Multicolour .cardart { background-color: #DAC87C; }
+.Multicolour .pinline { background-color: #C6AF71; }
+.Multicolour .cardtitlebar, .Multicolour .cardtypebar { background-color: #EBD7A3; }
+.Multicolour .cardtext { background-color: #eec; }
+.Multicolour .pinline_ptbox { background: #C6AF71 !important; }
+.Multicolour .ptbox { background: #C6AF71 !important; }
+
+.Land, .Land .cardart { background-color: #b9aea2 /*#A4968E*/; }
+.Land .pinline { background-color: #d7cDbF /*C7BDAF*/; }
+.Land .cardtitlebar, .Land .cardtypebar { background-color: #D8CFC8; }
+.Land .cardtext, .Land .pinline_ptbox { background-color: #D7D3CA; /* #eee6df; */}
+
+.Land.multicolour .cardtitlebar, .Land.multicolour .cardtypebar { background-color: #eea; }
+.Land.multicolour .pinline { background-color: #483; }
+.Land.multicolour .cardtext { background-color: #ffd; }
+
+.Land.white .cardtitlebar, .Land.white .cardtypebar { background-color: $Land_White_Bar; }
+.Land.white .cardtext, .Land.white .pinline_ptbox { background-color: $Land_White_Text; }
+
+.Land.blue .cardtitlebar, .Land.blue .cardtypebar { background-color: $Land_Blue_Bar; }
+.Land.blue .cardtext, .Land.blue .pinline_ptbox { background-color: $Land_Blue_Text; }
+
+.Land.black .cardtitlebar, .Land.black .cardtypebar { background-color: $Land_Black_Bar; }
+.Land.black .cardtext, .Land.black .pinline_ptbox { background-color: $Land_Black_Text; }
+
+.Land.red .cardtitlebar, .Land.red .cardtypebar { background-color: $Land_Red_Bar; }
+.Land.red .cardtext, .Land.red .pinline_ptbox { background-color: $Land_Red_Text; }
+
+.Land.green .cardtitlebar, .Land.green .cardtypebar { background-color: $Land_Green_Bar; }
+.Land.green .cardtext, .Land.green .pinline_ptbox { background-color: $Land_Green_Text; }
+
+/* .Land.whiteblue .cardtitlebar, .Land.whiteblue .cardtypebar { @include gradient_horz($Land_White_Bar, $Land_Blue_Bar); } */
+.Land.whiteblue .pinline { @include gradient_horz_padded($White_Pinline, $Blue_Pinline); }
+.Land.whiteblue .cardtext { @include gradient_horz_padded($Land_White_Text, $Land_Blue_Text); }
+
+.whiteblue .pinline { @include gradient_horz_padded($White_Pinline, $Blue_Pinline); }
+.whiteblack .pinline { @include gradient_horz_padded($White_Pinline, $Black_Pinline); }
+.blueblack .pinline { @include gradient_horz_padded($Blue_Pinline, $Black_Pinline); }
+.bluered .pinline { @include gradient_horz_padded($Blue_Pinline, $Red_Pinline); }
+.blackred .pinline { @include gradient_horz_padded($Black_Pinline, $Red_Pinline); }
+.redgreen .pinline { @include gradient_horz_padded($Red_Pinline, $Green_Pinline); }
+.redwhite .pinline, .whitered .pinline { @include gradient_horz_padded($Red_Pinline, $White_Pinline); }
+.blackgreen .pinline { @include gradient_horz_padded($Black_Pinline, $Green_Pinline); }
+.greenwhite .pinline, .whitegreen .pinline { @include gradient_horz_padded($Green_Pinline, $White_Pinline); }
+.greenblue .pinline, .bluegreen .pinline { @include gradient_horz_padded($Green_Pinline, $Blue_Pinline); }
+
+.Land.whiteblue .cardtext { @include gradient_horz_padded($Land_White_Text, $Land_Blue_Text); }
+.Land.whiteblack .cardtext { @include gradient_horz_padded($Land_White_Text, $Land_Black_Text); }
+.Land.blueblack .cardtext { @include gradient_horz_padded($Land_Blue_Text, $Land_Black_Text); }
+.Land.bluered .cardtext { @include gradient_horz_padded($Land_Blue_Text, $Land_Red_Text); }
+.Land.blackred .cardtext { @include gradient_horz_padded($Land_Black_Text, $Land_Red_Text); }
+.Land.blackgreen .cardtext { @include gradient_horz_padded($Land_Black_Text, $Land_Green_Text); }
+.Land.redgreen .cardtext { @include gradient_horz_padded($Land_Red_Text, $Land_Green_Text); }
+.Land.redwhite .cardtext, .Land.whitered .cardtext { @include gradient_horz_padded($Land_Red_Text, $Land_White_Text); }
+.Land.greenwhite .cardtext, .Land.whitegreen .cardtext { @include gradient_horz_padded($Land_Green_Text, $Land_White_Text); }
+.Land.greenblue .cardtext, .Land.bluegreen .cardtext { @include gradient_horz_padded($Land_Green_Text, $Land_Blue_Text); }
+
+.Hybrid.whiteblue { @include gradient_horz_padded($White_Card, $Blue_Card); }
+.Hybrid.whiteblack { @include gradient_horz_padded($White_Card, $Black_Card); }
+.Hybrid.blueblack { @include gradient_horz_padded($Blue_Card, $Black_Card); }
+.Hybrid.bluered { @include gradient_horz_padded($Blue_Card, $Red_Card); }
+.Hybrid.blackred { @include gradient_horz_padded($Black_Card, $Red_Card); }
+.Hybrid.blackgreen { @include gradient_horz_padded($Black_Card, $Green_Card); }
+.Hybrid.redgreen { @include gradient_horz_padded($Red_Card, $Green_Card); }
+.Hybrid.redwhite, .Hybrid.whitered { @include gradient_horz_padded($Red_Card, $White_Card); }
+.Hybrid.greenwhite, .Hybrid.whitegreen { @include gradient_horz_padded($Green_Card, $White_Card); }
+.Hybrid.greenblue, .Hybrid.bluegreen { @include gradient_horz_padded($Green_Card, $Blue_Card); }
+
+.whiteblue .cardtext { @include gradient_horz_padded($White_Text, $Blue_Text); }
+.whiteblack .cardtext { @include gradient_horz_padded($White_Text, $Black_Text); }
+.blueblack .cardtext { @include gradient_horz_padded($Blue_Text, $Black_Text); }
+.bluered .cardtext { @include gradient_horz_padded($Blue_Text, $Red_Text); }
+.blackred .cardtext { @include gradient_horz_padded($Black_Text, $Red_Text); }
+.blackgreen .cardtext { @include gradient_horz_padded($Black_Text, $Green_Text); }
+.redgreen .cardtext { @include gradient_horz_padded($Red_Text, $Green_Text); }
+.redwhite .cardtext, .Hybrid.whitered .cardtext { @include gradient_horz_padded($Red_Text, $White_Text); }
+.greenwhite .cardtext, .whitegreen .cardtext { @include gradient_horz_padded($Green_Text, $White_Text); }
+.greenblue .cardtext, .bluegreen .cardtext { @include gradient_horz_padded($Green_Text, $Blue_Text); }
+
+
+
+.Hybrid .cardtitlebar, .Hybrid .cardtypebar {
+  background: #D2CCC0;
+}
+.Hybrid .cardart {
+  background-color: #eeeeee;
+}
+
+/***** Card editing *****/
+
+#card_supertype, #card_cardtype, #card_subtype { width: 100px; }
+#card_rarity { margin-top: 8px; margin-bottom: 8px; }
+#card_power, #card_toughness { width: 20px; }
+.flavourtextfield { font-style: italic;
+                  width: 98%; }
+.rulestextfield { width: 98%; }
+.art_url_field  { width: 98%; }
+.image_url_field  { width: 400px; }

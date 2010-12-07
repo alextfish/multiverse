@@ -23,45 +23,78 @@
      <img src="">
    </div>
    <div class="onetab" id="prettycard"><a name="mockup"></a -->
-   <table class="card <%= @render_frame %>">
-    <tr class="cardtitle">
-     <td class="cardname">
-      <div class="field">
+   <div class="blackborder">
+   <div class="card <%= @card.display_class %>">
+    <div class="pinline pinline_box">
+     <div class="cardtitlebar">
+      <!-- div class="cardname" --><table><tr><td>
+       <div class="field">
         <%= f.label :name %><br />
         <%= f.text_field :name %>
-      </div>
-
-     <td class="cardcost" colspan="2">
-      <div class="field">
+       </div>
+      <!-- /div --></td>
+      <!-- div class="cardmanacost" --><td>
+       <div class="field">
         <%= f.label :cost %><br />
         <%= f.text_field :cost %>
-      </div>
-    <tr>                   <!-- art -->
-     <td colspan="3" class="cardart">
+       </div>
+      <!-- /div --></td></tr></table>
+     </div>
+    </div>
+    <div class="cardart_container">
+     <div class="pinline pinline_sides">
+      <div class="cardart">
        <%= f.label :art_url, "URL for art" %>
        <%= f.text_field :art_url, :class => "art_url_field" %>
-    <tr class="cardtypeline"> <!-- type line -->
-     <td class="minitext cardtype" colspan="2">
-        <%= f.text_field :supertype %>
-        <%= f.text_field :cardtype %> &ndash;
-        <%= f.text_field :subtype %>
-     <td class="cardrarity <%= @card.rarity %>" id="raritycell">
-      <%= f.select :rarity, Card.rarities.map{|r| [r[0].chr.upcase, r]},
-        { :selected => @card.rarity },
-        { :onchange => "update_card_rarity(this.value)" } %>
-
-    <tr>                   <!-- text box -->
-     <td class="cardtext" colspan="3">
-      <%= f.text_area :rulestext,   :class => "rulestextfield"   %>
-      <div class="flavourtext">
-      <%= f.text_area :flavourtext, :class => "flavourtextfield" %>
       </div>
-    <tr class="cardptline">
-     <td>
-        <%= f.text_field :artist %>
-     <td class="cardpt" colspan="2">
-      <%= f.text_field :power, :size => 5, :class => "powerfield" %>/<%= f.text_field :toughness, :size => 5, :class => "toughnessfield" %>
-   </table>
+     </div>
+    </div>
+    <div class="pinline pinline_box">
+     <div class="cardtypebar">
+      <table><tr>
+       <td>
+        <div class="cardtype">
+          <%= f.text_field :supertype %>
+          <%= f.text_field :cardtype %> &ndash;
+          <%= f.text_field :subtype %>
+        </div>
+       </td>
+       <td>
+        <div class="<%= @card.rarity %>" id="raritycell">
+          <%= f.select :rarity, Card.rarities.map{|r| [r[0].chr.upcase, r]},
+          { :selected => @card.rarity },
+          { :onchange => "update_card_rarity(this.value)" } %>
+        </div>
+       </td>
+      </tr></table>
+     </div>
+    </div>
+    <div class="cardtext_container">
+     <div class="pinline pinline_sidesbottom">
+      <div class="cardtext">
+       <%= f.text_area :rulestext,   :class => "rulestextfield"   %>
+       <div class="flavourtext">
+        <%= f.text_area :flavourtext, :class => "flavourtextfield" %>
+       </div>
+      </div>
+     </div>
+    </div>
+    <div class="bottombox">
+     <%= f.text_field :artist %>
+     <div class="ptbox_container">
+      <div class="pinline pinline_box pinline_ptbox">
+       <div class="notptbox">
+        <table style="margin: auto;"><tr>
+         <td><%= f.text_field :power, :size => 5, :class => "powerfield" %></td>
+         <td>/</td>
+         <td><%= f.text_field :toughness, :size => 5, :class => "toughnessfield" %></td>
+        </td></tr></table>
+      </div>
+     </div>
+    </div>
+   </div>
+  </div>
+  </div>
   </td>                    <!-- end of card -->
 
   <td>                     <!-- controls, comments etc -->
@@ -89,8 +122,8 @@
     </tr -->
     <tr>
      <td><%= f.label :frame %></td>
-     <% frames_keys = Card.frames %>
-     <% frames_values = frames_keys.map { |frame| frame.gsub(/[()-]/, '') } %>
+     <% frames_keys = Card.display_frames %>
+     <% frames_values = Card.frames %>
      <% frames = frames_keys.zip(frames_values) %>
      <td><%= f.select :frame, frames.unshift(["Auto", "Auto"]) %></td>
     </tr>

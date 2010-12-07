@@ -1,0 +1,125 @@
+<html>
+<head>
+ <title>Pinline Test</title>
+ <style type="text/css">
+  .blackborder { border: 8px solid black; 
+      -moz-border-radius:    10px;
+      -webkit-border-radius: 10px;
+      -khtml-border-radius:  10px;
+      border-radius:         10px; }
+  .cardborder { width: 200px; }
+  .card { background: #0ff; padding: 4px; }
+  .pinline { background: #f80; }
+  .pinline_box { padding: 3px; }
+  .pinline_sides { padding-left: 3px; padding-right: 3px;  }
+  .pinline_sidesbottom { padding-left: 3px; padding-right: 3px; padding-bottom: 3px; }
+  .pinline_box, .pinline_box > div { border: 1px solid black; 
+      -moz-border-radius:    4px / 8px;
+      -webkit-border-radius: 4px / 8px;
+      -khtml-border-radius:  4px;
+      border-radius:         4px;
+      border-radius:         4px / 8px; 
+      padding-left: 3px; } 
+  .pinline_sides, .pinline_sides > div { 
+     border-left: 1px solid black; border-right: 1px solid black; }
+  .pinline_sidesbottom, .pinline_sidesbottom > div { 
+     border-left: 1px solid black; border-right: 1px solid black; border-bottom: 1px solid black; }
+  
+  .cardtitlebar, .cardtypebar { background: #88f; 
+               font: 9pt serif; }
+  .cardname { float: left; }
+  .cardmanacost { float: right; }
+  .cardart_container, .cardtext_container { background: inherit; padding-left: 4px; padding-right: 4px; }
+  .cardart { background: #ff0; width: *; height: 80px; }
+  .cardtype { float: left; }
+  .cardrarity { float: right; padding-left: 3px; padding-right: 3px; margin-right: 2px; }  
+  .cardtext { background: #ff0; 
+              width: *; height: 100px; 
+              font: 10pt serif; }
+  .bottombox { background: #00f; color: #fff; 
+              margin-bottom: 4px; padding-right: 6px;
+              position: relative; 
+              font: 8pt serif; }
+  .ptbox { background: #0f0; color:#000; width: 90%; 
+              font: 11pt serif; }
+  
+  .manacost { align: right; }
+  .flavourtext { font-style: italic; }
+  .ptbox_container { float: right; position: relative; height: 10px; width: 25%; }
+  .pinline_ptbox { float: right; 
+      position: absolute; top: -10px; left: 0px; 
+      width: 80%; 
+      text-align: center; }
+  
+.common {  color: #fff; 
+  background-color: #000;}
+.uncommon {  
+  background: #0ff;
+  background: -webkit-gradient(linear, right top, left bottom, from(#999), color-stop(0.5, #ccd3d6), to(#999));
+  background: -moz-linear-gradient(right top, #999,  #ccd3d6, #999);
+ }
+.rare   {  color: #000; 
+  background-color: #e0d060;
+  background: -webkit-gradient(linear, right top, left bottom, #998044,  #e0d060, #998044);
+  background: -moz-linear-gradient(right top, #998044,  #e0d060, #998044);
+}
+.mythic { color: #fff; 
+  background-color: #933; 
+  background: -webkit-gradient(linear, right top, left bottom, #a43,  #e86, #a43);
+  background: -moz-linear-gradient(right top, #a43,  #e86, #a43);
+}
+ </style>
+<!--[if IE]>
+ <style type="text/css">
+  .pinline_ptbox { top: -20px; 
+                   padding-top: 0px !important; }
+  .uncommon { background-color: #999; }
+ </style>
+<![endif]-->
+</head>
+
+<body>
+<div class="cardborder blackborder">
+ <div class="card">
+  <div class="pinline pinline_box">
+   <div class="cardtitlebar">
+    <div class="cardname">Fish2</div>
+    <div class="cardmanacost">2GG</div>
+    &nbsp; <!-- required to give some height to the cardtitlebar -->
+   </div>
+  </div>
+  <div class="cardart_container">
+   <div class="pinline pinline_sides">
+    <div class="cardart">
+    </div>
+   </div>
+  </div>
+  <div class="pinline pinline_box">
+   <div class="cardtypebar">
+    <div class="cardtype">Creature<!-- - Centaur Shaman --></div>
+    <div class="cardrarity uncommon">U</div>
+    &nbsp; <!-- required to give some height to the cardtypebar -->
+   </div>
+  </div>
+  <div class="cardtext_container">
+   <div class="pinline pinline_sidesbottom">
+    <div class="cardtext">
+     Enchanted permanents you control can't be the target of spells or abilities your opponents control.
+     <div class="flavourtext">He'll protect you if you bear the mark of his allies.</div>
+    </div>
+   </div>
+  </div>
+  <div class="bottombox">
+   <span class="artist">Illus. Fishy</span>
+   <div class="ptbox_container">
+    <div class="pinline pinline_box pinline_ptbox">
+     <div class="ptbox">3/3
+     </div>
+    </div>
+   </div>
+  </div>
+ 
+ </div>
+</div>
+</body>
+</html>

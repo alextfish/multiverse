@@ -78,13 +78,16 @@ class Card < ActiveRecord::Base
     ["White", "Blue", "Black", "Red", "Green"]
   end
 
-  def self.frames
+  def self.display_frames
     Card.colours + ["Artifact", "Multicolour", "Colourless"] +
     Card.colour_pairs.map { |pair| "Hybrid #{pair.join("-").downcase}" } +
     ["Land (colourless)"] +
     Card.colours.map { |col| "Land (#{col.downcase})" } +
     Card.colour_pairs.map { |pair| "Land (#{pair.join('-').downcase})" } +
     ["Land (multicolour)"]
+  end
+  def self.frames
+    Card.display_frames.map { |f| f.gsub(/[()-]/,'') }
   end
   def self.colour_pairs
     Card.colours.combination(2).to_a
@@ -120,6 +123,20 @@ class Card < ActiveRecord::Base
       re.match(cost) ? colour : nil
     end.compact
   end
+  def display_class
+    if self.frame == "Auto"
+      cardclass = self.calculated_frame
+    else
+      cardclass = self.frame
+    end
+    if self.cardtype =~ /Artifact/ && self.frame != "Artifact"
+      cardclass << " Coloured_Artifact"
+    end
+    if self.num_colours == 2
+      cardclass << " " + self.colour_strings_present.join("").downcase
+    end
+    cardclass
+  end
 
   def category
     f = frame || calculated_frame
@@ -130,6 +147,52 @@ class Card < ActiveRecord::Base
         return f
       when /^Hybrid/
         return "Hybrid"
+    end
+  end
+
+  def frame
+    if Card.frames.include?(attributes["frame"]) || attributes["frame"] == "Auto"
+      attributes["frame"]
+    else
+      calculated_frame
+    end
+  end
+
+  def calculated_frame
+
+    case num_colours
+      when 1:     # Monocolour is the simplest case
+        case cost
+          when /w/i: return "White"
+          when /u/i: return "Blue"
+          when /b/i: return "Black"
+          when /r/i: return "Red"
+          when /g/i: return "Green"
+        end
+      when 2:     # Two-colour: distinguish between gold and hybrid
+                  # We say a card for 1W(W/U)U is gold, but 1W(W/G) is hybrid
+        # Count the number of colours present outside hybrid symbols
+        colours_present = @@nonhybrid_colour_regexps.reduce(0) do |total, re|
+          re.match(cost) ? total+1 : total
+        end
+        if colours_present >= 2
+          return "Multicolour"
+        else
+          return "Hybrid " + colour_strings_present.join("").downcase
+        end
+      when 3..5:  # Multicolour is easy
+        return "Multicolour"
+      when 0:     # Colourless is either artifact, land, or neither, based on type
+        if /land/i.match(cardtype) # Land
+          # Could try to detect the text box here, but that's really fiddly to get right
+          # Consider Coastal Tower, Arcane Sanctum, Hallowed Fountain, Flooded Strand, and Vivid Creek
+          # So we just let them override it
+          return "Land (colourless)"
+        elsif /artifact/i.match(cardtype)
+          return "Artifact"
+        else
+          return "Colourless"
+        end
     end
   end
 
@@ -176,52 +239,6 @@ class Card < ActiveRecord::Base
         # Within a category other than multicolour, just sort by name
         return printable_name <=> c2.printable_name
       end
-    end
-  end
-
-  def frame
-    if Card.frames.include?(attributes[:frame])
-      attributes[:frame]
-    else
-      calculated_frame
-    end
-  end
-
-  def calculated_frame
-
-    case num_colours
-      when 1:     # Monocolour is the simplest case
-        case cost
-          when /w/i: return "White"
-          when /u/i: return "Blue"
-          when /b/i: return "Black"
-          when /r/i: return "Red"
-          when /g/i: return "Green"
-        end
-      when 2:     # Two-colour: distinguish between gold and hybrid
-                  # We say a card for 1W(W/U)U is gold, but 1W(W/G) is hybrid
-        # Count the number of colours present outside hybrid symbols
-        colours_present = @@nonhybrid_colour_regexps.reduce(0) do |total, re|
-          re.match(cost) ? total+1 : total
-        end
-        if colours_present >= 2
-          return "Multicolour"
-        else
-          return "Hybrid " + colour_strings_present.join("").downcase
-        end
-      when 3..5:  # Multicolour is easy
-        return "Multicolour"
-      when 0:     # Colourless is either artifact, land, or neither, based on type
-        if /land/i.match(cardtype) # Land
-          # Could try to detect the text box here, but that's really fiddly to get right
-          # Consider Coastal Tower, Arcane Sanctum, Hallowed Fountain, Flooded Strand, and Vivid Creek
-          # So we just let them override it
-          return "Land (colourless)"
-        elsif /artifact/i.match(cardtype)
-          return "Artifact"
-        else
-          return "Colourless"
-        end
     end
   end
 

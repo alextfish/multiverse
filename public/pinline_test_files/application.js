@@ -3,8 +3,7 @@
 
 function update_card_rarity(new_rarity) {
   cell = document.getElementById("raritycell");
-  //cell.className = "cardrarity " + new_rarity.toLowerCase();
-  cell.className = new_rarity.toLowerCase();
+  cell.className = "cardrarity " + new_rarity.toLowerCase();
 }
 
 function update_details_pages(new_text) {
