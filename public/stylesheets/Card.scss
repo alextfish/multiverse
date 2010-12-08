@@ -142,7 +142,7 @@
 .Colourless.card, .Colourless .cardart  { background-color: #ccc6cc; }
 .Colourless .pinline { background-color: #ddd; }
 .Colourless .cardtitlebar, .Colourless .cardtypebar { background-color: #eee9ee; }
-.Colourless .cardtext, .Colourless .pinline_ptbox { background-color: #f2ecf2 !important; }
+.Colourless .cardtext, .Colourless .pinline_ptbox { background: #f2ecf2 !important; }
 
 $White_Card: #FBF9EA;
 $White_Pinline: #F2EFEA;
@@ -185,33 +185,33 @@ $Land_Green_Text: #cfc;
    }
 .Artifact .cardtext, .Artifact .pinline_ptbox { background-color: #D5DDE0; }
 .Artifact, .Artifact .cardart { background-color: #ABC1CE; }
-.Coloured_Artifact { background-color: #ABC1CE !important; }
+.Coloured_Artifact { background: #ABC1CE !important; }
 
 .White.card, .White .cardart  { background-color: $White_Card /* #fcf9f0; */ }
 .White .pinline, .Land.white .pinline { background-color: $White_Pinline; }
 .White .cardtitlebar, .White .cardtypebar { background-color: $White_Bar; }
-.White .cardtext, .White .pinline_ptbox { background-color: $White_Text !important; }
+.White .cardtext, .White .pinline_ptbox { background: $White_Text !important; }
 
 .Blue.card, .Blue .cardart  { background-color: $Blue_Card; /* #5bf; */ }
 .Blue .pinline, .Land.blue .pinline { background-color: $Blue_Pinline; }
 .Blue .cardtitlebar, .Blue .cardtypebar { background-color: $Blue_Bar;
   @include gradient_horz_highlight(#B7CEDA, #C8DCE4);}
-.Blue .cardtext, .Blue .pinline_ptbox { background-color: $Blue_Text !important; }
+.Blue .cardtext, .Blue .pinline_ptbox { background: $Blue_Text !important; }
 
 .Black.card, .Black .cardart  { background-color: $Black_Card; }
 .Black .pinline, .Land.black .pinline { background-color: $Black_Pinline; }
 .Black .cardtitlebar, .Black .cardtypebar { background-color: $Black_Bar; }
-.Black .cardtext, .Black .pinline_ptbox { background-color: $Black_Text !important; }
+.Black .cardtext, .Black .pinline_ptbox { background: $Black_Text !important; }
 
 .Red.card, .Red .cardart  { background-color: $Red_Card; /* #f76; */ }
 .Red .pinline, .Land.red .pinline { background-color: $Red_Pinline; }
 .Red .cardtitlebar, .Red .cardtypebar { background-color: $Red_Bar; }
-.Red .cardtext, .Red .pinline_ptbox { background-color: $Red_Text !important; }
+.Red .cardtext, .Red .pinline_ptbox { background: $Red_Text !important; }
 
 .Green.card, .Green .cardart { background-color: $Green_Card; /* #6b7 */}
 .Green .pinline, .Land.green .pinline { background-color: $Green_Pinline; }
 .Green .cardtitlebar, .Green .cardtypebar { background-color: $Green_Bar; }
-.Green .cardtext, .Green .pinline_ptbox { background-color: $Green_Text !important; /* #efe; */}
+.Green .cardtext, .Green .pinline_ptbox { background: $Green_Text !important; /* #efe; */}
 
 .Multicolour, .Multicolour .cardart { background-color: #DAC87C; }
 .Multicolour .pinline { background-color: #C6AF71; }

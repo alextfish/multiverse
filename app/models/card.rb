@@ -125,9 +125,9 @@ class Card < ActiveRecord::Base
   end
   def display_class
     if self.frame == "Auto"
-      cardclass = self.calculated_frame
+      cardclass = "" << self.calculated_frame
     else
-      cardclass = self.frame
+      cardclass = "" << self.frame
     end
     if self.cardtype =~ /Artifact/ && self.frame != "Artifact"
       cardclass << " Coloured_Artifact"

@@ -211,7 +211,7 @@
   background-color: #eee9ee; }
 
 .Colourless .cardtext, .Colourless .pinline_ptbox {
-  background-color: #f2ecf2 !important; }
+  background: #f2ecf2 !important; }
 
 /* #195D7E; */
 .Artifact .pinline {
@@ -235,7 +235,7 @@
   background-color: #ABC1CE; }
 
 .Coloured_Artifact {
-  background-color: #ABC1CE !important; }
+  background: #ABC1CE !important; }
 
 .White.card, .White .cardart {
   background-color: #fbf9ea; }
@@ -247,7 +247,7 @@
   background-color: #fffff9; }
 
 .White .cardtext, .White .pinline_ptbox {
-  background-color: white !important; }
+  background: white !important; }
 
 .Blue.card, .Blue .cardart {
   background-color: #63acda;
@@ -262,7 +262,7 @@
   background: -moz-linear-gradient(left, #b7ceda, #c8dce4, #b7ceda); }
 
 .Blue .cardtext, .Blue .pinline_ptbox {
-  background-color: #e1eced !important; }
+  background: #e1eced !important; }
 
 .Black.card, .Black .cardart {
   background-color: #444444; }
@@ -274,7 +274,7 @@
   background-color: #bbb7b7; }
 
 .Black .cardtext, .Black .pinline_ptbox {
-  background-color: #ddd9d3 !important; }
+  background: #ddd9d3 !important; }
 
 .Red.card, .Red .cardart {
   background-color: #e0664f;
@@ -287,7 +287,7 @@
   background-color: #f9d5c0; }
 
 .Red .cardtext, .Red .pinline_ptbox {
-  background-color: #f7e6de !important; }
+  background: #f7e6de !important; }
 
 .Green.card, .Green .cardart {
   background-color: #7ea17e;
@@ -300,7 +300,7 @@
   background-color: #ccddcc; }
 
 .Green .cardtext, .Green .pinline_ptbox {
-  background-color: #deeade !important;
+  background: #deeade !important;
   /* #efe; */ }
 
 .Multicolour, .Multicolour .cardart {
