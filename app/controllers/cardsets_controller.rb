@@ -83,6 +83,7 @@ class CardsetsController < ApplicationController
   # GET /cardsets/new
   def new
     @cardset = Cardset.new
+    @cardset.user_id = current_user.id
     @cardset.build_configuration
     @cardset.configuration.set_default_values!
   end

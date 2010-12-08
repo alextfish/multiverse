@@ -72,9 +72,9 @@
 .pinline_sidesbottom {
   border-bottom: 1px solid black; }
 
-/* .pinline_sides, .pinline_sides > div { 
+/* .pinline_sides, .pinline_sides > div {
    border-left: 1px solid black; border-right: 1px solid black; }
-.pinline_sidesbottom, .pinline_sidesbottom > div { 
+.pinline_sidesbottom, .pinline_sidesbottom > div {
    border-left: 1px solid black; border-right: 1px solid black; border-bottom: 1px solid black; } */
 .cardtitlebar, .cardtypebar {
   font: bold 9pt serif;
@@ -97,6 +97,9 @@
   /*width: *; */
   min-height: 100px; }
 
+.cardart img {
+  height: 131px; }
+
 .cardtypebar {
   padding-right: 0px !important;
   position: relative; }
@@ -117,9 +120,6 @@
 
 .cardtext br {
   margin-bottom: 0.25em; }
-
-.cardart img {
-  height: 150px; }
 
 .bottombox {
   background: inherit;

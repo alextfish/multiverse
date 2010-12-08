@@ -23,7 +23,7 @@
 
 /***** Card display *****/
 
-  .blackborder { border: 10px solid black; 
+  .blackborder { border: 10px solid black;
       -moz-border-radius:    10px;
       -webkit-border-radius: 10px;
       -khtml-border-radius:  10px;
@@ -34,22 +34,22 @@
   .pinline_box { padding: 2px;}
   .pinline_sides { padding-left: 2px; padding-right: 2px; }
   .pinline_sidesbottom { padding-left: 2px; padding-right: 2px; padding-bottom: 2px; }
-  .pinline_box { 
-      border-left: 1px solid black; 
-      border-right: 1px solid black; 
-      border-bottom: 1px solid black; 
+  .pinline_box {
+      border-left: 1px solid black;
+      border-right: 1px solid black;
+      border-bottom: 1px solid black;
       -moz-border-radius:    6px / 12px;
       -webkit-border-radius: 6px / 12px;
       -khtml-border-radius:  6px;
       border-radius:         6px;
-      border-radius:         6px / 12px; } 
-  .pinline_box > div { border: 1px solid black; 
+      border-radius:         6px / 12px; }
+  .pinline_box > div { border: 1px solid black;
       -moz-border-radius:    4px / 8px;
       -webkit-border-radius: 4px / 8px;
       -khtml-border-radius:  4px;
       border-radius:         4px;
-      border-radius:         4px / 8px; 
-      padding-left: 3px; } 
+      border-radius:         4px / 8px;
+      padding-left: 3px; }
   /* Left side outer */
   .pinline_sides, .pinline_sidesbottom {
     border-left: 1px solid black; }
@@ -63,56 +63,56 @@
   .pinline_sides, .pinline_sidesbottom {
     border-right: none; }
   /* Bottom inner */
-  .pinline_sidesbottom > div { 
+  .pinline_sidesbottom > div {
     border-bottom: none; }
   /* Bottom outer */
-  .pinline_sidesbottom { 
+  .pinline_sidesbottom {
     border-bottom: 1px solid black; }
-  /* .pinline_sides, .pinline_sides > div { 
+  /* .pinline_sides, .pinline_sides > div {
      border-left: 1px solid black; border-right: 1px solid black; }
-  .pinline_sidesbottom, .pinline_sidesbottom > div { 
+  .pinline_sidesbottom, .pinline_sidesbottom > div {
      border-left: 1px solid black; border-right: 1px solid black; border-bottom: 1px solid black; } */
-  
+
   .cardtitlebar, .cardtypebar { font: bold 9pt serif; padding-top: 1px; padding-bottom: 1px; }
   .cardname { float: left; }
   .cardmanacost { float: right; padding-right: 3px; }
   .cardart_container, .cardtext_container { background: inherit; padding-left: 4px; padding-right: 4px; }
   .cardart { /*width: *; */  min-height: 100px; }
-  .cardtypebar { padding-right: 0px !important; 
+  .cardart img { height: 131px; }
+  .cardtypebar { padding-right: 0px !important;
                 position: relative; }
   .cardtype { }
-  .cardrarity { position: absolute; right: 0px; 
+  .cardrarity { position: absolute; right: 0px;
               top: 0px;
               padding-left: 3px;
               padding-right: 3px;
-              margin-right: 2px; 
-              border: 1px solid black; }  
-  .cardtext { /*width: *; */ min-height: 105px; 
+              margin-right: 2px;
+              border: 1px solid black; }
+  .cardtext { /*width: *; */ min-height: 105px;
               padding: 2px; }
   .cardtext br { margin-bottom: 0.25em; }
-  .cardart img { height: 150px; }
-  .bottombox { background: inherit; 
+  .bottombox { background: inherit;
               margin-bottom: 4px; padding-right: 6px;
-              position: relative; 
+              position: relative;
               font: 8pt serif; }
   .ptbox_container { float: right; position: relative; height: 10px; width: 25%; }
-  .pinline_ptbox { float: right; 
-      position: absolute; top: -7px; left: 0px; 
-      width: 80%; 
-      text-align: center; 
+  .pinline_ptbox { float: right;
+      position: absolute; top: -7px; left: 0px;
+      width: 80%;
+      text-align: center;
       padding-right: 0px; }
-  .ptbox { width: 90%; 
-          font: 11pt serif; 
+  .ptbox { width: 90%;
+          font: 11pt serif;
           padding: 0px  !important; }
-  .pinline_ptbox { 
+  .pinline_ptbox {
     border-right-color: #ccc;
     border-top-color: #ccc;
    }
- .pinline_ptbox  div{ 
+ .pinline_ptbox  div{
     border-left-color: #ccc;
     border-bottom-color: #ccc;
    }
-  
+
   /* .manacost { align: right; } */
   .cardtext { font: 10pt serif; }
   .minitext, .nameminitext  { font-size: 9pt; }
@@ -121,20 +121,20 @@
   .condensedtypeline { font-size: 8pt; letter-spacing: -2px; }
   .flavourtext { font-style: italic; margin-top: 4px; }
   .microtext .flavourtext { margin-top: 2px; }
-  
-  
-.common {  color: #fff; 
+
+
+.common {  color: #fff;
   background-color: #000;}
-.uncommon {  
+.uncommon {
   background: #ccc;
   @include gradient_diag_highlight(#999, #ccd3d6);
  }
-.rare   {  color: #000; 
+.rare   {  color: #000;
   background: #e0d060;
   @include gradient_diag_highlight(#998044, #e0d060);
 }
-.mythic { color: #fff; 
-  background: #933; 
+.mythic { color: #fff;
+  background: #933;
   @include gradient_diag_highlight(#a43, #e86);
 }
 
@@ -178,8 +178,8 @@ $Land_Green_Text: #cfc;
 .Artifact .pinline { background-color: #eee; }
 .Artifact .pinline_ptbox { background-color: #9CB7BE; }
 .Artifact .ptbox { background-color: #A8BFC7; }
-.Artifact .cardtitlebar, .Artifact .cardtypebar { 
-   background: #B0C4C8; 
+.Artifact .cardtitlebar, .Artifact .cardtypebar {
+   background: #B0C4C8;
    background: -webkit-gradient(linear, left top, left bottom, from(#B0C4C8), color-stop(0.5, #D2D7DB), to(#B0C4C8));
    background: -moz-linear-gradient(top, #B0C4C8, #D2D7DB, #B0C4C8);
    }
@@ -194,7 +194,7 @@ $Land_Green_Text: #cfc;
 
 .Blue.card, .Blue .cardart  { background-color: $Blue_Card; /* #5bf; */ }
 .Blue .pinline, .Land.blue .pinline { background-color: $Blue_Pinline; }
-.Blue .cardtitlebar, .Blue .cardtypebar { background-color: $Blue_Bar; 
+.Blue .cardtitlebar, .Blue .cardtypebar { background-color: $Blue_Bar;
   @include gradient_horz_highlight(#B7CEDA, #C8DCE4);}
 .Blue .cardtext, .Blue .pinline_ptbox { background-color: $Blue_Text !important; }
 
@@ -301,7 +301,7 @@ $Land_Green_Text: #cfc;
   background: #D2CCC0 !important;
 }
 .Hybrid .pinline_ptbox, .Land .pinline_ptbox {
-  background: #e2dCd0 !important; 
+  background: #e2dCd0 !important;
 }
 .Hybrid .cardart {
   background-color: #eeeeee;

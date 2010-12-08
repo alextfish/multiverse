@@ -23,6 +23,8 @@ class Cardset < ActiveRecord::Base
   has_one :configuration, :dependent => :destroy
   has_many :comments, :dependent => :destroy
 
+  validates_length_of :name, :within => 2..40
+
   def get_stats
     out = {}
     out[:by_category] = Hash.new(0)

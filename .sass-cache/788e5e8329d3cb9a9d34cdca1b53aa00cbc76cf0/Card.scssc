@@ -1,8 +1,9 @@
 3.0.24 (Classy Cassidy)
-9222171aabb2fd60e28de028681416621067ebdf
+e27aee142edc87a887f3390b73ddbe6136719938
 o:Sass::Tree::RootNode
 :
-@linei:@template"9;@mixin gradient_horz($start, $end) {
+@linei:@template"
+;@mixin gradient_horz($start, $end) {
   filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#{$start}', endColorstr='#{$end}', GradientType=1);
   background: -webkit-gradient(linear, left top, right top, from($start), to($end));
   background: -moz-linear-gradient(left,  $start,  $end);
@@ -27,7 +28,7 @@
 
 /***** Card display *****/
 
-  .blackborder { border: 10px solid black; 
+  .blackborder { border: 10px solid black;
       -moz-border-radius:    10px;
       -webkit-border-radius: 10px;
       -khtml-border-radius:  10px;
@@ -38,22 +39,22 @@
   .pinline_box { padding: 2px;}
   .pinline_sides { padding-left: 2px; padding-right: 2px; }
   .pinline_sidesbottom { padding-left: 2px; padding-right: 2px; padding-bottom: 2px; }
-  .pinline_box { 
-      border-left: 1px solid black; 
-      border-right: 1px solid black; 
-      border-bottom: 1px solid black; 
+  .pinline_box {
+      border-left: 1px solid black;
+      border-right: 1px solid black;
+      border-bottom: 1px solid black;
       -moz-border-radius:    6px / 12px;
       -webkit-border-radius: 6px / 12px;
       -khtml-border-radius:  6px;
       border-radius:         6px;
-      border-radius:         6px / 12px; } 
-  .pinline_box > div { border: 1px solid black; 
+      border-radius:         6px / 12px; }
+  .pinline_box > div { border: 1px solid black;
       -moz-border-radius:    4px / 8px;
       -webkit-border-radius: 4px / 8px;
       -khtml-border-radius:  4px;
       border-radius:         4px;
-      border-radius:         4px / 8px; 
-      padding-left: 3px; } 
+      border-radius:         4px / 8px;
+      padding-left: 3px; }
   /* Left side outer */
   .pinline_sides, .pinline_sidesbottom {
     border-left: 1px solid black; }
@@ -67,56 +68,56 @@
   .pinline_sides, .pinline_sidesbottom {
     border-right: none; }
   /* Bottom inner */
-  .pinline_sidesbottom > div { 
+  .pinline_sidesbottom > div {
     border-bottom: none; }
   /* Bottom outer */
-  .pinline_sidesbottom { 
+  .pinline_sidesbottom {
     border-bottom: 1px solid black; }
-  /* .pinline_sides, .pinline_sides > div { 
+  /* .pinline_sides, .pinline_sides > div {
      border-left: 1px solid black; border-right: 1px solid black; }
-  .pinline_sidesbottom, .pinline_sidesbottom > div { 
+  .pinline_sidesbottom, .pinline_sidesbottom > div {
      border-left: 1px solid black; border-right: 1px solid black; border-bottom: 1px solid black; } */
-  
+
   .cardtitlebar, .cardtypebar { font: bold 9pt serif; padding-top: 1px; padding-bottom: 1px; }
   .cardname { float: left; }
   .cardmanacost { float: right; padding-right: 3px; }
   .cardart_container, .cardtext_container { background: inherit; padding-left: 4px; padding-right: 4px; }
   .cardart { /*width: *; */  min-height: 100px; }
-  .cardtypebar { padding-right: 0px !important; 
+  .cardart img { height: 131px; }
+  .cardtypebar { padding-right: 0px !important;
                 position: relative; }
   .cardtype { }
-  .cardrarity { position: absolute; right: 0px; 
+  .cardrarity { position: absolute; right: 0px;
               top: 0px;
               padding-left: 3px;
               padding-right: 3px;
-              margin-right: 2px; 
-              border: 1px solid black; }  
-  .cardtext { /*width: *; */ min-height: 105px; 
+              margin-right: 2px;
+              border: 1px solid black; }
+  .cardtext { /*width: *; */ min-height: 105px;
               padding: 2px; }
   .cardtext br { margin-bottom: 0.25em; }
-  .cardart img { height: 150px; }
-  .bottombox { background: inherit; 
+  .bottombox { background: inherit;
               margin-bottom: 4px; padding-right: 6px;
-              position: relative; 
+              position: relative;
               font: 8pt serif; }
   .ptbox_container { float: right; position: relative; height: 10px; width: 25%; }
-  .pinline_ptbox { float: right; 
-      position: absolute; top: -7px; left: 0px; 
-      width: 80%; 
-      text-align: center; 
+  .pinline_ptbox { float: right;
+      position: absolute; top: -7px; left: 0px;
+      width: 80%;
+      text-align: center;
       padding-right: 0px; }
-  .ptbox { width: 90%; 
-          font: 11pt serif; 
+  .ptbox { width: 90%;
+          font: 11pt serif;
           padding: 0px  !important; }
-  .pinline_ptbox { 
+  .pinline_ptbox {
     border-right-color: #ccc;
     border-top-color: #ccc;
    }
- .pinline_ptbox  div{ 
+ .pinline_ptbox  div{
     border-left-color: #ccc;
     border-bottom-color: #ccc;
    }
-  
+
   /* .manacost { align: right; } */
   .cardtext { font: 10pt serif; }
   .minitext, .nameminitext  { font-size: 9pt; }
@@ -125,20 +126,20 @@
   .condensedtypeline { font-size: 8pt; letter-spacing: -2px; }
   .flavourtext { font-style: italic; margin-top: 4px; }
   .microtext .flavourtext { margin-top: 2px; }
-  
-  
-.common {  color: #fff; 
+
+
+.common {  color: #fff;
   background-color: #000;}
-.uncommon {  
+.uncommon {
   background: #ccc;
   @include gradient_diag_highlight(#999, #ccd3d6);
  }
-.rare   {  color: #000; 
+.rare   {  color: #000;
   background: #e0d060;
   @include gradient_diag_highlight(#998044, #e0d060);
 }
-.mythic { color: #fff; 
-  background: #933; 
+.mythic { color: #fff;
+  background: #933;
   @include gradient_diag_highlight(#a43, #e86);
 }
 
@@ -182,8 +183,8 @@ $Land_Green_Text: #cfc;
 .Artifact .pinline { background-color: #eee; }
 .Artifact .pinline_ptbox { background-color: #9CB7BE; }
 .Artifact .ptbox { background-color: #A8BFC7; }
-.Artifact .cardtitlebar, .Artifact .cardtypebar { 
-   background: #B0C4C8; 
+.Artifact .cardtitlebar, .Artifact .cardtypebar {
+   background: #B0C4C8;
    background: -webkit-gradient(linear, left top, left bottom, from(#B0C4C8), color-stop(0.5, #D2D7DB), to(#B0C4C8));
    background: -moz-linear-gradient(top, #B0C4C8, #D2D7DB, #B0C4C8);
    }
@@ -198,7 +199,7 @@ $Land_Green_Text: #cfc;
 
 .Blue.card, .Blue .cardart  { background-color: $Blue_Card; /* #5bf; */ }
 .Blue .pinline, .Land.blue .pinline { background-color: $Blue_Pinline; }
-.Blue .cardtitlebar, .Blue .cardtypebar { background-color: $Blue_Bar; 
+.Blue .cardtitlebar, .Blue .cardtypebar { background-color: $Blue_Bar;
   @include gradient_horz_highlight(#B7CEDA, #C8DCE4);}
 .Blue .cardtext, .Blue .pinline_ptbox { background-color: $Blue_Text !important; }
 
@@ -305,7 +306,7 @@ $Land_Green_Text: #cfc;
   background: #D2CCC0 !important;
 }
 .Hybrid .pinline_ptbox, .Land .pinline_ptbox {
-  background: #e2dCd0 !important; 
+  background: #e2dCd0 !important;
 }
 .Hybrid .cardart {
   background-color: #eeeeee;
@@ -461,9 +462,9 @@ o;
 ;iB;[ ;;;o;;;;;;"1px solid black;@;["border-right;-i ;5T;@;-i o;:;iC;;0;[ ;"/* Right side outer */;@;<[ o;=;iD;>[").pinline_sides, .pinline_sidesbottom;[o;
 ;iE;[ ;;;o;;;;;;"	none;@;["border-right;-i ;5T;@;-i o;:;iF;;0;[ ;"/* Bottom inner */;@;<[ o;=;iG;>[".pinline_sidesbottom > div;[o;
 ;iH;[ ;;;o;;;;;;"	none;@;["border-bottom;-i ;5T;@;-i o;:;iI;;0;[ ;"/* Bottom outer */;@;<[ o;=;iJ;>[".pinline_sidesbottom;[o;
-;iK;[ ;;;o;;;;;;"1px solid black;@;["border-bottom;-i ;5T;@;-i o;:;iL;;0;[ ;"/* .pinline_sides, .pinline_sides > div { 
+;iK;[ ;;;o;;;;;;"1px solid black;@;["border-bottom;-i ;5T;@;-i o;:;iL;;0;[ ;"/* .pinline_sides, .pinline_sides > div {
    border-left: 1px solid black; border-right: 1px solid black; }
-.pinline_sidesbottom, .pinline_sidesbottom > div { 
+.pinline_sidesbottom, .pinline_sidesbottom > div {
    border-left: 1px solid black; border-right: 1px solid black; border-bottom: 1px solid black; } */;@;<[ o;=;iQ;>[" .cardtitlebar, .cardtypebar;[o;
 ;iQ;[ ;;;o;;;;;;"bold 9pt serif;@;["	font;-i o;
 ;iQ;[ ;;;o;;;;;;"1px;@;["padding-top;-i o;
@@ -478,23 +479,23 @@ float;-i o;
 ;iT;[ ;;;o;;;;;;"4px;@;["padding-left;-i o;
 ;iT;[ ;;;o;;;;;;"4px;@;["padding-right;-i ;5T;@;-i o;=;iU;>[".cardart;[o;:;iU;;0;[ ;"/*width: *; */;@;<[ o;
 ;iU;[ ;;;o;;;;;;"
-100px;@;["min-height;-i ;5T;@;-i o;=;iV;>[".cardtypebar;[o;
-;iV;[ ;;;o;;;;;;"0px !important;@;["padding-right;-i o;
-;iW;[ ;;;o;;;;;;"relative;@;["position;-i ;5T;@;-i o;=;iX;>[".cardtype;[ ;5T;@;-i o;=;iY;>[".cardrarity;[o;
-;iY;[ ;;;o;;;;;;"absolute;@;["position;-i o;
-;iY;[ ;;;o;;;;;;"0px;@;["
+100px;@;["min-height;-i ;5T;@;-i o;=;iV;>[".cardart img;[o;
+;iV;[ ;;;o;;;;;;"
+131px;@;["height;-i ;5T;@;-i o;=;iW;>[".cardtypebar;[o;
+;iW;[ ;;;o;;;;;;"0px !important;@;["padding-right;-i o;
+;iX;[ ;;;o;;;;;;"relative;@;["position;-i ;5T;@;-i o;=;iY;>[".cardtype;[ ;5T;@;-i o;=;iZ;>[".cardrarity;[o;
+;iZ;[ ;;;o;;;;;;"absolute;@;["position;-i o;
+;iZ;[ ;;;o;;;;;;"0px;@;["
 right;-i o;
-;iZ;[ ;;;o;;;;;;"0px;@;["top;-i o;
-;i[;[ ;;;o;;;;;;"3px;@;["padding-left;-i o;
-;i\;[ ;;;o;;;;;;"3px;@;["padding-right;-i o;
-;i];[ ;;;o;;;;;;"2px;@;["margin-right;-i o;
-;i^;[ ;;;o;;;;;;"1px solid black;@;["border;-i ;5T;@;-i o;=;i_;>[".cardtext;[o;:;i_;;0;[ ;"/*width: *; */;@;<[ o;
-;i_;[ ;;;o;;;;;;"
+;i[;[ ;;;o;;;;;;"0px;@;["top;-i o;
+;i\;[ ;;;o;;;;;;"3px;@;["padding-left;-i o;
+;i];[ ;;;o;;;;;;"3px;@;["padding-right;-i o;
+;i^;[ ;;;o;;;;;;"2px;@;["margin-right;-i o;
+;i_;[ ;;;o;;;;;;"1px solid black;@;["border;-i ;5T;@;-i o;=;i`;>[".cardtext;[o;:;i`;;0;[ ;"/*width: *; */;@;<[ o;
+;i`;[ ;;;o;;;;;;"
 105px;@;["min-height;-i o;
-;i`;[ ;;;o;;;;;;"2px;@;["padding;-i ;5T;@;-i o;=;ia;>[".cardtext br;[o;
-;ia;[ ;;;o;;;;;;"0.25em;@;["margin-bottom;-i ;5T;@;-i o;=;ib;>[".cardart img;[o;
-;ib;[ ;;;o;;;;;;"
-150px;@;["height;-i ;5T;@;-i o;=;ic;>[".bottombox;[
+;ia;[ ;;;o;;;;;;"2px;@;["padding;-i ;5T;@;-i o;=;ib;>[".cardtext br;[o;
+;ib;[ ;;;o;;;;;;"0.25em;@;["margin-bottom;-i ;5T;@;-i o;=;ic;>[".bottombox;[
 o;
 ;ic;[ ;;;o;;;;;;"inherit;@;["background;-i o;
 ;id;[ ;;;o;;;;;;"4px;@;["margin-bottom;-i o;
