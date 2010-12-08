@@ -95,7 +95,8 @@
 
 .cardart {
   /*width: *; */
-  min-height: 100px; }
+  min-height: 100px;
+  text-align: center; }
 
 .cardart img {
   height: 131px; }
