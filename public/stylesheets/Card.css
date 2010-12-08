@@ -304,16 +304,20 @@
   /* #efe; */ }
 
 .Multicolour, .Multicolour .cardart {
-  background-color: #DAC87C; }
+  background-color: #CAB86C;
+  /*#DAC87C;*/ }
 
-.Multicolour .pinline {
-  background-color: #C6AF71; }
+.Multicolour .pinline, .Land.multicolour .pinline {
+  background-color: #eAd88C;
+  /* #C6AF71;*/ }
 
-.Multicolour .cardtitlebar, .Multicolour .cardtypebar {
-  background-color: #EBD7A3; }
+.Multicolour .cardtitlebar, .Multicolour .cardtypebar, .Land.multicolour .cardtitlebar, .Land.multicolour .cardtypebar {
+  background-color: #DAC87C;
+  background: -webkit-gradient(linear, left top, right top, from(#b9a566), color-stop(0.5, #dbc68f), to(#b9a566));
+  background: -moz-linear-gradient(left, #b9a566, #dbc68f, #b9a566); }
 
-.Multicolour .cardtext {
-  background-color: #eec; }
+.Multicolour .cardtext, .Land.multicolour .cardtext {
+  background-color: #ffd; }
 
 .Multicolour .pinline_ptbox {
   background: #C6AF71 !important; }
@@ -333,15 +337,6 @@
 .Land .cardtext, .Land .pinline_ptbox {
   background-color: #D7D3CA;
   /* #eee6df; */ }
-
-.Land.multicolour .cardtitlebar, .Land.multicolour .cardtypebar {
-  background-color: #DAC87C; }
-
-.Land.multicolour .pinline {
-  background-color: #eAd88C; }
-
-.Land.multicolour .cardtext {
-  background-color: #ffd; }
 
 .Land.white .cardtitlebar, .Land.white .cardtypebar {
   background-color: #fffff6; }

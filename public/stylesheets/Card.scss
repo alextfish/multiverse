@@ -213,10 +213,11 @@ $Land_Green_Text: #cfc;
 .Green .cardtitlebar, .Green .cardtypebar { background-color: $Green_Bar; }
 .Green .cardtext, .Green .pinline_ptbox { background: $Green_Text !important; /* #efe; */}
 
-.Multicolour, .Multicolour .cardart { background-color: #DAC87C; }
-.Multicolour .pinline { background-color: #C6AF71; }
-.Multicolour .cardtitlebar, .Multicolour .cardtypebar { background-color: #EBD7A3; }
-.Multicolour .cardtext { background-color: #eec; }
+.Multicolour, .Multicolour .cardart { background-color: #CAB86C; /*#DAC87C;*/ }
+.Multicolour .pinline, .Land.multicolour .pinline { background-color: #eAd88C; /* #C6AF71;*/ }
+.Multicolour .cardtitlebar, .Multicolour .cardtypebar, .Land.multicolour .cardtitlebar, .Land.multicolour .cardtypebar { background-color: #DAC87C; 
+    @include gradient_horz_highlight(#B9A566, #DBC68F);}
+.Multicolour .cardtext, .Land.multicolour .cardtext { background-color: #ffd; }
 .Multicolour .pinline_ptbox { background: #C6AF71 !important; }
 .Multicolour .ptbox { background: #C6AF71 !important; }
 
@@ -224,10 +225,6 @@ $Land_Green_Text: #cfc;
 .Land .pinline { background-color: #d7cDbF /*C7BDAF*/; }
 .Land .cardtitlebar, .Land .cardtypebar { background-color: #D8CFC8; }
 .Land .cardtext, .Land .pinline_ptbox { background-color: #D7D3CA; /* #eee6df; */}
-
-.Land.multicolour .cardtitlebar, .Land.multicolour .cardtypebar { background-color: #DAC87C; }
-.Land.multicolour .pinline { background-color: #eAd88C; }
-.Land.multicolour .cardtext { background-color: #ffd; }
 
 .Land.white .cardtitlebar, .Land.white .cardtypebar { background-color: $Land_White_Bar; }
 .Land.white .cardtext, .Land.white .pinline_ptbox { background-color: $Land_White_Text; }
