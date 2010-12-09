@@ -24,7 +24,7 @@
    </div>
    <div class="onetab" id="prettycard"><a name="mockup"></a -->
    <div class="blackborder">
-   <div class="card <%= @card.display_class %>">
+   <div class="card <%= @card.display_class %>" id="card">
     <div class="pinline pinline_box">
      <div class="cardtitlebar">
       <!-- div class="cardname" --><table><tr><td>
@@ -36,7 +36,8 @@
       <!-- div class="cardmanacost" --><td>
        <div class="field">
         <%= f.label :cost %><br />
-        <%= f.text_field :cost %>
+        <%= f.text_field :cost,
+          { :onchange => "update_frame()" } %>
        </div>
       <!-- /div --></td></tr></table>
      </div>
@@ -55,7 +56,8 @@
        <td>
         <div class="cardtype">
           <%= f.text_field :supertype %>
-          <%= f.text_field :cardtype %> &ndash;
+          <%= f.text_field :cardtype,
+          { :onchange => "update_frame()" } %> &ndash;
           <%= f.text_field :subtype %>
         </div>
        </td>
@@ -125,7 +127,8 @@
      <% frames_keys = Card.display_frames %>
      <% frames_values = Card.frames %>
      <% frames = frames_keys.zip(frames_values) %>
-     <td><%= f.select :frame, frames.unshift(["Auto", "Auto"]) %></td>
+     <td><%= f.select :frame, frames.unshift(["Auto", "Auto"]), {}, 
+          { :onchange => "update_frame()" } %></td>
     </tr>
     <tr>
      <td colspan="2">

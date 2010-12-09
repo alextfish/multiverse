@@ -81,7 +81,7 @@ module ApplicationHelper
   def protect_smilies(text)
     text_array = text.split("\n")
     text_array.map { |this_line|
-      if this_line[0] == ?:
+      if [?:, ?<].include?(this_line[0])
         this_line = "&#173;" + this_line
       else
         this_line
