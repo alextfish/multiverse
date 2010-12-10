@@ -53,10 +53,10 @@ class Card < ActiveRecord::Base
   end
 
   def formatted_rules_text
-    format(rulestext)
+    format_card_text(rulestext)
   end
   def formatted_flavour_text
-    format(flavourtext)
+    format_card_text(flavourtext)
   end
 
   def printable_name
@@ -102,6 +102,30 @@ class Card < ActiveRecord::Base
   def self.category_order
     ["Colourless", "White", "Blue", "Black", "Red", "Green", "Multicolour", "Hybrid", "Artifact", "Land"]
   end
+  def self.mana_symbols 
+    colour_letters = %w{W U B R G}
+    out = (0..4).map do |i1|
+      i1a = (i1+1).modulo(5)
+      i1b = (i1+2).modulo(5)
+      ["{#{colour_letters[i1]}/#{colour_letters[i1a]}}", "{#{colour_letters[i1]}/#{colour_letters[i1b]}}"]
+    end.flatten
+    out += colour_letters.map {|s| "{#{s}/2}" }
+    out += ( colour_letters + %w{1000000 100 10 11 12 13 14 15 16 18 20 1 2 3 4 5 6 7 8 9 0 X Y T Q S C} ) .map {|s| "{#{s}}" }
+    
+    # ["{W/U}" "{W/B}" "{U/B}" "{U/R}" "{B/R}" "{B/G}" "{R/G}" "{R/W}" "{G/W}" "{G/U}"]
+  end
+  def self.mana_symbols_extensive
+    colour_letters = %w{W U B R G}
+    out =  colour_letters.map {|s| "{2/#{s}}" }
+    out += (0..4).map do |i1|
+      i1a = (i1+3).modulo(5)
+      i1b = (i1+4).modulo(5)
+      ["{#{colour_letters[i1]}/#{colour_letters[i1a]}}", "{#{colour_letters[i1]}/#{colour_letters[i1b]}}"]
+    end.flatten
+    out += self.mana_symbols    
+  end
+  
+  
   @@colour_regexps = [/w/i, /u/i, /b/i, /r/i, /g/i]
   @@nonhybrid_colour_regexps = [
       /(^|[^\/{(])w/i,  # match w either at the start ^, or after anything other than / { (

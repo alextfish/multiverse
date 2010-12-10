@@ -47,9 +47,9 @@ module ApplicationHelper
   end
 
   def format_all_markup(text)
-    formatted_text = protect_smilies(format_links(text))
+    formatted_text = protect_smilies(format_mana_symbols(format_links(text)))
 
-    markdown_text = Maruku.new(sanitize(formatted_text)).to_html.html_safe
+    markdown_text = Maruku.new(formatted_text).to_html.html_safe
   end
 
   def format_links(text)
@@ -65,6 +65,42 @@ module ApplicationHelper
     }.gsub(wizards_card_regexp) { |cardname|
       wizards_card_link(cardname.gsub(remove_brackets_regexp, '\2'))
     }
+  end
+  
+  def mana_symbol_url ( symbol )
+    my_symbol = "" << symbol
+    my_symbol.gsub!(/[\{\}\(\)\/]/, "")
+    if %w{wr wg uw ug bu bw rb ru gr gb w2 u2 b2 r2 g2}.include? my_symbol.downcase 
+      my_symbol.reverse!
+    end
+    my_symbol.gsub!(/S/, "snow")
+    my_symbol.gsub!(/T/, "tap")
+    my_symbol.gsub!(/Q/, "untap")
+    my_symbol.gsub!(/inf.*/i, "Infinity")
+    "http://gatherer.wizards.com/Handlers/Image.ashx?size=small&name=#{my_symbol}&type=symbol"
+  end
+
+  def format_mana_symbols(text, force = false) 
+    my_text = sanitize(text)
+    return my_text
+    if force
+      Card.mana_symbols_extensive.each do |sym|
+        target = "<img src='#{mana_symbol_url(sym)}'>"
+        sym_bare = sym.delete("{}")
+        my_text.gsub!( sym_bare, target )
+      end
+    end
+    Card.mana_symbols_extensive.each do |sym|
+      target = "<img src='#{mana_symbol_url(sym)}'>"
+      sym1 = sym.tr("{}", "()")
+      sym2 = sym.delete("/")
+      sym3 = sym1.delete("/")
+      my_text.gsub!( sym, target )
+      my_text.gsub!( sym1, target )
+      my_text.gsub!( sym2, target )
+      my_text.gsub!( sym3, target )
+    end
+    my_text.html_safe
   end
 
   def cardset_card_link(cardset, cardname)

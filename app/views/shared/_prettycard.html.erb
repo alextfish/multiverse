@@ -13,7 +13,7 @@
       <span title="<%= @card.code %>"><%= @card.name %></span>
      <% end %>
     </div>
-    <div class="cardmanacost"><%= @card.cost %></div>
+    <div class="cardmanacost"><%= format_mana_symbols(@card.cost) %></div>
     &nbsp; <!-- required to give some height to the cardtitlebar -->
    </div>
   </div>
@@ -55,8 +55,8 @@
          else           textboxclass = "cardtext nanotext"
        end %>
      <div class="<%= textboxclass %>"><!-- textbox has <%= textbox.length %> chars -->
-      <%= content_tag(:div, format(@card, :rulestext)) %>
-      <%= content_tag(:div, format(@card, :flavourtext), :class => "flavourtext") %>
+      <%= content_tag(:div, format_card_text(@card, :rulestext)) %>
+      <%= content_tag(:div, format_card_text(@card, :flavourtext), :class => "flavourtext") %>
      </div>
     </div>
    </div>

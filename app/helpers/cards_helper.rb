@@ -19,7 +19,7 @@ module CardsHelper
   }
   CARDNAME_ALIASES = ['CARDNAME', '~this~', '~']
 
-  def format(card, attribute, markup = true, escape = true)
+  def format_card_text(card, attribute, markup = true, escape = true)
     initial_text = card[attribute]
     if initial_text
       if escape
@@ -30,6 +30,7 @@ module CardsHelper
       intermediate_text = FORMAT_SUBSTITUTIONS.reduce(escaped_text) do |memo, (match, replace)| memo.gsub(match, replace) end
       if markup
         marked_text = MARKUP_SUBSTITUTIONS.reduce(intermediate_text) do |memo, (match, replace)| memo.gsub(match, replace) end
+        marked_text = format_mana_symbols(marked_text)
       else
         marked_text = intermediate_text
       end

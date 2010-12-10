@@ -1,6 +1,5 @@
 <div class="commentdetails">
   <%= comment_user_link(@comment) %>
-   at
   <%= format_datetime @comment.created_at %>:
   <% target_of_links = @comment # (@comment.cardset_id ? [@cardset, @comment] : @comment) %>
   <% if permission_to?(:admin, @cardset) %>
