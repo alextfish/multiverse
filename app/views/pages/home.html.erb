@@ -6,7 +6,7 @@
   <% numsets = Cardset.count; numtoshow = [numsets, 10].min %>
   There are <%= link_to "#{numsets} cardsets", cardsets_path %> in Multiverse right now<% if numsets > 0 %>, including:
     <ul>
-    <% Cardset.all.permutation(numtoshow).to_a.choice.each do |cardset| %>
+    <% Cardset.all.each do |cardset| %>
       <li><%= link_to cardset.name, cardset %> by <%= link_to cardset.user.name, cardset.user %> (<%= cardset.cards.count %> cards)<% if !cardset.description.blank? %>: <%= cardset.description %><% end %>
     <% end %>
     </ul>
