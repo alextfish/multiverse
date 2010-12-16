@@ -1,27 +1,30 @@
 # == Schema Information
-# Schema version: 20101103224310
+# Schema version: 20101215230231
 #
 # Table name: cards
 #
-#  id          :integer         not null, primary key
-#  code        :string(255)
-#  name        :string(255)
-#  cardset_id  :integer
-#  colour      :string(255)
-#  rarity      :string(255)
-#  cost        :string(255)
-#  supertype   :string(255)
-#  cardtype    :string(255)
-#  subtype     :string(255)
-#  rulestext   :text
-#  flavourtext :text
-#  power       :integer
-#  toughness   :integer
-#  image       :string(255)
-#  active      :boolean
-#  created_at  :datetime
-#  updated_at  :datetime
-#  frame       :string(255)
+#  id           :integer         not null, primary key
+#  code         :string(255)
+#  name         :string(255)
+#  cardset_id   :integer
+#  rarity       :string(255)
+#  cost         :string(255)
+#  supertype    :string(255)
+#  cardtype     :string(255)
+#  subtype      :string(255)
+#  rulestext    :text
+#  flavourtext  :text
+#  power        :integer
+#  toughness    :integer
+#  image        :string(255)
+#  active       :boolean
+#  created_at   :datetime
+#  updated_at   :datetime
+#  frame        :string(255)
+#  art_url      :string(255)
+#  artist       :string(255)
+#  image_url    :string(255)
+#  last_edit_by :integer
 #
 
 class Card < ActiveRecord::Base

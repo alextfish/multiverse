@@ -1,10 +1,9 @@
 # == Schema Information
-# Schema version: 20101103224310
+# Schema version: 20101215230231
 #
 # Table name: configurations
 #
 #  id                     :integer         not null, primary key
-#  cardset_id             :integer
 #  frame                  :string(255)
 #  use_highlighting       :boolean
 #  use_addressing         :boolean
@@ -18,6 +17,10 @@
 #  commentability         :string(255)
 #  created_at             :datetime
 #  updated_at             :datetime
+#  cardset_id             :integer
+#  editability            :string(255)
+#  adminability           :string(255)
+#  last_edit_by           :integer
 #
 
 class Configuration < ActiveRecord::Base

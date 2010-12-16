@@ -46,8 +46,15 @@ module ApplicationHelper
     end
   end
 
-  def format_all_markup(text)
-    formatted_text = protect_smilies(format_mana_symbols(format_links(text)))
+  def format_all_markup(text, cardset)
+    formatted_text = protect_smilies(
+                       format_mana_symbols(
+                         format_mechanics(
+                           format_links(text),
+                           cardset
+                         )
+                       )
+                     )
 
     markdown_text = Maruku.new(formatted_text).to_html.html_safe
   end
@@ -83,6 +90,10 @@ module ApplicationHelper
   def format_mana_symbols(text, force = false) 
     my_text = sanitize(text)
     return my_text
+  end
+  def format_mana_symbols_really(text, force = false) 
+    my_text = sanitize(text)
+    return my_text
     if force
       Card.mana_symbols_extensive.each do |sym|
         target = "<img src='#{mana_symbol_url(sym)}'>"
@@ -101,6 +112,38 @@ module ApplicationHelper
       my_text.gsub!( sym3, target )
     end
     my_text.html_safe
+  end
+  
+  def format_mechanics(text, cardset)
+    sep = " "                    # "|"
+    text_out = text
+    cardset.mechanics.each do |mech| 
+      src_start = "\\[#{mech.codename}"
+      one_param = "([^\]]*)"
+      case mech.parameters 
+        when 0:
+          src_main = src_start
+          target = mech.name 
+       when 1:
+          src_main = src_start + sep + one_param
+          target = mech.name + ' \\1'
+       when 2:
+          src_main = src_start + sep + one_param + sep + one_param
+          target = mech.name + ' \\1 &ndash; \\2'
+      end
+      src_no_reminder =  Regexp.new(src_main + "\\(\\)\\]")
+      src_with_reminder =  Regexp.new(src_main + "\\]")
+      target_no_reminder = target 
+      target_with_reminder = target
+      if !mech.reminder.blank?
+        target_with_reminder += " (#{mech.reminder})"
+      end
+      Rails.logger.info "Looking for #{src_with_reminder} to replace with #{target_with_reminder}"
+      text_out.gsub! src_with_reminder, target_with_reminder
+      Rails.logger.info "Looking for #{src_no_reminder} to replace with #{target_no_reminder}"
+      text_out.gsub! src_no_reminder, target_no_reminder
+    end
+    text_out
   end
 
   def cardset_card_link(cardset, cardname)

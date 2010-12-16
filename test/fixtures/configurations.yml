@@ -1,5 +1,5 @@
 # == Schema Information
-# Schema version: 20101103224310
+# Schema version: 20101215230231
 #
 # Table name: configurations
 #
@@ -18,6 +18,9 @@
 #  created_at             :datetime
 #  updated_at             :datetime
 #  cardset_id             :integer
+#  editability            :string(255)
+#  adminability           :string(255)
+#  last_edit_by           :integer
 #
 
 # Read about fixtures at http://ar.rubyonrails.org/classes/Fixtures.html

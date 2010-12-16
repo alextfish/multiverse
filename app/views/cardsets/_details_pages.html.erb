@@ -1,4 +1,12 @@
 <% dps_to_show = @cardset.details_pages.reject(&:new_record?).sort_by { |dp| dp.order || 0 } # &:order %>
+
+<% if !@cardset.mechanics.empty? %>
+  <%= link_to "Mechanics", cardset_mechanics_path(@cardset) %>
+  <% if !dps_to_show.empty? %>
+   |
+  <% end %>
+<% end %>
+
 <% dps_to_show.each_with_index do |p, index| %>
   <%= link_to_unless_current p.title, url_for([@cardset, p]) do %>
     <% # This entire block is only evaluated for the current details page (if any) %>

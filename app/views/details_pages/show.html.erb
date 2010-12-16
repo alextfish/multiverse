@@ -5,7 +5,7 @@
 <%= render 'cardsets/setviews' %>
 
 <p>
-  <%= format_all_markup(@details_page.body) %>
+  <%= format_all_markup @details_page.body, @details_page.cardset %>
 </p>
 
 <% if permission_to?(:admin, @cardset) %>

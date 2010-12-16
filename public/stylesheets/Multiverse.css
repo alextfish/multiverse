@@ -84,6 +84,16 @@ div.helptext { font-size: smaller; margin: 0px; color: #888; }
 div.config_section { margin: 4px; }
 input#cardset_description { width: 30em; }
 
+/***** Mechanics *****/
+
+div.mechanic { /*border-bottom: 1px solid black; */
+padding: 6px; 
+margin-bottom: 10px; }
+.mechanic_name { font-weight: bold; }
+.mechanic_reminder { font-style: italic; }
+.mechanic_label { width: 15em; }
+.mechanic label { font-weight: bold; }
+
 /***** Card display *****/
 
 .cardtabs {

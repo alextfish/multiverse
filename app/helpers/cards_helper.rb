@@ -28,6 +28,7 @@ module CardsHelper
         escaped_text = initial_text # ONLY for use in <pre>!
       end
       intermediate_text = FORMAT_SUBSTITUTIONS.reduce(escaped_text) do |memo, (match, replace)| memo.gsub(match, replace) end
+      intermediate_text = format_mechanics(intermediate_text, card.cardset)
       if markup
         marked_text = MARKUP_SUBSTITUTIONS.reduce(intermediate_text) do |memo, (match, replace)| memo.gsub(match, replace) end
         marked_text = format_mana_symbols(marked_text)

@@ -9,6 +9,6 @@
     <%= render :partial => 'shared/comment_buttons' %>
   <% end %>
   <div class="commentbody">
-    <%= format_all_markup( @comment.body ) %>
+    <%= format_all_markup @comment.body, @comment.get_cardset %>
   </div>
 </div>

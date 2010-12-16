@@ -6,7 +6,7 @@
     <%= link_to "XML", :action=>"cardlist", :controller=>"cardsets", :id=>@cardset.id, :format => :xml %> |
     <%= link_to_unless_current "Recent activity", recent_cardset_path(@cardset) %>
 </td></tr>
-<% if !@cardset.details_pages.empty? %>
+<% if !@cardset.details_pages.empty? || !@cardset.mechanics.empty? %>
   <tr><td id="details_pages">
     <%= render 'cardsets/details_pages' %>
   </td></tr>
@@ -19,6 +19,9 @@
     <% if permission_to?(:admin, @cardset) %>
        |
       <%= link_to_unless_current "Cardset options", edit_cardset_path(@cardset) %> |
+      <% if @cardset.mechanics.empty? %>
+        <%= link_to_unless_current "Define mechanics", cardset_mechanics_path(@cardset) %> |
+      <% end %>
       <%= link_to_unless_current "Add details page", new_cardset_details_page_path(@cardset) %>
     <% end %>
 </td></tr>

@@ -1,18 +1,18 @@
 # == Schema Information
-# Schema version: 20101103224310
+# Schema version: 20101215230231
 #
 # Table name: comments
 #
 #  id         :integer         not null, primary key
 #  card_id    :integer
-#  cardset_id :integer
-#  user_id    :integer
 #  user_name  :text
 #  posttime   :datetime
 #  body       :text
 #  status     :integer
 #  created_at :datetime
 #  updated_at :datetime
+#  cardset_id :integer
+#  user_id    :integer
 #
 
 class Comment < ActiveRecord::Base

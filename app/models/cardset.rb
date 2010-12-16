@@ -1,14 +1,15 @@
 # == Schema Information
-# Schema version: 20101103224310
+# Schema version: 20101215230231
 #
 # Table name: cardsets
 #
-#  id          :integer         not null, primary key
-#  name        :string(255)
-#  user_id     :integer
-#  description :text
-#  created_at  :datetime
-#  updated_at  :datetime
+#  id           :integer         not null, primary key
+#  name         :string(255)
+#  user_id      :integer
+#  description  :text
+#  created_at   :datetime
+#  updated_at   :datetime
+#  last_edit_by :integer
 #
 
 
@@ -20,6 +21,7 @@ class Cardset < ActiveRecord::Base
   has_many :cards, :dependent => :destroy
   has_many :admins, :class_name => "User"
   has_many :details_pages, :dependent => :destroy
+  has_many :mechanics, :dependent => :destroy 
   has_one :configuration, :dependent => :destroy
   has_many :comments, :dependent => :destroy
 

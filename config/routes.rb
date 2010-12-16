@@ -30,7 +30,8 @@ Multiverse::Application.routes.draw do
   # But I don't want the faff of refactoring to deal with that, so instead I'll create my own route:
   resources :cardsets do
     resources :details_pages, :only => [:new, :create, :destroy, :edit, :update, :show]
-    resources :comments, :only => [:new, :create, :destroy, :edit, :update]
+    resources :mechanics, :only => [:new, :create, :destroy, :edit, :update, :index]
+    resources :comments, :only => [:new, :create, :destroy, :edit, :update, :index]
     member do
       get 'cardlist' # in addition to /cardsets/:id which goes to cardsets#show
       get 'visualspoiler', 'recent'

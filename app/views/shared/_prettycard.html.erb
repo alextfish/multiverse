@@ -47,7 +47,8 @@
   </div>
   <div class="cardtext_container">
    <div class="pinline pinline_sidesbottom">
-     <% textbox = (@card.rulestext ? @card.rulestext : "") + (@card.flavourtext ? @card.flavourtext : "") %>
+     <% textbox = (@card.rulestext   ? format_card_text(@card, :rulestext  ) : "") + 
+                  (@card.flavourtext ? format_card_text(@card, :flavourtext) : "") %>
      <% case textbox.length
          when 0..150:   textboxclass = "cardtext"
          when 151..170: textboxclass = "cardtext minitext"
