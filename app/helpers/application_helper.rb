@@ -115,32 +115,10 @@ module ApplicationHelper
   end
   
   def format_mechanics(text, cardset)
-    sep = " "                    # "|"
     text_out = text
     cardset.mechanics.each do |mech| 
-      src_start = "\\[#{mech.codename}"
-      one_param = "([^\]]*)"
-      case mech.parameters 
-        when 0:
-          src_main = src_start
-          target = mech.name 
-       when 1:
-          src_main = src_start + sep + one_param
-          target = mech.name + ' \\1'
-       when 2:
-          src_main = src_start + sep + one_param + sep + one_param
-          target = mech.name + ' \\1 &ndash; \\2'
-      end
-      src_no_reminder =  Regexp.new(src_main + "\\(\\)\\]")
-      src_with_reminder =  Regexp.new(src_main + "\\]")
-      target_no_reminder = target 
-      target_with_reminder = target
-      if !mech.reminder.blank?
-        target_with_reminder += " (#{mech.reminder})"
-      end
-      Rails.logger.info "Looking for #{src_with_reminder} to replace with #{target_with_reminder}"
+      src_no_reminder, src_with_reminder, target_no_reminder, target_with_reminder = mech.regexps
       text_out.gsub! src_with_reminder, target_with_reminder
-      Rails.logger.info "Looking for #{src_no_reminder} to replace with #{target_no_reminder}"
       text_out.gsub! src_no_reminder, target_no_reminder
     end
     text_out
