@@ -1,0 +1,55 @@
+<div class="mechanic">
+  <%= form_for([@cardset, @mechanic]) do |f| %>
+    <table><tr>
+      <td class="mechanic_label">
+        <%= f.label :name %>
+        <br> e.g. "Suspend"
+      </td>
+      <td>
+        <%= f.text_field :name %>
+      </td>
+    </tr><tr>
+      <td class="mechanic_label">
+        <%= f.label :codename %>
+        <br> e.g. "Delay"; can be same as name
+      </td>
+      <td>
+        <%= f.text_field :codename %>
+      </td>
+    </tr><tr>
+      <td class="mechanic_label">
+        <%= f.label :parameters %>
+          <br>e.g. 0 for Convoke, 1 for Cycling, 2 for Suspend
+      </td>
+      <td>
+        <%= f.select :parameters, (0..2) %>
+      </td>
+    </tr><tr>
+      <td colspan="2">
+        <%= f.label :reminder %>
+          <br>
+        e.g. "Rather than cast this spell from your hand, you may pay \2 and exile it with \1 time counters on it."
+          <br>
+        <%= f.text_area :reminder %>
+      </td>
+    </tr><tr>
+      <td colspan="2">
+        <%= f.label :description %>
+          <br>
+        e.g. "This is a mechanic used to represent spells that are slower than normal."
+          <br>
+        <%= f.text_area :description %>
+      </td>
+    </tr>
+    <tr>
+      <td>
+          <%= f.submit %>
+    </tr>
+    </table>
+  <% end # form %>
+</div>
+<div>
+In card text or details pages, write the mechanic's code name between square brackets, like "[Crittercast]", "[Bushido 1]" or "Delay 4 {2}{R}{R}]". It will be expanded to the mechanic's name plus reminder text, such as "Suspend 4 &ndash; <%= format_mana_symbols_really("{2}{R}{R}") %>. <i>(Rather than cast this spell from your hand,...)</i>" 
+<br>To expand a mechanic's name but not its reminder text, include parentheses at the end of the square brackets: "[Crittercast()]", "Delay 9 {R}()]".
+<br> If the reminder text needs to come later in the sentence, use one mechanic for the rules text and a separate mechanic for the reminder text. If you need different versions of the reminder text in different circumstances, use multiple mechanics with different codenames but the same display name.
+</div>

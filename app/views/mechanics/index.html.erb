@@ -1,0 +1,31 @@
+<h1><%= @title = @cardset.name + ": Mechanics" %></h1>
+<% mechanic_editor = permission_to? :admin, @cardset %>
+<%= render :partial => "cardsets/setviews" %>
+<br>
+<% @cardset.mechanics.each do |@mechanic| %>
+  <div class="mechanic">
+    <div>
+      <span class="mechanic_name" title="Playtest name: <%= @mechanic.codename %>"><%= @mechanic.name %></span>:
+      <span class="mechanic_reminder"><%= format_mana_symbols(@mechanic.reminder) %></span> 
+    </div>
+    <% if mechanic_editor %>
+      <div>
+        <%= link_to "Edit", edit_cardset_mechanic_path(@cardset, @mechanic) %>
+        <%= link_to "Destroy", cardset_mechanic_path(@cardset.id, @mechanic),
+                :confirm => "Are you sure you want to permanently delete the #{@mechanic.name} mechanic? Any mentions of this on cards will not be expanded!",
+                :method => :delete %>
+      </div>
+    <% end %>
+    <div class="mechanic_description"><%= format_all_markup(@mechanic.description, @cardset) %></div>
+  </div> 
+<% end %>
+<% if @cardset.mechanics.empty? %>
+  <p>There are no defined keyword mechanics for <%= @cardset.name %> yet. You can create one by clicking <%= link_to "Add mechanic", new_cardset_mechanic_path(@cardset) %>. This will allow you to automatically keep the name and reminder text for your mechanic in sync across all your cards.</p>
+<% end %>
+<% if mechanic_editor %>
+  <p><%= link_to "Add mechanic", new_cardset_mechanic_path(@cardset) %></p>
+<% end %>
+<br><hr><br>
+<p>In card text or details pages, write the mechanic's code name between square brackets, like "[Crittercast]", "[Bushido 1]" or "Delay 4 {2}{R}{R}]". It will be expanded to the mechanic's name plus reminder text, such as "Suspend 4 &ndash; <%= format_mana_symbols_really "{2}{R}{R}" %>. <i>(Rather than cast this spell from your hand,...)</i>" 
+<br>To expand a mechanic's name but not its reminder text, include parentheses at the end of the square brackets: "[Crittercast()]", "Delay 9 {R}()]".
+</p>
