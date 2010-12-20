@@ -98,9 +98,7 @@ module ApplicationHelper
     end
     Card.mana_symbols_extensive.each do |sym|
       target = "<img src='#{mana_symbol_url(sym)}'>"
-      target.gsub!( "0", "zznofish" )
-      target.gsub!( "1", "zzonefish" )
-      target.gsub!( "2", "zztwofish" )
+      fishify(target)
       target.downcase!
       sym1 = sym.tr("{}", "()")
       sym2 = sym.delete("/")
@@ -113,19 +111,40 @@ module ApplicationHelper
     if force
       Card.mana_symbols_extensive.each do |sym|
         target = "<img src='#{mana_symbol_url(sym)}'>".downcase
-        target.gsub!( "0", "zznofish" )
-        target.gsub!( "1", "zzonefish" )
-        target.gsub!( "2", "zztwofish" )
+        fishify(target)
         sym_bare = sym.delete("{}").upcase
         my_text.gsub!( sym_bare, target )
       end
     end
-    my_text.gsub!( "zznofish", "0" )
-    my_text.gsub!( "zzonefish", "1" )
-    my_text.gsub!( "zztwofish", "2" )
+    unfishify(my_text)
     my_text.html_safe
   end
   
+  def fishify(text)
+    text.gsub!( "0", "zznofish" )
+    text.gsub!( "1", "zzonefish" )
+    text.gsub!( "2", "zztwofish" )
+    text.gsub!( "3", "zzthreefish" )
+    text.gsub!( "4", "zzfourfish" )
+    text.gsub!( "5", "zzfivefish" )
+    text.gsub!( "6", "zzsixfish" )
+    text.gsub!( "7", "zzsevenfish" )
+    text.gsub!( "8", "zzeightfish" )
+    text.gsub!( "9", "zzninefish" )
+  end
+  
+  def unfishify(text)
+    text.gsub!( "zznofish"   ,  "0" )
+    text.gsub!( "zzonefish"  ,  "1" )
+    text.gsub!( "zztwofish"  ,  "2" )
+    text.gsub!( "zzthreefish",  "3" )
+    text.gsub!( "zzfourfish" ,  "4" )
+    text.gsub!( "zzfivefish" ,  "5" )
+    text.gsub!( "zzsixfish"  ,  "6" )
+    text.gsub!( "zzsevenfish",  "7" )
+    text.gsub!( "zzeightfish",  "8" )
+    text.gsub!( "zzninefish" ,  "9" )
+  end
   def format_mechanics(text, cardset)
     text_out = text
     cardset.mechanics.each do |mech| 
