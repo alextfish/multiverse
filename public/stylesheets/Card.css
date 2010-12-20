@@ -90,7 +90,10 @@
   padding-bottom: 1px; }
 
 .cardname {
-  float: left; }
+  float: left;
+  position: relative;
+  z-index: 5;
+  /* so that foils' names are still clickable */ }
 
 .cardmanacost {
   float: right;
@@ -195,22 +198,14 @@
   height: 15px; }
 
 .cardtext img {
-  width: 13px;
-  height: 13px;
+  height: 1em;
   vertical-align: middle; }
 
-.minitext img {
-  width: 12px;
-  height: 12px; }
-
-.microtext img {
-  width: 11px;
-  height: 11px; }
-
-.nanotext img {
-  width: 10px;
-  height: 10px; }
-
+/*
+.cardtext  img { width: 13px; height: 13px; vertical-align: middle; }
+.minitext  img { width: 12px; height: 12px; }
+.microtext img { width: 11px; height: 11px; }
+.nanotext  img { width: 10px; height: 10px; } */
 .common {
   color: #fff;
   background-color: #000; }

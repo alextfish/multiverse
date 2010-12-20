@@ -121,13 +121,13 @@ class Cardset < ActiveRecord::Base
     # if uncommons.empty? || commons.empty? || rares_and_mythics.empty?
     #   raise "Set doesn't have cards of enough rarities to assemble boosters. Commons, uncommons, and either rares or mythics are required."
     # end
-    min_commons = 11
-    min_uncommons = 3
-    if (1..min_commons-1).include? commons.length 
-      return [nil, "Not enough commons to create a diverse booster pack: we require #{ min_commons } commons, but the cardset only has #{ commons.length }."]
-    elsif (1..min_uncommons-1).include? uncommons.length 
-      return [nil, "Not enough uncommons to create a diverse booster pack: we require #{ min_uncommons } uncommons, but the cardset only has #{ uncommons.length }."]
-    end
+    # min_commons = 11
+    # min_uncommons = 3
+    # if (1..min_commons-1).include? commons.length 
+      # return [nil, "Not enough commons to create a diverse booster pack: we require #{ min_commons } commons, but the cardset only has #{ commons.length }."]
+    # elsif (1..min_uncommons-1).include? uncommons.length 
+      # return [nil, "Not enough uncommons to create a diverse booster pack: we require #{ min_uncommons } uncommons, but the cardset only has #{ uncommons.length }."]
+    # end
       
     @m10_collation = mythics.any?
     if rand(60) < ( @m10_collation  ? 14 : 15 )
@@ -135,13 +135,18 @@ class Cardset < ActiveRecord::Base
       foil_type = rand(15)
       case foil_type
         when 1:
-          foil = rares_and_mythics.choice
+          foil_src = rares_and_mythics.choice
         when 2..4:
-          foil = uncommons.choice
+          foil_src = uncommons.choice
         else
-          foil = commons.choice 
+          foil_src = commons.choice 
       end
-      foil.foil = true
+      if foil_src.nil?
+        foil = nil
+      else
+        foil = foil_src.clone # so that if the unfoil one is in the booster too, that isn't foiled
+        foil.foil = true
+      end
     else
       foil = nil
     end
@@ -151,12 +156,20 @@ class Cardset < ActiveRecord::Base
     if foil
       @booster << foil
     end
-    @booster << rares_and_mythics.choice
+    if rares_and_mythics.empty?
+      chosen_rare = Card.blank("No more rares or mythics")
+    else
+      chosen_rare = rares_and_mythics.choice
+    end
+    @booster << chosen_rare
     chosen_uncommons = []
     while chosen_uncommons.length < 3
-      new_candidate = uncommons.choice
-      if !chosen_uncommons.include? new_candidate 
+      if uncommons.empty?
+        chosen_uncommons << Card.blank("No more uncommons")
+      else
+        new_candidate = uncommons.choice
         chosen_uncommons << new_candidate 
+        uncommons -= [new_candidate]
       end
     end
     @booster += chosen_uncommons
@@ -166,9 +179,12 @@ class Cardset < ActiveRecord::Base
     commons.sort!
     chosen_commons = []
     while chosen_commons.length < num_booster_commons
-      new_candidate = commons.choice
-      if !chosen_commons.include? new_candidate 
+      if commons.empty?
+        chosen_commons << Card.blank("No more commons")
+      else
+        new_candidate = commons.choice
         chosen_commons << new_candidate 
+        commons -= [new_candidate]
       end
     end
     @booster += chosen_commons

@@ -28,7 +28,10 @@
   </div>
   <div class="pinline pinline_box">
    <div class="cardtypebar">
-    <div class="cardrarity <%= @card.rarity %>">&nbsp;<%= @card.rarity[0].chr.upcase %>&nbsp;
+    <div class="cardrarity <%= @card.rarity %>">
+      <% if !@card.rarity.blank? %>
+        &nbsp;<%= @card.rarity[0].chr.upcase %>&nbsp;
+      <% end %>
     </div>
      <% typeline = (@card.supertype.blank? ? "" : "#{@card.supertype} ") +
                    (@card.cardtype.blank?  ? "" : "#{@card.cardtype}") +

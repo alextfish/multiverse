@@ -27,9 +27,11 @@
 
 <p>
   <% @booster.each do |@card| %>
-    <% do_link = !@card.cardset.nil? %>
-    <%= link_to_if do_link, @card.name, @card %>
-    (<%= @card.rarity %><% if @card.foil %>, foil<% end %>)
-  <br>
+    <% if !@card.blank %>
+      <% do_link = !@card.cardset.nil? %>
+      <%= link_to_if do_link, @card.name, @card %>
+      (<%= @card.rarity %><% if @card.foil %>, foil<% end %>)
+      <br>
+    <% end %>
   <% end %>
 </p>

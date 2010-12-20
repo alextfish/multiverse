@@ -31,7 +31,7 @@ class Card < ActiveRecord::Base
   belongs_to :cardset
   has_many :comments, :dependent => :destroy
   has_many :old_cards, :dependent => :destroy
-  attr_accessor :foil  # not saved
+  attr_accessor :foil, :blank  # not saved
 
   #has_many :highlighted_comments, :class_name => 'Comment', :conditions => ['status = ?', COMMENT_HIGHLIGHTED]
   #has_many :unaddressed_comments, :class_name => 'Comment', :conditions => ['status = ?', COMMENT_UNADDRESSED]
@@ -267,6 +267,11 @@ class Card < ActiveRecord::Base
   )
   def Card.basic_land 
     [PLAINS, ISLAND, SWAMP, MOUNTAIN, FOREST]
+  end
+  def Card.blank(text)
+    out = Card.new(:rulestext => text)
+    out.blank = true
+    out
   end
 
   def <=>(c2)

@@ -81,7 +81,9 @@
      border-left: 1px solid black; border-right: 1px solid black; border-bottom: 1px solid black; } */
 
   .cardtitlebar, .cardtypebar { font: bold 9pt serif; padding-top: 1px; padding-bottom: 1px; }
-  .cardname { float: left; }
+  .cardname { float: left; 
+     position: relative; z-index: +5;  /* so that foils' names are still clickable */
+  }
   .cardmanacost { float: right; padding-right: 3px; }
   .cardart_container, .cardtext_container { background: inherit; padding-left: 4px; padding-right: 4px; }
   .cardart { /*width: *; */  min-height: 100px; text-align: center; }
@@ -131,10 +133,12 @@
 
 /* Mana symbol sizes */
 .cardmanacost img { width: 15px; height: 15px; }
+.cardtext  img { height: 1em; vertical-align: middle; }
+/*
 .cardtext  img { width: 13px; height: 13px; vertical-align: middle; }
 .minitext  img { width: 12px; height: 12px; }
 .microtext img { width: 11px; height: 11px; }
-.nanotext  img { width: 10px; height: 10px; }
+.nanotext  img { width: 10px; height: 10px; } */
 
 .common {  color: #fff;
   background-color: #000;}

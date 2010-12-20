@@ -145,9 +145,10 @@ module ApplicationHelper
     text.gsub!( "zzeightfish",  "8" )
     text.gsub!( "zzninefish" ,  "9" )
   end
+  
   def format_mechanics(text, cardset)
     text_out = text
-    cardset.mechanics.each do |mech| 
+    cardset && cardset.mechanics.each do |mech| 
       src_no_reminder, src_with_reminder, target_no_reminder, target_with_reminder = mech.regexps
       #Rails.logger.info [src_no_reminder, src_with_reminder, target_no_reminder, target_with_reminder].join(" --- ")
       # Need the two following lines to be ordered by stricter first

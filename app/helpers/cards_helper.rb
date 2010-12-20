@@ -50,8 +50,10 @@ module CardsHelper
     end
 
     out = AFTER_SUBSTITUTIONS.reduce(marked_text) do |memo, (match, replace)| memo.gsub(match, replace) end
-    CARDNAME_ALIASES.each do |string|
-      out.gsub!(string, card.name)
+    if card.name
+      CARDNAME_ALIASES.each do |string|
+        out.gsub!(string, card.name)
+      end
     end
     return out.html_safe
   end
