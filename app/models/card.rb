@@ -14,8 +14,8 @@
 #  subtype      :string(255)
 #  rulestext    :text
 #  flavourtext  :text
-#  power        :integer
-#  toughness    :integer
+#  power        :string(255)
+#  toughness    :string(255)
 #  image        :string(255)
 #  active       :boolean
 #  created_at   :datetime

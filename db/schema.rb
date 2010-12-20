@@ -10,7 +10,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20101215230231) do
+ActiveRecord::Schema.define(:version => 20101220161110) do
 
   create_table "cards", :force => true do |t|
     t.string   "code"
@@ -23,8 +23,8 @@ ActiveRecord::Schema.define(:version => 20101215230231) do
     t.string   "subtype"
     t.text     "rulestext"
     t.text     "flavourtext"
-    t.integer  "power"
-    t.integer  "toughness"
+    t.string   "power"
+    t.string   "toughness"
     t.string   "image"
     t.boolean  "active"
     t.datetime "created_at"
