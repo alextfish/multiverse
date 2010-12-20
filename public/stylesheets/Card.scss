@@ -29,7 +29,14 @@
       -khtml-border-radius:  10px;
       border-radius:         10px; }
   .cardborder { width: 200px; /* height: 262px; */ }
-  .card { background: #0ff; padding-top: 4px; padding-left: 3px; padding-right: 3px; padding-bottom: 3px }
+  .card { background: #0ff; 
+          padding-top: 4px; padding-left: 3px; padding-right: 3px; padding-bottom: 3px;
+          position: relative;
+        }
+  .foil {
+    position: absolute; top: 0px; background-image: url(/images/foil_highlight.png); 
+    width: 200px;  height: 285px;
+  }
   .pinline { }
   .pinline_box { padding: 2px;}
   .pinline_sides { padding-left: 2px; padding-right: 2px; }
@@ -103,12 +110,12 @@
       padding-right: 0px; }
   .ptbox { width: 90%;
           font: 11pt serif;
-          padding: 0px  !important; }
+          padding: 0px !important; }
   .pinline_ptbox {
     border-right-color: #ccc;
     border-top-color: #ccc;
    }
- .pinline_ptbox  div{
+ .pinline_ptbox div {
     border-left-color: #ccc;
     border-bottom-color: #ccc;
    }
@@ -122,6 +129,12 @@
   .flavourtext { font-style: italic; margin-top: 4px; }
   .microtext .flavourtext { margin-top: 2px; }
 
+/* Mana symbol sizes */
+.cardmanacost img { width: 15px; height: 15px; }
+.cardtext  img { width: 13px; height: 13px; vertical-align: middle; }
+.minitext  img { width: 12px; height: 12px; }
+.microtext img { width: 11px; height: 11px; }
+.nanotext  img { width: 10px; height: 10px; }
 
 .common {  color: #fff;
   background-color: #000;}

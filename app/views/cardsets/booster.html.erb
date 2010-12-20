@@ -1,0 +1,35 @@
+<h1>
+  <%= link_to @cardset.name, @cardset %>: Virtual Booster
+</h1>
+<% @title = "#{@cardset.name}: Booster " %>
+
+<%= render "setviews" %>
+
+<div class="helptext">
+  <% if @m10_collation %>This booster was generated with modern collation since the cardset contains mythics: 1 rare / mythic, 3 uncommons, 10 commons, 1 basic land.
+  <% else %>
+    This booster was generated with pre-<i>Magic 2010</i> collation since the cardset contains no mythics: 1 rare, 3 uncommons, 11 commons
+  <% end %>
+</div>
+
+<table>
+  <% @booster.each_slice(5) do |cards| %>
+    <tr>
+      <% cards.each do |@card| %>
+        <td>
+          <% do_link = !@card.cardset.nil? %>
+          <%= render :partial => "shared/prettycard", :locals => {:link => do_link} %>
+        </td>
+      <% end %>
+    </tr>
+  <% end %>
+</table>
+
+<p>
+  <% @booster.each do |@card| %>
+    <% do_link = !@card.cardset.nil? %>
+    <%= link_to_if do_link, @card.name, @card %>
+    (<%= @card.rarity %><% if @card.foil %>, foil<% end %>)
+  <br>
+  <% end %>
+</p>

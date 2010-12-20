@@ -13,7 +13,7 @@
       <span title="<%= @card.code %>"><%= @card.name %></span>
      <% end %>
     </div>
-    <div class="cardmanacost"><%= format_mana_symbols(@card.cost) %></div>
+    <div class="cardmanacost"><%= format_mana_symbols(@card.cost, true) %></div>
     &nbsp; <!-- required to give some height to the cardtitlebar -->
    </div>
   </div>
@@ -47,15 +47,15 @@
   </div>
   <div class="cardtext_container">
    <div class="pinline pinline_sidesbottom">
-     <% textbox = (@card.rulestext   ? format_card_text(@card, :rulestext  ) : "") + 
-                  (@card.flavourtext ? format_card_text(@card, :flavourtext) : "") %>
-     <% case textbox.length
+     <% textbox_length = (@card.rulestext   ? textbox_chars_displayed(@card, :rulestext  ) : 0) + 
+                         (@card.flavourtext ? textbox_chars_displayed(@card, :flavourtext) : 0) %>
+     <% case textbox_length
          when 0..150:   textboxclass = "cardtext"
          when 151..170: textboxclass = "cardtext minitext"
          when 171..200: textboxclass = "cardtext microtext"
          else           textboxclass = "cardtext nanotext"
        end %>
-     <div class="<%= textboxclass %>"><!-- textbox has <%= textbox.length %> chars -->
+     <div class="<%= textboxclass %>"><!-- textbox has <%= textbox_length %> chars -->
       <%= content_tag(:div, format_card_text(@card, :rulestext)) %>
       <%= content_tag(:div, format_card_text(@card, :flavourtext), :class => "flavourtext") %>
      </div>
@@ -76,7 +76,8 @@
    </div>
    <% end %>
   </div>
-  </div>
- 
+  <% if @card.foil %>
+  <div class="foil">&nbsp;</div>
+   <% end %>
  </div>
 </div>

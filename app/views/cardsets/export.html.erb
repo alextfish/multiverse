@@ -1,0 +1,15 @@
+<h1>
+  <%= link_to @cardset.name, @cardset %>
+</h1>
+<% @title = "#{@cardset.name}: Export" %>
+
+<%= render "setviews" %>
+
+<h2>Export <%= @cardset.name %></h2>
+
+<p>
+  <%= link_to "Plain text spoiler", plaintext_cardset_path(@cardset) %>
+</p>
+<p>
+  <%= link_to "XML", :action=>"cardlist", :controller=>"cardsets", :id=>@cardset.id, :format => :xml %>
+</p>

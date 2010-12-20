@@ -84,25 +84,24 @@ module ApplicationHelper
     my_symbol.gsub!(/T/, "tap")
     my_symbol.gsub!(/Q/, "untap")
     my_symbol.gsub!(/inf.*/i, "Infinity")
-    "http://gatherer.wizards.com/Handlers/Image.ashx?size=small&name=#{my_symbol}&type=symbol"
+    "/images/mana/mana_#{my_symbol}.png"
+    # "http://gatherer.wizards.com/Handlers/Image.ashx?size=small&name=#{my_symbol}&type=symbol"
   end
 
   def format_mana_symbols(text, force = false) 
+    if text.nil?
+      return text
+    end
     my_text = sanitize(text)
-    return my_text
-  end
-  def format_mana_symbols_really(text, force = false) 
-    my_text = sanitize(text)
-    return my_text
     if force
-      Card.mana_symbols_extensive.each do |sym|
-        target = "<img src='#{mana_symbol_url(sym)}'>"
-        sym_bare = sym.delete("{}")
-        my_text.gsub!( sym_bare, target )
-      end
+      my_text.upcase!
     end
     Card.mana_symbols_extensive.each do |sym|
       target = "<img src='#{mana_symbol_url(sym)}'>"
+      target.gsub!( "0", "zznofish" )
+      target.gsub!( "1", "zzonefish" )
+      target.gsub!( "2", "zztwofish" )
+      target.downcase!
       sym1 = sym.tr("{}", "()")
       sym2 = sym.delete("/")
       sym3 = sym1.delete("/")
@@ -111,6 +110,19 @@ module ApplicationHelper
       my_text.gsub!( sym2, target )
       my_text.gsub!( sym3, target )
     end
+    if force
+      Card.mana_symbols_extensive.each do |sym|
+        target = "<img src='#{mana_symbol_url(sym)}'>".downcase
+        target.gsub!( "0", "zznofish" )
+        target.gsub!( "1", "zzonefish" )
+        target.gsub!( "2", "zztwofish" )
+        sym_bare = sym.delete("{}").upcase
+        my_text.gsub!( sym_bare, target )
+      end
+    end
+    my_text.gsub!( "zznofish", "0" )
+    my_text.gsub!( "zzonefish", "1" )
+    my_text.gsub!( "zztwofish", "2" )
     my_text.html_safe
   end
   
@@ -118,8 +130,11 @@ module ApplicationHelper
     text_out = text
     cardset.mechanics.each do |mech| 
       src_no_reminder, src_with_reminder, target_no_reminder, target_with_reminder = mech.regexps
-      text_out.gsub! src_with_reminder, target_with_reminder
+      #Rails.logger.info [src_no_reminder, src_with_reminder, target_no_reminder, target_with_reminder].join(" --- ")
+      # Need the two following lines to be ordered by stricter first
+      # e.g. [Bushido 1()] is best parsed as a no-reminder w param 1 than a with-reminder w param 1()
       text_out.gsub! src_no_reminder, target_no_reminder
+      text_out.gsub! src_with_reminder, target_with_reminder
     end
     text_out
   end

@@ -65,6 +65,20 @@ class CardsetsController < ApplicationController
     end
   end
 
+  def booster 
+    begin
+      @booster, err_message, data = @cardset.make_booster()
+      if @booster.nil?
+        flash[:error] = err_message
+        redirect_to :back #, :error => err_message
+      else
+        @m10_collation = data
+        render
+      end
+      # I just can't get "rescue Exceptions::BoosterError => e" to work, it gives "uninit constant" errors
+    end
+  end
+
   # POST /cardsets/1/import_data
   def import_data
     Rails.logger.info "User #{current_user} importing data"

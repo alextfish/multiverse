@@ -43,7 +43,7 @@ class Mechanic < ActiveRecord::Base
           target = self.name + ' \\1'
        when 2:
           src_main = src_start + sep + one_param + sep + one_param
-          target = self.name + ' \\1 &ndash; \\2'
+          target = self.name + ' \\1 - \\2'
       end
       # Rails.logger.info "Compiling regexp from " + src_main + "\\(\\)\\]"
       src_no_reminder =  Regexp.new(src_main + "\\(\\)\\]")

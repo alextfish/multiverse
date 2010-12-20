@@ -31,6 +31,7 @@ class Card < ActiveRecord::Base
   belongs_to :cardset
   has_many :comments, :dependent => :destroy
   has_many :old_cards, :dependent => :destroy
+  attr_accessor :foil  # not saved
 
   #has_many :highlighted_comments, :class_name => 'Comment', :conditions => ['status = ?', COMMENT_HIGHLIGHTED]
   #has_many :unaddressed_comments, :class_name => 'Comment', :conditions => ['status = ?', COMMENT_UNADDRESSED]
@@ -221,6 +222,51 @@ class Card < ActiveRecord::Base
           return "Colourless"
         end
     end
+  end
+  
+  
+  PLAINS = Card.new(
+    :name => "Plains",
+    :supertype => "Basic",
+    :cardtype => "Land",
+    :subtype => "Plains",
+    :frame => "Land white",
+    :rarity => "basic"
+  ) 
+  ISLAND = Card.new(
+    :name => "Island",
+    :supertype => "Basic",
+    :cardtype => "Land",
+    :subtype => "Island",
+    :frame => "Land blue",
+    :rarity => "basic"
+  )
+  SWAMP = Card.new(
+    :name => "Swamp",
+    :supertype => "Basic",
+    :cardtype => "Land",
+    :subtype => "Swamp",
+    :frame => "Land black",
+    :rarity => "basic"
+  )
+  MOUNTAIN = Card.new(
+    :name => "Mountain",
+    :supertype => "Basic",
+    :cardtype => "Land",
+    :subtype => "Mountain",
+    :frame => "Land red",
+    :rarity => "basic"
+  )
+  FOREST = Card.new(
+    :name => "Forest",
+    :supertype => "Basic",
+    :cardtype => "Land",
+    :subtype => "Forest",
+    :frame => "Land green",
+    :rarity => "basic"
+  )
+  def Card.basic_land 
+    [PLAINS, ISLAND, SWAMP, MOUNTAIN, FOREST]
   end
 
   def <=>(c2)

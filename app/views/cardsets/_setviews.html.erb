@@ -2,8 +2,8 @@
     <b><%= link_to_unless_current @cardset.name, @cardset %></b>:
     <%= link_to_unless_current "Full cardlist", cardlist_cardset_path(@cardset) %> |
     <%= link_to_unless_current "Visual spoiler", visualspoiler_cardset_path(@cardset) %> |
-    <%= link_to_unless_current "Plain text spoiler", plaintext_cardset_path(@cardset) %> |
-    <%= link_to "XML", :action=>"cardlist", :controller=>"cardsets", :id=>@cardset.id, :format => :xml %> |
+    <%= link_to_unless_current "Export", export_cardset_path(@cardset) %> |
+    <%= link_to_unless_current "Booster", booster_cardset_path(@cardset) %> |
     <%= link_to_unless_current "Recent activity", recent_cardset_path(@cardset) %>
 </td></tr>
 <% if !@cardset.details_pages.empty? || !@cardset.mechanics.empty? %>

@@ -26,6 +26,6 @@
   <p><%= link_to "Add mechanic", new_cardset_mechanic_path(@cardset) %></p>
 <% end %>
 <br><hr><br>
-<p>In card text or details pages, write the mechanic's code name between square brackets, like "[Crittercast]", "[Bushido 1]" or "Delay 4 {2}{R}{R}]". It will be expanded to the mechanic's name plus reminder text, such as "Suspend 4 &ndash; <%= format_mana_symbols_really "{2}{R}{R}" %>. <i>(Rather than cast this spell from your hand,...)</i>" 
+<p>In card text or details pages, write the mechanic's code name between square brackets, like "[Crittercast]", "[Bushido 1]" or "Delay 4 {2}{R}{R}]". It will be expanded to the mechanic's name plus reminder text, such as "Suspend 4 &ndash; <%= format_mana_symbols "{2}{R}{R}" %>. <i>(Rather than cast this spell from your hand,...)</i>" 
 <br>To expand a mechanic's name but not its reminder text, include parentheses at the end of the square brackets: "[Crittercast()]", "Delay 9 {R}()]".
 </p>

@@ -35,8 +35,8 @@ Multiverse::Application.routes.draw do
     member do
       get 'cardlist' # in addition to /cardsets/:id which goes to cardsets#show
       get 'visualspoiler', 'recent'
-      get 'import', 'plaintext'
-      get 'todo'
+      get 'import', 'plaintext', 'export'
+      get 'todo', 'booster'
       post 'import_data'
     end
   end

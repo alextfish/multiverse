@@ -106,7 +106,80 @@ class Cardset < ActiveRecord::Base
       when "image": 3
     end
   end
+  
+  
+  def make_booster()
+    commons   = self.cards.select { |c| c.rarity == "common" } 
+    uncommons = self.cards.select { |c| c.rarity == "uncommon" } 
+    rares     = self.cards.select { |c| c.rarity == "rare" } 
+    mythics   = self.cards.select { |c| c.rarity == "mythic" }     
+    basics    = self.cards.select { |c| c.rarity == "basic" }
+    if basics.empty? 
+      basics = Card.basic_land 
+    end
+    rares_and_mythics = rares + rares + mythics 
+    # if uncommons.empty? || commons.empty? || rares_and_mythics.empty?
+    #   raise "Set doesn't have cards of enough rarities to assemble boosters. Commons, uncommons, and either rares or mythics are required."
+    # end
+    min_commons = 11
+    min_uncommons = 3
+    if (1..min_commons-1).include? commons.length 
+      return [nil, "Not enough commons to create a diverse booster pack: we require #{ min_commons } commons, but the cardset only has #{ commons.length }."]
+    elsif (1..min_uncommons-1).include? uncommons.length 
+      return [nil, "Not enough uncommons to create a diverse booster pack: we require #{ min_uncommons } uncommons, but the cardset only has #{ uncommons.length }."]
+    end
+      
+    @m10_collation = mythics.any?
+    if rand(60) < ( @m10_collation  ? 14 : 15 )
+      # got a foil
+      foil_type = rand(15)
+      case foil_type
+        when 1:
+          foil = rares_and_mythics.choice
+        when 2..4:
+          foil = uncommons.choice
+        else
+          foil = commons.choice 
+      end
+      foil.foil = true
+    else
+      foil = nil
+    end
+    num_booster_commons = ( @m10_collation ? 10 : 11 ) - ( foil.nil? ? 0 : 1 )
 
+    @booster = []
+    if foil
+      @booster << foil
+    end
+    @booster << rares_and_mythics.choice
+    chosen_uncommons = []
+    while chosen_uncommons.length < 3
+      new_candidate = uncommons.choice
+      if !chosen_uncommons.include? new_candidate 
+        chosen_uncommons << new_candidate 
+      end
+    end
+    @booster += chosen_uncommons
+    
+    # For commons we do something slightly different: we distribute the chosen points
+    # evenly-ish along the list of commons
+    commons.sort!
+    chosen_commons = []
+    while chosen_commons.length < num_booster_commons
+      new_candidate = commons.choice
+      if !chosen_commons.include? new_candidate 
+        chosen_commons << new_candidate 
+      end
+    end
+    @booster += chosen_commons
+    if @m10_collation
+      @booster << basics.choice
+    end
+    data_out = [@m10_collation]
+    return [@booster, "", data_out]
+  end
+  
+  ########################## Importing data ##########################
   ALIASES = {
     "type" => "cardtype",
     "manacost" => "cost",
