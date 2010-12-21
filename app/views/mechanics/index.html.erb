@@ -3,10 +3,14 @@
 <%= render :partial => "cardsets/setviews" %>
 <br>
 <% @cardset.mechanics.each do |@mechanic| %>
+  <% src_no_reminder, src_with_reminder, target_no_reminder, target_with_reminder = @mechanic.regexps %>
   <div class="mechanic">
     <div>
       <span class="mechanic_name" title="Playtest name: <%= @mechanic.codename %>"><%= @mechanic.name %></span>:
-      <span class="mechanic_reminder"><%= format_mana_symbols(@mechanic.reminder) %></span> 
+      <span class="mechanic_reminder"><%= format_mana_symbols(@mechanic.reminder) %></span>
+      <span class="helptext">(Used on <%= 
+      @cardset.cards.select { |c| c.rulestext =~ src_no_reminder || c.rulestext =~ src_with_reminder }.count
+      %> cards)</span>
     </div>
     <% if mechanic_editor %>
       <div>
@@ -26,6 +30,6 @@
   <p><%= link_to "Add mechanic", new_cardset_mechanic_path(@cardset) %></p>
 <% end %>
 <br><hr><br>
-<p>In card text or details pages, write the mechanic's code name between square brackets, like "[Crittercast]", "[Bushido 1]" or "Delay 4 {2}{R}{R}]". It will be expanded to the mechanic's name plus reminder text, such as "Suspend 4 &ndash; <%= format_mana_symbols "{2}{R}{R}" %>. <i>(Rather than cast this spell from your hand,...)</i>" 
+<p>In card text or details pages, write the mechanic's code name (playtest name) between square brackets, like "[Crittercast]", "[Bushido 1]" or "Delay 4 {2}{R}{R}]". It will be expanded to the mechanic's name plus reminder text, such as "Suspend 4 &ndash; <%= format_mana_symbols "{2}{R}{R}" %>. <i>(Rather than cast this spell from your hand,...)</i>" 
 <br>To expand a mechanic's name but not its reminder text, include parentheses at the end of the square brackets: "[Crittercast()]", "Delay 9 {R}()]".
 </p>
