@@ -11,6 +11,7 @@
     </div>
   <% end %>
 
+<% @cardset = @cardset %>
 
 <table border="0">         <!-- grouping table -->
  <tr>
@@ -106,13 +107,13 @@
      <td><%= f.text_field :image_url, :class => "image_url_field" %>
      </td>
     </tr>
-    <% if @card.cardset.configuration.card_show_code %>
+    <% if @cardset.configuration.card_show_code %>
     <tr>
      <td><%= f.label :code %></td>
      <td><%= f.text_field :code %></td>
     </tr>
     <% end %>
-    <% if @card.cardset.configuration.card_show_active %>
+    <% if @cardset.configuration.card_show_active %>
     <tr>
      <td><%= f.label :active, "Active?" %></td>
      <td><%= f.check_box :active %></td>
@@ -132,8 +133,38 @@
     </tr>
     <tr>
      <td colspan="2">
-      <%= f.hidden_field :cardset_id, :value => @card.cardset_id %>
+      <%= f.hidden_field :cardset_id, :value => @cardset_id %>
       <%= f.submit %>
+     </td>
+    </tr>
+    <tr>
+     <td colspan="2">
+      <div class="helptext">
+        <p>
+        Enter mana symbols like this: 
+        <br><code>{2}{U}{U/R}, {T}</code> becomes <%= format_mana_symbols("{2}{U}{U/R}, {T}") %>
+        </p>
+       <% if !@cardset.mechanics.empty? %>
+         <p>
+         Enter <%= link_to "mechanics", cardset_mechanics_path(@cardset) %> like this:
+         <% @cardset.mechanics.all.each do |mech| %>
+           <% src_no_reminder, src_with_reminder, target_no_reminder, target_with_reminder = mech.regexps 
+           string_with_reminder = src_with_reminder.inspect.sub(Mechanic.one_param, "AA").sub(Mechanic.one_param, "BB").gsub(/\\|\//, "")
+           string_no_reminder = src_no_reminder.inspect.sub(Mechanic.one_param, "AA").sub(Mechanic.one_param, "BB").gsub(/\\|\//, "") %>
+           <br><code><%= string_with_reminder %></code> for <%= mech.name %>
+           <br><code><%= string_no_reminder %></code> for <%= mech.name %> without reminder text
+         <% end %>
+         </p>
+         <p>Abbreviations supported: 
+<br><code>ETBs</code> becomes <code>enters the battlefield</code>
+<br><code>UEOT</code> becomes <code>until end of turn</code>
+<br><code>&nbsp;//&nbsp;</code> becomes a linebreak (you may also enter
+linebreaks directly)
+<br><code>~</code>, <code>~this~</code> and <code>CARDNAME</code>
+become the card's name
+          </p>
+       <% end %>
+      </div>
      </td>
     </tr>
    </table>

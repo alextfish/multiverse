@@ -29,20 +29,22 @@ class Mechanic < ActiveRecord::Base
   validates_inclusion_of :parameters, :in => (0..2)
   
   attr_accessor :regexps
+  def Mechanic.one_param
+    "([^\\]]*)"
+  end
   def regexps
     if attributes[:regexps].nil?
       sep = " "                    # "|"
       src_start = "\\[#{self.codename}"
-      one_param = "([^\\]]*)"
       case self.parameters 
         when 0:
           src_main = src_start
           target = self.name 
        when 1:
-          src_main = src_start + sep + one_param
+          src_main = src_start + sep + Mechanic.one_param
           target = self.name + ' \\1'
        when 2:
-          src_main = src_start + sep + one_param + sep + one_param
+          src_main = src_start + sep + Mechanic.one_param + sep + Mechanic.one_param
           target = self.name + ' \\1 - \\2'
       end
       # Rails.logger.info "Compiling regexp from " + src_main + "\\(\\)\\]"
