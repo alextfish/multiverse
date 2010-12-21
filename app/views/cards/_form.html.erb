@@ -11,8 +11,6 @@
     </div>
   <% end %>
 
-<% @cardset = @cardset %>
-
 <table border="0">         <!-- grouping table -->
  <tr>
   <td>                      <!-- card -->
@@ -107,13 +105,13 @@
      <td><%= f.text_field :image_url, :class => "image_url_field" %>
      </td>
     </tr>
-    <% if @cardset.configuration.card_show_code %>
+    <% if @card.cardset.configuration.card_show_code %>
     <tr>
      <td><%= f.label :code %></td>
      <td><%= f.text_field :code %></td>
     </tr>
     <% end %>
-    <% if @cardset.configuration.card_show_active %>
+    <% if @card.cardset.configuration.card_show_active %>
     <tr>
      <td><%= f.label :active, "Active?" %></td>
      <td><%= f.check_box :active %></td>
@@ -133,7 +131,7 @@
     </tr>
     <tr>
      <td colspan="2">
-      <%= f.hidden_field :cardset_id, :value => @cardset_id %>
+      <%= f.hidden_field :cardset_id, :value => @card.cardset_id %>
       <%= f.submit %>
      </td>
     </tr>
