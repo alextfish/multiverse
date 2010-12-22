@@ -85,3 +85,32 @@ function update_comment_status(commentid, action) {
       break;
   }
 }
+
+/*
+
+// H/M * JS to fit the card text to the card.
+// Pseudocode:
+  // on load: resize_all_cards
+  // resize_all_cards: 
+    // cards_to_resize = $("#card")
+    // remove forms
+    // resize_cards
+  // resize_cards:
+    // for each card in cards_to_resize
+      // keep = false
+      // check size of text box
+      // if it's bigger than it should be:
+        // if there are any steps it can go further:
+          // shrink it one step
+          // keep = true
+      // check size of the type line
+      // if it's bigger than it should be:
+        // if there are any steps it can go further:
+          // shrink it one step
+          // keep = true
+      // if !keep:
+        // remove card from cards_to_resize
+    // // once all cards resized
+    // if any left in cards_to_resize:
+      // setTimeout 50, resize_cards
+      */

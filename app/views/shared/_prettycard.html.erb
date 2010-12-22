@@ -70,10 +70,10 @@
    <% else %>
      &nbsp;
    <% end %>
-   <% if @card.power || @card.toughness %>
+   <% if !@card.power.blank? || !@card.toughness.blank? %>
    <div class="ptbox_container">
     <div class="pinline pinline_box pinline_ptbox">
-     <div class="ptbox"><%= @card.power %><% if @card.power && @card.toughness %>/<% end %><%= @card.toughness %>
+     <div class="ptbox"><%= @card.power %><% if !@card.power.blank? && !@card.toughness.blank? %>/<% end %><%= @card.toughness %>
      </div>
     </div>
    </div>
