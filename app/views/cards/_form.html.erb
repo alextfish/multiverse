@@ -150,7 +150,9 @@
            string_with_reminder = src_with_reminder.inspect.sub(Mechanic.one_param, "AA").sub(Mechanic.one_param, "BB").gsub(/\\|\//, "")
            string_no_reminder = src_no_reminder.inspect.sub(Mechanic.one_param, "AA").sub(Mechanic.one_param, "BB").gsub(/\\|\//, "") %>
            <br><code><%= string_with_reminder %></code> for <%= mech.name %>
-           <br><code><%= string_no_reminder %></code> for <%= mech.name %> without reminder text
+           <% if !mech.reminder.blank? %>
+             <br><code><%= string_no_reminder %></code> for <%= mech.name %> without reminder text
+           <% end %>
          <% end %>
          </p>
        <% end %>
