@@ -8,8 +8,11 @@
 <h2>Export <%= @cardset.name %></h2>
 
 <p>
-  <%= link_to "Plain text spoiler", plaintext_cardset_path(@cardset) %>
+  <%= link_to "Plain text spoiler", cardlist_cardset_path(@cardset, :format => :txt) %>
 </p>
 <p>
-  <%= link_to "XML", :action=>"cardlist", :controller=>"cardsets", :id=>@cardset.id, :format => :xml %>
+  <%= link_to "XML", cardlist_cardset_path(@cardset, :format => :xml) %>
+</p>
+<p>
+  <%= link_to "CSV", cardlist_cardset_path(@cardset, :format => :csv) %>
 </p>

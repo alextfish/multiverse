@@ -38,6 +38,8 @@ class CardsetsController < ApplicationController
     respond_to do |format|
       format.html # cardlist.html.erb
       format.xml  { render :xml => @cardset.cards }   # ??
+      #format.txt  { render }  
+      format.csv  { render }  
     end
   end
 

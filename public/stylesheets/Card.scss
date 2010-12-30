@@ -20,14 +20,27 @@
   background: -webkit-gradient(linear, left top, right top, from($start), color-stop(0.4, $start), color-stop(0.6, $end), to($end));
   background: -moz-linear-gradient(left, $start, $start, $end, $end);
 }
+@mixin round_corners($radius) {
+  -moz-border-radius:    $radius;
+  -webkit-border-radius: $radius;
+  -khtml-border-radius:  $radius;
+  border-radius:         $radius; 
+}
+@mixin elliptical_corners($horz, $vert) {
+  -moz-border-radius:    $horz;
+  -webkit-border-radius: $horz;
+  -khtml-border-radius:  $horz;
+  border-radius:         $horz; 
+  -moz-border-radius:    $horz / $vert;
+  -webkit-border-radius: $horz / $vert;
+  -khtml-border-radius:  $horz / $vert;
+  border-radius:         $horz / $vert; 
+}
 
 /***** Card display *****/
 
   .blackborder { border: 10px solid black;
-      -moz-border-radius:    10px;
-      -webkit-border-radius: 10px;
-      -khtml-border-radius:  10px;
-      border-radius:         10px; }
+      @include round_corners(10px); }
   .cardborder { width: 200px; /* height: 262px; */ }
   .card { background: #0ff; 
           padding-top: 4px; padding-left: 3px; padding-right: 3px; padding-bottom: 3px;
@@ -45,21 +58,9 @@
       border-left: 1px solid black;
       border-right: 1px solid black;
       border-bottom: 1px solid black;
-      -moz-border-radius:    6px;
-      -moz-border-radius:    6px / 12px;
-      -webkit-border-radius: 6px;
-      -webkit-border-radius: 6px / 12px;
-      -khtml-border-radius:  6px;
-      border-radius:         6px;
-      border-radius:         6px / 12px; }
+      @include elliptical_corners(6px, 12px); }
   .pinline_box > div { border: 1px solid black;
-      -moz-border-radius:    4px;
-      -moz-border-radius:    4px / 8px;
-      -webkit-border-radius: 4px;
-      -webkit-border-radius: 4px / 8px;
-      -khtml-border-radius:  4px;
-      border-radius:         4px;
-      border-radius:         4px / 8px;
+      @include elliptical_corners(4px, 8px); 
       padding-left: 3px; 
       padding-right: 3px; }
   /* Left side outer */

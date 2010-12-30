@@ -207,7 +207,7 @@ class Cardset < ActiveRecord::Base
     "art" => "art_url",
     "image" => "image_url",
   }
-  FIELDS = ["","name","cost","supertype","cardtype","subtype","rarity","rulestext","flavourtext","power","toughness","loyalty","code","frame","art_url","artist","image_url","comment"]
+  FIELDS = ["","name","cost","supertype","cardtype","subtype","rarity","rulestext","flavourtext","power","toughness","loyalty","code","frame","art_url","artist","image_url","comment","active"]
   ENUM_ALIASES = {
     "frame" => {  # keys need to be strings, not symbols
       "w" => "white", "u" => "blue", "b" => "black", "r" => "red", "g" => "green", "a" => "artifact", "z" => "multicolour", "l" => "land", "h" => "hybrid",

@@ -71,9 +71,10 @@ input#separator       { width: 2em; }
 input#formatting_line { width: 600px; }
 textarea#import_data  { width: 600px; height: 15em; }
 
-p.plaintext_wrapper { white-space: pre;
-                      font-family: monospace;
-                      width: 600px; }
+.plaintext_wrapper { white-space: pre;
+                     font-family: monospace;
+                    }
+.medium_width { width: 600px; }
 
 /***** Cardset details pages *****/
 

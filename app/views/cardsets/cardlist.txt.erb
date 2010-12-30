@@ -1,0 +1,3 @@
+<% @cardset.cards.sort.each do |@card| # Can't indent this loop, because this is effectively inside <pre> %>
+<%= render :partial => 'shared/plain_individual_card' %>
+<% end %>

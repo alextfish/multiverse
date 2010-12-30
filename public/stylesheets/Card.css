@@ -42,22 +42,24 @@
   border-right: 1px solid black;
   border-bottom: 1px solid black;
   -moz-border-radius: 6px;
-  -moz-border-radius: 6px/12px;
   -webkit-border-radius: 6px;
-  -webkit-border-radius: 6px/12px;
   -khtml-border-radius: 6px;
   border-radius: 6px;
-  border-radius: 6px/12px; }
+  -moz-border-radius: 0.5;
+  -webkit-border-radius: 0.5;
+  -khtml-border-radius: 0.5;
+  border-radius: 0.5; }
 
 .pinline_box > div {
   border: 1px solid black;
   -moz-border-radius: 4px;
-  -moz-border-radius: 4px/8px;
   -webkit-border-radius: 4px;
-  -webkit-border-radius: 4px/8px;
   -khtml-border-radius: 4px;
   border-radius: 4px;
-  border-radius: 4px/8px;
+  -moz-border-radius: 0.5;
+  -webkit-border-radius: 0.5;
+  -khtml-border-radius: 0.5;
+  border-radius: 0.5;
   padding-left: 3px;
   padding-right: 3px; }
 
