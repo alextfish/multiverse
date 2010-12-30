@@ -337,11 +337,11 @@ class Cardset < ActiveRecord::Base
         card = @cardset.cards.build(carddatahash)
       else
         # See if there's an existing card
-        existing_card = carddatahash["code"] && @cardset.cards.find_by_code(carddatahash["code"])
-        if existing_card.nil?
-          existing_card = carddatahash["name"] && @cardset.cards.find_by_name(carddatahash["name"])
+        existing_card = !carddatahash["code"].blank? && @cardset.cards.find_by_code(carddatahash["code"])
+        if !existing_card
+          existing_card = !carddatahash["name"].blank? && @cardset.cards.find_by_name(carddatahash["name"])
         end
-        if existing_card.nil?
+        if !existing_card
           # Just create a new card
           new_cards+=1
           card = @cardset.cards.build(carddatahash)

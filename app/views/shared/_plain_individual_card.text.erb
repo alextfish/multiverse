@@ -1,4 +1,4 @@
-<% ### NOTE: This is duplicated :/ as .html.erb and .text.erb 
+<% ### NOTE: This is identical to .html.erb except this version contains .html_safe calls
 
    # produces output like:
    # CardName: Compulsive Sculptor
@@ -17,7 +17,7 @@ Type: <%= @card.supertype
       %><% if !@card.subtype.blank? %> - <%= @card.subtype %><% end
       %>
 Pow/Tgh: <%= @card.power %><% if @card.power && @card.toughness %>/<% end %><%= @card.toughness %>
-Rules Text: <%= word_wrap format_card_text(@card, :rulestext, false, false), 70 %>
-Flavour Text: <%= word_wrap format_card_text(@card, :flavourtext, false, false), 70 %>
+Rules Text: <%= word_wrap(format_card_text(@card, :rulestext, false, false), 70).html_safe %>
+Flavour Text: <%= word_wrap(format_card_text(@card, :flavourtext, false, false), 70).html_safe %>
 Set/Rarity: <%= @cardset.name %> <%= @card.rarity.capitalize %>
 

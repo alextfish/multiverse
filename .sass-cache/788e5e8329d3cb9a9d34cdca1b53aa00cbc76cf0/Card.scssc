@@ -1,8 +1,8 @@
 3.0.24 (Classy Cassidy)
-1d429b4f99b423b080b015091c76d3a78da3a522
+a123ad23a0e600723cd4c69b5fa531310388cb0c
 o:Sass::Tree::RootNode
 :
-@linei:@template"ö=@mixin gradient_horz($start, $end) {
+@linei:@template"p>@mixin gradient_horz($start, $end) {
   filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#{$start}', endColorstr='#{$end}', GradientType=1);
   background: -webkit-gradient(linear, left top, right top, from($start), to($end));
   background: -moz-linear-gradient(left,  $start,  $end);
@@ -110,6 +110,8 @@
   .cardtext { /*width: *; */ min-height: 105px;
               padding: 2px; }
   .cardtext br { margin-bottom: 0.25em; }
+  .cardtext .flavourtext br { margin-bottom: 0px; }
+  .cardtext div, .cardtext p { margin: 0px; }
   .bottombox { background: inherit;
               margin-bottom: 4px; padding-right: 6px;
               position: relative;
@@ -138,8 +140,8 @@
   .microtext { font-size: 8pt; }
   .nanotext  { font-size: 7.5pt; }
   .condensedtypeline { font-size: 8pt; letter-spacing: -2px; }
-  .flavourtext { font-style: italic; margin-top: 4px; }
-  .microtext .flavourtext { margin-top: 2px; }
+  .flavourtext { font-style: italic; margin-top: .25em !important; }
+  .flavourtext i, .flavourtext em { font-style: normal; }
 
 /* Mana symbol sizes */
 .cardmanacost img { width: 15px; height: 15px; }
@@ -341,7 +343,7 @@ $Land_Green_Text: #cfc;
 .rulestextfield { width: 98%; }
 .art_url_field  { width: 98%; }
 .image_url_field  { width: 400px; }
-:@children[Éo:Sass::Tree::MixinDefNode;i;[o:Sass::Tree::PropNode;i;[ :@prop_syntax:new:@valueo: Sass::Script::Interpolation:@aftero:Sass::Script::String
+:@children[Ëo:Sass::Tree::MixinDefNode;i;[o:Sass::Tree::PropNode;i;[ :@prop_syntax:new:@valueo: Sass::Script::Interpolation:@aftero:Sass::Script::String
 :@context:default;i:
 @type:identifier;"', GradientType=1):@options{ :@originally_textF:	@mido:Sass::Script::Variable	;;;i;@:
 @name"end;@:@whitespace_afterF:@beforeo;;o;
@@ -531,271 +533,275 @@ right;-i o;
 ;io;[ ;;;o;;;;;;"
 105px;@;["min-height;-i o;
 ;ip;[ ;;;o;;;;;;"2px;@;["padding;-i ;5T;@;-i o;>;iq;?[".cardtext br;[o;
-;iq;[ ;;;o;;;;;;"0.25em;@;["margin-bottom;-i ;5T;@;-i o;>;ir;?[".bottombox;[
+;iq;[ ;;;o;;;;;;"0.25em;@;["margin-bottom;-i ;5T;@;-i o;>;ir;?[".cardtext .flavourtext br;[o;
+;ir;[ ;;;o;;;;;;"0px;@;["margin-bottom;-i ;5T;@;-i o;>;is;?[".cardtext div, .cardtext p;[o;
+;is;[ ;;;o;;;;;;"0px;@;["margin;-i ;5T;@;-i o;>;it;?[".bottombox;[
 o;
-;ir;[ ;;;o;;;;;;"inherit;@;["background;-i o;
-;is;[ ;;;o;;;;;;"4px;@;["margin-bottom;-i o;
-;is;[ ;;;o;;;;;;"6px;@;["padding-right;-i o;
-;it;[ ;;;o;;;;;;"relative;@;["position;-i o;
-;iu;[ ;;;o;;;;;;"8pt serif;@;["	font;-i ;5T;@;-i o;>;iv;?[".ptbox_container;[	o;
-;iv;[ ;;;o;;;;;;"
-right;@;["
-float;-i o;
+;it;[ ;;;o;;;;;;"inherit;@;["background;-i o;
+;iu;[ ;;;o;;;;;;"4px;@;["margin-bottom;-i o;
+;iu;[ ;;;o;;;;;;"6px;@;["padding-right;-i o;
 ;iv;[ ;;;o;;;;;;"relative;@;["position;-i o;
-;iv;[ ;;;o;;;;;;"	10px;@;["height;-i o;
-;iv;[ ;;;o;;;;;;"25%;@;["min-width;-i ;5T;@;-i o;>;iw;?[".pinline_ptbox;[o;
-;iw;[ ;;;o;;;;;;"
+;iw;[ ;;;o;;;;;;"8pt serif;@;["	font;-i ;5T;@;-i o;>;ix;?[".ptbox_container;[	o;
+;ix;[ ;;;o;;;;;;"
 right;@;["
 float;-i o;
-;ix;[ ;;;o;;;;;;"absolute;@;["position;-i o;
-;ix;[ ;;;o;6;7"	-7px;;;ix;iô;8[ ;{ ;9["px;@;["top;-i o;
-;ix;[ ;;;o;;;;;;"0px;@;["
+;ix;[ ;;;o;;;;;;"relative;@;["position;-i o;
+;ix;[ ;;;o;;;;;;"	10px;@;["height;-i o;
+;ix;[ ;;;o;;;;;;"25%;@;["min-width;-i ;5T;@;-i o;>;iy;?[".pinline_ptbox;[o;
+;iy;[ ;;;o;;;;;;"
+right;@;["
+float;-i o;
+;iz;[ ;;;o;;;;;;"absolute;@;["position;-i o;
+;iz;[ ;;;o;6;7"	-7px;;;iz;iô;8[ ;{ ;9["px;@;["top;-i o;
+;iz;[ ;;;o;;;;;;"0px;@;["
 right;-i o;
-;iy;[ ;;;o;;;;;;"80%;@;["min-width;-i o;
-;iz;[ ;;;o;;;;;;"center;@;["text-align;-i o;
-;i{;[ ;;;o;;;;;;"0px;@;["padding-right;-i ;5T;@;-i o;>;i|;?[".ptbox;[o;
-;i|;[ ;;;o;;;;;;"90%;@;["min-width;-i o;
-;i};[ ;;;o;;;;;;"11pt serif;@;["	font;-i o;
-;i~;[ ;;;o;;;;;;"0px !important;@;["padding;-i ;5T;@;-i o;>;i;?[".pinline_ptbox;[o;
-;i{;[ ;;;o;;;;;;"	#ccc;@;["border-right-color;-i o;
-;i|;[ ;;;o;;;;;;"	#ccc;@;["border-top-color;-i ;5T;@;-i o;>;i~;?[".pinline_ptbox div;[o;
-;i;[ ;;;o;;;;;;"	#ccc;@;["border-left-color;-i o;
-;i€;[ ;;;o;;;;;;"	#ccc;@;["border-bottom-color;-i ;5T;@;-i o;;;iƒ;<0;[ ;"&/* .manacost { align: right; } */;@;=[ o;>;i„;?[".cardtext;[o;
-;i„;[ ;;;o;;;;;;"10pt serif;@;["	font;-i ;5T;@;-i o;>;i…;?[".minitext, .nameminitext;[o;
-;i…;[ ;;;o;;;;;;"9pt;@;["font-size;-i ;5T;@;-i o;>;i†;?[".microtext;[o;
-;i†;[ ;;;o;;;;;;"8pt;@;["font-size;-i ;5T;@;-i o;>;i‡;?[".nanotext;[o;
-;i‡;[ ;;;o;;;;;;"
-7.5pt;@;["font-size;-i ;5T;@;-i o;>;iˆ;?[".condensedtypeline;[o;
-;iˆ;[ ;;;o;;;;;;"8pt;@;["font-size;-i o;
-;iˆ;[ ;;;o;6;7"	-2px;;;iˆ;iù;8[ ;{ ;9["px;@;["letter-spacing;-i ;5T;@;-i o;>;i‰;?[".flavourtext;[o;
-;i‰;[ ;;;o;;;;;;"italic;@;["font-style;-i o;
-;i‰;[ ;;;o;;;;;;"4px;@;["margin-top;-i ;5T;@;-i o;>;iŠ;?[".microtext .flavourtext;[o;
-;iŠ;[ ;;;o;;;;;;"2px;@;["margin-top;-i ;5T;@;-i o;;;iŒ;<0;[ ;"/* Mana symbol sizes */;@;=[ o;>;i;?[".cardmanacost img;[o;
-;i;[ ;;;o;;;;;;"	15px;@;["
+;i{;[ ;;;o;;;;;;"80%;@;["min-width;-i o;
+;i|;[ ;;;o;;;;;;"center;@;["text-align;-i o;
+;i};[ ;;;o;;;;;;"0px;@;["padding-right;-i ;5T;@;-i o;>;i~;?[".ptbox;[o;
+;i~;[ ;;;o;;;;;;"90%;@;["min-width;-i o;
+;i;[ ;;;o;;;;;;"11pt serif;@;["	font;-i o;
+;i{;[ ;;;o;;;;;;"0px !important;@;["padding;-i ;5T;@;-i o;>;i|;?[".pinline_ptbox;[o;
+;i};[ ;;;o;;;;;;"	#ccc;@;["border-right-color;-i o;
+;i~;[ ;;;o;;;;;;"	#ccc;@;["border-top-color;-i ;5T;@;-i o;>;i€;?[".pinline_ptbox div;[o;
+;i;[ ;;;o;;;;;;"	#ccc;@;["border-left-color;-i o;
+;i‚;[ ;;;o;;;;;;"	#ccc;@;["border-bottom-color;-i ;5T;@;-i o;;;i…;<0;[ ;"&/* .manacost { align: right; } */;@;=[ o;>;i†;?[".cardtext;[o;
+;i†;[ ;;;o;;;;;;"10pt serif;@;["	font;-i ;5T;@;-i o;>;i‡;?[".minitext, .nameminitext;[o;
+;i‡;[ ;;;o;;;;;;"9pt;@;["font-size;-i ;5T;@;-i o;>;iˆ;?[".microtext;[o;
+;iˆ;[ ;;;o;;;;;;"8pt;@;["font-size;-i ;5T;@;-i o;>;i‰;?[".nanotext;[o;
+;i‰;[ ;;;o;;;;;;"
+7.5pt;@;["font-size;-i ;5T;@;-i o;>;iŠ;?[".condensedtypeline;[o;
+;iŠ;[ ;;;o;;;;;;"8pt;@;["font-size;-i o;
+;iŠ;[ ;;;o;6;7"	-2px;;;iŠ;iù;8[ ;{ ;9["px;@;["letter-spacing;-i ;5T;@;-i o;>;i‹;?[".flavourtext;[o;
+;i‹;[ ;;;o;;;;;;"italic;@;["font-style;-i o;
+;i‹;[ ;;;o;;;;;;".25em !important;@;["margin-top;-i ;5T;@;-i o;>;iŒ;?["$.flavourtext i, .flavourtext em;[o;
+;iŒ;[ ;;;o;;;;;;"normal;@;["font-style;-i ;5T;@;-i o;;;i;<0;[ ;"/* Mana symbol sizes */;@;=[ o;>;i;?[".cardmanacost img;[o;
+;i;[ ;;;o;;;;;;"	15px;@;["
 width;-i o;
-;i;[ ;;;o;;;;;;"	15px;@;["height;-i ;5T;@;-i o;>;i;?[".cardtext  img;[o;
-;i;[ ;;;o;;;;;;"1em;@;["height;-i o;
-;i;[ ;;;o;;;;;;"middle;@;["vertical-align;-i ;5T;@;-i o;;;i;<0;[ ;"Õ/*
+;i;[ ;;;o;;;;;;"	15px;@;["height;-i ;5T;@;-i o;>;i;?[".cardtext  img;[o;
+;i;[ ;;;o;;;;;;"1em;@;["height;-i o;
+;i;[ ;;;o;;;;;;"middle;@;["vertical-align;-i ;5T;@;-i o;;;i‘;<0;[ ;"Õ/*
 .cardtext  img { width: 13px; height: 13px; vertical-align: middle; }
 .minitext  img { width: 12px; height: 12px; }
 .microtext img { width: 11px; height: 11px; }
-.nanotext  img { width: 10px; height: 10px; } */;@;=[ o;>;i•;?[".common;[o;
-;i•;[ ;;;o;;;;;;"	#fff;@;["
+.nanotext  img { width: 10px; height: 10px; } */;@;=[ o;>;i—;?[".common;[o;
+;i—;[ ;;;o;;;;;;"	#fff;@;["
 color;-i o;
-;i–;[ ;;;o;;;;;;"	#000;@;["background-color;-i ;5T;@;-i o;>;i—;?[".uncommon;[o;
-;i˜;[ ;;;o;;;;;;"	#ccc;@;["background;-i o;@
-;i™;[ ;@;"gradient_diag_highlight;/[o:Sass::Script::Color
-;;;i™;0;{ :@attrs{	:redi™:
+;i˜;[ ;;;o;;;;;;"	#000;@;["background-color;-i ;5T;@;-i o;>;i™;?[".uncommon;[o;
+;iš;[ ;;;o;;;;;;"	#ccc;@;["background;-i o;@
+;i›;[ ;@;"gradient_diag_highlight;/[o:Sass::Script::Color
+;;;i›;0;{ :@attrs{	:redi™:
 alphai:
 greeni™:	bluei™o;D
-;;;i™;0;@X;E{	;FiÌ;Gi;HiÓ;IiÖ;5T;@;-i o;>;i›;?["
+;;;i›;0;@l;E{	;FiÌ;Gi;HiÓ;IiÖ;5T;@;-i o;>;i;?["
 .rare;[o;
-;i›;[ ;;;o;;;;;;"	#000;@;["
+;i;[ ;;;o;;;;;;"	#000;@;["
 color;-i o;
-;iœ;[ ;;;o;;;;;;"#e0d060;@;["background;-i o;@
-;i;[ ;@;"gradient_diag_highlight;/[o;D
-;;;i;0;{ ;E{	;Fi™;Gi;Hi€;IiIo;D
-;;;i;0;@q;E{	;Fià;Gi;HiĞ;Iie;5T;@;-i o;>;iŸ;?[".mythic;[o;
-;iŸ;[ ;;;o;;;;;;"	#fff;@;["
+;i;[ ;;;o;;;;;;"#e0d060;@;["background;-i o;@
+;iŸ;[ ;@;"gradient_diag_highlight;/[o;D
+;;;iŸ;0;{ ;E{	;Fi™;Gi;Hi€;IiIo;D
+;;;iŸ;0;@…;E{	;Fià;Gi;HiĞ;Iie;5T;@;-i o;>;i¡;?[".mythic;[o;
+;i¡;[ ;;;o;;;;;;"	#fff;@;["
 color;-i o;
-;i ;[ ;;;o;;;;;;"	#933;@;["background;-i o;@
-;i¡;[ ;@;"gradient_diag_highlight;/[o;D
-;;;i¡;0;{ ;E{	;Fiª;Gi;HiI;Ii8o;D
-;;;i¡;0;@Š;E{	;Fiî;Gi;Hiˆ;Iik;5T;@;-i o;>;i¥;?["+.Colourless.card, .Colourless .cardart;[o;
-;i¥;[ ;;;o;;;;;;"#ccc6cc;@;["background-color;-i ;5T;@;-i o;>;i¦;?[".Colourless .pinline;[o;
-;i¦;[ ;;;o;;;;;;"	#ddd;@;["background-color;-i ;5T;@;-i o;>;i§;?["8.Colourless .cardtitlebar, .Colourless .cardtypebar;[o;
-;i§;[ ;;;o;;;;;;"#eee9ee;@;["background-color;-i ;5T;@;-i o;>;i¨;?["6.Colourless .cardtext, .Colourless .pinline_ptbox;[o;
-;i¨;[ ;;;o;;;;;;"#f2ecf2 !important;@;["background;-i ;5T;@;-i o:Sass::Tree::VariableNode;iª;[ :@guarded0;@;"White_Card:
+;i¢;[ ;;;o;;;;;;"	#933;@;["background;-i o;@
+;i£;[ ;@;"gradient_diag_highlight;/[o;D
+;;;i£;0;{ ;E{	;Fiª;Gi;HiI;Ii8o;D
+;;;i£;0;@;E{	;Fiî;Gi;Hiˆ;Iik;5T;@;-i o;>;i§;?["+.Colourless.card, .Colourless .cardart;[o;
+;i§;[ ;;;o;;;;;;"#ccc6cc;@;["background-color;-i ;5T;@;-i o;>;i¨;?[".Colourless .pinline;[o;
+;i¨;[ ;;;o;;;;;;"	#ddd;@;["background-color;-i ;5T;@;-i o;>;i©;?["8.Colourless .cardtitlebar, .Colourless .cardtypebar;[o;
+;i©;[ ;;;o;;;;;;"#eee9ee;@;["background-color;-i ;5T;@;-i o;>;iª;?["6.Colourless .cardtext, .Colourless .pinline_ptbox;[o;
+;iª;[ ;;;o;;;;;;"#f2ecf2 !important;@;["background;-i ;5T;@;-i o:Sass::Tree::VariableNode;i¬;[ :@guarded0;@;"White_Card:
 @expro;D
-;;;iª;0;{ ;E{	;Fiû;Gi;Hiù;Iiêo;J;i«;[ ;K0;@;"White_Pinline;Lo;D
-;;;i«;0;{ ;E{	;Fiò;Gi;Hiï;Iiêo;J;i¬;[ ;K0;@;"White_Bar;Lo;D
-;;;i¬;0;{ ;E{	;Fiÿ;Gi;Hiÿ;Iiùo;J;i­;[ ;K0;@;"White_Text;Lo;D
-;;;i­;0;{ ;E{	;Fiÿ;Gi;Hiÿ;Iiÿo;J;i®;[ ;K0;@;"Blue_Card;Lo;D
-;;;i®;0;{ ;E{	;Fih;Gi;Hi¬;IiÚo;J;i¯;[ ;K0;@;"Blue_Pinline;Lo;D
-;;;i¯;0;{ ;E{	;Fi;Gi;Hi};Iio;;;i¯;<0;[ ;"/* #195D7E; */;@;=[ o;J;i°;[ ;K0;@;"Blue_Bar;Lo;D
-;;;i°;0;{ ;E{	;FiÅ;Gi;HiÚ;Iißo;J;i±;[ ;K0;@;"Blue_Text;Lo;D
-;;;i±;0;{ ;E{	;Fiá;Gi;Hiì;Iiío;J;i²;[ ;K0;@;"Black_Card;Lo;D
-;;;i²;0;{ ;E{	;FiI;Gi;HiI;IiIo;J;i³;[ ;K0;@;"Black_Pinline;Lo;D
-;;;i³;0;{ ;E{	;Fi8;Gi;Hi8;Ii8o;J;i´;[ ;K0;@;"Black_Bar;Lo;D
-;;;i´;0;{ ;E{	;Fi»;Gi;Hi·;Ii·o;J;iµ;[ ;K0;@;"Black_Text;Lo;D
-;;;iµ;0;{ ;E{	;Fiİ;Gi;HiÙ;IiÓo;J;i¶;[ ;K0;@;"Red_Card;Lo;D
-;;;i¶;0;{ ;E{	;Fià;Gi;Hik;IiTo;J;i·;[ ;K0;@;"Red_Pinline;Lo;D
-;;;i·;0;{ ;E{	;FiÂ;Gi;HiB;Ii9o;J;i¸;[ ;K0;@;"Red_Bar;Lo;D
-;;;i¸;0;{ ;E{	;Fiù;Gi;HiÕ;IiÀo;J;i¹;[ ;K0;@;"Red_Text;Lo;D
-;;;i¹;0;{ ;E{	;Fi÷;Gi;Hiæ;IiŞo;J;iº;[ ;K0;@;"Green_Card;Lo;D
-;;;iº;0;{ ;E{	;Fi~;Gi;Hi¡;Ii~o;J;i»;[ ;K0;@;"Green_Pinline;Lo;D
-;;;i»;0;{ ;E{	;FiI;Gi;Hiˆ;Ii8o;J;i¼;[ ;K0;@;"Green_Bar;Lo;D
-;;;i¼;0;{ ;E{	;FiÌ;Gi;Hiİ;IiÌo;J;i½;[ ;K0;@;"Green_Text;Lo;D
-;;;i½;0;{ ;E{	;FiŞ;Gi;Hiê;IiŞo;J;i¾;[ ;K0;@;"Land_White_Bar;Lo;D
-;;;i¾;0;{ ;E{	;Fiÿ;Gi;Hiÿ;Iiöo;J;i¿;[ ;K0;@;"Land_White_Text;Lo;D
-;;;i¿;0;{ ;E{	;Fiÿ;Gi;Hiÿ;IiÌo;J;iÀ;[ ;K0;@;"Land_Blue_Bar;Lo;D
-;;;iÀ;0;{ ;E{	;Fi¯;Gi;HiÏ;Iiÿo;J;iÁ;[ ;K0;@;"Land_Blue_Text;Lo;D
-;;;iÁ;0;{ ;E{	;Fi™;Gi;HiÅ;Iiÿo;J;iÂ;[ ;K0;@;"Land_Black_Bar;Lo;D
-;;;iÂ;0;{ ;E{	;FiÏ;Gi;HiÉ;IiÃo;J;iÃ;[ ;K0;@;"Land_Black_Text;Lo;D
-;;;iÃ;0;{ ;E{	;Fi»;Gi;Hi»;Ii»o;J;iÄ;[ ;K0;@;"Land_Red_Bar;Lo;D
-;;;iÄ;0;{ ;E{	;Fiÿ;Gi;HiĞ;IiÀo;J;iÅ;[ ;K0;@;"Land_Red_Text;Lo;D
-;;;iÅ;0;{ ;E{	;Fiÿ;Gi;Hi™;Iiˆo;J;iÆ;[ ;K0;@;"Land_Green_Bar;Lo;D
-;;;iÆ;0;{ ;E{	;Fiİ;Gi;Hiÿ;Iiİo;J;iÇ;[ ;K0;@;"Land_Green_Text;Lo;D
-;;;iÇ;0;{ ;E{	;FiÌ;Gi;Hiÿ;IiÌo;>;iÉ;?[".Artifact .pinline;[o;
-;iÉ;[ ;;;o;;;;;;"	#eee;@;["background-color;-i ;5T;@;-i o;>;iÊ;?[".Artifact .pinline_ptbox;[o;
-;iÊ;[ ;;;o;;;;;;"#9CB7BE;@;["background-color;-i ;5T;@;-i o;>;iË;?[".Artifact .ptbox;[o;
-;iË;[ ;;;o;;;;;;"#A8BFC7;@;["background-color;-i ;5T;@;-i o;>;iÌ;?["4.Artifact .cardtitlebar, .Artifact .cardtypebar;[o;
-;iÍ;[ ;;;o;;;;;;"#B0C4C8;@;["background;-i o;
-;iÎ;[ ;;;o;.
-;;;iÎ;{ ;"-webkit-gradient;/[o;
-;;;iÎ;;;"linear;@™o;0;;;iÎ;1;2;3o;
-;;;iÎ;;;"top;@™;4o;
-;;;iÎ;;;"	left;@™;@™o;0;;;iÎ;1;2;3o;
-;;;iÎ;;;"bottom;@™;4o;
-;;;iÎ;;;"	left;@™;@™o;.
-;;;iÎ;@™;"	from;/[o;D
-;;;iÎ;0;@™;E{	;Fi°;Gi;HiÄ;IiÈo;.
-;;;iÎ;@™;"color-stop;/[o;6;7"0.5;;;iÎ;f0.5;8[ ;@™;9[ o;D
-;;;iÎ;0;@™;E{	;FiÒ;Gi;Hi×;IiÛo;.
-;;;iÎ;@™;"to;/[o;D
-;;;iÎ;0;@™;E{	;Fi°;Gi;HiÄ;IiÈ;@;["background;-i o;
-;iÏ;[ ;;;o;.
-;;;iÏ;{ ;"-moz-linear-gradient;/[	o;
-;;;iÏ;;;"top;@Áo;D
-;;;iÏ;0;@Á;E{	;Fi°;Gi;HiÄ;IiÈo;D
-;;;iÏ;0;@Á;E{	;FiÒ;Gi;Hi×;IiÛo;D
-;;;iÏ;0;@Á;E{	;Fi°;Gi;HiÄ;IiÈ;@;["background;-i ;5T;@;-i o;>;iÑ;?["2.Artifact .cardtext, .Artifact .pinline_ptbox;[o;
-;iÑ;[ ;;;o;;;;;;"#D5DDE0;@;["background-color;-i ;5T;@;-i o;>;iÒ;?["".Artifact, .Artifact .cardart;[o;
-;iÒ;[ ;;;o;;;;;;"#ABC1CE;@;["background-color;-i ;5T;@;-i o;>;iÓ;?[".Coloured_Artifact;[o;
-;iÓ;[ ;;;o;;;;;;"#ABC1CE !important;@;["background;-i ;5T;@;-i o;>;iÕ;?["!.White.card, .White .cardart;[o;
-;iÕ;[ ;;;o;	;;;iÕ;{ ;"White_Card;@;["background-color;-i ;5T;@;-i o;>;iÖ;?["*.White .pinline, .Land.white .pinline;[o;
-;iÖ;[ ;;;o;	;;;iÖ;{ ;"White_Pinline;@;["background-color;-i ;5T;@;-i o;>;i×;?["..White .cardtitlebar, .White .cardtypebar;[o;
-;i×;[ ;;;o;	;;;i×;{ ;"White_Bar;@;["background-color;-i ;5T;@;-i o;>;iØ;?[",.White .cardtext, .White .pinline_ptbox;[o;
-;iØ;[ ;;;o;0;;;iØ;1;2;3o;
-;;;iØ;;;"!important;{ ;4o;	;;;iØ;@;"White_Text;@;@;["background;-i ;5T;@;-i o;>;iÚ;?[".Blue.card, .Blue .cardart;[o;
-;iÚ;[ ;;;o;	;;;iÚ;{ ;"Blue_Card;@;["background-color;-i o;;;iÚ;<0;[ ;"/* #5bf; */;@;=[ ;5T;@;-i o;>;iÛ;?["(.Blue .pinline, .Land.blue .pinline;[o;
-;iÛ;[ ;;;o;	;;;iÛ;{ ;"Blue_Pinline;@;["background-color;-i ;5T;@;-i o;>;iÜ;?[",.Blue .cardtitlebar, .Blue .cardtypebar;[o;
-;iÜ;[ ;;;o;	;;;iÜ;{ ;"Blue_Bar;@;["background-color;-i o;@
-;iİ;[ ;@;"gradient_horz_highlight;/[o;D
-;;;iİ;0;{ ;E{	;Fi·;Gi;HiÎ;IiÚo;D
-;;;iİ;0;@E;E{	;FiÈ;Gi;HiÜ;Iiä;5T;@;-i o;>;iŞ;?["*.Blue .cardtext, .Blue .pinline_ptbox;[o;
-;iŞ;[ ;;;o;0;;;iŞ;1;2;3o;
-;;;iŞ;;;"!important;{ ;4o;	;;;iŞ;@R;"Blue_Text;@R;@;["background;-i ;5T;@;-i o;>;ià;?["!.Black.card, .Black .cardart;[o;
-;ià;[ ;;;o;	;;;ià;{ ;"Black_Card;@;["background-color;-i ;5T;@;-i o;>;iá;?["*.Black .pinline, .Land.black .pinline;[o;
-;iá;[ ;;;o;	;;;iá;{ ;"Black_Pinline;@;["background-color;-i ;5T;@;-i o;>;iâ;?["..Black .cardtitlebar, .Black .cardtypebar;[o;
-;iâ;[ ;;;o;	;;;iâ;{ ;"Black_Bar;@;["background-color;-i ;5T;@;-i o;>;iã;?[",.Black .cardtext, .Black .pinline_ptbox;[o;
-;iã;[ ;;;o;0;;;iã;1;2;3o;
-;;;iã;;;"!important;{ ;4o;	;;;iã;@;"Black_Text;@;@;["background;-i ;5T;@;-i o;>;iå;?[".Red.card, .Red .cardart;[o;
-;iå;[ ;;;o;	;;;iå;{ ;"Red_Card;@;["background-color;-i o;;;iå;<0;[ ;"/* #f76; */;@;=[ ;5T;@;-i o;>;iæ;?["&.Red .pinline, .Land.red .pinline;[o;
-;iæ;[ ;;;o;	;;;iæ;{ ;"Red_Pinline;@;["background-color;-i ;5T;@;-i o;>;iç;?["*.Red .cardtitlebar, .Red .cardtypebar;[o;
-;iç;[ ;;;o;	;;;iç;{ ;"Red_Bar;@;["background-color;-i ;5T;@;-i o;>;iè;?["(.Red .cardtext, .Red .pinline_ptbox;[o;
-;iè;[ ;;;o;0;;;iè;1;2;3o;
-;;;iè;;;"!important;{ ;4o;	;;;iè;@´;"Red_Text;@´;@;["background;-i ;5T;@;-i o;>;iê;?["!.Green.card, .Green .cardart;[o;
-;iê;[ ;;;o;	;;;iê;{ ;"Green_Card;@;["background-color;-i o;;;iê;<0;[ ;"/* #6b7 */;@;=[ ;5T;@;-i o;>;ië;?["*.Green .pinline, .Land.green .pinline;[o;
-;ië;[ ;;;o;	;;;ië;{ ;"Green_Pinline;@;["background-color;-i ;5T;@;-i o;>;iì;?["..Green .cardtitlebar, .Green .cardtypebar;[o;
-;iì;[ ;;;o;	;;;iì;{ ;"Green_Bar;@;["background-color;-i ;5T;@;-i o;>;ií;?[",.Green .cardtext, .Green .pinline_ptbox;[o;
-;ií;[ ;;;o;0;;;ií;1;2;3o;
-;;;ií;;;"!important;{ ;4o;	;;;ií;@ç;"Green_Text;@ç;@;["background;-i o;;;ií;<0;[ ;"/* #efe; */;@;=[ ;5T;@;-i o;>;iï;?["(.Multicolour, .Multicolour .cardart;[o;
-;iï;[ ;;;o;;;;;;"#CAB86C;@;["background-color;-i o;;;iï;<0;[ ;"/*#DAC87C;*/;@;=[ ;5T;@;-i o;>;iğ;?["6.Multicolour .pinline, .Land.multicolour .pinline;[o;
-;iğ;[ ;;;o;;;;;;"#eAd88C;@;["background-color;-i o;;;iğ;<0;[ ;"/* #C6AF71;*/;@;=[ ;5T;@;-i o;>;iñ;?["{.Multicolour .cardtitlebar, .Multicolour .cardtypebar, .Land.multicolour .cardtitlebar, .Land.multicolour .cardtypebar;[o;
-;iñ;[ ;;;o;;;;;;"#DAC87C;@;["background-color;-i o;@
-;iò;[ ;@;"gradient_horz_highlight;/[o;D
-;;;iò;0;{ ;E{	;Fi¹;Gi;Hi¥;Iiko;D
-;;;iò;0;@;E{	;FiÛ;Gi;HiÆ;Ii;5T;@;-i o;>;ió;?["8.Multicolour .cardtext, .Land.multicolour .cardtext;[o;
-;ió;[ ;;;o;;;;;;"	#ffd;@;["background-color;-i ;5T;@;-i o;>;iô;?[" .Multicolour .pinline_ptbox;[o;
-;iô;[ ;;;o;;;;;;"#C6AF71 !important;@;["background;-i ;5T;@;-i o;>;iõ;?[".Multicolour .ptbox;[o;
-;iõ;[ ;;;o;;;;;;"#C6AF71 !important;@;["background;-i ;5T;@;-i o;>;i÷;?[".Land, .Land .cardart;[o;
-;i÷;[ ;;;o;D
-;;;i÷;0;{ ;E{	;Fi¹;Gi;Hi®;Ii¢;@;["background-color;-i ;5T;@;-i o;>;iø;?[".Land .pinline;[o;
-;iø;[ ;;;o;D
-;;;iø;0;{ ;E{	;Fi×;Gi;HiÍ;Ii¿;@;["background-color;-i ;5T;@;-i o;>;iù;?[",.Land .cardtitlebar, .Land .cardtypebar;[o;
-;iù;[ ;;;o;;;;;;"#D8CFC8;@;["background-color;-i ;5T;@;-i o;>;iú;?["*.Land .cardtext, .Land .pinline_ptbox;[o;
-;iú;[ ;;;o;;;;;;"#D7D3CA;@;["background-color;-i o;;;iú;<0;[ ;"/* #eee6df; */;@;=[ ;5T;@;-i o;>;iü;?["8.Land.white .cardtitlebar, .Land.white .cardtypebar;[o;
-;iü;[ ;;;o;	;;;iü;{ ;"Land_White_Bar;@;["background-color;-i ;5T;@;-i o;>;iı;?["6.Land.white .cardtext, .Land.white .pinline_ptbox;[o;
-;iı;[ ;;;o;	;;;iı;{ ;"Land_White_Text;@;["background-color;-i ;5T;@;-i o;>;iÿ;?["6.Land.blue .cardtitlebar, .Land.blue .cardtypebar;[o;
-;iÿ;[ ;;;o;	;;;iÿ;{ ;"Land_Blue_Bar;@;["background-color;-i ;5T;@;-i o;>;i ;?["4.Land.blue .cardtext, .Land.blue .pinline_ptbox;[o;
-;i ;[ ;;;o;	;;;i ;{ ;"Land_Blue_Text;@;["background-color;-i ;5T;@;-i o;>;i;?["8.Land.black .cardtitlebar, .Land.black .cardtypebar;[o;
-;i;[ ;;;o;	;;;i;{ ;"Land_Black_Bar;@;["background-color;-i ;5T;@;-i o;>;i;?["6.Land.black .cardtext, .Land.black .pinline_ptbox;[o;
-;i;[ ;;;o;	;;;i;{ ;"Land_Black_Text;@;["background-color;-i ;5T;@;-i o;>;i;?["4.Land.red .cardtitlebar, .Land.red .cardtypebar;[o;
-;i;[ ;;;o;	;;;i;{ ;"Land_Red_Bar;@;["background-color;-i ;5T;@;-i o;>;i;?["2.Land.red .cardtext, .Land.red .pinline_ptbox;[o;
-;i;[ ;;;o;	;;;i;{ ;"Land_Red_Text;@;["background-color;-i ;5T;@;-i o;>;i;?["8.Land.green .cardtitlebar, .Land.green .cardtypebar;[o;
-;i;[ ;;;o;	;;;i;{ ;"Land_Green_Bar;@;["background-color;-i ;5T;@;-i o;>;i	;?["6.Land.green .cardtext, .Land.green .pinline_ptbox;[o;
-;i	;[ ;;;o;	;;;i	;{ ;"Land_Green_Text;@;["background-color;-i ;5T;@;-i o;;;i;<0;[ ;"~/* .Land.whiteblue .cardtitlebar, .Land.whiteblue .cardtypebar { @include gradient_horz($Land_White_Bar, $Land_Blue_Bar); } */;@;=[ o;>;i;?[".Land.whiteblue .pinline;[o;@
-;i;[ ;@;"gradient_horz_padded;/[o;	;;;i;{ ;"White_Pinlineo;	;;;i;@æ;"Blue_Pinline;5T;@;-i o;>;i;?[".Land.whiteblue .cardtext;[o;@
-;i;[ ;@;"gradient_horz_padded;/[o;	;;;i;{ ;"Land_White_Texto;	;;;i;@ó;"Land_Blue_Text;5T;@;-i o;>;i;?[".whiteblue .pinline;[o;@
-;i;[ ;@;"gradient_horz_padded;/[o;	;;;i;{ ;"White_Pinlineo;	;;;i;@ 	;"Blue_Pinline;5T;@;-i o;>;i;?[".whiteblack .pinline;[o;@
-;i;[ ;@;"gradient_horz_padded;/[o;	;;;i;{ ;"White_Pinlineo;	;;;i;@	;"Black_Pinline;5T;@;-i o;>;i;?[".blueblack .pinline;[o;@
-;i;[ ;@;"gradient_horz_padded;/[o;	;;;i;{ ;"Blue_Pinlineo;	;;;i;@	;"Black_Pinline;5T;@;-i o;>;i;?[".bluered .pinline;[o;@
-;i;[ ;@;"gradient_horz_padded;/[o;	;;;i;{ ;"Blue_Pinlineo;	;;;i;@'	;"Red_Pinline;5T;@;-i o;>;i;?[".blackred .pinline;[o;@
-;i;[ ;@;"gradient_horz_padded;/[o;	;;;i;{ ;"Black_Pinlineo;	;;;i;@4	;"Red_Pinline;5T;@;-i o;>;i;?[".redgreen .pinline;[o;@
-;i;[ ;@;"gradient_horz_padded;/[o;	;;;i;{ ;"Red_Pinlineo;	;;;i;@A	;"Green_Pinline;5T;@;-i o;>;i;?["+.redwhite .pinline, .whitered .pinline;[o;@
-;i;[ ;@;"gradient_horz_padded;/[o;	;;;i;{ ;"Red_Pinlineo;	;;;i;@N	;"White_Pinline;5T;@;-i o;>;i;?[".blackgreen .pinline;[o;@
-;i;[ ;@;"gradient_horz_padded;/[o;	;;;i;{ ;"Black_Pinlineo;	;;;i;@[	;"Green_Pinline;5T;@;-i o;>;i;?["/.greenwhite .pinline, .whitegreen .pinline;[o;@
-;i;[ ;@;"gradient_horz_padded;/[o;	;;;i;{ ;"Green_Pinlineo;	;;;i;@h	;"White_Pinline;5T;@;-i o;>;i;?["-.greenblue .pinline, .bluegreen .pinline;[o;@
-;i;[ ;@;"gradient_horz_padded;/[o;	;;;i;{ ;"Green_Pinlineo;	;;;i;@u	;"Blue_Pinline;5T;@;-i o;>;i;?[".Land.whiteblue .cardtext;[o;@
-;i;[ ;@;"gradient_horz_padded;/[o;	;;;i;{ ;"Land_White_Texto;	;;;i;@‚	;"Land_Blue_Text;5T;@;-i o;>;i;?[".Land.whiteblack .cardtext;[o;@
-;i;[ ;@;"gradient_horz_padded;/[o;	;;;i;{ ;"Land_White_Texto;	;;;i;@	;"Land_Black_Text;5T;@;-i o;>;i;?[".Land.blueblack .cardtext;[o;@
-;i;[ ;@;"gradient_horz_padded;/[o;	;;;i;{ ;"Land_Blue_Texto;	;;;i;@œ	;"Land_Black_Text;5T;@;-i o;>;i;?[".Land.bluered .cardtext;[o;@
-;i;[ ;@;"gradient_horz_padded;/[o;	;;;i;{ ;"Land_Blue_Texto;	;;;i;@©	;"Land_Red_Text;5T;@;-i o;>;i;?[".Land.blackred .cardtext;[o;@
-;i;[ ;@;"gradient_horz_padded;/[o;	;;;i;{ ;"Land_Black_Texto;	;;;i;@¶	;"Land_Red_Text;5T;@;-i o;>;i;?[".Land.blackgreen .cardtext;[o;@
-;i;[ ;@;"gradient_horz_padded;/[o;	;;;i;{ ;"Land_Black_Texto;	;;;i;@Ã	;"Land_Green_Text;5T;@;-i o;>;i ;?[".Land.redgreen .cardtext;[o;@
-;i ;[ ;@;"gradient_horz_padded;/[o;	;;;i ;{ ;"Land_Red_Texto;	;;;i ;@Ğ	;"Land_Green_Text;5T;@;-i o;>;i!;?["7.Land.redwhite .cardtext, .Land.whitered .cardtext;[o;@
-;i!;[ ;@;"gradient_horz_padded;/[o;	;;;i!;{ ;"Land_Red_Texto;	;;;i!;@İ	;"Land_White_Text;5T;@;-i o;>;i";?[";.Land.greenwhite .cardtext, .Land.whitegreen .cardtext;[o;@
-;i";[ ;@;"gradient_horz_padded;/[o;	;;;i";{ ;"Land_Green_Texto;	;;;i";@ê	;"Land_White_Text;5T;@;-i o;>;i#;?["9.Land.greenblue .cardtext, .Land.bluegreen .cardtext;[o;@
-;i#;[ ;@;"gradient_horz_padded;/[o;	;;;i#;{ ;"Land_Green_Texto;	;;;i#;@÷	;"Land_Blue_Text;5T;@;-i o;>;i%;?[".Hybrid.whiteblue;[o;@
-;i%;[ ;@;"gradient_horz_padded;/[o;	;;;i%;{ ;"White_Cardo;	;;;i%;@
-;"Blue_Card;5T;@;-i o;>;i&;?[".Hybrid.whiteblack;[o;@
-;i&;[ ;@;"gradient_horz_padded;/[o;	;;;i&;{ ;"White_Cardo;	;;;i&;@
-;"Black_Card;5T;@;-i o;>;i';?[".Hybrid.blueblack;[o;@
-;i';[ ;@;"gradient_horz_padded;/[o;	;;;i';{ ;"Blue_Cardo;	;;;i';@
-;"Black_Card;5T;@;-i o;>;i(;?[".Hybrid.bluered;[o;@
-;i(;[ ;@;"gradient_horz_padded;/[o;	;;;i(;{ ;"Blue_Cardo;	;;;i(;@+
-;"Red_Card;5T;@;-i o;>;i);?[".Hybrid.blackred;[o;@
-;i);[ ;@;"gradient_horz_padded;/[o;	;;;i);{ ;"Black_Cardo;	;;;i);@8
-;"Red_Card;5T;@;-i o;>;i*;?[".Hybrid.blackgreen;[o;@
-;i*;[ ;@;"gradient_horz_padded;/[o;	;;;i*;{ ;"Black_Cardo;	;;;i*;@E
-;"Green_Card;5T;@;-i o;>;i+;?[".Hybrid.redgreen;[o;@
-;i+;[ ;@;"gradient_horz_padded;/[o;	;;;i+;{ ;"Red_Cardo;	;;;i+;@R
-;"Green_Card;5T;@;-i o;>;i,;?["'.Hybrid.redwhite, .Hybrid.whitered;[o;@
-;i,;[ ;@;"gradient_horz_padded;/[o;	;;;i,;{ ;"Red_Cardo;	;;;i,;@_
-;"White_Card;5T;@;-i o;>;i-;?["+.Hybrid.greenwhite, .Hybrid.whitegreen;[o;@
-;i-;[ ;@;"gradient_horz_padded;/[o;	;;;i-;{ ;"Green_Cardo;	;;;i-;@l
-;"White_Card;5T;@;-i o;>;i.;?[").Hybrid.greenblue, .Hybrid.bluegreen;[o;@
-;i.;[ ;@;"gradient_horz_padded;/[o;	;;;i.;{ ;"Green_Cardo;	;;;i.;@y
-;"Blue_Card;5T;@;-i o;>;i0;?[".whiteblue .cardtext;[o;@
-;i0;[ ;@;"gradient_horz_padded;/[o;	;;;i0;{ ;"White_Texto;	;;;i0;@†
-;"Blue_Text;5T;@;-i o;>;i1;?[".whiteblack .cardtext;[o;@
-;i1;[ ;@;"gradient_horz_padded;/[o;	;;;i1;{ ;"White_Texto;	;;;i1;@“
-;"Black_Text;5T;@;-i o;>;i2;?[".blueblack .cardtext;[o;@
-;i2;[ ;@;"gradient_horz_padded;/[o;	;;;i2;{ ;"Blue_Texto;	;;;i2;@ 
-;"Black_Text;5T;@;-i o;>;i3;?[".bluered .cardtext;[o;@
-;i3;[ ;@;"gradient_horz_padded;/[o;	;;;i3;{ ;"Blue_Texto;	;;;i3;@­
-;"Red_Text;5T;@;-i o;>;i4;?[".blackred .cardtext;[o;@
-;i4;[ ;@;"gradient_horz_padded;/[o;	;;;i4;{ ;"Black_Texto;	;;;i4;@º
-;"Red_Text;5T;@;-i o;>;i5;?[".blackgreen .cardtext;[o;@
-;i5;[ ;@;"gradient_horz_padded;/[o;	;;;i5;{ ;"Black_Texto;	;;;i5;@Ç
-;"Green_Text;5T;@;-i o;>;i6;?[".redgreen .cardtext;[o;@
-;i6;[ ;@;"gradient_horz_padded;/[o;	;;;i6;{ ;"Red_Texto;	;;;i6;@Ô
-;"Green_Text;5T;@;-i o;>;i7;?["4.redwhite .cardtext, .Hybrid.whitered .cardtext;[o;@
-;i7;[ ;@;"gradient_horz_padded;/[o;	;;;i7;{ ;"Red_Texto;	;;;i7;@á
-;"White_Text;5T;@;-i o;>;i8;?["1.greenwhite .cardtext, .whitegreen .cardtext;[o;@
-;i8;[ ;@;"gradient_horz_padded;/[o;	;;;i8;{ ;"Green_Texto;	;;;i8;@î
-;"White_Text;5T;@;-i o;>;i9;?["/.greenblue .cardtext, .bluegreen .cardtext;[o;@
-;i9;[ ;@;"gradient_horz_padded;/[o;	;;;i9;{ ;"Green_Texto;	;;;i9;@û
-;"Blue_Text;5T;@;-i o;>;i=;?["0.Hybrid .cardtitlebar, .Hybrid .cardtypebar;[o;
-;i>;[ ;;;o;;;;;;"#D2CCC0;@;["background;-i ;5T;@;-i o;>;i@;?[".Hybrid .ptbox;[o;
-;iA;[ ;;;o;;;;;;"#D2CCC0 !important;@;["background;-i ;5T;@;-i o;>;iC;?["1.Hybrid .pinline_ptbox, .Land .pinline_ptbox;[o;
-;iD;[ ;;;o;;;;;;"#e2dCd0 !important;@;["background;-i ;5T;@;-i o;>;iF;?[".Hybrid .cardart;[o;
-;iG;[ ;;;o;;;;;;"#eeeeee;@;["background-color;-i ;5T;@;-i o;;;iJ;<0;[ ;"/***** Card editing *****/;@;=[ o;>;iL;?["3#card_supertype, #card_cardtype, #card_subtype;[o;
-;iL;[ ;;;o;;;;;;"
+;;;i¬;0;{ ;E{	;Fiû;Gi;Hiù;Iiêo;J;i­;[ ;K0;@;"White_Pinline;Lo;D
+;;;i­;0;{ ;E{	;Fiò;Gi;Hiï;Iiêo;J;i®;[ ;K0;@;"White_Bar;Lo;D
+;;;i®;0;{ ;E{	;Fiÿ;Gi;Hiÿ;Iiùo;J;i¯;[ ;K0;@;"White_Text;Lo;D
+;;;i¯;0;{ ;E{	;Fiÿ;Gi;Hiÿ;Iiÿo;J;i°;[ ;K0;@;"Blue_Card;Lo;D
+;;;i°;0;{ ;E{	;Fih;Gi;Hi¬;IiÚo;J;i±;[ ;K0;@;"Blue_Pinline;Lo;D
+;;;i±;0;{ ;E{	;Fi;Gi;Hi};Iio;;;i±;<0;[ ;"/* #195D7E; */;@;=[ o;J;i²;[ ;K0;@;"Blue_Bar;Lo;D
+;;;i²;0;{ ;E{	;FiÅ;Gi;HiÚ;Iißo;J;i³;[ ;K0;@;"Blue_Text;Lo;D
+;;;i³;0;{ ;E{	;Fiá;Gi;Hiì;Iiío;J;i´;[ ;K0;@;"Black_Card;Lo;D
+;;;i´;0;{ ;E{	;FiI;Gi;HiI;IiIo;J;iµ;[ ;K0;@;"Black_Pinline;Lo;D
+;;;iµ;0;{ ;E{	;Fi8;Gi;Hi8;Ii8o;J;i¶;[ ;K0;@;"Black_Bar;Lo;D
+;;;i¶;0;{ ;E{	;Fi»;Gi;Hi·;Ii·o;J;i·;[ ;K0;@;"Black_Text;Lo;D
+;;;i·;0;{ ;E{	;Fiİ;Gi;HiÙ;IiÓo;J;i¸;[ ;K0;@;"Red_Card;Lo;D
+;;;i¸;0;{ ;E{	;Fià;Gi;Hik;IiTo;J;i¹;[ ;K0;@;"Red_Pinline;Lo;D
+;;;i¹;0;{ ;E{	;FiÂ;Gi;HiB;Ii9o;J;iº;[ ;K0;@;"Red_Bar;Lo;D
+;;;iº;0;{ ;E{	;Fiù;Gi;HiÕ;IiÀo;J;i»;[ ;K0;@;"Red_Text;Lo;D
+;;;i»;0;{ ;E{	;Fi÷;Gi;Hiæ;IiŞo;J;i¼;[ ;K0;@;"Green_Card;Lo;D
+;;;i¼;0;{ ;E{	;Fi~;Gi;Hi¡;Ii~o;J;i½;[ ;K0;@;"Green_Pinline;Lo;D
+;;;i½;0;{ ;E{	;FiI;Gi;Hiˆ;Ii8o;J;i¾;[ ;K0;@;"Green_Bar;Lo;D
+;;;i¾;0;{ ;E{	;FiÌ;Gi;Hiİ;IiÌo;J;i¿;[ ;K0;@;"Green_Text;Lo;D
+;;;i¿;0;{ ;E{	;FiŞ;Gi;Hiê;IiŞo;J;iÀ;[ ;K0;@;"Land_White_Bar;Lo;D
+;;;iÀ;0;{ ;E{	;Fiÿ;Gi;Hiÿ;Iiöo;J;iÁ;[ ;K0;@;"Land_White_Text;Lo;D
+;;;iÁ;0;{ ;E{	;Fiÿ;Gi;Hiÿ;IiÌo;J;iÂ;[ ;K0;@;"Land_Blue_Bar;Lo;D
+;;;iÂ;0;{ ;E{	;Fi¯;Gi;HiÏ;Iiÿo;J;iÃ;[ ;K0;@;"Land_Blue_Text;Lo;D
+;;;iÃ;0;{ ;E{	;Fi™;Gi;HiÅ;Iiÿo;J;iÄ;[ ;K0;@;"Land_Black_Bar;Lo;D
+;;;iÄ;0;{ ;E{	;FiÏ;Gi;HiÉ;IiÃo;J;iÅ;[ ;K0;@;"Land_Black_Text;Lo;D
+;;;iÅ;0;{ ;E{	;Fi»;Gi;Hi»;Ii»o;J;iÆ;[ ;K0;@;"Land_Red_Bar;Lo;D
+;;;iÆ;0;{ ;E{	;Fiÿ;Gi;HiĞ;IiÀo;J;iÇ;[ ;K0;@;"Land_Red_Text;Lo;D
+;;;iÇ;0;{ ;E{	;Fiÿ;Gi;Hi™;Iiˆo;J;iÈ;[ ;K0;@;"Land_Green_Bar;Lo;D
+;;;iÈ;0;{ ;E{	;Fiİ;Gi;Hiÿ;Iiİo;J;iÉ;[ ;K0;@;"Land_Green_Text;Lo;D
+;;;iÉ;0;{ ;E{	;FiÌ;Gi;Hiÿ;IiÌo;>;iË;?[".Artifact .pinline;[o;
+;iË;[ ;;;o;;;;;;"	#eee;@;["background-color;-i ;5T;@;-i o;>;iÌ;?[".Artifact .pinline_ptbox;[o;
+;iÌ;[ ;;;o;;;;;;"#9CB7BE;@;["background-color;-i ;5T;@;-i o;>;iÍ;?[".Artifact .ptbox;[o;
+;iÍ;[ ;;;o;;;;;;"#A8BFC7;@;["background-color;-i ;5T;@;-i o;>;iÎ;?["4.Artifact .cardtitlebar, .Artifact .cardtypebar;[o;
+;iÏ;[ ;;;o;;;;;;"#B0C4C8;@;["background;-i o;
+;iĞ;[ ;;;o;.
+;;;iĞ;{ ;"-webkit-gradient;/[o;
+;;;iĞ;;;"linear;@­o;0;;;iĞ;1;2;3o;
+;;;iĞ;;;"top;@­;4o;
+;;;iĞ;;;"	left;@­;@­o;0;;;iĞ;1;2;3o;
+;;;iĞ;;;"bottom;@­;4o;
+;;;iĞ;;;"	left;@­;@­o;.
+;;;iĞ;@­;"	from;/[o;D
+;;;iĞ;0;@­;E{	;Fi°;Gi;HiÄ;IiÈo;.
+;;;iĞ;@­;"color-stop;/[o;6;7"0.5;;;iĞ;f0.5;8[ ;@­;9[ o;D
+;;;iĞ;0;@­;E{	;FiÒ;Gi;Hi×;IiÛo;.
+;;;iĞ;@­;"to;/[o;D
+;;;iĞ;0;@­;E{	;Fi°;Gi;HiÄ;IiÈ;@;["background;-i o;
+;iÑ;[ ;;;o;.
+;;;iÑ;{ ;"-moz-linear-gradient;/[	o;
+;;;iÑ;;;"top;@Õo;D
+;;;iÑ;0;@Õ;E{	;Fi°;Gi;HiÄ;IiÈo;D
+;;;iÑ;0;@Õ;E{	;FiÒ;Gi;Hi×;IiÛo;D
+;;;iÑ;0;@Õ;E{	;Fi°;Gi;HiÄ;IiÈ;@;["background;-i ;5T;@;-i o;>;iÓ;?["2.Artifact .cardtext, .Artifact .pinline_ptbox;[o;
+;iÓ;[ ;;;o;;;;;;"#D5DDE0;@;["background-color;-i ;5T;@;-i o;>;iÔ;?["".Artifact, .Artifact .cardart;[o;
+;iÔ;[ ;;;o;;;;;;"#ABC1CE;@;["background-color;-i ;5T;@;-i o;>;iÕ;?[".Coloured_Artifact;[o;
+;iÕ;[ ;;;o;;;;;;"#ABC1CE !important;@;["background;-i ;5T;@;-i o;>;i×;?["!.White.card, .White .cardart;[o;
+;i×;[ ;;;o;	;;;i×;{ ;"White_Card;@;["background-color;-i ;5T;@;-i o;>;iØ;?["*.White .pinline, .Land.white .pinline;[o;
+;iØ;[ ;;;o;	;;;iØ;{ ;"White_Pinline;@;["background-color;-i ;5T;@;-i o;>;iÙ;?["..White .cardtitlebar, .White .cardtypebar;[o;
+;iÙ;[ ;;;o;	;;;iÙ;{ ;"White_Bar;@;["background-color;-i ;5T;@;-i o;>;iÚ;?[",.White .cardtext, .White .pinline_ptbox;[o;
+;iÚ;[ ;;;o;0;;;iÚ;1;2;3o;
+;;;iÚ;;;"!important;{ ;4o;	;;;iÚ;@*;"White_Text;@*;@;["background;-i ;5T;@;-i o;>;iÜ;?[".Blue.card, .Blue .cardart;[o;
+;iÜ;[ ;;;o;	;;;iÜ;{ ;"Blue_Card;@;["background-color;-i o;;;iÜ;<0;[ ;"/* #5bf; */;@;=[ ;5T;@;-i o;>;iİ;?["(.Blue .pinline, .Land.blue .pinline;[o;
+;iİ;[ ;;;o;	;;;iİ;{ ;"Blue_Pinline;@;["background-color;-i ;5T;@;-i o;>;iŞ;?[",.Blue .cardtitlebar, .Blue .cardtypebar;[o;
+;iŞ;[ ;;;o;	;;;iŞ;{ ;"Blue_Bar;@;["background-color;-i o;@
+;iß;[ ;@;"gradient_horz_highlight;/[o;D
+;;;iß;0;{ ;E{	;Fi·;Gi;HiÎ;IiÚo;D
+;;;iß;0;@Y;E{	;FiÈ;Gi;HiÜ;Iiä;5T;@;-i o;>;ià;?["*.Blue .cardtext, .Blue .pinline_ptbox;[o;
+;ià;[ ;;;o;0;;;ià;1;2;3o;
+;;;ià;;;"!important;{ ;4o;	;;;ià;@f;"Blue_Text;@f;@;["background;-i ;5T;@;-i o;>;iâ;?["!.Black.card, .Black .cardart;[o;
+;iâ;[ ;;;o;	;;;iâ;{ ;"Black_Card;@;["background-color;-i ;5T;@;-i o;>;iã;?["*.Black .pinline, .Land.black .pinline;[o;
+;iã;[ ;;;o;	;;;iã;{ ;"Black_Pinline;@;["background-color;-i ;5T;@;-i o;>;iä;?["..Black .cardtitlebar, .Black .cardtypebar;[o;
+;iä;[ ;;;o;	;;;iä;{ ;"Black_Bar;@;["background-color;-i ;5T;@;-i o;>;iå;?[",.Black .cardtext, .Black .pinline_ptbox;[o;
+;iå;[ ;;;o;0;;;iå;1;2;3o;
+;;;iå;;;"!important;{ ;4o;	;;;iå;@•;"Black_Text;@•;@;["background;-i ;5T;@;-i o;>;iç;?[".Red.card, .Red .cardart;[o;
+;iç;[ ;;;o;	;;;iç;{ ;"Red_Card;@;["background-color;-i o;;;iç;<0;[ ;"/* #f76; */;@;=[ ;5T;@;-i o;>;iè;?["&.Red .pinline, .Land.red .pinline;[o;
+;iè;[ ;;;o;	;;;iè;{ ;"Red_Pinline;@;["background-color;-i ;5T;@;-i o;>;ié;?["*.Red .cardtitlebar, .Red .cardtypebar;[o;
+;ié;[ ;;;o;	;;;ié;{ ;"Red_Bar;@;["background-color;-i ;5T;@;-i o;>;iê;?["(.Red .cardtext, .Red .pinline_ptbox;[o;
+;iê;[ ;;;o;0;;;iê;1;2;3o;
+;;;iê;;;"!important;{ ;4o;	;;;iê;@È;"Red_Text;@È;@;["background;-i ;5T;@;-i o;>;iì;?["!.Green.card, .Green .cardart;[o;
+;iì;[ ;;;o;	;;;iì;{ ;"Green_Card;@;["background-color;-i o;;;iì;<0;[ ;"/* #6b7 */;@;=[ ;5T;@;-i o;>;ií;?["*.Green .pinline, .Land.green .pinline;[o;
+;ií;[ ;;;o;	;;;ií;{ ;"Green_Pinline;@;["background-color;-i ;5T;@;-i o;>;iî;?["..Green .cardtitlebar, .Green .cardtypebar;[o;
+;iî;[ ;;;o;	;;;iî;{ ;"Green_Bar;@;["background-color;-i ;5T;@;-i o;>;iï;?[",.Green .cardtext, .Green .pinline_ptbox;[o;
+;iï;[ ;;;o;0;;;iï;1;2;3o;
+;;;iï;;;"!important;{ ;4o;	;;;iï;@û;"Green_Text;@û;@;["background;-i o;;;iï;<0;[ ;"/* #efe; */;@;=[ ;5T;@;-i o;>;iñ;?["(.Multicolour, .Multicolour .cardart;[o;
+;iñ;[ ;;;o;;;;;;"#CAB86C;@;["background-color;-i o;;;iñ;<0;[ ;"/*#DAC87C;*/;@;=[ ;5T;@;-i o;>;iò;?["6.Multicolour .pinline, .Land.multicolour .pinline;[o;
+;iò;[ ;;;o;;;;;;"#eAd88C;@;["background-color;-i o;;;iò;<0;[ ;"/* #C6AF71;*/;@;=[ ;5T;@;-i o;>;ió;?["{.Multicolour .cardtitlebar, .Multicolour .cardtypebar, .Land.multicolour .cardtitlebar, .Land.multicolour .cardtypebar;[o;
+;ió;[ ;;;o;;;;;;"#DAC87C;@;["background-color;-i o;@
+;iô;[ ;@;"gradient_horz_highlight;/[o;D
+;;;iô;0;{ ;E{	;Fi¹;Gi;Hi¥;Iiko;D
+;;;iô;0;@/;E{	;FiÛ;Gi;HiÆ;Ii;5T;@;-i o;>;iõ;?["8.Multicolour .cardtext, .Land.multicolour .cardtext;[o;
+;iõ;[ ;;;o;;;;;;"	#ffd;@;["background-color;-i ;5T;@;-i o;>;iö;?[" .Multicolour .pinline_ptbox;[o;
+;iö;[ ;;;o;;;;;;"#C6AF71 !important;@;["background;-i ;5T;@;-i o;>;i÷;?[".Multicolour .ptbox;[o;
+;i÷;[ ;;;o;;;;;;"#C6AF71 !important;@;["background;-i ;5T;@;-i o;>;iù;?[".Land, .Land .cardart;[o;
+;iù;[ ;;;o;D
+;;;iù;0;{ ;E{	;Fi¹;Gi;Hi®;Ii¢;@;["background-color;-i ;5T;@;-i o;>;iú;?[".Land .pinline;[o;
+;iú;[ ;;;o;D
+;;;iú;0;{ ;E{	;Fi×;Gi;HiÍ;Ii¿;@;["background-color;-i ;5T;@;-i o;>;iû;?[",.Land .cardtitlebar, .Land .cardtypebar;[o;
+;iû;[ ;;;o;;;;;;"#D8CFC8;@;["background-color;-i ;5T;@;-i o;>;iü;?["*.Land .cardtext, .Land .pinline_ptbox;[o;
+;iü;[ ;;;o;;;;;;"#D7D3CA;@;["background-color;-i o;;;iü;<0;[ ;"/* #eee6df; */;@;=[ ;5T;@;-i o;>;iş;?["8.Land.white .cardtitlebar, .Land.white .cardtypebar;[o;
+;iş;[ ;;;o;	;;;iş;{ ;"Land_White_Bar;@;["background-color;-i ;5T;@;-i o;>;iÿ;?["6.Land.white .cardtext, .Land.white .pinline_ptbox;[o;
+;iÿ;[ ;;;o;	;;;iÿ;{ ;"Land_White_Text;@;["background-color;-i ;5T;@;-i o;>;i;?["6.Land.blue .cardtitlebar, .Land.blue .cardtypebar;[o;
+;i;[ ;;;o;	;;;i;{ ;"Land_Blue_Bar;@;["background-color;-i ;5T;@;-i o;>;i;?["4.Land.blue .cardtext, .Land.blue .pinline_ptbox;[o;
+;i;[ ;;;o;	;;;i;{ ;"Land_Blue_Text;@;["background-color;-i ;5T;@;-i o;>;i;?["8.Land.black .cardtitlebar, .Land.black .cardtypebar;[o;
+;i;[ ;;;o;	;;;i;{ ;"Land_Black_Bar;@;["background-color;-i ;5T;@;-i o;>;i;?["6.Land.black .cardtext, .Land.black .pinline_ptbox;[o;
+;i;[ ;;;o;	;;;i;{ ;"Land_Black_Text;@;["background-color;-i ;5T;@;-i o;>;i;?["4.Land.red .cardtitlebar, .Land.red .cardtypebar;[o;
+;i;[ ;;;o;	;;;i;{ ;"Land_Red_Bar;@;["background-color;-i ;5T;@;-i o;>;i;?["2.Land.red .cardtext, .Land.red .pinline_ptbox;[o;
+;i;[ ;;;o;	;;;i;{ ;"Land_Red_Text;@;["background-color;-i ;5T;@;-i o;>;i
+;?["8.Land.green .cardtitlebar, .Land.green .cardtypebar;[o;
+;i
+;[ ;;;o;	;;;i
+;{ ;"Land_Green_Bar;@;["background-color;-i ;5T;@;-i o;>;i;?["6.Land.green .cardtext, .Land.green .pinline_ptbox;[o;
+;i;[ ;;;o;	;;;i;{ ;"Land_Green_Text;@;["background-color;-i ;5T;@;-i o;;;i;<0;[ ;"~/* .Land.whiteblue .cardtitlebar, .Land.whiteblue .cardtypebar { @include gradient_horz($Land_White_Bar, $Land_Blue_Bar); } */;@;=[ o;>;i;?[".Land.whiteblue .pinline;[o;@
+;i;[ ;@;"gradient_horz_padded;/[o;	;;;i;{ ;"White_Pinlineo;	;;;i;@ú;"Blue_Pinline;5T;@;-i o;>;i;?[".Land.whiteblue .cardtext;[o;@
+;i;[ ;@;"gradient_horz_padded;/[o;	;;;i;{ ;"Land_White_Texto;	;;;i;@	;"Land_Blue_Text;5T;@;-i o;>;i;?[".whiteblue .pinline;[o;@
+;i;[ ;@;"gradient_horz_padded;/[o;	;;;i;{ ;"White_Pinlineo;	;;;i;@	;"Blue_Pinline;5T;@;-i o;>;i;?[".whiteblack .pinline;[o;@
+;i;[ ;@;"gradient_horz_padded;/[o;	;;;i;{ ;"White_Pinlineo;	;;;i;@!	;"Black_Pinline;5T;@;-i o;>;i;?[".blueblack .pinline;[o;@
+;i;[ ;@;"gradient_horz_padded;/[o;	;;;i;{ ;"Blue_Pinlineo;	;;;i;@.	;"Black_Pinline;5T;@;-i o;>;i;?[".bluered .pinline;[o;@
+;i;[ ;@;"gradient_horz_padded;/[o;	;;;i;{ ;"Blue_Pinlineo;	;;;i;@;	;"Red_Pinline;5T;@;-i o;>;i;?[".blackred .pinline;[o;@
+;i;[ ;@;"gradient_horz_padded;/[o;	;;;i;{ ;"Black_Pinlineo;	;;;i;@H	;"Red_Pinline;5T;@;-i o;>;i;?[".redgreen .pinline;[o;@
+;i;[ ;@;"gradient_horz_padded;/[o;	;;;i;{ ;"Red_Pinlineo;	;;;i;@U	;"Green_Pinline;5T;@;-i o;>;i;?["+.redwhite .pinline, .whitered .pinline;[o;@
+;i;[ ;@;"gradient_horz_padded;/[o;	;;;i;{ ;"Red_Pinlineo;	;;;i;@b	;"White_Pinline;5T;@;-i o;>;i;?[".blackgreen .pinline;[o;@
+;i;[ ;@;"gradient_horz_padded;/[o;	;;;i;{ ;"Black_Pinlineo;	;;;i;@o	;"Green_Pinline;5T;@;-i o;>;i;?["/.greenwhite .pinline, .whitegreen .pinline;[o;@
+;i;[ ;@;"gradient_horz_padded;/[o;	;;;i;{ ;"Green_Pinlineo;	;;;i;@|	;"White_Pinline;5T;@;-i o;>;i;?["-.greenblue .pinline, .bluegreen .pinline;[o;@
+;i;[ ;@;"gradient_horz_padded;/[o;	;;;i;{ ;"Green_Pinlineo;	;;;i;@‰	;"Blue_Pinline;5T;@;-i o;>;i;?[".Land.whiteblue .cardtext;[o;@
+;i;[ ;@;"gradient_horz_padded;/[o;	;;;i;{ ;"Land_White_Texto;	;;;i;@–	;"Land_Blue_Text;5T;@;-i o;>;i;?[".Land.whiteblack .cardtext;[o;@
+;i;[ ;@;"gradient_horz_padded;/[o;	;;;i;{ ;"Land_White_Texto;	;;;i;@£	;"Land_Black_Text;5T;@;-i o;>;i;?[".Land.blueblack .cardtext;[o;@
+;i;[ ;@;"gradient_horz_padded;/[o;	;;;i;{ ;"Land_Blue_Texto;	;;;i;@°	;"Land_Black_Text;5T;@;-i o;>;i;?[".Land.bluered .cardtext;[o;@
+;i;[ ;@;"gradient_horz_padded;/[o;	;;;i;{ ;"Land_Blue_Texto;	;;;i;@½	;"Land_Red_Text;5T;@;-i o;>;i ;?[".Land.blackred .cardtext;[o;@
+;i ;[ ;@;"gradient_horz_padded;/[o;	;;;i ;{ ;"Land_Black_Texto;	;;;i ;@Ê	;"Land_Red_Text;5T;@;-i o;>;i!;?[".Land.blackgreen .cardtext;[o;@
+;i!;[ ;@;"gradient_horz_padded;/[o;	;;;i!;{ ;"Land_Black_Texto;	;;;i!;@×	;"Land_Green_Text;5T;@;-i o;>;i";?[".Land.redgreen .cardtext;[o;@
+;i";[ ;@;"gradient_horz_padded;/[o;	;;;i";{ ;"Land_Red_Texto;	;;;i";@ä	;"Land_Green_Text;5T;@;-i o;>;i#;?["7.Land.redwhite .cardtext, .Land.whitered .cardtext;[o;@
+;i#;[ ;@;"gradient_horz_padded;/[o;	;;;i#;{ ;"Land_Red_Texto;	;;;i#;@ñ	;"Land_White_Text;5T;@;-i o;>;i$;?[";.Land.greenwhite .cardtext, .Land.whitegreen .cardtext;[o;@
+;i$;[ ;@;"gradient_horz_padded;/[o;	;;;i$;{ ;"Land_Green_Texto;	;;;i$;@ş	;"Land_White_Text;5T;@;-i o;>;i%;?["9.Land.greenblue .cardtext, .Land.bluegreen .cardtext;[o;@
+;i%;[ ;@;"gradient_horz_padded;/[o;	;;;i%;{ ;"Land_Green_Texto;	;;;i%;@
+;"Land_Blue_Text;5T;@;-i o;>;i';?[".Hybrid.whiteblue;[o;@
+;i';[ ;@;"gradient_horz_padded;/[o;	;;;i';{ ;"White_Cardo;	;;;i';@
+;"Blue_Card;5T;@;-i o;>;i(;?[".Hybrid.whiteblack;[o;@
+;i(;[ ;@;"gradient_horz_padded;/[o;	;;;i(;{ ;"White_Cardo;	;;;i(;@%
+;"Black_Card;5T;@;-i o;>;i);?[".Hybrid.blueblack;[o;@
+;i);[ ;@;"gradient_horz_padded;/[o;	;;;i);{ ;"Blue_Cardo;	;;;i);@2
+;"Black_Card;5T;@;-i o;>;i*;?[".Hybrid.bluered;[o;@
+;i*;[ ;@;"gradient_horz_padded;/[o;	;;;i*;{ ;"Blue_Cardo;	;;;i*;@?
+;"Red_Card;5T;@;-i o;>;i+;?[".Hybrid.blackred;[o;@
+;i+;[ ;@;"gradient_horz_padded;/[o;	;;;i+;{ ;"Black_Cardo;	;;;i+;@L
+;"Red_Card;5T;@;-i o;>;i,;?[".Hybrid.blackgreen;[o;@
+;i,;[ ;@;"gradient_horz_padded;/[o;	;;;i,;{ ;"Black_Cardo;	;;;i,;@Y
+;"Green_Card;5T;@;-i o;>;i-;?[".Hybrid.redgreen;[o;@
+;i-;[ ;@;"gradient_horz_padded;/[o;	;;;i-;{ ;"Red_Cardo;	;;;i-;@f
+;"Green_Card;5T;@;-i o;>;i.;?["'.Hybrid.redwhite, .Hybrid.whitered;[o;@
+;i.;[ ;@;"gradient_horz_padded;/[o;	;;;i.;{ ;"Red_Cardo;	;;;i.;@s
+;"White_Card;5T;@;-i o;>;i/;?["+.Hybrid.greenwhite, .Hybrid.whitegreen;[o;@
+;i/;[ ;@;"gradient_horz_padded;/[o;	;;;i/;{ ;"Green_Cardo;	;;;i/;@€
+;"White_Card;5T;@;-i o;>;i0;?[").Hybrid.greenblue, .Hybrid.bluegreen;[o;@
+;i0;[ ;@;"gradient_horz_padded;/[o;	;;;i0;{ ;"Green_Cardo;	;;;i0;@
+;"Blue_Card;5T;@;-i o;>;i2;?[".whiteblue .cardtext;[o;@
+;i2;[ ;@;"gradient_horz_padded;/[o;	;;;i2;{ ;"White_Texto;	;;;i2;@š
+;"Blue_Text;5T;@;-i o;>;i3;?[".whiteblack .cardtext;[o;@
+;i3;[ ;@;"gradient_horz_padded;/[o;	;;;i3;{ ;"White_Texto;	;;;i3;@§
+;"Black_Text;5T;@;-i o;>;i4;?[".blueblack .cardtext;[o;@
+;i4;[ ;@;"gradient_horz_padded;/[o;	;;;i4;{ ;"Blue_Texto;	;;;i4;@´
+;"Black_Text;5T;@;-i o;>;i5;?[".bluered .cardtext;[o;@
+;i5;[ ;@;"gradient_horz_padded;/[o;	;;;i5;{ ;"Blue_Texto;	;;;i5;@Á
+;"Red_Text;5T;@;-i o;>;i6;?[".blackred .cardtext;[o;@
+;i6;[ ;@;"gradient_horz_padded;/[o;	;;;i6;{ ;"Black_Texto;	;;;i6;@Î
+;"Red_Text;5T;@;-i o;>;i7;?[".blackgreen .cardtext;[o;@
+;i7;[ ;@;"gradient_horz_padded;/[o;	;;;i7;{ ;"Black_Texto;	;;;i7;@Û
+;"Green_Text;5T;@;-i o;>;i8;?[".redgreen .cardtext;[o;@
+;i8;[ ;@;"gradient_horz_padded;/[o;	;;;i8;{ ;"Red_Texto;	;;;i8;@è
+;"Green_Text;5T;@;-i o;>;i9;?["4.redwhite .cardtext, .Hybrid.whitered .cardtext;[o;@
+;i9;[ ;@;"gradient_horz_padded;/[o;	;;;i9;{ ;"Red_Texto;	;;;i9;@õ
+;"White_Text;5T;@;-i o;>;i:;?["1.greenwhite .cardtext, .whitegreen .cardtext;[o;@
+;i:;[ ;@;"gradient_horz_padded;/[o;	;;;i:;{ ;"Green_Texto;	;;;i:;@;"White_Text;5T;@;-i o;>;i;;?["/.greenblue .cardtext, .bluegreen .cardtext;[o;@
+;i;;[ ;@;"gradient_horz_padded;/[o;	;;;i;;{ ;"Green_Texto;	;;;i;;@;"Blue_Text;5T;@;-i o;>;i?;?["0.Hybrid .cardtitlebar, .Hybrid .cardtypebar;[o;
+;i@;[ ;;;o;;;;;;"#D2CCC0;@;["background;-i ;5T;@;-i o;>;iB;?[".Hybrid .ptbox;[o;
+;iC;[ ;;;o;;;;;;"#D2CCC0 !important;@;["background;-i ;5T;@;-i o;>;iE;?["1.Hybrid .pinline_ptbox, .Land .pinline_ptbox;[o;
+;iF;[ ;;;o;;;;;;"#e2dCd0 !important;@;["background;-i ;5T;@;-i o;>;iH;?[".Hybrid .cardart;[o;
+;iI;[ ;;;o;;;;;;"#eeeeee;@;["background-color;-i ;5T;@;-i o;;;iL;<0;[ ;"/***** Card editing *****/;@;=[ o;>;iN;?["3#card_supertype, #card_cardtype, #card_subtype;[o;
+;iN;[ ;;;o;;;;;;"
 100px;@;["
-width;-i ;5T;@;-i o;>;iM;?["#card_rarity;[o;
-;iM;[ ;;;o;;;;;;"8px;@;["margin-top;-i o;
-;iM;[ ;;;o;;;;;;"8px;@;["margin-bottom;-i ;5T;@;-i o;>;iN;?["!#card_power, #card_toughness;[o;
-;iN;[ ;;;o;;;;;;"	20px;@;["
-width;-i ;5T;@;-i o;>;iO;?[".flavourtextfield;[o;
-;iO;[ ;;;o;;;;;;"italic;@;["font-style;-i o;
-;iP;[ ;;;o;;;;;;"98%;@;["
-width;-i ;5T;@;-i o;>;iQ;?[".rulestextfield;[o;
-;iQ;[ ;;;o;;;;;;"98%;@;["
-width;-i ;5T;@;-i o;>;iR;?[".art_url_field;[o;
+width;-i ;5T;@;-i o;>;iO;?["#card_rarity;[o;
+;iO;[ ;;;o;;;;;;"8px;@;["margin-top;-i o;
+;iO;[ ;;;o;;;;;;"8px;@;["margin-bottom;-i ;5T;@;-i o;>;iP;?["!#card_power, #card_toughness;[o;
+;iP;[ ;;;o;;;;;;"	20px;@;["
+width;-i ;5T;@;-i o;>;iQ;?[".flavourtextfield;[o;
+;iQ;[ ;;;o;;;;;;"italic;@;["font-style;-i o;
 ;iR;[ ;;;o;;;;;;"98%;@;["
-width;-i ;5T;@;-i o;>;iS;?[".image_url_field;[o;
-;iS;[ ;;;o;;;;;;"
+width;-i ;5T;@;-i o;>;iS;?[".rulestextfield;[o;
+;iS;[ ;;;o;;;;;;"98%;@;["
+width;-i ;5T;@;-i o;>;iT;?[".art_url_field;[o;
+;iT;[ ;;;o;;;;;;"98%;@;["
+width;-i ;5T;@;-i o;>;iU;?[".image_url_field;[o;
+;iU;[ ;;;o;;;;;;"
 400px;@;["
 width;-i ;5T;@;-i ;5T;@

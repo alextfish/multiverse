@@ -140,6 +140,12 @@
 .cardtext br {
   margin-bottom: 0.25em; }
 
+.cardtext .flavourtext br {
+  margin-bottom: 0px; }
+
+.cardtext div, .cardtext p {
+  margin: 0px; }
+
 .bottombox {
   background: inherit;
   margin-bottom: 4px;
@@ -194,10 +200,10 @@
 
 .flavourtext {
   font-style: italic;
-  margin-top: 4px; }
+  margin-top: .25em !important; }
 
-.microtext .flavourtext {
-  margin-top: 2px; }
+.flavourtext i, .flavourtext em {
+  font-style: normal; }
 
 /* Mana symbol sizes */
 .cardmanacost img {

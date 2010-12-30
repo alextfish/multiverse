@@ -50,8 +50,8 @@
   </div>
   <div class="cardtext_container">
    <div class="pinline pinline_sidesbottom">
-     <% textbox_length = (@card.rulestext   ? textbox_chars_displayed(@card, :rulestext  ) : 0) + 
-                         (@card.flavourtext ? textbox_chars_displayed(@card, :flavourtext) : 0) %>
+     <% textbox_length = (@card.rulestext.blank?   ? 0 : textbox_chars_displayed(@card, :rulestext  )) + 
+                         (@card.flavourtext.blank? ? 0 : textbox_chars_displayed(@card, :flavourtext)) %>
      <% case textbox_length
          when 0..150:   textboxclass = "cardtext"
          when 151..170: textboxclass = "cardtext minitext"
@@ -59,8 +59,8 @@
          else           textboxclass = "cardtext nanotext"
        end %>
      <div class="<%= textboxclass %>"><!-- textbox has <%= textbox_length %> chars -->
-      <%= content_tag(:div, format_card_text(@card, :rulestext)) %>
-      <%= content_tag(:div, format_card_text(@card, :flavourtext), :class => "flavourtext") %>
+      <% if !@card.rulestext.blank? %><%= content_tag(:div, format_card_text(@card, :rulestext), :class => "rulestext") %><% end %>
+      <% if !@card.flavourtext.blank? %><%= content_tag(:div, format_card_text(@card, :flavourtext), :class => "flavourtext") %><% end %>
      </div>
     </div>
    </div>
