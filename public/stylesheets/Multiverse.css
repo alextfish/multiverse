@@ -43,6 +43,8 @@ a > img { border: 0px; }
 .commentlist    { margin-right: 60px; margin-left: 20px; }
 .commentlist div.comment { border-bottom: 1px solid #888; 
                          margin-bottom: 4px; }
+li.recent_item div.comment { border-bottom: none;
+                         margin-bottom: 0px; }
 
 .compact p.commentbody { margin-bottom: 0px; }
 
