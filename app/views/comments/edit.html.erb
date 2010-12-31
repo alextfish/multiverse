@@ -1,11 +1,13 @@
 <h1>Editing comment</h1>
+<div class="big_comment_form">
 <% if @comment.cardset %>
   <% @title = @cardset.name + ": Editing comment" %>
-  <%= render 'shared/cardset_comment_form' %>
+  <%= render "shared/cardset_comment_form" %>
 <% else %>
   <% @title = @card.name + ": Editing comment" %>
-  <%= render 'shared/card_comment_form' %>
+  <%= render "shared/card_comment_form" %>
 <% end %>
+</div>
 
-<%= link_to 'Show', @comment %> |
-<%= link_to 'Back', :back %>
+<%= link_to "Show", @comment %> |
+<%= link_to "Back", :back %>
