@@ -148,8 +148,9 @@
           <% end %>
         <% else %>
           <% object = @comment.parent %>
-          <div class="comment">On <%= link_to object.name, object %>:
-          <%= render :partial => "shared/comment", :locals => { :buttons => true } %>
+          <div>On <%= link_to object.name, object %>:
+            <%= render :partial => "shared/comment", :locals => { :buttons => true } %>
+          </div>
         <% end %>
       <% end %>
     </div>
