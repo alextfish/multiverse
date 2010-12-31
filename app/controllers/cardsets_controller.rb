@@ -74,7 +74,7 @@ class CardsetsController < ApplicationController
         flash[:error] = err_message
         redirect_to :back #, :error => err_message
       else
-        @m10_collation = data
+        @m10_collation = data[0]
         render
       end
       # I just can't get "rescue Exceptions::BoosterError => e" to work, it gives "uninit constant" errors

@@ -1,6 +1,6 @@
 class CommentsController < ApplicationController
   before_filter :define_card_or_cardset
-  before_filter :only => [:show, :new, :create] do
+  before_filter :only => [:show, :new, :create, :index] do
     require_permission_to_view(@cardset)
   end
   before_filter :only => [:edit, :destroy] do
@@ -47,6 +47,12 @@ class CommentsController < ApplicationController
     @comment = @cardset.comments.build
   end
 
+  # INDEX: only exists for cardset comments
+  # Includes a form to create new comment, 
+  def index
+    @comment = @cardset.comments.build
+  end
+
   # POST /comments
   # Doubles up for creation of card comments and cardset comments
   def create
@@ -60,7 +66,7 @@ class CommentsController < ApplicationController
       if !ok
         flash[:error] = "Error creating comment: #{@comment.errors}"
       end
-      redirect_to @comment.parent
+      redirect_to @comment.parent_view
     end
   end
 
@@ -73,7 +79,7 @@ class CommentsController < ApplicationController
     end
 
     respond_to do |format|
-      format.html { redirect_to @comment.parent }
+      format.html { redirect_to @comment.parent_view }
       format.js  { render :text => "update_comment_status(#{params[:id]}, #{params[:comment][:status]})" } # this works!
                  # { render }
                  # { render :layout => false }
@@ -85,6 +91,6 @@ class CommentsController < ApplicationController
     @comment = Comment.find(params[:id])
     @comment.destroy
 
-    redirect_to @comment.parent
+    redirect_to @comment.parent_view
   end
 end

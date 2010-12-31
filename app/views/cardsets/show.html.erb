@@ -53,7 +53,7 @@
   <%= @cardset.description %>
 </p>
 
-<%= render 'setviews' %>
+<%= render "setviews" %>
 
 
 <% if permission_to?(:admin, @cardset) %>
@@ -63,8 +63,16 @@
 <% end %>
 
 <p>
-  <% if permission_to?(:comment, @cardset) %>
-    <%= link_to "Add a comment on this cardset", new_cardset_comment_path( @cardset) %>
+  <% existing_comments = !@cardset.comments.empty?
+     can_comment = permission_to?(:comment, @cardset) %>
+  <% if existing_comments %>
+    <%= link_to "Cardset comments (#{@cardset.comments.count})", cardset_comments_path( @cardset) %> 
+  <% end %>
+  <% if existing_comments && can_comment %>
+    |
+  <% end %>
+  <% if can_comment %>
+    <%= link_to "Add a comment on this cardset", cardset_comments_path( @cardset, :anchor => "new") %>
   <% end %>
 </p>
 
@@ -80,7 +88,7 @@
           <% target = @comment.parent %>
           <% reply_link = @comment.card || new_cardset_comment_path(@comment.cardset) %>
           On <%= link_to target.name, target %> (<%= link_to "reply", reply_link %>):
-          <%= render :partial => 'shared/comment', :locals => { :buttons => true } %>
+          <%= render :partial => "shared/comment", :locals => { :buttons => true } %>
           </td>
         <% end %>
         </tr>
@@ -101,8 +109,8 @@
       <tr>
        <% cards.each do |@card| %>
         <td>
-         <%= render :partial => 'shared/card', :locals => { :link => true } %>
-         <%= render :partial => 'shared/cardcommentcount' %>
+         <%= render :partial => "shared/card", :locals => { :link => true } %>
+         <%= render :partial => "shared/cardcommentcount" %>
         </td>
        <% end %>
       </tr>
@@ -141,11 +149,11 @@
         <% else %>
           <% object = @comment.parent %>
           <li>On <%= link_to object.name, object %>:
-          <%= render :partial => 'shared/comment', :locals => { :buttons => true } %>
+          <%= render :partial => "shared/comment", :locals => { :buttons => true } %>
         <% end %>
       <% end %>
     </ul>
   <% end %>
 </div>
 
-<%= link_to 'See other cardsets', cardsets_path %>
+<%= link_to "See other cardsets", cardsets_path %>

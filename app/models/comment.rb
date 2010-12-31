@@ -61,6 +61,13 @@ class Comment < ActiveRecord::Base
   def parent
     cardset || card
   end
+  def parent_view
+    if cardset
+      cardset_comments_path(cardset)
+    else
+      card
+    end
+  end
   def display_user
     user ? user.name : user_name
   end

@@ -41,6 +41,7 @@ class CardsController < ApplicationController
   def new
     @card = Card.new(:cardset_id => params[:cardset_id])
     @card.frame = "Auto"
+    @card.rarity = "common"
     unless @cardset && @cardset.new_record?
       @cardset = Cardset.find(params[:cardset_id])
     end

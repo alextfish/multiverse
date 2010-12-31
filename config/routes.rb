@@ -22,21 +22,18 @@ Multiverse::Application.routes.draw do
   resources :cards, :only => [:new, :create, :destroy, :edit, :update, :show]
   #, :has_many => [:comments, :old_cards]
 
-  # The cards/cardsets relation should probably be written as...
-  #   resources :cardsets do
-  #     resources :cards
-  #   end
+  # The cards/cardsets relation should probably be a nested resource.
   # This would provide cardset_cards_path(@cardset), etc.
   # But I don't want the faff of refactoring to deal with that, so instead I'll create my own route:
   resources :cardsets do
     resources :details_pages, :only => [:new, :create, :destroy, :edit, :update, :show]
-    resources :mechanics, :only => [:new, :create, :destroy, :edit, :update, :index]
-    resources :comments, :only => [:new, :create, :destroy, :edit, :update, :index]
+    resources :mechanics,     :only => [:new, :create, :destroy, :edit, :update, :index]
+    resources :comments,      :only => [:new, :create, :destroy, :edit, :update, :index]
     member do
       get 'cardlist' # in addition to /cardsets/:id which goes to cardsets#show
       get 'visualspoiler', 'recent'
       get 'import', 'export', 'plaintext', 'csv'
-      get 'todo', 'booster'
+      get 'todo', 'booster', 'comments'
       post 'import_data'
     end
   end

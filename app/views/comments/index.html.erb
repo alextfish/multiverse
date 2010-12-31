@@ -1,0 +1,22 @@
+<h1>
+  <%= link_to @title = @cardset.name + ": Comments", @cardset %>
+</h1>
+<% new_comment = @comment %>
+
+<%= render "cardsets/setviews" %>
+
+<br>
+ <ul>
+   <% @cardset.comments.reject(&:new_record?).sort_by(&:created_at).each do |@comment| %>
+     <%= render :partial => "shared/comment", :locals => { :buttons => true } %>
+   <% end %>
+   <li style="list-style-type: none;">
+    <p><a name="new"></a><b>Post your comments on <%= @cardset.name %> here!</b>
+    <br>If your comments are on a small number of specific cards, they may
+    be better added to those cards. This is for comments on the set as a
+    whole.</p>
+    <% @comment = new_comment %>
+    <%= render "shared/cardset_comment_form" %>
+   </li>
+ </ul>
+</div>

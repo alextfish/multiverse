@@ -1,5 +1,5 @@
 <% @title = @card.name %>
-<% new_comment = @comment # store, because we'll be overwriting "@comment" to show previous comments %>
+<% new_comment = @comment # store, because we`ll be overwriting "@comment" to show previous comments %>
 
 <%= javascript_include_tag "fabtabulous.js" %>
 
@@ -15,7 +15,7 @@
    </ul>
    <% if permission_to?(:edit, @card.cardset) %>
      <ul class="cardtabs">
-      <li><%= link_to 'Edit', edit_card_path(@card) %></li>
+      <li><%= link_to "Edit", edit_card_path(@card) %></li>
      </ul>
    <% end %>
 
@@ -23,32 +23,32 @@
      <img src="<%= @card.image_url %>">
    </div>
    <div class="onetab" id="plaincard"><a name="plaincard"></a>
-     <%= render :partial => 'shared/plaincard' %>
+     <%= render :partial => "shared/plaincard" %>
    </div>
    <div class="onetab" id="mockup"><a name="mockup"></a>
-     <%= render :partial => 'shared/prettycard', :locals => { :link => false } %>
+     <%= render :partial => "shared/prettycard", :locals => { :link => false } %>
    </div>
    <% show_edit_link = permission_to?(:edit, @card.cardset) %>
    <% show_delete_link = permission_to?(:delete, @card.cardset) %>
    <% if show_edit_link || show_delete_link %>
      <div class="card_controls_below">
        <% if show_edit_link %>
-         <%= link_to 'Edit card', edit_card_path(@card) %>
+         <%= link_to "Edit card", edit_card_path(@card) %>
        <% end %>
        <% if show_edit_link && show_delete_link %>
          |
        <% end %>
        <% if show_delete_link %>
-         <%= link_to 'Delete card', @card, :confirm => "Really DELETE #{@card.name}?", :method => :delete %>
+         <%= link_to "Delete card", @card, :confirm => "Really DELETE #{@card.name}?", :method => :delete %>
        <% end %>
      </div>
    <% end %>
-   <%= render :partial => 'shared/updated_at', :locals => { :object => @card } %>
+   <%= render :partial => "shared/updated_at", :locals => { :object => @card } %>
   </td> <!-- end of card -->
 
   <td> <!-- controls, comments etc -->
      <% @cardset = Cardset.find(@card.cardset_id) %>
-     <%= render 'cardsets/setviews' %>
+     <%= render "cardsets/setviews" %>
 
      <% if @card.cardset.configuration.card_show_code %>
        <p><b>Code:</b> <%= @card.code %></p>
@@ -61,14 +61,14 @@
        <div class="cardhistory">
        <ul>
          <% @card.comments.each do |@comment| %>
-           <%= render :partial => 'shared/comment', :locals => { :buttons => true } %>
+           <%= render :partial => "shared/comment", :locals => { :buttons => true } %>
          <% end %>
        </ul>
        </div>
        <% if permission_to?(:comment, @card.cardset) %>
          <b>Add your comments:</b>
          <% @comment = new_comment # restore the value stored at the top %>
-         <%= render 'shared/card_comment_form' %>
+         <%= render "shared/card_comment_form" %>
        <% else %>
          <%= @cardset.permission_message(:comment) %>
          <% if !signed_in? %>
