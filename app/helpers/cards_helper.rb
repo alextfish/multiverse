@@ -41,8 +41,8 @@ module CardsHelper
     intermediate_text = FORMAT_SUBSTITUTIONS.reduce(escaped_text) do |memo, (match, replace)| memo.gsub(match, replace) end
     intermediate_text = format_mechanics(intermediate_text, card.cardset)
     if markup
-      marked_text = MARKUP_SUBSTITUTIONS.reduce(intermediate_text) do |memo, (match, replace)| memo.gsub(match, replace) end
-      marked_text = Maruku.new(marked_text).to_html.html_safe
+      marked_text = Maruku.new(intermediate_text).to_html
+      marked_text = MARKUP_SUBSTITUTIONS.reduce(marked_text) do |memo, (match, replace)| memo.gsub(match, replace) end
     else
       marked_text = intermediate_text
     end
