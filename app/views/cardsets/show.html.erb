@@ -139,7 +139,7 @@
     <% end %>
   <% else %>
     Recent comments: (<%= link_to "all recent activity", recent_cardset_path %>)
-    <ul class="commentlist">
+    <div class="commentlist">
       <% num_comments_to_show = 10 %>
       <% sorted_comments.take(num_comments_to_show).each do |@comment| %>
         <% if @comment.nil? %>
@@ -148,11 +148,11 @@
           <% end %>
         <% else %>
           <% object = @comment.parent %>
-          <li>On <%= link_to object.name, object %>:
+          <div class="comment">On <%= link_to object.name, object %>:
           <%= render :partial => "shared/comment", :locals => { :buttons => true } %>
         <% end %>
       <% end %>
-    </ul>
+    </div>
   <% end %>
 </div>
 

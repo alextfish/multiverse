@@ -59,22 +59,22 @@
      <p>
        <b>Comments:</b>
        <div class="cardhistory">
-       <ul>
-         <% @card.comments.each do |@comment| %>
-           <%= render :partial => "shared/comment", :locals => { :buttons => true } %>
-         <% end %>
-       </ul>
+         <div class="commentlist">
+           <% @card.comments.each do |@comment| %>
+             <%= render :partial => "shared/comment", :locals => { :buttons => true } %>
+           <% end %>
+           <% if permission_to?(:comment, @card.cardset) %>
+             <b>Add your comments:</b>
+             <% @comment = new_comment # restore the value stored at the top %>
+             <%= render "shared/card_comment_form" %>
+           <% else %>
+             <%= @cardset.permission_message(:comment) %>
+             <% if !signed_in? %>
+               Would you like to <%= link_to "sign in", signin_path %>?
+             <% end %>
+           <% end %>
+         </div>
        </div>
-       <% if permission_to?(:comment, @card.cardset) %>
-         <b>Add your comments:</b>
-         <% @comment = new_comment # restore the value stored at the top %>
-         <%= render "shared/card_comment_form" %>
-       <% else %>
-         <%= @cardset.permission_message(:comment) %>
-         <% if !signed_in? %>
-           Would you like to <%= link_to "sign in", signin_path %>?
-         <% end %>
-       <% end %>
      </p>
   </td>
  </tr>

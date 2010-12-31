@@ -40,7 +40,9 @@ a > img { border: 0px; }
 .commentdetails { font-style: italic; margin: 0px; line-height: 2em; }
 .commentbody    { margin-top: 0px; }
 
-.commentlist    { margin-right: 60px; }
+.commentlist    { margin-right: 60px; margin-left: 20px; }
+.commentlist div.comment { border-bottom: 1px solid #888; 
+                         margin-bottom: 4px; }
 
 .compact p.commentbody { margin-bottom: 0px; }
 
@@ -57,8 +59,6 @@ li.recent_item { border-top: 1px solid black;
 form { display: inline; }
 
 textarea#comment_body { height: 8em; width: 500px; }
-
-ul.commentlist { margin-left: 20px; }
 
 .commentbody > p { margin-top: 0px; }
 
