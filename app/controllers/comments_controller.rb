@@ -41,6 +41,14 @@ class CommentsController < ApplicationController
       @cardset = @comment.cardset
     end
   end
+  
+  def parent_view(comment)
+    if comment.cardset
+      cardset_comments_path(comment.cardset)
+    else
+      comment.card
+    end
+  end
 
   # NEW: only exists for cardset comments
   def new
@@ -66,7 +74,7 @@ class CommentsController < ApplicationController
       if !ok
         flash[:error] = "Error creating comment: #{@comment.errors}"
       end
-      redirect_to @comment.parent_view
+      redirect_to parent_view(@comment)
     end
   end
 
@@ -79,7 +87,7 @@ class CommentsController < ApplicationController
     end
 
     respond_to do |format|
-      format.html { redirect_to @comment.parent_view }
+      format.html { redirect_to parent_view(@comment) }
       format.js  { render :text => "update_comment_status(#{params[:id]}, #{params[:comment][:status]})" } # this works!
                  # { render }
                  # { render :layout => false }
@@ -91,6 +99,6 @@ class CommentsController < ApplicationController
     @comment = Comment.find(params[:id])
     @comment.destroy
 
-    redirect_to @comment.parent_view
+    redirect_to parent_view(@comment)
   end
 end
