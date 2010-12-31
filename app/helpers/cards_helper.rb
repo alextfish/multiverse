@@ -8,13 +8,15 @@ module CardsHelper
     /\bCIP\b/ => "come into play",
     " // " => "\n",
   }
-  PRE_MARKUP_SUBSTITUTIONS = {
-    "\n" => "  \n",
-  }
   MARKUP_SUBSTITUTIONS = {
     /[(]/ => "<i>(",
     /[)]/ => ")</i>",
     / - / => " &ndash; ",
+    "\n" => "<br>",
+    /\*\*([^*]+)\*\*/ => '<b>\1</b>',
+    /\_\_([^_]+)\_\_/ => '<b>\1</b>',
+    /(^|[^*])\*([^*]+)\*/ => '\1<i>\2</i>',
+    /(^|[^_])\_([^_]+)\_/ => '\1<i>\2</i>',
   }
   AFTER_SUBSTITUTIONS = {
     ": until" => ": Until",
@@ -44,8 +46,6 @@ module CardsHelper
     intermediate_text = format_mechanics(intermediate_text, card.cardset)
     marked_text = intermediate_text
     if markup
-      marked_text = PRE_MARKUP_SUBSTITUTIONS.reduce(marked_text) do |memo, (match, replace)| memo.gsub(match, replace) end
-      marked_text = Maruku.new(marked_text).to_html
       marked_text = MARKUP_SUBSTITUTIONS.reduce(marked_text) do |memo, (match, replace)| memo.gsub(match, replace) end
     else
     end
