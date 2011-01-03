@@ -32,8 +32,8 @@
        <td><%= @cardset.cards.count %></td>
        <td>
          <% action = @cardset.recent_action  %>
-        <span style="display:none;"><%= index %></span><!-- for sorting -->
-         <%= format_datetime action.datestamp %>:
+        <span style="display:none;"><%= "%08d" % index %></span><!-- for sorting -->
+         <%= link_to format_datetime(action.datestamp), recent_cardset_path(@cardset) %>:
        <!-- </td>
        <td> -->
          <% if action.user %><%= link_to action.user, action.user %><% else %><%= User.name_for(action.user_id) %><% end %>
@@ -44,7 +44,9 @@
          <%= @cardset.description %>
        </td>
      <% else %>
-       <td colspan="99">&nbsp;</td>
+       <td style="border-right: none;"></td>
+       <td style="border-right: none; border-left: none;"><span style="display:none;">99999999</span><!-- for sorting --></td>
+       <td style="border-left: none;"></td>
      <% end %>
    </tr>
  <% end %>

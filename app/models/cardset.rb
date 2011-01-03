@@ -146,7 +146,7 @@ class Cardset < ActiveRecord::Base
       self.logs.create :kind => comment_cardset,
                        :datestamp => comment.created_at, 
                        :user => comment.user,
-                       :object_id => comment.card.id
+                       :object_id => comment.id
     end
     details_page_create = Log.kind(:details_page_create)
     details_page_edit = Log.kind(:details_page_edit)
