@@ -10,7 +10,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20101220161110) do
+ActiveRecord::Schema.define(:version => 20110101155400) do
 
   create_table "cards", :force => true do |t|
     t.string   "code"
@@ -94,6 +94,20 @@ ActiveRecord::Schema.define(:version => 20101220161110) do
   end
 
   add_index "details_pages", ["cardset_id"], :name => "index_details_pages_on_cardset_id"
+
+  create_table "logs", :force => true do |t|
+    t.integer  "cardset_id"
+    t.datetime "datestamp"
+    t.integer  "kind"
+    t.integer  "user_id"
+    t.integer  "object_id"
+    t.text     "text"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "logs", ["cardset_id"], :name => "index_logs_on_cardset_id"
+  add_index "logs", ["datestamp"], :name => "index_logs_on_datestamp"
 
   create_table "mechanics", :force => true do |t|
     t.string   "name"

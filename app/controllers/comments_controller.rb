@@ -71,7 +71,13 @@ class CommentsController < ApplicationController
       @comment.set_default_status!
 
       ok = @comment.save
-      if !ok
+      if ok
+        if @comment.card # comment on a card
+          @cardset.log :kind=>:comment_card, :user=>current_user, :object_id=>@comment.card.id
+        else            # comment on a cardset
+          @cardset.log :kind=>:comment_cardset, :user=>current_user, :object_id=>@cardset.id
+        end
+      else
         flash[:error] = "Error creating comment: #{@comment.errors}"
       end
       redirect_to parent_view(@comment)
@@ -83,6 +89,8 @@ class CommentsController < ApplicationController
     @comment = Comment.find(params[:id])
     @comment.update_attributes(params[:comment])
     if params[:comment][:body]
+      # Log the comment itself's ID for comment editing
+      @cardset.log :kind=>:comment_edit, :user=>current_user, :object_id=>@comment.id
       # set_last_edit(@comment) - comments don't have an editor stored right now
     end
 
@@ -98,6 +106,7 @@ class CommentsController < ApplicationController
   def destroy
     @comment = Comment.find(params[:id])
     @comment.destroy
+    @cardset.log :kind=>:comment_delete, :user=>current_user, :object_id=>@comment.id
 
     redirect_to parent_view(@comment)
   end

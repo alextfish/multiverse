@@ -40,7 +40,7 @@ module ApplicationHelper
   def format_datetime(dt)
     if dt < 1.week.ago
       # Show older dates in absolute time
-      out = "on " + dt.to_date.to_formatted_s(:rfc822)
+      "on " + dt.to_date.to_formatted_s(:rfc822)
     else
       time_ago_in_words(dt, :seconds => true) + " ago"
     end
@@ -183,5 +183,45 @@ module ApplicationHelper
 
   def comment_user_link(comment)
     link_to_unless comment.user.nil?, comment.display_user, comment.user
+  end
+  
+  
+  def link_to_log_object(log)
+    case log.kind
+      # For mechanics, return the cardset name and the mechanics path
+      when Log.kind(:mechanic_create), Log.kind(:mechanic_edit):
+        obj = Mechanic.find(log.object_id)
+        cardset = obj.cardset
+        return link_to(cardset.name, cardset_mechanics_path(cardset))
+      when Log.kind(:mechanic_delete):
+        cardset = Cardset.find(log.object_id)
+        return link_to(cardset.name, cardset_mechanics_path(cardset))        
+      # For cardset comments, return the cardset name and the cardset comments path
+      when Log.kind(:comment_cardset):
+        obj = Cardset.find(log.object_id)
+        return link_to(obj.name, cardset_comments_path(obj))
+      # For edited comments, link to either the card, or the cardset comments
+      when Log.kind(:comment_edit):
+        comment = Comment.find(log.object_id)
+        if comment.card
+          return link_to(comment.card.name, comment.card)
+        else
+          return link_to(comment.cardset.name, cardset_comments_path(comment.cardset))
+        end
+      # For details pages, links are nested resources
+      when Log.kind(:details_page_create), Log.kind(:details_page_edit), Log.kind(:comment_details_page):
+        obj = DetailsPage.find(log.object_id)
+        return link_to(obj.title, cardset_details_page_path(obj.cardset, obj))
+      # For cards and cardsets, just give name and path to the object
+      when Log.kind(:cardset_create), Log.kind(:cardset_options), Log.kind(:cardset_import), Log.kind(:details_page_delete):
+        obj = Cardset.find(log.object_id)
+        display_name = obj ? obj.name : ""
+      when Log.kind(:card_create), Log.kind(:card_edit), Log.kind(:comment_card):
+        obj = Card.find(log.object_id)
+        display_name = obj ? obj.name : ""
+      else
+        raise "Don't know how to link to logs of kind #{log.kind} such as log #{log.id}"
+    end
+    return link_to(display_name, obj)
   end
 end

@@ -1,6 +1,7 @@
 <h1>
-  <%= link_to @title = @cardset.name + ": Comments", @cardset %>
+  <%= link_to @cardset.name, @cardset %>: Comments
 </h1>
+<% @title = @cardset.name + ": Comments" %>
 <% new_comment = @comment %>
 
 <%= render "cardsets/setviews" %>

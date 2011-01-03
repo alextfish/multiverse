@@ -1,6 +1,7 @@
 <h1>
-  <%= @title = @cardset.name + ": Editing " + @details_page.title %>
+  <%= link_to @cardset.name, @cardset %>: Editing <%= @details_page.title %>
 </h1>
+<%= @title = @cardset.name + ": Editing " + @details_page.title %>
 
 <%= render 'form' %>
 

@@ -2,10 +2,10 @@ class MechanicsController < ApplicationController
 
   before_filter do # :except => [:index, :new, :create] do
     @cardset = Cardset.find(params[:cardset_id])
-    require_permission_to_view(@cardset)
+    require_permission_to_view @cardset
   end
   before_filter :only => [:new, :create, :edit, :update, :destroy] do
-    require_permission_to_admin(@cardset)
+    require_permission_to_admin @cardset
   end
 
 
@@ -24,6 +24,7 @@ class MechanicsController < ApplicationController
     @mechanic = @cardset.mechanics.build(params[:mechanic])
 
     if @mechanic.save
+      @cardset.log :kind=>:mechanic_create, :user=>current_user, :object_id=>@mechanic.id
       redirect_to cardset_mechanics_path(@cardset)
     else
       render :action => "new"
@@ -35,6 +36,7 @@ class MechanicsController < ApplicationController
     @mechanic = Mechanic.find(params[:id])
 
     if @mechanic.update_attributes(params[:mechanic])
+      @cardset.log :kind=>:mechanic_edit, :user=>current_user, :object_id=>@mechanic.id
       redirect_to cardset_mechanics_path(@cardset)
     else
       render :action => "edit"
@@ -45,6 +47,7 @@ class MechanicsController < ApplicationController
   def destroy
     @mechanic = Mechanic.find(params[:id])
     @mechanic.destroy
+    @cardset.log :kind=>:mechanic_delete, :user=>current_user, :object_id=>@cardset.id
 
     redirect_to cardset_mechanics_path(@cardset)
   end

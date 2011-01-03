@@ -24,6 +24,7 @@ class Cardset < ActiveRecord::Base
   has_many :mechanics, :dependent => :destroy 
   has_one :configuration, :dependent => :destroy
   has_many :comments, :dependent => :destroy
+  has_many :logs
 
   validates_length_of :name, :within => 2..40
 
@@ -98,7 +99,74 @@ class Cardset < ActiveRecord::Base
         raise "Unexpected value of configuration property in action #{action}: #{permitted_people}"
     end
   end
+  
+  def log(in_hash)
+    self.logs.create :kind=>Log.kind(in_hash[:kind]), 
+                     :datestamp=>Time.now, 
+                     :user=>in_hash[:user], 
+                     :object_id=>in_hash[:object_id],
+                     :text=>in_hash[:text]
+  end
+  
+  def public_access
+   if ['justme', 'admins', 'selected'].include? configuration.visibility
+     "Private"
+   elsif !['justme', 'admins', 'selected'].include? configuration.editability
+     "Editable"
+   else
+     "Viewable"
+   end
+  end
+  
+  def recent_action
+    self.logs.first
+  end
+  def make_logs
+    self.logs.create :kind => Log.kind(:cardset_create),
+                     :datestamp => self.created_at, 
+                     :user => self.user,
+                     :object_id => self.id
+    card_create = Log.kind(:card_create)
+    card_edit = Log.kind(:card_edit)
+    comment_card = Log.kind(:comment_card)
+    self.cards.each do |card|
+      self.logs.create :kind => ( card.created_at == card.updated_at ? card_create : card_edit),
+                       :datestamp => card.updated_at, 
+                       :user => User.find_by_id(card.last_edit_by),
+                       :object_id => card.id
+      card.comments.each do |comment|
+        self.logs.create :kind => comment_card,
+                         :datestamp => comment.created_at, 
+                         :user => comment.user,
+                         :object_id => card.id
+      end
+    end
+    comment_cardset = Log.kind(:comment_cardset)
+    self.comments.each do |comment|
+      self.logs.create :kind => comment_cardset,
+                       :datestamp => comment.created_at, 
+                       :user => comment.user,
+                       :object_id => comment.card.id
+    end
+    details_page_create = Log.kind(:details_page_create)
+    details_page_edit = Log.kind(:details_page_edit)
+    self.details_pages.each do |dp|
+      self.logs.create :kind => ( dp.created_at == dp.updated_at ? details_page_create : details_page_edit),
+                       :datestamp => dp.updated_at, 
+                       :user => User.find_by_id(dp.last_edit_by),
+                       :object_id => dp.id
+    end
+    mechanic_create = Log.kind(:mechanic_create)
+    mechanic_edit = Log.kind(:mechanic_edit)
+    self.mechanics.each do |mech|
+      self.logs.create :kind => ( mech.created_at == mech.updated_at ? mechanic_create : mechanic_edit),
+                       :datestamp => mech.updated_at, 
+                       :user => User.find_by_id(self.user),
+                       :object_id => mech.id
+    end
+  end
 
+  ########################## Boosters ##########################
   def cards_per_line
     case configuration.frame
       when "prettycard": 5
@@ -106,8 +174,7 @@ class Cardset < ActiveRecord::Base
       when "image": 3
     end
   end
-  
-  
+
   def make_booster()
     commons   = self.cards.select { |c| c.rarity == "common" } 
     uncommons = self.cards.select { |c| c.rarity == "uncommon" } 
@@ -224,21 +291,21 @@ class Cardset < ActiveRecord::Base
   SUBTYPE_DELIMITERS = [" -- ", " - ", "--", "-"]
 
   def import_data(params, current_user)
-    # Returns [success, message]
+    # Returns [success, message, log_text, changed_cards]
 
     # Initial informative error messages
     @cardset = Cardset.find(params[:id])
     if params[:separator].blank?
-      return false, "Separator character is required", []
+      return false, "Separator character is required", "", []
     end
     if params[:formatting_line].blank?
-      return false, "Formatting line is required", []
+      return false, "Formatting line is required", "", []
     end
     if params[:data].blank?
-      return false, "No data supplied", []
+      return false, "No data supplied", "", []
     end
     if params[:id].blank?
-      return false, "No cardset ID supplied - please re-navigate to this page via the cardset", []
+      return false, "No cardset ID supplied - please re-navigate to this page via the cardset", "", []
     end
 
     # Validate the supplied formatting line
@@ -246,7 +313,7 @@ class Cardset < ActiveRecord::Base
     canonfields = inputfields.map{ |f| ALIASES.has_key?(f) ? ALIASES[f] : f.strip }
     validfields = canonfields.select{ |f| FIELDS.include?(f) }
     if validfields != canonfields
-      return false, "The following fields were not recognised: " + (canonfields - validfields).join(", "), []
+      return false, "The following fields were not recognised: " + (canonfields - validfields).join(", "), "", []
     end
 
     # We need to detect and reject duplicates of any field, except "" which we allow in multiples
@@ -257,7 +324,7 @@ class Cardset < ActiveRecord::Base
     end
 
     if !rejectfields.empty?
-      return false, "The following fields were duplicated: " + rejectfields.uniq.join(", "), []
+      return false, "The following fields were duplicated: " + rejectfields.uniq.join(", "), "", []
     end
 
     debug = ''
@@ -282,7 +349,7 @@ class Cardset < ActiveRecord::Base
       end
       if carddata.length != fields.length
         # Give a nice error message, with 1-based indexing
-        return false, "Line #{index+1} of data had #{carddata.length} fields when expecting #{fields.length}", []
+        return false, "Line #{index+1} of data had #{carddata.length} fields when expecting #{fields.length}", "", []
       end
 
       carddatahash = Hash[fields.zip(carddata)]
@@ -383,10 +450,12 @@ class Cardset < ActiveRecord::Base
       end
     end
 
+    # Returns [success, message, log_text, changed_cards]
     message = "Data was successfully imported! "
     skipped_cards>0 && message << "#{skipped_cards} cards were left unchanged. "
     overwritten_cards>0 && message << "#{overwritten_cards} cards were updated. "
     new_cards>0 && message << "#{new_cards} new cards were added. "
-    return true, message, cards_and_comments.map { |card, comment| card }
+    log_text = "#{new_cards} created, #{overwritten_cards} updated"
+    return true, message, log_text, cards_and_comments.map { |card, comment| card }
   end
 end

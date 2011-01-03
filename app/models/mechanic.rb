@@ -1,23 +1,15 @@
 # == Schema Information
-# Schema version: 20100926114339
+# Schema version: 20110101155400
 #
-# Table name: old_cards
+# Table name: mechanics
 #
 #  id          :integer         not null, primary key
-#  card_id     :integer
 #  name        :string(255)
 #  cardset_id  :integer
-#  colour      :string(255)
-#  rarity      :string(255)
-#  cost        :string(255)
-#  supertype   :string(255)
-#  cardtype    :string(255)
-#  subtype     :string(255)
-#  rulestext   :text
-#  flavourtext :text
-#  power       :integer
-#  toughness   :integer
-#  posttime    :datetime
+#  codename    :string(255)
+#  reminder    :text
+#  parameters  :integer
+#  description :text
 #  created_at  :datetime
 #  updated_at  :datetime
 #

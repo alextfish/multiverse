@@ -84,12 +84,13 @@ class CardsetsController < ApplicationController
   # POST /cardsets/1/import_data
   def import_data
     Rails.logger.info "User #{current_user} importing data"
-    success, message, changed_cards = @cardset.import_data(params, current_user)
+    success, message, log_text, changed_cards = @cardset.import_data(params, current_user)
     if success
       changed_cards.each do |card|
-        set_last_edit(card)
+        set_last_edit card 
       end
-      redirect_to(@cardset, :notice => message)
+      @cardset.log :kind=>:cardset_import, :user=>current_user, :object_id=>@cardset.id, :text=>log_text
+      redirect_to @cardset, :notice => message 
     else
       flash.now[:error] = message
       render :import
@@ -119,7 +120,9 @@ class CardsetsController < ApplicationController
     ok &= configuration.save
 
     if ok
-      redirect_to(@cardset, :notice => 'Cardset was successfully created.')
+      set_last_edit @cardset 
+      @cardset.log :kind=>:cardset_create, :user=>current_user, :object_id=>@cardset.id
+      redirect_to @cardset, :notice => 'Cardset was successfully created.' 
     else
       render :action => "new"
     end
@@ -130,8 +133,9 @@ class CardsetsController < ApplicationController
     ok = @cardset.update_attributes(params[:cardset])
     ok &= @cardset.configuration.update_attributes(params[:configuration])
     if ok
-      set_last_edit(@cardset)
-      redirect_to(@cardset, :notice => 'Cardset was successfully updated.')
+      set_last_edit @cardset 
+      @cardset.log :kind=>:cardset_options, :user=>current_user, :object_id=>@cardset.id
+      redirect_to @cardset, :notice => 'Cardset was successfully updated.' 
     else
       render :action => "edit"
     end

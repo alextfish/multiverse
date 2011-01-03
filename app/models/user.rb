@@ -17,6 +17,7 @@ require 'digest'
 class User < ActiveRecord::Base
   attr_accessor :password
   attr_accessible :name, :email, :password, :password_confirmation
+  has_many :logs
 
   email_regex = /\A[\w+\-.]+@[a-z\d\-.]+\.[a-z]+\z/i
 
@@ -45,10 +46,10 @@ class User < ActiveRecord::Base
     encrypted_password == encrypt(submitted_password)
   end
 
-  def self.NON_SIGNED_IN_USER
+  def User.NON_SIGNED_IN_USER
     -1
   end
-  def self.name_for(id)
+  def User.name_for(id)
     if id == User.NON_SIGNED_IN_USER
       "a non-signed-in user"
     elsif id == nil
@@ -59,8 +60,7 @@ class User < ActiveRecord::Base
   end
 
 
-  # Static method - could be written as def User.authenticate
-  def self.authenticate(email, submitted_password)
+  def User.authenticate(email, submitted_password)
     user = find_by_email(email)
     return nil  if user.nil?
     return user if user.has_password?(submitted_password)

@@ -33,7 +33,8 @@ class DetailsPagesController < ApplicationController
     @details_page = @cardset.details_pages.build(params[:details_page])
 
     if @details_page.save
-      set_last_edit(@details_page)
+      set_last_edit @details_page
+      @cardset.log :kind=>:details_page_create, :user=>current_user, :object_id=>@details_page.id
       redirect_to([@cardset, @details_page], :notice => 'Details page was successfully created.')
     else
       render :action => "new"
@@ -56,7 +57,8 @@ class DetailsPagesController < ApplicationController
     else
       # Normal update
       if @details_page.update_attributes(params[:details_page])
-        set_last_edit(@details_page)
+        set_last_edit @details_page
+        @cardset.log :kind=>:details_page_edit, :user=>current_user, :object_id=>@details_page.id
         redirect_to([@cardset, @details_page], :notice => 'Details page was successfully updated.')
       else
         render :action => "edit"
@@ -68,6 +70,7 @@ class DetailsPagesController < ApplicationController
   def destroy
     @details_page = DetailsPage.find(params[:id])
     @details_page.destroy
+    @cardset.log :kind=>:details_page_delete, :user=>current_user, :object_id=>@cardset.id
 
     redirect_to(@cardset)
   end

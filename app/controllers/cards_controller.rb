@@ -70,10 +70,11 @@ class CardsController < ApplicationController
   def create
     @card = Card.new(params[:card])
     process_card
-    set_last_edit(@card)
+    set_last_edit @card
 
     if @card.save
-      redirect_to(@card, :notice => "#{@card.name} was successfully created.")
+      @cardset.log :kind=>:card_create, :user=>current_user, :object_id=>@card.id
+      redirect_to @card, :notice => "#{@card.name} was successfully created." 
     else
       render :action => "new"
     end
@@ -85,7 +86,8 @@ class CardsController < ApplicationController
 
     if @card.update_attributes(params[:card])
       process_card
-      set_last_edit(@card)
+      set_last_edit @card
+      @cardset.log :kind=>:card_edit, :user=>current_user, :object_id=>@card.id
 
       redirect_to @card   #, :notice => 'Card was successfully updated.'
     else
@@ -100,7 +102,10 @@ class CardsController < ApplicationController
     @card.destroy
 
     respond_to do |format|
-      format.html { redirect_to(@cardset) }
+      format.html do
+        @cardset.log :kind=>:card_delete, :user=>current_user, :object_id=>@card.id
+        redirect_to @cardset
+      end
       # Horrible MVC violation, but I just can't get .js.erb files to render
       # Can only destroy cards via JS from the cardlist view
       format.js   { render :text => "$('card_row_#{params[:id]}').visualEffect('Fade', {'queue':'parallel'})" }

@@ -1,6 +1,7 @@
 <h1>
-  <%= @title = "#{@cardset.name}: Add details page" %>
+  <%= link_to @cardset.name, @cardset %>: Add details page
 </h1>
+<% @title = "#{@cardset.name}: Add details page" %>
 
 <%= render 'cardsets/setviews' %>
 
