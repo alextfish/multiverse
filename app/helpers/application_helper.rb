@@ -185,6 +185,16 @@ module ApplicationHelper
     link_to_unless comment.user.nil?, comment.display_user, comment.user
   end
   
+  def select_random(num_to_choose, array_in)
+     chosen = []
+     while chosen.length < num_to_choose
+       candidate = array_in.choice # i.e. random element
+       if !chosen.include?(candidate)
+         chosen << candidate
+       end
+     end
+     chosen
+  end
   
   def link_to_log_object(log)
     case log.kind
@@ -213,7 +223,7 @@ module ApplicationHelper
         obj = DetailsPage.find(log.object_id)
         return link_to(obj.title, cardset_details_page_path(obj.cardset, obj))
       # For cards and cardsets, just give name and path to the object
-      when Log.kind(:cardset_create), Log.kind(:cardset_options), Log.kind(:cardset_import), Log.kind(:details_page_delete):
+      when Log.kind(:cardset_create), Log.kind(:cardset_options), Log.kind(:cardset_import), Log.kind(:card_delete), Log.kind(:details_page_delete):
         obj = Cardset.find(log.object_id)
         display_name = obj ? obj.name : ""
       when Log.kind(:card_create), Log.kind(:card_edit), Log.kind(:comment_card):

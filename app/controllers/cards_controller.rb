@@ -103,7 +103,7 @@ class CardsController < ApplicationController
 
     respond_to do |format|
       format.html do
-        @cardset.log :kind=>:card_delete, :user=>current_user, :object_id=>@card.id
+        @cardset.log :kind=>:card_delete, :user=>current_user, :object_id=>@cardset.id
         redirect_to @cardset
       end
       # Horrible MVC violation, but I just can't get .js.erb files to render

@@ -310,7 +310,7 @@ $Land_Green_Text: #cfc;
 .blackred .cardtext { @include gradient_horz_padded($Black_Text, $Red_Text); }
 .blackgreen .cardtext { @include gradient_horz_padded($Black_Text, $Green_Text); }
 .redgreen .cardtext { @include gradient_horz_padded($Red_Text, $Green_Text); }
-.redwhite .cardtext, .Hybrid.whitered .cardtext { @include gradient_horz_padded($Red_Text, $White_Text); }
+.redwhite .cardtext, .whitered .cardtext { @include gradient_horz_padded($Red_Text, $White_Text); }
 .greenwhite .cardtext, .whitegreen .cardtext { @include gradient_horz_padded($Green_Text, $White_Text); }
 .greenblue .cardtext, .bluegreen .cardtext { @include gradient_horz_padded($Green_Text, $Blue_Text); }
 

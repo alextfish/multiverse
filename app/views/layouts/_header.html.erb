@@ -6,7 +6,7 @@
     <ul>
       <li class="first"><%= # link_to "Home", root_path
       %></li>
-      <li class="first drops_parent"><%= link_to "Cardsets", cardsets_path #, :class => "drops"
+      <li class="first drops_parent"><%= link_to "Recent updates", cardsets_path #, :class => "drops"
       %>
         <ul id="cardsets_dropdown" style="display:none;"><!-- class="licious" -->
           <% Cardset.all.each do |cardset| %>

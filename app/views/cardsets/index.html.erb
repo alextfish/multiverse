@@ -1,7 +1,7 @@
 <h1><%= @title = "All cardsets" %></h1>
 
 <% if signed_in? %>
-  <%= link_to "New Cardset", new_cardset_path %>
+  <%= link_to "Create a new cardset", new_cardset_path %>
 <% else %>
   To create your own cardset, first <%= link_to "sign in", signin_path %> or <%= link_to "sign up", signup_path %>.
 <% end %>
@@ -24,8 +24,8 @@
  <% Cardset.all.sort_by{|cs|cs.recent_action.datestamp}.reverse.each_with_index do |@cardset, index| %>
    <tr>
      <% set_viewable = permission_to? :view, @cardset %>
-     <td><%= link_to @cardset.name, @cardset %></td>
-     <td><%= @cardset.user %></td>
+     <td><b><%= link_to @cardset.name, @cardset %></b></td>
+     <td><%= link_to @cardset.user.name, @cardset.user %></td>
      <% access = @cardset.public_access  %>
      <td class="access_<%= access %>"><%= access %></td>
      <% if set_viewable %>
