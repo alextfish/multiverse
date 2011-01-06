@@ -58,38 +58,6 @@ module ApplicationHelper
 
     markdown_text = Maruku.new(formatted_text).to_html.html_safe
   end
-
-  def format_links(text_in)
-    # Translate [[[-links and (((-links into Maruku links
-    old_atcard = @card
-    cardset_image_regexp = /\(\(([^)]*)\)\)/
-    wizards_image_regexp = /\[\[([^\]]*)\]\]/
-    cardset_card_regexp = /\(\(\(([^)]*)\)\)\)/
-    wizards_card_regexp = /\[\[\[([^\]]*)\]\]\]/
-    remove_brackets_regexp = /([(\[])\1\1?(.*[^)\]])([)\]])\3\3?/
-    
-    text_middle = text_in.gsub(wizards_card_regexp) { |cardname|
-      actual_cardname = cardname.gsub(remove_brackets_regexp, '\2')
-      wizards_card_link(actual_cardname, actual_cardname)
-    }.gsub(wizards_image_regexp) { |cardname|
-      actual_cardname = cardname.gsub(remove_brackets_regexp, '\2')
-      wizards_card_image(actual_cardname)
-    }.gsub(cardset_card_regexp) { |cardname|
-      actual_cardname = cardname.gsub(remove_brackets_regexp, '\2')
-      cardset_card_link(@cardset, actual_cardname, actual_cardname)
-    }
-    if @cardset.configuration.frame == "image"
-      text_out = text_middle.gsub(cardset_image_regexp) { |cardname|
-        cardset_card_image(@cardset, cardname.gsub(remove_brackets_regexp, '\2'))
-      }
-    else
-      text_out = text_middle.gsub(cardset_image_regexp) { |cardname|
-        cardset_card_mockup(@cardset, cardname.gsub(remove_brackets_regexp, '\2'))
-      }
-    end
-    @card = old_atcard
-    text_out
-  end
   
   def mana_symbol_url ( symbol )
     my_symbol = "" << symbol
@@ -176,6 +144,38 @@ module ApplicationHelper
     text_out
   end
 
+  def format_links(text_in)
+    # Translate [[[-links and (((-links into Maruku links
+    old_atcard = @card
+    cardset_image_regexp = /\(\(([^)]*)\)\)/
+    wizards_image_regexp = /\[\[([^\]]*)\]\]/
+    cardset_card_regexp = /\(\(\(([^)]*)\)\)\)/
+    wizards_card_regexp = /\[\[\[([^\]]*)\]\]\]/
+    remove_brackets_regexp = /([(\[])\1\1?(.*[^)\]])([)\]])\3\3?/
+    
+    text_middle = text_in.gsub(wizards_card_regexp) { |cardname|
+      actual_cardname = cardname.gsub(remove_brackets_regexp, '\2')
+      wizards_card_link(actual_cardname, actual_cardname)
+    }.gsub(wizards_image_regexp) { |cardname|
+      actual_cardname = cardname.gsub(remove_brackets_regexp, '\2')
+      wizards_card_image(actual_cardname)
+    }.gsub(cardset_card_regexp) { |cardname|
+      actual_cardname = cardname.gsub(remove_brackets_regexp, '\2')
+      cardset_card_link(@cardset, actual_cardname, actual_cardname)
+    }
+    if @cardset.configuration.frame == "image"
+      text_out = text_middle.gsub(cardset_image_regexp) { |cardname|
+        cardset_card_image(@cardset, cardname.gsub(remove_brackets_regexp, '\2'))
+      }
+    else
+      text_out = text_middle.gsub(cardset_image_regexp) { |cardname|
+        cardset_card_mockup(@cardset, cardname.gsub(remove_brackets_regexp, '\2'))
+      }
+    end
+    @card = old_atcard
+    text_out
+  end
+
   def cardset_card_link(cardset, cardname, link_content)
     if (card = cardset.cards.find_by_name(cardname)) || (card = cardset.cards.find_by_code(cardname))
       "<a href=\"#{url_for(card)}\">#{link_content}</a>"
@@ -187,7 +187,8 @@ module ApplicationHelper
     "<a href=\"http://gatherer.wizards.com/Pages/Search/Default.aspx?name=+[%22#{URI.escape(cardname)}%22]\">#{link_content}</a>"
   end
   def wizards_card_image(cardname)
-    wizards_card_link(cardname, image_tag("http://www.wizards.com/global/images/magic/general/#{URI.escape(cardname)}", :alt => "[[#{cardname}]]", :class => "CardImage"))
+    image_name = ActiveSupport::Inflector::parameterize(cardname, '_').gsub('-','_')
+    wizards_card_link(cardname, image_tag("http://www.wizards.com/global/images/magic/general/#{image_name}.jpg", :alt => "[[#{cardname}]]", :class => "CardImage"))
   end
   def cardset_card_image(cardset, cardname)
     if (card = cardset.cards.find_by_name(cardname)) || (card = cardset.cards.find_by_code(cardname))
