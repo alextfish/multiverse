@@ -45,10 +45,10 @@
   -webkit-border-radius: 6px;
   -khtml-border-radius: 6px;
   border-radius: 6px;
-  -moz-border-radius: 0.5;
-  -webkit-border-radius: 0.5;
-  -khtml-border-radius: 0.5;
-  border-radius: 0.5; }
+  -moz-border-radius: 6px / 12px;
+  -webkit-border-radius: 6px 12px;
+  -khtml-border-radius: 6px / 12px;
+  border-radius: 6px / 12px; }
 
 .pinline_box > div {
   border: 1px solid black;
@@ -56,10 +56,10 @@
   -webkit-border-radius: 4px;
   -khtml-border-radius: 4px;
   border-radius: 4px;
-  -moz-border-radius: 0.5;
-  -webkit-border-radius: 0.5;
-  -khtml-border-radius: 0.5;
-  border-radius: 0.5;
+  -moz-border-radius: 4px / 8px;
+  -webkit-border-radius: 4px 8px;
+  -khtml-border-radius: 4px / 8px;
+  border-radius: 4px / 8px;
   padding-left: 3px;
   padding-right: 3px; }
 
@@ -603,7 +603,7 @@
   background: -webkit-gradient(linear, left top, right top, from(#f7e6de), color-stop(0.4, #f7e6de), color-stop(0.6, #deeade), to(#deeade));
   background: -moz-linear-gradient(left, #f7e6de, #f7e6de, #deeade, #deeade); }
 
-.redwhite .cardtext, .Hybrid.whitered .cardtext {
+.redwhite .cardtext, .whitered .cardtext {
   filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#f7e6de', endColorstr='white', GradientType=1);
   background: -webkit-gradient(linear, left top, right top, from(#f7e6de), color-stop(0.4, #f7e6de), color-stop(0.6, white), to(white));
   background: -moz-linear-gradient(left, #f7e6de, #f7e6de, white, white); }

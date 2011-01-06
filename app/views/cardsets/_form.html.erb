@@ -26,7 +26,7 @@
         <%= f.text_field :description, :width => "50em" %>
           <div class="helptext">This is a short sentence that will be displayed alongside your set's name in lists.
           <br>You can add more elaborate description using
-          <% if !@cardset.new_record?  # Can't use link_to_unless, because n_c_d_p_p(@c) will *error* if @c.new_record. %>
+          <% if !@cardset.new_record?  # Can`t use link_to_unless, because n_c_d_p_p(@c) will *error* if @c.new_record. %>
             <%= link_to "details pages", new_cardset_details_page_path(@cardset) %>.
           <% else %>
             details pages.
@@ -88,6 +88,8 @@
         <% end %>
           <%= config_fields.label :cardlist_show_comments, "Show comments" %>
             <%= config_fields.check_box :cardlist_show_comments %>
+          <%= config_fields.label :cardlist_show_code, "Show code" %>
+            <%= config_fields.check_box :cardlist_show_code %>
           <%= config_fields.label :cardlist_show_active, "Show active" %>
             <%= config_fields.check_box :cardlist_show_active %>
       </div>
@@ -98,6 +100,9 @@
             <%= config_fields.check_box :card_show_code %>
           <%= config_fields.label :card_show_active, "Show active" %>
             <%= config_fields.check_box :card_show_active %>
+          <div class="helptext">Card codes are strings like CW01 used to identify a card's
+          role in the set. If you enable the "active" field, some features like boosters will
+          only select from the active cards rather than all cards.</div>
       </div>
 
     <% end %>

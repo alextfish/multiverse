@@ -1,8 +1,6 @@
 <% # prettycard helper takes boolean param "link?"
 #link = false if local_assigns[:link].nil?
-%>
-
-<div class="cardborder blackborder">
+%><div class="cardborder blackborder">
  <div class="card <%= @card.display_class %>">
   <div class="pinline pinline_box">
    <div class="cardtitlebar">
@@ -14,7 +12,7 @@
      <% end %>
     </div>
     <div class="cardmanacost"><%= format_mana_symbols(@card.cost, true) %></div>
-    &nbsp; <!-- required to give some height to the cardtitlebar -->
+    &nbsp; <% "required to give some height to the cardtitlebar" %>
    </div>
   </div>
   <div class="cardart_container">
@@ -37,7 +35,6 @@
                    (@card.cardtype.blank?  ? "" : "#{@card.cardtype}") +
                    (@card.subtype.blank?   ? "" : " - #{@card.subtype}") %>
      <% typeclass = typeline.length > 28 ? "cardtype condensedtypeline" : "cardtype" %>
-                   
     <div class="<%= typeclass %>">
      <% if !typeline.blank? %>
        <%= h(typeline).gsub("-", "&ndash;").html_safe %>
@@ -45,7 +42,7 @@
        &nbsp;
      <% end %>
     </div>
-    <!-- &nbsp; required to give some height to the cardtypebar -->
+    <% " &nbsp; required to give some height to the cardtypebar " %>
    </div>
   </div>
   <div class="cardtext_container">
@@ -58,18 +55,14 @@
          when 171..200: textboxclass = "cardtext microtext"
          else           textboxclass = "cardtext nanotext"
        end %>
-     <div class="<%= textboxclass %>"><!-- textbox has <%= textbox_length %> chars -->
-      <% if !@card.rulestext.blank? %><%= content_tag(:div, format_card_text(@card, :rulestext), :class => "rulestext") %><% end %>
-      <% if !@card.flavourtext.blank? %><%= content_tag(:div, format_card_text(@card, :flavourtext), :class => "flavourtext") %><% end %>
-     </div>
+     <div class="<%= textboxclass %>"><% Rails.logger.info "#{@card.name}'s textbox has #{textbox_length} chars"%><% if !@card.rulestext.blank? %><%= content_tag(:div, format_card_text(@card, :rulestext), :class => "rulestext") %><% end %>
+      <% if !@card.flavourtext.blank? %><%= content_tag(:div, format_card_text(@card, :flavourtext), :class => "flavourtext") %><% end %></div>
     </div>
    </div>
   <div class="bottombox">
    <% if !@card.artist.blank? %>
      <span class="artist">Illus. <%= @card.artist %></span>
-   <% else %>
-     &nbsp;
-   <% end %>
+   <% else %>&nbsp;<% end %>
    <% if !@card.power.blank? || !@card.toughness.blank? %>
    <div class="ptbox_container">
     <div class="pinline pinline_box pinline_ptbox">

@@ -31,10 +31,10 @@
   -webkit-border-radius: $horz;
   -khtml-border-radius:  $horz;
   border-radius:         $horz; 
-  -moz-border-radius:    $horz / $vert;
-  -webkit-border-radius: $horz / $vert;
-  -khtml-border-radius:  $horz / $vert;
-  border-radius:         $horz / $vert; 
+  -moz-border-radius:    #{$horz} / #{$vert};
+  -webkit-border-radius: $horz $vert;
+  -khtml-border-radius:  #{$horz} / #{$vert};
+  border-radius:         #{$horz} / #{$vert};
 }
 
 /***** Card display *****/

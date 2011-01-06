@@ -1,6 +1,7 @@
 /***** Site layout *****/
 
-a > img { border: 0px; }
+a > img { border: 0px; vertical-align: bottom; }
+a > img:hover { background-color: #fff; }
 
 .flash  { margin-left: 2px; width: 50%; }
 .error  { color: #600; background-color: #f99; border: 1px solid #600; }
@@ -34,6 +35,11 @@ a > img { border: 0px; }
             vertical-align: top; }
 
 .helptext { font-size: smaller; margin: 0px; color: #888; }
+
+/***** Templates used in multiple places *****/
+
+div.CardRenderInline { display: inline-block; }
+img.CardImage        { display: inline-block; }
 
 /***** Comment display *****/
 
