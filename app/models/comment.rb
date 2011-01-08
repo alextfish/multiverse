@@ -37,6 +37,10 @@ class Comment < ActiveRecord::Base
       errors.add(:user_name, " #{user_name} is the name of an existing Multiverse user. Please choose a different name.")
     end
   end
+  
+  def anchor_name
+    "comment_#{id}"
+  end
 
   # Class methods
   def self.status

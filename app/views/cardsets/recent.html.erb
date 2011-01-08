@@ -2,51 +2,25 @@
   <%= @title = "#{@cardset.name}: Recent Activity" %>
 </h1>
 
-<%= render 'setviews' %>
+<%= render "setviews" %>
 
-<% @owner = User.find_by_id(@cardset.user_id) %>
-<% card_comments = Comment.find(:all, :include => :card,
-     :conditions => ["cards.cardset_id = ?", @cardset.id])  %>
-<% recent_items = card_comments + @cardset.cards + @cardset.details_pages + @cardset.comments %>
-<% recent_items.sort! { |x, y| y.recency <=> x.recency }  # sort most recent items highest
-   # TODO: Also remember cardset itself's properties
-%>
-<% items_to_show = recent_items.paginate :page => params[:page] || 1, :per_page => 50 %>
+<% items_to_show = @cardset.logs.paginate :page => params[:page] || 1, :per_page => 50 %>
 
 <p>
-  <% if !recent_items.empty? %>
+  <% if !items_to_show.empty? %>
     Recent updates to <%= @cardset.name %>:
 
     <%= will_paginate items_to_show  %>
 
     <ul class="commentlist compact">
-      <% items_to_show.each do |object| %>
+      <% items_to_show.each do |@log| %>
         <li class="recent_item">
-          <span class="timestamp"><%= format_datetime object.recency %>:</span>
-          <% if object.kind_of?(Card) %>
-              <%= link_to_last_edit_user(object) %>
-              <% if object.created_at == object.updated_at %>created<% else %>updated<% end %>
-              <%= link_to object.name, object %>
-          <% elsif object.kind_of?(DetailsPage) %>
-              <%= link_to_last_edit_user(object) %>
-              <% if object.created_at == object.updated_at %>created<% else %>updated<% end %>
-              page <%= link_to object.title, [@cardset, object] %>
-          <% elsif object.kind_of?(Comment) %>
-              <% if !object.card.nil? %>
-                <% @target = object.card %>
-              <% elsif !object.cardset.nil? %>
-                <% @target = object.cardset %>
-              <% else %>
-                <% raise "Comment on an unidentifiable object: #{object.inspect}" %>
-              <% end %>
-              <%= comment_user_link(object) %>
-              commented on
-              <%= link_to @target.name, @target %>:
-              <!-- %= simple_format h(object.comment), :class => "commentbody" % -->
-              <% @comment = object %>
-              <%= render :partial => 'shared/comment', :locals => { :buttons => false } %>
-          <% else %>
-              <% raise "Unknown object in recent items list: #{object.inspect}" %>
+          <%= render :partial => "log_entry", :locals => { :link_to_recent => false } %>
+          <% if @log.comment? %>
+            <% @comment = Comment.find_by_id(@log.object_id) %>
+            <% if @comment %>
+              <%= render :partial => "shared/comment", :locals => { :buttons => false } %>
+            <% end %>
           <% end %>
       <% end %>
     </ul>
@@ -57,4 +31,4 @@
   <% end %>
 </div>
 
-<%= link_to 'See other cardsets', cardsets_path %>
+<%= link_to "See other cardsets", cardsets_path %>

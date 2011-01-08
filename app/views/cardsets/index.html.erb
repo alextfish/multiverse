@@ -14,10 +14,6 @@
  <th>Owner</th>
  <th>Public access</th>
  <th>Cards</th>
- <!--
- <th style="text-align:right; border-right: none;" class="sortfirstasc">Recent</th>
- <th style="text-align:left; border-left: none;">activity</th>
- -->
  <th class="sortfirstasc">Recent activity</th>
  <th>Description</th>
  </tr>
@@ -31,14 +27,9 @@
      <% if set_viewable %>
        <td><%= @cardset.cards.count %></td>
        <td>
-         <% action = @cardset.recent_action  %>
-        <span style="display:none;"><%= "%08d" % index %></span><!-- for sorting -->
-         <%= link_to format_datetime(action.datestamp), recent_cardset_path(@cardset) %>:
-       <!-- </td>
-       <td> -->
-         <% if action.user %><%= link_to action.user, action.user %><% else %><%= User.name_for(action.user_id) %><% end %>
-         <%= action.past_tense_verb %> 
-         <%= link_to_log_object action %>
+         <% @log = @cardset.recent_action  %>
+         <span style="display:none;"><%= "%08d" % index %></span><!-- for sorting -->
+         <%= render :partial => "log_entry", :locals => { :link_to_recent => true } %>
        </td>
        <td>
          <%= @cardset.description %>

@@ -145,7 +145,11 @@ module ApplicationHelper
   end
 
   def format_links(text_in)
+    # Returns [text-out, out-fcn]
     # Translate [[[-links and (((-links into Maruku links
+    out_fcn = nil
+    
+    # Preserve value of @card coming in, because the prettycard renders need us to overwrite it
     old_atcard = @card
     cardset_image_regexp = /\(\(([^)]*)\)\)/
     wizards_image_regexp = /\[\[([^\]]*)\]\]/
@@ -171,6 +175,7 @@ module ApplicationHelper
       text_out = text_middle.gsub(cardset_image_regexp) { |cardname|
         cardset_card_mockup(@cardset, cardname.gsub(remove_brackets_regexp, '\2'))
       }
+      #out_fcn = lambda { }
     end
     @card = old_atcard
     text_out
@@ -237,41 +242,88 @@ module ApplicationHelper
   end
   
   def link_to_log_object(log)
-    case log.kind
-      # For mechanics, return the cardset name and the mechanics path
-      when Log.kind(:mechanic_create), Log.kind(:mechanic_edit):
-        obj = Mechanic.find(log.object_id)
-        cardset = obj.cardset
-        return link_to(cardset.name, cardset_mechanics_path(cardset))
-      when Log.kind(:mechanic_delete):
-        cardset = Cardset.find(log.object_id)
-        return link_to(cardset.name, cardset_mechanics_path(cardset))        
-      # For cardset comments, return the cardset name and the cardset comments path
-      when Log.kind(:comment_cardset):
-        obj = Cardset.find(log.object_id)
-        return link_to(obj.name, cardset_comments_path(obj))
-      # For edited comments, link to either the card, or the cardset comments
-      when Log.kind(:comment_edit):
-        comment = Comment.find(log.object_id)
-        if comment.card
-          return link_to(comment.card.name, comment.card)
-        else
-          return link_to(comment.cardset.name, cardset_comments_path(comment.cardset))
-        end
-      # For details pages, links are nested resources
-      when Log.kind(:details_page_create), Log.kind(:details_page_edit), Log.kind(:comment_details_page):
-        obj = DetailsPage.find(log.object_id)
-        return link_to(obj.title, cardset_details_page_path(obj.cardset, obj))
-      # For cards and cardsets, just give name and path to the object
-      when Log.kind(:cardset_create), Log.kind(:cardset_options), Log.kind(:cardset_import), Log.kind(:card_delete), Log.kind(:details_page_delete):
-        obj = Cardset.find(log.object_id)
-        display_name = obj ? obj.name : ""
-      when Log.kind(:card_create), Log.kind(:card_edit), Log.kind(:comment_card):
-        obj = Card.find(log.object_id)
-        display_name = obj ? obj.name : ""
-      else
-        raise "Don't know how to link to logs of kind #{log.kind} such as log #{log.id}"
+    if log.nil?
+      # Can't get anything from this
+      return log.past_tense_verb(false)
     end
-    return link_to(display_name, obj)
+    obj = log.return_object
+    if obj.nil?
+      # Logs for a deleted object
+      # Just return the kind of object we were expecting
+      case log.kind
+        # Comments: complicated by the way I didn't originally store the id of the comment itself
+        when Log.kind(:comment_cardset):
+          # There may be a cardset id still available
+          if log.cardset
+            return log.past_tense_verb(true) + link_to(log.cardset.name, log.cardset)
+          else
+            return log.past_tense_verb(false)
+          end
+        else
+          return log.past_tense_verb(false)
+      end
+    else
+      case log.kind
+        # For mechanics, return the cardset name and the mechanics path
+        when Log.kind(:mechanic_create), Log.kind(:mechanic_edit):
+          cardset = obj.cardset
+          return log.past_tense_verb(true) + link_to(cardset.name, cardset_mechanics_path(cardset))
+        when Log.kind(:mechanic_delete):
+          return log.past_tense_verb(true) + link_to(obj.name, cardset_mechanics_path(obj)) 
+        # For details pages, links are nested resources
+        when Log.kind(:details_page_create), Log.kind(:details_page_edit), Log.kind(:comment_details_page):
+          return log.past_tense_verb(true) + link_to(obj.title, cardset_details_page_path(obj.cardset, obj))
+        # For cardset comments, return the cardset name and the cardset comments path
+        when Log.kind(:comment_cardset):
+          # This is complicated by the way I didn't originally store the id for cardset comments
+          if obj.kind_of?(Comment)
+            # We have a new-style link with a comment id: link to it
+            return log.past_tense_verb(true) + link_to(obj.cardset.name, 
+                           cardset_comments_path(obj.cardset, :anchor => obj.anchor_name))
+          else
+            # We have an old-style link with just the cardset id
+            return log.past_tense_verb(true) + link_to(obj.name, cardset_comments_path(obj))
+          end
+        # For card comments, return the card name and the card comment anchor
+        when Log.kind(:comment_card):
+          # This is complicated by the way I didn't originally store the id for card comments
+          if obj.kind_of?(Comment)
+            # We have a new-style link with a comment id: link to it
+            return log.past_tense_verb(true) + link_to(obj.card.name, card_path(obj.card, :anchor => obj.anchor_name))
+          else
+            # We have an old-style link with just the card id
+            #f obj 
+              return log.past_tense_verb(true) + link_to(obj.name, obj)
+            #else
+            #  return log.past_tense_verb(false)
+            # end
+          end
+        # For edited comments, link to either the card, or the cardset comments
+        when Log.kind(:comment_edit):
+          if obj.card
+            return log.past_tense_verb(true) + link_to(obj.card.name, card_path(obj.card, :anchor => obj.anchor_name))
+          else
+            return log.past_tense_verb(true) + link_to(obj.cardset.name, 
+                           cardset_comments_path(obj.cardset, :anchor => obj.anchor_name))
+          end
+        # For deleted comments, link to the card if there was one, cardset otherwise
+        when Log.kind(:comment_delete):
+          # And again, sometimes this was the comment id.
+          if obj.kind_of?(Card)
+            return log.past_tense_verb(true) + link_to(display_name, obj)
+          else
+            return log.past_tense_verb(true) + link_to(log.cardset.name, log.cardset)
+          end
+        # For cards and cardsets, just give name and path to the object
+        when Log.kind(:cardset_create), Log.kind(:cardset_options), Log.kind(:cardset_import), Log.kind(:card_delete), Log.kind(:details_page_delete), Log.kind(:card_create), Log.kind(:card_edit):
+          if obj 
+            return log.past_tense_verb(true) + link_to(obj.name, obj)
+          else
+            return log.past_tense_verb(false)
+          end
+        else
+          raise "Don't know how to link to logs of kind #{log.kind} such as log #{log.id}"
+      end
+    end
   end
 end

@@ -4,9 +4,10 @@
   <% commentclass = @comment.public_status_string  %>
 <% end %>
 
-<div class="comment <%= commentclass %>" id="comment_<%= @comment.id %>">
+<div class="comment <%= commentclass %>" id="<%= @comment.anchor_name %>">
+  <a name="<%= @comment.anchor_name %>"></a>
   <% if buttons %>
-    <%= render :partial => 'shared/comment_buttons' %>
+    <%= render :partial => "shared/comment_buttons" %>
   <% end %>
   <div class="commentbody">
     <%= format_all_markup @comment.body, @comment.get_cardset %>

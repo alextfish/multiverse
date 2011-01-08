@@ -42,7 +42,8 @@ class CardsController < ApplicationController
     @card = Card.new(:cardset_id => params[:cardset_id])
     @card.frame = "Auto"
     @card.rarity = "common"
-    unless @cardset && @cardset.new_record?
+    unless @cardset && @cardset.new_record? 
+      # why is this here? under what circumstances will I be going to /cards/new when the @cardset is a new_record?
       @cardset = Cardset.find(params[:cardset_id])
     end
   end
@@ -108,7 +109,9 @@ class CardsController < ApplicationController
       end
       # Horrible MVC violation, but I just can't get .js.erb files to render
       # Can only destroy cards via JS from the cardlist view
-      format.js   { render :text => "$('card_row_#{params[:id]}').visualEffect('Fade', {'queue':'parallel'})" }
+      format.js   do
+        render :text => "$('card_row_#{params[:id]}').visualEffect('Fade', {'queue':'parallel'})" 
+      end
     end
   end
 end

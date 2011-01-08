@@ -72,11 +72,8 @@ class CommentsController < ApplicationController
 
       ok = @comment.save
       if ok
-        if @comment.card # comment on a card
-          @cardset.log :kind=>:comment_card, :user=>current_user, :object_id=>@comment.card.id
-        else            # comment on a cardset
-          @cardset.log :kind=>:comment_cardset, :user=>current_user, :object_id=>@cardset.id
-        end
+        log_kind = ( @comment.card ? :comment_card : :comment_cardset )
+        @cardset.log :kind=>log_kind, :user=>current_user, :object_id=>@comment.id
       else
         flash[:error] = "Error creating comment: #{@comment.errors}"
       end
@@ -106,7 +103,7 @@ class CommentsController < ApplicationController
   def destroy
     @comment = Comment.find(params[:id])
     @comment.destroy
-    @cardset.log :kind=>:comment_delete, :user=>current_user, :object_id=>@comment.id
+    @cardset.log :kind=>:comment_delete, :user=>current_user, :object_id=>@comment.parent.id
 
     redirect_to parent_view(@comment)
   end

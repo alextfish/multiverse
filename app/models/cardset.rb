@@ -121,49 +121,91 @@ class Cardset < ActiveRecord::Base
   def recent_action
     self.logs.first
   end
-  def make_logs
-    self.logs.create :kind => Log.kind(:cardset_create),
-                     :datestamp => self.created_at, 
-                     :user => self.user,
-                     :object_id => self.id
-    card_create = Log.kind(:card_create)
-    card_edit = Log.kind(:card_edit)
+  def datestamps_close(d1,d2)
+    (d1-d2).abs < 20.seconds
+  end
+  def make_logs_v2
+    updated_card_comment_logs = 0
+    new_card_comment_logs = 0
+    updated_cardset_comment_logs = 0
+    new_cardset_comment_logs = 0
+  
     comment_card = Log.kind(:comment_card)
+    comment_cardset = Log.kind(:comment_cardset)
+    comment_edit = Log.kind(:comment_edit)
     self.cards.each do |card|
-      self.logs.create :kind => ( card.created_at == card.updated_at ? card_create : card_edit),
-                       :datestamp => card.updated_at, 
-                       :user => User.find_by_id(card.last_edit_by),
-                       :object_id => card.id
       card.comments.each do |comment|
-        self.logs.create :kind => comment_card,
-                         :datestamp => comment.created_at, 
-                         :user => comment.user,
-                         :object_id => card.id
+        # find creation
+        orig_create_log = self.logs.select { |l| l.kind == comment_card &&
+                         datestamps_close(l.datestamp, comment.created_at) &&
+                         l.user == comment.user }[0]
+        if orig_create_log
+          updated_card_comment_logs += 1
+          orig_create_log.object_id = comment.id
+          orig_create_log.save
+        else
+          new_card_comment_logs += 1
+          self.logs.create :kind => comment_card,
+                           :datestamp => comment.created_at, 
+                           :user => comment.user,
+                           :object_id => comment.id
+        end
+        
+        # if !datestamps_close(comment.created_at, comment.updated_at)
+          # # find edit
+          # orig_update_log = self.logs.select { |l| l.kind == comment_edit &&
+                           # datestamps_close(l.datestamp, comment.updated_at) &&
+                           # l.user == comment.user }[0]
+          # if orig_update_log
+            # updated_card_comment_logs += 1
+            # orig_update_log.object_id = comment.id
+            # orig_update_log.save
+          # else
+            # new_card_comment_logs += 1
+            # self.logs.create :kind => comment_edit,
+                             # :datestamp => comment.updated_at, 
+                             # :user => comment.user,
+                             # :object_id => comment.id
+          # end
+        # end
       end
     end
-    comment_cardset = Log.kind(:comment_cardset)
     self.comments.each do |comment|
-      self.logs.create :kind => comment_cardset,
-                       :datestamp => comment.created_at, 
-                       :user => comment.user,
-                       :object_id => comment.id
+      # find creation
+      orig_create_log = self.logs.select { |l| l.kind == comment_cardset &&
+                       datestamps_close(l.datestamp, comment.created_at) &&
+                       l.user == comment.user }[0]
+      if orig_create_log
+        updated_cardset_comment_logs += 1
+        orig_create_log.object_id = comment.id
+        orig_create_log.save
+      else
+        new_cardset_comment_logs += 1
+        self.logs.create :kind => comment_cardset,
+                         :datestamp => comment.created_at, 
+                         :user => comment.user,
+                         :object_id => comment.id
+      end
+      
+      # if !datestamps_close(comment.created_at, comment.updated_at)
+        # # find update
+        # orig_update_log = self.logs.select { |l| l.kind == comment_edit &&
+                         # datestamps_close(l.datestamp, comment.updated_at) &&
+                         # l.user == comment.user }[0]
+        # if orig_update_log
+          # updated_cardset_comment_logs += 1
+          # orig_update_log.object_id = comment.id
+          # orig_update_log.save
+        # else
+          # new_cardset_comment_logs += 1
+          # self.logs.create :kind => comment_edit,
+                           # :datestamp => comment.updated_at, 
+                           # :user => comment.user,
+                           # :object_id => comment.id
+        # end
+      # end
     end
-    details_page_create = Log.kind(:details_page_create)
-    details_page_edit = Log.kind(:details_page_edit)
-    self.details_pages.each do |dp|
-      self.logs.create :kind => ( dp.created_at == dp.updated_at ? details_page_create : details_page_edit),
-                       :datestamp => dp.updated_at, 
-                       :user => User.find_by_id(dp.last_edit_by),
-                       :object_id => dp.id
-    end
-    mechanic_create = Log.kind(:mechanic_create)
-    mechanic_edit = Log.kind(:mechanic_edit)
-    self.mechanics.each do |mech|
-      self.logs.create :kind => ( mech.created_at == mech.updated_at ? mechanic_create : mechanic_edit),
-                       :datestamp => mech.updated_at, 
-                       :user => User.find_by_id(self.user),
-                       :object_id => mech.id
-    end
+    Rails.logger.info "Updated #{self.name} logs: card comment logs new #{new_card_comment_logs}, updated #{updated_card_comment_logs}; cardset comment logs new #{new_cardset_comment_logs}, updated #{updated_cardset_comment_logs}"
   end
 
   ########################## Boosters ##########################
@@ -277,7 +319,7 @@ class Cardset < ActiveRecord::Base
   FIELDS = ["","name","cost","supertype","cardtype","subtype","rarity","rulestext","flavourtext","power","toughness","loyalty","code","frame","art_url","artist","image_url","comment","active"]
   ENUM_ALIASES = {
     "frame" => {  # keys need to be strings, not symbols
-      "w" => "white", "u" => "blue", "b" => "black", "r" => "red", "g" => "green", "a" => "artifact", "z" => "multicolour", "l" => "land", "h" => "hybrid",
+      "w" => "white", "u" => "blue", "b" => "black", "r" => "red", "g" => "green", "a" => "artifact", "z" => "multicolour", "m" => "multicolour", "l" => "land", "h" => "hybrid",
       "gold" => "multicolour", "multi" => "multicolour", "multicolor" => "multicolour", "multicolored" => "multicolour", "multicoloured" => "multicolour"
     },
     "rarity" => {

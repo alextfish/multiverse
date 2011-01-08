@@ -143,6 +143,7 @@ class CardsetsController < ApplicationController
 
   # DELETE /cardsets/1
   def destroy
+    @cardset.log :kind=>:cardset_delete, :user=>current_user, :object_id=>@cardset.id
     @cardset.destroy
 
     redirect_to(cardsets_url)
