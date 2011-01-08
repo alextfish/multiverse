@@ -301,7 +301,7 @@ module ApplicationHelper
         # For edited comments, link to either the card, or the cardset comments
         when Log.kind(:comment_edit):
           if obj.card
-            return log.past_tense_verb(true) + link_to(obj.card.name, card_path(obj.card, :anchor => obj.anchor_name))
+            return log.past_tense_verb(true) + link_to(obj.card.printable_name, card_path(obj.card, :anchor => obj.anchor_name))
           else
             return log.past_tense_verb(true) + link_to(obj.cardset.name, 
                            cardset_comments_path(obj.cardset, :anchor => obj.anchor_name))
@@ -310,12 +310,19 @@ module ApplicationHelper
         when Log.kind(:comment_delete):
           # And again, sometimes this was the comment id.
           if obj.kind_of?(Card)
-            return log.past_tense_verb(true) + link_to(display_name, obj)
+            return log.past_tense_verb(true) + link_to(obj.printable_name, obj)
           else
             return log.past_tense_verb(true) + link_to(log.cardset.name, log.cardset)
           end
-        # For cards and cardsets, just give name and path to the object
-        when Log.kind(:cardset_create), Log.kind(:cardset_options), Log.kind(:cardset_import), Log.kind(:card_delete), Log.kind(:details_page_delete), Log.kind(:card_create), Log.kind(:card_edit):
+        # For cards, just give name and path to the object
+        when Log.kind(:card_create), Log.kind(:card_edit):
+          if obj 
+            return log.past_tense_verb(true) + link_to(obj.printable_name, obj)
+          else
+            return log.past_tense_verb(false)
+          end
+        # For cardsets, just give name and path to the object
+        when Log.kind(:cardset_create), Log.kind(:cardset_options), Log.kind(:cardset_import), Log.kind(:card_delete), Log.kind(:details_page_delete):
           if obj 
             return log.past_tense_verb(true) + link_to(obj.name, obj)
           else

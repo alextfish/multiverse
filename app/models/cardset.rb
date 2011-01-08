@@ -148,7 +148,8 @@ class Cardset < ActiveRecord::Base
           self.logs.create :kind => comment_card,
                            :datestamp => comment.created_at, 
                            :user => comment.user,
-                           :object_id => comment.id
+                           :object_id => comment.id,
+                           :text => "created by make_logs_v2"
         end
         
         # if !datestamps_close(comment.created_at, comment.updated_at)
@@ -184,7 +185,8 @@ class Cardset < ActiveRecord::Base
         self.logs.create :kind => comment_cardset,
                          :datestamp => comment.created_at, 
                          :user => comment.user,
-                         :object_id => comment.id
+                         :object_id => comment.id,
+                         :text => "created by make_logs_v2"
       end
       
       # if !datestamps_close(comment.created_at, comment.updated_at)
