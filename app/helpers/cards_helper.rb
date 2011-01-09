@@ -6,6 +6,7 @@ module CardsHelper
     /\bETB\b/ => "enter the battlefield",
     /\bCIPs\b/ => "comes into play",
     /\bCIP\b/ => "come into play",
+    /\bCMC\b/ => "converted mana cost",
     " // " => "\n",
   }
   MARKUP_SUBSTITUTIONS = {

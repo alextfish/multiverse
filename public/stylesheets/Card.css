@@ -219,7 +219,7 @@
 .minitext  img { width: 12px; height: 12px; }
 .microtext img { width: 11px; height: 11px; }
 .nanotext  img { width: 10px; height: 10px; } */
-.common {
+.common, .token, .basic {
   color: #fff;
   background-color: #000; }
 
@@ -653,3 +653,6 @@
 
 .image_url_field {
   width: 400px; }
+
+form #raritycell {
+  border: 1px solid black; }

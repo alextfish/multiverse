@@ -69,12 +69,12 @@ class CardsetsController < ApplicationController
 
   def booster 
     begin
-      @booster, err_message, data = @cardset.make_booster()
+      @booster, err_message, @booster_info = @cardset.make_booster()
       if @booster.nil?
         flash[:error] = err_message
         redirect_to :back #, :error => err_message
       else
-        @m10_collation = data[0]
+        Rails.logger.info @booster_info.inspect
         render
       end
       # I just can't get "rescue Exceptions::BoosterError => e" to work, it gives "uninit constant" errors

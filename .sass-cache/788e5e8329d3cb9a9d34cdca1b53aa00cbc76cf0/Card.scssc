@@ -1,8 +1,8 @@
 3.0.24 (Classy Cassidy)
-c692f9d2614692813b9715941b220053ed6c508d
+693d7033a66307062fd42119cf0fe16ded269e13
 o:Sass::Tree::RootNode
 :
-@linei:@template"y>@mixin gradient_horz($start, $end) {
+@linei:@template"¶>@mixin gradient_horz($start, $end) {
   filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#{$start}', endColorstr='#{$end}', GradientType=1);
   background: -webkit-gradient(linear, left top, right top, from($start), to($end));
   background: -moz-linear-gradient(left,  $start,  $end);
@@ -152,7 +152,7 @@ c692f9d2614692813b9715941b220053ed6c508d
 .microtext img { width: 11px; height: 11px; }
 .nanotext  img { width: 10px; height: 10px; } */
 
-.common {  color: #fff;
+.common, .token, .basic {  color: #fff;
   background-color: #000;}
 .uncommon {
   background: #ccc;
@@ -343,7 +343,7 @@ $Land_Green_Text: #cfc;
 .rulestextfield { width: 98%; }
 .art_url_field  { width: 98%; }
 .image_url_field  { width: 400px; }
-:@children[Ëo:Sass::Tree::MixinDefNode;i;[o:Sass::Tree::PropNode;i;[ :@prop_syntax:new:@valueo: Sass::Script::Interpolation:@aftero:Sass::Script::String
+form #raritycell { border: 1px solid black; }:@children[Ìo:Sass::Tree::MixinDefNode;i;[o:Sass::Tree::PropNode;i;[ :@prop_syntax:new:@valueo: Sass::Script::Interpolation:@aftero:Sass::Script::String
 :@context:default;i:
 @type:identifier;"', GradientType=1):@options{ :@originally_textF:	@mido:Sass::Script::Variable	;;;i;@:
 @name"end;@:@whitespace_afterF:@beforeo;;o;
@@ -586,7 +586,7 @@ width;-i o;
 .cardtext  img { width: 13px; height: 13px; vertical-align: middle; }
 .minitext  img { width: 12px; height: 12px; }
 .microtext img { width: 11px; height: 11px; }
-.nanotext  img { width: 10px; height: 10px; } */;@;=[ o;>;i—;?[".common;[o;
+.nanotext  img { width: 10px; height: 10px; } */;@;=[ o;>;i—;?[".common, .token, .basic;[o;
 ;i—;[ ;;;o;;;;;;"	#fff;@;["
 color;-i o;
 ;i˜;[ ;;;o;;;;;;"	#000;@;["background-color;-i ;5T;@;-i o;>;i™;?[".uncommon;[o;
@@ -808,4 +808,5 @@ width;-i ;5T;@;-i o;>;iT;?[".art_url_field;[o;
 width;-i ;5T;@;-i o;>;iU;?[".image_url_field;[o;
 ;iU;[ ;;;o;;;;;;"
 400px;@;["
-width;-i ;5T;@;-i ;5T;@
+width;-i ;5T;@;-i o;>;iV;?["form #raritycell;[o;
+;iV;[ ;;;o;;;;;;"1px solid black;@;["border;-i ;5T;@;-i ;5T;@

@@ -224,11 +224,13 @@ class Cardset < ActiveRecord::Base
     uncommons = self.cards.select { |c| c.rarity == "uncommon" } 
     rares     = self.cards.select { |c| c.rarity == "rare" } 
     mythics   = self.cards.select { |c| c.rarity == "mythic" }     
-    basics    = self.cards.select { |c| c.rarity == "basic" }
+    basics    = self.cards.select { |c| c.rarity == "basic" }   
+    tokens    = self.cards.select { |c| c.rarity == "token" }
     if basics.empty? 
       basics = Card.basic_land 
     end
     rares_and_mythics = rares + rares + mythics 
+    tokens_present = !tokens.empty?
     # if uncommons.empty? || commons.empty? || rares_and_mythics.empty?
     #   raise "Set doesn't have cards of enough rarities to assemble boosters. Commons, uncommons, and either rares or mythics are required."
     # end
@@ -302,7 +304,11 @@ class Cardset < ActiveRecord::Base
     if @m10_collation
       @booster << basics.choice
     end
-    data_out = [@m10_collation]
+    if tokens_present
+      @booster << tokens.choice
+    end
+    
+    data_out = [@m10_collation, tokens_present]
     return [@booster, "", data_out]
   end
   
@@ -382,7 +388,11 @@ class Cardset < ActiveRecord::Base
 
     # Read the CSV
     # Use CSV.parse, which takes care of quoting and newlines for us
-    cardsdata = CSV.parse(params[:data], params[:separator]);
+    begin
+      cardsdata = CSV.parse(params[:data], params[:separator]);
+    rescue CSV::IllegalFormatError => ie
+      return false, "I'm sorry, but your CSV wasn't valid. Try splitting it into chunks and importing them separately.", "", []      
+    end
     cards_and_comments = []
     skipped_cards = overwritten_cards = new_cards = 0
 

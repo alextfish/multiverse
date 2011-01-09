@@ -98,7 +98,7 @@ class Card < ActiveRecord::Base
   end
 
   def self.rarities
-    ["common", "uncommon", "rare", "mythic"]
+    ["common", "uncommon", "rare", "mythic", "token", "basic"]
   end
   def self.supertypes
     ["Legendary", "Basic", "World", "Snow"]

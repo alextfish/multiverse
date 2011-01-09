@@ -36,7 +36,8 @@
        <div class="field">
         <%= f.label :cost %><br />
         <%= f.text_field :cost,
-          { :onchange => "update_frame()" } %>
+          { :onchange => "update_frame()",
+            :onkeyup => "update_frame()" } %>
        </div>
       <!-- /div --></td></tr></table>
      </div>
@@ -54,17 +55,28 @@
       <table><tr>
        <td>
         <div class="cardtype">
-          <%= f.text_field :supertype %>
+          <% if @card.supertype.blank? || Card.supertypes.include?(@card.supertype) %>
+            <%= select_tag "card_supertype_select", options_for_select(Card.supertypes << "Custom", :selected => @card.supertype),
+              { :onchange => "update_card_supertype(this.value)",
+              :onkeyup => "update_card_supertype(this.value)", :include_blank => true } %>
+            <% supertype_visibility = "none"; %>
+          <% else %>
+            <% supertype_visibility = "inline"; %>
+          <% end %>
+          <%= f.text_field :supertype, { :style => "display:#{supertype_visibility};" } %>
           <%= f.text_field :cardtype,
-          { :onchange => "update_frame()" } %> &ndash;
+          { :onchange => "update_frame()",
+            :onkeyup => "update_frame()" } %> &ndash;
           <%= f.text_field :subtype %>
         </div>
        </td>
        <td>
         <div class="<%= @card.rarity %>" id="raritycell">
-          <%= f.select :rarity, Card.rarities.map{|r| [r[0].chr.upcase, r]},
+          <%= f.select :rarity, Card.rarities.map{|r| [r.capitalize, r]},
           { :selected => @card.rarity },
-          { :onchange => "update_card_rarity(this.value)" } %>
+          { :onchange => "update_card_rarity(this.value)",
+            :onkeyup => "update_card_rarity(this.value)",
+            :onkeydown => "update_card_rarity(this.value)" } %>
         </div>
        </td>
       </tr></table>
@@ -159,6 +171,7 @@
        <p>Abbreviations supported: 
 <br><code>ETBs</code> becomes <code>enters the battlefield</code>
 <br><code>UEOT</code> becomes <code>until end of turn</code>
+<br><code>CMC</code> becomes <code>converted mana cost</code>
 <br><code>~</code>, <code>~this~</code> and <code>CARDNAME</code>
 become the card's name
 <br>Surround with asterisks for <i>*italics*</i> and double-asterisks for <b>**bold**</b>

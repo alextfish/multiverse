@@ -148,7 +148,7 @@
 .microtext img { width: 11px; height: 11px; }
 .nanotext  img { width: 10px; height: 10px; } */
 
-.common {  color: #fff;
+.common, .token, .basic {  color: #fff;
   background-color: #000;}
 .uncommon {
   background: #ccc;
@@ -339,3 +339,4 @@ $Land_Green_Text: #cfc;
 .rulestextfield { width: 98%; }
 .art_url_field  { width: 98%; }
 .image_url_field  { width: 400px; }
+form #raritycell { border: 1px solid black; }

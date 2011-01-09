@@ -1,6 +1,14 @@
 // Place your application-specific JavaScript functions and classes here
 // This file is automatically included by javascript_include_tag :defaults
 
+function update_card_supertype(new_value) {
+  if (new_value == "Custom") {
+    $("card_supertype_select").hide();
+    $("card_supertype").show();
+  } else {
+    $("card_supertype").value = new_value;
+  }
+}
 function update_frame() {
   cardframe = $("card_frame").value;
     //if( cardframe != "Auto" ) {
