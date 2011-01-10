@@ -48,7 +48,9 @@ function update_frame() {
     }
     newClass = outer + inner + pinline;
   //}
-  $("card").className = "card " + newClass;
+  universalClass = "form card ";
+  if ($("card").className.search(/token/) > -1) { universalClass += "token "; }
+  $("card").className = universalClass + newClass;
 }
 
 function update_card_rarity(rarity_in) {

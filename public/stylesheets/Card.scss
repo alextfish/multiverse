@@ -183,8 +183,8 @@
   @include elliptical_corners(50px, 30px); 
   border-right: 1px solid black;
   border-left: 1px solid white;
-height: 100%;
-min-height: 150px;
+  height: 100%;
+  min-height: 175px;
  }
 .token .cardart_container .pinline_sides { 
   @include elliptical_corners(45px, 32px); 

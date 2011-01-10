@@ -1,8 +1,8 @@
 3.0.24 (Classy Cassidy)
-8b83ad9e73c19c4e924ee447032a32c149c8dada
+64a5e2da511d35aa3830bff88440d0252b554d7d
 o:Sass::Tree::RootNode
 :
-@linei:@template"µC@mixin gradient_horz($start, $end) {
+@linei:@template"¹C@mixin gradient_horz($start, $end) {
   filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#{$start}', endColorstr='#{$end}', GradientType=1);
   background: -webkit-gradient(linear, left top, right top, from($start), to($end));
   background: -moz-linear-gradient(left,  $start,  $end);
@@ -187,8 +187,8 @@
   @include elliptical_corners(50px, 30px); 
   border-right: 1px solid black;
   border-left: 1px solid white;
-height: 100%;
-min-height: 150px;
+  height: 100%;
+  min-height: 175px;
  }
 .token .cardart_container .pinline_sides { 
   @include elliptical_corners(45px, 32px); 
@@ -683,7 +683,7 @@ o;@
 ;i¹;[ ;;;o;;;;;;"1px solid white;@;["border-left;-i o;
 ;iº;[ ;;;o;;;;;;"	100%;@;["height;-i o;
 ;i»;[ ;;;o;;;;;;"
-150px;@;["min-height;-i ;5T;@;-i o;>;i½;?["-.token .cardart_container .pinline_sides;[o;@
+175px;@;["min-height;-i ;5T;@;-i o;>;i½;?["-.token .cardart_container .pinline_sides;[o;@
 ;i¾;[ ;@;"elliptical_corners;/[o;6;7"	45px;;;i¾;i2;8[ ;{ ;9["pxo;6;7"	32px;;;i¾;i%;8[ ;@a;9["pxo;
 ;i¿;[ ;;;o;;;;;;"1px solid black;@;["border-left;-i o;
 ;iÀ;[ ;;;o;;;;;;"1px solid white;@;["border-top;-i o;
