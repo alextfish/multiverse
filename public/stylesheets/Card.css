@@ -254,7 +254,7 @@
 .token.card.form {
   height: inherit; }
 
-.token .cardname {
+.token .cardname, .token .cardname a {
   color: #ba8;
   text-shadow: #ffff99 1px -1px;
   float: none;

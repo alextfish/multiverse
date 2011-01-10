@@ -169,7 +169,7 @@
 .token .cardtext_container.notext { padding: 0px; display: none; }
 .token.card { height: 262px;}
 .token.card.form { height: inherit; }
-.token .cardname { 
+.token .cardname, .token .cardname a { 
   color: #ba8; 
   text-shadow: #ff9 1px -1px;
   float: none; display: inline;}

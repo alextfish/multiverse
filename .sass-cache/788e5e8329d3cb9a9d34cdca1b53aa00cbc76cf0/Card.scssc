@@ -1,8 +1,8 @@
 3.0.24 (Classy Cassidy)
-a4893f6394bc9c7359e934eb9cf2fc789cf4c44e
+f14fb777d61263e67aeb9e4bd8488d669fa709a3
 o:Sass::Tree::RootNode
 :
-@linei:@template"ØC@mixin gradient_horz($start, $end) {
+@linei:@template"ìC@mixin gradient_horz($start, $end) {
   filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#{$start}', endColorstr='#{$end}', GradientType=1);
   background: -webkit-gradient(linear, left top, right top, from($start), to($end));
   background: -moz-linear-gradient(left,  $start,  $end);
@@ -173,7 +173,7 @@ a4893f6394bc9c7359e934eb9cf2fc789cf4c44e
 .token .cardtext_container.notext { padding: 0px; display: none; }
 .token.card { height: 262px;}
 .token.card.form { height: inherit; }
-.token .cardname { 
+.token .cardname, .token .cardname a { 
   color: #ba8; 
   text-shadow: #ff9 1px -1px;
   float: none; display: inline;}
@@ -665,7 +665,7 @@ color;-i o;
 ;i©;[ ;;;o;;;;;;"	none;@;["display;-i ;5T;@;-i o;>;iª;?[".token.card;[o;
 ;iª;[ ;;;o;;;;;;"
 262px;@;["height;-i ;5T;@;-i o;>;i«;?[".token.card.form;[o;
-;i«;[ ;;;o;;;;;;"inherit;@;["height;-i ;5T;@;-i o;>;i¬;?[".token .cardname;[	o;
+;i«;[ ;;;o;;;;;;"inherit;@;["height;-i ;5T;@;-i o;>;i¬;?[").token .cardname, .token .cardname a;[	o;
 ;i­;[ ;;;o;;;;;;"	#ba8;@;["
 color;-i o;
 ;i®;[ ;;;o;0;;;i®;1;2;3o;6;7"	-1px;;;i®;iú;8[ ;{ ;9["px;4o;0;;;i®;1;2;3o;6;7"1px;;;i®;i;8[ ;@î;9["px;4o;D
