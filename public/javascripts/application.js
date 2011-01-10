@@ -51,10 +51,16 @@ function update_frame() {
   $("card").className = "card " + newClass;
 }
 
-function update_card_rarity(new_rarity) {
-  cell = document.getElementById("raritycell");
-  //cell.className = "cardrarity " + new_rarity.toLowerCase();
-  cell.className = new_rarity.toLowerCase();
+function update_card_rarity(rarity_in) {
+  new_rarity = rarity_in.toLowerCase();
+  $("raritycell").className = "cardrarity " + new_rarity;
+  if (new_rarity == "token") {
+    if ($("card").className.search(/token/) == -1) {
+      $("card").className += " token";
+    }
+  } else {
+    $("card").className = $("card").className.replace(/ token/,"");
+  }
 }
 
 function update_details_pages(new_text) {

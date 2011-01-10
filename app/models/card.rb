@@ -98,7 +98,7 @@ class Card < ActiveRecord::Base
   end
 
   def self.rarities
-    ["common", "uncommon", "rare", "mythic", "token", "basic"]
+    ["common", "uncommon", "rare", "mythic", "basic", "token"]
   end
   def self.supertypes
     ["Legendary", "Basic", "World", "Snow"]
@@ -162,6 +162,9 @@ class Card < ActiveRecord::Base
     end
     if self.num_colours == 2
       cardclass << " " + self.colour_strings_present.join("").downcase
+    end
+    if self.rarity == "token"
+      cardclass << " token"
     end
     cardclass
   end

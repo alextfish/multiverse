@@ -23,8 +23,8 @@
    </div>
    <div class="onetab" id="prettycard"><a name="mockup"></a -->
    <div class="blackborder">
-   <div class="card <%= @card.display_class %>" id="card">
-    <div class="pinline pinline_box">
+   <div class="form card <%= @card.display_class %>" id="card">
+    <div class="pinline pinline_box namebox">
      <div class="cardtitlebar">
       <!-- div class="cardname" --><table><tr><td>
        <div class="field">
@@ -71,7 +71,7 @@
         </div>
        </td>
        <td>
-        <div class="<%= @card.rarity %>" id="raritycell">
+        <div class="cardrarity <%= @card.rarity %>" id="raritycell">
           <%= f.select :rarity, Card.rarities.map{|r| [r.capitalize, r]},
           { :selected => @card.rarity },
           { :onchange => "update_card_rarity(this.value)",

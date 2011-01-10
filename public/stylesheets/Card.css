@@ -219,7 +219,7 @@
 .minitext  img { width: 12px; height: 12px; }
 .microtext img { width: 11px; height: 11px; }
 .nanotext  img { width: 10px; height: 10px; } */
-.common, .token, .basic {
+.cardrarity.common, .cardrarity.token, .cardrarity.basic {
   color: #fff;
   background-color: #000; }
 
@@ -240,6 +240,92 @@
   background: -webkit-gradient(linear, right top, left bottom, from(#aa4433), color-stop(0.5, #ee8866), to(#aa4433));
   background: -moz-linear-gradient(right top, #aa4433, #ee8866, #aa4433); }
 
+/***** Tokens *****/
+.token .cardtext {
+  min-height: 0px; }
+
+.token .cardtext_container.notext {
+  padding: 0px;
+  display: none; }
+
+.token.card {
+  height: 262px; }
+
+.token.card.form {
+  height: inherit; }
+
+.token .cardname {
+  color: #ba8;
+  text-shadow: #ffff99 1px -1px;
+  float: none;
+  display: inline; }
+
+.token .cardtitlebar {
+  background-color: #000 !important;
+  text-align: center; }
+
+.token .cardtitlebar label {
+  color: #fff; }
+
+.token .cardmanacost {
+  display: none; }
+
+.token .cardart {
+  -moz-border-radius: 50px;
+  -webkit-border-radius: 50px;
+  -khtml-border-radius: 50px;
+  border-radius: 50px;
+  -moz-border-radius: 50px / 30px;
+  -webkit-border-radius: 50px 30px;
+  -khtml-border-radius: 50px / 30px;
+  border-radius: 50px / 30px;
+  border-right: 1px solid black;
+  border-left: 1px solid white;
+  height: 100%;
+  min-height: 150px; }
+
+.token .cardart_container .pinline_sides {
+  -moz-border-radius: 45px;
+  -webkit-border-radius: 45px;
+  -khtml-border-radius: 45px;
+  border-radius: 45px;
+  -moz-border-radius: 45px / 32px;
+  -webkit-border-radius: 45px 32px;
+  -khtml-border-radius: 45px / 32px;
+  border-radius: 45px / 32px;
+  border-left: 1px solid black;
+  border-top: 1px solid white;
+  border-bottom: 1px solid black;
+  padding-left: 2px;
+  padding-right: 3px;
+  height: 100%;
+  min-height: 100px; }
+
+.token .cardart_container {
+  -moz-border-radius: 44px;
+  -webkit-border-radius: 44px;
+  -khtml-border-radius: 44px;
+  border-radius: 44px;
+  -moz-border-radius: 44px / 32px;
+  -webkit-border-radius: 44px 32px;
+  -khtml-border-radius: 44px / 32px;
+  border-radius: 44px / 32px;
+  min-height: 100px; }
+
+.token .pinline.namebox {
+  background: #ba8;
+  border-top: 1px solid #ff9;
+  padding-top: 1px;
+  width: 120px;
+  margin: auto; }
+
+.token.form .pinline.namebox {
+  width: inherit; }
+
+.token .cardtitlebar {
+  border-bottom: 1px solid #ff9; }
+
+/***** Colours *****/
 .Colourless.card, .Colourless .cardart {
   background-color: #ccc6cc; }
 

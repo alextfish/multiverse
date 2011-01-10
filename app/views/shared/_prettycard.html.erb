@@ -2,7 +2,7 @@
 #link = false if local_assigns[:link].nil?
 %><div class="cardborder blackborder">
  <div class="card <%= @card.display_class %>">
-  <div class="pinline pinline_box">
+  <div class="pinline pinline_box namebox">
    <div class="cardtitlebar">
     <div class="cardname">
      <% if link %>
@@ -45,16 +45,16 @@
     <% " &nbsp; required to give some height to the cardtypebar " %>
    </div>
   </div>
-  <div class="cardtext_container">
+  <% textbox_length = (@card.rulestext.blank?   ? 0 : textbox_chars_displayed(@card, :rulestext  )) + 
+                     (@card.flavourtext.blank? ? 0 : textbox_chars_displayed(@card, :flavourtext)) %>
+  <% case textbox_length
+     when 0..150:   textboxclass = "cardtext"
+     when 151..170: textboxclass = "cardtext minitext"
+     when 171..200: textboxclass = "cardtext microtext"
+     else           textboxclass = "cardtext nanotext"
+   end %>
+  <div class="cardtext_container<% if textbox_length == 0 %> notext<% end %>">
    <div class="pinline pinline_sidesbottom">
-     <% textbox_length = (@card.rulestext.blank?   ? 0 : textbox_chars_displayed(@card, :rulestext  )) + 
-                         (@card.flavourtext.blank? ? 0 : textbox_chars_displayed(@card, :flavourtext)) %>
-     <% case textbox_length
-         when 0..150:   textboxclass = "cardtext"
-         when 151..170: textboxclass = "cardtext minitext"
-         when 171..200: textboxclass = "cardtext microtext"
-         else           textboxclass = "cardtext nanotext"
-       end %>
      <div class="<%= textboxclass %>"><% Rails.logger.info "#{@card.name}'s textbox has #{textbox_length} chars"%><% if !@card.rulestext.blank? %><%= content_tag(:div, format_card_text(@card, :rulestext), :class => "rulestext") %><% end %>
       <% if !@card.flavourtext.blank? %><%= content_tag(:div, format_card_text(@card, :flavourtext), :class => "flavourtext") %><% end %></div>
     </div>
