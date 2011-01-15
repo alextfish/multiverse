@@ -40,8 +40,14 @@ class CardsController < ApplicationController
   # GET /cards/new
   def new
     @card = Card.new(:cardset_id => params[:cardset_id])
-    @card.frame = "Auto"
-    @card.rarity = "common"
+    if params[:code] =~ Card.code_regexp
+      @card.code = params[:code]
+      @card.rarity, @card.frame = Card.interpret_code params[:code]
+      Rails.logger.info "Detected valid code #{params[:code]}: using rarity #{@card.rarity} and frame #{@card.frame}"
+    else
+      @card.frame = "Auto"
+      @card.rarity = "common"
+    end
     unless @cardset && @cardset.new_record? 
       # why is this here? under what circumstances will I be going to /cards/new when the @cardset is a new_record?
       @cardset = Cardset.find(params[:cardset_id])

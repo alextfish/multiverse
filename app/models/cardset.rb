@@ -209,6 +209,11 @@ class Cardset < ActiveRecord::Base
     end
     Rails.logger.info "Updated #{self.name} logs: card comment logs new #{new_card_comment_logs}, updated #{updated_card_comment_logs}; cardset comment logs new #{new_cardset_comment_logs}, updated #{updated_cardset_comment_logs}"
   end
+  
+  ########################## Skeletons #########################  
+  def skeleton
+    self.details_pages.find{|dp| dp.name == "Skeleton" }
+  end
 
   ########################## Boosters ##########################
   def cards_per_line

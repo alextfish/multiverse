@@ -6,7 +6,7 @@ class CardsetsController < ApplicationController
   before_filter :only => [:new, :create] do
     require_any_login
   end
-  before_filter :only => [:edit, :update, :destroy, :todo] do
+  before_filter :only => [:edit, :update, :destroy, :todo, :generate_skeleton] do
     require_permission_to_admin(@cardset)
   end
 
@@ -54,6 +54,11 @@ class CardsetsController < ApplicationController
   # GET /cardsets/1/todo
   def todo
   end
+  
+  # GET /cardsets/1/todo
+  def skeleton
+    @skeleton = @cardset.skeleton
+  end
 
   # GET /cardsets/1/import
   def import
@@ -95,6 +100,11 @@ class CardsetsController < ApplicationController
       flash.now[:error] = message
       render :import
     end
+  end
+  
+  # POST /cardsets/1/generate_skeleton
+  def generate_skeleton
+    TODO
   end
 
   # GET /cardsets/new

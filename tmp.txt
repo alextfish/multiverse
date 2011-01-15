@@ -1,0 +1,175 @@
+=> ["I see the problem. It's possible to (a) say that some black cards should be enchantments, like some black cards are instants (b) make it do something overw
+helming but not outright winning, or otherwise contingent (c) tweak the mechanics so it does aproximately the same thing but feels like a sorcery. I debated alt
+ernatives for (c), but nothing seemed perfect.\r\n\r\n\"At the next end step\" wouldn't quite be an enchantment as it would only happen once, but I agree it's n
+ot quite a sorcery. The same would apply to having the sorcery work or be cast from the graveyard.", "The flavor and mechanics fit amazingly well, painting a vi
+vid picture. I have to admit that I was thrown for a second by the British \"programme\" though.\r\nI also wonder whether it might be slightly overpowered for W
+hite, with three total power for three.", "Oh, I see, you were talking about the flavour? In which case I haven't assessed it, and don't really care much. (((Sk
+y Temple))) is an interesting card usable by a blue-green deck, a black-white deck, or any other. From a design point of view, what I care about is the mechanic
+al affiliation. (Although I've seen mono-red decks run [[[Pendelhaven]]], and mono-green decks run [[[Teetering Peaks]]]...)", "Yeah, the wording is fiddly and
+confusing, so this card shouldn't be any lower than rare. Fortunately the mechanic is powerful enough to be rare anyway. It's pretty much guaranteed to kill the
+ creatures fighting it, but it won't normally trample over for anything more than the creature's normal power. I don't think it's a problem, though I'd be inter
+ested to hear other comments.", "Lifelink on an enchantment made me laugh, but it makes amazing sense for the set.\r\nI also enjoy the way you put the name toge
+ther with just the right mechanics, and the way White gets a removal spell that fits one of its themes.", "Mmm... yeah, the flavour doesn't quite work there, I'
+ll admit. Would it still be interesting enough if it lost the trample line?\r\nAlso, there's a question whether the mechanics of this are too close to Silkvine.
+", "This looks very well-balanced to me, with a good combination of mechanics and flavor.  It also fits in well with the peaceful feel of the world, without nee
+ding a direct tie to the set mechanics.\r\n", "I like the cycle as a whole quite a bit.  It really brings out your mechanical flavor. However, flying on a Human
+ Soldier strikes me as odd.  It would make more sense as a Knight on a flying steed.", "Thank you! I think I was looking to fill out a hybrid cycle with better-
+in-both-colours mechanics, and this just fell into my brain :)", "Should there be a cost on scrycling? I guess you can add a details page explaining the mechani
+cs if not. Hmm, I should add the ability to auto-include reminder text from a specified details page, so you can update the mechanic in one place...", "The inst
+ant by itself does nothing, why not change the \"may reveal exactly five instants\" to as an additional cost to pay reveal 5 instants or even exile 5 instants f
+rom your hand, and the effect being you may cast those instant cards without paying their mana costs, if you go with the exile zone this card gets better with y
+our exile zone mechanics and other cards.\r\nAll in all a good card, just think it should read as it does something every time you cast it, (if you leave it as
+it is you can cast it with no effect because of they \"may\" clause)", "White can add counters to my permanents, i think you can add, put a charge counter on a
+permanent you control, then gain life equal to the number of charge counters among permanents you control.\r\nIs just 1 life point swing, makes it feel more fla
+vor for this set's white mechanichs and helps it interact better with the rest of the set.", "That sounds like a fine idea (apart from the more wide-reaching pr
+oblems with the curve mechanic).", "(a) it's really, really not balanced, I just picked a cost because I wanted to make the mechanic for humour value -- these c
+ards are not a coherent set, just a dumping ground for ideas. 3W is probably a reasonable cost. (b) 3C is used for destroy target creature, and 1WB for sorcery
+destroy target permanent, so this is not that much more expensive (although I agree it's diminishing returns).", "I think I commented on this elsewhere but I ca
+n't find it now. I know what you mean, but fwiw I really loved this card: the mechanics match the flavour so perfectly. (Who knew you could have awesome flavour
+ for \"-1/+3 loses flying\"? :))", "Yeah. See \"mechanical themes\" page for an explanation, although I see while I wasn't paying attention Alex has made a host
+ of new improvements including explicit links for individual mechanics.\r\n\r\nI started designing the set with a random collection of woodland creature cards,
+and was looking for other ideas to add. I didn't want at that point to introduce a specific new mechanic that would require a greater knowledge of the set to ap
+preciate individual cards, and somehow I came up with this idea.\r\n\r\nIt seemed really obvious: the loyalty ability can be used in a variety of interesting wa
+ys, but never will be so long as it has to be on scary mythic cards. Originally it was on a variety of card types, but lands seemed by far the most natural. My
+(one quick) playtest showed it reasonably interesting and not too fiddly, although unsurprisingly some were way overpowered :)", "It's a really interesting mech
+anic. Even those like (((Arcane Scriptorium))) that can add mana without losing loyalty aren't \"strictly better\" than basic lands, because (a) they can be att
+acked, and (b) loyalty abilities can only be activated on your turn at sorcery speed.", "By the way, I specifically designed the mechanics support so that you c
+ould use it for \"macros\" and non-keyworded mechanics like Fragile here. You do it by putting the whole string \"If a player controls deals damage to equipped
+creature, they may destroy this instead.\" in the name of the macro, and no reminder text, and then you can paste it into multiple cards by just including `[Fra
+gile]` instead. Of course, you don't have to use it, particularly while its presence will force a currently hardcoded \"Mechanics\" details-page to the front of
+ your informative details pages.", ":) Thank you :)\r\n\r\nI was very liberal with coloured artefacts on whim as several just felt natural like that (they could
+ have had coloured activations, but the dual mana cost feels like it fulfils the \"not better than colours\" mission of artefacts) and it's a mechanic which can
+ add something cool to the set without a lot of mechanical baggage. (The same for scry, wither, etc, even though I suppose there normally wouldn't be so many me
+chanics repeated a little bit at once.)", "The way I figured them is that you can get a slow, steady trickle of generic mana or you can wait for the land to 'ch
+arge up' (as your mechanic is named) and get stronger, colour specific mana every so often. I can always remove the colourless mana option but I feel that, with
+out it, they would only ever see play in limited (probably true anyway).", "yeah because Scrycling is kinda clunky. Nice idea for a new mechanic riffing on two
+existing ones.", "Finally put together a creature ability mechanic. Ferocity. Still pretty unsure about it though.", "**Actively seeking suggestions for steampu
+nk mechanics**. If you have any suggestions for how one could mechanically represent some steampunk concept on a Magic card, please [add a comment to the cardse
+t](http://multiverse.heroku.com/cardsets/32/comments/new) with your thoughts. Feel free to check out [my current ideas for artifact mechanics](http://multiverse
+.heroku.com/cardsets/32/details_pages/22) and [for coloured cards](http://multiverse.heroku.com/cardsets/32/details_pages/25) first.", "Thanks.\r\nThis crd was
+meant as an homage to that lost card-type, the Interrupt and split second was the closest to the old mechanic - another nostalgia card.", "I think we're onto so
+mething.\r\nBut how exactly are we defining a Contraption and the Assemble mechanic?\r\nMy thinking of contraptions was that it would basically be equipment for
+ artifacts in the form of other artifacts. So, a bunch of different artifacts could become one huge machine, or contraption in this case. In short, contraption
+is equipment, and assemble is equip - to an extent.", "I don't think there's any point making Contraptions if you don't make them work with [[[Steamflogger Boss
+]]]. [[[Steamflogger Boss]]] is the reason and inspiration for Contraptions; what's the point in giving him errata? His wording is actually quite difficult to m
+ake something sensible work with, but that's the challenge; I can't see any point making something that \"almost\" works with [[[Steamflogger Boss]]]. Other peo
+ple are welcome to, but it's all-or-nothing for me with Contraptions.\r\n\r\nAs for plugging artifacts together like equipment: heh. That's another of my ideas,
+ heading for the same kind of feel, but with a different mechanical approach. The equipment-for-artifacts is a fun idea - I was going to call it Bolt-On, but my
+ wife suggested the much better name Connector. The question is, what do you make them do? Almost all Equipment either modify power and toughness, or interact w
+ith combat in some other way. Fortifications were a great idea for one card ([[[Darksteel Garrison]]]), but they have the same problem if you try to make twenty
+ of them: what do they do? I actually do have a plan for how to make Connectors relevant and present in enough quantities in the set, but I'd be curious to rece
+ive your thoughts, since our ideas have rather paralleled each other so far :)\r\n\r\nAnd the different power types are like five more colours of mana, yes, exc
+ept they go in your power pool. This would let me do things like make the power pool empty at different times than the mana pool, or behave differently in other
+ ways, but I probably want to make it behave similarly to the mana pool to increase intuitive comprehensibility. It's basically five more mana types, to let the
+ players plug lots of different artifacts together to transfer power between them and assemble random fun machines made of several artifacts to do something ran
+dom.... a bit like what a contraption might be ;)", "Yeah I was having trouble wording this correctly. Your suggestion doesn't work as it doesn't stop Unearth,
+Flashback & similar mechanics. Definately need to work on this one a bit more. Obviously, with the graveyard matters theme in the set, this is the hoser card.",
+ "Curve is a genuinely good mechanic. I could see Wizards actually using it.\r\n\r\nLurk is also a good mechanic, although i think *some* cost should be involve
+d for playing it, even though it acts as a colorless land its also acts as a creature with flash. (Flip it up anytime, right?)", "I think an 8/8 with upkeep 2 l
+ife is undercosted at 4 mana; should probably be 6, even at mythic. Very nice mechanic though. ", "Please give feedback (preferably positive), card ideas, mecha
+nic ideas, etc.", "Please give feedback (preferably positive), card ideas, mechanic ideas, etc.", "I would like to use your mechanic curve in my set Aeons. I th
+ink it fits perfectly with a set that cares about time. I'd just tweak it a little for my cause:\r\n\r\nAngry Goblin {R}\r\n\r\nHaste\r\n\r\n_Curve_ - If it is
+the first, second, or third turn of the game, Angry Goblin gets +1/+0 until end of turn.\r\n\r\n1/1", "I would like to use your Ferocity mechanic for my set Are
+na. I think it goes great because the setting is an _*arena*_.", "Thanks. Hope Veredictum doesn't mind me using his mechanic. :D", "There you go, done. I've add
+ed it to your [mechanic](http://multiverse.heroku.com/cardsets/25/mechanics), but you can just code it directly into the text box with asterisks if you'd prefer
+.", "Just to point out, Endure isn't exactly a new mechanic. It was printed under the name \"Absorb\" in Future Sight. [[[Lymph Sliver]]] to be exact.", "(((Ser
+ra Avenger))) taken from Time Spiral, using the tweaked Curve mechanic.", "I agree, Absorb makes this guy sound like his name should be Sponge Giant. I'd stick
+with endure and on your mechanics page note that you didn't know abouth [[[Lymph Sliver]]] /  Absorb when you created the mechanic.", "Dwarves are much smarter
+an mechanical minded than orcs/Goblins. This would be fine without the 2 damage to you/a creature you control drawback (which is on Orcish/Goblin artillery more
+ for flavour reasons than anything else). As it does 2 damage you may need to make it {R}{T} to activate.", "Then Erosion Chime it is then.\r\n\r\nWhich reminds
+ me of this guy MisterOrange (He has a channel on YouTube, he does The Magic Show) who made his own custom Magic sets. One of his mechanics is an ability called
+ Erode (This creature deals damage in the form of putting the top card of the library into the graveyard.)\r\n\r\nCheck it out if you want some ideas or inspira
+tion:\r\nmisterorange.com/foh & misterorange.com/titan for his two sets. misterorange.com for some random cards in general.\r\n\r\nFun fact, I got the name stas
+is from one of his sets despite his version doing something completely different from mine.", "nah given that clockwork is wordy anyway.\r\nHave you thought abo
+ut recycling the modular mechanic from original mirrodin ? would fit nicely with the clockworks.", "This, (((Illuminated Bolt))) and (((Light of Life))) were my
+ attempt at redesigning Jonathon Loucks's Illuminate mechanic from the GDS2. This version does away with all the complexity of exiling the card and remembering
+which exiled card is the currently illuminated card. I did suggest this version to him through the Wiki but it may have been too late as the judges really disli
+ke even the thought of Illuminate at this stage.", "Hm, looks like Multiverse doesn't quite have enough support for parameterised reminder text. I tried to add
+a mechanic for the reminder-text sentence, but I need to let you suppress display of the parameters. I'll try to get that added in the next couple of days.", "I
+ didn't mean to put modular on the rat, I meant that it was a mechanic that could go on other cards to compliment the clockwork theme.", "I wonder if it should
+have trample. Given its other mechanic it'd definitely work well with it, but I wonder if that might be a bit too good. Given there are cheap ways to drop artif
+acts onto the battlefield like [[[Master Transmuter]]] and [[[Trash for Treasure]]], it probably would.", "Thanks for your comments! Scrycling isn't meant to be
+ super-flavourful (much like Cyclying!), it's just a handy smoothing mechanic.\r\n\r\nWhat do you see as the \"new\" wording for Parrying? I don't think I've ch
+anged it recently...", "Much appreciated. It was Assail, and Challenge sounds good. Also like Vendetta, but that is already a card plus it sounds like a graveya
+rd ability. (Might make an interesting mechanic :D ). I think Clash would be a good name, provided it wasn't already a mechanic. How does Brawl or Melee sound?\
+r\n\r\nRegarding Vendetta as a mechanic:\r\nSomething like \"Vendetta (If this creature is put into the graveyard as a result of combat, it deals damage equal t
+o its power to target creature.)\"", "Perhaps not *recently*. I am relatively new to this site which, by the way, is great.\r\n\r\nI was commenting on Camruth's
+ comment about its complexity (the one on Dec 24). On your mechanics description page you have a rather long description of parrying, something about designatin
+g a parried creature and something. But then on (((Imperial Guard))) the reminder text much simpler. I guess at some point you simplified it on the mechanics pa
+ge and then forgot to update the mechanics description?\r\n\r\nAlso, I was wondering if I could use it for my set Arena?", "When I redesigned Johnathon Louck's
+Illuminate mechanic from his GDS2 submission, I felt I had a workable version that gave the light side a character. So Light = Illuminate, Dark = Morph. I wante
+d to suggest a mechanic that could be shared by both sides to add tension and conflict. Then, I remembered Shadow. Shadow was perfect to return to Johnathan's s
+etting, you need Light and Dark to make shadows and it could be easily themesd to either side. Dark hides in the shadows and sneaks around. Light defends the sh
+adows, seeking to sweep them away along with everything else dark. This was my first Shadow design.", "This and (((Obscurer))) were dark side ideas for Johnatho
+n Louck's Penumbria GDS2 submission. Hopefully this works as intended. It was meant to take the dark side's Morph mechanic to the next level. The ETB clause is
+what really makes this card shine I believe.", "Gee, since I started designing cards for my version of Jonathon Louck's Illuminate mechanic, I haven't been able
+ to stop. I've had all sorts of what I think are cool ideas and have even done some Morph stuff for the dark side of his Penumbria setting and even brought in S
+hadow for the grey areas in between.", "I got rid of Annihilator as a mechanic, bringing it into line with (((Annihilator Dragon))) and got rid of non-token.",
+"I have seen a lot of discussion, especially on the Magic Wiki about \"Mount\" creatures and how messy it was to have creatures attach to other creatures in the
+ various ways. Given that there was already a 'mechanic' in existence that would serve this purpose, I created this card, (((Assault Pachyderm))) and (((Riding
+Hippocampus))) as my examples.", "Problem is, this mechanic wasn't very popular. Matching up the sizes and abilities is very sensible, but it makes it less appe
+aling to activate the abilities in many cases. They're reminiscent of the [[[Pearlspear Courier]]] cycle, which also didn't make much of a splash.", "This and (
+((Verelin Hangar))) are an attempt at capturing the flavour of (respectively) a big flying carrier of little flying machines and a hangar for little flying mach
+ines. Similar mechanically to [[[Pentavus]]], and somewhat similar in flavour. I wanted a power clause in there as well, but the flavour gain wasn't worth the e
+xtra words.\r\n\r\nThey're somewhat restrictive designs: giving everything the [[[Sengir Nosferatu]]] ability could definitely get irritating, and if all flying
+ creatures can flicker, that restricts how many ETB effects I can put on flying creatures in the block. The question is, is it worth it to get the funky flavour
+ and interesting combos?", "I'm not really worried about whether or not the set as a whole works (probably a terrible design practice and affront to designers e
+verywhere). I just like making cool mechanics and cards that fall into an over-arcing story. And I kinda had it that this set was like Planechase or Archenemy,
+just a huge set with a random assortment of cards.\r\n\r\nIn truth this set will probably be completely unbalanced because I play red, black, and blue, hardly e
+ver green or white unless it is with one of the other three. Granted I could still design green and white cards that function good, it's just more fun doing red
+, black, and blue. :D", "I'd just be a little dubious about adding another 5 different types of resource to the game (I add 3SCWU to my pools...).  Also, it's r
+ather a parasitic mechanic.", "There is already a mechanic that does the same thing as your Vanishing mechanic - namely Fading - though that uses Fade counters.
+ Mechanically they are identical in what they do.\r\n\r\nI don't see any issue with you using the old mechanics - Cumulative Upkeep and Fading - but changing th
+em all to reference time counters for the sake of simplicity. In fact, I think it is something Wizards should look at for all of their similar mechanics to simp
+lify things.", "to save having to create a mechanic for each numeric value of rage, I am putting the value BEFORE the mechanic. So this has Rage 2 (+2/-1 UEoT w
+hen it attacks).", "Not sure on this mechanic as yet. It still needs work to ensure that it isn't broken. Not all cards with **Gravecast** would have an ability
+ that allowed you to discard it though.\r\n\r\nIf I can get it to work, this mechanic will go into my Dark Omens set.", "You can build the cost inside the Spell
+morph mechanic by editing the mechanic to have 1 parameter rather than 0, then write \\[Spel[l]morph {R\\}{R\\}]. Similarly you could write Scry as \\[S[c]ry 3]
+, and make the mechanic say \"Look at the top \\\\1 cards of your library...\": the \\\\1 will be replaced by the number you provide on each card, which can be
+different from card to card.\r\n\r\n(I know I need to write clearer documentation for how to use the mechanics page.)", "You could probably remove the reminder
+text since this is a rare. (You can do that by adding parentheses to the mechanic text as mentioned on the edit screen.)", "Although, to be honest, that sort of
+ shenanigans seem pretty much in keeping with quantum mechanics :)", "Gah. I keep vacillating on Parrying. I actually do like the complex version I have, but th
+at may just be Melvin.\r\n\r\nYou're free to borrow the mechanic, though.", "Yeah, the only original mechanics for this set are Stasis and Curve, and the latter
+ is Veredictum's only tweaked.\r\n\r\nPersonally, I think Fading does sound cooler. And there are various little references sprinkled throughout my set to the o
+ld mechanics like flicker, phasing, and, of course, fading. :D", "Ooh, steampunk. Comments as of current state in multiverse.\r\n\r\nI really love the flavour.
+It really captures steampunk.\r\n\r\nConnectors are great. Whether they'll be comprehensible will need testing, but I think the basic idea is great for giving t
+he feel of assembling a complex THING, without being too unmanageable or unmagiclike.\r\n\r\nHierarchy is cool. I feel like it might not be that different to \"
+if you have 3 other creatures at all\", but it _feels_ right, and gives you a good reason to play small creatures.\r\n\r\nNot sure about collaborate: simple and
+ straightforward, but maybe _too_ straifghtforward? EDIT: On reflection it probably plays well (cf. exalted), it just makes several collaborate creatures feel a
+ bit samey, but that may not be bad.\r\n\r\nQuirky, intermittent artefacts: I agree this is excellent flavour.\r\n\r\nPower pool: I agree it's risky to introduc
+e lots more resources, but also I agree the idea seems pretty balanced. I think it will definitely need updating, but I think the basic idea is (to my surprise)
+ very sound. I agree with the large risk of memory problems, but also I think that your strategy of having the resources be comparatively rare solves it fine wi
+thout the need for more complicated rules. If you've only one or two sources of power, then you won't be trying to juggle so many you'll forget: you typically w
+ill use them immediately anyway. I agree having some way of having them less linear is good, but also that the alternate costs fix make it much, much better.\r\
+n\r\nI like all the energy flavours except for torque: I like the idea of torque, but I'm not positive it works as U/G.\r\n\r\nI mostly like the mechanic/flavou
+r/creature types for the colours.", "I think Steamflogger Boss may be screwed. I thought from the moment I saw it that the joke was entertaining, but that \"ass
+emble a contraption\" was something that was unlikely to ever have a meaning in magic rules, and our difficulties here, and Aaron Forsythe's admission that they
+ didn't have anything in mind, seem to bear that somewhat out.\r\n\r\nI want to include it _somehow_ and agree that it's a welcome challenge, but I think we lik
+ely to end up having to compromise somehow...\r\n\r\nSuggested constraints for contraptions:\r\n\r\n* I'm happy to errata Steamflogger Boss a little bit so long
+ as all the nouns stay in place. I'm not sure this helps, though.\r\n* Contraptions must typically be assembled by other permanents (probably creatures, probabl
+y riggers)\r\n* Contraption must be a subtype of artefact (can this be errata'd?)\r\n* Assembling a contraption should be something good to do multiple times.\r
+\n* Contraptions should fit the flavour of contraptions. (eg. combining two artefacts into one fits the flavour EXCELLENTLY. being a 1/1 creature with no abilit
+ies fits it much less)\r\n* The idea of connectors is so cool for this set it probably wants to be the underlying mechanic for contraptions.\r\n\r\n--\r\n\r\nI
+will also keep any steampunk mechanics that occur to me in mind and send them on to you :)\r\n\r\nEDIT: Hm. Perhaps if riggers tend to do non-repeatable it make
+s Boss relevant. Although, it still leaves the question of why it says \"if a <i>rigger</i> would assemble a contraption\" rather than \"if you would assemble a
+ contraption\". It sounds more like dealing damage than doing anything to cards. (I don't think a creature with \"T: exile target creature\" can be described as
+ \"if a creature exiles another creature\" can it?) It seems to imply lots of creatures can assemble equipment, but riggers are especially good at it. But if al
+l cards that assemble equipment say so, it seems unfair only riggers get the bonus; it feels like it should be like equipment, where any creature can use equipm
+ent, but kor do it better. But what does assembling a contraption mean if anyone can do it? Should there be cards that say \"1. Artefact -- Contraption. Assembl
+e -- Tap a creature: exile two artefacts, ~ gains all the abilities of both of them?\" _maybe_ that would work but I still don't like it.\r\n\r\nBut if you can
+live without that, you could imagine:\r\n\r\nCreature -- Goblin Rigger. Nibelung Steamflogger. 3R. 2/2. When ~ comes into play, you may exile two non-creature a
+rtefacts and assemble a contraption artefact token which has all the abilities of both.\r\n\r\nTribal Sorcery -- Rigger. Crazed tinkering. 1U. Exile two non-cre
+ature artefacts and assemble a contraption artefact token which has all the abilities of both.", "Has the card changed? The flavour seems good to me now.\r\n\r\
+nI'm not sure about symbols. The symbols would be so flavourful I really want them, but may not be as intuitive when you first see it. Probably wait to see how
+the mechanic evolves. One possibility would be to say \"Add ? to your radiation pool\". Then your squeeze in the symbol and the name, and if they're always mat
+ched, I don't think there's an extra cognitive load, I think people will instinctively assume they all act like the mana pool.\r\n\r\n(I think there's a dramati
+c laser-warning sign that would do for all sorts of radiation, but it doesn't seem to be the default one.)", "PS. I do like the mechanic.", "repeatable [[[Tome
+Scour]]] on a 1/1 Wizard body. Much like its inspiration it costs {U} and a card from your hand each time you activate it. Good for mid to late game if you have
+ a land flood or draw your cheap creatures that will have no effective impact on the game.\r\n\r\nAlso will work well with **Gravecast** cards that appear in la
+ter sets. (((Endless Legion))) is kind of a **Gravecast** preview and I may update it to have the mechanic once I'm happy that it works properly.", "Probably. I
+'ll be honest, Bloodthirst seems like a boring expert mechanic to have in a core set anyways.", "This seems more red, but the mechanic is cool.", "You may be ab
+le to get it to work as:\r\n\r\nSuspend 2 - {U}{B}\r\nWhen ~ Enters the battlefield it gains Vanishing 2 and \"when the last time counter is removed from ~, exi
+le it with two time counters on it.\"\r\n\r\nAlso, I agree that 5/5 is way too big for this. Also, this is way too complicated to be a common.\r\n\r\nAlternatel
+y, given what you are trying to do why not just reuse the old (and a bit iffy) Phasing mechanic.", "Test card for a new mechanic that encourages attacking. Supe
+rficially it is similar to Vigilance but I feel it has its own unique design space to explore."]
+>> cc.reduce(""){|m,c| m << "\n#{c.body}"}

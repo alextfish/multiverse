@@ -62,7 +62,7 @@ module ApplicationHelper
   def mana_symbol_url ( symbol )
     my_symbol = "" << symbol
     my_symbol.gsub!(/[\{\}\(\)\/]/, "")
-    if %w{wr wg uw ug bu bw rb ru gr gb w2 u2 b2 r2 g2}.include? my_symbol.downcase 
+    if %w{wr wg uw ug bu bw rb ru gr gb w2 u2 b2 r2 g2 w3 u3 b3 r3 g3}.include? my_symbol.downcase 
       my_symbol.reverse!
     end
     my_symbol.gsub!(/S/, "snow")
@@ -184,6 +184,9 @@ module ApplicationHelper
   def cardset_card_link(cardset, cardname, link_content)
     if (card = cardset.cards.find_by_name(cardname)) || (card = cardset.cards.find_by_code(cardname))
       "<a href=\"#{url_for(card)}\">#{link_content}</a>"
+    elsif link_content =~ Card.code_regexp
+      # Link to a (valid & safe) code that doesn't yet exist: offer to created it
+      link_to "(#{link_content})", new_card_path(:cardset_id => cardset.id, :code => link_content)
     else
       "(((#{link_content})))"
     end

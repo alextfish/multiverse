@@ -17,7 +17,6 @@ Multiverse::Application.routes.draw do
   resources :old_cards, :only => [:create, :destroy]
 
   resources :comments, :only => [:create, :destroy, :edit, :update]
-  match '/newcomment', :to => 'comments#create'
 
   resources :cards, :only => [:new, :create, :destroy, :edit, :update, :show]
   #, :has_many => [:comments, :old_cards]
@@ -34,7 +33,8 @@ Multiverse::Application.routes.draw do
       get 'visualspoiler', 'recent'
       get 'import', 'export', 'plaintext', 'csv'
       get 'todo', 'booster', 'comments'
-      post 'import_data'
+      get 'skeleton'
+      post 'import_data', 'generate_skeleton'
     end
   end
 

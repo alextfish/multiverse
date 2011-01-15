@@ -114,13 +114,15 @@ class Card < ActiveRecord::Base
       ["{#{colour_letters[i1]}/#{colour_letters[i1a]}}", "{#{colour_letters[i1]}/#{colour_letters[i1b]}}"]
     end.flatten
     out += colour_letters.map {|s| "{#{s}/2}" }
-    out += ( colour_letters + %w{1000000 100 10 11 12 13 14 15 16 18 20 1 2 3 4 5 6 7 8 9 0 X Y T Q S C} ) .map {|s| "{#{s}}" }
+    out += colour_letters.map {|s| "{#{s}/3}" }
+    out += ( colour_letters + %w{1000000 100 10 11 12 13 14 15 16 18 20 -3 1 2 3 4 5 6 7 8 9 0 X Y T Q S C} ) .map {|s| "{#{s}}" }
     
     # ["{W/U}" "{W/B}" "{U/B}" "{U/R}" "{B/R}" "{B/G}" "{R/G}" "{R/W}" "{G/W}" "{G/U}"]
   end
   def self.mana_symbols_extensive
     colour_letters = %w{W U B R G}
     out =  colour_letters.map {|s| "{2/#{s}}" }
+    out =  colour_letters.map {|s| "{3/#{s}}" }
     out += (0..4).map do |i1|
       i1a = (i1+3).modulo(5)
       i1b = (i1+4).modulo(5)
@@ -129,6 +131,33 @@ class Card < ActiveRecord::Base
     out += self.mana_symbols    
   end
   
+  def self.code_regexp
+    # [CURMBT][CWUBRGMZHSAL]\d\d
+    rarity_pattern = Card.rarities.reduce("["){ |m,r| m << r.upcase[0] }+"]"
+    colour_codes_pattern = "[CWUBRGMZHSAL]"
+    code_numbers_pattern = "[0-9][0-9]"
+    regexp_string = rarity_pattern + colour_codes_pattern + code_numbers_pattern
+    out = Regexp.new(regexp_string)
+  end
+
+  def self.interpret_code ( code )
+    rarity_out = Card.rarities.select {|r| r[0] == code.downcase[0]}
+    frame_out = case code[1]
+      when ?C: "Colourless"
+      when ?W: "White"
+      when ?U: "Blue"
+      when ?B: "Black"
+      when ?R: "Red"
+      when ?G: "Green"
+      when ?M, ?Z: "Multicolour"
+      when ?H: "Auto"
+      when ?S: "Auto"
+      when ?A: "Artifact"
+      when ?L: "Land colourless"
+      else nil
+    end
+    [rarity_out, frame_out]
+  end
   
   @@colour_regexps = [/w/i, /u/i, /b/i, /r/i, /g/i]
   @@nonhybrid_colour_regexps = [

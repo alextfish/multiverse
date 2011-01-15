@@ -1,0 +1,33 @@
+<% @title = @cardset + ": Skeleton" %>
+
+<% render "setviews" %>
+
+<%= javascript_include_tag "fabtabulous.js" %>
+
+<ul class="cardtabs" id="tabs">
+ <li><a href="#about"    id="about_link"   >About</a></li>
+ <li><a href="#generate" id="generate_link">Generate</a></li>
+ <li><a href="#view"     id="view_link"    >View</a></li>
+</ul>
+<% if permission_to?(:edit, @card.cardset) %>
+  <ul class="cardtabs">
+   <li><%= link_to "Edit", edit_cardset_skeleton_path(@cardset) %></li>
+  </ul>
+<% end %>
+
+<div class="onetab" id="about"><a name="about"></a>
+  <h2>About Set Skeletons</h2>
+  <p>A set skeleton is a tool to help you when structuring your set. It helps you keep the number of different types of card balanced across colours and balanced in line with the colour pie. It's particularly useful in early design when you're wanting to make sure you have the right amounts of creatures and other card types in the different colours. 
+  </p>
+  <p>To read more about skeletons, read <a href="http://www.wizards.com/magic/magazine/Article.aspx?x=mtg/daily/mm/78">Mark Rosewater's article "Design Skeletons"</a>.
+  <h2>About Set Skeletons In Multiverse</h2>
+  <p>In Multiverse, set skeletons are a particular type of details page, using tables written in the <a href="http://michelf.com/projects/php-markdown/extra/#table">Markdown Extra table syntax</a>. Multiverse will generate the rows of the table for you.</p>
+  <p>Once you've generated your skeleton, each row will start with a link like "(CW01)". At first, these links will be in parentheses, to indicate that no card yet exists with that code. You can click on links like these to create a card with that code. Once those cards exist, the links will no longer be in parentheses. You can thus easily tell which slots in your skeleton have no card at all corresponding to them, and which have at least some information on a card (even if that card is not ready or not even complete).</p>
+  <p>To get started, click the "Generate" tab above!</p>
+</div>
+<div class="onetab" id="generate"><a name="generate"></a>
+</div>
+<div class="onetab" id="view"><a name="view"></a>
+  <%= format_all_markup @skeleton.body, @cardset %>
+</div>
+     
