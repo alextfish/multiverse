@@ -45,6 +45,7 @@
   .card { background: #0ff; 
           padding-top: 4px; padding-left: 3px; padding-right: 3px; padding-bottom: 3px;
           position: relative;
+          line-height: 100%;
         }
   .foil {
     position: absolute; top: 0px; background-image: url(/images/foil_highlight.png); 
@@ -131,7 +132,7 @@
    }
 
   /* .manacost { align: right; } */
-  .cardtext { font: 10pt serif; }
+  .cardtext { font: 10pt /*serif*/; }
   .minitext, .nameminitext  { font-size: 9pt; }
   .microtext { font-size: 8pt; }
   .nanotext  { font-size: 7.5pt; }

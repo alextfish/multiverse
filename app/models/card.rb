@@ -108,7 +108,8 @@ class Card < ActiveRecord::Base
   end
   def self.mana_symbols 
     colour_letters = %w{W U B R G}
-    out = (0..4).map do |i1|
+    out = []
+    out += (0..4).map do |i1|
       i1a = (i1+1).modulo(5)
       i1b = (i1+2).modulo(5)
       ["{#{colour_letters[i1]}/#{colour_letters[i1a]}}", "{#{colour_letters[i1]}/#{colour_letters[i1b]}}"]
@@ -121,8 +122,9 @@ class Card < ActiveRecord::Base
   end
   def self.mana_symbols_extensive
     colour_letters = %w{W U B R G}
-    out =  colour_letters.map {|s| "{2/#{s}}" }
-    out =  colour_letters.map {|s| "{3/#{s}}" }
+    out = []
+    out += colour_letters.map {|s| "{2/#{s}}" }
+    out += colour_letters.map {|s| "{3/#{s}}" }
     out += (0..4).map do |i1|
       i1a = (i1+3).modulo(5)
       i1b = (i1+4).modulo(5)

@@ -122,6 +122,8 @@
      <td><%= f.label :code %></td>
      <td><%= f.text_field :code %></td>
     </tr>
+    <% else %>
+    <%= f.hidden_field :code %>
     <% end %>
     <% if @card.cardset.configuration.card_show_active %>
     <tr>

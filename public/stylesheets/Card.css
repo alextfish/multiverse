@@ -16,7 +16,8 @@
   padding-left: 3px;
   padding-right: 3px;
   padding-bottom: 3px;
-  position: relative; }
+  position: relative;
+  line-height: 100%; }
 
 .foil {
   position: absolute;
@@ -183,7 +184,7 @@
 
 /* .manacost { align: right; } */
 .cardtext {
-  font: 10pt serif; }
+  font: 10pt; }
 
 .minitext, .nameminitext {
   font-size: 9pt; }
