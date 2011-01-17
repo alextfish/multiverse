@@ -1,6 +1,5 @@
-<h1>
-  <%= @title = "#{@cardset.name}: Recent Activity" %>
-</h1>
+<h1><%= link_to @cardset.name, @cardset %>: Recent Activity</h1>
+<% @title = @cardset.name + ": Recent Activity" %>
 
 <%= render "setviews" %>
 

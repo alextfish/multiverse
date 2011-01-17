@@ -50,7 +50,7 @@ module ApplicationHelper
     formatted_text = protect_smilies(
                        format_mana_symbols(
                          format_mechanics(
-                           format_links(text),
+                           format_links(text, cardset),
                            cardset
                          )
                        )
@@ -73,7 +73,7 @@ module ApplicationHelper
     # "http://gatherer.wizards.com/Handlers/Image.ashx?size=small&name=#{my_symbol}&type=symbol"
   end
 
-  def format_mana_symbols(text, force = false) 
+  def format_mana_symbols(text, force = false)
     if text.nil?
       return text
     end
@@ -144,7 +144,7 @@ module ApplicationHelper
     text_out
   end
 
-  def format_links(text_in)
+  def format_links(text_in, cardset)
     # Returns [text-out, out-fcn]
     # Translate [[[-links and (((-links into Maruku links
     out_fcn = nil
@@ -163,19 +163,24 @@ module ApplicationHelper
     }.gsub(wizards_image_regexp) { |cardname|
       actual_cardname = cardname.gsub(remove_brackets_regexp, '\2')
       wizards_card_image(actual_cardname)
-    }.gsub(cardset_card_regexp) { |cardname|
-      actual_cardname = cardname.gsub(remove_brackets_regexp, '\2')
-      cardset_card_link(@cardset, actual_cardname, actual_cardname)
     }
-    if @cardset.configuration.frame == "image"
-      text_out = text_middle.gsub(cardset_image_regexp) { |cardname|
-        cardset_card_image(@cardset, cardname.gsub(remove_brackets_regexp, '\2'))
+    if cardset
+      text_late = text_middle.gsub(cardset_card_regexp) { |cardname|
+        actual_cardname = cardname.gsub(remove_brackets_regexp, '\2')
+        cardset_card_link(cardset, actual_cardname, actual_cardname)
       }
+      if cardset.configuration.frame == "image"
+        text_out = text_late.gsub(cardset_image_regexp) { |cardname|
+          cardset_card_image(cardset, cardname.gsub(remove_brackets_regexp, '\2'))
+        }
+      else
+        text_out = text_late.gsub(cardset_image_regexp) { |cardname|
+          cardset_card_mockup(cardset, cardname.gsub(remove_brackets_regexp, '\2'))
+        }
+        #out_fcn = lambda { }
+      end
     else
-      text_out = text_middle.gsub(cardset_image_regexp) { |cardname|
-        cardset_card_mockup(@cardset, cardname.gsub(remove_brackets_regexp, '\2'))
-      }
-      #out_fcn = lambda { }
+      text_out = text_middle
     end
     @card = old_atcard
     text_out
@@ -188,7 +193,7 @@ module ApplicationHelper
       # Link to a (valid & safe) code that doesn't yet exist: offer to created it
       link_to "(#{link_content})", new_card_path(:cardset_id => cardset.id, :code => link_content)
     else
-      "(((#{link_content})))"
+      "\(\(\(\(#{link_content})))" # yes, that's four parentheses. No, I don't know why Markdown eats one of them. But it does, so I need one extra.
     end
   end
   def wizards_card_link(cardname, link_content)
@@ -231,6 +236,18 @@ module ApplicationHelper
 
   def comment_user_link(comment)
     link_to_unless comment.user.nil?, comment.display_user, comment.user
+  end
+  
+  def format_skeleton_table(text)
+    skeleton_line_regexp = />(?:[(]?)([CURM])([A-Z])/
+    text.lines.each do |line|
+      if line =~ skeleton_line_regexp
+        data = line.match(skeleton_line_regexp)
+        rarity_letter, frame_letter = data
+        line.sub("<tr>", "<tr class=\"code_#{frame_letter}\">")
+        line.sub("<td ", "<td class=\"\"")
+      end
+    end
   end
   
   def select_random(num_to_choose, array_in)

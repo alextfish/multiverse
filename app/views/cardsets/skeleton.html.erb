@@ -1,20 +1,24 @@
-<% @title = @cardset + ": Skeleton" %>
+<h1><%= link_to @cardset.name, @cardset %>: Skeleton</h1>
+<% @title = @cardset.name + ": Skeleton" %>
 
-<% render "setviews" %>
+     <%= render "cardsets/setviews" %>
 
 <%= javascript_include_tag "fabtabulous.js" %>
 
+<br>
 <ul class="cardtabs" id="tabs">
  <li><a href="#about"    id="about_link"   >About</a></li>
- <li><a href="#generate" id="generate_link">Generate</a></li>
- <li><a href="#view"     id="view_link"    >View</a></li>
+<% if permission_to?(:admin, @cardset) %><li><a href="#generate" id="generate_link">Generate</a></li><% end %>
+<% if !@skeleton.nil? %><li><a href="#view"     id="view_link"    >View</a></li><% end %>
 </ul>
-<% if permission_to?(:edit, @card.cardset) %>
+<% if permission_to?(:edit, @cardset) && !@skeleton.nil? %>
   <ul class="cardtabs">
-   <li><%= link_to "Edit", edit_cardset_skeleton_path(@cardset) %></li>
+   <li><%= link_to "Edit", edit_cardset_details_page_path(@cardset, @skeleton) %></li>
   </ul>
 <% end %>
 
+<br>
+<!-- About tab -->
 <div class="onetab" id="about"><a name="about"></a>
   <h2>About Set Skeletons</h2>
   <p>A set skeleton is a tool to help you when structuring your set. It helps you keep the number of different types of card balanced across colours and balanced in line with the colour pie. It's particularly useful in early design when you're wanting to make sure you have the right amounts of creatures and other card types in the different colours. 
@@ -23,11 +27,81 @@
   <h2>About Set Skeletons In Multiverse</h2>
   <p>In Multiverse, set skeletons are a particular type of details page, using tables written in the <a href="http://michelf.com/projects/php-markdown/extra/#table">Markdown Extra table syntax</a>. Multiverse will generate the rows of the table for you.</p>
   <p>Once you've generated your skeleton, each row will start with a link like "(CW01)". At first, these links will be in parentheses, to indicate that no card yet exists with that code. You can click on links like these to create a card with that code. Once those cards exist, the links will no longer be in parentheses. You can thus easily tell which slots in your skeleton have no card at all corresponding to them, and which have at least some information on a card (even if that card is not ready or not even complete).</p>
-  <p>To get started, click the "Generate" tab above!</p>
+  <% if permission_to?(:admin, @cardset) %>
+    <p>To get started, click the "Generate" tab above!</p>
+  <% end %>
 </div>
+<!--  Generate tab -->
 <div class="onetab" id="generate"><a name="generate"></a>
+<%= form_tag :action => :generate_skeleton, :id => @cardset do %>
+  <table class="skeleton_generate">
+    <tr><td></td><td colspan="2">Generate codes for:</td>
+    <td colspan="2">
+    <select onchange="if(self.value) { } return false;">
+      <option value="">(Add more fields:)</option>
+      <option value="allygold">Gold cards in allied-colour pairs</option>
+      <option value="enemygold">Gold cards in enemy-colour pairs</option>
+      <option value="allyhybrid">Hybrid cards in allied-colour pairs</option>
+      <option value="enemyhybrid">Hybrid cards in enemy-colour pairs</option>
+    </select></td>
+    </tr>
+    <% form_sections = [["white", "White cards (also blue,<br>black, red and green cards)", true],
+        ["artifact", "Artifact cards", true], 
+        ["land", "Land cards", true],
+        ["allygold", "White-blue gold cards and<br>each allied-colour pair", false], 
+        ["enemygold", "White-black gold cards and<br>each enemy-colour pair", false], 
+        ["allyhybrid", "White-blue hybrid cards and<br>each allied-colour pair", false], 
+        ["enemyhybrid", "White-black hybrid cards and<br>each enemy-colour pair", false], 
+        ] %>
+    <% form_sections.each do |section| %>
+    <% frame, description, showing = section %>
+    <tr id="<%= frame %>_row" <% unless showing %>style="display: none;"<% end %>>
+      <td><%= description.html_safe %>
+      <td><%= number_field_tag "#{frame}_commons" %> commons,
+      <td><%= number_field_tag "#{frame}_uncommons" %> uncommons,
+      <td><%= number_field_tag "#{frame}_rares" %> rares and
+      <td><%= number_field_tag "#{frame}_mythics" %> mythics
+    </tr>
+    <% end %>
+  </table>
+  <div>
+  <%= submit_tag "Generate!", :disabled_with => "Generating..." %>
+  </div><div>
+  (Note: This just generates the lines of the skeleton table. You can edit the table before you
+  create any cards.)
+  </div>
+<% end %>
 </div>
-<div class="onetab" id="view"><a name="view"></a>
-  <%= format_all_markup @skeleton.body, @cardset %>
-</div>
+<!-- View tab -->
+<% Rails.logger.info @skeleton.inspect %>
+<% if !@skeleton.nil? %>
+  <div class="onetab" id="view"><a name="view"></a>
+    <% select_frames_regexp = /^[|]?\s*\(\(\([CURM]([A-Z])/
+    present_frame_letters = @skeleton.body.lines.grep(select_frames_regexp) do |line|
+      line.match(select_frames_regexp)[1]
+    end.uniq %>
+    <% frame_toggle_letters = Card.frame_code_letters.select {|l| present_frame_letters.include?(l)} %>
+    <% if frame_toggle_letters.any? %>
+      Show frames:
+      <% frame_toggle_letters.each do |letter| %>
+        <span id="frame_<%= letter %>_toggle" class="skeleton_letter_toggle code_shown" onclick="toggle_frame_letter(self)"><%= letter %></span>
+      <% end %>
+    <% end %>
+    <br>
+      Show rarities:
+      <% ["C", "U", "R", "M"].each do |letter| %>
+        <span id="rarity_<%= letter %>_toggle" class="skeleton_letter_toggle code_shown" onclick="toggle_rarity_letter(self)"><%= letter %></span>
+      <% end %>
+    <%= format_skeleton_table(format_all_markup(@skeleton.body, @cardset)) %>
+  </div>
+<% end %>
+<% if @skeleton.nil?
+     desired_tab = "about"
+   else 
+     desired_tab = "view"
+   end
+%>
+  <script type="text/javascript">
+     new Fabtabs("tabs", "<%= desired_tab %>_link");
+  </script>
      

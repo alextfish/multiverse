@@ -212,7 +212,7 @@ class Cardset < ActiveRecord::Base
   
   ########################## Skeletons #########################  
   def skeleton
-    self.details_pages.find{|dp| dp.name == "Skeleton" }
+    self.details_pages.select{|dp| dp.title == "Skeleton" }[0]
   end
 
   ########################## Boosters ##########################

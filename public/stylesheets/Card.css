@@ -127,11 +127,16 @@
 .cardrarity {
   position: absolute;
   right: 0px;
-  top: 0px;
+  top: -1px;
   padding-left: 3px;
   padding-right: 3px;
   margin-right: 2px;
   border: 1px solid black; }
+
+@-moz-document url-prefix() {
+  /* Firefox wants it just fractionally lower... */
+  .cardrarity {
+    top: -0.5px; } }
 
 .cardtext {
   /*width: *; */
@@ -220,22 +225,22 @@
 .minitext  img { width: 12px; height: 12px; }
 .microtext img { width: 11px; height: 11px; }
 .nanotext  img { width: 10px; height: 10px; } */
-.cardrarity.common, .cardrarity.token, .cardrarity.basic {
+.cardrarity.common, .skeleton_letter_toggle.code_shown#rarity_C_toggle, .cardrarity.token, .cardrarity.basic {
   color: #fff;
   background-color: #000; }
 
-.uncommon {
+.uncommon, .skeleton_letter_toggle.code_shown#rarity_U_toggle {
   background: #ccc;
   background: -webkit-gradient(linear, right top, left bottom, from(#999999), color-stop(0.5, #ccd3d6), to(#999999));
   background: -moz-linear-gradient(right top, #999999, #ccd3d6, #999999); }
 
-.rare {
+.rare, .skeleton_letter_toggle.code_shown#rarity_R_toggle {
   color: #000;
   background: #e0d060;
   background: -webkit-gradient(linear, right top, left bottom, from(#998044), color-stop(0.5, #e0d060), to(#998044));
   background: -moz-linear-gradient(right top, #998044, #e0d060, #998044); }
 
-.mythic {
+.mythic, .skeleton_letter_toggle.code_shown#rarity_M_toggle {
   color: #fff;
   background: #933;
   background: -webkit-gradient(linear, right top, left bottom, from(#aa4433), color-stop(0.5, #ee8866), to(#aa4433));
@@ -723,8 +728,8 @@
   width: 100px; }
 
 #card_rarity {
-  margin-top: 8px;
-  margin-bottom: 8px; }
+  margin-top: 6px;
+  margin-bottom: 6px; }
 
 #card_power, #card_toughness {
   width: 20px; }

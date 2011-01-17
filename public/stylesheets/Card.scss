@@ -99,11 +99,14 @@
                 position: relative; }
   .cardtype { }
   .cardrarity { position: absolute; right: 0px;
-              top: 0px;
+              top: -1px;
               padding-left: 3px;
               padding-right: 3px;
               margin-right: 2px;
               border: 1px solid black; }
+  @-moz-document url-prefix() { /* Firefox wants it just fractionally lower... */
+    .cardrarity { top: -0.5px; }
+  }
   .cardtext { /*width: *; */ min-height: 105px;
               padding: 2px; }
   .cardtext br { margin-bottom: 0.25em; }
@@ -163,6 +166,11 @@
   background: #933;
   @include gradient_diag_highlight(#a43, #e86);
 }
+
+.skeleton_letter_toggle.code_shown#rarity_C_toggle { @extend .cardrarity.common ; }
+.skeleton_letter_toggle.code_shown#rarity_U_toggle { @extend .uncommon ; }
+.skeleton_letter_toggle.code_shown#rarity_R_toggle { @extend .rare ; }
+.skeleton_letter_toggle.code_shown#rarity_M_toggle { @extend .mythic ; }
 
 /***** Tokens *****/
 
@@ -384,7 +392,7 @@ $Land_Green_Text: #cfc;
 /***** Card editing *****/
 
 #card_supertype, #card_cardtype, #card_subtype { width: 100px; }
-#card_rarity { margin-top: 8px; margin-bottom: 8px; }
+#card_rarity { margin-top: 6px; margin-bottom: 6px; }
 #card_power, #card_toughness { width: 20px; }
 .flavourtextfield { font-style: italic;
                   width: 98%; }

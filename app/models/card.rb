@@ -82,64 +82,71 @@ class Card < ActiveRecord::Base
     ["White", "Blue", "Black", "Red", "Green"]
   end
 
-  def self.display_frames
+  COLOUR_PAIRS = Card.colours.combination(2).to_a
+  def self.colour_pairs
+    COLOUR_PAIRS
+  end
+  
+  DISPLAY_FRAMES = 
     Card.colours + ["Artifact", "Multicolour", "Colourless"] +
     Card.colour_pairs.map { |pair| "Hybrid #{pair.join("-").downcase}" } +
     ["Land (colourless)"] +
     Card.colours.map { |col| "Land (#{col.downcase})" } +
     Card.colour_pairs.map { |pair| "Land (#{pair.join('-').downcase})" } +
     ["Land (multicolour)"]
+  def self.display_frames
+    DISPLAY_FRAMES
   end
+  FRAMES = DISPLAY_FRAMES.map { |f| f.gsub(/[()-]/,'') }
   def self.frames
-    Card.display_frames.map { |f| f.gsub(/[()-]/,'') }
-  end
-  def self.colour_pairs
-    Card.colours.combination(2).to_a
+    FRAMES
   end
 
   def self.rarities
-    ["common", "uncommon", "rare", "mythic", "basic", "token"]
+    %w{common uncommon rare mythic basic token}
   end
   def self.supertypes
-    ["Legendary", "Basic", "World", "Snow"]
+    %w{Legendary Basic World Snow}
   end
   def self.category_order
-    ["Colourless", "White", "Blue", "Black", "Red", "Green", "Multicolour", "Hybrid", "Artifact", "Land"]
+    %w{Colourless White Blue Black Red Green Multicolour Hybrid Artifact Land}
   end
-  def self.mana_symbols 
-    colour_letters = %w{W U B R G}
-    out = []
-    out += (0..4).map do |i1|
-      i1a = (i1+1).modulo(5)
-      i1b = (i1+2).modulo(5)
-      ["{#{colour_letters[i1]}/#{colour_letters[i1a]}}", "{#{colour_letters[i1]}/#{colour_letters[i1b]}}"]
-    end.flatten
-    out += colour_letters.map {|s| "{#{s}/2}" }
-    out += colour_letters.map {|s| "{#{s}/3}" }
-    out += ( colour_letters + %w{1000000 100 10 11 12 13 14 15 16 18 20 -3 1 2 3 4 5 6 7 8 9 0 X Y T Q S C} ) .map {|s| "{#{s}}" }
-    
-    # ["{W/U}" "{W/B}" "{U/B}" "{U/R}" "{B/R}" "{B/G}" "{R/G}" "{R/W}" "{G/W}" "{G/U}"]
-  end
-  def self.mana_symbols_extensive
-    colour_letters = %w{W U B R G}
-    out = []
-    out += colour_letters.map {|s| "{2/#{s}}" }
-    out += colour_letters.map {|s| "{3/#{s}}" }
-    out += (0..4).map do |i1|
-      i1a = (i1+3).modulo(5)
-      i1b = (i1+4).modulo(5)
-      ["{#{colour_letters[i1]}/#{colour_letters[i1a]}}", "{#{colour_letters[i1]}/#{colour_letters[i1b]}}"]
-    end.flatten
-    out += self.mana_symbols    
+  def self.frame_code_letters
+    %w{C W U B R G M Z H A L}
   end
   
+  colour_letters = %w{W U B R G}
+  mana_symbols = []
+  # First the misformed ones
+  mana_symbols += colour_letters.map {|s| "{2/#{s}}" }
+  mana_symbols += colour_letters.map {|s| "{3/#{s}}" }
+  mana_symbols += (0..4).map do |i1|
+    i1a = (i1+3).modulo(5)
+    i1b = (i1+4).modulo(5)
+    ["{#{colour_letters[i1]}/#{colour_letters[i1a]}}", "{#{colour_letters[i1]}/#{colour_letters[i1b]}}"]
+  end.flatten
+  mana_symbols  += (0..4).map do |i1|
+    i1a = (i1+1).modulo(5)
+    i1b = (i1+2).modulo(5)
+    ["{#{colour_letters[i1]}/#{colour_letters[i1a]}}", "{#{colour_letters[i1]}/#{colour_letters[i1b]}}"]
+  end.flatten
+  mana_symbols += colour_letters.map {|s| "{#{s}/2}" }
+  mana_symbols += colour_letters.map {|s| "{#{s}/3}" }
+  mana_symbols += ( colour_letters + %w{1000000 100 10 11 12 13 14 15 16 17 18 19 20 -3 1 2 3 4 5 6 7 8 9 0 X Y T Q S C} ) .map {|s| "{#{s}}" }
+  MANA_SYMBOLS = mana_symbols
+    
+  def self.mana_symbols_extensive
+    MANA_SYMBOLS
+  end
+  
+  # [CURMBT][CWUBRGMZHSAL]\d\d
+  rarity_pattern = Card.rarities.reduce("["){ |m,r| m << r.upcase[0] }+"]"
+  colour_codes_pattern = "[CWUBRGMZHSAL]"
+  code_numbers_pattern = "[0-9][0-9]"
+  regexp_string = rarity_pattern + colour_codes_pattern + code_numbers_pattern
+  CODE_REGEXP = Regexp.new(regexp_string)
   def self.code_regexp
-    # [CURMBT][CWUBRGMZHSAL]\d\d
-    rarity_pattern = Card.rarities.reduce("["){ |m,r| m << r.upcase[0] }+"]"
-    colour_codes_pattern = "[CWUBRGMZHSAL]"
-    code_numbers_pattern = "[0-9][0-9]"
-    regexp_string = rarity_pattern + colour_codes_pattern + code_numbers_pattern
-    out = Regexp.new(regexp_string)
+    CODE_REGEXP
   end
 
   def self.interpret_code ( code )
@@ -163,11 +170,11 @@ class Card < ActiveRecord::Base
   
   @@colour_regexps = [/w/i, /u/i, /b/i, /r/i, /g/i]
   @@nonhybrid_colour_regexps = [
-      /(^|[^\/{(])w/i,  # match w either at the start ^, or after anything other than / { (
-      /(^|[^\/{(])u/i,
-      /(^|[^\/{(])b/i,
-      /(^|[^\/{(])r/i,
-      /(^|[^\/{(])g/i]
+      /(^|[^\/{(])w|[({]w[})]/i,  # match w either at the start ^, or after anything other than / { (
+      /(^|[^\/{(])u|[({]u[})]/i,
+      /(^|[^\/{(])b|[({]b[})]/i,
+      /(^|[^\/{(])r|[({]r[})]/i,
+      /(^|[^\/{(])g|[({]g[})]/i]
 
   def colours_in_cost
     out = @@colour_regexps.map do |re|

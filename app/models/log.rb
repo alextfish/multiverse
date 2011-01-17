@@ -144,7 +144,12 @@ class Log < ActiveRecord::Base
         else
           # We have an old-style link with just the card id: give the card
           card = Card.find_by_id(self.object_id)
-          return card
+          if card && card.cardset == self.cardset
+            return card
+          else
+            # New-style comment on a comment that's since been deleted
+            return nil
+          end
         end
       # Deleted comment may have been on a card, or maybe not
       when Log.kind(:comment_delete):

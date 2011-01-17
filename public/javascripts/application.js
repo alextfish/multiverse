@@ -1,6 +1,15 @@
 // Place your application-specific JavaScript functions and classes here
 // This file is automatically included by javascript_include_tag :defaults
 
+function toggle_frame_letter(letter_elem) {
+}
+function toggle_rarity_letter(letter_elem) {
+}
+function show_skeleton_row(value) {
+  $(value + "_row").show(); 
+  $("option_" + value).delete(); 
+}
+
 function update_card_supertype(new_value) {
   if (new_value == "Custom") {
     $("card_supertype_select").hide();
@@ -9,45 +18,60 @@ function update_card_supertype(new_value) {
     $("card_supertype").value = new_value;
   }
 }
+function getIntValue(id) {
+  return parseInt($(id).value, 10);
+}
+function update_generate_totals() {
+  var rarities=["commons", "uncommons", "rares", "mythics"];
+  var counts={};
+  for (count in rarities) {
+    this_rarity = rarities[count];
+    counts[this_rarity] = getIntValue("artifact_"+this_rarity) + getIntValue("land_"+this_rarity) +
+      5*getIntValue("white_"+this_rarity) + 5*getIntValue("allygold_"+this_rarity) +
+      5*getIntValue("enemygold_"+this_rarity) + 5*getIntValue("allyhybrid_"+this_rarity) +
+      5*getIntValue("enemyhybrid_"+this_rarity);
+  }
+  total = commons + uncommons + rares + mythics
+  $("generate_total").innerHTML = total
+  $("generate_commons").innerHTML = commons
+  //etc
+}
+
 function update_frame() {
   cardframe = $("card_frame").value;
-    //if( cardframe != "Auto" ) {
-    //  newClass = cardframe;
-    //} else {
-    // else: autocalculate frame
-    cost = $("card_cost").value;
-    cardtype = $("card_cardtype").value;
-    colours = [
-      (cost.search(/w/i)>-1 ? "White" : ""),
-      (cost.search(/u/i)>-1 ? "Blue" : ""),
-      (cost.search(/b/i)>-1 ? "Black" : ""),
-      (cost.search(/r/i)>-1 ? "Red" : ""),
-      (cost.search(/g/i)>-1 ? "Green" : "")
-    ];
-    num_colours = 0;
-    for( i=0; i<5; i++ ) {
-      if ( colours[i] != "") num_colours++;
+  cost = $("card_cost").value;
+  cardtype = $("card_cardtype").value;
+  colours = [
+    (cost.search(/w/i)>-1 ? "White" : ""),
+    (cost.search(/u/i)>-1 ? "Blue" : ""),
+    (cost.search(/b/i)>-1 ? "Black" : ""),
+    (cost.search(/r/i)>-1 ? "Red" : ""),
+    (cost.search(/g/i)>-1 ? "Green" : "")
+  ];
+  num_colours = 0;
+  for( i=0; i<5; i++ ) {
+    if ( colours[i] != "") num_colours++;
+  }
+  outer = cardtype.search(/Artifact/)>-1 ? "Coloured_Artifact " : "";
+  if (cardframe != "Auto") {
+    inner = cardframe;
+  } else {
+    // calculate frame
+    switch ( num_colours ) {
+      case 1: inner = colours.join(""); break;
+      case 0: inner = ( cardtype.search(/Land/)>-1 ? "Land" : cardtype.search(/Artifact/)>-1 ? "Artifact" : "Colourless" ); break;
+      case 3: case 4: case 5: inner = "Multicolour"; break;
+      case 2: inner = (cost.search(/[({][^)}]{2,}[)}]/)>-1 ? "Hybrid" : "Multicolour"); break;
+      // this case 2 is buggy for Twinclaws cases, but meh
     }
-    outer = cardtype.search(/Artifact/)>-1 ? "Coloured_Artifact " : "";
-    if (cardframe != "Auto") {
-      inner = cardframe;
-    } else {
-      // calculate frame
-      switch ( num_colours ) {
-        case 1: inner = colours.join(""); break;
-        case 0: inner = ( cardtype.search(/Land/)>-1 ? "Land" : cardtype.search(/Artifact/)>-1 ? "Artifact" : "Colourless" ); break;
-        case 3: case 4: case 5: inner = "Multicolour"; break;
-        case 2: inner = (cost.search(/[({].{2,}[)}]/)>-1 ? "Hybrid" : "Multicolour"); break;
-        // this case 2 is buggy for Twinclaws cases, but meh
-      }
-    }
-    if ( num_colours == 2) {
-      pinline = " " + colours.join("").toLowerCase();
-    } else {
-      pinline = "";
-    }
-    newClass = outer + inner + pinline;
-  //}
+  }
+  if ( num_colours == 2) {
+    pinline = " " + colours.join("").toLowerCase();
+  } else {
+    pinline = "";
+  }
+  newClass = outer + inner + pinline;
+
   universalClass = "form card ";
   if ($("card").className.search(/token/) > -1) { universalClass += "token "; }
   $("card").className = universalClass + newClass;

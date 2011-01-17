@@ -79,7 +79,6 @@ class CardsetsController < ApplicationController
         flash[:error] = err_message
         redirect_to :back #, :error => err_message
       else
-        Rails.logger.info @booster_info.inspect
         render
       end
       # I just can't get "rescue Exceptions::BoosterError => e" to work, it gives "uninit constant" errors

@@ -1,11 +1,9 @@
-<h1>
-  <%= link_to @cardset.name, @cardset %>
-</h1>
-<% @title = "#{@cardset.name}: Export" %>
+<h1><%= link_to @cardset.name, @cardset %>: Export</h1>
+<% @title = @cardset.name + ": Export" %>
 
 <%= render "setviews" %>
 
-<h2>Export <%= @cardset.name %></h2>
+<h3><i>Export formats for <%= @cardset.name %>:</i></h3>
 
 <p>
   <%= link_to "Plain text spoiler", cardlist_cardset_path(@cardset, :format => :txt) %>

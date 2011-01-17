@@ -11,10 +11,10 @@ class DetailsPagesController < ApplicationController
   # GET /details_pages/1.xml
   def show
     @details_page = DetailsPage.find(params[:id])
-
-    respond_to do |format|
-      format.html # show.html.erb
-      format.xml  { render :xml => @details_page }
+    if @details_page.title == "Skeleton" && Rails.env.development?
+      redirect_to skeleton_cardset_path(@cardset)
+    else
+      # render
     end
   end
 

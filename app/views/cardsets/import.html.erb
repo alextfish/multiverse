@@ -1,11 +1,7 @@
-<h1>
-  <%= link_to @cardset.name, @cardset %>
-</h1>
+<h1><%= link_to @cardset.name, @cardset %>: Import Data</h1>
+<% @title = @cardset.name + ": Import Data" %>
 
-<h2>Import Data Into <%= @cardset.name %></h2>
-<% @title = "Import into #{@cardset.name}" %>
-
-<%= render 'shared/import_help' %>
+<%= render "shared/import_help" %>
 <hr>
 <%= form_tag :action => :import_data, :id => @cardset do %>
   <p><b>Separating character:</b>
@@ -32,5 +28,5 @@
   </p>
 <% end %>
 
-<%= link_to 'View cardset', @cardset %> |
-<%= link_to 'See other cardsets', cardsets_path %>
+<%= link_to "View cardset", @cardset %> |
+<%= link_to "See other cardsets", cardsets_path %>
