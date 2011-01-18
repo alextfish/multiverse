@@ -2,8 +2,23 @@
 // This file is automatically included by javascript_include_tag :defaults
 
 function toggle_frame_letter(letter_elem) {
+  if (letter_elem.className.search(/code_shown/) > -1) {
+    letter_elem.className = letter_elem.className.replace(/code_shown/, "code_not_shown");
+    $$(".code_frame_" + letter_elem.innerHTML).invoke("hide");
+    letter_elem.show();
+  } else {
+    letter_elem.className = letter_elem.className.replace(/code_not_shown/, "code_shown");
+    $$(".code_frame_" + letter_elem.innerHTML).invoke("show");
+  }
 }
 function toggle_rarity_letter(letter_elem) {
+  if (letter_elem.className.search(/code_shown/) > -1) {
+    letter_elem.className = letter_elem.className.replace(/code_shown/, "code_not_shown");
+    $$(".code_rarity_" + letter_elem.innerHTML).invoke("hide");
+  } else {
+    letter_elem.className = letter_elem.className.replace(/code_not_shown/, "code_shown");
+    $$(".code_rarity_" + letter_elem.innerHTML).invoke("show");
+  }
 }
 function show_skeleton_row(value) {
   $(value + "_row").show(); 

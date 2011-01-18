@@ -167,10 +167,6 @@
   @include gradient_diag_highlight(#a43, #e86);
 }
 
-.skeleton_letter_toggle.code_shown#rarity_C_toggle { @extend .cardrarity.common ; }
-.skeleton_letter_toggle.code_shown#rarity_U_toggle { @extend .uncommon ; }
-.skeleton_letter_toggle.code_shown#rarity_R_toggle { @extend .rare ; }
-.skeleton_letter_toggle.code_shown#rarity_M_toggle { @extend .mythic ; }
 
 /***** Tokens *****/
 
@@ -259,6 +255,9 @@ $Land_Red_Bar: #ffd0c0;
 $Land_Red_Text: #f98;
 $Land_Green_Bar: #dfd;
 $Land_Green_Text: #cfc;
+$Artifact_Text: #D5DDE0;
+$Land_Text: #D7D3CA;
+$Multicolour_Text: #ffd;
 
 .Artifact .pinline { background-color: #eee; }
 .Artifact .pinline_ptbox { background-color: #9CB7BE; }
@@ -268,7 +267,7 @@ $Land_Green_Text: #cfc;
    background: -webkit-gradient(linear, left top, left bottom, from(#B0C4C8), color-stop(0.5, #D2D7DB), to(#B0C4C8));
    background: -moz-linear-gradient(top, #B0C4C8, #D2D7DB, #B0C4C8);
    }
-.Artifact .cardtext, .Artifact .pinline_ptbox { background-color: #D5DDE0; }
+.Artifact .cardtext, .Artifact .pinline_ptbox { background-color: $Artifact_Text; }
 .Artifact, .Artifact .cardart { background-color: #ABC1CE; }
 .Coloured_Artifact { background: #ABC1CE !important; }
 
@@ -302,14 +301,14 @@ $Land_Green_Text: #cfc;
 .Multicolour .pinline, .Land.multicolour .pinline { background-color: #eAd88C; /* #C6AF71;*/ }
 .Multicolour .cardtitlebar, .Multicolour .cardtypebar, .Land.multicolour .cardtitlebar, .Land.multicolour .cardtypebar { background-color: #DAC87C; 
     @include gradient_horz_highlight(#B9A566, #DBC68F);}
-.Multicolour .cardtext, .Land.multicolour .cardtext { background-color: #ffd; }
+.Multicolour .cardtext, .Land.multicolour .cardtext { background-color: $Multicolour_Text; }
 .Multicolour .pinline_ptbox { background: #C6AF71 !important; }
 .Multicolour .ptbox { background: #C6AF71 !important; }
 
 .Land, .Land .cardart { background-color: #b9aea2 /*#A4968E*/; }
 .Land .pinline { background-color: #d7cDbF /*C7BDAF*/; }
 .Land .cardtitlebar, .Land .cardtypebar { background-color: #D8CFC8; }
-.Land .cardtext, .Land .pinline_ptbox { background-color: #D7D3CA; /* #eee6df; */}
+.Land .cardtext, .Land .pinline_ptbox { background-color: $Land_Text; /* #eee6df; */}
 
 .Land.white .cardtitlebar, .Land.white .cardtypebar { background-color: $Land_White_Bar; }
 .Land.white .cardtext, .Land.white .pinline_ptbox { background-color: $Land_White_Text; }
@@ -400,3 +399,22 @@ $Land_Green_Text: #cfc;
 .art_url_field  { width: 98%; }
 .image_url_field  { width: 400px; }
 form #raritycell { border: 1px solid black; }
+
+/***** Skeletons *****/
+.skeleton_letter_toggle.code_shown#rarity_C_toggle { @extend .cardrarity.common; }
+.skeleton_letter_toggle.code_shown#rarity_U_toggle { @extend .uncommon; }
+.skeleton_letter_toggle.code_shown#rarity_R_toggle { @extend .rare; }
+.skeleton_letter_toggle.code_shown#rarity_M_toggle { @extend .mythic; }
+.code_frame_W { background-color: $Land_White_Text; }
+.code_frame_U { background-color: $Land_Blue_Text; }
+.code_frame_B { background-color: $Land_Black_Text; }
+.code_frame_R { background-color: $Land_Red_Text; }
+.code_frame_G { background-color: $Land_Green_Text; }
+.code_frame_A { background-color: $Artifact_Text; }
+.code_frame_M, .code_frame_Z { background-color: $Multicolour_Text; }
+.code_frame_L { background-color: $Land_Text; }
+.code_rarity_C td.code_link, .code_rarity_C td.code_link a { @extend .cardrarity.common; }
+.code_rarity_U td.code_link { @extend .uncommon; }
+.code_rarity_R td.code_link { @extend .rare; }
+.code_rarity_M td.code_link { @extend .mythic; }
+ 

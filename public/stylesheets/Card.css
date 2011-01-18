@@ -225,22 +225,22 @@
 .minitext  img { width: 12px; height: 12px; }
 .microtext img { width: 11px; height: 11px; }
 .nanotext  img { width: 10px; height: 10px; } */
-.cardrarity.common, .skeleton_letter_toggle.code_shown#rarity_C_toggle, .cardrarity.token, .cardrarity.basic {
+.cardrarity.common, .skeleton_letter_toggle.code_shown#rarity_C_toggle, .code_rarity_C td.code_link, .code_rarity_C td.code_link a, .cardrarity.token, .cardrarity.basic {
   color: #fff;
   background-color: #000; }
 
-.uncommon, .skeleton_letter_toggle.code_shown#rarity_U_toggle {
+.uncommon, .skeleton_letter_toggle.code_shown#rarity_U_toggle, .code_rarity_U td.code_link {
   background: #ccc;
   background: -webkit-gradient(linear, right top, left bottom, from(#999999), color-stop(0.5, #ccd3d6), to(#999999));
   background: -moz-linear-gradient(right top, #999999, #ccd3d6, #999999); }
 
-.rare, .skeleton_letter_toggle.code_shown#rarity_R_toggle {
+.rare, .skeleton_letter_toggle.code_shown#rarity_R_toggle, .code_rarity_R td.code_link {
   color: #000;
   background: #e0d060;
   background: -webkit-gradient(linear, right top, left bottom, from(#998044), color-stop(0.5, #e0d060), to(#998044));
   background: -moz-linear-gradient(right top, #998044, #e0d060, #998044); }
 
-.mythic, .skeleton_letter_toggle.code_shown#rarity_M_toggle {
+.mythic, .skeleton_letter_toggle.code_shown#rarity_M_toggle, .code_rarity_M td.code_link {
   color: #fff;
   background: #933;
   background: -webkit-gradient(linear, right top, left bottom, from(#aa4433), color-stop(0.5, #ee8866), to(#aa4433));
@@ -361,7 +361,7 @@
   background: -moz-linear-gradient(top, #b0c4c8, #d2d7db, #b0c4c8); }
 
 .Artifact .cardtext, .Artifact .pinline_ptbox {
-  background-color: #D5DDE0; }
+  background-color: #d5dde0; }
 
 .Artifact, .Artifact .cardart {
   background-color: #ABC1CE; }
@@ -449,7 +449,7 @@
   background: -moz-linear-gradient(left, #b9a566, #dbc68f, #b9a566); }
 
 .Multicolour .cardtext, .Land.multicolour .cardtext {
-  background-color: #ffd; }
+  background-color: #ffffdd; }
 
 .Multicolour .pinline_ptbox {
   background: #C6AF71 !important; }
@@ -467,7 +467,7 @@
   background-color: #D8CFC8; }
 
 .Land .cardtext, .Land .pinline_ptbox {
-  background-color: #D7D3CA;
+  background-color: #d7d3ca;
   /* #eee6df; */ }
 
 .Land.white .cardtitlebar, .Land.white .cardtypebar {
@@ -749,3 +749,28 @@
 
 form #raritycell {
   border: 1px solid black; }
+
+/***** Skeletons *****/
+.code_frame_W {
+  background-color: #ffffcc; }
+
+.code_frame_U {
+  background-color: #99c5ff; }
+
+.code_frame_B {
+  background-color: #bbbbbb; }
+
+.code_frame_R {
+  background-color: #ff9988; }
+
+.code_frame_G {
+  background-color: #ccffcc; }
+
+.code_frame_A {
+  background-color: #d5dde0; }
+
+.code_frame_M, .code_frame_Z {
+  background-color: #ffffdd; }
+
+.code_frame_L {
+  background-color: #d7d3ca; }

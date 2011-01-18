@@ -84,13 +84,13 @@
     <% if frame_toggle_letters.any? %>
       Show frames:
       <% frame_toggle_letters.each do |letter| %>
-        <span id="frame_<%= letter %>_toggle" class="skeleton_letter_toggle code_shown" onclick="toggle_frame_letter(self)"><%= letter %></span>
+        <span id="frame_<%= letter %>_toggle" class="skeleton_letter_toggle code_shown code_frame_<%= letter %>" onclick="toggle_frame_letter(this)"><%= letter %></span>
       <% end %>
     <% end %>
     <br>
       Show rarities:
       <% ["C", "U", "R", "M"].each do |letter| %>
-        <span id="rarity_<%= letter %>_toggle" class="skeleton_letter_toggle code_shown" onclick="toggle_rarity_letter(self)"><%= letter %></span>
+        <span id="rarity_<%= letter %>_toggle" class="skeleton_letter_toggle code_shown" onclick="toggle_rarity_letter(this)"><%= letter %></span>
       <% end %>
     <%= format_skeleton_table(format_all_markup(@skeleton.body, @cardset)) %>
   </div>

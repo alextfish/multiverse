@@ -240,14 +240,17 @@ module ApplicationHelper
   
   def format_skeleton_table(text)
     skeleton_line_regexp = />(?:[(]?)([CURM])([A-Z])/
-    text.lines.each do |line|
+    lines_out = text.lines.map do |line|
       if line =~ skeleton_line_regexp
         data = line.match(skeleton_line_regexp)
-        rarity_letter, frame_letter = data
-        line.sub("<tr>", "<tr class=\"code_#{frame_letter}\">")
-        line.sub("<td ", "<td class=\"\"")
+        rarity_letter = data[1]
+        frame_letter = data[2]
+        line.sub!("<tr>", "<tr class=\"code_frame_#{frame_letter} code_rarity_#{rarity_letter}\">")
+        line.sub!("<td ", "<td class=\"code_link\"")
       end
+      line
     end
+    lines_out.join("\n").html_safe
   end
   
   def select_random(num_to_choose, array_in)
