@@ -19,7 +19,7 @@
 class Log < ActiveRecord::Base
   belongs_to :cardset
   belongs_to :user
-  validates_inclusion_of :kind, :in => (1..18)
+  validates_inclusion_of :kind, :in => (1..20)
   default_scope :order => 'logs.datestamp DESC'
   
   def Log.kind(sym)
@@ -42,6 +42,8 @@ class Log < ActiveRecord::Base
       when :mechanic_delete:     16
       when :cardset_import:      17
       when :comment_edit:        18
+      when :skeleton_generate:   19
+      when :skeleton_edit:       20
 
       else
         raise "Unknown log kind specified: #{sym}"
@@ -85,6 +87,10 @@ class Log < ActiveRecord::Base
         specific ? "deleted a mechanic in " : "deleted a mechanic"
       when Log.kind(:cardset_import):
         specific ? "imported cards (#{self.text}) into " : "imported cards (#{self.text})"
+      when Log.kind(:skeleton_generate):
+        specific ? "generated part of a set skeleton in " : "generated part of a set skeleton"
+      when Log.kind(:skeleton_edited):
+        specific ? "edited the set skeleton in " : "edited the set skeleton"
       else
         raise "Unknown log kind #{self.kind} found in log #{self.id}"
     end
@@ -121,6 +127,10 @@ class Log < ActiveRecord::Base
       when Log.kind(:mechanic_create), Log.kind(:mechanic_edit):
         mech = Mechanic.find_by_id(self.object_id)
         return mech
+      # skeletons
+      when Log.kind(:skeleton_generate), Log.kind(:skeleton_edit):
+        dp = DetailsPage.find_by_id(self.object_id)
+        return dp
       # For deleted objects, just return the parent cardset
       when Log.kind(:mechanic_delete), Log.kind(:card_delete), Log.kind(:details_page_delete):
         cardset = Cardset.find_by_id(self.object_id)

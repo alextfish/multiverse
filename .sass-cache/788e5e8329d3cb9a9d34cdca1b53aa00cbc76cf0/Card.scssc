@@ -1,8 +1,8 @@
 3.0.24 (Classy Cassidy)
-3bd951ec1ea2f4f98cedbe7562757ff01c0cf18f
+67c1af5f2d3ec878392420318ba381e80eb000c2
 o:Sass::Tree::RootNode
 :
-@linei:@template"ÍH@mixin gradient_horz($start, $end) {
+@linei:@template"øI@mixin gradient_horz($start, $end) {
   filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#{$start}', endColorstr='#{$end}', GradientType=1);
   background: -webkit-gradient(linear, left top, right top, from($start), to($end));
   background: -moz-linear-gradient(left,  $start,  $end);
@@ -421,7 +421,16 @@ form #raritycell { border: 1px solid black; }
 .code_rarity_U td.code_link { @extend .uncommon; }
 .code_rarity_R td.code_link { @extend .rare; }
 .code_rarity_M td.code_link { @extend .mythic; }
- :@children[ño:Sass::Tree::MixinDefNode;i;[o:Sass::Tree::PropNode;i;[ :@prop_syntax:new:@valueo: Sass::Script::Interpolation:@aftero:Sass::Script::String
+
+.code_frame_W.code_not_shown,
+.code_frame_U.code_not_shown,
+.code_frame_B.code_not_shown,
+.code_frame_R.code_not_shown,
+.code_frame_G.code_not_shown,
+.code_frame_A.code_not_shown,
+.code_frame_M.code_not_shown, .code_frame_Z.code_not_shown,
+.code_frame_L.code_not_shown { background-color: white; }
+ :@children[òo:Sass::Tree::MixinDefNode;i;[o:Sass::Tree::PropNode;i;[ :@prop_syntax:new:@valueo: Sass::Script::Interpolation:@aftero:Sass::Script::String
 :@context:default;i:
 @type:identifier;"', GradientType=1):@options{ :@originally_textF:	@mido:Sass::Script::Variable	;;;i;@:
 @name"end;@:@whitespace_afterF:@beforeo;;o;
@@ -939,4 +948,13 @@ width;-i ;5T;@;-i o;>;i‘;?["form #raritycell;[o;
 ;iœ;[ ;;;o;	;;;iœ;{ ;"Land_Green_Text;@;["background-color;-i ;5T;@;-i o;>;i;?[".code_frame_A;[o;
 ;i;[ ;;;o;	;;;i;{ ;"Artifact_Text;@;["background-color;-i ;5T;@;-i o;>;iž;?["!.code_frame_M, .code_frame_Z;[o;
 ;iž;[ ;;;o;	;;;iž;{ ;"Multicolour_Text;@;["background-color;-i ;5T;@;-i o;>;iŸ;?[".code_frame_L;[o;
-;iŸ;[ ;;;o;	;;;iŸ;{ ;"Land_Text;@;["background-color;-i ;5T;@;-i o;>;i ;?["?.code_rarity_C td.code_link, .code_rarity_C td.code_link a;[o;N	;O[	"."cardrarity"."common;i ;[ ;@;5T;@;-i o;>;i¡;?[" .code_rarity_U td.code_link;[o;N	;O["."uncommon;i¡;[ ;@;5T;@;-i o;>;i¢;?[" .code_rarity_R td.code_link;[o;N	;O["."	rare;i¢;[ ;@;5T;@;-i o;>;i£;?[" .code_rarity_M td.code_link;[o;N	;O["."mythic;i£;[ ;@;5T;@;-i ;5T;@
+;iŸ;[ ;;;o;	;;;iŸ;{ ;"Land_Text;@;["background-color;-i ;5T;@;-i o;>;i ;?["?.code_rarity_C td.code_link, .code_rarity_C td.code_link a;[o;N	;O[	"."cardrarity"."common;i ;[ ;@;5T;@;-i o;>;i¡;?[" .code_rarity_U td.code_link;[o;N	;O["."uncommon;i¡;[ ;@;5T;@;-i o;>;i¢;?[" .code_rarity_R td.code_link;[o;N	;O["."	rare;i¢;[ ;@;5T;@;-i o;>;i£;?[" .code_rarity_M td.code_link;[o;N	;O["."mythic;i£;[ ;@;5T;@;-i o;>;i¬;?[".code_frame_W.code_not_shown,
+.code_frame_U.code_not_shown,
+.code_frame_B.code_not_shown,
+.code_frame_R.code_not_shown,
+.code_frame_G.code_not_shown,
+.code_frame_A.code_not_shown,
+.code_frame_M.code_not_shown, .code_frame_Z.code_not_shown,
+.code_frame_L.code_not_shown;[o;
+;i¬;[ ;;;o;;;;;;"
+white;@;["background-color;-i ;5T;@;-i ;5T;@

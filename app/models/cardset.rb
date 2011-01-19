@@ -214,6 +214,99 @@ class Cardset < ActiveRecord::Base
   def skeleton
     self.details_pages.select{|dp| dp.title == "Skeleton" }[0]
   end
+  
+  def generate_skeleton(params)
+    # Read existing skeleton content: 
+    # assemble array all_existing_codes and hash line_numbers_for_code
+    @skeleton = self.skeleton
+    
+    code_lines = []
+    all_existing_codes = []
+    line_numbers_for_code = {}
+    if !@skeleton.nil?
+      all_lines = @skeleton.body.lines
+      all_lines.each_with_index do |line, index|
+        if line =~ skeleton_code_regexp
+          code_lines_and_numbers << [line, index]
+          code = line.match(skeleton_code_regexp)[1]
+          all_existing_codes << code
+          line_numbers_for_code[code] = index
+        end
+      end
+    end
+
+    # For each posted frame-rarity combo:
+    rarity_frame_regexp = /rarity([A-Z])_frame([A-Z])/
+    params[:generate_form].each do |param_key, param_value|
+      if !param_key =~ rarity_frame_regexp
+        raise "Unexpected param #{param_key}"
+      end
+      # read rarity_letter, frame_letter, and number_in from the form entry
+      rarity_letter = param_key.match(rarity_frame_regexp)[1]
+      frame_letter = param_key.match(rarity_frame_regexp)[2]
+      number_in = param_value
+      # if number is 0: next
+      if number_in == 0
+        next
+      end
+      # calculate "new lines" - codes that we need that don't already exist
+      new_range = (1..number_in).map {|num| "$#{rarity_letter}#{frame_letter}%02d" % num}
+      new_codes = new_range.select{|c| !existing_codes.include?(c) }
+      # if no new codes:
+      if new_codes.empty?
+        # do nothing
+      # elsif some codes already exist:
+      elsif new_codes.length < new_range.length
+        # find last line num of existing codes
+        existing_codes = new_range - new_codes
+        last_line_num = highest_line_num existing_codes, line_numbers_for_code
+        # insert new lines immediately after last code. this allows them to delete CW02 and it reappears after CW18, but meh
+        insertions << [new_codes, last_line_num]
+      else # no codes already exist
+        existing_codes_this_frame = all_existing_codes.select {|code| code[0] == frame_letter }
+        # if any lines exist for this frame:
+        if !existing_codes_this_frame.empty?
+          existing_rarities = existing_codes_this_frame.map{|code| code[1]}
+          existing_codes_previous_rarities = case rarity_letter
+            when ?C: []
+            when ?U: existing_codes_this_frame.select {|code| code[1]==?C}
+            when ?R: existing_codes_this_frame.select {|code| [?C,?U].include? code[1]}
+            when ?M: existing_codes_this_frame # already established there are no mythics
+            else
+              raise "Unexpected rarity letter #{rarity_letter}"
+          end
+          # if any lines exist for previous rarities in this frame:
+          if !existing_codes_previous_rarities.empty?
+            # insert new lines immediately after last previous rarity
+            last_line_num = highest_line_num existing_codes_previous_rarities, line_numbers_for_code
+            insertions << [new_codes, last_line_num]
+          else
+            # insert new lines immediately before first line (since it's a subsequent rarity)
+            first_line_num = lowest_line_num existing_codes_this_frame, line_numbers_for_code
+            insertions << [new_codes, first_line_num]
+          end
+        else # no lines exist for this frame:
+          raise "todo"
+        end
+      end
+    end
+    
+    # now handle the insertions
+    raise "insertions todo"
+  end
+
+  def highest_line_num (codes_in, line_numbers_for_code)
+    codes_in.reduce(0) do |code, current_highest_line_num|
+      this_line_num = line_numbers_for_code[code]
+      this_line_num > current_highest_line_num ? this_line_num : current_highest_line_num
+    end
+  end
+  def lowest_line_num (codes_in, line_numbers_for_code)
+    codes_in.reduce(999999) do |code, current_lowest_line_num|
+      this_line_num = line_numbers_for_code[code]
+      this_line_num < current_lowest_line_num ? this_line_num : current_lowest_line_num
+    end
+  end
 
   ########################## Boosters ##########################
   def cards_per_line

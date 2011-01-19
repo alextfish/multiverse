@@ -103,7 +103,15 @@ class CardsetsController < ApplicationController
   
   # POST /cardsets/1/generate_skeleton
   def generate_skeleton
-    TODO
+    Rails.logger.info "Generating skeleton for #{@cardset.name}"
+    success, message = @cardset.generate_skeleton(params)
+    if success
+      @cardset.log :kind=>:skeleton_generate, :user=>current_user, :object_id=>@skeleton.id
+      redirect_to skeleton_cardset_path(@cardset)
+    else
+      flash.now[:error] = message
+      render :skeleton
+    end
   end
 
   # GET /cardsets/new

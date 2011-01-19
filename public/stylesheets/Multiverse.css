@@ -112,7 +112,7 @@ margin-bottom: 10px; }
 .code_shown { color: black; font-weight: normal; }
 .code_not_shown { color: #888; font-weight: normal; }
 
-table.skeleton_generate input { width: 3em; }
+table.skeleton_generate input { width: 2em; }
 
 /***** Card display *****/
 

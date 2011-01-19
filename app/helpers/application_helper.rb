@@ -293,8 +293,8 @@ module ApplicationHelper
           return log.past_tense_verb(true) + link_to(cardset.name, cardset_mechanics_path(cardset))
         when Log.kind(:mechanic_delete):
           return log.past_tense_verb(true) + link_to(obj.name, cardset_mechanics_path(obj)) 
-        # For details pages, links are nested resources
-        when Log.kind(:details_page_create), Log.kind(:details_page_edit), Log.kind(:comment_details_page):
+        # For details pages / skeletons, links are nested resources
+        when Log.kind(:details_page_create), Log.kind(:details_page_edit), Log.kind(:comment_details_page), Log.kind(:skeleton_generate), Log.kind(:skeleton_edit):
           return log.past_tense_verb(true) + link_to(obj.title, cardset_details_page_path(obj.cardset, obj))
         # For cardset comments, return the cardset name and the cardset comments path
         when Log.kind(:comment_cardset):

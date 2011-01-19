@@ -774,3 +774,13 @@ form #raritycell {
 
 .code_frame_L {
   background-color: #d7d3ca; }
+
+.code_frame_W.code_not_shown,
+.code_frame_U.code_not_shown,
+.code_frame_B.code_not_shown,
+.code_frame_R.code_not_shown,
+.code_frame_G.code_not_shown,
+.code_frame_A.code_not_shown,
+.code_frame_M.code_not_shown, .code_frame_Z.code_not_shown,
+.code_frame_L.code_not_shown {
+  background-color: white; }

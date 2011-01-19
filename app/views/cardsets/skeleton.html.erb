@@ -35,17 +35,17 @@
 <div class="onetab" id="generate"><a name="generate"></a>
 <%= form_tag :action => :generate_skeleton, :id => @cardset do %>
   <table class="skeleton_generate">
-    <tr><td></td><td colspan="2">Generate codes for:</td>
+    <tr><td></td><td colspan="3">Generate codes for:</td>
     <td colspan="2">
-    <select onchange="if(self.value) { } return false;">
+    <select onchange="if(this.value) { $(this.value + '_row').show(); $(this.value + '_option').remove(); } return false;">
       <option value="">(Add more fields:)</option>
-      <option value="allygold">Gold cards in allied-colour pairs</option>
-      <option value="enemygold">Gold cards in enemy-colour pairs</option>
-      <option value="allyhybrid">Hybrid cards in allied-colour pairs</option>
-      <option value="enemyhybrid">Hybrid cards in enemy-colour pairs</option>
+      <option value="allygold" id="allygold_option">Gold cards in allied-colour pairs</option>
+      <option value="enemygold" id="enemygold_option">Gold cards in enemy-colour pairs</option>
+      <option value="allyhybrid" id="allyhybrid_option">Hybrid cards in allied-colour pairs</option>
+      <option value="enemyhybrid" id="enemyhybrid_option">Hybrid cards in enemy-colour pairs</option>
     </select></td>
     </tr>
-    <% form_sections = [["white", "White cards (also blue,<br>black, red and green cards)", true],
+    <% frame_sections = [["white", "White cards (also blue,<br>black, red and green cards)", true],
         ["artifact", "Artifact cards", true], 
         ["land", "Land cards", true],
         ["allygold", "White-blue gold cards and<br>each allied-colour pair", false], 
@@ -53,16 +53,28 @@
         ["allyhybrid", "White-blue hybrid cards and<br>each allied-colour pair", false], 
         ["enemyhybrid", "White-black hybrid cards and<br>each enemy-colour pair", false], 
         ] %>
-    <% form_sections.each do |section| %>
+    <% rarity_sections = [["rarityC", "commons,"], 
+        ["rarityU", "uncommons,"], 
+        ["rarityR", "rares and"],
+        ["rarityM", "mythics"]]; %>
+    <% frame_sections.each do |section| %>
     <% frame, description, showing = section %>
     <tr id="<%= frame %>_row" <% unless showing %>style="display: none;"<% end %>>
       <td><%= description.html_safe %>
-      <td><%= number_field_tag "#{frame}_commons" %> commons,
-      <td><%= number_field_tag "#{frame}_uncommons" %> uncommons,
-      <td><%= number_field_tag "#{frame}_rares" %> rares and
-      <td><%= number_field_tag "#{frame}_mythics" %> mythics
+      <% rarity_sections.each do |rarity_section| %>
+        <% rarity, description = rarity_section %>
+        <td><%= number_field_tag "#{frame}_#{rarity}", nil, :onchange => "update_generate_totals();" %> <%= description %>
+      <% end %>
+      <td>(<span id="total_<%= frame %>">0</span> total)
     </tr>
     <% end %>
+    <tr>
+      <td>For a total of
+      <td><span id="total_rarityC">0</span> commons,
+      <td><span id="total_rarityU">0</span> uncommons,
+      <td><span id="total_rarityR">0</span> rares and
+      <td><span id="total_rarityM">0</span> mythics
+      <td>(<span id="grand_total">0</span> cards total).
   </table>
   <div>
   <%= submit_tag "Generate!", :disabled_with => "Generating..." %>
@@ -95,7 +107,9 @@
     <%= format_skeleton_table(format_all_markup(@skeleton.body, @cardset)) %>
   </div>
 <% end %>
-<% if @skeleton.nil?
+<% if flash[:error]
+     desired_tab = "generate"
+   elsif @skeleton.nil?
      desired_tab = "about"
    else 
      desired_tab = "view"

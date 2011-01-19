@@ -1,22 +1,24 @@
 // Place your application-specific JavaScript functions and classes here
 // This file is automatically included by javascript_include_tag :defaults
 
+// Skeletons
+// - Skeleton View
 function toggle_frame_letter(letter_elem) {
   if (letter_elem.className.search(/code_shown/) > -1) {
-    letter_elem.className = letter_elem.className.replace(/code_shown/, "code_not_shown");
+    letter_elem.removeClassName("code_shown").addClassName("code_not_shown");
     $$(".code_frame_" + letter_elem.innerHTML).invoke("hide");
     letter_elem.show();
   } else {
-    letter_elem.className = letter_elem.className.replace(/code_not_shown/, "code_shown");
+    letter_elem.removeClassName("code_not_shown").addClassName("code_shown");
     $$(".code_frame_" + letter_elem.innerHTML).invoke("show");
   }
 }
 function toggle_rarity_letter(letter_elem) {
   if (letter_elem.className.search(/code_shown/) > -1) {
-    letter_elem.className = letter_elem.className.replace(/code_shown/, "code_not_shown");
+    letter_elem.removeClassName("code_shown").addClassName("code_not_shown");
     $$(".code_rarity_" + letter_elem.innerHTML).invoke("hide");
   } else {
-    letter_elem.className = letter_elem.className.replace(/code_not_shown/, "code_shown");
+    letter_elem.removeClassName("code_not_shown").addClassName("code_shown");
     $$(".code_rarity_" + letter_elem.innerHTML).invoke("show");
   }
 }
@@ -24,7 +26,39 @@ function show_skeleton_row(value) {
   $(value + "_row").show(); 
   $("option_" + value).delete(); 
 }
+// - Skeleton Generate
+function getIntValue(id) {
+  parsed = parseInt($(id).value, 10);
+  return (isNaN(parsed) ? 0 : parsed);
+}
+function update_generate_totals() {
+  var rarities=["rarityC", "rarityU", "rarityR", "rarityM"];
+  var frames=["white", "artifact", "land", "allygold", "enemygold", "allyhybrid", "enemyhybrid"];
+  var frame_multiplier={"white":5, "artifact":1, "land":1, "allygold":5, "enemygold":5, "allyhybrid":5, "enemyhybrid":5};
+  var counts={};
+  var total_count=0;
+  frames.each(function(this_frame) {
+    counts[this_frame] = 0;
+  });
+  rarities.each(function(this_rarity) {
+    counts[this_rarity] = 0;
+    frames.each(function(this_frame) {
+      this_count = getIntValue(this_frame + "_" + this_rarity) * frame_multiplier[this_frame];
+      counts[this_rarity] += this_count;
+      counts[this_frame] += this_count;
+      total_count += this_count;
+    })
+  });
+  $("grand_total").innerHTML = total_count;
+  rarities.each(function(this_count) {
+    $("total_" + this_count).innerHTML = counts[this_count];
+  });
+  frames.each(function(this_count) {
+    $("total_" + this_count).innerHTML = counts[this_count];
+  });
+}
 
+// Card editing
 function update_card_supertype(new_value) {
   if (new_value == "Custom") {
     $("card_supertype_select").hide();
@@ -32,24 +66,6 @@ function update_card_supertype(new_value) {
   } else {
     $("card_supertype").value = new_value;
   }
-}
-function getIntValue(id) {
-  return parseInt($(id).value, 10);
-}
-function update_generate_totals() {
-  var rarities=["commons", "uncommons", "rares", "mythics"];
-  var counts={};
-  for (count in rarities) {
-    this_rarity = rarities[count];
-    counts[this_rarity] = getIntValue("artifact_"+this_rarity) + getIntValue("land_"+this_rarity) +
-      5*getIntValue("white_"+this_rarity) + 5*getIntValue("allygold_"+this_rarity) +
-      5*getIntValue("enemygold_"+this_rarity) + 5*getIntValue("allyhybrid_"+this_rarity) +
-      5*getIntValue("enemyhybrid_"+this_rarity);
-  }
-  total = commons + uncommons + rares + mythics
-  $("generate_total").innerHTML = total
-  $("generate_commons").innerHTML = commons
-  //etc
 }
 
 function update_frame() {
