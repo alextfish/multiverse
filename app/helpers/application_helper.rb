@@ -239,7 +239,7 @@ module ApplicationHelper
   end
   
   def format_skeleton_table(text)
-    skeleton_line_regexp = />(?:[(]?)([CURM])([A-Z])/
+    skeleton_line_regexp = />(?:[(]?)([CURM])([A-Z])[0-9][0-9]/
     lines_out = text.lines.map do |line|
       if line =~ skeleton_line_regexp
         data = line.match(skeleton_line_regexp)
