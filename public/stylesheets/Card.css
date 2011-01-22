@@ -8,7 +8,7 @@
 
 .cardborder {
   width: 200px;
-  /* height: 262px; */ }
+  min-height: 280px; }
 
 .card {
   background: #0ff;
@@ -246,6 +246,144 @@
   background: -webkit-gradient(linear, right top, left bottom, from(#aa4433), color-stop(0.5, #ee8866), to(#aa4433));
   background: -moz-linear-gradient(right top, #aa4433, #ee8866, #aa4433); }
 
+/***** Planeswalkers *****/
+.card.Planeswalker {
+  padding-top: 0px; }
+
+.Planeswalker .namebox {
+  padding-top: 0px; }
+
+.Planeswalker .pinline_box {
+  -moz-border-radius: 8px 8px 12px 12px;
+  -webkit-border-radius: 8px 8px 12px 12px;
+  -khtml-border-radius: 8px 8px 12px 12px;
+  border-radius: 8px 8px 12px 12px;
+  -moz-border-radius: 8px 8px 2px 2px / 12px 12px 2px 2px;
+  -webkit-border-radius: 8px 8px 2px 2px 12px 12px 2px 2px;
+  -khtml-border-radius: 8px 8px 2px 2px / 12px 12px 2px 2px;
+  border-radius: 8px 8px 2px 2px / 12px 12px 2px 2px; }
+
+.Planeswalker .cardtitlebar, .Planeswalker .cardtypebar {
+  -moz-border-radius: 8px 8px 12px 12px;
+  -webkit-border-radius: 8px 8px 12px 12px;
+  -khtml-border-radius: 8px 8px 12px 12px;
+  border-radius: 8px 8px 12px 12px;
+  -moz-border-radius: 8px 8px 2px 2px / 12px 12px 2px 2px;
+  -webkit-border-radius: 8px 8px 2px 2px 12px 12px 2px 2px;
+  -khtml-border-radius: 8px 8px 2px 2px / 12px 12px 2px 2px;
+  border-radius: 8px 8px 2px 2px / 12px 12px 2px 2px; }
+
+.Planeswalker .cardart_container .pinline_sides {
+  -moz-border-radius: 4px;
+  -webkit-border-radius: 4px;
+  -khtml-border-radius: 4px;
+  border-radius: 4px;
+  -moz-border-radius: 4px / 42px;
+  -webkit-border-radius: 4px 42px;
+  -khtml-border-radius: 4px / 42px;
+  border-radius: 4px / 42px; }
+
+.Planeswalker .cardart {
+  -moz-border-radius: 7px;
+  -webkit-border-radius: 7px;
+  -khtml-border-radius: 7px;
+  border-radius: 7px;
+  -moz-border-radius: 7px / 40px;
+  -webkit-border-radius: 7px 40px;
+  -khtml-border-radius: 7px / 40px;
+  border-radius: 7px / 40px;
+  border-right: 1px solid black;
+  border-left: 1px solid white;
+  min-height: 115px; }
+
+.Planeswalker .cardtext {
+  -moz-border-radius: 4px 4px 8px 8px;
+  -webkit-border-radius: 4px 4px 8px 8px;
+  -khtml-border-radius: 4px 4px 8px 8px;
+  border-radius: 4px 4px 8px 8px;
+  -moz-border-radius: 4px 4px 18px 18px / 8px 8px 32px 32px;
+  -webkit-border-radius: 4px 4px 18px 18px 8px 8px 32px 32px;
+  -khtml-border-radius: 4px 4px 18px 18px / 8px 8px 32px 32px;
+  border-radius: 4px 4px 18px 18px / 8px 8px 32px 32px;
+  border-left: 1px solid black;
+  border-bottom: 1px solid black;
+  padding-left: 8px; }
+
+.Planeswalker .cardtext_container .pinline_sidesbottom {
+  -moz-border-radius: 0px 0px 0px 0px;
+  -webkit-border-radius: 0px 0px 0px 0px;
+  -khtml-border-radius: 0px 0px 0px 0px;
+  border-radius: 0px 0px 0px 0px;
+  -moz-border-radius: 0px 0px 18px 18px / 0px 0px 32px 32px;
+  -webkit-border-radius: 0px 0px 18px 18px 0px 0px 32px 32px;
+  -khtml-border-radius: 0px 0px 18px 18px / 0px 0px 32px 32px;
+  border-radius: 0px 0px 18px 18px / 0px 0px 32px 32px;
+  padding-left: 16px; }
+
+.Planeswalker .pinline_ptbox.pinline {
+  background-color: #bbb !important;
+  -moz-border-radius: 15px 15px 4px 4px;
+  -webkit-border-radius: 15px 15px 4px 4px;
+  -khtml-border-radius: 15px 15px 4px 4px;
+  border-radius: 15px 15px 4px 4px;
+  -moz-border-radius: 15px 15px 30px 30px / 4px 4px 15px 15px;
+  -webkit-border-radius: 15px 15px 30px 30px 4px 4px 15px 15px;
+  -khtml-border-radius: 15px 15px 30px 30px / 4px 4px 15px 15px;
+  border-radius: 15px 15px 30px 30px / 4px 4px 15px 15px;
+  padding-right: 2px;
+  padding-top: 2px !important;
+  top: -12px; }
+
+.Planeswalker .pinline_ptbox .ptbox {
+  background-color: black !important;
+  color: white !important;
+  -moz-border-radius: 12px 12px 4px 4px;
+  -webkit-border-radius: 12px 12px 4px 4px;
+  -khtml-border-radius: 12px 12px 4px 4px;
+  border-radius: 12px 12px 4px 4px;
+  -moz-border-radius: 12px 12px 30px 30px / 4px 4px 12px 12px;
+  -webkit-border-radius: 12px 12px 30px 30px 4px 4px 12px 12px;
+  -khtml-border-radius: 12px 12px 30px 30px / 4px 4px 12px 12px;
+  border-radius: 12px 12px 30px 30px / 4px 4px 12px 12px; }
+
+.Planeswalker .pinline_ptbox .ptbox {
+  background-color: black !important;
+  color: white !important;
+  -moz-border-radius: 12px 12px 4px 4px;
+  -webkit-border-radius: 12px 12px 4px 4px;
+  -khtml-border-radius: 12px 12px 4px 4px;
+  border-radius: 12px 12px 4px 4px;
+  -moz-border-radius: 12px 12px 30px 30px / 4px 4px 12px 12px;
+  -webkit-border-radius: 12px 12px 30px 30px 4px 4px 12px 12px;
+  -khtml-border-radius: 12px 12px 30px 30px / 4px 4px 12px 12px;
+  border-radius: 12px 12px 30px 30px / 4px 4px 12px 12px; }
+
+.Planeswalker .bottombox {
+  position: relative;
+  margin: 0 auto;
+  text-align: left; }
+
+.Planeswalker .artist {
+  color: white;
+  background: black;
+  font-size: 7pt;
+  position: absolute;
+  width: 80%;
+  left: 15%;
+  top: -2px;
+  padding-left: 20px;
+  -moz-border-radius: 30px 30px 12px 12px;
+  -webkit-border-radius: 30px 30px 12px 12px;
+  -khtml-border-radius: 30px 30px 12px 12px;
+  border-radius: 30px 30px 12px 12px;
+  -moz-border-radius: 30px 30px 0px 0px / 12px 12px 0px 0px;
+  -webkit-border-radius: 30px 30px 0px 0px 12px 12px 0px 0px;
+  -khtml-border-radius: 30px 30px 0px 0px / 12px 12px 0px 0px;
+  border-radius: 30px 30px 0px 0px / 12px 12px 0px 0px; }
+
+.Planeswalker .powerfield#card_power {
+  width: 0px; }
+
 /***** Tokens *****/
 .token .cardtext {
   min-height: 0px; }
@@ -436,7 +574,7 @@
   /* #efe; */ }
 
 .Multicolour, .Multicolour .cardart {
-  background-color: #CAB86C;
+  background-color: #cab86c;
   /*#DAC87C;*/ }
 
 .Multicolour .pinline, .Land.multicolour .pinline {
@@ -464,10 +602,10 @@
   background-color: #d7cdbf; }
 
 .Land .cardtitlebar, .Land .cardtypebar {
-  background-color: #D8CFC8; }
+  background-color: #d8cfc8; }
 
 .Land .cardtext, .Land .pinline_ptbox {
-  background-color: #d7d3ca;
+  background-color: #d8cfc8;
   /* #eee6df; */ }
 
 .Land.white .cardtitlebar, .Land.white .cardtypebar {
@@ -770,10 +908,15 @@ form #raritycell {
   background-color: #d5dde0; }
 
 .code_frame_M, .code_frame_Z {
-  background-color: #ffffdd; }
+  background-color: #cab86c; }
+
+.code_frame_H {
+  filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#ffffcc', endColorstr='#bbbbbb', GradientType=1);
+  background: -webkit-gradient(linear, left top, right top, from(#ffffcc), color-stop(0.4, #ffffcc), color-stop(0.6, #bbbbbb), to(#bbbbbb));
+  background: -moz-linear-gradient(left, #ffffcc, #ffffcc, #bbbbbb, #bbbbbb); }
 
 .code_frame_L {
-  background-color: #d7d3ca; }
+  background-color: #d8cfc8; }
 
 .code_frame_W.code_not_shown,
 .code_frame_U.code_not_shown,
@@ -781,6 +924,8 @@ form #raritycell {
 .code_frame_R.code_not_shown,
 .code_frame_G.code_not_shown,
 .code_frame_A.code_not_shown,
+.code_frame_H.code_not_shown,
 .code_frame_M.code_not_shown, .code_frame_Z.code_not_shown,
 .code_frame_L.code_not_shown {
-  background-color: white; }
+  background-color: white;
+  background: white; }

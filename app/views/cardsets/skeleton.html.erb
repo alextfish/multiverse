@@ -18,7 +18,9 @@
 <% end %>
 
 <br>
-<!-- About tab -->
+
+<!-- ----------------------- About tab ----------------------- -->
+
 <div class="onetab" id="about"><a name="about"></a>
   <h2>About Set Skeletons</h2>
   <p>A set skeleton is a tool to help you when structuring your set. It helps you keep the number of different types of card balanced across colours and balanced in line with the colour pie. It's particularly useful in early design when you're wanting to make sure you have the right amounts of creatures and other card types in the different colours. 
@@ -31,7 +33,9 @@
     <p>To get started, click the "Generate" tab above!</p>
   <% end %>
 </div>
-<!--  Generate tab -->
+
+<!-- ----------------------- Generate tab ----------------------- -->
+
 <div class="onetab" id="generate"><a name="generate"></a>
 <%= form_tag :action => :generate_skeleton, :id => @cardset do %>
   <table class="skeleton_generate">
@@ -63,7 +67,7 @@
       <td><%= description.html_safe %>
       <% rarity_sections.each do |rarity_section| %>
         <% rarity, description = rarity_section %>
-        <td><%= number_field_tag "#{frame}_#{rarity}", nil, :onchange => "update_generate_totals();" %> <%= description %>
+        <td><%= number_field_tag "skeletonform_#{frame}_#{rarity}", nil, :onchange => "update_generate_totals();" %> <%= description %>
       <% end %>
       <td>(<span id="total_<%= frame %>">0</span> total)
     </tr>
@@ -77,23 +81,24 @@
       <td>(<span id="grand_total">0</span> cards total).
   </table>
   <div>
-  <!-- %= submit_tag "Generate!", :disabled_with => "Generating..." % -->
-  <button value="Generate!" disabled>Generate!</button> - <i>Note: 
+  <%= submit_tag "Generate!", :disabled_with => "Generating..." %>
+  <!-- button value="Generate!" disabled>Generate!</button> - <i>Note: 
   Skeleton generation is not yet supported. Check back soon. In the meantime, you can use the table above to plan out your
-  skeleton, and then copy lines from <a href="/cardsets/2/details_pages/50">the test skeleton</a></i>.
+  skeleton, and then copy lines from <a href="/cardsets/2/details_pages/50">the test skeleton</a></i -->
   </div><div>
-  <!-- (Note: This just generates the lines of the skeleton table. You can edit the table before you
-  create any cards.) -->
+  (Note: This just generates the lines of the skeleton table. You can edit the table before you
+  create any cards.)
   </div>
 <% end %>
 </div>
-<!-- View tab -->
+
+<!-- ----------------------- View tab ----------------------- -->
+
 <% Rails.logger.info @skeleton.inspect %>
 <% if !@skeleton.nil? %>
   <div class="onetab" id="view"><a name="view"></a>
-    <% select_frames_regexp = /^[|]?\s*\(\(\([CURM]([A-Z])/
-    present_frame_letters = @skeleton.body.lines.grep(select_frames_regexp) do |line|
-      line.match(select_frames_regexp)[1]
+    <% present_frame_letters = @skeleton.body.lines.grep(Cardset.skeleton_line_regexp_MD) do |line|
+      line.match(Cardset.skeleton_line_regexp_MD)[2]
     end.uniq %>
     <% frame_toggle_letters = Card.frame_code_letters.select {|l| present_frame_letters.include?(l)} %>
     <% if frame_toggle_letters.any? %>

@@ -36,12 +36,22 @@
   -khtml-border-radius:  #{$horz} / #{$vert};
   border-radius:         #{$horz} / #{$vert};
 }
+@mixin elliptical_corners_asymmetric($tophorz, $topvert, $bottomhorz, $bottomvert) {
+  -moz-border-radius:    $tophorz $tophorz $bottomhorz $bottomhorz;
+  -webkit-border-radius: $tophorz $tophorz $bottomhorz $bottomhorz;
+  -khtml-border-radius:  $tophorz $tophorz $bottomhorz $bottomhorz;
+  border-radius:         $tophorz $tophorz $bottomhorz $bottomhorz;
+  -moz-border-radius:    #{$tophorz} #{$tophorz} #{$topvert} #{$topvert} / #{$bottomhorz} #{$bottomhorz} #{$bottomvert} #{$bottomvert};
+  -webkit-border-radius: #{$tophorz} #{$tophorz} #{$topvert} #{$topvert} #{$bottomhorz} #{$bottomhorz} #{$bottomvert} #{$bottomvert};
+  -khtml-border-radius:  #{$tophorz} #{$tophorz} #{$topvert} #{$topvert} / #{$bottomhorz} #{$bottomhorz} #{$bottomvert} #{$bottomvert};
+  border-radius:         #{$tophorz} #{$tophorz} #{$topvert} #{$topvert} / #{$bottomhorz} #{$bottomhorz} #{$bottomvert} #{$bottomvert};
+}
 
 /***** Card display *****/
 
   .blackborder { border: 10px solid black;
       @include round_corners(10px); }
-  .cardborder { width: 200px; /* height: 262px; */ }
+  .cardborder { width: 200px; min-height: 280px; }
   .card { background: #0ff; 
           padding-top: 4px; padding-left: 3px; padding-right: 3px; padding-bottom: 3px;
           position: relative;
@@ -168,6 +178,73 @@
 }
 
 
+/***** Planeswalkers *****/
+
+.card.Planeswalker { padding-top: 0px; }
+
+.Planeswalker .namebox { padding-top: 0px; }
+
+.Planeswalker .pinline_box {
+  @include elliptical_corners_asymmetric(8px, 2px, 12px, 2px);
+}
+.Planeswalker .cardtitlebar, .Planeswalker .cardtypebar {
+  @include elliptical_corners_asymmetric(8px, 2px, 12px, 2px);
+}
+
+.Planeswalker .cardart_container .pinline_sides {
+  @include elliptical_corners(4px, 42px);
+}
+.Planeswalker .cardart {
+  @include elliptical_corners(7px, 40px);
+  border-right: 1px solid black;
+  border-left: 1px solid white;
+  min-height: 115px; 
+}
+
+
+.Planeswalker .cardtext {
+  @include elliptical_corners_asymmetric(4px, 18px, 8px, 32px);
+  border-left: 1px solid black;
+  border-bottom: 1px solid black;
+  padding-left: 8px;
+}
+.Planeswalker .cardtext_container .pinline_sidesbottom {
+  @include elliptical_corners_asymmetric(0px, 18px, 0px, 32px);
+  padding-left: 16px;
+}
+
+.Planeswalker .pinline_ptbox.pinline { 
+  background-color: #bbb !important;
+  @include elliptical_corners_asymmetric(15px, 30px, 4px, 15px);
+  padding-right: 2px;
+  padding-top: 2px !important;
+  top: -12px;
+}
+.Planeswalker .pinline_ptbox .ptbox { 
+  background-color: black !important;
+  color: white !important;
+  @include elliptical_corners_asymmetric(12px, 30px, 4px, 12px);
+}
+
+.Planeswalker .pinline_ptbox .ptbox {
+  background-color: black !important;
+  color: white !important;
+  @include elliptical_corners_asymmetric(12px, 30px, 4px, 12px);
+}
+
+.Planeswalker .bottombox {
+  position: relative; 
+  margin: 0 auto; 
+  text-align: left; }
+.Planeswalker .artist { 
+  color: white; background: black; font-size: 7pt; 
+  position: absolute; width: 80%; left: 15%; top: -2px; 
+  padding-left: 20px;
+  @include elliptical_corners_asymmetric(30px, 0px, 12px, 0px);
+}
+
+.Planeswalker .powerfield#card_power { width: 0px; }
+
 /***** Tokens *****/
 
 .token .cardtext { min-height: 0px; }
@@ -256,8 +333,10 @@ $Land_Red_Text: #f98;
 $Land_Green_Bar: #dfd;
 $Land_Green_Text: #cfc;
 $Artifact_Text: #D5DDE0;
-$Land_Text: #D7D3CA;
+$Land_Colourless_Bar: #D8CFC8;
+$Land_Text: #D8CFC8;
 $Multicolour_Text: #ffd;
+$Multicolour_Background: #CAB86C; 
 
 .Artifact .pinline { background-color: #eee; }
 .Artifact .pinline_ptbox { background-color: #9CB7BE; }
@@ -297,7 +376,7 @@ $Multicolour_Text: #ffd;
 .Green .cardtitlebar, .Green .cardtypebar { background-color: $Green_Bar; }
 .Green .cardtext, .Green .pinline_ptbox { background: $Green_Text !important; /* #efe; */}
 
-.Multicolour, .Multicolour .cardart { background-color: #CAB86C; /*#DAC87C;*/ }
+.Multicolour, .Multicolour .cardart { background-color: $Multicolour_Background; /*#DAC87C;*/ }
 .Multicolour .pinline, .Land.multicolour .pinline { background-color: #eAd88C; /* #C6AF71;*/ }
 .Multicolour .cardtitlebar, .Multicolour .cardtypebar, .Land.multicolour .cardtitlebar, .Land.multicolour .cardtypebar { background-color: #DAC87C; 
     @include gradient_horz_highlight(#B9A566, #DBC68F);}
@@ -307,7 +386,7 @@ $Multicolour_Text: #ffd;
 
 .Land, .Land .cardart { background-color: #b9aea2 /*#A4968E*/; }
 .Land .pinline { background-color: #d7cDbF /*C7BDAF*/; }
-.Land .cardtitlebar, .Land .cardtypebar { background-color: #D8CFC8; }
+.Land .cardtitlebar, .Land .cardtypebar { background-color: $Land_Colourless_Bar; }
 .Land .cardtext, .Land .pinline_ptbox { background-color: $Land_Text; /* #eee6df; */}
 
 .Land.white .cardtitlebar, .Land.white .cardtypebar { background-color: $Land_White_Bar; }
@@ -411,8 +490,9 @@ form #raritycell { border: 1px solid black; }
 .code_frame_R { background-color: $Land_Red_Text; }
 .code_frame_G { background-color: $Land_Green_Text; }
 .code_frame_A { background-color: $Artifact_Text; }
-.code_frame_M, .code_frame_Z { background-color: $Multicolour_Text; }
-.code_frame_L { background-color: $Land_Text; }
+.code_frame_M, .code_frame_Z { background-color: $Multicolour_Background; }
+.code_frame_H { @include gradient_horz_padded($Land_White_Text, $Land_Black_Text); }
+.code_frame_L { background-color: $Land_Colourless_Bar; }
 .code_rarity_C td.code_link, .code_rarity_C td.code_link a { @extend .cardrarity.common; }
 .code_rarity_U td.code_link { @extend .uncommon; }
 .code_rarity_R td.code_link { @extend .rare; }
@@ -424,6 +504,7 @@ form #raritycell { border: 1px solid black; }
 .code_frame_R.code_not_shown,
 .code_frame_G.code_not_shown,
 .code_frame_A.code_not_shown,
+.code_frame_H.code_not_shown,
 .code_frame_M.code_not_shown, .code_frame_Z.code_not_shown,
-.code_frame_L.code_not_shown { background-color: white; }
+.code_frame_L.code_not_shown { background-color: white; background: white; }
  

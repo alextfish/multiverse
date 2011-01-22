@@ -43,7 +43,7 @@ function update_generate_totals() {
   rarities.each(function(this_rarity) {
     counts[this_rarity] = 0;
     frames.each(function(this_frame) {
-      this_count = getIntValue(this_frame + "_" + this_rarity) * frame_multiplier[this_frame];
+      this_count = getIntValue("skeletonform_" + this_frame + "_" + this_rarity) * frame_multiplier[this_frame];
       counts[this_rarity] += this_count;
       counts[this_frame] += this_count;
       total_count += this_count;
@@ -83,7 +83,9 @@ function update_frame() {
   for( i=0; i<5; i++ ) {
     if ( colours[i] != "") num_colours++;
   }
-  outer = cardtype.search(/Artifact/)>-1 ? "Coloured_Artifact " : "";
+  outer = "";
+  outer += cardtype.search(/Artifact/)>-1 ? "Coloured_Artifact " : "";
+  outer += cardtype.search(/Planeswalker/)>-1 ? "Planeswalker " : "";
   if (cardframe != "Auto") {
     inner = cardframe;
   } else {

@@ -8,21 +8,22 @@
 </td></tr>
 <% if !@cardset.details_pages.empty? || !@cardset.mechanics.empty? %>
   <tr><td id="details_pages">
-    <%= render 'cardsets/details_pages' %>
+    <%= render "cardsets/details_pages" %>
   </td></tr>
 <% end %>
 <% if permission_to?(:edit, @cardset) %>
 <tr><td>
     <%= link_to_unless_current "New card", new_card_path(:cardset_id => @cardset.id) %> |
     <%= link_to_unless_current "Import data", import_cardset_path(@cardset) %> |
-    <%= link_to_unless_current "Unaddressed comments", todo_cardset_path(@cardset) %>
+    <%= link_to_unless_current "Unaddressed", todo_cardset_path(@cardset) %>
     <% if permission_to?(:admin, @cardset) %>
        |
       <%= link_to_unless_current "Cardset options", edit_cardset_path(@cardset) %> |
       <% if @cardset.mechanics.empty? %>
         <%= link_to_unless_current "Define mechanics", cardset_mechanics_path(@cardset) %> |
       <% end %>
-      <%= link_to_unless_current "Add details page", new_cardset_details_page_path(@cardset) %>
+      <%= link_to_unless_current "Add details page", new_cardset_details_page_path(@cardset) %> |
+      <%= link_to_unless_current "Add skeleton", skeleton_cardset_path(@cardset) %>
     <% end %>
 </td></tr>
 <% end %>

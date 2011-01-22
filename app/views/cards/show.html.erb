@@ -51,7 +51,12 @@
      <%= render "cardsets/setviews" %>
 
      <% if @card.cardset.configuration.card_show_code %>
-       <p><b>Code:</b> <%= @card.code %></p>
+       <p><b>Code:</b> 
+       <% if !@card.cardset.skeleton.nil? %>
+         <%= link_to @card.code, skeleton_cardset_path(@card.cardset), :title => "Skeleton" %>
+       <% else %>
+         <%= @card.code %>
+       <% end %></p>
      <% end %>
      <% if @card.cardset.configuration.card_show_active %>
        <p><b>Active?:</b> <%= @card.active %></p>

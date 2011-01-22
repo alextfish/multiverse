@@ -1,8 +1,11 @@
 <h1>
   <%= link_to @cardset.name, @cardset %>: Editing <%= @details_page.title %>
 </h1>
-<%= @title = @cardset.name + ": Editing " + @details_page.title %>
+<%= @title = @cardset.name + ": Editing " + @details_page.title %> (<%= link_to "Destroy", cardset_details_page_path(@cardset.id, @details_page),
+          :confirm => "Are you sure you want to permanently delete the #{@details_page.title} page?",
+          :method => :delete %>)
 
 <%= render "form" %>
+
 
 <%= link_to "Back", [@cardset, @details_page] %>

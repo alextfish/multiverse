@@ -239,10 +239,12 @@ module ApplicationHelper
   end
   
   def format_skeleton_table(text)
-    skeleton_line_regexp = />(?:[(]?)([CURM])([A-Z])[0-9][0-9]/
+    text.sub!("<tbody>", "\r\n<tbody>") 
+    # because Maruku puts the thead and tbody on one line, which means the sub!s below
+    # will colour the heads white rather than row 1
     lines_out = text.lines.map do |line|
-      if line =~ skeleton_line_regexp
-        data = line.match(skeleton_line_regexp)
+      if line =~ Cardset.skeleton_line_regexp_HTML
+        data = line.match(Cardset.skeleton_line_regexp_HTML)
         rarity_letter = data[1]
         frame_letter = data[2]
         line.sub!("<tr>", "<tr class=\"code_frame_#{frame_letter} code_rarity_#{rarity_letter}\">")

@@ -215,7 +215,15 @@ class Cardset < ActiveRecord::Base
     self.details_pages.select{|dp| dp.title == "Skeleton" }[0]
   end
   
+  def Cardset.skeleton_line_regexp_MD
+    /^\(\(\(([CURM])([A-Z])([0-9][0-9])/
+  end
+  def Cardset.skeleton_line_regexp_HTML
+    /(?:>[(]?)([CURM])([A-Z])([0-9][0-9])/
+  end
+  
   def generate_skeleton(params)
+    ok_so_far = true
     # Read existing skeleton content: 
     # assemble array all_existing_codes and hash line_numbers_for_code
     @skeleton = self.skeleton
@@ -223,55 +231,83 @@ class Cardset < ActiveRecord::Base
     code_lines = []
     all_existing_codes = []
     line_numbers_for_code = {}
+    insertions = []
     if !@skeleton.nil?
       all_lines = @skeleton.body.lines
       all_lines.each_with_index do |line, index|
-        if line =~ skeleton_code_regexp
-          code_lines_and_numbers << [line, index]
-          code = line.match(skeleton_code_regexp)[1]
+        if line =~ Cardset.skeleton_line_regexp_MD
+          # code_lines_and_numbers << [line, index]
+          data = line.match(Cardset.skeleton_line_regexp_MD) 
+          code = data[1] + data[2] + data[3]
           all_existing_codes << code
           line_numbers_for_code[code] = index
         end
       end
     end
+    # Generate virtual params for blue, black, red and green, equal to white
+    %w{blue black red green}.each do |colour|
+      %w{C U R M}.each do |rarity_letter|
+        params["skeletonform_#{colour}_rarity#{rarity_letter}"] = params["skeletonform_white_rarity#{rarity_letter}"]
+      end
+    end
 
-    # For each posted frame-rarity combo:
-    rarity_frame_regexp = /rarity([A-Z])_frame([A-Z])/
-    params[:generate_form].each do |param_key, param_value|
+    # For each frame-rarity combo (which all start with skeletonform_):
+    rarity_frame_regexp = /skeletonform_([a-z]*)_rarity([A-Z])/
+    params.select{|param_key, param_value| param_key =~ /^skeletonform_/}.each do |param_key, param_value|
       if !param_key =~ rarity_frame_regexp
         raise "Unexpected param #{param_key}"
       end
       # read rarity_letter, frame_letter, and number_in from the form entry
-      rarity_letter = param_key.match(rarity_frame_regexp)[1]
-      frame_letter = param_key.match(rarity_frame_regexp)[2]
-      number_in = param_value
+      number_in = param_value.to_i
       # if number is 0: next
       if number_in == 0
         next
       end
+      frame_code = param_key.match(rarity_frame_regexp)[1]
+      rarity_letter = param_key.match(rarity_frame_regexp)[2]
+      case frame_code
+        when "white": frame_letter = "W"
+        when "blue": frame_letter = "U"
+        when "black": frame_letter = "B"
+        when "red": frame_letter = "R"
+        when "green": frame_letter = "G"
+        when "artifact": frame_letter = "A"
+        when "land": frame_letter = "L"
+        when "allygold": frame_letter = "Z"; number_in *= 5
+        when "enemygold": frame_letter = "Z"; number_in *= 5
+        when "allyhybrid": frame_letter = "H"; number_in *= 5
+        when "enemyhybrid": frame_letter = "H"; number_in *= 5
+        else raise "Unexpected frame_code #{frame_code}"
+      end
+      Rails.logger.info "Rarity #{rarity_letter}, frame #{frame_letter}: making #{number_in}"
       # calculate "new lines" - codes that we need that don't already exist
-      new_range = (1..number_in).map {|num| "$#{rarity_letter}#{frame_letter}%02d" % num}
-      new_codes = new_range.select{|c| !existing_codes.include?(c) }
+      new_range = (1..number_in).map {|num| "#{rarity_letter}#{frame_letter}%02d" % num}
+        
+      
+      new_codes = new_range.select{|c| !all_existing_codes.include?(c) }
       # if no new codes:
       if new_codes.empty?
+        Rails.logger.info "No new codes for #{rarity_letter}#{frame_letter}"
         # do nothing
-      # elsif some codes already exist:
+      # elsif some of the codes we're making for this rarity+frame already exist:
       elsif new_codes.length < new_range.length
         # find last line num of existing codes
-        existing_codes = new_range - new_codes
-        last_line_num = highest_line_num existing_codes, line_numbers_for_code
+        existing_codes_this_frame_and_rarity = new_range - new_codes
+        last_line_num = highest_line_num existing_codes_this_frame_and_rarity, line_numbers_for_code
         # insert new lines immediately after last code. this allows them to delete CW02 and it reappears after CW18, but meh
-        insertions << [new_codes, last_line_num]
-      else # no codes already exist
-        existing_codes_this_frame = all_existing_codes.select {|code| code[0] == frame_letter }
+        insertions << [new_codes, last_line_num+1]
+        Rails.logger.info "Adding #{new_codes.length} new codes for #{rarity_letter}#{frame_letter}"
+      else # none of the codes we're making for this rarity+frame already exist
+        # Look for any code with this frame
+        existing_codes_this_frame = all_existing_codes.select {|code| code[1].chr == frame_letter }
         # if any lines exist for this frame:
         if !existing_codes_this_frame.empty?
-          existing_rarities = existing_codes_this_frame.map{|code| code[1]}
+          #existing_rarities = existing_codes_this_frame.map{|code| code[1].chr}
           existing_codes_previous_rarities = case rarity_letter
-            when ?C: []
-            when ?U: existing_codes_this_frame.select {|code| code[1]==?C}
-            when ?R: existing_codes_this_frame.select {|code| [?C,?U].include? code[1]}
-            when ?M: existing_codes_this_frame # already established there are no mythics
+            when "C": []
+            when "U": existing_codes_this_frame.select {|code| code[0]==?C}
+            when "R": existing_codes_this_frame.select {|code| [?C,?U].include? code[0]}
+            when "M": existing_codes_this_frame # already established there are no mythics
             else
               raise "Unexpected rarity letter #{rarity_letter}"
           end
@@ -279,32 +315,99 @@ class Cardset < ActiveRecord::Base
           if !existing_codes_previous_rarities.empty?
             # insert new lines immediately after last previous rarity
             last_line_num = highest_line_num existing_codes_previous_rarities, line_numbers_for_code
-            insertions << [new_codes, last_line_num]
+            Rails.logger.info "Generating new rarity section for frame #{frame_letter} rarity #{rarity_letter}, after the previous ones: line #{last_line_num}"
+            insertions << [new_codes, last_line_num+1]
           else
             # insert new lines immediately before first line (since it's a subsequent rarity)
             first_line_num = lowest_line_num existing_codes_this_frame, line_numbers_for_code
+            Rails.logger.info "Generating new rarity section for frame #{frame_letter} rarity #{rarity_letter}, before all previous ones: line #{first_line_num}"
             insertions << [new_codes, first_line_num]
           end
+          Rails.logger.info "Adding #{new_codes.length} new codes for #{rarity_letter}#{frame_letter}"
         else # no lines exist for this frame:
-          raise "todo"
+          Rails.logger.info "All existing codes: #{all_existing_codes.inspect}"
+          if all_existing_codes.empty?
+            # Add these codes at line 0 along with all the others
+            insertions << [new_codes, 0]
+          else
+            # Some frames exist. Find the last one before us in the frame order.
+            preceding_codes = all_existing_codes.select do |code|
+              Card.frame_code_letters.index(code[1].chr) < Card.frame_code_letters.index(frame_letter)
+            end
+            last_line_num = highest_line_num preceding_codes, line_numbers_for_code
+            if last_line_num == 0
+              # If there are none, insert at the first code line 
+              target_line_num = lowest_line_num all_existing_codes, line_numbers_for_code
+            else
+              # If there are some preceding codes, insert immediately after them
+              target_line_num = last_line_num+1
+            end
+            insertions << [new_codes, target_line_num]
+          end
         end
       end
     end
     
+    Rails.logger.info "Insertions: #{insertions.inspect}"
+    
     # now handle the insertions
-    raise "insertions todo"
+    # first, figure out how many |s there are in the first table line
+    # Default table has 3 columns, 3 bars
+    number_of_bars = 3
+    if @skeleton.nil?
+      lines_out = []
+    else
+      lines_out = all_lines.to_a
+      first_table_line = all_lines.find{|line| line.include? "|"}
+      if !first_table_line.nil?
+        # The table header line has extra bars at the start
+        # So if the header has 5 bars, it'll have 6 parts split by "|"
+        # Normal lines want 4 bars, so we take the split count -2
+        number_of_bars = first_table_line.split("|").count - 2
+      end
+    end
+    
+    # now insert lines into lines_out, from the end first so the line numbers stay valid
+    frame_offsets = {}
+    Card.frame_code_letters.each_with_index {|letter, index| frame_offsets[letter] = 0.05*index }
+    rarity_offsets = {"C" => 0, "U" => 0.01, "R" => 0.02, "M" => 0.03}
+    insertions.sort_by {|codes, line_num| line_num + rarity_offsets[codes[0][0].chr] + frame_offsets[codes[0][1].chr]}.reverse_each do |codes, line_num|
+      # To insert lines for [a b c] at position 5, we insert c at 5, then b at 5, then a at 5
+      codes.reverse.each do |code|
+        new_line = "(((#{code})))" + (" | " * number_of_bars) + "\n"
+        lines_out.insert line_num, new_line
+      end
+    end
+    
+    # Now lines_out contains the new skeleton body
+    # Existing lines and inserted lines all end with "\n", so we just join() them
+    if @skeleton.nil?
+      @skeleton = self.details_pages.build(:title => "Skeleton")
+      lines_out = ["|Code | Slot | Card name |\n", "|:---:|------|---------|\n"] + lines_out
+    end
+    @skeleton.body = lines_out.join
+    @skeleton.save!
+    return true
   end
 
   def highest_line_num (codes_in, line_numbers_for_code)
-    codes_in.reduce(0) do |code, current_highest_line_num|
+    codes_in.reduce(0) do |current_highest_line_num, code|
       this_line_num = line_numbers_for_code[code]
-      this_line_num > current_highest_line_num ? this_line_num : current_highest_line_num
+      if this_line_num.nil? || this_line_num <= current_highest_line_num
+        current_highest_line_num
+      else
+        this_line_num 
+      end
     end
   end
   def lowest_line_num (codes_in, line_numbers_for_code)
-    codes_in.reduce(999999) do |code, current_lowest_line_num|
+    codes_in.reduce(999999) do |current_lowest_line_num, code|
       this_line_num = line_numbers_for_code[code]
-      this_line_num < current_lowest_line_num ? this_line_num : current_lowest_line_num
+      if this_line_num.nil? || this_line_num >= current_lowest_line_num
+        current_lowest_line_num
+      else
+        this_line_num 
+      end
     end
   end
 

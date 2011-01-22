@@ -104,13 +104,13 @@ class CardsetsController < ApplicationController
   # POST /cardsets/1/generate_skeleton
   def generate_skeleton
     Rails.logger.info "Generating skeleton for #{@cardset.name}"
-    success, message = @cardset.generate_skeleton(params)
+    success = @cardset.generate_skeleton(params)
     if success
-      @cardset.log :kind=>:skeleton_generate, :user=>current_user, :object_id=>@skeleton.id
+      @cardset.log :kind=>:skeleton_generate, :user=>current_user, :object_id=>@cardset.skeleton.id
       redirect_to skeleton_cardset_path(@cardset)
-    else
-      flash.now[:error] = message
-      render :skeleton
+    else # need to figure out a message here... but there's currently no way generate_skeleton can return false
+      flash[:error] = message
+      redirect_to skeleton_cardset_path(@cardset)
     end
   end
 
