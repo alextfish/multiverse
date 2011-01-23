@@ -6,7 +6,9 @@
   To create your own cardset, first <%= link_to "sign in", signin_path %> or <%= link_to "sign up", signup_path %>.
 <% end %>
 
-<br><br>
+<br>
+<%= render :partial => "shared/new_features", :locals => { :news_type => :link } %>
+<br>
 
 <table class="sortable">
  <tr>

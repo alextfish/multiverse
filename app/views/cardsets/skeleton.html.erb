@@ -27,7 +27,7 @@
   </p>
   <p>To read more about skeletons, read <a href="http://www.wizards.com/magic/magazine/Article.aspx?x=mtg/daily/mm/78">Mark Rosewater's article "Design Skeletons"</a>.
   <h2>About Set Skeletons In Multiverse</h2>
-  <p>In Multiverse, set skeletons are a particular type of details page, using tables written in the <a href="http://michelf.com/projects/php-markdown/extra/#table">Markdown Extra table syntax</a>. Multiverse will generate the rows of the table for you.</p>
+  <p>In Multiverse, set skeletons are a particular type of details page, using tables written in the <a href="http://michelf.com/projects/php-markdown/extra/#table">Markdown Extra table syntax</a>. Multiverse will generate the rows of the table for you. If you let Multiverse generate the whole skeleton, it will give you columns for Code, Slot and Card name. If you add extra columns by editing the title rows, then the Generate tab will create the right number of columns for each new row it generates.</p>
   <p>Once you've generated your skeleton, each row will start with a link like "(CW01)". At first, these links will be in parentheses, to indicate that no card yet exists with that code. You can click on links like these to create a card with that code. Once those cards exist, the links will no longer be in parentheses. You can thus easily tell which slots in your skeleton have no card at all corresponding to them, and which have at least some information on a card (even if that card is not ready or not even complete).</p>
   <% if permission_to?(:admin, @cardset) %>
     <p>To get started, click the "Generate" tab above!</p>

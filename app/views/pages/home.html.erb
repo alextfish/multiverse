@@ -26,6 +26,8 @@
   <% end %>
 </p>
 
+<%= render :partial => "shared/new_features", :locals => { :news_type => :link } %>
+
 <p>
   <% numcards = Card.count
      num_to_show = [numcards, 5].min

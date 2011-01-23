@@ -9,6 +9,7 @@ Multiverse::Application.routes.draw do
   # also defines contact_path => '/contact' and contact_url => 'http://localhost:3000/contact'
   match '/about',   :to => 'pages#about'
   match '/help',    :to => 'pages#help'
+  match '/news',    :to => 'pages#news'
 
   get 'pages/home'
 

@@ -85,7 +85,7 @@ function update_frame() {
   }
   outer = "";
   outer += cardtype.search(/Artifact/)>-1 ? "Coloured_Artifact " : "";
-  outer += cardtype.search(/Planeswalker/)>-1 ? "Planeswalker " : "";
+  // outer += cardtype.search(/Planeswalker/)>-1 ? "Planeswalker " : "";
   if (cardframe != "Auto") {
     inner = cardframe;
   } else {

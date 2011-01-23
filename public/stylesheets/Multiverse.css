@@ -41,6 +41,20 @@ a > img:hover { background-color: #fff; }
 div.CardRenderInline { display: inline-block; }
 img.CardImage        { display: inline-block; }
 
+/***** News *****/
+
+div.news_outer { min-width: 20px; margin: 8px 30px 25px 8px;
+  position: relative; 
+}
+
+div.newfeatures { border: 1px solid black; margin: auto; text-align: center; 
+  position: absolute; 
+  padding: 4px;
+}
+.newfeatures.hot { background-color: #ff9; color: #c00; border: 1px solid red; }
+.newfeatures.hot a { color: #c00; }
+
+
 /***** Comment display *****/
 
 .commentdetails { font-style: italic; margin: 0px; line-height: 2em; }

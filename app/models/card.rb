@@ -195,9 +195,9 @@ class Card < ActiveRecord::Base
     else
       cardclass = "" << self.frame
     end
-    if self.cardtype =~ /Planeswalker/
-      cardclass << " Planeswalker"
-    end
+    #if self.cardtype =~ /Planeswalker/
+    #  cardclass << " Planeswalker"
+    #end
     if self.cardtype =~ /Artifact/ && self.frame != "Artifact"
       cardclass << " Coloured_Artifact"
     end
