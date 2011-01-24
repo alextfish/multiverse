@@ -52,7 +52,7 @@
 
      <% if @card.cardset.configuration.card_show_code %>
        <p><b>Code:</b> 
-       <% if !@card.cardset.skeleton.nil? %>
+       <% if !@card.cardset.skeleton.nil? && !@card.code.blank? %>
          <%= link_to @card.code, skeleton_cardset_path(@card.cardset), :title => "Skeleton" %>
        <% else %>
          <%= @card.code %>
