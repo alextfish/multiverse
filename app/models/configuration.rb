@@ -21,6 +21,7 @@
 #  editability            :string(255)
 #  adminability           :string(255)
 #  last_edit_by           :integer
+#  border_colour          :string(255)
 #
 
 class Configuration < ActiveRecord::Base
@@ -53,6 +54,12 @@ class Configuration < ActiveRecord::Base
     :commentability => people_options,
     :editability => people_options,
     :adminability => admin_options,
+    :border_colour => {
+      "black" => "Black",
+      "white" => "White",
+      "silver" => "Silver",
+      "purple" => "Purple",
+    },
   }
   validators = Hash[ @@legal_values_internal.map do |prop, values_hash|
     [prop, Regexp.new( values_hash.keys.join('|') )]
@@ -81,6 +88,7 @@ class Configuration < ActiveRecord::Base
     :commentability         => 'anyone',
     :editability            => 'admins',
     :adminability           => 'justme',
+    :border_colour          => 'black',
   }
 
   def set_default_values!
@@ -93,6 +101,9 @@ class Configuration < ActiveRecord::Base
     end
     if self.adminability.blank?
       self.adminability = DEFAULT_VALUES[:adminability]
+    end
+    if self.border_colour.blank?
+      self.border_colour = DEFAULT_VALUES[:border_colour]
     end
     self.save!
   end

@@ -1,10 +1,28 @@
 /***** Card display *****/
-.blackborder {
-  border: 10px solid black;
+.blackborder, .silverborder, .whiteborder, .purpleborder {
   -moz-border-radius: 10px;
   -webkit-border-radius: 10px;
   -khtml-border-radius: 10px;
-  border-radius: 10px; }
+  border-radius: 10px;
+  border-width: 10px;
+  border-style: solid; }
+
+.blackborder {
+  border-color: black; }
+
+.silverborder {
+  border-color: #a3a3a3; }
+
+.purpleborder {
+  border-color: #a6f; }
+
+.whiteborder {
+  border-color: black;
+  border-width: 1px;
+  padding: 9px; }
+
+.whiteborder .card, .whiteborder .editborder_inner {
+  border: 1px solid #888; }
 
 .cardborder {
   width: 200px;

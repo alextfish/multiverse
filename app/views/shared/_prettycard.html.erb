@@ -1,6 +1,6 @@
 <% # prettycard helper takes boolean param "link"
 #link = false if local_assigns[:link].nil?
-%><div class="cardborder blackborder">
+%><div class="cardborder <%= @cardset.configuration.border_colour %>border">
  <div class="card <%= @card.display_class %>">
   <div class="pinline pinline_box namebox">
    <div class="cardtitlebar">

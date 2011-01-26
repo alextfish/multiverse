@@ -37,6 +37,17 @@
     <td><!-- Cardset configuration -->
     <%= fields_for @cardset.configuration do |config_fields| %>
       <div class="config_section">
+        Border colour:
+        <% %w{black white silver purple}.each do |colour| %>
+          <span class="<%= colour %>border">
+            <span class="editborder_inner">
+              <%= config_fields.radio_button :border_colour, colour, :checked => (@cardset.configuration.border_colour == colour) %>
+              <%= config_fields.label :border_colour, colour.capitalize, :value => colour %>
+            </span>
+          </span>
+        <% end %>
+      </div>
+      <div class="config_section">
         Allow to view:
           <%= config_fields.select :visibility, @cardset.configuration.legal_values[:visibility].invert.to_a %>
       </div>

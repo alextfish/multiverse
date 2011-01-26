@@ -10,7 +10,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20110101155400) do
+ActiveRecord::Schema.define(:version => 20110126214800) do
 
   create_table "cards", :force => true do |t|
     t.string   "code"
@@ -81,6 +81,7 @@ ActiveRecord::Schema.define(:version => 20110101155400) do
     t.string   "editability"
     t.string   "adminability"
     t.integer  "last_edit_by"
+    t.string   "border_colour"
   end
 
   create_table "details_pages", :force => true do |t|
