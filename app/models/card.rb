@@ -254,6 +254,13 @@ class Card < ActiveRecord::Base
       return 1
     end
   end
+  def border_colour
+    if cardset && cardset.configuration && !cardset.configuration.border_colour.blank?
+      cardset.configuration.border_colour
+    else
+      Configuration.DEFAULT_VALUES[:border_colour]
+    end
+  end
 
   def category
     f = frame || calculated_frame

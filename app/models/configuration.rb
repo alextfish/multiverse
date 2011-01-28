@@ -90,20 +90,23 @@ class Configuration < ActiveRecord::Base
     :adminability           => 'justme',
     :border_colour          => 'black',
   }
+  def self.DEFAULT_VALUES
+    DEFAULT_VALUES
+  end
 
   def set_default_values!
-    self.attributes = DEFAULT_VALUES
+    self.attributes = Configuration.DEFAULT_VALUES
   end
 
   def set_blank_values!
     if self.editability.blank?
-      self.editability = DEFAULT_VALUES[:editability]
+      self.editability = Configuration.DEFAULT_VALUES[:editability]
     end
     if self.adminability.blank?
-      self.adminability = DEFAULT_VALUES[:adminability]
+      self.adminability = Configuration.DEFAULT_VALUES[:adminability]
     end
     if self.border_colour.blank?
-      self.border_colour = DEFAULT_VALUES[:border_colour]
+      self.border_colour = Configuration.DEFAULT_VALUES[:border_colour]
     end
     self.save!
   end
