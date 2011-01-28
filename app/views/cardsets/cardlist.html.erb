@@ -19,10 +19,7 @@
       ["updated", "last update", false],
       ["comments", "comments", @cardset.configuration.cardlist_show_comments]
     ]
-    unaddressed_column = permission_to?(:edit, @cardset) && @cardset.configuration.use_addressing
-    #if unaddressed_column
-    #  toggleable_fields << ["unaddressed", "unaddressed"]
-    #end %>
+    unaddressed_column = permission_to?(:edit, @cardset) && @cardset.configuration.use_addressing %>
   <% toggleable_fields.each do |field_class, field_text, initially_shown| %>
     <span class="one_control" onclick="$$('.<%= field_class %>').invoke('toggle');"
       ><span class="<%= field_class %> shown_control" <%= initially_shown ? "" : "style='display:none;'" %>>Hide <%= field_text %></span
@@ -48,8 +45,8 @@
     <th class="updated" <%= update_display %>>Updated</th>
     <th class="comments" <%= comment_display %>>Comments</th>
     <th class="comments" <%= comment_display %>>Recent comment</th>
-    <% if permission_to?(:edit, @cardset) && @cardset.configuration.use_addressing %>
-      <th class="comments">Unaddressed</th>
+    <% if unaddressed_column %>
+      <th class="comments" <%= comment_display %>>Unaddressed</th>
     <% end %>
     <% if permission_to?(:edit, @cardset) || permission_to?(:delete, @cardset) %>
       <th colspan="3" class="nosort">&nbsp;</th>
