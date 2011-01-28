@@ -46,7 +46,7 @@
    </div>
   </div>
   <% textbox_length = (@card.rulestext.blank?   ? 0 : textbox_chars_displayed(@card, :rulestext  )) + 
-                     (@card.flavourtext.blank? ? 0 : textbox_chars_displayed(@card, :flavourtext)) %>
+                      (@card.flavourtext.blank? ? 0 : textbox_chars_displayed(@card, :flavourtext)) %>
   <% case textbox_length
      when 0..150:   textboxclass = "cardtext"
      when 151..170: textboxclass = "cardtext minitext"

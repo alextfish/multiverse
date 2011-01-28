@@ -1,8 +1,23 @@
-<% news_latest_update = {
-  :date => Time.gm(2011,1,23,9,26,00),
-  :title => "New Features: Set Skeletons and New Features List!",
+<% 
+  update_date = Time.gm(2011,1,28,1,44,29);
+  update_title = "New Features: Planeswalkers, Border Colour, Fuller Cardlist ";
+  
+news_latest_update = {
+  :date => update_date,
+  :title => update_title,
   :body => <<ENDBODY };
 
+### #{update_title}
+#### Fri Jan 28 01:44:29
+Several features that people have been asking for. First, planeswalker cards now have a much nicer mockup, with an approximation to the special planeswalker frame as used by Wizards of the Coast.
+
+Cardsets can now have border colours other than black. The assorted silver-bordered sets of silliness can now have silver borders. Those of you making core sets may like to make your core set white-bordered, if you want. And someone might want a purple-bordered set... maybe.
+
+The "full cardlist" page is now nicer to use. It includes the rules text of all cards. Clicking the "Colour" column will now sort cards in the order Colourless-White-Blue-Black-Red-Green-Multicolour-Hybrid-Artifact-Land. Clicking the "cost" column will now sort by converted mana cost. And you can now turn off some columns if you don't want to see them by default.
+
+Finally, on a cardset's recent activity view, you can now mark comments as highlighted / unaddressed / normal, or go straight to the Edit Comment screen, without having to click through to the thing the comment was on. This was a feature requested by Vitenka on the [Feature Requests page](http://www.toothycat.net/wiki/wiki.pl?Multiverse/BugsAndFeatures), so I added it. If there's a feature you'd like to see, add it to the [Feature Requests page](http://www.toothycat.net/wiki/wiki.pl?Multiverse/BugsAndFeatures) and there's a good chance I'll do it!
+
+----
 ### New Features: Set Skeletons and New Features List!
 #### Sun Jan 23 09:26:00
 Two new features for you this weekend! Firstly, I've added this New Features page, so that I've got a way to tell you when Multiverse supports some funky new capability. I've added the details and times for the past few updates, so take a look below: there may be something you missed.

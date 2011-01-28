@@ -170,3 +170,23 @@ div#mockup { padding-top: 4px; }
   font-style: italic;
   color: #999;
 }
+
+/***** Cardlist *****/
+
+.controls { 
+  margin-left: 10px;
+  border: 1px solid #888;
+  padding-left: 2px;
+  padding-right: 2px;
+  padding-top: 4px;
+  padding-bottom: 4px;
+}
+.one_control {
+  border: 1px solid #444;
+  margin-left: 2px;
+  margin-right: 2px;
+}
+.hidden_control {
+  background: #ccc;
+  color: #666;
+}

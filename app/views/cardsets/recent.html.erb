@@ -20,7 +20,7 @@
           <% if @log.comment? && !comment_kinds_to_not_show.include?(@log.kind) %>
             <% @comment = Comment.find_by_id(@log.object_id) %>
             <% if @comment %>
-              <%= render :partial => "shared/comment", :locals => { :buttons => false } %>
+              <%= render :partial => "shared/comment", :locals => { :buttons => true } %>
             <% end %>
           <% end %>
       <% end %>

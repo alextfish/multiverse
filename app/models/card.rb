@@ -195,9 +195,9 @@ class Card < ActiveRecord::Base
     else
       cardclass = "" << self.frame
     end
-    #if self.cardtype =~ /Planeswalker/
-    #  cardclass << " Planeswalker"
-    #end
+    if self.cardtype =~ /Planeswalker/
+      cardclass << " Planeswalker"
+    end
     if self.cardtype =~ /Artifact/ && self.frame != "Artifact"
       cardclass << " Coloured_Artifact"
     end
@@ -208,6 +208,51 @@ class Card < ActiveRecord::Base
       cardclass << " token"
     end
     cardclass
+  end
+  def converted_mana_cost
+    # We split three times!
+    # First extract parenthesised or braced subexpressions
+    cost_tokens = cost.split(/([{(][^})]*[})])/)
+    total = 0
+    cost_tokens.each do |token|
+      if token.match(/[{(]/)
+        # This is a bracketed symbol such as (1), {2/G), {15}, {X}, or {W/U}
+        total += cmc_of_token(token)
+      else
+        # This is not bracketed, but potentially a string of tokens such as 11BRG
+        # Need to keep numbers grouped
+        components = token.split(/([0-9-]+)/)
+        components.each do |component|
+          # This is either a string of letters like XRR
+          # or a string of numbers like 15
+          if component.match(/[0-9-]+/)
+            total += cmc_of_token(component)
+          else
+            # This is a string of letters: split into characters
+            component.split("").each do |letter|
+              total += cmc_of_token(letter)
+            end
+          end
+        end
+      end
+    end
+    total
+  end
+  def cmc_of_token(token)
+    # Return CMC-contribution of one token, such as U, W, X, 11, {3}, (Y), {2/G}
+    if token.blank?
+      return 0
+    end
+    internal_number = token.match(/[0-9-]+/)
+    if internal_number 
+      return internal_number[0].to_i
+    elsif token.match(/[XYZxyz]/)
+      # (X) or (Y) have CMC 0
+      return 0
+    else
+      # Any other bracketed symbol without a number has CMC 1
+      return 1
+    end
   end
 
   def category

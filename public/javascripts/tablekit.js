@@ -940,22 +940,34 @@ document.observe("dom:loaded", TableKit.load);
 
 
 TableKit.Sortable.addSortType(new TableKit.Sortable.Type('rarity', {
-    pattern : /^[Rare|Uncommon|Common|Mythic]$/i,
     normal : function(v) {
-      var val = 4;
+      var val = 6;
       switch(v) {
-        case 'Common':
-          val = 0;
-          break;
-        case 'Uncommon':
-          val = 1;
-          break;
-        case 'Rare':
-          val = 2;
-          break;
-        case 'Mythic':
-          val = 3;
-          break;
+        case 'Common': val = 0; break;
+        case 'Uncommon': val = 1; break;
+        case 'Rare': val = 2; break;
+        case 'Mythic': val = 3; break;
+        case 'Basic': val = 4; break;
+        case 'Token': val = 5; break;
+      }
+      return val;
+    }
+  }
+));
+TableKit.Sortable.addSortType(new TableKit.Sortable.Type('colour', {
+    normal : function(v) {
+      var val = 99;
+      switch(v) {
+        case 'Colourless': val = 0; break;
+        case 'White': val = 1; break;
+        case 'Blue': val = 2; break;
+        case 'Black': val = 3; break;
+        case 'Red': val = 4; break;
+        case 'Green': val = 5; break;
+        case 'Multicolour': val = 6; break;
+        case 'Hybrid': val = 7; break;
+        case 'Artifact': val = 8; break;
+        case 'Land': val = 9; break;
       }
       return val;
     }

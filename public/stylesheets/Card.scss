@@ -54,8 +54,10 @@
     border-width: 10px; 
     border-style: solid; }
   .blackborder { border-color: black; }
-  .silverborder { border-color: #a3a3a3; }
-  .purpleborder { border-color: #a6f; }
+  $SilverBorder: #a3a3a3;
+  .silverborder { border-color: $SilverBorder; }
+  $PurpleBorder: #a6f;
+  .purpleborder { border-color: $PurpleBorder; }
   .whiteborder { 
     border-color: black;
     border-width: 1px;
@@ -165,7 +167,7 @@
   .flavourtext i, .flavourtext em { font-style: normal; }
 
 /* Mana symbol sizes */
-.cardmanacost img { width: 15px; height: 15px; }
+.cardmanacost img { width: 14px; height: 14px; vertical-align: middle; }
 .cardtext  img { height: 1em; vertical-align: middle; }
 /*
 .cardtext  img { width: 13px; height: 13px; vertical-align: middle; }
@@ -214,44 +216,84 @@
 
 
 .Planeswalker .cardtext {
-  @include elliptical_corners_asymmetric(4px, 18px, 8px, 32px);
+  @include elliptical_corners_asymmetric(4px, 18px, 8px, 12px); /* 4 18 8 32 */
   border-left: 1px solid black;
   border-bottom: 1px solid black;
   padding-left: 8px;
 }
 .Planeswalker .cardtext_container .pinline_sidesbottom {
-  @include elliptical_corners_asymmetric(0px, 18px, 0px, 32px);
+  @include elliptical_corners_asymmetric(0px, 18px, 0px, 16px); /* 0 18 0 32 */
   padding-left: 16px;
 }
 
-.Planeswalker .pinline_ptbox.pinline { 
-  background-color: #bbb !important;
-  @include elliptical_corners_asymmetric(15px, 30px, 4px, 15px);
+.Planeswalker .cardtext {
+  position: relative;
+  padding-top: 4px;
+}
+.Planeswalker .cardtext .loyalty_container { position: relative; }
+.Planeswalker .cardtext .loyalty { 
+  position: absolute;
+  left: -34px;
+  top: -2px;
+  color: white;
+  padding-top: 5px;
+  padding-left: 1px;
+  background-repeat: no-repeat;
+  background-position: 3px 0px;
+  width: 32px;
+  height: 30px; 
+  text-align: center;
+  font-weight: bold;
+  font-size: 8pt;
+  letter-spacing: -1px;
+}
+.Planeswalker .cardtext br { margin-bottom: 5px; }
+.Planeswalker .cardtext .loyalty.positive { background-image: url(/images/loyaltyup.png); }
+.Planeswalker .cardtext .loyalty.neutral  { background-image: url(/images/loyaltynaught.png); 
+  padding-top: 3px;}
+.Planeswalker .cardtext .loyalty.negative { background-image: url(/images/loyaltydown.png); }
+
+.Planeswalker .pinline_ptbox.pinline {
+  border: none;
+  background: none !important;
   padding-right: 2px;
-  padding-top: 2px !important;
-  top: -12px;
-}
-.Planeswalker .pinline_ptbox .ptbox { 
-  background-color: black !important;
-  color: white !important;
-  @include elliptical_corners_asymmetric(12px, 30px, 4px, 12px);
-}
+  top: -16px; 
+  right: -4px;}
 
 .Planeswalker .pinline_ptbox .ptbox {
-  background-color: black !important;
+  background: none !important;
+  background-image: url(/images/loyalty.png) !important; 
+  background-repeat: no-repeat !important;
+border: none;
   color: white !important;
-  @include elliptical_corners_asymmetric(12px, 30px, 4px, 12px);
-}
+  height: 40px;
+  width: 40px;
+  position: absolute;
+  padding-top: 4px !important;
+ }
+
 
 .Planeswalker .bottombox {
   position: relative; 
   margin: 0 auto; 
   text-align: left; }
 .Planeswalker .artist { 
-  color: white; background: black; font-size: 7pt; 
+  font-size: 7pt; 
   position: absolute; width: 80%; left: 15%; top: -2px; 
   padding-left: 20px;
   @include elliptical_corners_asymmetric(30px, 0px, 12px, 0px);
+}
+.blackborder .Planeswalker .artist { 
+  color: white; background: black; 
+}
+.whiteborder .Planeswalker .artist { 
+  color: black; background: white; 
+}
+.silverborder .Planeswalker .artist { 
+  color: black; background: $SilverBorder; 
+}
+.purpleborder .Planeswalker .artist { 
+  color: white; background: $PurpleBorder; 
 }
 
 .Planeswalker .powerfield#card_power { width: 0px; }
