@@ -190,3 +190,6 @@ div#mockup { padding-top: 4px; }
   background: #ccc;
   color: #666;
 }
+th.manacost {
+  min-width: 45px;
+}

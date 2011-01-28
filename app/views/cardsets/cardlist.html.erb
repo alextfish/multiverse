@@ -9,6 +9,7 @@
 <% code_display = @cardset.configuration.cardlist_show_code ? "" : "style='display:none;'" 
   active_display = @cardset.configuration.cardlist_show_active ? "" : "style='display:none;'" 
   comment_display = @cardset.configuration.cardlist_show_comments ? "" : "style='display:none;'" 
+  update_display = "style='display:none;'" 
 %>
 <div><span class="controls">
   <% toggleable_fields = [
@@ -37,16 +38,16 @@
     <th>Name</th>
     <th class="colour">Colour</th>
     <th id="rarity">Rarity</th>
-    <th class="string">Cost</th>
+    <th class="manacost">Cost</th>
     <th>Type</th>
     <th>P</th>
     <th>T</th>
     <th class="code" <%= code_display %>>Code</th>
     <th class="active" <%= active_display %>>Active?</th>
     <th class="cardtext">Card text</th>
-    <th class="date updated">Updated</th>
+    <th class="updated" <%= update_display %>>Updated</th>
     <th class="comments" <%= comment_display %>>Comments</th>
-    <th class="date comments" comment_display>Recent comment</th>
+    <th class="comments" <%= comment_display %>>Recent comment</th>
     <% if permission_to?(:edit, @cardset) && @cardset.configuration.use_addressing %>
       <th class="comments">Unaddressed</th>
     <% end %>
@@ -76,7 +77,8 @@
       <td class="cardtext">
         <%= format_card_text(card, :rulestext) %>
       </td>
-      <td class="updated">
+      <td class="updated" <%= update_display %>>
+        <span style="display:none;"><%= card.updated_at.to_i %></span>
         <%= format_datetime(card.updated_at) %> <%= by_last_edit_user_if_available card %>
       </td>
       <% card_comments_sorted = Comment.find(:all,
@@ -85,6 +87,7 @@
       <td class="comments" <%= comment_display %>><%= card_comments_sorted.count %></td>
       <td class="comments" <%= comment_display %>>
         <% if !card_comments_sorted.empty? %>
+          <span style="display:none;"><%= card_comments_sorted[0].created_at.to_i %></span>
           <%= format_datetime(card_comments_sorted[0].created_at) %> by <%= comment_user_link(card_comments_sorted[0]) %>
         <% end %>
       </td>
