@@ -1,13 +1,17 @@
+<% "Takes two parameters: show_buttons (required) and show_date (required if show_buttons)" %>
 <% if permission_to?(:edit, @cardset) %>
   <% commentclass = @comment.admin_status_string  %>
 <% else %>
   <% commentclass = @comment.public_status_string  %>
 <% end %>
 
+<% if show_buttons && !show_date %>
+  <%= render :partial => "shared/comment_buttons", :locals => { :show_date => show_date } %>
+<% end %>
 <div class="comment <%= commentclass %>" id="<%= @comment.anchor_name %>">
   <a name="<%= @comment.anchor_name %>"></a>
-  <% if buttons %>
-    <%= render :partial => "shared/comment_buttons" %>
+  <% if show_buttons && show_date %>
+    <%= render :partial => "shared/comment_buttons", :locals => { :show_date => show_date } %>
   <% end %>
   <div class="commentbody">
     <%= format_all_markup @comment.body, @comment.get_cardset %>

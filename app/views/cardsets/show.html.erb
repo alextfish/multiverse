@@ -88,7 +88,7 @@
           <% target = @comment.parent %>
           <% reply_link = @comment.card || new_cardset_comment_path(@comment.cardset) %>
           On <%= link_to target.name, target %> (<%= link_to "reply", reply_link %>):
-          <%= render :partial => "shared/comment", :locals => { :buttons => true } %>
+          <%= render :partial => "shared/comment", :locals => { :show_buttons => true, :show_date => true } %>
           </td>
         <% end %>
         </tr>
@@ -149,7 +149,7 @@
         <% else %>
           <% object = @comment.parent %>
           <div>On <%= link_to object.name, object %>:
-            <%= render :partial => "shared/comment", :locals => { :buttons => true } %>
+            <%= render :partial => "shared/comment", :locals => { :show_buttons => true, :show_date => true } %>
           </div>
         <% end %>
       <% end %>

@@ -1,6 +1,9 @@
+<% "Takes one parameter, show_date" %>
+<% if show_date %>
 <div class="commentdetails">
   <%= comment_user_link(@comment) %>
   <%= format_datetime @comment.created_at %>:
+<% end %>
   <% target_of_links = @comment # (@comment.cardset_id ? [@cardset, @comment] : @comment) %>
   <% if permission_to?(:admin, @cardset) %>
     <%= link_to image_tag("delete.png", :alt => "Delete this comment",
@@ -70,4 +73,6 @@
                 edit_comment_path(target_of_links) %>
   <% end %>
 
+<% if show_date %>
 </div>
+<% end %>

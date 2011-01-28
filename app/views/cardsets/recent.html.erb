@@ -19,8 +19,8 @@
           <%= render :partial => "log_entry", :locals => { :link_to_recent => false } %>
           <% if @log.comment? && !comment_kinds_to_not_show.include?(@log.kind) %>
             <% @comment = Comment.find_by_id(@log.object_id) %>
-            <% if @comment %>
-              <%= render :partial => "shared/comment", :locals => { :buttons => true } %>
+            <% if @comment && @comment.get_cardset == @cardset %>
+              <%= render :partial => "shared/comment", :locals => { :show_buttons => true, :show_date => false } %>
             <% end %>
           <% end %>
       <% end %>

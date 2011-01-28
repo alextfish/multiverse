@@ -9,7 +9,7 @@
 <br>
 <div class="commentlist">
    <% @cardset.comments.reject(&:new_record?).sort_by(&:created_at).each do |@comment| %>
-     <%= render :partial => "shared/comment", :locals => { :buttons => true } %>
+     <%= render :partial => "shared/comment", :locals => { :show_buttons => true, :show_date => true } %>
    <% end %>
    <div>
     <p><a name="new"></a><b>Post your comments on <%= @cardset.name %> here!</b>

@@ -66,7 +66,7 @@
        <div class="cardhistory">
          <div class="commentlist">
            <% @card.comments.each do |@comment| %>
-             <%= render :partial => "shared/comment", :locals => { :buttons => true } %>
+             <%= render :partial => "shared/comment", :locals => { :show_buttons => true, :show_date => true } %>
            <% end %>
            <% if permission_to?(:comment, @card.cardset) %>
              <b>Add your comments:</b>
