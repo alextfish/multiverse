@@ -22,8 +22,10 @@
       <% if @cardset.mechanics.empty? %>
         <%= link_to_unless_current "Define mechanics", cardset_mechanics_path(@cardset) %> |
       <% end %>
-      <%= link_to_unless_current "Add details page", new_cardset_details_page_path(@cardset) %> |
-      <%= link_to_unless_current "Add skeleton", skeleton_cardset_path(@cardset) %>
+      <%= link_to_unless_current "Add details page", new_cardset_details_page_path(@cardset) %>
+      <% if @cardset.skeleton.nil? %>
+        | <%= link_to_unless_current "Add skeleton", skeleton_cardset_path(@cardset) %>
+      <% end %>
     <% end %>
 </td></tr>
 <% end %>

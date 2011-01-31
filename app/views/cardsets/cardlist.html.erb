@@ -13,7 +13,7 @@
 %>
 <div><span class="controls">
   <% toggleable_fields = [
-      ["cardtext", "card text", true],
+      ["card_text", "card text", true],
       ["code", "code", @cardset.configuration.cardlist_show_code],
       ["active", "active", @cardset.configuration.cardlist_show_active],
       ["updated", "last update", false],
@@ -41,7 +41,7 @@
     <th>T</th>
     <th class="code" <%= code_display %>>Code</th>
     <th class="active" <%= active_display %>>Active?</th>
-    <th class="cardtext">Card text</th>
+    <th class="card_text">Card text</th>
     <th class="updated" <%= update_display %>>Updated</th>
     <th class="comments" <%= comment_display %>>Comments</th>
     <th class="comments" <%= comment_display %>>Recent comment</th>
@@ -71,7 +71,7 @@
       <td><%= card.toughness %></td>
       <td class="code" <%= code_display %>><%= card.code %></td>
       <td class="active" <%= active_display %>><%= card.active %></td>
-      <td class="cardtext">
+      <td class="card_text">
         <%= format_card_text(card, :rulestext) %>
       </td>
       <td class="updated" <%= update_display %>>
@@ -95,7 +95,7 @@
         <td><%= link_to "Edit", edit_card_path(card) %></td>
       <% end %>
       <% if permission_to?(:delete, @cardset) %>
-        <td><%= link_to "Delete", card, :confirm => "Really DELETE #{card.name}?", :method => :delete, :remote => true %></td>
+        <td><%= link_to "Delete", card, :confirm => "Really DELETE #{card.printable_name}?", :method => :delete, :remote => true %></td>
       <% end %>
     </tr>
   <% end %>

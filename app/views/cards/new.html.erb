@@ -1,4 +1,4 @@
-<h1>Add card</h1>
+<h1><%= link_to @cardset.name, @cardset %>: Add card</h1>
 
 <% @title = "#{@cardset.name}: Add card" %>
 <%= render 'form' %>

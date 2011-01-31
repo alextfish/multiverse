@@ -1,4 +1,4 @@
-<% @title = @card.name %>
+<% @title = @card.printable_name %>
 <% new_comment = @comment # store, because we`ll be overwriting "@comment" to show previous comments %>
 
 <%= javascript_include_tag "fabtabulous.js" %>
@@ -39,7 +39,7 @@
          |
        <% end %>
        <% if show_delete_link %>
-         <%= link_to "Delete card", @card, :confirm => "Really DELETE #{@card.name}?", :method => :delete %>
+         <%= link_to "Delete card", @card, :confirm => "Really DELETE #{@card.printable_name}?", :method => :delete %>
        <% end %>
      </div>
    <% end %>

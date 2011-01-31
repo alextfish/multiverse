@@ -55,7 +55,7 @@
    end %>
   <div class="cardtext_container<% if textbox_length == 0 %> notext<% end %>">
    <div class="pinline pinline_sidesbottom">
-     <div class="<%= textboxclass %>"><% Rails.logger.info "#{@card.name}'s textbox has #{textbox_length} chars"%><% if !@card.rulestext.blank? %><%= content_tag(:div, format_card_text(@card, :rulestext), :class => "rulestext") %><% end %>
+     <div class="<%= textboxclass %>"><% Rails.logger.info "#{@card.printable_name}'s textbox has #{textbox_length} chars"%><% if !@card.rulestext.blank? %><%= content_tag(:div, format_card_text(@card, :rulestext), :class => "rulestext") %><% end %>
       <% if !@card.flavourtext.blank? %><%= content_tag(:div, format_card_text(@card, :flavourtext), :class => "flavourtext") %><% end %></div>
     </div>
    </div>

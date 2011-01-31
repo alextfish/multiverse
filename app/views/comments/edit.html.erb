@@ -4,7 +4,7 @@
   <% @title = @cardset.name + ": Editing comment" %>
   <%= render "shared/cardset_comment_form" %>
 <% else %>
-  <% @title = @card.name + ": Editing comment" %>
+  <% @title = @card.printable_name + ": Editing comment" %>
   <%= render "shared/card_comment_form" %>
 <% end %>
 </div>

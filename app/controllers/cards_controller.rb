@@ -18,10 +18,10 @@ class CardsController < ApplicationController
     elsif !params[:id].nil?
       @card = Card.find(params[:id])
       @cardset = @card.cardset
-    elsif !params[:card][:cardset_id].nil?
+    elsif params[:card] && !params[:card][:cardset_id].nil?
       @cardset = Cardset.find(params[:card][:cardset_id])
     else
-      raise "Couldn't find cardset id"
+      redirect_to root_path, :notice => "Cards must be in a cardset"
     end
   end
 
@@ -81,7 +81,7 @@ class CardsController < ApplicationController
 
     if @card.save
       @cardset.log :kind=>:card_create, :user=>current_user, :object_id=>@card.id
-      redirect_to @card, :notice => "#{@card.name} was successfully created." 
+      redirect_to @card, :notice => "#{@card.printable_name} was successfully created." 
     else
       render :action => "new"
     end

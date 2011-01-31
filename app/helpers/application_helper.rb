@@ -157,30 +157,30 @@ module ApplicationHelper
     wizards_card_regexp = /\[\[\[([^\]]*)\]\]\]/
     remove_brackets_regexp = /([(\[])\1\1?(.*[^)\]])([)\]])\3\3?/
     
-    text_middle = text_in.gsub(wizards_card_regexp) { |cardname|
+    text_out = text_in
+    text_out.gsub!(wizards_card_regexp) { |cardname|
       actual_cardname = cardname.gsub(remove_brackets_regexp, '\2')
       wizards_card_link(actual_cardname, actual_cardname)
-    }.gsub(wizards_image_regexp) { |cardname|
+    }
+    text_out.gsub!(wizards_image_regexp) { |cardname|
       actual_cardname = cardname.gsub(remove_brackets_regexp, '\2')
       wizards_card_image(actual_cardname)
     }
     if cardset
-      text_late = text_middle.gsub(cardset_card_regexp) { |cardname|
+      text_out.gsub!(cardset_card_regexp) { |cardname|
         actual_cardname = cardname.gsub(remove_brackets_regexp, '\2')
         cardset_card_link(cardset, actual_cardname, actual_cardname)
       }
       if cardset.configuration.frame == "image"
-        text_out = text_late.gsub(cardset_image_regexp) { |cardname|
+        text_out.gsub!(cardset_image_regexp) { |cardname|
           cardset_card_image(cardset, cardname.gsub(remove_brackets_regexp, '\2'))
         }
       else
-        text_out = text_late.gsub(cardset_image_regexp) { |cardname|
+        text_out.gsub!(cardset_image_regexp) { |cardname|
           cardset_card_mockup(cardset, cardname.gsub(remove_brackets_regexp, '\2'))
         }
         #out_fcn = lambda { }
       end
-    else
-      text_out = text_middle
     end
     @card = old_atcard
     text_out
@@ -190,7 +190,7 @@ module ApplicationHelper
     if (card = cardset.cards.find_by_name(cardname)) || (card = cardset.cards.find_by_code(cardname))
       "<a href=\"#{url_for(card)}\">#{link_content}</a>"
     elsif link_content =~ Card.code_regexp
-      # Link to a (valid & safe) code that doesn't yet exist: offer to created it
+      # Link to a (valid & safe) code that doesn't yet exist: offer to create it
       link_to "(#{link_content})", new_card_path(:cardset_id => cardset.id, :code => link_content)
     else
       "\(\(\(\(#{link_content})))" # yes, that's four parentheses. No, I don't know why Markdown eats one of them. But it does, so I need one extra.
@@ -224,18 +224,13 @@ module ApplicationHelper
   end
 
   def protect_smilies(text)
-    text_array = text.split("\n")
-    text_array.map { |this_line|
+    text.lines.map { |this_line|
       if [?:, ?<].include?(this_line[0])
         this_line = "&#173;" + this_line
       else
         this_line
       end
-    }.join("\n")
-  end
-
-  def comment_user_link(comment)
-    link_to_unless comment.user.nil?, comment.display_user, comment.user
+    }.join
   end
   
   def format_skeleton_table(text)
@@ -252,7 +247,7 @@ module ApplicationHelper
       end
       line
     end
-    lines_out.join("\n").html_safe
+    lines_out.join.html_safe
   end
   
   def select_random(num_to_choose, array_in)
@@ -264,6 +259,10 @@ module ApplicationHelper
        end
      end
      chosen
+  end
+
+  def comment_user_link(comment)
+    link_to_unless comment.user.nil?, comment.display_user, comment.user
   end
   
   def link_to_log_object(log)
@@ -314,14 +313,12 @@ module ApplicationHelper
           # This is complicated by the way I didn't originally store the id for card comments
           if obj.kind_of?(Comment)
             # We have a new-style link with a comment id: link to it
-            return log.past_tense_verb(true) + link_to(obj.card.name, card_path(obj.card, :anchor => obj.anchor_name))
-          else
+            return log.past_tense_verb(true) + link_to(obj.card.printable_name, card_path(obj.card, :anchor => obj.anchor_name))
+          elsif obj.kind_of?(Card)
             # We have an old-style link with just the card id
-            #f obj 
-              return log.past_tense_verb(true) + link_to(obj.name, obj)
-            #else
-            #  return log.past_tense_verb(false)
-            # end
+            return log.past_tense_verb(true) + link_to(obj.printable_name, obj)
+          else
+            return log.past_tense_verb(true) + link_to(obj.name, obj)
           end
         # For edited comments, link to either the card, or the cardset comments
         when Log.kind(:comment_edit):

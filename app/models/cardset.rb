@@ -690,7 +690,7 @@ class Cardset < ActiveRecord::Base
       else
         cards_and_comments << [card, nil]
       end
-      Rails.logger.info "Imported card #{card.name}"
+      Rails.logger.info "Imported card #{card.printable_name}"
     end
 
     # We've not returned so far, so the whole data must be good
