@@ -18,7 +18,7 @@
     <%= @cardset.name %> by <%= link_to @owner.name, @owner %>
   </h1>
   <p>
-    <%= @allmycards.length %> cards in Multiverse
+    <%= pluralize @allmycards.length, "card" %> in Multiverse
     <% if @myactivecards.any? && !@myactivecards.all? %>
       (<%= @myactivecards.length %> active)
     <% end %>

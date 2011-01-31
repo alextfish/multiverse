@@ -707,9 +707,9 @@ class Cardset < ActiveRecord::Base
 
     # Returns [success, message, log_text, changed_cards]
     message = "Data was successfully imported! "
-    skipped_cards>0 && message << "#{skipped_cards} cards were left unchanged. "
-    overwritten_cards>0 && message << "#{overwritten_cards} cards were updated. "
-    new_cards>0 && message << "#{new_cards} new cards were added. "
+    skipped_cards>0 && message << (skipped_cards == 1 ? "#{skipped_cards} card was left unchanged. " : "#{skipped_cards} cards were left unchanged. ")
+    overwritten_cards>0 && message << (overwritten_cards == 1 ? "#{overwritten_cards} card was updated. " : "#{overwritten_cards} cards were updated. ")
+    new_cards>0 && message << (new_cards == 1 ? "#{new_cards} new card was added. " : "#{new_cards} new cards were added. ")
     log_text = "#{new_cards} created, #{overwritten_cards} updated"
     return true, message, log_text, cards_and_comments.map { |card, comment| card }
   end

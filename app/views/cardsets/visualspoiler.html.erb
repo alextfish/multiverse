@@ -3,23 +3,31 @@
 </h1>
 <% @title = "#{@cardset.name}: Visual Spoiler" %>
 
-<%= render 'setviews' %>
+<%= render "setviews" %>
 
-<p>Showing all <%= @cardset.cards.count %> cards
+<p>Showing all <%= pluralize @cardset.cards.count, "card" %>
 </p>
-<table>
+<!-- table>
   <% @cardset.cards.sort.each_slice(5) do |cards| %>
     <tr>
       <% cards.each do |@card| %>
         <td>
-          <%= render :partial => 'shared/prettycard', :locals => {:link => true} %>
-          <%= render :partial => 'shared/cardcommentcount' %>
+          <%= render :partial => "shared/prettycard", :locals => {:link => true} %>
+          <%= render :partial => "shared/cardcommentcount" %>
         </td>
       <% end %>
     </tr>
   <% end %>
-</table>
+</table -->
 
+    <p>
+      <% @cardset.cards.sort.each do |@card| %>
+        <div class="CardRenderInline">
+          <%= render :partial => "shared/prettycard", :locals => {:link => true} %>
+          <%= render :partial => "shared/cardcommentcount" %>
+        </div>
+      <% end %>
+    </p>
 <p><br>
-  <%= render 'setviews' %>
+  <%= render "setviews" %>
 </p>

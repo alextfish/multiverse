@@ -4,5 +4,14 @@ rulestext flavourtext power toughness artist art_url image_url frame
 active } %>
 <%= fields.join separator %>
 <% @cardset.cards.sort.each do |@card| %>
-<% fields.each_with_index do |field, index| %>"<%= format_card_text(@card, field, false, false).gsub('"', '""') %>"<% if index < fields.length-1 %><%= separator %><% end %><% end %>
+<% fields.each_with_index do |field, index| %>"<%= 
+  if @card[field].kind_of?(String)
+    format_card_text(@card, field, false, false).gsub('"', '""') 
+  else
+    @card[field]
+  end
+  %>"<% if index < fields.length-1 
+    %><%= separator 
+  %><% end 
+  %><% end %>
 <% end %>
