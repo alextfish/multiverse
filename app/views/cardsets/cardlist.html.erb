@@ -70,7 +70,7 @@
       <td><%= card.power %></td>
       <td><%= card.toughness %></td>
       <td class="code" <%= code_display %>><%= card.code %></td>
-      <td class="active" <%= active_display %>><%= card.active %></td>
+      <td class="active" <%= active_display %>><%= card.active ? "Yes" : "" %></td>
       <td class="card_text">
         <%= format_card_text(card, :rulestext) %>
       </td>

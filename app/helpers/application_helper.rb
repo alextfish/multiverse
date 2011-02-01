@@ -156,9 +156,24 @@ module ApplicationHelper
     cardset_card_regexp = /\(\(\(([^)]*)\)\)\)/
     wizards_card_regexp = /\[\[\[([^\]]*)\]\]\]/
     remove_brackets_regexp = /([(\[])\1\1?(.*[^)\]])([)\]])\3\3?/
+    any_internal_links = text_in =~ /\(\(/
     
-    cardset_cardnames = cardset.cards.map { |c| c.name }
-    cardset_codes = cardset.cards.map { |c| c.code }
+    # If there are any double-paren links
+    if cardset && any_internal_links
+      # Build lookup tables so we don't need to do lots of cards.find_by_name
+      cardset_cardnames_and_codes = []
+      cardset_cards_from_name_or_code = {}
+      cardset.cards.each do |card| 
+        if card.name 
+          cardset_cardnames_and_codes << card.name
+          cardset_cards_from_name_or_code[card.name] = card
+        end
+        if card.code
+          cardset_cardnames_and_codes << card.code
+          cardset_cards_from_name_or_code[card.code] = card
+        end
+      end
+    end
     
     text_out = text_in
     text_out.gsub!(wizards_card_regexp) { |cardname|
@@ -169,20 +184,20 @@ module ApplicationHelper
       actual_cardname = cardname.gsub(remove_brackets_regexp, '\2')
       wizards_card_image(actual_cardname)
     }
-    if cardset
+    if cardset && any_internal_links
       text_out.gsub!(cardset_card_regexp) { |cardname|
         actual_cardname = cardname.gsub(remove_brackets_regexp, '\2')
-        cardset_card_link(cardset, actual_cardname, actual_cardname, cardset_cardnames, cardset_codes)
+        cardset_card_link(cardset, actual_cardname, actual_cardname, cardset_cardnames_and_codes, cardset_cards_from_name_or_code)
       }
       if cardset.configuration.frame == "image"
         text_out.gsub!(cardset_image_regexp) { |cardname|
           actual_cardname = cardname.gsub(remove_brackets_regexp, '\2')
-          cardset_card_image(cardset, actual_cardname, cardset_cardnames, cardset_codes)
+          cardset_card_image(cardset, actual_cardname, cardset_cardnames_and_codes, cardset_cards_from_name_or_code)
         }
       else
         text_out.gsub!(cardset_image_regexp) { |cardname|
           actual_cardname = cardname.gsub(remove_brackets_regexp, '\2')
-          cardset_card_mockup(cardset, actual_cardname, cardset_cardnames, cardset_codes)
+          cardset_card_mockup(cardset, actual_cardname, cardset_cardnames_and_codes, cardset_cards_from_name_or_code)
         }
         #out_fcn = lambda { }
       end
@@ -191,10 +206,9 @@ module ApplicationHelper
     text_out
   end
 
-  def cardset_card_link(cardset, cardname, link_content, cardset_cardnames, cardset_codes)
-    if cardset_cardnames.include?(cardname) || cardset_codes.include?(cardname)
-      card = cardset.cards.find_by_name(cardname)
-      card ||= cardset.cards.find_by_code(cardname)
+  def cardset_card_link(cardset, cardname, link_content, cardset_cardnames_and_codes, cardset_cards_from_name_or_code)
+    if cardset_cardnames_and_codes.include?(cardname)
+      card = cardset_cards_from_name_or_code[cardname]
       "<a href=\"#{url_for(card)}\">#{link_content}</a>"
     elsif link_content =~ Card.code_regexp
       # Link to a (valid & safe) code that doesn't yet exist: offer to create it
@@ -210,10 +224,9 @@ module ApplicationHelper
     image_name = ActiveSupport::Inflector::parameterize(cardname, '_').gsub('-','_')
     wizards_card_link(cardname, image_tag("http://www.wizards.com/global/images/magic/general/#{image_name}.jpg", :alt => "[[#{cardname}]]", :class => "CardImage"))
   end
-  def cardset_card_image(cardset, cardname, cardset_cardnames, cardset_codes)
-    if cardset_cardnames.include?(cardname) || cardset_codes.include?(cardname)
-      card = cardset.cards.find_by_name(cardname)
-      card ||= cardset.cards.find_by_code(cardname)
+  def cardset_card_image(cardset, cardname, cardset_cardnames_and_codes, cardset_cards_from_name_or_code)
+    if cardset_cardnames_and_codes.include?(cardname)
+      card = cardset_cards_from_name_or_code[cardname]
       if card.image_url.blank?
         cardset_card_mockup(cardset, cardname)
       else
@@ -223,10 +236,9 @@ module ApplicationHelper
       "((#{cardname}))"
     end
   end
-  def cardset_card_mockup(cardset, cardname, cardset_cardnames, cardset_codes)
-    if cardset_cardnames.include?(cardname) || cardset_codes.include?(cardname)
-      card = cardset.cards.find_by_name(cardname)
-      card ||= cardset.cards.find_by_code(cardname)
+  def cardset_card_mockup(cardset, cardname, cardset_cardnames_and_codes, cardset_cards_from_name_or_code)
+    if cardset_cardnames_and_codes.include?(cardname)
+      card = cardset_cards_from_name_or_code[cardname]
       @card = card
       "<div class='CardRenderInline'>#{render :partial => 'shared/prettycard', :locals => { :link => true }}</div>"
     else
