@@ -74,6 +74,19 @@
     position: absolute; top: 0px; background-image: url(/images/foil_highlight.png); 
     width: 200px;  height: 285px;
   }
+  .cardborder { 
+    position: relative;
+  }
+  .banner {
+    position: absolute; 
+    top: 40px; 
+    padding: 8px 0px;
+    font-size: 20pt; 
+    background-color: #888;
+    z-index: 4; 
+    width: 100%; 
+    text-align: center;
+  }
   .pinline { }
   .pinline_box { padding: 2px;}
   .pinline_sides { padding-left: 2px; padding-right: 2px; }

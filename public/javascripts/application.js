@@ -58,7 +58,8 @@ function update_generate_totals() {
   });
 }
 
-// Card editing
+////// Card editing //////
+
 function update_card_supertype(new_value) {
   if (new_value == "Custom") {
     $("card_supertype_select").hide();
@@ -126,6 +127,7 @@ function update_details_pages(new_text) {
   $( "details_pages" ).update(new_text);
 }
 
+////// Comments //////
 function update_comment_status(commentid, action) {
   // Find the whole row to set the style
   commentdiv = document.getElementById("comment_" + commentid);
@@ -159,7 +161,7 @@ function update_comment_status(commentid, action) {
   }
 }
 
-/*
+
 
 // H/M * JS to fit the card text to the card.
 // Pseudocode:
@@ -167,23 +169,39 @@ function update_comment_status(commentid, action) {
   // resize_all_cards: 
     // cards_to_resize = $("#card")
     // remove forms
-    // resize_cards
-  // resize_cards:
-    // for each card in cards_to_resize
-      // keep = false
-      // check size of text box
-      // if it's bigger than it should be:
-        // if there are any steps it can go further:
-          // shrink it one step
-          // keep = true
-      // check size of the type line
-      // if it's bigger than it should be:
-        // if there are any steps it can go further:
-          // shrink it one step
-          // keep = true
-      // if !keep:
-        // remove card from cards_to_resize
-    // // once all cards resized
-    // if any left in cards_to_resize:
-      // setTimeout 50, resize_cards
-      */
+function shrinkName(nameDiv) {
+  titleBarDiv = nameDiv.parentNode;
+  manaCostDiv = titleBarDiv.childElements().find(function(div){ if (div.hasClassName("cardmanacost")) {return div;} });
+  defaultNameFontSize = 9; // points, as defined in Card.scss:
+  nameSizeOK = 0;
+  fontSize = defaultNameFontSize;
+  // .cardtitlebar, .cardtypebar { font: bold 9pt serif; }
+  for(var i=0; !nameSizeOK && i>-3; i-=0.25) { 
+    nameDiv.style.letterSpacing = i + "px"; 
+    nameSizeOK = (manaCostDiv.offsetTop == nameDiv.offsetTop) && titleBarDiv.clientHeight < 20;
+    if (!nameSizeOK) {
+      nameDiv.style.fontSize = (defaultNameFontSize + i) + "pt";
+      nameSizeOK = (manaCostDiv.offsetTop == nameDiv.offsetTop) && titleBarDiv.clientHeight < 20;
+    }
+  }
+}
+function shrinkType(typeDiv) {
+  typeSpan = typeDiv.childElements()[0];
+  typeBarDiv = typeDiv.parentNode;
+  rarityDiv = typeBarDiv.childElements().find(function(div){ if (div.hasClassName("cardrarity")) {return div;} });
+  if (!rarityDiv) return;
+  typeBarPadding = 9; // calculated from the padding-left and padding-right of cardrarity and .pinline_box>div
+  maxWidth = typeBarDiv.getWidth() - rarityDiv.getWidth() - typeBarPadding;
+  typeSizeOK = false;
+  for(var i=0; !typeSizeOK && i>-3; i-=0.25) { 
+    typeSpan.style.letterSpacing = i + "px"; 
+    typeSizeOK = (typeBarDiv.getHeight() < 20) && (typeSpan.getWidth() < maxWidth); 
+  }
+}
+
+function makeAllCardsFit() {
+  $$('.cardname').each(shrinkName);
+  $$('.cardtype').each(shrinkType);
+}
+
+Event.observe(window, 'load', makeAllCardsFit);

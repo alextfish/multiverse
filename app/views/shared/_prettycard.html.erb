@@ -1,6 +1,9 @@
 <% # prettycard helper takes boolean param "link"
 #link = false if local_assigns[:link].nil?
 %><div class="cardborder <%= @card.border_colour %>border">
+ <% if !@card.active && @card.cardset && @card.cardset.configuration.card_show_active %>
+   <div class="banner">INACTIVE</div>
+ <% end %>
  <div class="card <%= @card.display_class %>">
   <div class="pinline pinline_box namebox">
    <div class="cardtitlebar">
@@ -34,14 +37,16 @@
      <% typeline = (@card.supertype.blank? ? "" : "#{@card.supertype} ") +
                    (@card.cardtype.blank?  ? "" : "#{@card.cardtype}") +
                    (@card.subtype.blank?   ? "" : " - #{@card.subtype}") %>
-     <% typeclass = typeline.length > 28 ? "cardtype condensedtypeline" : "cardtype" %>
-    <div class="<%= typeclass %>">
+     <% typeclass = "cardtype";
+   '     typeline.length > 28 ? "cardtype condensedtypeline" : "cardtype" ' 
+   %>
+    <div class="<%= typeclass %>"><span>
      <% if !typeline.blank? %>
        <%= h(typeline).gsub("-", "&ndash;").html_safe %>
      <% else %>
        &nbsp;
      <% end %>
-    </div>
+    </span></div>
     <% " &nbsp; required to give some height to the cardtypebar " %>
    </div>
   </div>
