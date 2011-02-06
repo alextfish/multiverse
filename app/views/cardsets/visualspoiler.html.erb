@@ -9,7 +9,7 @@
 </p>
 <p>
   <% @cardset.cards.sort.each do |@card| %>
-    <div class="CardRenderInline">
+    <div class="CardRenderInline visualspoiler">
       <%= render :partial => "shared/prettycard", :locals => {:link => true} %>
       <%= render :partial => "shared/cardcommentcount" %>
     </div>

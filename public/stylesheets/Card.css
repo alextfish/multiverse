@@ -31,11 +31,12 @@
 .card {
   background: #0ff;
   padding-top: 4px;
+  padding-bottom: 3px;
   padding-left: 3px;
   padding-right: 3px;
-  padding-bottom: 3px;
   position: relative;
-  line-height: 100%; }
+  min-height: 275px;
+  /* + 2px for some unknown reason */ }
 
 .foil {
   position: absolute;
@@ -54,7 +55,7 @@
   font-size: 20pt;
   background-color: #888;
   z-index: 4;
-  width: 100%;
+  width: 200px;
   text-align: center; }
 
 .pinline_box {
@@ -220,7 +221,7 @@
 
 /* .manacost { align: right; } */
 .cardtext {
-  font: 10pt; }
+  font: 9pt; }
 
 .minitext, .nameminitext {
   font-size: 9pt; }
@@ -246,7 +247,7 @@
 .cardmanacost img {
   width: 14px;
   height: 14px;
-  vertical-align: middle; }
+  /*vertical-align: middle;*/ }
 
 .cardtext img {
   height: 1em;
@@ -280,7 +281,8 @@
 
 /***** Planeswalkers *****/
 .card.Planeswalker {
-  padding-top: 0px; }
+  padding-top: 0px;
+  min-height: 277px; }
 
 .Planeswalker .namebox {
   padding-top: 0px; }
@@ -326,7 +328,7 @@
   border-radius: 7px / 40px;
   border-right: 1px solid black;
   border-left: 1px solid white;
-  min-height: 115px; }
+  min-height: 121px; }
 
 .Planeswalker .cardtext {
   -moz-border-radius: 4px 4px 8px 8px;

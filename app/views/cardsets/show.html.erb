@@ -103,19 +103,13 @@
 
 <p>
   <% if !recentcards.empty? %>
-    Recently updated cards: (<%= link_to "all recent activity", recent_cardset_path %>)
-    <table>
-     <% recentcards.each_slice(@cardset.cards_per_line) do |cards| %>
-      <tr>
-       <% cards.each do |@card| %>
-        <td>
-         <%= render :partial => "shared/card", :locals => { :link => true } %>
-         <%= render :partial => "shared/cardcommentcount" %>
-        </td>
-       <% end %>
-      </tr>
-     <% end %>
-    </table>
+    Recently updated cards: (<%= link_to "all recent activity", recent_cardset_path %>)    
+   <% recentcards.each do |@card| %>
+     <div class="CardRenderInline">
+       <%= render :partial => "shared/card", :locals => { :link => true } %>
+       <%= render :partial => "shared/cardcommentcount" %>
+     </div>
+   <% end %>
   <% else %>
     There are no cards in this cardset.
     <% if permission_to?(:edit, @cardset) %>

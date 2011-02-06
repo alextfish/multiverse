@@ -63,16 +63,23 @@
     border-width: 1px;
     padding: 9px;
   }
+  
+  $CardWidth: 200px;
+  $CardHeight: 280px;
+  $CardPaddingTop: 4px;
+  $CardPaddingBottom: 3px;
   .whiteborder .card, .whiteborder .editborder_inner { border: 1px solid #888; }
-  .cardborder { width: 200px; min-height: 280px; }
+  .cardborder { width: $CardWidth; min-height: $CardHeight; }
   .card { background: #0ff; 
-          padding-top: 4px; padding-left: 3px; padding-right: 3px; padding-bottom: 3px;
+          padding-top: $CardPaddingTop; padding-bottom: $CardPaddingBottom;
+          padding-left: 3px; padding-right: 3px;
           position: relative;
-          line-height: 100%;
+          min-height: $CardHeight - $CardPaddingTop - $CardPaddingBottom + 2; 
+          /* + 2px for some unknown reason */
         }
   .foil {
     position: absolute; top: 0px; background-image: url(/images/foil_highlight.png); 
-    width: 200px;  height: 285px;
+    width: $CardWidth;  height: 285px;
   }
   .cardborder { 
     position: relative;
@@ -84,7 +91,7 @@
     font-size: 20pt; 
     background-color: #888;
     z-index: 4; 
-    width: 100%; 
+    width: $CardWidth; 
     text-align: center;
   }
   .pinline { }
@@ -171,7 +178,7 @@
    }
 
   /* .manacost { align: right; } */
-  .cardtext { font: 10pt /*serif*/; }
+  .cardtext { font: 9pt /*serif*/; }
   .minitext, .nameminitext  { font-size: 9pt; }
   .microtext { font-size: 8pt; }
   .nanotext  { font-size: 7.5pt; }
@@ -180,7 +187,7 @@
   .flavourtext i, .flavourtext em { font-style: normal; }
 
 /* Mana symbol sizes */
-.cardmanacost img { width: 14px; height: 14px; vertical-align: middle; }
+.cardmanacost img { width: 14px; height: 14px; /*vertical-align: middle;*/}
 .cardtext  img { height: 1em; vertical-align: middle; }
 /*
 .cardtext  img { width: 13px; height: 13px; vertical-align: middle; }
@@ -206,7 +213,10 @@
 
 /***** Planeswalkers *****/
 
-.card.Planeswalker { padding-top: 0px; }
+.card.Planeswalker { 
+  padding-top: 0px; 
+  min-height: $CardHeight - $CardPaddingBottom;
+}
 
 .Planeswalker .namebox { padding-top: 0px; }
 
@@ -224,7 +234,7 @@
   @include elliptical_corners(7px, 40px);
   border-right: 1px solid black;
   border-left: 1px solid white;
-  min-height: 115px; 
+  min-height: 121px; 
 }
 
 

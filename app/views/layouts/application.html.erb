@@ -2,13 +2,15 @@
 <html>
   <head>
     <title><% if Rails.env.development? %>MV Dev<% else %>Multiverse<% end %>: <%= @title %></title>
-    <%= stylesheet_link_tag :all, :media => "all" %>
-    <!-- link rel="stylesheet" type="text/css" href="Cardset.css" / -->
-    <%= javascript_include_tag :defaults %>
-    <%= csrf_meta_tag %>
+    <%= stylesheet_link_tag "Card", :media => "all" %>
+    <%= stylesheet_link_tag "Multiverse", :media => "all" %>
+    <%= stylesheet_link_tag "tablekit", :media => "screen" %>
     <!--[if lt IE 8]>
       <%= stylesheet_link_tag "Card_ie" %>
     <![endif]-->
+    
+    <%= javascript_include_tag :defaults %>
+    <%= csrf_meta_tag %>
     <!--[if lt IE 9]>
     <script src="http://html5shiv.googlecode.com/svn/trunk/html5.js"></script>
     <![endif]-->
@@ -27,6 +29,8 @@
     <% end %>
 
     <%= yield %>
+
+    <%= render "layouts/footer" %>
 
   </body>
 </html>
