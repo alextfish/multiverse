@@ -3,7 +3,8 @@
 
 <%= render "setviews" %>
 
-<% items_to_show = @cardset.logs.reject{ |l| Log.kinds_to_not_show.include?(l.kind) }.paginate :page => params[:page] || 1, :per_page => 50 %>
+<% kinds_to_not_show = Log.kinds_to_not_show
+   items_to_show = @cardset.logs.reject{ |l| kinds_to_not_show.include?(l.kind) }.paginate :page => params[:page] || 1, :per_page => 50 %>
 
 <p>
   <% if !items_to_show.empty? %>
@@ -15,7 +16,7 @@
       <% items_to_show.each do |@log| %>
         <li class="recent_item">
           <%= render :partial => "log_entry", :locals => { :link_to_recent => false } %>
-          <% if @log.comment? && !Log.kinds_to_not_show.include?(@log.kind) %>
+          <% if @log.comment? && !kinds_to_not_show.include?(@log.kind) %>
             <% @comment = Comment.find_by_id(@log.object_id) %>
             <% if @comment && @comment.get_cardset == @cardset %>
               <%= render :partial => "shared/comment", :locals => { :show_buttons => true, :show_date => false } %>

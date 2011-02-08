@@ -65,11 +65,25 @@
        <b>History:</b>
        <div class="cardhistory">
          <div class="commentlist">
-           <% @card.comments.each do |@comment| %>
-             <%= render :partial => "shared/comment", :locals => { :show_buttons => true, :show_date => true } %>
+           <% @card.get_history.each do |history_item| %>
+             <% if history_item.is_a? Log %>
+               <div class="comment">
+                 <%= format_datetime history_item.datestamp %>:
+                 <%= friendly_link_to_user_id(history_item.user_id) %> edited the card<% if history_item.text %>:<br><%= history_item.text %><% end %>
+               </div>
+             <% else %><% "it's a comment" %>
+               <% @comment = history_item %>
+               <%= render :partial => "shared/comment", :locals => { :show_buttons => true, :show_date => true } %>
+             <% end %>
            <% end %>
-           <% if permission_to?(:comment, @card.cardset) %>
-             <b>Add your comments:</b>
+         </div>
+       </div>
+     </p>
+     <% if permission_to?(:comment, @card.cardset) %>
+       <p>
+         <b>Add your comments:</b>
+         <div class="cardhistory">
+           <div class="commentlist">
              <% @comment = new_comment # restore the value stored at the top %>
              <%= render "shared/card_comment_form" %>
            <% else %>
@@ -77,9 +91,9 @@
              <% if !signed_in? %>
                Would you like to <%= link_to "sign in", signin_path %>?
              <% end %>
-           <% end %>
+           </div>
          </div>
-       </div>
+       <% end %>
      </p>
   </td>
  </tr>

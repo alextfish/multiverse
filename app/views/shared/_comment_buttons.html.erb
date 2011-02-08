@@ -1,8 +1,8 @@
 <% "Takes one parameter, show_date" %>
 <% if show_date %>
 <div class="commentdetails">
-  <%= comment_user_link(@comment) %>
-  <%= format_datetime @comment.created_at %>:
+  <%= format_datetime @comment.created_at %> by
+  <%= comment_user_link(@comment) %>:
 <% end %>
   <% target_of_links = @comment # (@comment.cardset_id ? [@cardset, @comment] : @comment) %>
   <% if permission_to?(:admin, @cardset) %>

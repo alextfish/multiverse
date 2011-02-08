@@ -9,8 +9,7 @@ module ApplicationHelper
     end
   end
 
-  def get_last_edit_user_and_string(object)
-    uid = object.last_edit_by
+  def get_user_and_string(uid)
     case
       when uid == User.NON_SIGNED_IN_USER
         [nil, "a non-signed-in user"]
@@ -20,16 +19,18 @@ module ApplicationHelper
         [nil, "someone"]
     end
   end
-  def link_to_last_edit_user(object)
-    user, user_name = get_last_edit_user_and_string(object)
+  def friendly_link_to_user_id(uid)
+    user, user_name = get_user_and_string(uid)
     if user.nil?
       user_name
     else
       link_to user_name, user
     end
   end
+  
   def by_last_edit_user_if_available(object)
-    user, user_name = get_last_edit_user_and_string(object)
+    uid = object.last_edit_by
+    user, user_name = get_user_and_string(uid)
     if user.nil?
       ""
     else

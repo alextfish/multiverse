@@ -77,6 +77,12 @@ class Card < ActiveRecord::Base
   def recency  # For a card, its order in recency is when it was updated
     updated_at
   end
+  
+  def get_history
+    possible_logs = Log.find(:all, :conditions => {:object_id => id})
+    my_logs = possible_logs.select{|l| l.return_object == self}
+    out = (comments + my_logs).sort_by &:recency
+  end
 
   def self.colours
     ["White", "Blue", "Black", "Red", "Green"]

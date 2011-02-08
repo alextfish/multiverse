@@ -99,6 +99,10 @@ class Log < ActiveRecord::Base
     end
   end
   
+  def recency  # For a comment, its order in recency is its datestamp
+    datestamp
+  end
+  
   def comment?
     case self.kind
       when Log.kind(:comment_card), Log.kind(:comment_details_page), Log.kind(:comment_cardset), Log.kind(:comment_edit):

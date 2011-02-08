@@ -1,6 +1,6 @@
 <% 
-  update_date = Time.gm(2011,1,28,1,44,29);
-  update_title = "New Features: Planeswalkers, Border Colour, Fuller Cardlist";
+  update_date = Time.gm(2011,2,8,1,01,37);
+  update_title = "New Feature: Card Contents Shrink-To-Fit, Edits Show in Card History";
   
 news_latest_update = {
   :date => update_date,
@@ -8,6 +8,17 @@ news_latest_update = {
   :body => <<ENDBODY };
 
 ### #{update_title}
+#### Tue Feb 8 01:01:37
+The update this week is simple: your card text will now fit on your card. 
+
+No longer will your excessively-long cardnames push the mana cost out of the title bar, or the too-long type line disappear behind the rarity, or your overly-wordy text box stretch the card too much vertically. Now all these elements will be smoothly resized in your browser by a little Javascript. Even the ridiculously over-worded [Sienira's Facets](http://multiverse.heroku.com/cardsets/1) cards all fit, even if some of their [text boxes](http://multiverse.heroku.com/cards/222) or [type lines](http://multiverse.heroku.com/cards/1732) are still too dense for Wizards to actually print.
+
+It won't carry it to excess. If you write an essay for each of your Planeswalker's abilities, it'll still stretch the card rather than reduce the font to smaller than 6 point text. But this should result in some rather nicer-looking cards, particularly in boosters and visual spoilers.
+
+There are a few other tweaks that have gone in. Cards will now print properly from visual spoilers and suchlike. And a card's comment log now also includes where someone edited the card, so that you can see where the conversation was punctuated by an edit.
+
+----
+### New Features: Planeswalkers, Border Colour, Fuller Cardlist
 #### Fri Jan 28 01:44:29
 Several features that people have been asking for. First, planeswalker cards now have a much nicer mockup, with an approximation to the special planeswalker frame as used by Wizards of the Coast.
 
