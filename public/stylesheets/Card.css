@@ -221,7 +221,7 @@
 
 /* .manacost { align: right; } */
 .cardtext {
-  font: 9pt; }
+  font-size: 9pt; }
 
 .minitext, .nameminitext {
   font-size: 9pt; }
@@ -466,9 +466,13 @@
 
 .token .cardname, .token .cardname a {
   color: #ba8;
-  text-shadow: #ffff99 1px -1px;
+  text-shadow: #ffff99 1px -1px; }
+
+.token .cardname {
   float: none;
-  display: inline; }
+  display: inline;
+  padding-right: 2px;
+  /* to balance the text-shadow */ }
 
 .token .cardtitlebar {
   background-color: #000 !important;
@@ -480,6 +484,19 @@
 
 .token .cardmanacost {
   display: none; }
+
+.token .pinline.namebox {
+  background: #ba8;
+  border-top: 1px solid #ff9;
+  padding-top: 1px;
+  /* width: 120px; */
+  margin: auto; }
+
+.token.form .pinline.namebox {
+  width: inherit; }
+
+.token .cardtitlebar {
+  border-bottom: 1px solid #ff9; }
 
 .token .cardart {
   -moz-border-radius: 50px;
@@ -509,8 +526,7 @@
   border-bottom: 1px solid black;
   padding-left: 2px;
   padding-right: 3px;
-  height: 100%;
-  min-height: 100px; }
+  height: 100%; }
 
 .token .cardart_container {
   -moz-border-radius: 44px;
@@ -520,21 +536,7 @@
   -moz-border-radius: 44px / 32px;
   -webkit-border-radius: 44px 32px;
   -khtml-border-radius: 44px / 32px;
-  border-radius: 44px / 32px;
-  min-height: 100px; }
-
-.token .pinline.namebox {
-  background: #ba8;
-  border-top: 1px solid #ff9;
-  padding-top: 1px;
-  width: 120px;
-  margin: auto; }
-
-.token.form .pinline.namebox {
-  width: inherit; }
-
-.token .cardtitlebar {
-  border-bottom: 1px solid #ff9; }
+  border-radius: 44px / 32px; }
 
 /***** Colours *****/
 .Colourless.card, .Colourless .cardart {

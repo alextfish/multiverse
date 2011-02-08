@@ -170,32 +170,60 @@ function update_comment_status(commentid, action) {
     // cards_to_resize = $("#card")
     // remove forms
 function shrinkName(nameDiv) {
-  titleBarDiv = nameDiv.parentNode;
-  manaCostDiv = titleBarDiv.select("div.cardmanacost")[0];
-  cardDiv = titleBarDiv.up("div.card");
-  if (!cardDiv.hasClassName("token")) {
-    // Non-token algorithm:
-    defaultNameFontSize = 9; // points, as defined in Card.scss
-    nameSizeOK = 0;
-    fontSize = defaultNameFontSize;
-    // .cardtitlebar, .cardtypebar { font: bold 9pt serif; }
-    for(var i=0; !nameSizeOK && i>-3; i-=0.25) { 
-      nameDiv.style.letterSpacing = i + "px"; 
-      nameSizeOK = (manaCostDiv.offsetTop == nameDiv.offsetTop) && titleBarDiv.clientHeight < 20;
-      if (!nameSizeOK) {
-        nameDiv.style.fontSize = (defaultNameFontSize + i) + "pt";
-        nameSizeOK = (manaCostDiv.offsetTop == nameDiv.offsetTop) && titleBarDiv.clientHeight < 20;
-      }
+  var titleBarDiv = nameDiv.parentNode;
+  var manaCostDiv = titleBarDiv.select("div.cardmanacost")[0];
+  // Non-token algorithm:
+  var defaultNameFontSize = 9; // points, as defined in Card.scss
+  var idealTitleHeight = 20;
+  var nameSizeOK = 0;
+  var fontSize = defaultNameFontSize;
+  // .cardtitlebar, .cardtypebar { font: bold 9pt serif; }
+  for(var i=0; !nameSizeOK && i>-3; i-=0.25) { 
+    nameDiv.style.letterSpacing = i + "px"; 
+    nameSizeOK = (manaCostDiv.offsetTop == nameDiv.offsetTop) && titleBarDiv.clientHeight < idealTitleHeight;
+    if (!nameSizeOK) {
+      nameDiv.style.fontSize = (defaultNameFontSize + i) + "pt";
+      nameSizeOK = (manaCostDiv.offsetTop == nameDiv.offsetTop) && titleBarDiv.clientHeight < idealTitleHeight;
     }
-  } else {
-    // Token algorithm
-    alert('Todo!')
   }
 }
-function shrinkType(typeDiv) {
+function sizeTokenName(nameDiv) {
+  // Token algorithm
+  var titleBarDiv = nameDiv.parentNode;
+  var titlePinline = titleBarDiv.parentNode;
+  var tokenNamePadding = 12; // cardtitlebar p-left=3=3; namebox p-left=p-right=2; 2px wiggle room
+  var defaultNameFontSize = 9; // points, as defined in Card.scss
+  var idealTitleHeight = 20;
+  var nameWidth = nameDiv.getWidth();
+  var nameSizeOK = (nameWidth + tokenNamePadding < titlePinline.getWidth()) && (titleBarDiv.clientHeight <= idealTitleHeight);
+  if (nameSizeOK) {
+    titlePinline.style.width = nameWidth + tokenNamePadding + "px";
+  } else {
+    for(var i=0; !nameSizeOK && i>-3; i-=0.25) { 
+      nameDiv.style.letterSpacing = i + "px"; 
+      nameSizeOK = (nameWidth + tokenNamePadding < titlePinline.getWidth()) && (titleBarDiv.clientHeight <= idealTitleHeight)
+      if (!nameSizeOK) {
+        nameDiv.style.fontSize = (defaultNameFontSize + i) + "pt";
+        nameSizeOK = (nameWidth + tokenNamePadding < titlePinline.getWidth()) && (titleBarDiv.clientHeight <= idealTitleHeight)
+      }
+    }
+  }
+}
+function sizeTokenArt(cardDiv, artDiv) {
+  // Should come after sizing token name
+  var bottomBox = cardDiv.getElementsByClassName("bottombox")[0];
+  var artHeight = artDiv.getHeight();
+  var bottomHeight = bottomBox.getHeight();
+  var cardHeight = cardDiv.getHeight();
+  // The art's minHeight is based on its current height, plus or minus whatever
+  // the offset of the bottomBox is
+  artDiv.style.minHeight = artHeight + cardHeight - (bottomBox.offsetTop + bottomHeight) + "px";
+}
+
+function shrinkType(typeDiv) { //, rarityDiv) {
   typeSpan = typeDiv.childElements()[0];
   typeBarDiv = typeDiv.parentNode;
-  rarityDiv = typeBarDiv.select("div.cardrarity")[0];
+  rarityDiv = typeBarDiv.getElementsByClassName("cardrarity")[0];
   if (!rarityDiv) return;
   typeBarPadding = 9; // calculated from the padding-left and padding-right of cardrarity and .pinline_box>div
   maxWidth = typeBarDiv.getWidth() - rarityDiv.getWidth() - typeBarPadding;
@@ -225,10 +253,43 @@ function shrinkTextBox(textDiv) {
   }
 }
 
+function shrinkCardBits(cardDiv) {
+  var nameDiv = cardDiv.getElementsByClassName("cardname")[0];
+  var typeDiv = cardDiv.getElementsByClassName("cardtype")[0];
+  var rarityDiv = cardDiv.getElementsByClassName("cardrarity")[0];
+  if (cardDiv.hasClassName("token")) {
+    var artDiv = cardDiv.getElementsByClassName("cardart")[0];
+    sizeTokenName(nameDiv);
+    sizeTokenArt(cardDiv, artDiv);
+  } else {
+    var textDiv = cardDiv.getElementsByClassName("cardtext")[0];
+    shrinkName(nameDiv);
+    shrinkTextBox(textDiv);
+  }
+  shrinkType(typeDiv, rarityDiv);
+}
+
 function makeAllCardsFit() {
-  $$('div.cardname').each(shrinkName);
-  $$('div.cardtype').each(shrinkType);
-  $$('div.cardtext').each(shrinkTextBox);
+  $A(document.getElementsByClassName("card")).each(shrinkCardBits);
+  return;
+  
+  t0 = (new Date()).getTime();
+  var names = $A(document.getElementsByClassName("cardname"));
+  t05 = (new Date()).getTime();
+  names.each(shrinkName);
+  t1 = (new Date()).getTime();
+  var types = $A(document.getElementsByClassName("cardtype"));
+  t15 = (new Date()).getTime();
+  //types.each(shrinkType);
+  t2 = (new Date()).getTime();
+  var texts = $A(document.getElementsByClassName("cardtext"));
+  t25 = (new Date()).getTime();
+  //texts.each(shrinkTextBox);
+  t3 = (new Date()).getTime();
+  alert("Names: finding " + (t05-t0) + ", shrinking " + (t1-t05) + ".\n Types: finding " + (t15-t1) + ", shrinking " + (t2-t15) + ".\nTexts: finding " + (t25-t2) + ", shrinking " + (t3-t25));
+  // SF on FF: names 1.256, types 3.825, texts 2.119
+  // SF on IE: names 74.8, types 85.9, texts 21.6. Finding in each case 0.13.
+  // COCA on IE: names .547, types 1.1, texts .391. Finding in each case 0.016.
 }
 
 Event.observe(window, 'load', makeAllCardsFit);

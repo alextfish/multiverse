@@ -178,7 +178,7 @@
    }
 
   /* .manacost { align: right; } */
-  .cardtext { font: 9pt /*serif*/; }
+  .cardtext { font-size: 9pt /*serif*/; }
   .minitext, .nameminitext  { font-size: 9pt; }
   .microtext { font-size: 8pt; }
   .nanotext  { font-size: 7.5pt; }
@@ -330,7 +330,11 @@ border: none;
 .token .cardname, .token .cardname a { 
   color: #ba8; 
   text-shadow: #ff9 1px -1px;
-  float: none; display: inline;}
+}
+.token .cardname {
+  float: none; display: inline;
+  padding-right: 2px; /* to balance the text-shadow */
+}
 .token .cardtitlebar { 
   background-color: #000 !important;
   background: #000 !important;
@@ -338,6 +342,17 @@ border: none;
  }
 .token .cardtitlebar label { color: #fff; }
 .token .cardmanacost { display: none;}
+.token .pinline.namebox { background: #ba8; 
+  border-top: 1px solid #ff9;
+  padding-top: 1px;
+  /* width: 120px; */
+  margin: auto;
+}
+.token.form  .pinline.namebox {
+  width: inherit;}
+.token .cardtitlebar { 
+  border-bottom: 1px solid #ff9;
+}
 .token .cardart { 
   @include elliptical_corners(50px, 30px); 
   border-right: 1px solid black;
@@ -353,23 +368,10 @@ border: none;
   padding-left: 2px;
   padding-right: 3px;
   height: 100%;
-  min-height: 100px;
  }
 .token .cardart_container { 
   @include elliptical_corners(44px, 32px); 
-  min-height: 100px;
  }
-.token .pinline.namebox { background: #ba8; 
-border-top: 1px solid #ff9;
-padding-top: 1px;
- width: 120px;
- margin: auto;
-}
-.token.form  .pinline.namebox {
-  width: inherit;}
-.token .cardtitlebar { 
-border-bottom: 1px solid #ff9;
-}
 
 /***** Colours *****/
 

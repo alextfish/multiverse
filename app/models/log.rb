@@ -49,6 +49,9 @@ class Log < ActiveRecord::Base
         raise "Unknown log kind specified: #{sym}"
     end
   end
+  def Log.kinds_to_not_show
+    [Log.kind(:comment_edit)]
+  end
   def past_tense_verb(specific)
     case self.kind
       when Log.kind(:cardset_create):

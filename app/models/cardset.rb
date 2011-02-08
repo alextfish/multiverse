@@ -119,7 +119,11 @@ class Cardset < ActiveRecord::Base
   end
   
   def recent_action
-    self.logs.first
+    out = self.logs.first
+    if Log.kinds_to_not_show.include?(out.kind) 
+      out = self.logs.reject{ |l| Log.kinds_to_not_show.include?(l.kind) }.first
+    end
+    out
   end
   def datestamps_close(d1,d2)
     (d1-d2).abs < 20.seconds
