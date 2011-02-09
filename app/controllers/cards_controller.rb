@@ -94,7 +94,7 @@ class CardsController < ApplicationController
     if @card.update_attributes(params[:card])
       process_card
       set_last_edit @card
-      @cardset.log :kind=>:card_edit, :user=>current_user, :object_id=>@card.id
+      @cardset.log :kind=>:card_edit, :user=>current_user, :object_id=>@card.id, :text=>params[:edit_comment]
 
       redirect_to @card   #, :notice => 'Card was successfully updated.'
     else

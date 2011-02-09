@@ -1,8 +1,8 @@
 3.0.24 (Classy Cassidy)
-50c8d10842e15f973e24d7a00215f016c114b47e
+41ad51fb98da4899ff6b5b97fdc155ebaf0290fb
 o:Sass::Tree::RootNode
 :
-@linei:@template"«]@mixin gradient_horz($start, $end) {
+@linei:@template"š^@mixin gradient_horz($start, $end) {
   filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#{$start}', endColorstr='#{$end}', GradientType=1);
   background: -webkit-gradient(linear, left top, right top, from($start), to($end));
   background: -moz-linear-gradient(left,  $start,  $end);
@@ -257,8 +257,8 @@
   position: relative;
   padding-top: 4px;
 }
-.Planeswalker .cardtext .loyalty_container { position: relative; }
-.Planeswalker .cardtext .loyalty { 
+.loyalty_container { position: relative; }
+.loyalty { 
   position: absolute;
   left: -34px;
   top: -2px;
@@ -275,10 +275,10 @@
   letter-spacing: -1px;
 }
 .Planeswalker .cardtext br { margin-bottom: 5px; }
-.Planeswalker .cardtext .loyalty.positive { background-image: url(/images/loyaltyup.png); }
-.Planeswalker .cardtext .loyalty.neutral  { background-image: url(/images/loyaltynaught.png); 
+.loyalty.positive { background-image: url(/images/loyaltyup.png); }
+.loyalty.neutral  { background-image: url(/images/loyaltynaught.png); 
   padding-top: 3px;}
-.Planeswalker .cardtext .loyalty.negative { background-image: url(/images/loyaltydown.png); }
+.loyalty.negative { background-image: url(/images/loyaltydown.png); }
 
 .Planeswalker .pinline_ptbox.pinline {
   border: none;
@@ -558,8 +558,14 @@ $Multicolour_Background: #CAB86C;
                   width: 98%; }
 .rulestextfield { width: 98%; }
 .art_url_field  { width: 98%; }
-.image_url_field  { width: 400px; }
+.image_url_field, .edit_comment_field  { width: 400px; }
 form #raritycell { border: 1px solid black; }
+.Planeswalker #power_field, .Planeswalker #pt_slash { display: none; }
+.Planeswalker .notptbox { border: none; 
+    background-image: url(/images/loyalty_big.png); 
+    width: 80px; height: 41px; /* img is 51px high, minus the 10px top padding */
+    padding: 10px 0px 0px 0px; }
+.Planeswalker.form .pinline_ptbox.pinline { top: -36px; }
 
 /***** Skeletons *****/
 .skeleton_letter_toggle.code_shown#rarity_C_toggle { @extend .cardrarity.common; }
@@ -589,7 +595,7 @@ form #raritycell { border: 1px solid black; }
 .code_frame_H.code_not_shown,
 .code_frame_M.code_not_shown, .code_frame_Z.code_not_shown,
 .code_frame_L.code_not_shown { background-color: white; background: white; }
- :@children[o:Sass::Tree::MixinDefNode;i;[o:Sass::Tree::PropNode;i;[ :@prop_syntax:new:@valueo: Sass::Script::Interpolation:@aftero:Sass::Script::String
+ :@children[ o:Sass::Tree::MixinDefNode;i;[o:Sass::Tree::PropNode;i;[ :@prop_syntax:new:@valueo: Sass::Script::Interpolation:@aftero:Sass::Script::String
 :@context:default;i:
 @type:identifier;"', GradientType=1):@options{ :@originally_textF:	@mido:Sass::Script::Variable	;;;i;@:
 @name"end;@:@whitespace_afterF:@beforeo;;o;
@@ -934,8 +940,8 @@ o;@
 ;iø;[ ;@;""elliptical_corners_asymmetric;/[	o;6;7"0px;;;iø;i ;8[ ;{ ;9["pxo;6;7"	18px;;;iø;i;8[ ;@=;9["pxo;6;7"0px;;;iø;i ;8[ ;@=;9["pxo;6;7"	16px;;;iø;i;8[ ;@=;9["pxo;;;iø;<0;[ ;"/* 0 18 0 32 */;@;=[ o;
 ;iù;[ ;;;o;;;;;;"	16px;@;["padding-left;-i ;5T;@;-i o;>;iü;?[".Planeswalker .cardtext;[o;
 ;iý;[ ;;;o;;;;;;"relative;@;["position;-i o;
-;iþ;[ ;;;o;;;;;;"4px;@;["padding-top;-i ;5T;@;-i o;>;i ;?["/.Planeswalker .cardtext .loyalty_container;[o;
-;i ;[ ;;;o;;;;;;"relative;@;["position;-i ;5T;@;-i o;>;i;?["%.Planeswalker .cardtext .loyalty;[o;
+;iþ;[ ;;;o;;;;;;"4px;@;["padding-top;-i ;5T;@;-i o;>;i ;?[".loyalty_container;[o;
+;i ;[ ;;;o;;;;;;"relative;@;["position;-i ;5T;@;-i o;>;i;?[".loyalty;[o;
 ;i;[ ;;;o;;;;;;"absolute;@;["position;-i o;
 ;i;[ ;;;o;6;7"
 -34px;;;i;iÙ;8[ ;{ ;9["px;@;["	left;-i o;
@@ -955,12 +961,12 @@ width;-i o;
 ;i;[ ;;;o;;;;;;"	bold;@;["font-weight;-i o;
 ;i;[ ;;;o;;;;;;"8pt;@;["font-size;-i o;
 ;i;[ ;;;o;6;7"	-1px;;;i;iú;8[ ;{ ;9["px;@;["letter-spacing;-i ;5T;@;-i o;>;i;?[".Planeswalker .cardtext br;[o;
-;i;[ ;;;o;;;;;;"5px;@;["margin-bottom;-i ;5T;@;-i o;>;i;?["..Planeswalker .cardtext .loyalty.positive;[o;
+;i;[ ;;;o;;;;;;"5px;@;["margin-bottom;-i ;5T;@;-i o;>;i;?[".loyalty.positive;[o;
 ;i;[ ;;;o;
-;;;i;;;"url(/images/loyaltyup.png);{ ;@;["background-image;-i ;5T;@;-i o;>;i;?["-.Planeswalker .cardtext .loyalty.neutral;[o;
+;;;i;;;"url(/images/loyaltyup.png);{ ;@;["background-image;-i ;5T;@;-i o;>;i;?[".loyalty.neutral;[o;
 ;i;[ ;;;o;
 ;;;i;;;"#url(/images/loyaltynaught.png);{ ;@;["background-image;-i o;
-;i;[ ;;;o;;;;;;"3px;@;["padding-top;-i ;5T;@;-i o;>;i;?["..Planeswalker .cardtext .loyalty.negative;[o;
+;i;[ ;;;o;;;;;;"3px;@;["padding-top;-i ;5T;@;-i o;>;i;?[".loyalty.negative;[o;
 ;i;[ ;;;o;
 ;;;i;;;"!url(/images/loyaltydown.png);{ ;@;["background-image;-i ;5T;@;-i o;>;i;?[").Planeswalker .pinline_ptbox.pinline;[
 o;
@@ -1245,20 +1251,30 @@ width;-i ;5T;@;-i o;>;i+;?[".rulestextfield;[o;
 ;i+;[ ;;;o;;;;;;"98%;@;["
 width;-i ;5T;@;-i o;>;i,;?[".art_url_field;[o;
 ;i,;[ ;;;o;;;;;;"98%;@;["
-width;-i ;5T;@;-i o;>;i-;?[".image_url_field;[o;
+width;-i ;5T;@;-i o;>;i-;?["*.image_url_field, .edit_comment_field;[o;
 ;i-;[ ;;;o;;;;;;"
 400px;@;["
 width;-i ;5T;@;-i o;>;i.;?["form #raritycell;[o;
-;i.;[ ;;;o;;;;;;"1px solid black;@;["border;-i ;5T;@;-i o;;;i0;<0;[ ;"/***** Skeletons *****/;@;=[ o;>;i1;?["7.skeleton_letter_toggle.code_shown#rarity_C_toggle;[o:Sass::Tree::ExtendNode	:@selector[	"."cardrarity"."common;i1;[ ;@;5T;@;-i o;>;i2;?["7.skeleton_letter_toggle.code_shown#rarity_U_toggle;[o;O	;P["."uncommon;i2;[ ;@;5T;@;-i o;>;i3;?["7.skeleton_letter_toggle.code_shown#rarity_R_toggle;[o;O	;P["."	rare;i3;[ ;@;5T;@;-i o;>;i4;?["7.skeleton_letter_toggle.code_shown#rarity_M_toggle;[o;O	;P["."mythic;i4;[ ;@;5T;@;-i o;>;i5;?[".code_frame_W;[o;
-;i5;[ ;;;o;	;;;i5;{ ;"Land_White_Text;@;["background-color;-i ;5T;@;-i o;>;i6;?[".code_frame_U;[o;
-;i6;[ ;;;o;	;;;i6;{ ;"Land_Blue_Text;@;["background-color;-i ;5T;@;-i o;>;i7;?[".code_frame_B;[o;
-;i7;[ ;;;o;	;;;i7;{ ;"Land_Black_Text;@;["background-color;-i ;5T;@;-i o;>;i8;?[".code_frame_R;[o;
-;i8;[ ;;;o;	;;;i8;{ ;"Land_Red_Text;@;["background-color;-i ;5T;@;-i o;>;i9;?[".code_frame_G;[o;
-;i9;[ ;;;o;	;;;i9;{ ;"Land_Green_Text;@;["background-color;-i ;5T;@;-i o;>;i:;?[".code_frame_A;[o;
-;i:;[ ;;;o;	;;;i:;{ ;"Artifact_Text;@;["background-color;-i ;5T;@;-i o;>;i;;?["!.code_frame_M, .code_frame_Z;[o;
-;i;;[ ;;;o;	;;;i;;{ ;"Multicolour_Background;@;["background-color;-i ;5T;@;-i o;>;i<;?[".code_frame_H;[o;@
-;i<;[ ;@;"gradient_horz_padded;/[o;	;;;i<;{ ;"Land_White_Texto;	;;;i<;@ó;"Land_Black_Text;5T;@;-i o;>;i=;?[".code_frame_L;[o;
-;i=;[ ;;;o;	;;;i=;{ ;"Land_Colourless_Bar;@;["background-color;-i ;5T;@;-i o;>;i>;?["?.code_rarity_C td.code_link, .code_rarity_C td.code_link a;[o;O	;P[	"."cardrarity"."common;i>;[ ;@;5T;@;-i o;>;i?;?[" .code_rarity_U td.code_link;[o;O	;P["."uncommon;i?;[ ;@;5T;@;-i o;>;i@;?[" .code_rarity_R td.code_link;[o;O	;P["."	rare;i@;[ ;@;5T;@;-i o;>;iA;?[" .code_rarity_M td.code_link;[o;O	;P["."mythic;iA;[ ;@;5T;@;-i o;>;iK;?["*.code_frame_W.code_not_shown,
+;i.;[ ;;;o;;;;;;"1px solid black;@;["border;-i ;5T;@;-i o;>;i/;?["8.Planeswalker #power_field, .Planeswalker #pt_slash;[o;
+;i/;[ ;;;o;;;;;;"	none;@;["display;-i ;5T;@;-i o;>;i0;?[".Planeswalker .notptbox;[o;
+;i0;[ ;;;o;;;;;;"	none;@;["border;-i o;
+;i1;[ ;;;o;
+;;;i1;;;"!url(/images/loyalty_big.png);{ ;@;["background-image;-i o;
+;i2;[ ;;;o;;;;;;"	80px;@;["
+width;-i o;
+;i2;[ ;;;o;;;;;;"	41px;@;["height;-i o;;;i2;<0;[ ;"7/* img is 51px high, minus the 10px top padding */;@;=[ o;
+;i3;[ ;;;o;;;;;;"10px 0px 0px 0px;@;["padding;-i ;5T;@;-i o;>;i4;?["..Planeswalker.form .pinline_ptbox.pinline;[o;
+;i4;[ ;;;o;6;7"
+-36px;;;i4;i×;8[ ;{ ;9["px;@;["top;-i ;5T;@;-i o;;;i6;<0;[ ;"/***** Skeletons *****/;@;=[ o;>;i7;?["7.skeleton_letter_toggle.code_shown#rarity_C_toggle;[o:Sass::Tree::ExtendNode	:@selector[	"."cardrarity"."common;i7;[ ;@;5T;@;-i o;>;i8;?["7.skeleton_letter_toggle.code_shown#rarity_U_toggle;[o;O	;P["."uncommon;i8;[ ;@;5T;@;-i o;>;i9;?["7.skeleton_letter_toggle.code_shown#rarity_R_toggle;[o;O	;P["."	rare;i9;[ ;@;5T;@;-i o;>;i:;?["7.skeleton_letter_toggle.code_shown#rarity_M_toggle;[o;O	;P["."mythic;i:;[ ;@;5T;@;-i o;>;i;;?[".code_frame_W;[o;
+;i;;[ ;;;o;	;;;i;;{ ;"Land_White_Text;@;["background-color;-i ;5T;@;-i o;>;i<;?[".code_frame_U;[o;
+;i<;[ ;;;o;	;;;i<;{ ;"Land_Blue_Text;@;["background-color;-i ;5T;@;-i o;>;i=;?[".code_frame_B;[o;
+;i=;[ ;;;o;	;;;i=;{ ;"Land_Black_Text;@;["background-color;-i ;5T;@;-i o;>;i>;?[".code_frame_R;[o;
+;i>;[ ;;;o;	;;;i>;{ ;"Land_Red_Text;@;["background-color;-i ;5T;@;-i o;>;i?;?[".code_frame_G;[o;
+;i?;[ ;;;o;	;;;i?;{ ;"Land_Green_Text;@;["background-color;-i ;5T;@;-i o;>;i@;?[".code_frame_A;[o;
+;i@;[ ;;;o;	;;;i@;{ ;"Artifact_Text;@;["background-color;-i ;5T;@;-i o;>;iA;?["!.code_frame_M, .code_frame_Z;[o;
+;iA;[ ;;;o;	;;;iA;{ ;"Multicolour_Background;@;["background-color;-i ;5T;@;-i o;>;iB;?[".code_frame_H;[o;@
+;iB;[ ;@;"gradient_horz_padded;/[o;	;;;iB;{ ;"Land_White_Texto;	;;;iB;@2;"Land_Black_Text;5T;@;-i o;>;iC;?[".code_frame_L;[o;
+;iC;[ ;;;o;	;;;iC;{ ;"Land_Colourless_Bar;@;["background-color;-i ;5T;@;-i o;>;iD;?["?.code_rarity_C td.code_link, .code_rarity_C td.code_link a;[o;O	;P[	"."cardrarity"."common;iD;[ ;@;5T;@;-i o;>;iE;?[" .code_rarity_U td.code_link;[o;O	;P["."uncommon;iE;[ ;@;5T;@;-i o;>;iF;?[" .code_rarity_R td.code_link;[o;O	;P["."	rare;iF;[ ;@;5T;@;-i o;>;iG;?[" .code_rarity_M td.code_link;[o;O	;P["."mythic;iG;[ ;@;5T;@;-i o;>;iQ;?["*.code_frame_W.code_not_shown,
 .code_frame_U.code_not_shown,
 .code_frame_B.code_not_shown,
 .code_frame_R.code_not_shown,
@@ -1267,7 +1283,7 @@ width;-i ;5T;@;-i o;>;i.;?["form #raritycell;[o;
 .code_frame_H.code_not_shown,
 .code_frame_M.code_not_shown, .code_frame_Z.code_not_shown,
 .code_frame_L.code_not_shown;[o;
-;iK;[ ;;;o;;;;;;"
+;iQ;[ ;;;o;;;;;;"
 white;@;["background-color;-i o;
-;iK;[ ;;;o;;;;;;"
+;iQ;[ ;;;o;;;;;;"
 white;@;["background;-i ;5T;@;-i ;5T;@

@@ -98,9 +98,9 @@
       <div class="pinline pinline_box pinline_ptbox">
        <div class="notptbox">
         <table style="margin: auto;"><tr>
-         <td><%= f.text_field :power, :size => 5, :class => "powerfield" %></td>
-         <td>/</td>
-         <td><%= f.text_field :toughness, :size => 5, :class => "toughnessfield" %></td>
+         <td id="power_field"><%= f.text_field :power, :size => 5, :class => "powerfield" %></td>
+         <td id="pt_slash">/</td>
+         <td id="toughness_field"><%= f.text_field :toughness, :size => 5, :class => "toughnessfield" %></td>
         </td></tr></table>
       </div>
      </div>
@@ -143,6 +143,15 @@
      <td><%= f.select :frame, frames.unshift(["Auto", "Auto"]), {}, 
           { :onchange => "update_frame()" } %></td>
     </tr>
+    <% if !@card.new_record? %>
+    <tr>
+     <td colspan="2">
+      <br>
+     <%= label_tag "edit_comment", "Enter a brief summary of the change you made:" %>
+     <br><%= text_field_tag :edit_comment, params[:edit_comment], :class => "edit_comment_field" %>
+     </td>
+    </tr>
+    <% end %>
     <tr>
      <td colspan="2">
       <%= f.hidden_field :cardset_id, :value => @card.cardset_id %>
@@ -152,9 +161,11 @@
     <tr>
      <td colspan="2">
       <div class="helptext">
-        <p>
+        <p id="nonplaneswalker">
         Enter mana symbols like this: 
         <br><code>{2}{U}{U/R}, {T}</code> becomes <%= format_mana_symbols("{2}{U}{U/R}, {T}") %>
+        </p>
+        <p id="planeswalker">On planeswalkers, <code>[+1]</code> becomes <span class="loyalty_container"><span class="loyalty positive" style="left: 0px;">+1</span></span>
         </p>
        <% if !@cardset.mechanics.empty? %>
          <p>

@@ -360,10 +360,10 @@
   position: relative;
   padding-top: 4px; }
 
-.Planeswalker .cardtext .loyalty_container {
+.loyalty_container {
   position: relative; }
 
-.Planeswalker .cardtext .loyalty {
+.loyalty {
   position: absolute;
   left: -34px;
   top: -2px;
@@ -382,14 +382,14 @@
 .Planeswalker .cardtext br {
   margin-bottom: 5px; }
 
-.Planeswalker .cardtext .loyalty.positive {
+.loyalty.positive {
   background-image: url(/images/loyaltyup.png); }
 
-.Planeswalker .cardtext .loyalty.neutral {
+.loyalty.neutral {
   background-image: url(/images/loyaltynaught.png);
   padding-top: 3px; }
 
-.Planeswalker .cardtext .loyalty.negative {
+.loyalty.negative {
   background-image: url(/images/loyaltydown.png); }
 
 .Planeswalker .pinline_ptbox.pinline {
@@ -950,11 +950,25 @@
 .art_url_field {
   width: 98%; }
 
-.image_url_field {
+.image_url_field, .edit_comment_field {
   width: 400px; }
 
 form #raritycell {
   border: 1px solid black; }
+
+.Planeswalker #power_field, .Planeswalker #pt_slash {
+  display: none; }
+
+.Planeswalker .notptbox {
+  border: none;
+  background-image: url(/images/loyalty_big.png);
+  width: 80px;
+  height: 41px;
+  /* img is 51px high, minus the 10px top padding */
+  padding: 10px 0px 0px 0px; }
+
+.Planeswalker.form .pinline_ptbox.pinline {
+  top: -36px; }
 
 /***** Skeletons *****/
 .code_frame_W {

@@ -59,18 +59,36 @@
        <% end %></p>
      <% end %>
      <% if @card.cardset.configuration.card_show_active %>
-       <p><b>Active?:</b> <%= @card.active %></p>
+       <p><b>Active?:</b> <%= !!@card.active %></p>
      <% end %>
      <p>
        <b>History:</b>
        <div class="cardhistory">
          <div class="commentlist">
+           <% last_item_blank_edit = false 
+              last_edit_date = nil %>
            <% @card.get_history.each do |history_item| %>
              <% if history_item.is_a? Log %>
+               <% verb = history_item.past_tense_verb(true)
+                  if verb == "edited "
+                    verb << " the card" 
+                    skip_display = last_item_blank_edit && history_item.text.blank? && last_edit_date == history_item.datestamp.to_date
+                    # skip if the last was also another blank edit on the same date
+                    last_item_blank_edit = history_item.text.blank?
+                    last_edit_date = history_item.datestamp.to_date
+                  else
+                    last_item_blank_edit = false
+                    skip_display = false
+                  end
+                  %>
+               <% if !skip_display %>
                <div class="comment">
-                 <%= format_datetime history_item.datestamp %>:
-                 <%= friendly_link_to_user_id(history_item.user_id) %> edited the card<% if history_item.text %>:<br><%= history_item.text %><% end %>
+                 <span class="editdetails"><%= format_datetime history_item.datestamp %>:
+                 <%= friendly_link_to_user_id(history_item.user_id) %> <%= verb %><% if !history_item.text.blank? %>:</span> <%= history_item.text %>
+                 <% else %></span>
+                 <% end %>
                </div>
+               <% end %>
              <% else %><% "it's a comment" %>
                <% @comment = history_item %>
                <%= render :partial => "shared/comment", :locals => { :show_buttons => true, :show_date => true } %>
