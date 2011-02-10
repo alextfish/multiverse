@@ -236,8 +236,8 @@ function shrinkType(typeDiv) { //, rarityDiv) {
 
 function shrinkTextBox(textDiv, isPlaneswalker) {
   //cardDiv = textDiv.up('.card');
-  var wiggleRoom = 5 + (isPlaneswalker ? 2 : 0);
-  var idealTextBoxHeight = 105;
+  var wiggleRoom = (isPlaneswalker ? 5 : 0);
+  var idealTextBoxHeight = 109;
   var currentFontSize = textDiv.getStyles().fontSize;
   var currentFontSizeNumber = parseInt(currentFontSize);
   var currentFontSizeUnits = currentFontSize.slice(-2); // assumes "px" or "pt"

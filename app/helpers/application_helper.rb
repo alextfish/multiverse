@@ -232,9 +232,9 @@ module ApplicationHelper
     if cardset_cardnames_and_codes.include?(cardname)
       card = cardset_cards_from_name_or_code[cardname]
       if card.image_url.blank?
-        cardset_card_mockup(cardset, cardname)
+        cardset_card_mockup(cardset, cardname, cardset_cardnames_and_codes, cardset_cards_from_name_or_code)
       else
-        cardset_card_link(cardset, cardname, image_tag(card.image_url, :alt => "((#{cardname}))", :class => "CardImage"))
+        cardset_card_link(cardset, cardname, image_tag(card.image_url, :alt => "((#{cardname}))", :class => "CardImage"), cardset_cardnames_and_codes, cardset_cards_from_name_or_code)
       end
     else
       "((#{cardname}))"
