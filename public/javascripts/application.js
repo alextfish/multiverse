@@ -234,9 +234,9 @@ function shrinkType(typeDiv) { //, rarityDiv) {
   }
 }
 
-function shrinkTextBox(textDiv) {
+function shrinkTextBox(textDiv, isPlaneswalker) {
   //cardDiv = textDiv.up('.card');
-  var wiggleRoom = 1;
+  var wiggleRoom = 5 + (isPlaneswalker ? 2 : 0);
   var idealTextBoxHeight = 105;
   var currentFontSize = textDiv.getStyles().fontSize;
   var currentFontSizeNumber = parseInt(currentFontSize);
@@ -262,9 +262,10 @@ function shrinkCardBits(cardDiv) {
     sizeTokenName(nameDiv);
     sizeTokenArt(cardDiv, artDiv);
   } else {
+    var isPlaneswalker = cardDiv.hasClassName("Planeswalker")
     var textDiv = cardDiv.getElementsByClassName("cardtext")[0];
     shrinkName(nameDiv, typeDiv);
-    shrinkTextBox(textDiv);
+    shrinkTextBox(textDiv, isPlaneswalker);
   }
   shrinkType(typeDiv, rarityDiv);
 }

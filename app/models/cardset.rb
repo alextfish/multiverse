@@ -120,8 +120,9 @@ class Cardset < ActiveRecord::Base
   
   def recent_action
     out = self.logs.first
-    if Log.kinds_to_not_show.include?(out.kind) 
-      out = self.logs.reject{ |l| Log.kinds_to_not_show.include?(l.kind) }.first
+    logs_to_not_show = Log.kinds_to_not_show(:cardset_recent)
+    if logs_to_not_show.include?(out.kind) 
+      out = self.logs.reject{ |l| logs_to_not_show.include?(l.kind) }.first
     end
     out
   end

@@ -10,7 +10,7 @@
     <% if !@card.image_url.blank? %>
       <li><a href="#cardimage" id="cardimage_link">Image</a></li>
     <% end %>
-    <li><a href="#mockup"      id="mockup_link"   >Mockup</a></li>
+    <li><a href="#mockup"      id="mockup_link"    onclick="setTimeout(makeAllCardsFit, 100);">Mockup</a></li>
     <li><a href="#plaincard"   id="plaincard_link">Plain</a></li>
    </ul>
    <% if permission_to?(:edit, @card.cardset) %>

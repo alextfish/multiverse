@@ -53,6 +53,8 @@ class Log < ActiveRecord::Base
     case situation
       when :card_history:
         [Log.kind(:comment_edit), Log.kind(:comment_delete)]
+      when :cardset_recent:
+        [Log.kind(:comment_edit)]
       else
         [Log.kind(:comment_edit)]
     end
