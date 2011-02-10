@@ -28,7 +28,7 @@ function show_skeleton_row(value) {
 }
 // - Skeleton Generate
 function getIntValue(id) {
-  parsed = parseInt($(id).value, 10);
+  var parsed = parseInt($(id).value, 10);
   return (isNaN(parsed) ? 0 : parsed);
 }
 function update_generate_totals() {
@@ -70,25 +70,25 @@ function update_card_supertype(new_value) {
 }
 
 function update_frame() {
-  cardframe = $("card_frame").value;
-  cost = $("card_cost").value;
-  cardtype = $("card_cardtype").value;
-  colours = [
+  var cardframe = $("card_frame").value;
+  var cost = $("card_cost").value;
+  var cardtype = $("card_cardtype").value;
+  var colours = [
     (cost.search(/w/i)>-1 ? "White" : ""),
     (cost.search(/u/i)>-1 ? "Blue" : ""),
     (cost.search(/b/i)>-1 ? "Black" : ""),
     (cost.search(/r/i)>-1 ? "Red" : ""),
     (cost.search(/g/i)>-1 ? "Green" : "")
   ];
-  num_colours = 0;
+  var num_colours = 0;
   for( i=0; i<5; i++ ) {
     if ( colours[i] != "") num_colours++;
   }
-  outer = "";
+  var outer = "";
   outer += cardtype.search(/Artifact/)>-1 ? "Coloured_Artifact " : "";
   outer += cardtype.search(/Planeswalker/)>-1 ? "Planeswalker " : "";
   if (cardframe != "Auto") {
-    inner = cardframe;
+    var inner = cardframe;
   } else {
     // calculate frame
     switch ( num_colours ) {
@@ -100,19 +100,19 @@ function update_frame() {
     }
   }
   if ( num_colours == 2) {
-    pinline = " " + colours.join("").toLowerCase();
+    var pinline = " " + colours.join("").toLowerCase();
   } else {
-    pinline = "";
+    var pinline = "";
   }
-  newClass = outer + inner + pinline;
+  var newClass = outer + inner + pinline;
 
-  universalClass = "form card ";
+  var universalClass = "form card ";
   if ($("card").className.search(/token/) > -1) { universalClass += "token "; }
   $("card").className = universalClass + newClass;
 }
 
 function update_card_rarity(rarity_in) {
-  new_rarity = rarity_in.toLowerCase();
+  var new_rarity = rarity_in.toLowerCase();
   $("raritycell").className = "cardrarity " + new_rarity;
   if (new_rarity == "token") {
     if ($("card").className.search(/token/) == -1) {
@@ -130,12 +130,12 @@ function update_details_pages(new_text) {
 ////// Comments //////
 function update_comment_status(commentid, action) {
   // Find the whole row to set the style
-  commentdiv = document.getElementById("comment_" + commentid);
+  var commentdiv = document.getElementById("comment_" + commentid);
   // Find the buttons to show the right ones
-  addressform     = document.getElementById("address_comment_" + commentid);
-  unaddressform   = document.getElementById("unaddress_comment_" + commentid);
-  highlightform   = document.getElementById("highlight_comment_" + commentid);
-  unhighlightform = document.getElementById("unhighlight_comment_" + commentid);
+  var addressform     = document.getElementById("address_comment_" + commentid);
+  var unaddressform   = document.getElementById("unaddress_comment_" + commentid);
+  var highlightform   = document.getElementById("highlight_comment_" + commentid);
+  var unhighlightform = document.getElementById("unhighlight_comment_" + commentid);
   switch (action) {
     case 0:  //  "address":   case "unhighlight":
       commentdiv.className = "comment normal";
@@ -169,21 +169,21 @@ function update_comment_status(commentid, action) {
   // resize_all_cards: 
     // cards_to_resize = $("#card")
     // remove forms
-function shrinkName(nameDiv) {
+function shrinkName(nameDiv, typeDiv) {
   var titleBarDiv = nameDiv.parentNode;
   var manaCostDiv = titleBarDiv.select("div.cardmanacost")[0];
   // Non-token algorithm:
   var defaultNameFontSize = 9; // points, as defined in Card.scss
-  var idealTitleHeight = 20;
+  var idealTitleHeight = typeDiv.parentNode.getHeight() + 2;
   var nameSizeOK = 0;
   var fontSize = defaultNameFontSize;
   // .cardtitlebar, .cardtypebar { font: bold 9pt serif; }
   for(var i=0; !nameSizeOK && i>-3; i-=0.25) { 
     nameDiv.style.letterSpacing = i + "px"; 
-    nameSizeOK = (manaCostDiv.offsetTop == nameDiv.offsetTop) && titleBarDiv.clientHeight < idealTitleHeight;
+    nameSizeOK = (manaCostDiv.offsetTop == nameDiv.offsetTop) && titleBarDiv.clientHeight <= idealTitleHeight;
     if (!nameSizeOK) {
       nameDiv.style.fontSize = (defaultNameFontSize + i) + "pt";
-      nameSizeOK = (manaCostDiv.offsetTop == nameDiv.offsetTop) && titleBarDiv.clientHeight < idealTitleHeight;
+      nameSizeOK = (manaCostDiv.offsetTop == nameDiv.offsetTop) && titleBarDiv.clientHeight <= idealTitleHeight;
     }
   }
 }
@@ -221,13 +221,13 @@ function sizeTokenArt(cardDiv, artDiv) {
 }
 
 function shrinkType(typeDiv) { //, rarityDiv) {
-  typeSpan = typeDiv.childElements()[0];
-  typeBarDiv = typeDiv.parentNode;
-  rarityDiv = typeBarDiv.getElementsByClassName("cardrarity")[0];
+  var typeSpan = typeDiv.childElements()[0];
+  var typeBarDiv = typeDiv.parentNode;
+  var rarityDiv = typeBarDiv.getElementsByClassName("cardrarity")[0];
   if (!rarityDiv) return;
-  typeBarPadding = 9; // calculated from the padding-left and padding-right of cardrarity and .pinline_box>div
-  maxWidth = typeBarDiv.getWidth() - rarityDiv.getWidth() - typeBarPadding;
-  typeSizeOK = false;
+  var typeBarPadding = 9; // calculated from the padding-left and padding-right of cardrarity and .pinline_box>div
+  var maxWidth = typeBarDiv.getWidth() - rarityDiv.getWidth() - typeBarPadding;
+  var typeSizeOK = false;
   for(var i=0; !typeSizeOK && i>-3; i-=0.25) { 
     typeSpan.style.letterSpacing = i + "px"; 
     typeSizeOK = (typeBarDiv.getHeight() < 20) && (typeSpan.getWidth() < maxWidth); 
@@ -236,12 +236,12 @@ function shrinkType(typeDiv) { //, rarityDiv) {
 
 function shrinkTextBox(textDiv) {
   //cardDiv = textDiv.up('.card');
-  wiggleRoom = 1;
-  idealTextBoxHeight = 105;
-  currentFontSize = textDiv.getStyles().fontSize;
-  currentFontSizeNumber = parseInt(currentFontSize);
-  currentFontSizeUnits = currentFontSize.slice(-2); // assumes "px" or "pt"
-  textSizeOK = textDiv.getHeight() <= idealTextBoxHeight + wiggleRoom;
+  var wiggleRoom = 1;
+  var idealTextBoxHeight = 105;
+  var currentFontSize = textDiv.getStyles().fontSize;
+  var currentFontSizeNumber = parseInt(currentFontSize);
+  var currentFontSizeUnits = currentFontSize.slice(-2); // assumes "px" or "pt"
+  var textSizeOK = textDiv.getHeight() <= idealTextBoxHeight + wiggleRoom;
   if (textSizeOK) {
     // It started out OK: let's try to centre stuff
   } else {
@@ -263,7 +263,7 @@ function shrinkCardBits(cardDiv) {
     sizeTokenArt(cardDiv, artDiv);
   } else {
     var textDiv = cardDiv.getElementsByClassName("cardtext")[0];
-    shrinkName(nameDiv);
+    shrinkName(nameDiv, typeDiv);
     shrinkTextBox(textDiv);
   }
   shrinkType(typeDiv, rarityDiv);

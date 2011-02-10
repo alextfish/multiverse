@@ -1,4 +1,4 @@
- <div class="timestamp">Updated
+ <div class="timestamp"><%= datestamps_close(object.updated_at, object.created_at) ? "Created" : "Updated" %>
    <%= format_datetime object.updated_at %>
    <%= by_last_edit_user_if_available object %>
  </div>

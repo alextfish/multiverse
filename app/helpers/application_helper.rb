@@ -46,6 +46,9 @@ module ApplicationHelper
       time_ago_in_words(dt, :seconds => true) + " ago"
     end
   end
+  def datestamps_close(d1, d2)
+    (d1-d2).abs < 1.minute
+  end
 
   def format_all_markup(text, cardset)
     formatted_text = protect_smilies(

@@ -62,12 +62,14 @@
        <p><b>Active?:</b> <%= !!@card.active %></p>
      <% end %>
      <p>
-       <b>History:</b>
-       <div class="cardhistory">
-         <div class="commentlist">
+       <% card_history = @card.get_history %>
+       <b>History:</b><% if card_history.length > 3 %> <%= link_to_function "[-]",
+          visual_effect(:toggle_blind, :history_list, :duration => 0.5) %><% end %>
+       <div class="cardhistory" id="history_list">
+         <div class="commentlist" id="history_items">
            <% last_item_blank_edit = false 
               last_edit_date = nil %>
-           <% @card.get_history.each do |history_item| %>
+           <% card_history.each do |history_item| %>
              <% if history_item.is_a? Log %>
                <% verb = history_item.past_tense_verb(true)
                   if verb == "edited "

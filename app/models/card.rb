@@ -81,6 +81,8 @@ class Card < ActiveRecord::Base
   def get_history
     possible_logs = Log.find(:all, :conditions => {:object_id => id})
     my_logs = possible_logs.select{|l| l.return_object == self}
+    logs_to_not_show = Log.kinds_to_not_show(:card_history)
+    my_logs.reject!{|l| logs_to_not_show.include? l.kind}
     out = (comments + my_logs).sort_by &:recency
   end
 

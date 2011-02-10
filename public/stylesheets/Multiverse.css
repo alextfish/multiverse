@@ -64,6 +64,7 @@ div.newfeatures { border: 1px solid black; margin: auto; text-align: center;
 .commentdetails { font-style: italic; margin: 0px; line-height: 2em; }
 .commentbody    { margin-top: 0px; }
 .editdetails    { font-style: italic; }
+/* .cardhistory    { height: 500px; overflow: auto; } */
 
 .commentlist    { margin-right: 60px; margin-left: 20px; }
 .commentlist div.comment { border-bottom: 1px solid #888; 
