@@ -9,18 +9,8 @@ module ApplicationHelper
     end
   end
 
-  def get_user_and_string(uid)
-    case
-      when uid == User.NON_SIGNED_IN_USER
-        [nil, "a non-signed-in user"]
-      when uid && !(user = User.find(uid)).nil?     # define user if we can
-        [user, user.name]
-      else # an edit from before edits were logged (uid==nil) or a user that no longer exists
-        [nil, "someone"]
-    end
-  end
   def friendly_link_to_user_id(uid)
-    user, user_name = get_user_and_string(uid)
+    user, user_name = User.user_and_name_for(uid)
     if user.nil?
       user_name
     else
@@ -30,11 +20,19 @@ module ApplicationHelper
   
   def by_last_edit_user_if_available(object)
     uid = object.last_edit_by
-    user, user_name = get_user_and_string(uid)
+    user, user_name = User.user_and_name_for(uid)
     if user.nil?
       ""
     else
       "by #{link_to user_name, user}".html_safe
+    end
+  end
+  
+  def show_printable_name(object)
+    if object.kind_of? Card
+      object.printable_name
+    else
+      object.name
     end
   end
 

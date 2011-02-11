@@ -49,6 +49,12 @@ Multiverse::Application.routes.draw do
   match '/signout', :to => 'sessions#destroy'
   match '/profile', :to => 'users#show'
 
+  resources :searches, :only => [:form, :do_search, :do_quicksearch, :show]
+
+  match '/searchform',  :to => 'searches#form'
+  match '/search',      :to => 'searches#do_search'
+  match '/quicksearch', :to => 'searches#do_quicksearch'
+
 
   # The priority is based upon order of creation:
   # first created -> highest priority.

@@ -1,4 +1,0 @@
-<% "Takes one parameter, :link_to_recent, true or false" %>
-<%= link_to_if link_to_recent, format_datetime(@log.datestamp), recent_cardset_path(@cardset) %>:
-<% if @log.user %><%= link_to @log.user, @log.user %><% else %><%= User.name_for(@log.user_id) %><% end %>
-<%= link_to_log_object(@log).html_safe %>

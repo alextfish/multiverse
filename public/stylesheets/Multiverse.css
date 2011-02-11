@@ -63,7 +63,7 @@ div.newfeatures { border: 1px solid black; margin: auto; text-align: center;
 
 .commentdetails { font-style: italic; margin: 0px; line-height: 2em; }
 .commentbody    { margin-top: 0px; }
-.editdetails    { font-style: italic; }
+.logdetails     { font-style: italic; }
 /* .cardhistory    { height: 500px; overflow: auto; } */
 
 .commentlist    { margin-right: 60px; margin-left: 20px; }
@@ -71,6 +71,8 @@ div.newfeatures { border: 1px solid black; margin: auto; text-align: center;
                          margin-bottom: 4px; }
 li.recent_item div.comment { border-bottom: none;
                          margin-bottom: 0px; }
+                         
+#history_items div.comment.log p { display: inline; }
 
 .compact p.commentbody { margin-bottom: 0px; }
 

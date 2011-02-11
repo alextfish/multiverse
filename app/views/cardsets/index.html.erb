@@ -31,7 +31,7 @@
        <td>
          <% @log = @cardset.recent_action  %>
          <span style="display:none;"><%= "%08d" % index %></span><!-- for sorting -->
-         <%= render :partial => "log_entry", :locals => { :link_to_recent => true } %>
+         <%= render :partial => "shared/log_entry", :locals => { :link_to_recent => true } %>
        </td>
        <td>
          <%= @cardset.description %>

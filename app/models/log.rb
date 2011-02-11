@@ -59,6 +59,12 @@ class Log < ActiveRecord::Base
         [Log.kind(:comment_edit)]
     end
   end
+  def show_text?
+    case self.kind
+      when Log.kind(:card_edit): true
+      else                       false
+    end
+  end
   def past_tense_verb(specific)
     case self.kind
       when Log.kind(:cardset_create):

@@ -49,14 +49,19 @@ class User < ActiveRecord::Base
   def User.NON_SIGNED_IN_USER
     -1
   end
-  def User.name_for(id)
-    if id == User.NON_SIGNED_IN_USER
-      "a non-signed-in user"
-    elsif id == nil
-      "someone"
-    else
-      User.find(id).name
+  def User.user_and_name_for(id)
+    case
+      when id == User.NON_SIGNED_IN_USER
+        [nil, "a non-signed-in user"]
+      when id && !(user = User.find(id)).nil?     # define user if we can
+        [user, user.name]
+      else # an edit from before edits were logged (uid==nil) or a user that no longer exists
+        [nil, "someone"]
     end
+  end
+  def User.name_for(id)
+    user, name = User.user_and_name_for(id)
+    name
   end
 
 

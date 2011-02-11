@@ -4,13 +4,14 @@
   end %>
   <nav>
     <ul>
-      <li class="first drops_parent"><%= link_to "Recent updates", cardsets_path #, :class => "drops"
-      %>
-        <ul id="cardsets_dropdown" style="display:none;"><!-- class="licious" -->
-          <% Cardset.all.each do |cardset| %>
-            <li><%= link_to cardset.name, cardset %></li>
-          <% end %>
-        </ul>
+      <li class="first"><%= link_to "Recent updates", cardsets_path %></li>
+      <li class="subsequent"><%= link_to "Search:", searchform_path %>
+        <% 'form_tag("/quicksearch", :method => "get") do' 
+        %>
+        <form action="<%= quicksearch_path %>" method="get">
+          <%= text_field_tag "q" %>
+        </form>
+        <% "end" %>
       </li>
       <% if signed_in? %>
       <li class="subsequent">Signed in as <%= link_to current_user.name, current_user %></li>
