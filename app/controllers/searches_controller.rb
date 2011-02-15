@@ -142,7 +142,7 @@ class SearchesController < ApplicationController
         if exact
           [string + "lower(#{field}) = ?", inputs << value.downcase]
         else
-          [string + "#{field} LIKE ?", inputs << "%#{value.downcase}%"] 
+          [string + "lower(#{field}) LIKE ?", inputs << "%#{value.downcase}%"] 
         end
       end.flatten
           Rails.logger.info "Searching for #{queries.inspect}: condition is #{condition.inspect}"
