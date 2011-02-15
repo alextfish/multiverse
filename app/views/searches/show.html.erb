@@ -1,0 +1,107 @@
+<h1><%= @title = "Search results" %></h1>
+<div>You searched for: <%= @query %><br><br></div>
+<% if @to_show.empty? || @to_show.values.flatten.length == 0 %>
+  <div>Sorry, no search results were found.<br><br></div>
+<% end %>
+<div>Search again:
+  <br>
+    <form action="<%= quicksearch_path %>" method="get">
+      <%= text_field_tag "q", @quicksearch_query %>
+      <input type="submit" value="Quick search">
+    </form>
+  </form>
+  |
+  <%= link_to "Advanced", advanced_search_path %>
+</div>
+
+<!--    Cardsets   -->
+<div>
+<% if @to_show[:cardsets] && !@to_show[:cardsets].empty? %>
+  <h3>Cardsets</h3>
+  <table class="sortable resizable">
+    <tr>
+      <th>Name</th>
+      <th>Owner</th>
+      <th>Cards</th>
+      <th>Description</th>
+    </tr>
+  <% @to_show[:cardsets].uniq.each do |cs| %>
+    <tr><td><b><%= link_to highlight(cs.name, @quicksearch_query), cs %></b>
+    <td>by <%= cs.user %>
+    <td><%= pluralize cs.cards.count, "card" %>
+    <td><%= cs.description %>
+  <% end %>
+  </table>
+<% end %>
+
+<!--    Cards   -->
+<% if @to_show[:cards] && !@to_show[:cards].empty? %>
+  <h3>Cards</h3>
+  <% cards = @to_show[:cards].uniq %>
+  <% if cards.length > 100 %>
+    <div>More than 100 cards matched. Please use a more specific query.</div>
+    <% cards = cards[0..99] %>
+  <% end %>
+       
+  <% if !@quicksearch_query.blank? %>
+    <% name_highlight = type_highlight = text_highlight = @quicksearch_query 
+       show_flavourtext = false %>
+  <% elsif @query_hash %>
+    <% name_highlight = @query_hash["name"]
+       type_highlight = @query_hash["types"]
+       text_highlight = @query_hash["rulestext"] 
+       flavour_highlight = @query_hash["flavourtext"] 
+       show_flavourtext = !flavour_highlight.blank?
+       %>
+  <% end %>
+  <table class="sortable resizable">
+    <tr>
+      <th>Name</th>
+      <th>Cardset</th>
+      <th>Type</th>
+      <th class="manacost">Cost</th>
+      <th class="card_text">Card text</th>
+      <% if show_flavourtext %><th>Flavour text</th><% end %>
+    </tr>
+    <% cards.each do |card| %>
+      <tr><td><b><%= link_to highlight(card.printable_name, name_highlight), card %></b></td>
+      <td>from <%= link_to card.cardset.name, card.cardset %></td>
+      <td><%= highlight(displayed_type(card), type_highlight) %></td>
+      <td class="costcell"><span style="display:none;"><%= card.converted_mana_cost %></span><%= format_mana_symbols(card.cost, true) %></td>
+      <td class="textcell"><%= highlight(format_card_text(card, :rulestext), text_highlight) %></td>
+      <% if show_flavourtext %>
+        <td class="textcell"><%= highlight(format_card_text(card, :flavourtext), flavour_highlight) %></td>
+      <% end %>
+    <% end %>
+  </table>
+<% end %>
+
+<!--    Details Pages   -->
+<% if @to_show[:details_pages] && !@to_show[:details_pages].empty? %>
+  <h3>Details Pages</h3>
+  <table>
+  <% @to_show[:details_pages].uniq.each do |dp, excerpt| %>
+    <% cs = dp.cardset %>
+    <tr><td><b><%= link_to highlight(dp.title, @query_hash["title"]), [cs, dp] %></b>
+    <td>from <%= link_to cs.name, cs %>
+    <td>by <%= cs.user %>
+    <td><% if excerpt %><%= format_all_markup excerpt, cs %><% end %>
+  <% end %>
+  </table>
+<% end %>
+
+<!--    Comments   -->
+<% if @to_show[:comments] && !@to_show[:comments].empty? %>
+  <h3>Comments</h3>
+  <table>
+  <% @to_show[:comments].uniq.each do |comment, excerpt| %>
+    <% parent = comment.parent %>
+    <% cs = comment.get_cardset %>
+    <tr>
+    <td>on <%= link_to_comment comment %>
+    <td><% if parent != cs %>in <%= link_to cs.name, cs %><% end %>
+    <td>by <%= link_to_comment_user comment %>
+    <td><% if excerpt %><%= format_all_markup excerpt, cs %><% end %>
+  <% end %>
+  </table>
+<% end %>

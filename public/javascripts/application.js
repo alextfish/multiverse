@@ -220,11 +220,18 @@ function shrinkType(typeDiv) { //, rarityDiv) {
   var rarityDiv = typeBarDiv.getElementsByClassName("cardrarity")[0];
   if (!rarityDiv) return;
   var typeBarPadding = 9; // calculated from the padding-left and padding-right of cardrarity and .pinline_box>div
+  if (idealTypeHeight < 0) {
+    // Oneoff: calculate ideal height of type bar
+    // defined as this card's type bar if the text size is teenytiny
+    typeSpan.style.letterSpacing = "-20px"; 
+    idealTypeHeight = typeBarDiv.getHeight();
+  }
+  
   var maxWidth = typeBarDiv.getWidth() - rarityDiv.getWidth() - typeBarPadding;
   var typeSizeOK = false;
   for(var i=0; !typeSizeOK && i>-3; i-=0.25) { 
     typeSpan.style.letterSpacing = i + "px"; 
-    typeSizeOK = (typeBarDiv.getHeight() < 20) && (typeSpan.getWidth() < maxWidth); 
+    typeSizeOK = (typeBarDiv.getHeight() <= idealTypeHeight) && (typeSpan.getWidth() <= maxWidth); 
   }
 }
 
@@ -286,5 +293,7 @@ function makeAllCardsFit() {
   // SF on IE: names 74.8, types 85.9, texts 21.6. Finding in each case 0.13.
   // COCA on IE: names .547, types 1.1, texts .391. Finding in each case 0.016.
 }
+
+idealTypeHeight = -1;
 
 Event.observe(window, 'load', makeAllCardsFit);

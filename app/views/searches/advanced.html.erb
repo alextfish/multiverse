@@ -1,0 +1,37 @@
+<h1><%= @title = "Advanced Search" %></h1>
+<p>Enter one or more strings to search for:</p>
+  <% searchable_text_fields = {
+    "cardset"      => ["name", "description"],
+    "card"         => ["name", "types", "rules_text", "flavour_text"],
+    "details_page" => ["title", "body"],
+    "comment"      => ["body"]
+    } 
+    text_fields_order = ["cardset", "details_page", "card", "comment"]
+    %>
+<table border="1px solid #888">
+  <% text_fields_order.each_slice(2) do |these_fields| %>
+  <tr>
+    <% these_fields.each do |object_type| %>
+    <td class="search_cell">
+      <% form_tag("/search", :class => "search_form") do %>
+        <h3><%= object_type.humanize.pluralize %></h3>
+        <% object_field_name = object_type.underscore %>
+        <table>
+          <% searchable_text_fields[object_type].each do |field| %>
+            <% field_name = field.delete("_") %>
+            <% input_id = "#{object_field_name}[#{field_name}]" %>
+            <tr><td>
+              <%= label_tag input_id, field.humanize + ":" %>
+            </td><td>
+              <%= text_field_tag input_id, field.humanize, :value => params[object_field_name.to_sym] && params[object_field_name.to_sym][field_name.to_sym] %>
+            </td></tr>
+          <% end %>
+        </table>
+        <%= hidden_field_tag "search_type", object_field_name %>
+        <div class="search_submit"><%= submit_tag "Search #{object_type.titleize.pluralize}" %></div>
+      <% end %>
+    </td>
+    <% end %>
+  </tr>
+  <% end %>
+</table>
