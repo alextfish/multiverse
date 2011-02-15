@@ -6,7 +6,13 @@ class SearchesController < ApplicationController
   def do_search
     @to_show = {}
     object_type = params[:search_type]
+    if object_type.nil? || object_type.empty? 
+      redirect_to :advancedsearch and return
+    end
     inputs = params[object_type.to_sym]
+    if inputs.nil? || inputs.empty? 
+      redirect_to :advancedsearch and return
+    end
     @query_hash = inputs.clone
     hide_type_string = false
     case object_type
@@ -38,9 +44,6 @@ class SearchesController < ApplicationController
         redirect_to :advancedsearch and return
     end
     
-    if inputs.nil? || inputs.empty? 
-      rails "Empty search inputs received. Params were: #{params.inspect}"
-    end
     
     if !(inputs.keys - valid_keys).empty?
       raise "Unexpected #{object_type} search field found. Fields were: #{inputs.keys.join(", ")}"
