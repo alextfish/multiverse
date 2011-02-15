@@ -7,11 +7,11 @@ class SearchesController < ApplicationController
     @to_show = {}
     object_type = params[:search_type]
     if object_type.nil? || object_type.empty? 
-      redirect_to :advancedsearch and return
+      redirect_to :advanced_search and return
     end
     inputs = params[object_type.to_sym]
     if inputs.nil? || inputs.empty? 
-      redirect_to :advancedsearch and return
+      redirect_to :advanced_search and return
     end
     @query_hash = inputs.clone
     hide_type_string = false
@@ -41,7 +41,7 @@ class SearchesController < ApplicationController
         
       else 
         # Unknown object search type
-        redirect_to :advancedsearch and return
+        redirect_to :advanced_search and return
     end
     
     
@@ -89,7 +89,7 @@ class SearchesController < ApplicationController
   def do_quicksearch
     @query = params[:q]
     if @query.blank? || @query.length <= 1
-      redirect_to :advancedsearch and return
+      redirect_to :advanced_search and return
     end
     @quicksearch_query = @query
     # We're going to search
