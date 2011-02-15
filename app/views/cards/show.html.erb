@@ -70,6 +70,7 @@
            <% last_item_blank_edit = false 
               last_edit_date = nil %>
            <% card_history.each do |history_item| %>
+             <!-- id: <%= history_item.id %> -->
              <% case history_item.what_are_you %>
                <% when "Log": %>
                  <% @log = history_item %>
