@@ -257,7 +257,7 @@ nav ul li {
   list-style-type: none;
   display: inline-block;
   padding: 0.2em 0em;
-  vertical-align: top;
+  /* vertical-align: top; */
 }
 
 nav ul li.subsequent:before
