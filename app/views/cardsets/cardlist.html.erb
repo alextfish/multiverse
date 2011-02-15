@@ -61,12 +61,7 @@
       <td><%= card.category %></td>
       <td><%= card.rarity.capitalize %></td>
       <td><span style="display:none;"><%= card.converted_mana_cost %></span><%= format_mana_symbols(card.cost, true) %></td>
-      <td>
-        <%= card.supertype %>
-        <%= card.cardtype %>
-        <% if !card.subtype.blank? %>
-          &ndash; <%= card.subtype %>
-        <% end %> </td>
+      <td><%= displayed_type(card) %></td>
       <td><%= card.power %></td>
       <td><%= card.toughness %></td>
       <td class="code" <%= code_display %>><%= card.code %></td>
@@ -85,7 +80,7 @@
       <td class="comments" <%= comment_display %>>
         <% if !card_comments_sorted.empty? %>
           <span style="display:none;"><%= card_comments_sorted[0].created_at.to_i %></span>
-          <%= format_datetime(card_comments_sorted[0].created_at) %> by <%= comment_user_link(card_comments_sorted[0]) %>
+          <%= format_datetime(card_comments_sorted[0].created_at) %> by <%= link_to_comment_user card_comments_sorted[0] %>
         <% end %>
       </td>
       <% if permission_to?(:edit, @cardset) && @cardset.configuration.use_addressing %>

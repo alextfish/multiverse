@@ -70,32 +70,35 @@
            <% last_item_blank_edit = false 
               last_edit_date = nil %>
            <% card_history.each do |history_item| %>
-             <% if history_item.is_a? Log %>
-               <% @log = history_item %>
-               <% verb = @log.past_tense_verb(true)
-                  if verb == "edited "
-                    verb << " the card" 
-                    skip_display = last_item_blank_edit && @log.text.blank? && last_edit_date == @log.datestamp.to_date
-                    # skip if the last was also another blank edit on the same date
-                    last_item_blank_edit = @log.text.blank?
-                    last_edit_date = @log.datestamp.to_date
-                  else
-                    last_item_blank_edit = false
-                    skip_display = false
-                  end
-                  %>
-               <% if !skip_display %>
-               <div class="comment log">
-                 <%= render :partial => "shared/log_entry", :locals => { :link_to_recent => false } %>
-                 <!-- <span class="logdetails"><%= format_datetime history_item.datestamp %>:
-                 <%= friendly_link_to_user_id history_item.user_id %> <%= verb %><% if !history_item.text.blank? %>:</span> <%= history_item.text %>
-                 <% else %></span>
-                 <% end %> -->
-               </div>
-               <% end %>
-             <% else %><% "it's a comment" %>
-               <% @comment = history_item %>
-               <%= render :partial => "shared/comment", :locals => { :show_buttons => true, :show_date => true } %>
+             <% case history_item.what_are_you %>
+               <% when "Log": %>
+                 <% @log = history_item %>
+                 <% verb = @log.past_tense_verb(true)
+                    if verb == "edited "
+                      verb << " the card" 
+                      skip_display = last_item_blank_edit && @log.text.blank? && last_edit_date == @log.datestamp.to_date
+                      # skip if the last was also another blank edit on the same date
+                      last_item_blank_edit = @log.text.blank?
+                      last_edit_date = @log.datestamp.to_date
+                    else
+                      last_item_blank_edit = false
+                      skip_display = false
+                    end
+                    %>
+                 <% if !skip_display %>
+                 <div class="comment log">
+                   <%= render :partial => "shared/log_entry", :locals => { :link_to_recent => false } %>
+                   <!-- <span class="logdetails"><%= format_datetime history_item.datestamp %>:
+                   <%= friendly_link_to_user_id history_item.user_id %> <%= verb %><% if !history_item.text.blank? %>:</span> <%= history_item.text %>
+                   <% else %></span>
+                   <% end %> -->
+                 </div>
+                 <% end %>
+               <% when "Comment": %>
+                 <% @comment = history_item %>
+                 <%= render :partial => "shared/comment", :locals => { :show_buttons => true, :show_date => true } %>
+               <% else %><% "don't know what it is" %>
+                 <% Rails.logger.info "Not showing history item #{history_item.class} with ID #{history_item.id} since it's not a Comment or Log" %>
              <% end %>
            <% end %>
          </div>

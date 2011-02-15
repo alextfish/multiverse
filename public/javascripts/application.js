@@ -162,13 +162,7 @@ function update_comment_status(commentid, action) {
 }
 
 
-
-// H/M * JS to fit the card text to the card.
-// Pseudocode:
-  // on load: resize_all_cards
-  // resize_all_cards: 
-    // cards_to_resize = $("#card")
-    // remove forms
+////// Resizing //////
 function shrinkName(nameDiv, typeDiv) {
   var titleBarDiv = nameDiv.parentNode;
   var manaCostDiv = titleBarDiv.select("div.cardmanacost")[0];

@@ -97,4 +97,7 @@ class Comment < ActiveRecord::Base
       "normal"
     end
   end
+  def what_are_you
+    "Comment"
+  end
 end

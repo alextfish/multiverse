@@ -253,10 +253,15 @@
   position: relative;
   padding-top: 4px;
 }
-.loyalty_container { position: relative; }
+.loyalty_container { 
+  position: relative; 
+  width: 32px;
+  display: inline-block;
+  top: -2px;
+  vertical-align: text-top;
+}
 .loyalty { 
   position: absolute;
-  left: -34px;
   top: -2px;
   color: white;
   padding-top: 5px;
@@ -269,6 +274,14 @@
   font-weight: bold;
   font-size: 8pt;
   letter-spacing: -1px;
+}
+.Planeswalker .loyalty {
+  left: -34px;
+}
+.Planeswalker .loyalty_container {
+  width: 0px;
+  display: inline;
+  top: 0px;
 }
 .Planeswalker .cardtext br { margin-bottom: 5px; }
 .loyalty.positive { background-image: url(/images/loyaltyup.png); }

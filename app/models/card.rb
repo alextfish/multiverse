@@ -42,7 +42,11 @@ class Card < ActiveRecord::Base
   #end
 
   DEFAULT_RARITY = "common"
-  STRING_FIELDS = ["name","cost","supertype","cardtype","subtype","rarity","rulestext","flavourtext","code","colour","art_url","artist","image_url"]
+  STRING_FIELDS = ["name","cost","supertype","cardtype","subtype","rarity","rulestext","flavourtext","code","frame","art_url","artist","image_url"]
+  LONG_TEXT_FIELDS = ["rulestext", "flavourtext"]
+  (STRING_FIELDS-LONG_TEXT_FIELDS).each do |field|
+    validates field.to_sym, :length     => { :maximum => 255 }
+  end
   def regularise_fields
     # Enforce rarity; Default rarity to common
     if (self.rarity.blank?) || !Card.rarities.include?(self.rarity)
@@ -73,7 +77,7 @@ class Card < ActiveRecord::Base
         "Card#{id}"
     end
   end
-
+  
   def recency  # For a card, its order in recency is when it was updated
     updated_at
   end
@@ -218,6 +222,9 @@ class Card < ActiveRecord::Base
     cardclass
   end
   def converted_mana_cost
+    if cost.nil?
+      return 0
+    end
     # We split three times!
     # First extract parenthesised or braced subexpressions
     cost_tokens = cost.split(/([{(][^})]*[})])/)

@@ -133,8 +133,10 @@ class Log < ActiveRecord::Base
     case self.kind
       # cardsets
       when Log.kind(:cardset_create), Log.kind(:cardset_options), Log.kind(:cardset_import):
-        obj = Cardset.find_by_id(self.object_id)
+        cardset = Cardset.find_by_id(self.object_id)
         return cardset
+      when Log.kind(:cardset_delete)
+        return nil
       # cards
       when Log.kind(:card_create), Log.kind(:card_edit):
         card = Card.find_by_id(self.object_id)
@@ -197,6 +199,9 @@ class Log < ActiveRecord::Base
         raise "Don't know how to get the object from logs of kind #{self.kind} such as log #{self.id}"
     end
   end
-  
   # See also application_helper/link_to_log_object()
+  
+  def what_are_you
+    "Log"
+  end
 end

@@ -286,7 +286,18 @@ module ApplicationHelper
      chosen
   end
 
-  def comment_user_link(comment)
+  def link_to_comment(comment) # logic is duplicated in searches_controller
+    parent = comment.parent
+    case parent
+      when Card:
+        link_to parent.printable_name, card_path(parent, :anchor => comment.anchor_name)
+      when Cardset:
+        link_to parent.name, cardset_comments_path(parent, :anchor => comment.anchor_name)
+      else
+        raise "Don't know how to link_to_comment with parent #{parent}"
+    end
+  end
+  def link_to_comment_user(comment)
     link_to_unless comment.user.nil?, comment.display_user, comment.user
   end
   

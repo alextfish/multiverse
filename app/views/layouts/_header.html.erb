@@ -5,11 +5,11 @@
   <nav>
     <ul>
       <li class="first"><%= link_to "Recent updates", cardsets_path %></li>
-      <li class="subsequent"><%= link_to "Search:", searchform_path %>
+      <li class="subsequent"><%= link_to "Search:", advanced_search_path %>
         <% 'form_tag("/quicksearch", :method => "get") do' 
         %>
         <form action="<%= quicksearch_path %>" method="get">
-          <%= text_field_tag "q" %>
+          <%= text_field_tag "q", @quicksearch_query %>
         </form>
         <% "end" %>
       </li>

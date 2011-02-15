@@ -36,15 +36,10 @@
         &nbsp;<%= @card.rarity[0].chr.upcase %>&nbsp;
       <% end %>
     </div>
-     <% typeline = (@card.supertype.blank? ? "" : "#{@card.supertype} ") +
-                   (@card.cardtype.blank?  ? "" : "#{@card.cardtype}") +
-                   (@card.subtype.blank?   ? "" : " - #{@card.subtype}") %>
-     <% typeclass = "cardtype";
-   '     typeline.length > 28 ? "cardtype condensedtypeline" : "cardtype" ' 
-   %>
-    <div class="<%= typeclass %>"><span>
-     <% if !typeline.blank? %>
-       <%= h(typeline).gsub("-", "&ndash;").html_safe %>
+    <div class="cardtype"><span>
+     <% my_type = displayed_type(@card) %>
+     <% if !my_type.blank? %>
+       <%= my_type %>
      <% else %>
        &nbsp;
      <% end %>
