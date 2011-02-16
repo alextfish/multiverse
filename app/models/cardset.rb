@@ -426,12 +426,13 @@ class Cardset < ActiveRecord::Base
   end
 
   def make_booster()
-    commons   = self.cards.select { |c| c.rarity == "common" } 
-    uncommons = self.cards.select { |c| c.rarity == "uncommon" } 
-    rares     = self.cards.select { |c| c.rarity == "rare" } 
-    mythics   = self.cards.select { |c| c.rarity == "mythic" }     
-    basics    = self.cards.select { |c| c.rarity == "basic" }   
-    tokens    = self.cards.select { |c| c.rarity == "token" }
+    ignore_active = !configuration.card_show_active
+    commons   = self.cards.select { |c| c.rarity == "common"   && (ignore_active || c.active)} 
+    uncommons = self.cards.select { |c| c.rarity == "uncommon" && (ignore_active || c.active)} 
+    rares     = self.cards.select { |c| c.rarity == "rare"     && (ignore_active || c.active)} 
+    mythics   = self.cards.select { |c| c.rarity == "mythic"   && (ignore_active || c.active)}     
+    basics    = self.cards.select { |c| c.rarity == "basic"    && (ignore_active || c.active)}   
+    tokens    = self.cards.select { |c| c.rarity == "token"    && (ignore_active || c.active)}
     if basics.empty? 
       basics = Card.basic_land 
     end

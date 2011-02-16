@@ -72,7 +72,7 @@ div.newfeatures { border: 1px solid black; margin: auto; text-align: center;
 li.recent_item div.comment { border-bottom: none;
                          margin-bottom: 0px; }
                          
-#history_items div.comment.log p { display: inline; }
+#history_items div.comment.log p, .commentlist .recent_item p { display: inline; }
 
 .compact p.commentbody { margin-bottom: 0px; }
 

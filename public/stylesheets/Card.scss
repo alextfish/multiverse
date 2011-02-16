@@ -49,13 +49,15 @@
 
 /***** Card display *****/
 
-  .blackborder, .silverborder, .whiteborder, .purpleborder { 
+  .blackborder, .silverborder, .whiteborder, .purpleborder, .goldborder { 
     @include round_corners(10px); 
     border-width: 10px; 
     border-style: solid; }
   .blackborder { border-color: black; }
   $SilverBorder: #a3a3a3;
   .silverborder { border-color: $SilverBorder; }
+  $GoldBorder: #ca0;
+  .goldborder { border-color: $GoldBorder; }
   $PurpleBorder: #a6f;
   .purpleborder { border-color: $PurpleBorder; }
   .whiteborder { 
@@ -79,7 +81,8 @@
         }
   .foil {
     position: absolute; top: 0px; background-image: url(/images/foil_highlight.png); 
-    width: $CardWidth;  height: 285px;
+    top: 0; bottom: 0; left: 0; right: 0;
+    /* width: $CardWidth;  height: 285px; */
   }
   .cardborder { 
     position: relative;
@@ -210,6 +213,13 @@
   @include gradient_diag_highlight(#a43, #e86);
 }
 
+.rulestext i, .rulestext i i i, .flavourtext i i, .flavourtext i i i i {
+  font-style: italic;
+}
+.rulestext i i, .rulestext i i i i, .flavourtext i, .flavourtext i i i {
+  font-style: normal;
+}
+
 
 /***** Planeswalkers *****/
 
@@ -327,6 +337,9 @@ border: none;
 }
 .silverborder .Planeswalker .artist { 
   color: black; background: $SilverBorder; 
+}
+.goldborder .Planeswalker .artist { 
+  color: black; background: $GoldBorder; 
 }
 .purpleborder .Planeswalker .artist { 
   color: white; background: $PurpleBorder; 

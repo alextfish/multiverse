@@ -168,7 +168,6 @@ function shrinkName(nameDiv, typeDiv) {
   var manaCostDiv = titleBarDiv.select("div.cardmanacost")[0];
   // Non-token algorithm:
   var defaultNameFontSize = 9; // points, as defined in Card.scss
-  var idealTitleHeight = typeDiv.parentNode.getHeight() + 2;
   var nameSizeOK = 0;
   var fontSize = defaultNameFontSize;
   // .cardtitlebar, .cardtypebar { font: bold 9pt serif; }
@@ -181,13 +180,12 @@ function shrinkName(nameDiv, typeDiv) {
     }
   }
 }
-function sizeTokenName(nameDiv) {
+function sizeTokenName(nameDiv, typeDiv) {
   // Token algorithm
   var titleBarDiv = nameDiv.parentNode;
   var titlePinline = titleBarDiv.parentNode;
   var tokenNamePadding = 12; // cardtitlebar p-left=3=3; namebox p-left=p-right=2; 2px wiggle room
   var defaultNameFontSize = 9; // points, as defined in Card.scss
-  var idealTitleHeight = 20;
   var nameWidth = nameDiv.getWidth();
   var nameSizeOK = (nameWidth + tokenNamePadding < titlePinline.getWidth()) && (titleBarDiv.clientHeight <= idealTitleHeight);
   if (nameSizeOK) {
@@ -220,12 +218,6 @@ function shrinkType(typeDiv) { //, rarityDiv) {
   var rarityDiv = typeBarDiv.getElementsByClassName("cardrarity")[0];
   if (!rarityDiv) return;
   var typeBarPadding = 9; // calculated from the padding-left and padding-right of cardrarity and .pinline_box>div
-  if (idealTypeHeight < 0) {
-    // Oneoff: calculate ideal height of type bar
-    // defined as this card's type bar if the text size is teenytiny
-    typeSpan.style.letterSpacing = "-20px"; 
-    idealTypeHeight = typeBarDiv.getHeight();
-  }
   
   var maxWidth = typeBarDiv.getWidth() - rarityDiv.getWidth() - typeBarPadding;
   var typeSizeOK = false;
@@ -258,9 +250,25 @@ function shrinkCardBits(cardDiv) {
   var nameDiv = cardDiv.getElementsByClassName("cardname")[0];
   var typeDiv = cardDiv.getElementsByClassName("cardtype")[0];
   var rarityDiv = cardDiv.getElementsByClassName("cardrarity")[0];
+  
+  if (idealTypeHeight < 0) {
+    // Oneoff: calculate ideal height of type bar (global variable)
+    // defined as this card's type bar if the text size is teenytiny
+    var typeBarDiv = typeDiv.parentNode;
+    var typeSpan = typeDiv.childElements()[0];
+    origLetterSpacing = typeSpan.getStyles().letterSpacing; 
+    typeSpan.style.letterSpacing = "-20px"; 
+    idealTypeHeight = typeBarDiv.getHeight();
+    typeSpan.style.letterSpacing = origLetterSpacing; 
+  }
+  if (idealTitleHeight < 0) {
+    // Similar oneoff
+    idealTitleHeight = typeDiv.parentNode.getHeight() + 2;
+  }
+  
   if (cardDiv.hasClassName("token")) {
     var artDiv = cardDiv.getElementsByClassName("cardart")[0];
-    sizeTokenName(nameDiv);
+    sizeTokenName(nameDiv, typeDiv);
     sizeTokenArt(cardDiv, artDiv);
   } else {
     var isPlaneswalker = cardDiv.hasClassName("Planeswalker")
@@ -295,5 +303,6 @@ function makeAllCardsFit() {
 }
 
 idealTypeHeight = -1;
+idealTitleHeight = -1;
 
 Event.observe(window, 'load', makeAllCardsFit);

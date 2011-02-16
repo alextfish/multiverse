@@ -10,6 +10,7 @@ class DetailsPagesController < ApplicationController
   # GET /details_pages/1
   # GET /details_pages/1.xml
   def show
+    @printable = params.has_key?(:printable)
     @details_page = DetailsPage.find(params[:id])
     if @details_page.title == "Skeleton"
       redirect_to skeleton_cardset_path(@cardset)

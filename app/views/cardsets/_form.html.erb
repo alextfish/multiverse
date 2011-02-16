@@ -38,7 +38,7 @@
     <%= fields_for @cardset.configuration do |config_fields| %>
       <div class="config_section">
         Border colour:
-        <% %w{black white silver purple}.each do |colour| %>
+        <% %w{black white silver gold purple}.each do |colour| %>
           <span class="<%= colour %>border">
             <span class="editborder_inner">
               <%= config_fields.radio_button :border_colour, colour, :checked => (@cardset.configuration.border_colour == colour) 
@@ -101,8 +101,6 @@
             <%= config_fields.check_box :cardlist_show_comments %>
           <%= config_fields.label :cardlist_show_code, "Show code" %>
             <%= config_fields.check_box :cardlist_show_code %>
-          <%= config_fields.label :cardlist_show_active, "Show active" %>
-            <%= config_fields.check_box :cardlist_show_active %>
       </div>
 
       <div class="config_section">

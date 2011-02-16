@@ -22,7 +22,9 @@
   </head>
   <body>
 
-    <%= render "layouts/header" %>
+    <% if !@printable %>
+      <%= render "layouts/header" %>
+    <% end %>
 
     <% flash.each do |key, value| %>
       <div class="flash <%= key %>"><%= value %></div>
@@ -30,7 +32,9 @@
 
     <%= yield %>
 
-    <%= render "layouts/footer" %>
+    <% if !@printable %>
+      <%= render "layouts/footer" %>
+    <% end %>
 
   </body>
 </html>

@@ -1,5 +1,5 @@
 /***** Card display *****/
-.blackborder, .silverborder, .whiteborder, .purpleborder {
+.blackborder, .silverborder, .whiteborder, .purpleborder, .goldborder {
   -moz-border-radius: 10px;
   -webkit-border-radius: 10px;
   -khtml-border-radius: 10px;
@@ -12,6 +12,9 @@
 
 .silverborder {
   border-color: #a3a3a3; }
+
+.goldborder {
+  border-color: #ccaa00; }
 
 .purpleborder {
   border-color: #aa66ff; }
@@ -42,8 +45,11 @@
   position: absolute;
   top: 0px;
   background-image: url(/images/foil_highlight.png);
-  width: 200px;
-  height: 285px; }
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  /* width: $CardWidth;  height: 285px; */ }
 
 .cardborder {
   position: relative; }
@@ -279,6 +285,12 @@
   background: -webkit-gradient(linear, right top, left bottom, from(#aa4433), color-stop(0.5, #ee8866), to(#aa4433));
   background: -moz-linear-gradient(right top, #aa4433, #ee8866, #aa4433); }
 
+.rulestext i, .rulestext i i i, .flavourtext i i, .flavourtext i i i i {
+  font-style: italic; }
+
+.rulestext i i, .rulestext i i i i, .flavourtext i, .flavourtext i i i {
+  font-style: normal; }
+
 /***** Planeswalkers *****/
 .card.Planeswalker {
   padding-top: 0px;
@@ -453,6 +465,10 @@
 .silverborder .Planeswalker .artist {
   color: black;
   background: #a3a3a3; }
+
+.goldborder .Planeswalker .artist {
+  color: black;
+  background: #ccaa00; }
 
 .purpleborder .Planeswalker .artist {
   color: white;

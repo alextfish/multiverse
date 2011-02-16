@@ -58,7 +58,8 @@ module ApplicationHelper
                        )
                      )
 
-    markdown_text = Maruku.new(formatted_text).to_html.html_safe
+    markdown_text = RDiscount.new(formatted_text)
+    embed_card_renders(markdown_text.to_html).html_safe
   end
   
   def mana_symbol_url ( symbol )
@@ -149,7 +150,6 @@ module ApplicationHelper
   def format_links(text_in, cardset)
     # Returns [text-out, out-fcn]
     # Translate [[[-links and (((-links into Maruku links
-    out_fcn = nil
     
     # Preserve value of @card coming in, because the prettycard renders need us to overwrite it
     old_atcard = @card
@@ -157,6 +157,7 @@ module ApplicationHelper
     wizards_image_regexp = /\[\[([^\]]*)\]\]/
     cardset_card_regexp = /\(\(\(([^)]*)\)\)\)/
     wizards_card_regexp = /\[\[\[([^\]]*)\]\]\]/
+    any_brackets_regexp    = /([(\[][(\[][(\[]?)(.*?[^)\]])([)\]][)\]][)\]]?)/
     remove_brackets_regexp = /([(\[])\1\1?(.*[^)\]])([)\]])\3\3?/
     any_internal_links = text_in =~ /\(\(/
     
@@ -178,30 +179,24 @@ module ApplicationHelper
     end
     
     text_out = text_in
-    text_out.gsub!(wizards_card_regexp) { |cardname|
-      actual_cardname = cardname.gsub(remove_brackets_regexp, '\2')
-      wizards_card_link(actual_cardname, actual_cardname)
-    }
-    text_out.gsub!(wizards_image_regexp) { |cardname|
-      actual_cardname = cardname.gsub(remove_brackets_regexp, '\2')
-      wizards_card_image(actual_cardname)
-    }
-    if cardset && any_internal_links
-      text_out.gsub!(cardset_card_regexp) { |cardname|
-        actual_cardname = cardname.gsub(remove_brackets_regexp, '\2')
-        cardset_card_link(cardset, actual_cardname, actual_cardname, cardset_cardnames_and_codes, cardset_cards_from_name_or_code)
-      }
-      if cardset.configuration.frame == "image"
-        text_out.gsub!(cardset_image_regexp) { |cardname|
-          actual_cardname = cardname.gsub(remove_brackets_regexp, '\2')
-          cardset_card_image(cardset, actual_cardname, cardset_cardnames_and_codes, cardset_cards_from_name_or_code)
-        }
-      else
-        text_out.gsub!(cardset_image_regexp) { |cardname|
-          actual_cardname = cardname.gsub(remove_brackets_regexp, '\2')
-          cardset_card_mockup(cardset, actual_cardname, cardset_cardnames_and_codes, cardset_cards_from_name_or_code)
-        }
-        #out_fcn = lambda { }
+    match_count = 0
+    text_out.gsub!(any_brackets_regexp) do |matched_link|
+      actual_cardname = matched_link.gsub(remove_brackets_regexp, '\2')
+      cardset_present = !!cardset
+      image_frame = cardset && cardset.configuration && cardset.configuration.frame == "image"
+      case 
+        when matched_link =~ wizards_card_regexp:
+          wizards_card_link(actual_cardname, actual_cardname)
+        when matched_link =~ wizards_image_regexp:
+          wizards_card_image(actual_cardname)
+        when cardset && any_internal_links && matched_link =~ cardset_card_regexp:
+          cardset_card_link(cardset, actual_cardname, actual_cardname, cardset_cardnames_and_codes, cardset_cards_from_name_or_code)
+        when cardset && any_internal_links && matched_link =~ cardset_image_regexp:
+          if image_frame
+            cardset_card_image(cardset, actual_cardname, cardset_cardnames_and_codes, cardset_cards_from_name_or_code)
+          else
+            cardset_card_mockup(cardset, actual_cardname, cardset_cardnames_and_codes, cardset_cards_from_name_or_code)
+          end
       end
     end
     @card = old_atcard
@@ -215,6 +210,16 @@ module ApplicationHelper
     elsif link_content =~ Card.code_regexp
       # Link to a (valid & safe) code that doesn't yet exist: offer to create it
       link_to "(#{link_content})", new_card_path(:cardset_id => cardset.id, :code => link_content)
+    elsif link_content =~ Card.bar_code_regexp
+      # Link to a bar code. If the cardset has this code, link to that card by name
+      # If the cardset doesn't have this code, offer to create it
+      actual_code = link_content.slice(Card.code_regexp)
+      if cardset_cardnames_and_codes.include?(actual_code)
+        card = cardset_cards_from_name_or_code[actual_code]
+        "<a href=\"#{url_for(card)}\">#{actual_code} #{card.name}</a>"
+      else
+        link_to "(#{actual_code})", new_card_path(:cardset_id => cardset.id, :code => actual_code)
+      end
     else
       "\(\(\(\(#{link_content})))" # yes, that's four parentheses. No, I don't know why Markdown eats one of them. But it does, so I need one extra.
     end
@@ -241,10 +246,15 @@ module ApplicationHelper
   def cardset_card_mockup(cardset, cardname, cardset_cardnames_and_codes, cardset_cards_from_name_or_code)
     if cardset_cardnames_and_codes.include?(cardname)
       card = cardset_cards_from_name_or_code[cardname]
-      @card = card
-      "<div class='CardRenderInline'>#{render :partial => 'shared/prettycard', :locals => { :link => true }}</div>"
+      "@@MULTIVERSE@RENDER@#{card.id}@CARD@@"
     else
       "((#{cardname}))"
+    end
+  end
+  def embed_card_renders(text)
+    text.gsub(/@@MULTIVERSE@RENDER@([0-9]*)@CARD@@/) do |matched_string|
+      @card = Card.find($1)
+      "<div class='CardRenderInline'>#{render :partial => 'shared/prettycard', :locals => { :link => true }}</div>"
     end
   end
 

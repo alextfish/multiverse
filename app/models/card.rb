@@ -157,8 +157,12 @@ class Card < ActiveRecord::Base
   code_numbers_pattern = "[0-9][0-9]"
   regexp_string = rarity_pattern + colour_codes_pattern + code_numbers_pattern
   CODE_REGEXP = Regexp.new(regexp_string)
+  BAR_CODE_REGEXP = Regexp.new("|" + regexp_string)
   def self.code_regexp
     CODE_REGEXP
+  end
+  def self.bar_code_regexp
+    BAR_CODE_REGEXP
   end
 
   def self.interpret_code ( code )

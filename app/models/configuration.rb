@@ -58,6 +58,7 @@ class Configuration < ActiveRecord::Base
       "black" => "Black",
       "white" => "White",
       "silver" => "Silver",
+      "gold" => "Gold",
       "purple" => "Purple",
     },
   }
