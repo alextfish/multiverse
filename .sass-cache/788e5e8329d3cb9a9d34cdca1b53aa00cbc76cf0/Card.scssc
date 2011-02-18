@@ -1,8 +1,8 @@
 3.0.24 (Classy Cassidy)
-00683de3e3fc8df7482d70cb1a9d9820525dfe93
+c8843a4d2200fdc2c3481b7e06612856f6cba1bd
 o:Sass::Tree::RootNode
 :
-@linei:@template"ï`@mixin gradient_horz($start, $end) {
+@linei:@template"<a@mixin gradient_horz($start, $end) {
   filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#{$start}', endColorstr='#{$end}', GradientType=1);
   background: -webkit-gradient(linear, left top, right top, from($start), to($end));
   background: -moz-linear-gradient(left,  $start,  $end);
@@ -607,10 +607,14 @@ form #raritycell { border: 1px solid black; }
 .code_frame_M, .code_frame_Z { background-color: $Multicolour_Background; }
 .code_frame_H { @include gradient_horz_padded($Land_White_Text, $Land_Black_Text); }
 .code_frame_L { background-color: $Land_Colourless_Bar; }
-.code_rarity_C td.code_link, .code_rarity_C td.code_link a { @extend .cardrarity.common; }
+.code_rarity_C td.code_link, .code_rarity_C td.code_link a { 
+  @extend .cardrarity.common; 
+  text-shadow: 1px 0 #888888;
+}
 .code_rarity_U td.code_link { @extend .uncommon; }
 .code_rarity_R td.code_link { @extend .rare; }
 .code_rarity_M td.code_link { @extend .mythic; }
+/* td.code_link { text-align: center; } */
 
 .code_frame_W.code_not_shown,
 .code_frame_U.code_not_shown,
@@ -621,7 +625,7 @@ form #raritycell { border: 1px solid black; }
 .code_frame_H.code_not_shown,
 .code_frame_M.code_not_shown, .code_frame_Z.code_not_shown,
 .code_frame_L.code_not_shown { background-color: white; background: white; }
- :@children['o:Sass::Tree::MixinDefNode;i;[o:Sass::Tree::PropNode;i;[ :@prop_syntax:new:@valueo: Sass::Script::Interpolation:@aftero:Sass::Script::String
+ :@children[(o:Sass::Tree::MixinDefNode;i;[o:Sass::Tree::PropNode;i;[ :@prop_syntax:new:@valueo: Sass::Script::Interpolation:@aftero:Sass::Script::String
 :@context:default;i:
 @type:identifier;"', GradientType=1):@options{ :@originally_textF:	@mido:Sass::Script::Variable	;;;i;@:
 @name"end;@:@whitespace_afterF:@beforeo;;o;
@@ -1316,7 +1320,8 @@ width;-i o;
 ;iZ;[ ;;;o;	;;;iZ;{ ;"Artifact_Text;@;["background-color;-i ;5T;@;-i o;>;i[;?["!.code_frame_M, .code_frame_Z;[o;
 ;i[;[ ;;;o;	;;;i[;{ ;"Multicolour_Background;@;["background-color;-i ;5T;@;-i o;>;i\;?[".code_frame_H;[o;@
 ;i\;[ ;@;"gradient_horz_padded;/[o;	;;;i\;{ ;"Land_White_Texto;	;;;i\;@­;"Land_Black_Text;5T;@;-i o;>;i];?[".code_frame_L;[o;
-;i];[ ;;;o;	;;;i];{ ;"Land_Colourless_Bar;@;["background-color;-i ;5T;@;-i o;>;i^;?["?.code_rarity_C td.code_link, .code_rarity_C td.code_link a;[o;O	;P[	"."cardrarity"."common;i^;[ ;@;5T;@;-i o;>;i_;?[" .code_rarity_U td.code_link;[o;O	;P["."uncommon;i_;[ ;@;5T;@;-i o;>;i`;?[" .code_rarity_R td.code_link;[o;O	;P["."	rare;i`;[ ;@;5T;@;-i o;>;ia;?[" .code_rarity_M td.code_link;[o;O	;P["."mythic;ia;[ ;@;5T;@;-i o;>;ik;?["*.code_frame_W.code_not_shown,
+;i];[ ;;;o;	;;;i];{ ;"Land_Colourless_Bar;@;["background-color;-i ;5T;@;-i o;>;i^;?["?.code_rarity_C td.code_link, .code_rarity_C td.code_link a;[o;O	;P[	"."cardrarity"."common;i_;[ ;@o;
+;i`;[ ;;;o;;;;;;"1px 0 #888888;@;["text-shadow;-i ;5T;@;-i o;>;ib;?[" .code_rarity_U td.code_link;[o;O	;P["."uncommon;ib;[ ;@;5T;@;-i o;>;ic;?[" .code_rarity_R td.code_link;[o;O	;P["."	rare;ic;[ ;@;5T;@;-i o;>;id;?[" .code_rarity_M td.code_link;[o;O	;P["."mythic;id;[ ;@;5T;@;-i o;;;ie;<0;[ ;"//* td.code_link { text-align: center; } */;@;=[ o;>;io;?["*.code_frame_W.code_not_shown,
 .code_frame_U.code_not_shown,
 .code_frame_B.code_not_shown,
 .code_frame_R.code_not_shown,
@@ -1325,7 +1330,7 @@ width;-i o;
 .code_frame_H.code_not_shown,
 .code_frame_M.code_not_shown, .code_frame_Z.code_not_shown,
 .code_frame_L.code_not_shown;[o;
-;ik;[ ;;;o;;;;;;"
+;io;[ ;;;o;;;;;;"
 white;@;["background-color;-i o;
-;ik;[ ;;;o;;;;;;"
+;io;[ ;;;o;;;;;;"
 white;@;["background;-i ;5T;@;-i ;5T;@

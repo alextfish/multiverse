@@ -259,11 +259,8 @@ function shrinkCardBits(cardDiv) {
     origLetterSpacing = typeSpan.getStyles().letterSpacing; 
     typeSpan.style.letterSpacing = "-20px"; 
     idealTypeHeight = typeBarDiv.getHeight();
+    idealTitleHeight = typeBarDiv.getHeight() + 2;
     typeSpan.style.letterSpacing = origLetterSpacing; 
-  }
-  if (idealTitleHeight < 0) {
-    // Similar oneoff
-    idealTitleHeight = typeDiv.parentNode.getHeight() + 2;
   }
   
   if (cardDiv.hasClassName("token")) {

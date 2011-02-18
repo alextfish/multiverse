@@ -1027,6 +1027,10 @@ form #raritycell {
 .code_frame_L {
   background-color: #d8cfc8; }
 
+.code_rarity_C td.code_link, .code_rarity_C td.code_link a {
+  text-shadow: 1px 0 #888888; }
+
+/* td.code_link { text-align: center; } */
 .code_frame_W.code_not_shown,
 .code_frame_U.code_not_shown,
 .code_frame_B.code_not_shown,

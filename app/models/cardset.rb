@@ -221,7 +221,7 @@ class Cardset < ActiveRecord::Base
   end
   
   def Cardset.skeleton_line_regexp_MD
-    /^\(\(\(([CURM])([A-Z])([0-9][0-9])/
+    /^\(\(\((?:[-]?)([CURM])([A-Z])([0-9][0-9])/
   end
   def Cardset.skeleton_line_regexp_HTML
     /(?:>[(]?)([CURM])([A-Z])([0-9][0-9])/
@@ -379,7 +379,7 @@ class Cardset < ActiveRecord::Base
     insertions.sort_by {|codes, line_num| line_num + rarity_offsets[codes[0][0].chr] + frame_offsets[codes[0][1].chr]}.reverse_each do |codes, line_num|
       # To insert lines for [a b c] at position 5, we insert c at 5, then b at 5, then a at 5
       codes.reverse.each do |code|
-        new_line = "(((#{code})))" + (" | " * number_of_bars) + "\n"
+        new_line = "(((-#{code})))" + (" | " * number_of_bars) + "\n"
         lines_out.insert line_num, new_line
       end
     end
@@ -412,6 +412,28 @@ class Cardset < ActiveRecord::Base
         current_lowest_line_num
       else
         this_line_num 
+      end
+    end
+  end
+  
+  def Cardset.fix_all_skeletons!
+    Cardset.all.each do |cs|
+      if cs.skeleton
+        lines_out = cs.skeleton.body.lines.map do |line|
+          if line =~ Cardset.skeleton_line_regexp_MD
+            line.sub! Cardset.skeleton_line_regexp_MD, '(((-\1\2\3'
+            code = line[4..7]
+            cards = cs.cards.find_all_by_code(code)
+            if cards.length == 1
+              remove_name = Regexp.new("\\|[ ]*\\(\\(\\(#{cards[0].name}\\)\\)\\)")
+              p "Fixing card with code #{code} by replacing #{remove_name.to_s}"
+              line.sub! remove_name, ""
+            end
+          end
+          line
+        end
+        cs.skeleton.body = lines_out.join
+        cs.skeleton.save!
       end
     end
   end

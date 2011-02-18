@@ -33,13 +33,13 @@ class Card < ActiveRecord::Base
   has_many :old_cards, :dependent => :destroy
   attr_accessor :foil, :blank  # not saved
 
-  #has_many :highlighted_comments, :class_name => 'Comment', :conditions => ['status = ?', COMMENT_HIGHLIGHTED]
-  #has_many :unaddressed_comments, :class_name => 'Comment', :conditions => ['status = ?', COMMENT_UNADDRESSED]
+  # has_many :highlighted_comments, :class_name => 'Comment', :conditions => ['status = ?', COMMENT_HIGHLIGHTED]
+  # has_many :unaddressed_comments, :class_name => 'Comment', :conditions => ['status = ?', COMMENT_UNADDRESSED]
 
   before_create :regularise_fields
-  #after_save do  - Can't do this, as we don't have access to session methods in model callbacks :/
-  #  set_last_edit(self)
-  #end
+  # after_save do  - Can't do this, as we don't have access to session methods in model callbacks :/
+  #   set_last_edit(self)
+  # end
 
   DEFAULT_RARITY = "common"
   STRING_FIELDS = ["name","cost","supertype","cardtype","subtype","rarity","rulestext","flavourtext","code","frame","art_url","artist","image_url"]
@@ -101,7 +101,7 @@ class Card < ActiveRecord::Base
   
   DISPLAY_FRAMES = 
     Card.colours + ["Artifact", "Multicolour", "Colourless"] +
-    Card.colour_pairs.map { |pair| "Hybrid #{pair.join("-").downcase}" } +
+    Card.colour_pairs.map { |pair| "Hybrid #{pair.join('-').downcase}" } +
     ["Land (colourless)"] +
     Card.colours.map { |col| "Land (#{col.downcase})" } +
     Card.colour_pairs.map { |pair| "Land (#{pair.join('-').downcase})" } +
@@ -157,7 +157,7 @@ class Card < ActiveRecord::Base
   code_numbers_pattern = "[0-9][0-9]"
   regexp_string = rarity_pattern + colour_codes_pattern + code_numbers_pattern
   CODE_REGEXP = Regexp.new(regexp_string)
-  BAR_CODE_REGEXP = Regexp.new("|" + regexp_string)
+  BAR_CODE_REGEXP = Regexp.new("-" + regexp_string)
   def self.code_regexp
     CODE_REGEXP
   end
@@ -183,7 +183,6 @@ class Card < ActiveRecord::Base
     end
     [rarity_out, frame_out]
   end
-  
   @@colour_regexps = [/w/i, /u/i, /b/i, /r/i, /g/i]
   @@nonhybrid_colour_regexps = [
       /(^|[^\/{(])w|[({]w[})]/i,  # match w either at the start ^, or after anything other than / { (

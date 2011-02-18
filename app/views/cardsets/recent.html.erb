@@ -8,7 +8,7 @@
 
 <p>
   <% if !items_to_show.empty? %>
-    Recent updates to <%= @cardset.name %>:
+    Recent updates to <%= @cardset.name %>: <span class="helptext">(Generated at <%= format_datetime_absolute Time.now %>)</span>
 
     <%= will_paginate items_to_show  %>
 

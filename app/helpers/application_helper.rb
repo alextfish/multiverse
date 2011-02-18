@@ -44,6 +44,9 @@ module ApplicationHelper
       time_ago_in_words(dt, :seconds => true) + " ago"
     end
   end
+  def format_datetime_absolute(dt)
+    dt.to_formatted_s :long
+  end
   def datestamps_close(d1, d2)
     (d1-d2).abs < 1.minute
   end
@@ -138,7 +141,7 @@ module ApplicationHelper
     text_out = text
     cardset && cardset.mechanics.each do |mech| 
       src_no_reminder, src_with_reminder, target_no_reminder, target_with_reminder = mech.regexps
-      #Rails.logger.info [src_no_reminder, src_with_reminder, target_no_reminder, target_with_reminder].join(" --- ")
+      # Rails.logger.info [src_no_reminder, src_with_reminder, target_no_reminder, target_with_reminder].join(" --- ")
       # Need the two following lines to be ordered by stricter first
       # e.g. [Bushido 1()] is best parsed as a no-reminder w param 1 than a with-reminder w param 1()
       text_out.gsub! src_no_reminder, target_no_reminder
@@ -151,8 +154,6 @@ module ApplicationHelper
     # Returns [text-out, out-fcn]
     # Translate [[[-links and (((-links into Maruku links
     
-    # Preserve value of @card coming in, because the prettycard renders need us to overwrite it
-    old_atcard = @card
     cardset_image_regexp = /\(\(([^)]*)\)\)/
     wizards_image_regexp = /\[\[([^\]]*)\]\]/
     cardset_card_regexp = /\(\(\(([^)]*)\)\)\)/
@@ -197,9 +198,9 @@ module ApplicationHelper
           else
             cardset_card_mockup(cardset, actual_cardname, cardset_cardnames_and_codes, cardset_cards_from_name_or_code)
           end
+        else matched_link
       end
     end
-    @card = old_atcard
     text_out
   end
 
@@ -207,9 +208,6 @@ module ApplicationHelper
     if cardset_cardnames_and_codes.include?(cardname)
       card = cardset_cards_from_name_or_code[cardname]
       "<a href=\"#{url_for(card)}\">#{link_content}</a>"
-    elsif link_content =~ Card.code_regexp
-      # Link to a (valid & safe) code that doesn't yet exist: offer to create it
-      link_to "(#{link_content})", new_card_path(:cardset_id => cardset.id, :code => link_content)
     elsif link_content =~ Card.bar_code_regexp
       # Link to a bar code. If the cardset has this code, link to that card by name
       # If the cardset doesn't have this code, offer to create it
@@ -220,8 +218,11 @@ module ApplicationHelper
       else
         link_to "(#{actual_code})", new_card_path(:cardset_id => cardset.id, :code => actual_code)
       end
+    elsif link_content =~ Card.code_regexp
+      # Link to a (valid & safe) code that doesn't yet exist: offer to create it
+      link_to "(#{link_content})", new_card_path(:cardset_id => cardset.id, :code => link_content)
     else
-      "\(\(\(\(#{link_content})))" # yes, that's four parentheses. No, I don't know why Markdown eats one of them. But it does, so I need one extra.
+      "\(\(\(#{link_content})))" 
     end
   end
   def wizards_card_link(cardname, link_content)
@@ -269,16 +270,15 @@ module ApplicationHelper
   end
   
   def format_skeleton_table(text)
-    text.sub!("<tbody>", "\r\n<tbody>") 
-    # because Maruku puts the thead and tbody on one line, which means the sub!s below
-    # will colour the heads white rather than row 1
+    text.sub!("<th></th>", "")
+    text.gsub!(/<tr>\n<td>(\&\#173;)?/, "<tr><td>")
     lines_out = text.lines.map do |line|
       if line =~ Cardset.skeleton_line_regexp_HTML
         data = line.match(Cardset.skeleton_line_regexp_HTML)
         rarity_letter = data[1]
         frame_letter = data[2]
         line.sub!("<tr>", "<tr class=\"code_frame_#{frame_letter} code_rarity_#{rarity_letter}\">")
-        line.sub!("<td ", "<td class=\"code_link\"")
+        line.sub!("<td", "<td class=\"code_link\" ")
       end
       line
     end

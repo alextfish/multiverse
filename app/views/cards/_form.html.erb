@@ -118,23 +118,19 @@
      </td>
     </tr>
     <% if @card.cardset.configuration.card_show_code %>
-    <tr>
-     <td><%= f.label :code %></td>
-     <td><%= f.text_field :code %></td>
-    </tr>
+     <tr>
+      <td><%= f.label :code %></td>
+      <td><%= f.text_field :code %></td>
+     </tr>
     <% else %>
-    <%= f.hidden_field :code %>
+     <%= f.hidden_field :code %>
     <% end %>
     <% if @card.cardset.configuration.card_show_active %>
-    <tr>
-     <td><%= f.label :active, "Active?" %></td>
-     <td><%= f.check_box :active %></td>
-    </tr>
+     <tr>
+      <td><%= f.label :active, "Active?" %></td>
+      <td><%= f.check_box :active %></td>
+     </tr>
     <% end %>
-    <!-- tr>
-     <td><##%= f.label :colour %></td>
-     <td><##%= f.select :colour, Card.colours.unshift("Auto").map{|c| [c.capitalize, c]} %></td>
-    </tr -->
     <tr>
      <td><%= f.label :frame %></td>
      <% frames_keys = Card.display_frames %>
@@ -144,13 +140,13 @@
           { :onchange => "update_frame()" } %></td>
     </tr>
     <% if !@card.new_record? %>
-    <tr>
-     <td colspan="2">
-      <br>
-     <%= label_tag "edit_comment", "Enter a brief summary of the change you made:" %>
-     <br><%= text_field_tag :edit_comment, params[:edit_comment], :class => "edit_comment_field" %>
-     </td>
-    </tr>
+     <tr>
+      <td colspan="2">
+       <br>
+      <%= label_tag "edit_comment", "Enter a brief summary of the change you made:" %>
+      <br><%= text_field_tag :edit_comment, params[:edit_comment], :class => "edit_comment_field" %>
+      </td>
+     </tr>
     <% end %>
     <tr>
      <td colspan="2">
