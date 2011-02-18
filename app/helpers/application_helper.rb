@@ -282,7 +282,9 @@ module ApplicationHelper
       end
       line
     end
-    lines_out.join.html_safe
+    text_out = lines_out.join
+    text_out.gsub!(/<td><\/td>\n<\/tr>/, "</tr>")
+    text_out.html_safe
   end
   
   def select_random(num_to_choose, array_in)
