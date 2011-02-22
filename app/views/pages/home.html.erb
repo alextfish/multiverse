@@ -31,7 +31,7 @@
 <p>
   <% numcards = Card.count
      num_to_show = [numcards, 5].min
-     chosencards = select_random(num_to_show, Card.all)
+     chosencards = select_random_visible_cards(num_to_show, Card.all)
      %>
   There are <%= numcards %> cards in Multiverse right now<% if numcards > 0 %>, including:
     <table>

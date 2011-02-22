@@ -19,8 +19,12 @@ Multiverse::Application.routes.draw do
 
   resources :comments, :only => [:create, :destroy, :edit, :update]
 
-  resources :cards, :only => [:new, :create, :destroy, :edit, :update, :show]
-  #, :has_many => [:comments, :old_cards]
+  resources :cards, :only => [:new, :create, :destroy, :edit, :update, :show, :move]
+  resources :cards do
+    member do
+      get 'move'
+    end
+  end
 
   # The cards/cardsets relation should probably be a nested resource.
   # This would provide cardset_cards_path(@cardset), etc.

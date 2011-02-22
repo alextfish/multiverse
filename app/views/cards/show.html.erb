@@ -3,6 +3,18 @@
 
 <%= javascript_include_tag "fabtabulous.js" %>
 
+<% tab_display = {}
+  if @card.cardset.configuration.frame == "image" && !@card.image_url.blank?
+      default_tab = "cardimage"
+  elsif @card.cardset.configuration.frame == "plain"
+      default_tab = "plaincard"
+  else # "prettycard", and also "image" with no image
+      default_tab = "mockup"
+  end
+  tab_display[default_tab] = true
+  show_this_tab = ' style="display: block;"'
+  # this lot isn't necessary if fabtabulous works, but in no-JS browsers it lets them display
+%>
 <table border="0"> <!-- grouping table -->
  <tr>
   <td class="cardcell"> <!-- card -->
@@ -19,27 +31,34 @@
      </ul>
    <% end %>
 
-   <div class="onetab" id="cardimage"><a name="cardimage"></a>
+   <div class="onetab" id="cardimage"<%= tab_display["cardimage"] ? show_this_tab : "" %>><a name="cardimage"></a>
      <img src="<%= @card.image_url %>">
    </div>
-   <div class="onetab" id="plaincard"><a name="plaincard"></a>
+   <div class="onetab" id="plaincard"<%= tab_display["plaincard"] ? show_this_tab : "" %>><a name="plaincard"></a>
      <%= render :partial => "shared/plaincard" %>
    </div>
-   <div class="onetab" id="mockup"><a name="mockup"></a>
+   <div class="onetab" id="mockup"<%= tab_display["mockup"] ? show_this_tab : "" %>><a name="mockup"></a>
      <%= render :partial => "shared/prettycard", :locals => { :link => false } %>
    </div>
    <% show_edit_link = permission_to?(:edit, @card.cardset) %>
+   <% show_move_link = false && permission_to?(:admin, @card.cardset) %>
    <% show_delete_link = permission_to?(:delete, @card.cardset) %>
-   <% if show_edit_link || show_delete_link %>
+   <% if show_edit_link || show_move_link || show_delete_link %>
      <div class="card_controls_below">
        <% if show_edit_link %>
-         <%= link_to "Edit card", edit_card_path(@card) %>
+         <%= link_to "Edit", edit_card_path(@card) %>
        <% end %>
-       <% if show_edit_link && show_delete_link %>
+       <% if show_edit_link && (show_move_link || show_delete_link) %>
+         |
+       <% end %>
+       <% if show_move_link %>
+         <%= link_to "Move", move_card_path(@card) %>
+       <% end %>
+       <% if show_move_link && show_delete_link %>
          |
        <% end %>
        <% if show_delete_link %>
-         <%= link_to "Delete card", @card, :confirm => "Really DELETE #{@card.printable_name}?", :method => :delete %>
+         <%= link_to "Delete", @card, :confirm => "Really DELETE #{@card.printable_name}?", :method => :delete %>
        <% end %>
      </div>
    <% end %>
@@ -124,14 +143,6 @@
   </td>
  </tr>
 </table>
-   <% if @card.cardset.configuration.frame == "image" && !@card.image_url.blank?
-          desired_tab = "cardimage"
-      elsif @card.cardset.configuration.frame == "plain"
-          desired_tab = "plaincard"
-      else # "prettycard", and also "image" with no image
-          desired_tab = "mockup"
-      end
-    %>
    <script type="text/javascript">
-     new Fabtabs("tabs", "<%= desired_tab %>_link");
+     new Fabtabs("tabs", "<%= default_tab %>_link");
    </script>

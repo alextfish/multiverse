@@ -121,6 +121,6 @@ ENDBODY
   </div>&nbsp;
   </div>
 <% elsif news_type == :show %>
-  <% text = Maruku.new(news_latest_update[:body]).to_html.html_safe %>
+  <% text = RDiscount.new(news_latest_update[:body]).to_html.html_safe %>
   <%= text %>
 <% end %>

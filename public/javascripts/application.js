@@ -303,3 +303,27 @@ idealTypeHeight = -1;
 idealTitleHeight = -1;
 
 Event.observe(window, 'load', makeAllCardsFit);
+
+
+///// Dates /////
+// Functions adapted from the renderDate and renderTime functions on
+// http://www.stephenmcintosh.com/puzzle/puzzles.pl
+
+var month_names = new Array("January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December");
+
+function renderDate(span) {
+    //Date Format: 'Y-m-d H:i:s'
+    var matches = /(\d+)-(\d+)-(\d+)\ (\d+):(\d+):(\d+)/.exec(span.innerHTML);   
+    if (matches) {
+        var LocaleDate = new Date();
+        LocaleDate.setUTCFullYear(matches[1], matches[2] - 1, matches[3]);
+        LocaleDate.setUTCHours(matches[4], matches[5], matches[6], 0);  
+        minutes = LocaleDate.getMinutes() + "";
+        var date_out = month_names[LocaleDate.getMonth()] + " " + LocaleDate.getDate() + " " + LocaleDate.getFullYear() + ", " + LocaleDate.getHours() + ":" + (minutes.length == 1 ? "0" : "") + minutes + ":" + LocaleDate.getSeconds();
+        span.innerHTML = date_out;
+    }
+}
+function renderAllDatesAndTimes() {
+    $$("span.date").each(renderDate);
+}
+Event.observe(window, 'load', renderAllDatesAndTimes);

@@ -17,6 +17,7 @@ class DetailsPage < ActiveRecord::Base
   belongs_to :cardset
   validates_presence_of :title
   # validates_length_of :title, :within => 1..140
+  validates_uniqueness_of :title, :scope => [:cardset_id]
 
   before_create :decide_order
 

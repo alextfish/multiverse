@@ -47,6 +47,9 @@ class Card < ActiveRecord::Base
   (STRING_FIELDS-LONG_TEXT_FIELDS).each do |field|
     validates field.to_sym, :length     => { :maximum => 255 }
   end
+  # Ensure code is either blank or unique within cardset
+  validates_uniqueness_of :code, :scope => [:cardset_id], :allow_blank => true
+  
   def regularise_fields
     # Enforce rarity; Default rarity to common
     if (self.rarity.blank?) || !Card.rarities.include?(self.rarity)

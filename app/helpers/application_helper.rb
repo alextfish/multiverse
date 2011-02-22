@@ -45,7 +45,9 @@ module ApplicationHelper
     end
   end
   def format_datetime_absolute(dt)
-    dt.to_formatted_s :long
+    content_tag(:span, :class => "date") do
+      dt.utc.to_formatted_s(:db)
+    end
   end
   def datestamps_close(d1, d2)
     (d1-d2).abs < 1.minute
@@ -298,6 +300,17 @@ module ApplicationHelper
      chosen
   end
 
+  def select_random_visible_cards(num_to_choose, cards_array)
+     chosen = []
+     while chosen.length < num_to_choose
+       candidate = cards_array.choice # i.e. random element
+       if permission_to?(:view, candidate.cardset) && !chosen.include?(candidate)
+         chosen << candidate
+       end
+     end
+     chosen
+  end
+  
   def link_to_comment(comment) # logic is duplicated in searches_controller
     parent = comment.parent
     case parent

@@ -1,6 +1,7 @@
 <h1><%= link_to @cardset.name, @cardset %>: Add card</h1>
 
 <% @title = "#{@cardset.name}: Add card" %>
-<%= render 'form' %>
 
-<%= link_to 'Back', cards_path %>
+<%= render "cardset/setviews" %>
+<%= render "form" %>
+

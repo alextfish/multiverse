@@ -6,6 +6,9 @@ class CardsController < ApplicationController
   before_filter :only => :destroy do
     require_permission_to(:delete, @cardset)
   end
+  before_filter :only => :move do
+    require_permission_to(:admin, @cardset)
+  end
   before_filter do
     require_permission_to_view(@cardset)
   end
@@ -52,6 +55,10 @@ class CardsController < ApplicationController
       # why is this here? under what circumstances will I be going to /cards/new when the @cardset is a new_record?
       @cardset = Cardset.find(params[:cardset_id])
     end
+  end
+  
+  def move
+    @card = Card.find(params[:id])
   end
 
   # GET /cards/1/edit

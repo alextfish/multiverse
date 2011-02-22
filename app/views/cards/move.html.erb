@@ -1,0 +1,14 @@
+<h1><%= link_to @card.printable_name, @card %>: Move</h1>
+
+<% @title = "#{@card.printable_name}: Move" %>
+
+<%= render "cardset/setviews" %>
+
+<% "We require admin permission on the source cardset and edit on the destination"
+   valid_cardsets = Cardset.each.select { permission_to?(:edit, cs) } - @cardset %>
+<% if valid_cardsets.empty? %>
+  <div>There are no other cardsets which you have permission to move this card into.</div>
+<% else %>
+  <%= form_for(@card) do |f| %>
+  <%= end %>
+<% end %>

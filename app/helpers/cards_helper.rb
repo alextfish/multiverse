@@ -27,7 +27,7 @@ module CardsHelper
     ": until" => ": Until",
     /^until/ => "Until",
   }
-  CARDNAME_ALIASES = ['CARDNAME', '~this~', '~']
+  CARDNAME_ALIASES_REGEXP = /(CARDNAME|~this~|~)/
 
   def textbox_chars_displayed(card, attribute)
     text = format_card_text(card, attribute, false, true, false)
@@ -59,10 +59,10 @@ module CardsHelper
     end
 
     out = AFTER_SUBSTITUTIONS.reduce(marked_text) do |memo, (match, replace)| memo.gsub(match, replace) end
-    if card.name
-      CARDNAME_ALIASES.each do |string|
-        out.gsub!(string, card.name)
-      end
+    if card.name.present?
+      subsequent_name = (card.supertype =~ /Legendary/) ? card.name.sub(/,.*/, "") : card.name
+      out.sub!(CARDNAME_ALIASES_REGEXP, card.name)
+      out.gsub!(CARDNAME_ALIASES_REGEXP, subsequent_name)
     end
     return out.html_safe
   end

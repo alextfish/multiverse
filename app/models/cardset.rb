@@ -219,6 +219,9 @@ class Cardset < ActiveRecord::Base
   def skeleton
     self.details_pages.select{|dp| dp.title == "Skeleton" }[0]
   end
+  def front_page
+    self.details_pages.select{|dp| dp.title == "Front Page" }[0]
+  end
   
   def Cardset.skeleton_line_regexp_MD
     /^\(\(\((?:[-]?)([CURM])([A-Z])([0-9][0-9])/
