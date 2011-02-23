@@ -319,7 +319,8 @@ function renderDate(span) {
         LocaleDate.setUTCFullYear(matches[1], matches[2] - 1, matches[3]);
         LocaleDate.setUTCHours(matches[4], matches[5], matches[6], 0);  
         minutes = LocaleDate.getMinutes() + "";
-        var date_out = month_names[LocaleDate.getMonth()] + " " + LocaleDate.getDate() + " " + LocaleDate.getFullYear() + ", " + LocaleDate.getHours() + ":" + (minutes.length == 1 ? "0" : "") + minutes + ":" + LocaleDate.getSeconds();
+        seconds = LocaleDate.getSeconds() + "";
+        var date_out = month_names[LocaleDate.getMonth()] + " " + LocaleDate.getDate() + " " + LocaleDate.getFullYear() + ", " + LocaleDate.getHours() + ":" + (minutes.length == 1 ? "0" : "") + minutes + ":" + (seconds.length == 1 ? "0" : "") + seconds;
         span.innerHTML = date_out;
     }
 }
