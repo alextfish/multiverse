@@ -1,10 +1,11 @@
 <%= form_for(@cardset) do |f| %>
-  <% if @cardset.errors.any? %>
+  <% errors = @cardset.errors.merge @cardset.configuration.errors %>
+  <% if errors.any? %>
     <div id="error_explanation">
-      <h2><%= pluralize(@cardset.errors.count, "error") %> prohibited this cardset from being saved:</h2>
+      <h2><%= pluralize(errors.count, "error") %> prohibited this cardset from being saved:</h2>
 
       <ul>
-      <% @cardset.errors.full_messages.each do |msg| %>
+      <% errors.full_messages.each do |msg| %>
         <li><%= msg %></li>
       <% end %>
       </ul>
@@ -91,27 +92,27 @@
       </div>
 
       <div class="config_section">
-        On
-        <% if !@cardset.new_record? %>
-          <%= link_to "cardlist", cardlist_cardset_path(@cardset) %>:
-        <% else %>
-          cardlist:
-        <% end %>
+        <%= config_fields.label :card_show_code, "Use card codes?" %>
+          <%= config_fields.check_box :card_show_code %>
+        <div class="helptext">Card codes are strings like CW01 used to identify a card's
+          role in the set. <%= @cardset.new_record? ? "Set skeletons" : link_to("Set skeletons", skeleton_cardset_path(@cardset)) %> work best with card codes enabled.</div>
+      </div>
+
+      <div class="config_section">
+        <% 'link_to_if !@cardset.new_record? && !@cardset.cards.empty?, "single card view", @cardset.cards.first'
+        %>
+        <%= config_fields.label :card_show_active, "Enable card 'active' status?" %>
+          <%= config_fields.check_box :card_show_active %>
+        <div class="helptext">If you enable the "active" status, some features like boosters will
+          only select from the active cards rather than all cards.</div>
+      </div>
+
+      <div class="config_section">
+        On <%= @cardset.new_record? ? "cardlist" : link_to("cardlist", cardlist_cardset_path(@cardset)) %>:
           <%= config_fields.label :cardlist_show_comments, "Show comments" %>
             <%= config_fields.check_box :cardlist_show_comments %>
           <%= config_fields.label :cardlist_show_code, "Show code" %>
             <%= config_fields.check_box :cardlist_show_code %>
-      </div>
-
-      <div class="config_section">
-        On <%= link_to_if !@cardset.new_record? && !@cardset.cards.empty?, "single card view", @cardset.cards.first %>:
-          <%= config_fields.label :card_show_code, "Show code" %>
-            <%= config_fields.check_box :card_show_code %>
-          <%= config_fields.label :card_show_active, "Show active" %>
-            <%= config_fields.check_box :card_show_active %>
-          <div class="helptext">Card codes are strings like CW01 used to identify a card's
-          role in the set. If you enable the "active" field, some features like boosters will
-          only select from the active cards rather than all cards.</div>
       </div>
 
     <% end %>

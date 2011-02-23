@@ -1,4 +1,4 @@
-<% dps_to_show = @cardset.details_pages.reject(&:new_record?).sort_by { |dp| dp.order || 0 } # &:order %>
+<% dps_to_show = @cardset.details_pages_except_front_page.reject(&:new_record?).sort_by { |dp| dp.order || 0 } # &:order %>
 
 <% if !@cardset.mechanics.empty? %>
   <%= link_to "Mechanics", cardset_mechanics_path(@cardset) %>
@@ -8,26 +8,33 @@
 <% end %>
 
 <% dps_to_show.each_with_index do |p, index| %>
-  <%= link_to_unless_current p.title, url_for([@cardset, p]) do %>
+  <% if current_page?([@cardset, p]) || (current_page?(:controller => "cardsets", :id => @cardset.id, :action => "skeleton") && p == @cardset.skeleton) %>
     <% # This entire block is only evaluated for the current details page (if any) %>
     <% current_order = p.order %>
     <% if permission_to?(:admin, @cardset) && current_order > 0 %>
-      <%= form_for [@cardset, p], :remote => true, :dataType => 'script' do |f| %>
+      <%= form_for [@cardset, p], :remote => true, :dataType => "script" do |f| %>
         <%= f.hidden_field :order, :value => p.order - 1 %>
         <%= image_submit_tag "moveleft.png", :alt => "Move this details page left",
                                            :title => "Move this details page left",
-                                           :class => "image_submit" %>
+                                           :class => "image_submit",
+                                           :id => "move_left_image",
+                                           :onclick => "$('move_left_image').disable(); $('move_left_image').src = '/images/ellipsis.png'; $('move_right_image').remove(); "
+                                           %>
       <% end %>
     <% end %>
     <%= p.title %>
     <% if permission_to?(:admin, @cardset) && current_order < dps_to_show.length-1 %>
-      <%= form_for [@cardset, p], :remote => true, :dataType => 'script' do |f| %>
+      <%= form_for [@cardset, p], :remote => true, :dataType => "script" do |f| %>
         <%= f.hidden_field :order, :value => p.order + 1 %>
         <%= image_submit_tag "moveright.png", :alt => "Move this details page right",
                                            :title => "Move this details page right",
-                                           :class => "image_submit" %>
+                                           :class => "image_submit",
+                                           :id => "move_right_image",
+                                           :onclick => "$('move_right_image').disable(); $('move_right_image').src = '/images/ellipsis.png'; $('move_left_image').remove(); " %>
       <% end %>
     <% end %>
+  <% else %>
+    <%= link_to p.title, url_for([@cardset, p]) %>
   <% end %>
   <% if index < dps_to_show.length-1 %>
     |

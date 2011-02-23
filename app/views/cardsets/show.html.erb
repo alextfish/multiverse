@@ -55,11 +55,20 @@
 
 <%= render "setviews" %>
 
+<% if @cardset.front_page %>
+  <%= format_all_markup @cardset.front_page.body, @cardset %>
+<% end %>
 
 <% if permission_to?(:admin, @cardset) %>
+  <p>
+    <% if @cardset.front_page %>
+      <%= link_to "Edit front page content", edit_cardset_details_page_path(@cardset, @cardset.front_page) %>
+      |
+    <% end %>
     <%= link_to "Delete entire cardset", @cardset,
       :confirm => "Really delete this whole cardset and all cards in it?",
       :method => :delete %>
+  </p>
 <% end %>
 
 <p>

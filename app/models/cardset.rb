@@ -217,10 +217,13 @@ class Cardset < ActiveRecord::Base
   
   ########################## Skeletons #########################  
   def skeleton
-    self.details_pages.select{|dp| dp.title == "Skeleton" }[0]
+    self.details_pages.select{|dp| dp.title == DetailsPage.SKELETON_TITLE }[0]
   end
   def front_page
-    self.details_pages.select{|dp| dp.title == "Front Page" }[0]
+    self.details_pages.select{|dp| dp.title == DetailsPage.FRONT_PAGE_TITLE }[0]
+  end
+  def details_pages_except_front_page
+    self.details_pages.reject{|dp| dp.title == DetailsPage.FRONT_PAGE_TITLE }
   end
   
   def Cardset.skeleton_line_regexp_MD

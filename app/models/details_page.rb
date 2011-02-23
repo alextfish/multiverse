@@ -21,9 +21,19 @@ class DetailsPage < ActiveRecord::Base
 
   before_create :decide_order
 
+  def DetailsPage.FRONT_PAGE_TITLE
+    "Front Page"
+  end
+  def DetailsPage.SKELETON_TITLE
+    "Skeleton"
+  end
   def decide_order
-    self.order = cardset.details_pages.length
     self.title.strip!
+    if self.title == DetailsPage.FRONT_PAGE_TITLE
+      self.order = -1
+    else
+      self.order = cardset.details_pages_except_front_page.length
+    end
   end
 
   def set_order(new_order)

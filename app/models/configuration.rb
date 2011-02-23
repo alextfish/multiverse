@@ -67,8 +67,7 @@ class Configuration < ActiveRecord::Base
   end ]
 
   validators.keys.each do |thisprop|
-    validates thisprop, :presence => true,
-                        :format   => { :with => validators[thisprop] }
+    validates thisprop, :format   => { :with => validators[thisprop] }
   end
 
   def legal_values

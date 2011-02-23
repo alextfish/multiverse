@@ -10,13 +10,24 @@
       </ul>
     </div>
   <% end %>
+  
+  <% title_change_disabled = (@details_page.title == "Skeleton") %>
 
-  <div class="field">
-    <%= f.label :title %>:     <%= f.text_field :title %>
+  <div style="float: right;">
+    <%= select_tag "special_titles", options_for_select([["Special titles:", ""], ["Front Page - will be shown on the cardset main page", "Front Page"], ["Skeleton - will have special table formatting and generation options", "Skeleton"]], :selected => @details_page.title),
+      { :onchange => "$('details_page_title').value = this.value",
+      :onkeyup => "$('details_page_title').value = this.value", :disabled => title_change_disabled } %>
   </div>
   <div class="field">
-    <%= f.label :body, "Content" %>
-      <%= render :partial => 'shared/markdown_short' -%>
+    <%= f.label :title, "Title:" %>
+    <%= f.text_field :title, :disabled => title_change_disabled %>
+    <% if title_change_disabled %>
+      <%= link_to_function "(Change title)", "$('details_page_title').enable(); $('special_titles').enable(); $('change_title_link').remove();", :id => "change_title_link" %>
+    <% end %>
+  </div>
+  <div class="field">
+    <%= f.label :body, "Content:" %>
+      <%= render :partial => "shared/markdown_short" -%>
   </div>
   <div class="field">
     <%= f.text_area :body, :rows=>"", :cols=>"" %>

@@ -6,7 +6,7 @@
     <%= link_to_unless_current "Booster", booster_cardset_path(@cardset) %> |
     <%= link_to_unless_current "Recent activity", recent_cardset_path(@cardset) %>
 </td></tr>
-<% if !@cardset.details_pages.empty? || !@cardset.mechanics.empty? %>
+<% if !@cardset.details_pages_except_front_page.empty? || !@cardset.mechanics.empty? %>
   <tr><td id="details_pages">
     <%= render "cardsets/details_pages" %>
   </td></tr>
