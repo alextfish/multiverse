@@ -247,6 +247,10 @@ function shrinkTextBox(textDiv, isPlaneswalker) {
 }
 
 function shrinkCardBits(cardDiv) {
+  if (cardDiv.getHeight() == 0) {
+    // Card is invisible: do nothing
+    return
+  }
   var nameDiv = cardDiv.getElementsByClassName("cardname")[0];
   var typeDiv = cardDiv.getElementsByClassName("cardtype")[0];
   var rarityDiv = cardDiv.getElementsByClassName("cardrarity")[0];
@@ -362,10 +366,14 @@ document.observe('dom:loaded', function() {
   $$('a.cardmockup[name]').each(function(element) {
     new Tip(element, mockupTipParams(element) ); // no content when using ajax
     element.observe('prototip:shown', function() {
-      $$("div.stand_alone_mockup").each(shrinkCardBits); 
-      // only shrink once the mockup is actually shown
-      $$("div.stand_alone_mockup").invoke('removeClassName', 'stand_alone_mockup');
-      // so it doesn't get repeatedly shrunk
+      $$("div.stand_alone_mockup").each(function(cardWrapperDiv) {
+        if (cardWrapperDiv.getHeight() > 0) {
+          shrinkCardBits(cardWrapperDiv);
+          // only shrink once the mockup is actually shown
+          cardWrapperDiv.removeClassName('stand_alone_mockup');
+          // so it doesn't get repeatedly shrunk
+        }
+      });     
     });
   });
 });
