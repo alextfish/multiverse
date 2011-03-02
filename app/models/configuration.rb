@@ -36,6 +36,7 @@ class Configuration < ActiveRecord::Base
     # :selected => "Selected users:"
   }
   admin_options = {
+    :anyone => "Anyone",
     :signedin => "Signed-in users",
     :justme => "Just owner",
     # :selected => "Selected users:"

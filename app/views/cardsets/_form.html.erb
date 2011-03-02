@@ -66,6 +66,7 @@
       <div class="config_section">
         Grant admin privileges to:
           <%= config_fields.select :adminability, @cardset.configuration.legal_values[:adminability].invert.to_a %>
+          <div class="helptext">Only the cardset owner can delete the cardset. But people with admin privileges can do everything else: edit and delete details pages, mechanics, and the set skeleton, and alter these configuration options.</div>
       </div>
 
       <div class="config_section">

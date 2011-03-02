@@ -1,5 +1,5 @@
 /***** Card display *****/
-.blackborder, .silverborder, .whiteborder, .purpleborder, .goldborder {
+.blackborder, div.wizardsimage, .silverborder, .whiteborder, .purpleborder, .goldborder {
   -moz-border-radius: 10px;
   -webkit-border-radius: 10px;
   -khtml-border-radius: 10px;
@@ -7,7 +7,7 @@
   border-width: 10px;
   border-style: solid; }
 
-.blackborder {
+.blackborder, div.wizardsimage {
   border-color: black; }
 
 .silverborder {
@@ -454,7 +454,7 @@
   -khtml-border-radius: 30px 30px 0px 0px / 12px 12px 0px 0px;
   border-radius: 30px 30px 0px 0px / 12px 12px 0px 0px; }
 
-.blackborder .Planeswalker .artist {
+.blackborder .Planeswalker .artist, div.wizardsimage .Planeswalker .artist {
   color: white;
   background: black; }
 
@@ -1042,3 +1042,8 @@ form #raritycell {
 .code_frame_L.code_not_shown {
   background-color: white;
   background: white; }
+
+div.wizardsimage {
+  width: 200px;
+  height: 285px;
+  align: center; }

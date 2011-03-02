@@ -622,3 +622,9 @@ form #raritycell { border: 1px solid black; }
 .code_frame_M.code_not_shown, .code_frame_Z.code_not_shown,
 .code_frame_L.code_not_shown { background-color: white; background: white; }
  
+div.wizardsimage {
+  @extend .blackborder;
+  width: 200px;
+  height: 285px;
+  align: center;
+}

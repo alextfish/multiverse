@@ -1,14 +1,18 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <title><% if Rails.env.development? %>MV Dev<% else %>Multiverse<% end %>: <%= @title %></title>
+    <title><% if Rails.env.development? %>MV Dev<% elsif request.domain =~ /staging/ %>MV Staging<% else %>Multiverse<% end %>: <%= @title %></title>
     <%= stylesheet_link_tag "Card", :media => "all" %>
     <%= stylesheet_link_tag "Multiverse", :media => "all" %>
     <%= stylesheet_link_tag "tablekit", :media => "screen" %>
+    <%= stylesheet_link_tag "prototip", :media => "screen" %>
     <!--[if lt IE 8]>
       <%= stylesheet_link_tag "Card_ie" %>
     <![endif]-->
     
+    <!-- Include prototype via Google APIs -->
+    <!-- script type="text/javascript" src="https://www.google.com/jsapi?key=ABQIAAAAamsVepxMT6ljrz3EN5w4RRQT-wLRTWe_ovoHgr2bIcWdkH-CwhRxqsVXAlZ_m7hwKPIO68bYiAMoXQ"></script>
+    <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/libs/prototype/1.7/prototype.js"></script -->
     <%= javascript_include_tag :defaults %>
     <%= csrf_meta_tag %>
     <!--[if lt IE 9]>
@@ -18,6 +22,7 @@
     <%= javascript_include_tag "fastinit.js" %>
     <%= javascript_include_tag "tablekit.js" %>
     <%= javascript_include_tag "droplicious.js" %>
+    <%= javascript_include_tag "prototip.js" %>
     <link rel="shortcut icon" href="/favicon.ico" />
   </head>
   <body>

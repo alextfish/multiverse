@@ -78,8 +78,10 @@ module SessionsHelper
         permitted_people = cardset.configuration.visibility
       when :edit
         permitted_people = cardset.configuration.editability
-      when :admin, :delete
+      when :admin
         permitted_people = cardset.configuration.adminability
+      when :delete
+        permitted_people = "justme"
       else
         raise "Bad input to permission_to?(#{action})"
     end

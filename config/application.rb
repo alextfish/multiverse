@@ -32,6 +32,11 @@ module Multiverse
 
     # JavaScript files you want as :defaults (application.js is always included).
     # config.action_view.javascript_expansions[:defaults] = %w(jquery rails)
+    # default value is: 
+    # config.action_view.javascript_expansions = { :defaults => ['prototype', 'effects', 'dragdrop', 'controls', 'rails'] }
+    # but I'm sourcing prototype via Google APIs, so I want to remove that
+    # except it doesn't work... never mind
+    # config.action_view.javascript_expansions = { :defaults => ['effects', 'dragdrop', 'controls', 'rails'] }
 
     # Configure the default encoding used in templates for Ruby 1.9.
     config.encoding = "utf-8"

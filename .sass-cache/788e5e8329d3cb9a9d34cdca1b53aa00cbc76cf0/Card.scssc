@@ -1,8 +1,8 @@
 3.0.24 (Classy Cassidy)
-c8843a4d2200fdc2c3481b7e06612856f6cba1bd
+dc439e49885c0701ea7721c8396ee19cd5312f92
 o:Sass::Tree::RootNode
 :
-@linei:@template"<a@mixin gradient_horz($start, $end) {
+@linei:@template"›a@mixin gradient_horz($start, $end) {
   filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#{$start}', endColorstr='#{$end}', GradientType=1);
   background: -webkit-gradient(linear, left top, right top, from($start), to($end));
   background: -moz-linear-gradient(left,  $start,  $end);
@@ -625,7 +625,13 @@ form #raritycell { border: 1px solid black; }
 .code_frame_H.code_not_shown,
 .code_frame_M.code_not_shown, .code_frame_Z.code_not_shown,
 .code_frame_L.code_not_shown { background-color: white; background: white; }
- :@children[(o:Sass::Tree::MixinDefNode;i;[o:Sass::Tree::PropNode;i;[ :@prop_syntax:new:@valueo: Sass::Script::Interpolation:@aftero:Sass::Script::String
+ 
+div.wizardsimage {
+  @extend .blackborder;
+  width: 200px;
+  height: 285px;
+  align: center;
+}:@children[)o:Sass::Tree::MixinDefNode;i;[o:Sass::Tree::PropNode;i;[ :@prop_syntax:new:@valueo: Sass::Script::Interpolation:@aftero:Sass::Script::String
 :@context:default;i:
 @type:identifier;"', GradientType=1):@options{ :@originally_textF:	@mido:Sass::Script::Variable	;;;i;@:
 @name"end;@:@whitespace_afterF:@beforeo;;o;
@@ -1333,4 +1339,11 @@ width;-i o;
 ;io;[ ;;;o;;;;;;"
 white;@;["background-color;-i o;
 ;io;[ ;;;o;;;;;;"
-white;@;["background;-i ;5T;@;-i ;5T;@
+white;@;["background;-i ;5T;@;-i o;>;iq;?["div.wizardsimage;[	o;O	;P["."blackborder;ir;[ ;@o;
+;is;[ ;;;o;;;;;;"
+200px;@;["
+width;-i o;
+;it;[ ;;;o;;;;;;"
+285px;@;["height;-i o;
+;iu;[ ;;;o;;;;;;"center;@;["
+align;-i ;5T;@;-i ;5T;@

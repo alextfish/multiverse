@@ -328,3 +328,42 @@ function renderAllDatesAndTimes() {
     $$("span.date").each(renderDate);
 }
 Event.observe(window, 'load', renderAllDatesAndTimes);
+
+
+///// Preview card images /////
+wizardsTipParams = {
+  hook: { tip: 'topLeft', mouse: true },
+  offset: { x: 14, y: -54 }
+};
+function mockupTipParams(linkElement) {
+  return {
+    hook: { tip: 'topLeft', mouse: true },
+    offset: { x: 14, y: -54 },
+    ajax: {
+      url: '/cards/' + linkElement.name + '/mockup',
+      options: {
+        method: 'get',
+        onSuccess: function() { }
+      }
+    }
+  };
+};
+function createBlackBorderImage(src) {
+  div = new Element('div', {'class': 'blackborder wizardsimage'});
+  div.appendChild(new Element('img', {'src': src, 'alt': "No card by that name found"}));
+  div.appendChild(new Element('br'));
+  div.appendChild(document.createTextNode("No card by that name found"));
+  return div
+}
+document.observe('dom:loaded', function() {
+  $$('a.wizardscard[name]').each(function(element) {
+    new Tip(element, createBlackBorderImage(element.name), wizardsTipParams);
+  });
+  $$('a.cardmockup[name]').each(function(element) {
+    new Tip(element, mockupTipParams(element) ); // no content when using ajax
+    element.observe('prototip:shown', function() {
+      $$("div.stand_alone_mockup").each(shrinkCardBits); 
+      // only shrink once the mockup is actually shown
+    });
+  });
+});

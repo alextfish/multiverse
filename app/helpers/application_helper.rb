@@ -209,14 +209,14 @@ module ApplicationHelper
   def cardset_card_link(cardset, cardname, link_content, cardset_cardnames_and_codes, cardset_cards_from_name_or_code)
     if cardset_cardnames_and_codes.include?(cardname)
       card = cardset_cards_from_name_or_code[cardname]
-      "<a href=\"#{url_for(card)}\">#{link_content}</a>"
+      "<a class=\"cardmockup\" name=\"#{card.id}\" href=\"#{url_for(card)}\">#{link_content}</a>"
     elsif link_content =~ Card.bar_code_regexp
       # Link to a bar code. If the cardset has this code, link to that card by name
       # If the cardset doesn't have this code, offer to create it
       actual_code = link_content.slice(Card.code_regexp)
       if cardset_cardnames_and_codes.include?(actual_code)
         card = cardset_cards_from_name_or_code[actual_code]
-        "<a href=\"#{url_for(card)}\">#{actual_code} #{card.name}</a>"
+        "<a class=\"cardmockup\" name=\"#{card.id}\" href=\"#{url_for(card)}\">#{actual_code} #{card.name}</a>"
       else
         link_to "(#{actual_code})", new_card_path(:cardset_id => cardset.id, :code => actual_code)
       end
@@ -228,11 +228,14 @@ module ApplicationHelper
     end
   end
   def wizards_card_link(cardname, link_content)
-    "<a href=\"http://gatherer.wizards.com/Pages/Search/Default.aspx?name=+[%22#{URI.escape(cardname)}%22]\">#{link_content}</a>"
+    "<a class=\"wizardscard\" href=\"http://gatherer.wizards.com/Pages/Search/Default.aspx?name=+[%22#{URI.escape(cardname)}%22]\" name=\"#{wizards_card_image_path(cardname)}\">#{link_content}</a>"
   end
   def wizards_card_image(cardname)
-    image_name = ActiveSupport::Inflector::parameterize(cardname, '_').gsub('-','_')
-    wizards_card_link(cardname, image_tag("http://www.wizards.com/global/images/magic/general/#{image_name}.jpg", :alt => "[[#{cardname}]]", :class => "CardImage"))
+    wizards_card_link(cardname, image_tag(wizards_card_image_path(cardname), :alt => "[[#{cardname}]]", :class => "CardImage"))
+  end
+  def wizards_card_image_path(cardname)
+    image_name = ActiveSupport::Inflector::parameterize(cardname.gsub("'", ''), '_').gsub('-','_')
+    "http://www.wizards.com/global/images/magic/general/#{image_name}.jpg"
   end
   def cardset_card_image(cardset, cardname, cardset_cardnames_and_codes, cardset_cards_from_name_or_code)
     if cardset_cardnames_and_codes.include?(cardname)

@@ -108,6 +108,11 @@ class CardsController < ApplicationController
       render :action => "edit"
     end
   end
+  
+  # GET /cards/1/mockup - via Ajax
+  def mockup
+    @printable = true
+  end
 
   # DELETE /cards/1
   def destroy
