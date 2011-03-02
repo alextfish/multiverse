@@ -364,6 +364,8 @@ document.observe('dom:loaded', function() {
     element.observe('prototip:shown', function() {
       $$("div.stand_alone_mockup").each(shrinkCardBits); 
       // only shrink once the mockup is actually shown
+      $$("div.stand_alone_mockup").invoke('removeClassName', 'stand_alone_mockup');
+      // so it doesn't get repeatedly shrunk
     });
   });
 });
