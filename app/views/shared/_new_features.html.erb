@@ -1,6 +1,6 @@
 <% 
-  update_date = Time.gm(2011,2,23,21,36,41);
-  update_title = "New Feature: Front Page";
+  update_date = Time.gm(2011,3,2,1,41,50);
+  update_title = "New Feature: Tooltip Card Images and Mockups";
   
 news_latest_update = {
   :date => update_date,
@@ -8,7 +8,17 @@ news_latest_update = {
   :body => <<ENDBODY };
 
 
+----
+
 ### #{update_title}
+#### Wed Mar 3 01:41:50 2011
+A nifty new enhancement went live today. Whenever you're looking at a comment or details page that includes links created with [[[triple brackets]]] or (((triple parens))), if you move your mouse cursor over the link, the target will pop up in a preview window. This works with links to printed Wizards cards in [[[triple square brackets]]], and links to other cards in the cardset in triple parens - in any of the three forms (((Card name))), (((CW01))) (card code), or (((-CW01))) (expand card code to show card name as well).
+
+This means that discussions like [this one](http://multiverse.heroku.com/cards/2042) will be rather easier to follow. It means that [set skeletons](http://multiverse.heroku.com/cardsets/14/details_pages/29) will preview each card that exists (i.e. its code is not parenthesised) as you mouseover those codes. And it also means when you're posting a comment, if you name an existing card or a card in the same cardset, it's a really good idea to use the triple-bracket or triple-paren links, because it makes it much easier for people to follow what you're saying!
+
+----
+
+### New Feature: Front Page
 #### Wed Feb 23 21:36:41 2011
 A new feature today, for those of you who've been wanting to customise your cardset's first impressions. You can now create a details page called "Front Page", which won't display in the normal list of details pages; instead, it'll display at the top of your cardset's main page, just after the cardset description and before any highlighted comments. You can use this to show off some of your most interesting cards, by typing ((Cardname)) into the text of the details page. See [Clockwork Wings](http://multiverse.heroku.com/cardsets/32) for an example. 
 
