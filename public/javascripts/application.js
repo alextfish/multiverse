@@ -368,7 +368,8 @@ document.observe('dom:loaded', function() {
     element.observe('prototip:shown', function() {
       $$("div.stand_alone_mockup").each(function(cardWrapperDiv) {
         if (cardWrapperDiv.getHeight() > 0) {
-          shrinkCardBits(cardWrapperDiv);
+          var cardDiv = cardWrapperDiv.firstElementChild.firstElementChild;
+          shrinkCardBits(cardDiv);
           // only shrink once the mockup is actually shown
           cardWrapperDiv.removeClassName('stand_alone_mockup');
           // so it doesn't get repeatedly shrunk
