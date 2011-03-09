@@ -571,6 +571,47 @@ $Multicolour_Background: #CAB86C;
   background-color: #eeeeee;
 }
 
+/***** Dominion *****/
+.Dominion.card {
+  padding-left: 0px;
+  padding-right: 0px;
+}
+.Dominion.Treasure {
+  background-color: #ec6;
+}
+.Dominion .pinline_box, .Dominion .pinline_sides, .Dominion .pinline_sidesbottom, .Dominion .pinline_sides > div, .Dominion .pinline_sidesbottom > div, .Dominion .cardtitlebar { border: 0px; padding: 0px 0px 0px 0px;
+}
+.Dominion .cardname {
+  float: none;
+  display: inline;
+  padding-right: 2px;}
+.Dominion .cardtitlebar {
+  text-align: center;
+text-transform:uppercase;
+font-size: 18px;
+}
+.Dominion .cardart {
+  background: white;
+  padding: 0px;
+}
+.Dominion .cardtext {
+  background: #bbb;
+  text-align: center;
+  padding: 0px;
+}
+.Dominion .cardart_container, .Dominion .cardtext_container {
+  padding: 0px;
+}
+.Dominion .cardtypebar { position: absolute; bottom: 0px; width: 100%; border: 0px;  
+  text-align: center;
+text-transform:uppercase;
+}
+.Dominion .cardtext img { height: 3em;}
+
+.Dominion .cardmanacost { position: absolute; bottom: 0px; left: 4px; }
+.Dominion .cardmanacost img { height: 1em; width: 1em; }
+
+
 /***** Card editing *****/
 
 #card_supertype, #card_cardtype, #card_subtype { width: 100px; }
@@ -588,6 +629,11 @@ form #raritycell { border: 1px solid black; }
     width: 80px; height: 41px; /* img is 51px high, minus the 10px top padding */
     padding: 10px 0px 0px 0px; }
 .Planeswalker.form .pinline_ptbox.pinline { top: -36px; }
+
+div.history_box_limited { overflow: auto;
+ height: 50%;
+}
+td.form_info_cell { color: #666; }
 
 /***** Skeletons *****/
 .skeleton_letter_toggle.code_shown#rarity_C_toggle { @extend .cardrarity.common; }
@@ -627,4 +673,6 @@ div.wizardsimage {
   width: 200px;
   height: 285px;
   align: center;
+  background-color: white;
+  color: red;
 }

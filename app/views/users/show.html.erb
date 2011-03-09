@@ -1,19 +1,11 @@
 <h1><%= @title = @user.name %></h1>
 
-<!-- p>
-  <b>Name:</b>
-  <%= @user.name %>
-</p>
-
-<p>
-  <b>Email:</b>
-  <%= @user.email %>
-</p -->
-
 <%= render @user %>
 
-<p><%= link_to "Create new cardset", new_cardset_path %> |
-<% if @user == current_user %>
-  <%= link_to 'Edit profile', edit_user_path(@user) %> |
-<% end %>
-<%= link_to 'All users', users_path %>
+<p>
+  <%= link_to "Create new cardset", new_cardset_path %> |
+  <% if @user == current_user %>
+    <%= link_to "Edit profile", edit_user_path(@user) %> |
+  <% end %>
+  <%= link_to "All users", users_path %>
+</p>

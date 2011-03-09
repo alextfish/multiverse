@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html>
+  <% if !@embedded %>
   <head>
     <title><% if Rails.env.development? %>MV Dev<% elsif request.domain =~ /staging/ %>MV Staging<% else %>Multiverse<% end %>: <%= @title %></title>
     <%= stylesheet_link_tag "Card", :media => "all" %>
@@ -23,11 +24,13 @@
     <%= javascript_include_tag "tablekit.js" %>
     <%= javascript_include_tag "droplicious.js" %>
     <%= javascript_include_tag "prototip.js" %>
+    <%= javascript_include_tag "fabtabulous.js" %>
     <link rel="shortcut icon" href="/favicon.ico" />
   </head>
+  <% end %>
   <body>
 
-    <% if !@printable %>
+    <% if !@printable && !@embedded %>
       <%= render "layouts/header" %>
     <% end %>
 
@@ -37,7 +40,7 @@
 
     <%= yield %>
 
-    <% if !@printable %>
+    <% if !@printable && !@embedded %>
       <%= render "layouts/footer" %>
     <% end %>
 

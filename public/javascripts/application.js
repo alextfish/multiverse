@@ -378,3 +378,43 @@ document.observe('dom:loaded', function() {
     });
   });
 });
+
+document.observe('dom:loaded', function() {
+  card_tooltips = {} // global hash
+  var site_url = /(^.*:\/\/[^\/]+)/.exec(window.location.href)[1];
+  var card_link_regex = new RegExp ( site_url + "cards\/([0-9]+)($|[#?])");
+  $$("a[href]").each( function(element){
+    if (card_link_regex.exec(element.href)) {
+      card_id = $1;
+      tooltip_div = makeTooltipDiv(card_id);
+      new Tip ( element, tooltip_div, {
+        on_show: getTooltipContent(card_id, tooltip_div.id)
+      });
+    }
+  });
+});
+function makeTooltipDiv(card_id){
+  div_id = "card_tooltip_" + card_id;
+  while ( $(div_id) ) {
+    div_id += "_2"
+  }
+  // now we have an unused id
+  div = new Element ("div", "class", "tooltip_wrapper", "id", div_id)
+  div.appendChild( new Element ("div", "class", "card blackborder").appendChild ( document.createTextNode("Loading") ));
+  return div;
+}
+function getTooltipContent(card_id, div_id){
+  render = card_tooltips[""+card_id]; // returns a div object
+  if (!render) {
+    alert("create ajax request")
+    alert("onSuccess = ajaxRenderSuccess(card_id, div_id, content)")
+  } else {
+    div = $(div_id);
+    div.appendChild(render);
+  }
+}
+function ajaxRenderSuccess(card_id, div_id, content) {
+  div = $(div_id);
+  div.update ( content );
+  card_tooltips[""+card_id] = div.firstElementChild;
+}

@@ -112,6 +112,7 @@ class CardsController < ApplicationController
   # GET /cards/1/mockup - via Ajax
   def mockup
     @printable = true
+    @embedded = true
   end
 
   # DELETE /cards/1

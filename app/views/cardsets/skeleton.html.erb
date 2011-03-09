@@ -3,8 +3,6 @@
 
      <%= render "cardsets/setviews" %>
 
-<%= javascript_include_tag "fabtabulous.js" %>
-
 <br>
 <ul class="cardtabs" id="tabs">
  <li><a href="#about"    id="about_link"   >About</a></li>
@@ -343,7 +341,6 @@
 
 <!-- ----------------------- View tab ----------------------- -->
 
-<% Rails.logger.info @skeleton.inspect %>
 <% if !@skeleton.nil? %>
   <div class="onetab" id="view"><a name="view"></a>
     <% present_frame_letters = @skeleton.body.lines.grep(Cardset.skeleton_line_regexp_MD) do |line|

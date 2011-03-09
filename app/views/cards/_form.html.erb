@@ -112,6 +112,23 @@
 
   <td>                     <!-- controls, comments etc -->
    <table>
+    <% code = @card.code || params[:code]%>
+    <% if !code.blank? && @cardset.skeleton %>
+     <tr>
+      <td class="form_info_cell">Skeleton row</td>
+      <td>
+        <% skeleton_row = @cardset.get_skeleton_row(code) %>
+        <% if !skeleton_row.blank? %>
+         <div>
+           <% mini_table = @cardset.get_skeleton_header_rows + skeleton_row %>
+           <%= format_skeleton_table(format_all_markup(mini_table, @cardset)) %>
+         </div>
+        <% else %>
+          <div>No skeleton entry for code "<%= code %>" found</div>
+        <% end %>
+      </td>
+     </tr>
+    <% end %>
     <tr>
      <td><%= f.label :image_url, "URL for whole card image" %>
      <td><%= f.text_field :image_url, :class => "image_url_field" %>
@@ -154,43 +171,57 @@
       <%= f.submit %>
      </td>
     </tr>
-    <tr>
-     <td colspan="2">
-      <div class="helptext">
-        <p id="nonplaneswalker">
-        Enter mana symbols like this: 
-        <br><code>{2}{U}{U/R}, {T}</code> becomes <%= format_mana_symbols("{2}{U}{U/R}, {T}") %>
-        </p>
-        <p id="planeswalker">On planeswalkers, <code>[+1]</code> becomes <span class="loyalty_container"><span class="loyalty positive">+1</span></span>
-        </p>
-       <% if !@cardset.mechanics.empty? %>
-         <p>
-         Enter <%= link_to "mechanics", cardset_mechanics_path(@cardset) %> like this:
-         <% @cardset.mechanics.all.each do |mech| %>
-           <% src_no_reminder, src_with_reminder, target_no_reminder, target_with_reminder = mech.regexps 
-           string_with_reminder = src_with_reminder.inspect.sub(Mechanic.one_param, "AA").sub(Mechanic.one_param, "BB").gsub(/\\|\//, "")
-           string_no_reminder = src_no_reminder.inspect.sub(Mechanic.one_param, "AA").sub(Mechanic.one_param, "BB").gsub(/\\|\//, "") %>
-           <br><code><%= string_with_reminder %></code> for <%= mech.name %>
-           <% if !mech.reminder.blank? %>
-             <br><code><%= string_no_reminder %></code> for <%= mech.name %> without reminder text
-           <% end %>
+   </table>
+   <% if !@card.new_record? %>
+     <br>
+     <div>
+       <ul class="cardtabs" id="tabs">
+        <li><a href="#editing_help" id="editing_help_link">Help</a></li>
+        <li><a href="#history">History</a></li>
+       </ul>
+     </div>
+   <% end %>
+   <div class="helptext onetab active-tab-body" id="editing_help">
+      <p id="nonplaneswalker">
+      Enter mana symbols like this: 
+      <br><code>{2}{U}{U/R}, {T}</code> becomes <%= format_mana_symbols("{2}{U}{U/R}, {T}") %>
+      </p>
+      <p id="planeswalker">On planeswalkers, <code>[+1]</code> becomes <span class="loyalty_container"><span class="loyalty positive">+1</span></span>
+      </p>
+     <% if !@cardset.mechanics.empty? %>
+       <p>
+       Enter <%= link_to "mechanics", cardset_mechanics_path(@cardset) %> like this:
+       <% @cardset.mechanics.all.each do |mech| %>
+         <% src_no_reminder, src_with_reminder, target_no_reminder, target_with_reminder = mech.regexps 
+         string_with_reminder = src_with_reminder.inspect.sub(Mechanic.one_param, "AA").sub(Mechanic.one_param, "BB").gsub(/\\|\//, "")
+         string_no_reminder = src_no_reminder.inspect.sub(Mechanic.one_param, "AA").sub(Mechanic.one_param, "BB").gsub(/\\|\//, "") %>
+         <br><code><%= string_with_reminder %></code> for <%= mech.name %>
+         <% if !mech.reminder.blank? %>
+           <br><code><%= string_no_reminder %></code> for <%= mech.name %> without reminder text
          <% end %>
-         </p>
        <% end %>
-       <p>Abbreviations supported: 
+       </p>
+     <% end %>
+     <p>Abbreviations supported: 
 <br><code>ETBs</code> becomes <code>enters the battlefield</code>
 <br><code>UEOT</code> becomes <code>until end of turn</code>
 <br><code>CMC</code> becomes <code>converted mana cost</code>
 <br><code>~</code>, <code>~this~</code> and <code>CARDNAME</code>
 become the card's name
 <br>Surround with asterisks for <i>*italics*</i> and double-asterisks for <b>**bold**</b>
-        </p>
-      </div>
-     </td>
-    </tr>
-   </table>
+      </p>
+    </div>
+    <% if !@card.new_record? %>
+    <div class="onetab" id="history">
+      <%= render "history" %>
+    </div>
+    <% end %>
   </td>
  </tr>
 </table>
 
+   <script type="text/javascript">
+     new Fabtabs("tabs", "editing_help_link");
+   </script>
+   
 <% end %>

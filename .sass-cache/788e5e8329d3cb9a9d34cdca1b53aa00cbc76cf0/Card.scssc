@@ -1,8 +1,8 @@
 3.0.24 (Classy Cassidy)
-dc439e49885c0701ea7721c8396ee19cd5312f92
+719156709b0a033078d8e6456432002ed382b796
 o:Sass::Tree::RootNode
 :
-@linei:@template"›a@mixin gradient_horz($start, $end) {
+@linei:@template"Af@mixin gradient_horz($start, $end) {
   filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#{$start}', endColorstr='#{$end}', GradientType=1);
   background: -webkit-gradient(linear, left top, right top, from($start), to($end));
   background: -moz-linear-gradient(left,  $start,  $end);
@@ -575,6 +575,47 @@ $Multicolour_Background: #CAB86C;
   background-color: #eeeeee;
 }
 
+/***** Dominion *****/
+.Dominion.card {
+  padding-left: 0px;
+  padding-right: 0px;
+}
+.Dominion.Treasure {
+  background-color: #ec6;
+}
+.Dominion .pinline_box, .Dominion .pinline_sides, .Dominion .pinline_sidesbottom, .Dominion .pinline_sides > div, .Dominion .pinline_sidesbottom > div, .Dominion .cardtitlebar { border: 0px; padding: 0px 0px 0px 0px;
+}
+.Dominion .cardname {
+  float: none;
+  display: inline;
+  padding-right: 2px;}
+.Dominion .cardtitlebar {
+  text-align: center;
+text-transform:uppercase;
+font-size: 18px;
+}
+.Dominion .cardart {
+  background: white;
+  padding: 0px;
+}
+.Dominion .cardtext {
+  background: #bbb;
+  text-align: center;
+  padding: 0px;
+}
+.Dominion .cardart_container, .Dominion .cardtext_container {
+  padding: 0px;
+}
+.Dominion .cardtypebar { position: absolute; bottom: 0px; width: 100%; border: 0px;  
+  text-align: center;
+text-transform:uppercase;
+}
+.Dominion .cardtext img { height: 3em;}
+
+.Dominion .cardmanacost { position: absolute; bottom: 0px; left: 4px; }
+.Dominion .cardmanacost img { height: 1em; width: 1em; }
+
+
 /***** Card editing *****/
 
 #card_supertype, #card_cardtype, #card_subtype { width: 100px; }
@@ -592,6 +633,11 @@ form #raritycell { border: 1px solid black; }
     width: 80px; height: 41px; /* img is 51px high, minus the 10px top padding */
     padding: 10px 0px 0px 0px; }
 .Planeswalker.form .pinline_ptbox.pinline { top: -36px; }
+
+div.history_box_limited { overflow: auto;
+ height: 50%;
+}
+td.form_info_cell { color: #666; }
 
 /***** Skeletons *****/
 .skeleton_letter_toggle.code_shown#rarity_C_toggle { @extend .cardrarity.common; }
@@ -631,7 +677,9 @@ div.wizardsimage {
   width: 200px;
   height: 285px;
   align: center;
-}:@children[)o:Sass::Tree::MixinDefNode;i;[o:Sass::Tree::PropNode;i;[ :@prop_syntax:new:@valueo: Sass::Script::Interpolation:@aftero:Sass::Script::String
+  background-color: white;
+  color: red;
+}:@children[8o:Sass::Tree::MixinDefNode;i;[o:Sass::Tree::PropNode;i;[ :@prop_syntax:new:@valueo: Sass::Script::Interpolation:@aftero:Sass::Script::String
 :@context:default;i:
 @type:identifier;"', GradientType=1):@options{ :@originally_textF:	@mido:Sass::Script::Variable	;;;i;@:
 @name"end;@:@whitespace_afterF:@beforeo;;o;
@@ -1289,45 +1337,82 @@ o;@
 ;i2;[ ;;;o;;;;;;"#D2CCC0;@;["background;-i ;5T;@;-i o;>;i4;?[".Hybrid .ptbox;[o;
 ;i5;[ ;;;o;;;;;;"#D2CCC0 !important;@;["background;-i ;5T;@;-i o;>;i7;?["1.Hybrid .pinline_ptbox, .Land .pinline_ptbox;[o;
 ;i8;[ ;;;o;;;;;;"#e2dCd0 !important;@;["background;-i ;5T;@;-i o;>;i:;?[".Hybrid .cardart;[o;
-;i;;[ ;;;o;;;;;;"#eeeeee;@;["background-color;-i ;5T;@;-i o;;;i>;<0;[ ;"/***** Card editing *****/;@;=[ o;>;i@;?["3#card_supertype, #card_cardtype, #card_subtype;[o;
-;i@;[ ;;;o;;;;;;"
-100px;@;["
-width;-i ;5T;@;-i o;>;iA;?["#card_rarity;[o;
-;iA;[ ;;;o;;;;;;"6px;@;["margin-top;-i o;
-;iA;[ ;;;o;;;;;;"6px;@;["margin-bottom;-i ;5T;@;-i o;>;iB;?["!#card_power, #card_toughness;[o;
-;iB;[ ;;;o;;;;;;"	20px;@;["
-width;-i ;5T;@;-i o;>;iC;?[".flavourtextfield;[o;
-;iC;[ ;;;o;;;;;;"italic;@;["font-style;-i o;
-;iD;[ ;;;o;;;;;;"98%;@;["
-width;-i ;5T;@;-i o;>;iE;?[".rulestextfield;[o;
-;iE;[ ;;;o;;;;;;"98%;@;["
-width;-i ;5T;@;-i o;>;iF;?[".art_url_field;[o;
-;iF;[ ;;;o;;;;;;"98%;@;["
-width;-i ;5T;@;-i o;>;iG;?["*.image_url_field, .edit_comment_field;[o;
-;iG;[ ;;;o;;;;;;"
-400px;@;["
-width;-i ;5T;@;-i o;>;iH;?["form #raritycell;[o;
-;iH;[ ;;;o;;;;;;"1px solid black;@;["border;-i ;5T;@;-i o;>;iI;?["8.Planeswalker #power_field, .Planeswalker #pt_slash;[o;
-;iI;[ ;;;o;;;;;;"	none;@;["display;-i ;5T;@;-i o;>;iJ;?[".Planeswalker .notptbox;[o;
-;iJ;[ ;;;o;;;;;;"	none;@;["border;-i o;
-;iK;[ ;;;o;
-;;;iK;;;"!url(/images/loyalty_big.png);{ ;@;["background-image;-i o;
-;iL;[ ;;;o;;;;;;"	80px;@;["
+;i;;[ ;;;o;;;;;;"#eeeeee;@;["background-color;-i ;5T;@;-i o;;;i>;<0;[ ;"/***** Dominion *****/;@;=[ o;>;i?;?[".Dominion.card;[o;
+;i@;[ ;;;o;;;;;;"0px;@;["padding-left;-i o;
+;iA;[ ;;;o;;;;;;"0px;@;["padding-right;-i ;5T;@;-i o;>;iC;?[".Dominion.Treasure;[o;
+;iD;[ ;;;o;;;;;;"	#ec6;@;["background-color;-i ;5T;@;-i o;>;iF;?["¯.Dominion .pinline_box, .Dominion .pinline_sides, .Dominion .pinline_sidesbottom, .Dominion .pinline_sides > div, .Dominion .pinline_sidesbottom > div, .Dominion .cardtitlebar;[o;
+;iF;[ ;;;o;;;;;;"0px;@;["border;-i o;
+;iF;[ ;;;o;;;;;;"0px 0px 0px 0px;@;["padding;-i ;5T;@;-i o;>;iH;?[".Dominion .cardname;[o;
+;iI;[ ;;;o;;;;;;"	none;@;["
+float;-i o;
+;iJ;[ ;;;o;;;;;;"inline;@;["display;-i o;
+;iK;[ ;;;o;;;;;;"2px;@;["padding-right;-i ;5T;@;-i o;>;iL;?[".Dominion .cardtitlebar;[o;
+;iM;[ ;;;o;;;;;;"center;@;["text-align;-i o;
+;iN;[ ;;;o;;;;;;"uppercase;@;["text-transform;-i o;
+;iO;[ ;;;o;;;;;;"	18px;@;["font-size;-i ;5T;@;-i o;>;iQ;?[".Dominion .cardart;[o;
+;iR;[ ;;;o;;;;;;"
+white;@;["background;-i o;
+;iS;[ ;;;o;;;;;;"0px;@;["padding;-i ;5T;@;-i o;>;iU;?[".Dominion .cardtext;[o;
+;iV;[ ;;;o;;;;;;"	#bbb;@;["background;-i o;
+;iW;[ ;;;o;;;;;;"center;@;["text-align;-i o;
+;iX;[ ;;;o;;;;;;"0px;@;["padding;-i ;5T;@;-i o;>;iZ;?["@.Dominion .cardart_container, .Dominion .cardtext_container;[o;
+;i[;[ ;;;o;;;;;;"0px;@;["padding;-i ;5T;@;-i o;>;i];?[".Dominion .cardtypebar;[o;
+;i];[ ;;;o;;;;;;"absolute;@;["position;-i o;
+;i];[ ;;;o;;;;;;"0px;@;["bottom;-i o;
+;i];[ ;;;o;;;;;;"	100%;@;["
 width;-i o;
-;iL;[ ;;;o;;;;;;"	41px;@;["height;-i o;;;iL;<0;[ ;"7/* img is 51px high, minus the 10px top padding */;@;=[ o;
-;iM;[ ;;;o;;;;;;"10px 0px 0px 0px;@;["padding;-i ;5T;@;-i o;>;iN;?["..Planeswalker.form .pinline_ptbox.pinline;[o;
-;iN;[ ;;;o;6;7"
--36px;;;iN;i×;8[ ;{ ;9["px;@;["top;-i ;5T;@;-i o;;;iP;<0;[ ;"/***** Skeletons *****/;@;=[ o;>;iQ;?["7.skeleton_letter_toggle.code_shown#rarity_C_toggle;[o:Sass::Tree::ExtendNode	:@selector[	"."cardrarity"."common;iQ;[ ;@;5T;@;-i o;>;iR;?["7.skeleton_letter_toggle.code_shown#rarity_U_toggle;[o;O	;P["."uncommon;iR;[ ;@;5T;@;-i o;>;iS;?["7.skeleton_letter_toggle.code_shown#rarity_R_toggle;[o;O	;P["."	rare;iS;[ ;@;5T;@;-i o;>;iT;?["7.skeleton_letter_toggle.code_shown#rarity_M_toggle;[o;O	;P["."mythic;iT;[ ;@;5T;@;-i o;>;iU;?[".code_frame_W;[o;
-;iU;[ ;;;o;	;;;iU;{ ;"Land_White_Text;@;["background-color;-i ;5T;@;-i o;>;iV;?[".code_frame_U;[o;
-;iV;[ ;;;o;	;;;iV;{ ;"Land_Blue_Text;@;["background-color;-i ;5T;@;-i o;>;iW;?[".code_frame_B;[o;
-;iW;[ ;;;o;	;;;iW;{ ;"Land_Black_Text;@;["background-color;-i ;5T;@;-i o;>;iX;?[".code_frame_R;[o;
-;iX;[ ;;;o;	;;;iX;{ ;"Land_Red_Text;@;["background-color;-i ;5T;@;-i o;>;iY;?[".code_frame_G;[o;
-;iY;[ ;;;o;	;;;iY;{ ;"Land_Green_Text;@;["background-color;-i ;5T;@;-i o;>;iZ;?[".code_frame_A;[o;
-;iZ;[ ;;;o;	;;;iZ;{ ;"Artifact_Text;@;["background-color;-i ;5T;@;-i o;>;i[;?["!.code_frame_M, .code_frame_Z;[o;
-;i[;[ ;;;o;	;;;i[;{ ;"Multicolour_Background;@;["background-color;-i ;5T;@;-i o;>;i\;?[".code_frame_H;[o;@
-;i\;[ ;@;"gradient_horz_padded;/[o;	;;;i\;{ ;"Land_White_Texto;	;;;i\;@­;"Land_Black_Text;5T;@;-i o;>;i];?[".code_frame_L;[o;
-;i];[ ;;;o;	;;;i];{ ;"Land_Colourless_Bar;@;["background-color;-i ;5T;@;-i o;>;i^;?["?.code_rarity_C td.code_link, .code_rarity_C td.code_link a;[o;O	;P[	"."cardrarity"."common;i_;[ ;@o;
-;i`;[ ;;;o;;;;;;"1px 0 #888888;@;["text-shadow;-i ;5T;@;-i o;>;ib;?[" .code_rarity_U td.code_link;[o;O	;P["."uncommon;ib;[ ;@;5T;@;-i o;>;ic;?[" .code_rarity_R td.code_link;[o;O	;P["."	rare;ic;[ ;@;5T;@;-i o;>;id;?[" .code_rarity_M td.code_link;[o;O	;P["."mythic;id;[ ;@;5T;@;-i o;;;ie;<0;[ ;"//* td.code_link { text-align: center; } */;@;=[ o;>;io;?["*.code_frame_W.code_not_shown,
+;i];[ ;;;o;;;;;;"0px;@;["border;-i o;
+;i^;[ ;;;o;;;;;;"center;@;["text-align;-i o;
+;i_;[ ;;;o;;;;;;"uppercase;@;["text-transform;-i ;5T;@;-i o;>;ia;?[".Dominion .cardtext img;[o;
+;ia;[ ;;;o;;;;;;"3em;@;["height;-i ;5T;@;-i o;>;ic;?[".Dominion .cardmanacost;[o;
+;ic;[ ;;;o;;;;;;"absolute;@;["position;-i o;
+;ic;[ ;;;o;;;;;;"0px;@;["bottom;-i o;
+;ic;[ ;;;o;;;;;;"4px;@;["	left;-i ;5T;@;-i o;>;id;?[" .Dominion .cardmanacost img;[o;
+;id;[ ;;;o;;;;;;"1em;@;["height;-i o;
+;id;[ ;;;o;;;;;;"1em;@;["
+width;-i ;5T;@;-i o;;;ig;<0;[ ;"/***** Card editing *****/;@;=[ o;>;ii;?["3#card_supertype, #card_cardtype, #card_subtype;[o;
+;ii;[ ;;;o;;;;;;"
+100px;@;["
+width;-i ;5T;@;-i o;>;ij;?["#card_rarity;[o;
+;ij;[ ;;;o;;;;;;"6px;@;["margin-top;-i o;
+;ij;[ ;;;o;;;;;;"6px;@;["margin-bottom;-i ;5T;@;-i o;>;ik;?["!#card_power, #card_toughness;[o;
+;ik;[ ;;;o;;;;;;"	20px;@;["
+width;-i ;5T;@;-i o;>;il;?[".flavourtextfield;[o;
+;il;[ ;;;o;;;;;;"italic;@;["font-style;-i o;
+;im;[ ;;;o;;;;;;"98%;@;["
+width;-i ;5T;@;-i o;>;in;?[".rulestextfield;[o;
+;in;[ ;;;o;;;;;;"98%;@;["
+width;-i ;5T;@;-i o;>;io;?[".art_url_field;[o;
+;io;[ ;;;o;;;;;;"98%;@;["
+width;-i ;5T;@;-i o;>;ip;?["*.image_url_field, .edit_comment_field;[o;
+;ip;[ ;;;o;;;;;;"
+400px;@;["
+width;-i ;5T;@;-i o;>;iq;?["form #raritycell;[o;
+;iq;[ ;;;o;;;;;;"1px solid black;@;["border;-i ;5T;@;-i o;>;ir;?["8.Planeswalker #power_field, .Planeswalker #pt_slash;[o;
+;ir;[ ;;;o;;;;;;"	none;@;["display;-i ;5T;@;-i o;>;is;?[".Planeswalker .notptbox;[o;
+;is;[ ;;;o;;;;;;"	none;@;["border;-i o;
+;it;[ ;;;o;
+;;;it;;;"!url(/images/loyalty_big.png);{ ;@;["background-image;-i o;
+;iu;[ ;;;o;;;;;;"	80px;@;["
+width;-i o;
+;iu;[ ;;;o;;;;;;"	41px;@;["height;-i o;;;iu;<0;[ ;"7/* img is 51px high, minus the 10px top padding */;@;=[ o;
+;iv;[ ;;;o;;;;;;"10px 0px 0px 0px;@;["padding;-i ;5T;@;-i o;>;iw;?["..Planeswalker.form .pinline_ptbox.pinline;[o;
+;iw;[ ;;;o;6;7"
+-36px;;;iw;i×;8[ ;{ ;9["px;@;["top;-i ;5T;@;-i o;>;iy;?["div.history_box_limited;[o;
+;iy;[ ;;;o;;;;;;"	auto;@;["overflow;-i o;
+;iz;[ ;;;o;;;;;;"50%;@;["height;-i ;5T;@;-i o;>;i|;?["td.form_info_cell;[o;
+;i|;[ ;;;o;;;;;;"	#666;@;["
+color;-i ;5T;@;-i o;;;i~;<0;[ ;"/***** Skeletons *****/;@;=[ o;>;i;?["7.skeleton_letter_toggle.code_shown#rarity_C_toggle;[o:Sass::Tree::ExtendNode	:@selector[	"."cardrarity"."common;i;[ ;@;5T;@;-i o;>;i€;?["7.skeleton_letter_toggle.code_shown#rarity_U_toggle;[o;O	;P["."uncommon;i€;[ ;@;5T;@;-i o;>;i;?["7.skeleton_letter_toggle.code_shown#rarity_R_toggle;[o;O	;P["."	rare;i;[ ;@;5T;@;-i o;>;i‚;?["7.skeleton_letter_toggle.code_shown#rarity_M_toggle;[o;O	;P["."mythic;i‚;[ ;@;5T;@;-i o;>;iƒ;?[".code_frame_W;[o;
+;iƒ;[ ;;;o;	;;;iƒ;{ ;"Land_White_Text;@;["background-color;-i ;5T;@;-i o;>;i„;?[".code_frame_U;[o;
+;i„;[ ;;;o;	;;;i„;{ ;"Land_Blue_Text;@;["background-color;-i ;5T;@;-i o;>;i…;?[".code_frame_B;[o;
+;i…;[ ;;;o;	;;;i…;{ ;"Land_Black_Text;@;["background-color;-i ;5T;@;-i o;>;i†;?[".code_frame_R;[o;
+;i†;[ ;;;o;	;;;i†;{ ;"Land_Red_Text;@;["background-color;-i ;5T;@;-i o;>;i‡;?[".code_frame_G;[o;
+;i‡;[ ;;;o;	;;;i‡;{ ;"Land_Green_Text;@;["background-color;-i ;5T;@;-i o;>;iˆ;?[".code_frame_A;[o;
+;iˆ;[ ;;;o;	;;;iˆ;{ ;"Artifact_Text;@;["background-color;-i ;5T;@;-i o;>;i‰;?["!.code_frame_M, .code_frame_Z;[o;
+;i‰;[ ;;;o;	;;;i‰;{ ;"Multicolour_Background;@;["background-color;-i ;5T;@;-i o;>;iŠ;?[".code_frame_H;[o;@
+;iŠ;[ ;@;"gradient_horz_padded;/[o;	;;;iŠ;{ ;"Land_White_Texto;	;;;iŠ;@©;"Land_Black_Text;5T;@;-i o;>;i‹;?[".code_frame_L;[o;
+;i‹;[ ;;;o;	;;;i‹;{ ;"Land_Colourless_Bar;@;["background-color;-i ;5T;@;-i o;>;iŒ;?["?.code_rarity_C td.code_link, .code_rarity_C td.code_link a;[o;O	;P[	"."cardrarity"."common;i;[ ;@o;
+;iŽ;[ ;;;o;;;;;;"1px 0 #888888;@;["text-shadow;-i ;5T;@;-i o;>;i;?[" .code_rarity_U td.code_link;[o;O	;P["."uncommon;i;[ ;@;5T;@;-i o;>;i‘;?[" .code_rarity_R td.code_link;[o;O	;P["."	rare;i‘;[ ;@;5T;@;-i o;>;i’;?[" .code_rarity_M td.code_link;[o;O	;P["."mythic;i’;[ ;@;5T;@;-i o;;;i“;<0;[ ;"//* td.code_link { text-align: center; } */;@;=[ o;>;i;?["*.code_frame_W.code_not_shown,
 .code_frame_U.code_not_shown,
 .code_frame_B.code_not_shown,
 .code_frame_R.code_not_shown,
@@ -1336,14 +1421,18 @@ width;-i o;
 .code_frame_H.code_not_shown,
 .code_frame_M.code_not_shown, .code_frame_Z.code_not_shown,
 .code_frame_L.code_not_shown;[o;
-;io;[ ;;;o;;;;;;"
+;i;[ ;;;o;;;;;;"
 white;@;["background-color;-i o;
-;io;[ ;;;o;;;;;;"
-white;@;["background;-i ;5T;@;-i o;>;iq;?["div.wizardsimage;[	o;O	;P["."blackborder;ir;[ ;@o;
-;is;[ ;;;o;;;;;;"
+;i;[ ;;;o;;;;;;"
+white;@;["background;-i ;5T;@;-i o;>;iŸ;?["div.wizardsimage;[o;O	;P["."blackborder;i ;[ ;@o;
+;i¡;[ ;;;o;;;;;;"
 200px;@;["
 width;-i o;
-;it;[ ;;;o;;;;;;"
+;i¢;[ ;;;o;;;;;;"
 285px;@;["height;-i o;
-;iu;[ ;;;o;;;;;;"center;@;["
-align;-i ;5T;@;-i ;5T;@
+;i£;[ ;;;o;;;;;;"center;@;["
+align;-i o;
+;i¤;[ ;;;o;;;;;;"
+white;@;["background-color;-i o;
+;i¥;[ ;;;o;;;;;;"red;@;["
+color;-i ;5T;@;-i ;5T;@

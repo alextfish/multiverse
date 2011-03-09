@@ -1,11 +1,12 @@
-<%= link_to user.name, user %> (<%= user.email %>)
+<%= link_to_unless_current user.name, user %>:
 
 <% @cardsets = Cardset.find_all_by_user_id(user.id) %>
 <%= pluralize(  (@cardsets ? @cardsets.length : 0), "set") %><% if @cardsets.any? %>:
-  <%= raw(cardset_links(@cardsets).join(', ')) %>
+  <%= raw(cardset_links(@cardsets).join(", ")) %>
 <% end %>
-  <% if current_user && current_user.admin? %>
-  | <%= link_to "Delete user", user, :method => :delete, :confirm => "You sure?",
-                                :title => "Delete #{user.name}" %>
+  <% if signed_in_as_moderator? %>
+    <br>Email (only shown to moderators): <%= link_to user.email, "mailto:#{user.email}" %>
+    <br><%= link_to "Delete user", user, :method => :delete, :confirm => "Really DELETE #{user.name}?",
+                                  :title => "Delete #{user.name}" %>
   <% end %>
 <br>

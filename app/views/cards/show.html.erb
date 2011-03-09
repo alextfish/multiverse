@@ -1,7 +1,6 @@
 <% @title = @card.printable_name %>
 <% new_comment = @comment # store, because we`ll be overwriting "@comment" to show previous comments %>
 
-<%= javascript_include_tag "fabtabulous.js" %>
 
 <% tab_display = {}
   if @card.cardset.configuration.frame == "image" && !@card.image_url.blank?
@@ -12,7 +11,7 @@
       default_tab = "mockup"
   end
   tab_display[default_tab] = true
-  show_this_tab = ' style="display: block;"'
+  show_this_tab = " active-tab-body"
   # this lot isn't necessary if fabtabulous works, but in no-JS browsers it lets them display
 %>
 <table border="0"> <!-- grouping table -->
@@ -31,13 +30,13 @@
      </ul>
    <% end %>
 
-   <div class="onetab" id="cardimage"<%= tab_display["cardimage"] ? show_this_tab : "" %>><a name="cardimage"></a>
+   <div id="cardimage" class="onetab<%= tab_display["cardimage"] ? show_this_tab : "" %>"><a name="cardimage"></a>
      <img src="<%= @card.image_url %>">
    </div>
-   <div class="onetab" id="plaincard"<%= tab_display["plaincard"] ? show_this_tab : "" %>><a name="plaincard"></a>
+   <div id="plaincard" class="onetab<%= tab_display["plaincard"] ? show_this_tab : "" %>"><a name="plaincard"></a>
      <%= render :partial => "shared/plaincard" %>
    </div>
-   <div class="onetab" id="mockup"<%= tab_display["mockup"] ? show_this_tab : "" %>><a name="mockup"></a>
+   <div id="mockup" class="onetab<%= tab_display["mockup"] ? show_this_tab : "" %>"><a name="mockup"></a>
      <%= render :partial => "shared/prettycard", :locals => { :link => false } %>
    </div>
    <% show_edit_link = permission_to?(:edit, @card.cardset) %>
@@ -81,51 +80,12 @@
        <p><b>Active?:</b> <%= !!@card.active %></p>
      <% end %>
      <p>
+       <b>History:</b>
        <% card_history = @card.get_history %>
-       <b>History:</b><% if card_history.length > 3 %> <%= link_to_function "[-]",
-          visual_effect(:toggle_blind, :history_list, :duration => 0.5) %><% end %>
-       <div class="cardhistory" id="history_list">
-         <div class="commentlist" id="history_items">
-           <% last_item_blank_edit = false 
-              last_edit_date = nil 
-              last_edit_user = nil %>
-           <% card_history.each do |history_item| %>
-             <!-- id: <%= history_item.id %> -->
-             <% case history_item.what_are_you %>
-               <% when "Log": %>
-                 <% @log = history_item %>
-                 <% verb = @log.past_tense_verb(true)
-                    if verb == "edited "
-                      verb << " the card" 
-                      skip_display = last_item_blank_edit && @log.text.blank? && last_edit_date == @log.datestamp.to_date && last_edit_user == @log.user_id
-                      # skip if the last was also another blank edit by the same user on the same date
-                      last_item_blank_edit = @log.text.blank?
-                      last_edit_date = @log.datestamp.to_date
-                      last_edit_user = @log.user_id
-                    else
-                      last_item_blank_edit = false
-                      skip_display = false
-                    end
-                    %>
-                 <% if !skip_display %>
-                 <div class="comment log">
-                   <%= render :partial => "shared/log_entry", :locals => { :link_to_recent => false } %>
-                   <!-- <span class="logdetails"><%= format_datetime history_item.datestamp %>:
-                   <%= friendly_link_to_user_id history_item.user_id %> <%= verb %><% if !history_item.text.blank? %>:</span> <%= history_item.text %>
-                   <% else %></span>
-                   <% end %> -->
-                 </div>
-                 <% end %>
-               <% when "Comment": %>
-                 <% @comment = history_item %>
-                 <% last_item_blank_edit = false %>
-                 <%= render :partial => "shared/comment", :locals => { :show_buttons => true, :show_date => true } %>
-               <% else %><% "don't know what it is" %>
-                 <% Rails.logger.info "Not showing history item #{history_item.class} with ID #{history_item.id} since it's not a Comment or Log" %>
-             <% end %>
-           <% end %>
-         </div>
-       </div>
+       <% if card_history.length > 3 %> 
+         <%= link_to_function "[-]", visual_effect(:toggle_blind, :history_list, :duration => 0.5) %>
+       <% end %>
+       <%= render "history" %>
      </p>
      <% if permission_to?(:comment, @card.cardset) %>
        <p>
@@ -134,13 +94,13 @@
            <div class="commentlist">
              <% @comment = new_comment # restore the value stored at the top %>
              <%= render "shared/card_comment_form" %>
-           <% else %>
-             <%= @cardset.permission_message(:comment) %>
-             <% if !signed_in? %>
-               Would you like to <%= link_to "sign in", signin_path %>?
-             <% end %>
            </div>
          </div>
+       <% else %>
+         <%= @cardset.permission_message(:comment) %>
+         <% if !signed_in? %>
+           Would you like to <%= link_to "sign in", signin_path %>?
+         <% end %>
        <% end %>
      </p>
   </td>

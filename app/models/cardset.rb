@@ -233,6 +233,21 @@ class Cardset < ActiveRecord::Base
     /(?:>[(]?)([CURM])([A-Z])([0-9][0-9])/
   end
   
+  def get_skeleton_row(code)
+    if !skeleton
+      return nil
+    end
+    skeleton.body.lines.find {|line| line =~ Regexp.new(code)}
+  end
+  def get_skeleton_header_rows
+    if !skeleton
+      return nil
+    end
+    line1 = skeleton.body.lines.find {|line| line =~ /^[|](.*[|])+/ } # first line with bars
+    line2 = skeleton.body.lines.find {|line| line =~ /^[|]([:-]*[|])+/ } # first line with bars separated only by colons and dashes
+    line1 + line2
+  end
+  
   def generate_skeleton(params)
     ok_so_far = true
     # Read existing skeleton content: 
