@@ -499,7 +499,8 @@
   float: none;
   display: inline;
   padding-right: 2px;
-  /* to balance the text-shadow */ }
+  /* to balance the text-shadow */
+  text-transform: uppercase; }
 
 .token .cardtitlebar {
   background-color: #000 !important;

@@ -221,6 +221,18 @@ strong.highlight {
 }
 
 
+/**** Tooltips ****/
+div.card_loading {
+  text-align: center;
+  background-color: white; 
+  padding-top: 20px;
+  opacity: 0.5;
+}
+div.card_loading:after {
+  content: "Loading..."
+}
+
+
 /**** Nav ****/
 /* Navigation */
 

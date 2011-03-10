@@ -13,7 +13,7 @@
 
 <table border="0">         <!-- grouping table -->
  <tr>
-  <td>                      <!-- card -->
+  <td style="vertical-align: top;">                      <!-- card -->
    <!-- div class="cardtabs" id="tabs">
     <a href="#cardimage">Image</a>
     <a href="#mockup">Mockup</a>
@@ -110,7 +110,7 @@
   </div>
   </td>                    <!-- end of card -->
 
-  <td>                     <!-- controls, comments etc -->
+  <td style="vertical-align: top;">           <!-- controls, comments etc -->
    <table>
     <% code = @card.code || params[:code]%>
     <% if !code.blank? && @cardset.skeleton %>

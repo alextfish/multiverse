@@ -312,6 +312,7 @@ Event.observe(window, 'load', makeAllCardsFit);
 ///// Dates /////
 // Functions adapted from the renderDate and renderTime functions on
 // http://www.stephenmcintosh.com/puzzle/puzzles.pl
+// (with Stephen's permission)
 
 var month_names = new Array("January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December");
 
@@ -322,9 +323,10 @@ function renderDate(span) {
         var LocaleDate = new Date();
         LocaleDate.setUTCFullYear(matches[1], matches[2] - 1, matches[3]);
         LocaleDate.setUTCHours(matches[4], matches[5], matches[6], 0);  
+        hours   = LocaleDate.getHours() + "";
         minutes = LocaleDate.getMinutes() + "";
         seconds = LocaleDate.getSeconds() + "";
-        var date_out = month_names[LocaleDate.getMonth()] + " " + LocaleDate.getDate() + " " + LocaleDate.getFullYear() + ", " + LocaleDate.getHours() + ":" + (minutes.length == 1 ? "0" : "") + minutes + ":" + (seconds.length == 1 ? "0" : "") + seconds;
+        var date_out = month_names[LocaleDate.getMonth()] + " " + LocaleDate.getDate() + " " + LocaleDate.getFullYear() + ", " + (hours.length == 1 ? "0" : "") + ":" + (minutes.length == 1 ? "0" : "") + minutes + ":" + (seconds.length == 1 ? "0" : "") + seconds;
         span.innerHTML = date_out;
     }
 }
@@ -335,22 +337,9 @@ Event.observe(window, 'load', renderAllDatesAndTimes);
 
 
 ///// Preview card images /////
-wizardsTipParams = {
+cardTooltipParams = {
   hook: { tip: 'topLeft', mouse: true },
   offset: { x: 14, y: -54 }
-};
-function mockupTipParams(linkElement) {
-  return {
-    hook: { tip: 'topLeft', mouse: true },
-    offset: { x: 14, y: -54 },
-    ajax: {
-      url: '/cards/' + linkElement.name + '/mockup',
-      options: {
-        method: 'get',
-        onSuccess: function() { }
-      }
-    }
-  };
 };
 function createBlackBorderImage(src) {
   div = new Element('div', {'class': 'blackborder wizardsimage'});
@@ -359,62 +348,85 @@ function createBlackBorderImage(src) {
   div.appendChild(document.createTextNode("No card by that name found"));
   return div
 }
+// Add tooltips for Wizards cards
 document.observe('dom:loaded', function() {
   $$('a.wizardscard[name]').each(function(element) {
-    new Tip(element, createBlackBorderImage(element.name), wizardsTipParams);
-  });
-  $$('a.cardmockup[name]').each(function(element) {
-    new Tip(element, mockupTipParams(element) ); // no content when using ajax
-    element.observe('prototip:shown', function() {
-      $$("div.stand_alone_mockup").each(function(cardWrapperDiv) {
-        if (cardWrapperDiv.getHeight() > 0) {
-          var cardDiv = cardWrapperDiv.firstElementChild.firstElementChild;
-          shrinkCardBits(cardDiv);
-          // only shrink once the mockup is actually shown
-          cardWrapperDiv.removeClassName('stand_alone_mockup');
-          // so it doesn't get repeatedly shrunk
-        }
-      });     
-    });
+    new Tip(element, createBlackBorderImage(element.name), cardTooltipParams);
   });
 });
-
+// Add tooltips for Multiverse mockups
 document.observe('dom:loaded', function() {
   card_tooltips = {} // global hash
   var site_url = /(^.*:\/\/[^\/]+)/.exec(window.location.href)[1];
-  var card_link_regex = new RegExp ( site_url + "cards\/([0-9]+)($|[#?])");
-  $$("a[href]").each( function(element){
-    if (card_link_regex.exec(element.href)) {
-      card_id = $1;
-      tooltip_div = makeTooltipDiv(card_id);
-      new Tip ( element, tooltip_div, {
-        on_show: getTooltipContent(card_id, tooltip_div.id)
-      });
+  var card_link_regex = new RegExp ( "^(" + site_url + ")?/cards\/([0-9]+)($|[#?])");
+  $$("a[href]").each( function(link_element){
+    if (matches = card_link_regex.exec(link_element.href)) {
+      card_id = matches[2];
+      tooltip_div = makeTooltipDiv(link_element, card_id);
+      link_element.tip = new Tip( link_element, tooltip_div, cardTooltipParams );
+      // Store some useful data
+      link_element.card_id = card_id;
+      link_element.mockup_wrapper = tooltip_div;
+      link_element.observe('prototip:shown', function() {
+          // "this" is the link_element
+          getTooltipContent(this.card_id, this.mockup_wrapper);
+      }); 
     }
   });
 });
-function makeTooltipDiv(card_id){
+// Function to create a unique wrapper div for each intra-MV link 
+function makeTooltipDiv(parent_element, card_id){
   div_id = "card_tooltip_" + card_id;
   while ( $(div_id) ) {
     div_id += "_2"
   }
   // now we have an unused id
-  div = new Element ("div", "class", "tooltip_wrapper", "id", div_id)
-  div.appendChild( new Element ("div", "class", "card blackborder").appendChild ( document.createTextNode("Loading") ));
+  div = new Element("div", {"class": "distinct_mockup_container", "id": div_id});
+  div.appendChild(new Element("div", {"class": "cardborder blackborder card_loading"}));
+  // $() in the while loop above will only find this if it's added into the DOM somewhere,
+  // so we append it to the parent element for now
+  parent_element.appendChild(div.hide());
+  // store the card id for easy access by the Ajax onSuccess callback
+  div.card_id = card_id;
   return div;
 }
-function getTooltipContent(card_id, div_id){
-  render = card_tooltips[""+card_id]; // returns a div object
+// Function called when a tooltip is actually shown
+function getTooltipContent(card_id, mockup_wrapper){
+  card_id_string = ""+card_id;
+  render = card_tooltips[card_id_string]; // returns a div object
   if (!render) {
-    alert("create ajax request")
-    alert("onSuccess = ajaxRenderSuccess(card_id, div_id, content)")
+    // We'll go get it via Ajax.
+    // First, store a temp div so that we don't send multiple requests in case of a shaky mouse
+    card_tooltips[card_id_string] = new Element("div", {"class": "request_sent"});
+    // Create the Ajax request
+    new Ajax.Updater(mockup_wrapper, '/cards/' + card_id_string + '/mockup', {
+      method: "get",
+      parameters: card_id_string, 
+      onComplete: function(transport) {
+        mockup_wrapper = transport.request.container.success;
+        card_id_string = mockup_wrapper.card_id;
+        // Store this One True Mockup of this card in the global array
+        card_tooltips[card_id_string] = mockup_wrapper.firstElementChild;
+        // Shrink the bits appropriately
+        cardDiv = mockup_wrapper.down("div.card");
+        shrinkTooltipCardBits(cardDiv);
+      }
+    });
   } else {
-    div = $(div_id);
-    div.appendChild(render);
+    if (!render.hasClassName("request_sent")) {
+      // Get rid of any "card loading" divs, and move the proper one here
+      mockup_wrapper.select("div.card_loading").invoke("remove");
+      mockup_wrapper.appendChild(render);
+    }
   }
 }
-function ajaxRenderSuccess(card_id, div_id, content) {
-  div = $(div_id);
-  div.update ( content );
-  card_tooltips[""+card_id] = div.firstElementChild;
+
+function shrinkTooltipCardBits(cardDiv) {
+  tooltip = cardDiv.up("div.prototip");
+  wasVisible = tooltip.visible();
+  tooltip.show();
+  shrinkCardBits(cardDiv);
+  if (!wasVisible) {
+    tooltip.hide();
+  }
 }
