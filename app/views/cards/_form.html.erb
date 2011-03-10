@@ -115,7 +115,7 @@
     <% code = @card.code || params[:code]%>
     <% if !code.blank? && @cardset.skeleton %>
      <tr>
-      <td class="form_info_cell">Skeleton row</td>
+      <td class="form_info_cell"><%= link_to "Skeleton", [@cardset, @cardset.skeleton] %> row</td>
       <td>
         <% skeleton_row = @cardset.get_skeleton_row(code) %>
         <% if !skeleton_row.blank? %>

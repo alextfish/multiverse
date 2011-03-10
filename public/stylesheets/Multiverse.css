@@ -57,6 +57,7 @@ div.newfeatures { border: 1px solid black; margin: auto; text-align: center;
 }
 .newfeatures.hot { background-color: #ff9; color: #c00; border: 1px solid red; }
 .newfeatures.hot a { color: #c00; }
+.newfeatures.hot a:hover { background-color:#c00; color: #ff0; }
 
 
 /***** Comment display *****/
