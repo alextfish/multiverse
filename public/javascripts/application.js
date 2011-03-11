@@ -326,7 +326,7 @@ function renderDate(span) {
         hours   = LocaleDate.getHours() + "";
         minutes = LocaleDate.getMinutes() + "";
         seconds = LocaleDate.getSeconds() + "";
-        var date_out = month_names[LocaleDate.getMonth()] + " " + LocaleDate.getDate() + " " + LocaleDate.getFullYear() + ", " + (hours.length == 1 ? "0" : "") + ":" + (minutes.length == 1 ? "0" : "") + minutes + ":" + (seconds.length == 1 ? "0" : "") + seconds;
+        var date_out = month_names[LocaleDate.getMonth()] + " " + LocaleDate.getDate() + " " + LocaleDate.getFullYear() + ", " + (hours.length == 1 ? "0" : "") + hours + ":" + (minutes.length == 1 ? "0" : "") + minutes + ":" + (seconds.length == 1 ? "0" : "") + seconds;
         span.innerHTML = date_out;
     }
 }
