@@ -279,6 +279,12 @@ class Cardset < ActiveRecord::Base
 
     # For each frame-rarity combo (which all start with skeletonform_):
     rarity_frame_regexp = /skeletonform_([a-z]*)_rarity([A-Z])/
+    if params[:allyhybrid] || params[:enemyhybrid]
+      params[:hybrid] = (params.delete(:allyhybrid) || 0) + (params.delete(:enemyhybrid) || 0)
+    end
+    if params[:allygold] || params[:enemygold]
+      params[:gold] = (params.delete(:allygold) || 0) + (params.delete(:enemygold) || 0)
+    end
     params.select{|param_key, param_value| param_key =~ /^skeletonform_/}.each do |param_key, param_value|
       if !param_key =~ rarity_frame_regexp
         raise "Unexpected param #{param_key}"
@@ -299,10 +305,8 @@ class Cardset < ActiveRecord::Base
         when "green": frame_letter = "G"
         when "artifact": frame_letter = "A"
         when "land": frame_letter = "L"
-        when "allygold": frame_letter = "Z"; number_in *= 5
-        when "enemygold": frame_letter = "Z"; number_in *= 5
-        when "allyhybrid": frame_letter = "H"; number_in *= 5
-        when "enemyhybrid": frame_letter = "H"; number_in *= 5
+        when "gold": frame_letter = "Z"; number_in *= 5
+        when "hybrid": frame_letter = "H"; number_in *= 5
         else raise "Unexpected frame_code #{frame_code}"
       end
       Rails.logger.info "Rarity #{rarity_letter}, frame #{frame_letter}: making #{number_in}"

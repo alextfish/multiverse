@@ -377,13 +377,23 @@ TableKit.Sortable = {
     } else {
       var datatype = TableKit.Sortable.getDataType(cell,index,table);
       var tkst = TableKit.Sortable.types;
-      rows.sort(function(a,b) {
-        return order * tkst[datatype].compare(TableKit.getCellText(a.cells[index]),TableKit.getCellText(b.cells[index]));
-      });
+            // Alex's changes
+            var rowIndices = $A($R(0, rows.length-1));
+            rowIndices.sort(function(a,b) {
+              var comparator = order * tkst[datatype].compare(TableKit.getCellText(rows[a].cells[index]),TableKit.getCellText(rows[b].cells[index]));
+              return (comparator != 0 ? comparator : order * (a-b));
+            });
+            var newRows = new Array();
+            for (var i=0; i<rows.length; i++) {
+              newRows[rowIndices[i]] = rows[i];
+            }
+      //rows.sort(function(a,b) {
+      //  return order * tkst[datatype].compare(TableKit.getCellText(a.cells[index]),TableKit.getCellText(b.cells[index]));
+      //});
     }
     var tb = table.tBodies[0];
     var tkr = TableKit.Rows;
-    rows.each(function(r,i) {
+    $A(newRows).each(function(r,i) {
       tb.appendChild(r);
       tkr.addStripeClass(table,r,i);
     });

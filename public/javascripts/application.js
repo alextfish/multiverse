@@ -360,7 +360,7 @@ document.observe('dom:loaded', function() {
   var site_url = /(^.*:\/\/[^\/]+)/.exec(window.location.href)[1];
   var card_link_regex = new RegExp ( "^(" + site_url + ")?/cards\/([0-9]+)($|[#?])");
   $$("a[href]").each( function(link_element){
-    if (matches = card_link_regex.exec(link_element.href)) {
+    if ((matches = card_link_regex.exec(link_element.href)) && !link_element.hasClassName("tab_link")) {
       card_id = matches[2];
       tooltip_div = makeTooltipDiv(link_element, card_id);
       link_element.tip = new Tip( link_element, tooltip_div, cardTooltipParams );

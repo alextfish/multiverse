@@ -3,6 +3,11 @@ class CommentsController < ApplicationController
   before_filter :only => [:show, :new, :create, :index] do
     require_permission_to_view(@cardset)
   end
+  before_filter :only => [:create] do
+    if !signed_in?
+      ensure_not_spam
+    end
+  end
   before_filter :only => [:edit, :destroy] do
     require_permission_to_edit_comment(@comment)
   end
@@ -16,6 +21,15 @@ class CommentsController < ApplicationController
     end
   end
 
+  def ensure_not_spam
+    body_text = params[:comment][:body]
+    # Look for Markdown links or HTML links
+    # We allow autocard links [[[]]] or ((())) - so call Markdown without first calling format_links
+    formatted_comment_text = RDiscount.new(body_text)
+    if formatted_comment_text =~ /<a[^>]*href/
+      redirect_to spam_path
+    end
+  end
 
   def define_card_or_cardset
     # Define @comment if available

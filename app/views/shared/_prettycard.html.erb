@@ -22,11 +22,14 @@
   </div>
   <div class="cardart_container">
    <div class="pinline pinline_sides">
-    <div class="cardart">
-     <% if !@card.art_url.blank? %>
+    <% if !@card.art_url.blank? %>
+     <div class="cardart image">
       <img src="<%= @card.art_url %>">
-     <% end %>
-    </div>
+     </div>
+    <% else %>
+     <div class="cardart noart">
+     </div>
+    <% end %>
    </div>
   </div>
   <div class="pinline pinline_box">

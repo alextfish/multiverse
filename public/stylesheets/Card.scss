@@ -64,6 +64,7 @@
     border-color: black;
     border-width: 1px;
     padding: 9px;
+    background-color: white;
   }
   
   $CardWidth: 200px;
@@ -97,7 +98,7 @@
     width: $CardWidth; 
     text-align: center;
   }
-  .pinline { }
+  .pinline { position: relative; z-index: 1; }
   .pinline_box { padding: 2px;}
   .pinline_sides { padding-left: 2px; padding-right: 2px; }
   .pinline_sidesbottom { padding-left: 2px; padding-right: 2px; padding-bottom: 2px; }
@@ -139,8 +140,11 @@
   }
   .cardmanacost { float: right; padding-right: 3px; }
   .cardart_container, .cardtext_container { background: inherit; padding-left: 4px; padding-right: 4px; }
-  .cardart { /*width: *; */  min-height: 100px; text-align: center; }
-  .cardart img { height: 131px; }
+  .cardart {  position: relative;
+              min-height: 131px; text-align: center; }
+  .cardart img { position: absolute; left: 0px;
+              width: 180px; 
+              z-index: 0;}
   .cardtypebar { padding-right: 0px !important;
                 position: relative; }
   .cardtype { }

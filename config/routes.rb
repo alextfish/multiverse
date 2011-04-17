@@ -10,6 +10,7 @@ Multiverse::Application.routes.draw do
   match '/about',   :to => 'pages#about'
   match '/help',    :to => 'pages#help'
   match '/news',    :to => 'pages#news'
+  match '/spam',    :to => 'pages#spam'
 
   get 'pages/home'
 

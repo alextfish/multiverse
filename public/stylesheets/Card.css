@@ -22,7 +22,8 @@
 .whiteborder {
   border-color: black;
   border-width: 1px;
-  padding: 9px; }
+  padding: 9px;
+  background-color: white; }
 
 .whiteborder .card, .whiteborder .editborder_inner {
   border: 1px solid #888; }
@@ -63,6 +64,10 @@
   z-index: 4;
   width: 200px;
   text-align: center; }
+
+.pinline {
+  position: relative;
+  z-index: 1; }
 
 .pinline_box {
   padding: 2px; }
@@ -151,12 +156,15 @@
   padding-right: 4px; }
 
 .cardart {
-  /*width: *; */
-  min-height: 100px;
+  position: relative;
+  min-height: 131px;
   text-align: center; }
 
 .cardart img {
-  height: 131px; }
+  position: absolute;
+  left: 0px;
+  width: 180px;
+  z-index: 0; }
 
 .cardtypebar {
   padding-right: 0px !important;
