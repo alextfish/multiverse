@@ -25,8 +25,9 @@ class CommentsController < ApplicationController
     body_text = params[:comment][:body]
     # Look for Markdown links or HTML links
     # We allow autocard links [[[]]] or ((())) - so call Markdown without first calling format_links
-    formatted_comment_text = RDiscount.new(body_text)
-    if formatted_comment_text =~ /<a[^>]*href/
+    formatted_comment_text = RDiscount.new(body_text).to_html.html_safe
+    Rails.logger.info "Inspecting comment with body #{body_text} - formats to #{formatted_comment_text}"
+    if formatted_comment_text =~ /<a[^>]*href/i
       redirect_to spam_path
     end
   end
