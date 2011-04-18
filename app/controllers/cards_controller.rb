@@ -3,6 +3,11 @@ class CardsController < ApplicationController
   before_filter :only => [:new, :create, :edit, :update] do
     require_permission_to_edit(@cardset)
   end
+  before_filter :only => [:update] do
+    if !signed_in?
+      ensure_not_spam
+    end
+  end
   before_filter :only => :destroy do
     require_permission_to(:delete, @cardset)
   end
@@ -25,6 +30,16 @@ class CardsController < ApplicationController
       @cardset = Cardset.find(params[:card][:cardset_id])
     else
       redirect_to root_path, :notice => "Cards must be in a cardset"
+    end
+  end
+  def ensure_not_spam
+    edit_comment = params[:edit_comment]
+    # Look for Markdown links or HTML links
+    # We allow autocard links [[[]]] or ((())) - so call Markdown without first calling format_links
+    formatted_comment_text = RDiscount.new(edit_comment).to_html.html_safe
+    Rails.logger.info "Inspecting edit comment of #{edit_comment} - formats to #{formatted_comment_text}"
+    if formatted_comment_text =~ /<a[^>]*href/i
+      redirect_to spam_path
     end
   end
 

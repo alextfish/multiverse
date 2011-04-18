@@ -387,13 +387,14 @@ TableKit.Sortable = {
             for (var i=0; i<rows.length; i++) {
               newRows[rowIndices[i]] = rows[i];
             }
-      //rows.sort(function(a,b) {
-      //  return order * tkst[datatype].compare(TableKit.getCellText(a.cells[index]),TableKit.getCellText(b.cells[index]));
-      //});
+      rows.sort(function(a,b) {
+        return order * tkst[datatype].compare(TableKit.getCellText(a.cells[index]),TableKit.getCellText(b.cells[index]));
+      });
+            // rows = newRows;
     }
     var tb = table.tBodies[0];
     var tkr = TableKit.Rows;
-    $A(newRows).each(function(r,i) {
+    $A(rows).each(function(r,i) {
       tb.appendChild(r);
       tkr.addStripeClass(table,r,i);
     });
