@@ -49,7 +49,7 @@ class Card < ActiveRecord::Base
   end
   # Ensure code is either blank or unique within cardset
   validates_uniqueness_of :code, :scope => [:cardset_id], :allow_blank => true
-  
+
   def regularise_fields
     # Enforce rarity; Default rarity to common
     if (self.rarity.blank?) || !Card.rarities.include?(self.rarity)
@@ -80,11 +80,11 @@ class Card < ActiveRecord::Base
         "Card#{id}"
     end
   end
-  
+
   def recency  # For a card, its order in recency is when it was updated
     updated_at
   end
-  
+
   def get_history
     possible_logs = Log.find(:all, :conditions => {:object_id => id})
     my_logs = possible_logs.select{|l| l.return_object == self}
@@ -101,8 +101,8 @@ class Card < ActiveRecord::Base
   def self.colour_pairs
     COLOUR_PAIRS
   end
-  
-  DISPLAY_FRAMES = 
+
+  DISPLAY_FRAMES =
     Card.colours + ["Artifact", "Multicolour", "Colourless"] +
     Card.colour_pairs.map { |pair| "Hybrid #{pair.join('-').downcase}" } +
     ["Land (colourless)"] +
@@ -129,12 +129,13 @@ class Card < ActiveRecord::Base
   def self.frame_code_letters
     %w{C W U B R G M Z H A L}
   end
-  
+
   colour_letters = %w{W U B R G}
   mana_symbols = []
   # First the misformed ones
   mana_symbols += colour_letters.map {|s| "{2/#{s}}" }
   mana_symbols += colour_letters.map {|s| "{3/#{s}}" }
+  mana_symbols += colour_letters.map {|s| "{#{s}P}" }
   mana_symbols += (0..4).map do |i1|
     i1a = (i1+3).modulo(5)
     i1b = (i1+4).modulo(5)
@@ -147,13 +148,14 @@ class Card < ActiveRecord::Base
   end.flatten
   mana_symbols += colour_letters.map {|s| "{#{s}/2}" }
   mana_symbols += colour_letters.map {|s| "{#{s}/3}" }
+  mana_symbols += colour_letters.map {|s| "{P#{s}}" }
   mana_symbols += ( colour_letters + %w{1000000 100 10 11 12 13 14 15 16 17 18 19 20 -3 1 2 3 4 5 6 7 8 9 0 X Y T Q S C} ) .map {|s| "{#{s}}" }
   MANA_SYMBOLS = mana_symbols
-    
+
   def self.mana_symbols_extensive
     MANA_SYMBOLS
   end
-  
+
   # [CURMBT][CWUBRGMZHSAL]\d\d
   rarity_pattern = Card.rarities.reduce("["){ |m,r| m << r.upcase[0] }+"]"
   colour_codes_pattern = "[CWUBRGMZHSAL]"
@@ -265,7 +267,7 @@ class Card < ActiveRecord::Base
       return 0
     end
     internal_number = token.match(/[0-9-]+/)
-    if internal_number 
+    if internal_number
       return internal_number[0].to_i
     elsif token.match(/[XYZxyz]/)
       # (X) or (Y) have CMC 0
@@ -340,8 +342,8 @@ class Card < ActiveRecord::Base
         end
     end
   end
-  
-  
+
+
   PLAINS = Card.new(
     :name => "Plains",
     :supertype => "Basic",
@@ -349,7 +351,7 @@ class Card < ActiveRecord::Base
     :subtype => "Plains",
     :frame => "Land white",
     :rarity => "basic"
-  ) 
+  )
   ISLAND = Card.new(
     :name => "Island",
     :supertype => "Basic",
@@ -382,7 +384,7 @@ class Card < ActiveRecord::Base
     :frame => "Land green",
     :rarity => "basic"
   )
-  def Card.basic_land 
+  def Card.basic_land
     [PLAINS, ISLAND, SWAMP, MOUNTAIN, FOREST]
   end
   def Card.blank(text)

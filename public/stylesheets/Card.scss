@@ -24,13 +24,13 @@
   -moz-border-radius:    $radius;
   -webkit-border-radius: $radius;
   -khtml-border-radius:  $radius;
-  border-radius:         $radius; 
+  border-radius:         $radius;
 }
 @mixin elliptical_corners($horz, $vert) {
   -moz-border-radius:    $horz;
   -webkit-border-radius: $horz;
   -khtml-border-radius:  $horz;
-  border-radius:         $horz; 
+  border-radius:         $horz;
   -moz-border-radius:    #{$horz} / #{$vert};
   -webkit-border-radius: $horz $vert;
   -khtml-border-radius:  #{$horz} / #{$vert};
@@ -49,9 +49,9 @@
 
 /***** Card display *****/
 
-  .blackborder, .silverborder, .whiteborder, .purpleborder, .goldborder { 
-    @include round_corners(10px); 
-    border-width: 10px; 
+  .blackborder, .silverborder, .whiteborder, .purpleborder, .goldborder {
+    @include round_corners(10px);
+    border-width: 10px;
     border-style: solid; }
   .blackborder { border-color: black; }
   $SilverBorder: #a3a3a3;
@@ -60,42 +60,42 @@
   .goldborder { border-color: $GoldBorder; }
   $PurpleBorder: #a6f;
   .purpleborder { border-color: $PurpleBorder; }
-  .whiteborder { 
+  .whiteborder {
     border-color: black;
     border-width: 1px;
     padding: 9px;
     background-color: white;
   }
-  
+
   $CardWidth: 200px;
   $CardHeight: 280px;
   $CardPaddingTop: 4px;
   $CardPaddingBottom: 3px;
   .whiteborder .card, .whiteborder .editborder_inner { border: 1px solid #888; }
   .cardborder { width: $CardWidth; min-height: $CardHeight; }
-  .card { background: #0ff; 
+  .card { background: #0ff;
           padding-top: $CardPaddingTop; padding-bottom: $CardPaddingBottom;
           padding-left: 3px; padding-right: 3px;
           position: relative;
-          min-height: $CardHeight - $CardPaddingTop - $CardPaddingBottom + 2; 
+          min-height: $CardHeight - $CardPaddingTop - $CardPaddingBottom + 2;
           /* + 2px for some unknown reason */
         }
   .foil {
-    position: absolute; top: 0px; background-image: url(/images/foil_highlight.png); 
+    position: absolute; top: 0px; background-image: url(/images/foil_highlight.png);
     top: 0; bottom: 0; left: 0; right: 0;
     /* width: $CardWidth;  height: 285px; */
   }
-  .cardborder { 
+  .cardborder {
     position: relative;
   }
   .banner {
-    position: absolute; 
-    top: 40px; 
+    position: absolute;
+    top: 40px;
     padding: 8px 0px;
-    font-size: 20pt; 
+    font-size: 20pt;
     background-color: #888;
-    z-index: 4; 
-    width: $CardWidth; 
+    z-index: 4;
+    width: $CardWidth;
     text-align: center;
   }
   .pinline { position: relative; z-index: 1; }
@@ -108,8 +108,8 @@
       border-bottom: 1px solid black;
       @include elliptical_corners(6px, 12px); }
   .pinline_box > div { border: 1px solid black;
-      @include elliptical_corners(4px, 8px); 
-      padding-left: 3px; 
+      @include elliptical_corners(4px, 8px);
+      padding-left: 3px;
       padding-right: 3px; }
   /* Left side outer */
   .pinline_sides, .pinline_sidesbottom {
@@ -135,7 +135,7 @@
      border-left: 1px solid black; border-right: 1px solid black; border-bottom: 1px solid black; } */
 
   .cardtitlebar, .cardtypebar { font: bold 9pt serif; padding-top: 1px; padding-bottom: 1px; }
-  .cardname { float: left; 
+  .cardname { float: left;
      position: relative; z-index: +5;  /* so that foils' names are still clickable */
   }
   .cardmanacost { float: right; padding-right: 3px; }
@@ -143,7 +143,7 @@
   .cardart {  position: relative;
               min-height: 131px; text-align: center; }
   .cardart img { position: absolute; left: 0px;
-              width: 180px; 
+              width: 180px;
               z-index: 0;}
   .cardtypebar { padding-right: 0px !important;
                 position: relative; }
@@ -160,7 +160,7 @@
   .cardtext { /*width: *; */ min-height: 105px;
               padding: 2px; }
   .cardtext br { margin-bottom: 0.25em; }
-  .cardtext .flavourtext br { margin-bottom: 0px; } 
+  .cardtext .flavourtext br { margin-bottom: 0px; }
   .cardtext div, .cardtext p { margin: 0px; }
   .bottombox { background: inherit;
               margin-bottom: 4px; padding-right: 6px;
@@ -227,8 +227,8 @@
 
 /***** Planeswalkers *****/
 
-.card.Planeswalker { 
-  padding-top: 0px; 
+.card.Planeswalker {
+  padding-top: 0px;
   min-height: $CardHeight - $CardPaddingBottom;
 }
 
@@ -248,7 +248,7 @@
   @include elliptical_corners(7px, 40px);
   border-right: 1px solid black;
   border-left: 1px solid white;
-  min-height: 121px; 
+  min-height: 121px;
 }
 
 
@@ -267,14 +267,14 @@
   position: relative;
   padding-top: 4px;
 }
-.loyalty_container { 
-  position: relative; 
+.loyalty_container {
+  position: relative;
   width: 32px;
   display: inline-block;
   top: -2px;
   vertical-align: text-top;
 }
-.loyalty { 
+.loyalty {
   position: absolute;
   top: -2px;
   color: white;
@@ -283,7 +283,7 @@
   background-repeat: no-repeat;
   background-position: 3px 0px;
   width: 32px;
-  height: 30px; 
+  height: 30px;
   text-align: center;
   font-weight: bold;
   font-size: 8pt;
@@ -299,7 +299,7 @@
 }
 .Planeswalker .cardtext br { margin-bottom: 5px; }
 .loyalty.positive { background-image: url(/images/loyaltyup.png); }
-.loyalty.neutral  { background-image: url(/images/loyaltynaught.png); 
+.loyalty.neutral  { background-image: url(/images/loyaltynaught.png);
   padding-top: 3px;}
 .loyalty.negative { background-image: url(/images/loyaltydown.png); }
 
@@ -307,12 +307,12 @@
   border: none;
   background: none !important;
   padding-right: 2px;
-  top: -16px; 
+  top: -16px;
   right: -4px;}
 
 .Planeswalker .pinline_ptbox .ptbox {
   background: none !important;
-  background-image: url(/images/loyalty.png) !important; 
+  background-image: url(/images/loyalty.png) !important;
   background-repeat: no-repeat !important;
 border: none;
   color: white !important;
@@ -324,29 +324,29 @@ border: none;
 
 
 .Planeswalker .bottombox {
-  position: relative; 
-  margin: 0 auto; 
+  position: relative;
+  margin: 0 auto;
   text-align: left; }
-.Planeswalker .artist { 
-  font-size: 7pt; 
-  position: absolute; width: 80%; left: 15%; top: -2px; 
+.Planeswalker .artist {
+  font-size: 7pt;
+  position: absolute; width: 80%; left: 15%; top: -2px;
   padding-left: 20px;
   @include elliptical_corners_asymmetric(30px, 0px, 12px, 0px);
 }
-.blackborder .Planeswalker .artist { 
-  color: white; background: black; 
+.blackborder .Planeswalker .artist {
+  color: white; background: black;
 }
-.whiteborder .Planeswalker .artist { 
-  color: black; background: white; 
+.whiteborder .Planeswalker .artist {
+  color: black; background: white;
 }
-.silverborder .Planeswalker .artist { 
-  color: black; background: $SilverBorder; 
+.silverborder .Planeswalker .artist {
+  color: black; background: $SilverBorder;
 }
-.goldborder .Planeswalker .artist { 
-  color: black; background: $GoldBorder; 
+.goldborder .Planeswalker .artist {
+  color: black; background: $GoldBorder;
 }
-.purpleborder .Planeswalker .artist { 
-  color: white; background: $PurpleBorder; 
+.purpleborder .Planeswalker .artist {
+  color: white; background: $PurpleBorder;
 }
 
 .Planeswalker .powerfield#card_power { width: 0px; }
@@ -357,8 +357,8 @@ border: none;
 .token .cardtext_container.notext { padding: 0px; display: none; }
 .token.card { height: 262px;}
 .token.card.form { height: inherit; }
-.token .cardname, .token .cardname a { 
-  color: #ba8; 
+.token .cardname, .token .cardname a {
+  color: #ba8;
   text-shadow: #ff9 1px -1px;
 }
 .token .cardname {
@@ -366,14 +366,14 @@ border: none;
   padding-right: 2px; /* to balance the text-shadow */
   text-transform: uppercase;
 }
-.token .cardtitlebar { 
+.token .cardtitlebar {
   background-color: #000 !important;
   background: #000 !important;
   text-align: center;
  }
 .token .cardtitlebar label { color: #fff; }
 .token .cardmanacost { display: none;}
-.token .pinline.namebox { background: #ba8; 
+.token .pinline.namebox { background: #ba8;
   border-top: 1px solid #ff9;
   padding-top: 1px;
   /* width: 120px; */
@@ -381,18 +381,18 @@ border: none;
 }
 .token.form  .pinline.namebox {
   width: inherit;}
-.token .cardtitlebar { 
+.token .cardtitlebar {
   border-bottom: 1px solid #ff9;
 }
-.token .cardart { 
-  @include elliptical_corners(50px, 30px); 
+.token .cardart {
+  @include elliptical_corners(50px, 30px);
   border-right: 1px solid black;
   border-left: 1px solid white;
   height: 100%;
   min-height: 175px;
  }
-.token .cardart_container .pinline_sides { 
-  @include elliptical_corners(45px, 32px); 
+.token .cardart_container .pinline_sides {
+  @include elliptical_corners(45px, 32px);
   border-left: 1px solid black;
   border-top: 1px solid white;
   border-bottom: 1px solid black;
@@ -400,8 +400,8 @@ border: none;
   padding-right: 3px;
   height: 100%;
  }
-.token .cardart_container { 
-  @include elliptical_corners(44px, 32px); 
+.token .cardart_container {
+  @include elliptical_corners(44px, 32px);
  }
 
 /***** Colours *****/
@@ -445,7 +445,7 @@ $Artifact_Text: #D5DDE0;
 $Land_Colourless_Bar: #D8CFC8;
 $Land_Text: #D8CFC8;
 $Multicolour_Text: #ffd;
-$Multicolour_Background: #CAB86C; 
+$Multicolour_Background: #CAB86C;
 
 .Artifact .pinline { background-color: #eee; }
 .Artifact .pinline_ptbox { background-color: #9CB7BE; }
@@ -487,7 +487,7 @@ $Multicolour_Background: #CAB86C;
 
 .Multicolour, .Multicolour .cardart { background-color: $Multicolour_Background; /*#DAC87C;*/ }
 .Multicolour .pinline, .Land.multicolour .pinline { background-color: #eAd88C; /* #C6AF71;*/ }
-.Multicolour .cardtitlebar, .Multicolour .cardtypebar, .Land.multicolour .cardtitlebar, .Land.multicolour .cardtypebar { background-color: #DAC87C; 
+.Multicolour .cardtitlebar, .Multicolour .cardtypebar, .Land.multicolour .cardtitlebar, .Land.multicolour .cardtypebar { background-color: #DAC87C;
     @include gradient_horz_highlight(#B9A566, #DBC68F);}
 .Multicolour .cardtext, .Land.multicolour .cardtext { background-color: $Multicolour_Text; }
 .Multicolour .pinline_ptbox { background: #C6AF71 !important; }
@@ -607,7 +607,7 @@ font-size: 18px;
 .Dominion .cardart_container, .Dominion .cardtext_container {
   padding: 0px;
 }
-.Dominion .cardtypebar { position: absolute; bottom: 0px; width: 100%; border: 0px;  
+.Dominion .cardtypebar { position: absolute; bottom: 0px; width: 100%; border: 0px;
   text-align: center;
 text-transform:uppercase;
 }
@@ -629,8 +629,8 @@ text-transform:uppercase;
 .image_url_field, .edit_comment_field  { width: 400px; }
 form #raritycell { border: 1px solid black; }
 .Planeswalker #power_field, .Planeswalker #pt_slash { display: none; }
-.Planeswalker .notptbox { border: none; 
-    background-image: url(/images/loyalty_big.png); 
+.Planeswalker .notptbox { border: none;
+    background-image: url(/images/loyalty_big.png);
     width: 80px; height: 41px; /* img is 51px high, minus the 10px top padding */
     padding: 10px 0px 0px 0px; }
 .Planeswalker.form .pinline_ptbox.pinline { top: -36px; }
@@ -654,8 +654,8 @@ td.form_info_cell { color: #666; }
 .code_frame_M, .code_frame_Z { background-color: $Multicolour_Background; }
 .code_frame_H { @include gradient_horz_padded($Land_White_Text, $Land_Black_Text); }
 .code_frame_L { background-color: $Land_Colourless_Bar; }
-.code_rarity_C td.code_link, .code_rarity_C td.code_link a { 
-  @extend .cardrarity.common; 
+.code_rarity_C td.code_link, .code_rarity_C td.code_link a {
+  @extend .cardrarity.common;
   text-shadow: 1px 0 #888888;
 }
 .code_rarity_U td.code_link { @extend .uncommon; }
@@ -672,11 +672,11 @@ td.form_info_cell { color: #666; }
 .code_frame_H.code_not_shown,
 .code_frame_M.code_not_shown, .code_frame_Z.code_not_shown,
 .code_frame_L.code_not_shown { background-color: white; background: white; }
- 
+
 div.wizardsimage {
-  @extend .blackborder;
+  /* @extend .blackborder;
   width: 200px;
-  height: 285px;
+  height: 285px; */
   align: center;
   background-color: white;
   color: red;

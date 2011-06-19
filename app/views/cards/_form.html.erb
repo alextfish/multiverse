@@ -153,7 +153,7 @@
      <% frames_keys = Card.display_frames %>
      <% frames_values = Card.frames %>
      <% frames = frames_keys.zip(frames_values) %>
-     <td><%= f.select :frame, frames.unshift(["Auto", "Auto"]), {}, 
+     <td><%= f.select :frame, frames.unshift(["Auto", "Auto"]), {},
           { :onchange => "update_frame()" } %></td>
     </tr>
     <% if !@card.new_record? %>
@@ -183,8 +183,8 @@
    <% end %>
    <div class="helptext onetab active-tab-body" id="editing_help">
       <p id="nonplaneswalker">
-      Enter mana symbols like this: 
-      <br><code>{2}{U}{U/R}, {T}</code> becomes <%= format_mana_symbols("{2}{U}{U/R}, {T}") %>
+      Enter mana symbols like this:
+      <br><code>{2}{U}{U/R}{PR}, {T}</code> becomes <%= format_mana_symbols("{2}{U}{U/R}{PR}, {T}") %>
       </p>
       <p id="planeswalker">On planeswalkers, <code>[+1]</code> becomes <span class="loyalty_container"><span class="loyalty positive">+1</span></span>
       </p>
@@ -192,7 +192,7 @@
        <p>
        Enter <%= link_to "mechanics", cardset_mechanics_path(@cardset) %> like this:
        <% @cardset.mechanics.all.each do |mech| %>
-         <% src_no_reminder, src_with_reminder, target_no_reminder, target_with_reminder = mech.regexps 
+         <% src_no_reminder, src_with_reminder, target_no_reminder, target_with_reminder = mech.regexps
          string_with_reminder = src_with_reminder.inspect.sub(Mechanic.one_param, "AA").sub(Mechanic.one_param, "BB").gsub(/\\|\//, "")
          string_no_reminder = src_no_reminder.inspect.sub(Mechanic.one_param, "AA").sub(Mechanic.one_param, "BB").gsub(/\\|\//, "") %>
          <br><code><%= string_with_reminder %></code> for <%= mech.name %>
@@ -202,7 +202,7 @@
        <% end %>
        </p>
      <% end %>
-     <p>Abbreviations supported: 
+     <p>Abbreviations supported:
 <br><code>ETBs</code> becomes <code>enters the battlefield</code>
 <br><code>UEOT</code> becomes <code>until end of turn</code>
 <br><code>CMC</code> becomes <code>converted mana cost</code>
@@ -223,5 +223,5 @@ become the card's name
    <script type="text/javascript">
      new Fabtabs("tabs", "editing_help_link");
    </script>
-   
+
 <% end %>

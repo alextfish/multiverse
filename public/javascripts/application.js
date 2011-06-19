@@ -23,8 +23,8 @@ function toggle_rarity_letter(letter_elem) {
   }
 }
 function show_skeleton_row(value) {
-  $(value + "_row").show(); 
-  $("option_" + value).remove(); 
+  $(value + "_row").show();
+  $("option_" + value).remove();
 }
 // - Skeleton Generate
 function getIntValue(id) {
@@ -171,8 +171,8 @@ function shrinkName(nameDiv, typeDiv) {
   var nameSizeOK = 0;
   var fontSize = defaultNameFontSize;
   // .cardtitlebar, .cardtypebar { font: bold 9pt serif; }
-  for(var i=0; !nameSizeOK && i>-3; i-=0.25) { 
-    nameDiv.style.letterSpacing = i + "px"; 
+  for(var i=0; !nameSizeOK && i>-3; i-=0.25) {
+    nameDiv.style.letterSpacing = i + "px";
     nameSizeOK = (manaCostDiv.offsetTop == nameDiv.offsetTop) && titleBarDiv.clientHeight <= idealTitleHeight;
     if (!nameSizeOK) {
       nameDiv.style.fontSize = (defaultNameFontSize + i) + "pt";
@@ -191,8 +191,8 @@ function sizeTokenName(nameDiv, typeDiv) {
   if (nameSizeOK) {
     titlePinline.style.width = nameWidth + tokenNamePadding + "px";
   } else {
-    for(var i=0; !nameSizeOK && i>-3; i-=0.25) { 
-      nameDiv.style.letterSpacing = i + "px"; 
+    for(var i=0; !nameSizeOK && i>-3; i-=0.25) {
+      nameDiv.style.letterSpacing = i + "px";
       nameSizeOK = (nameWidth + tokenNamePadding < titlePinline.getWidth()) && (titleBarDiv.clientHeight <= idealTitleHeight)
       if (!nameSizeOK) {
         nameDiv.style.fontSize = (defaultNameFontSize + i) + "pt";
@@ -218,12 +218,12 @@ function shrinkType(typeDiv) { //, rarityDiv) {
   var rarityDiv = typeBarDiv.getElementsByClassName("cardrarity")[0];
   if (!rarityDiv) return;
   var typeBarPadding = 9; // calculated from the padding-left and padding-right of cardrarity and .pinline_box>div
-  
+
   var maxWidth = typeBarDiv.getWidth() - rarityDiv.getWidth() - typeBarPadding;
   var typeSizeOK = false;
-  for(var i=0; !typeSizeOK && i>-3; i-=0.25) { 
-    typeSpan.style.letterSpacing = i + "px"; 
-    typeSizeOK = (typeBarDiv.getHeight() <= idealTypeHeight) && (typeSpan.getWidth() <= maxWidth); 
+  for(var i=0; !typeSizeOK && i>-3; i-=0.25) {
+    typeSpan.style.letterSpacing = i + "px";
+    typeSizeOK = (typeBarDiv.getHeight() <= idealTypeHeight) && (typeSpan.getWidth() <= maxWidth);
   }
 }
 
@@ -239,7 +239,7 @@ function shrinkTextBox(textDiv, isPlaneswalker) {
     // It started out OK: let's try to centre stuff
   } else {
     // It's stretched: shrink stuff
-    for(var i=0; !textSizeOK && i>-5; i-=0.25) { 
+    for(var i=0; !textSizeOK && i>-5; i-=0.25) {
       textDiv.style.fontSize = (currentFontSizeNumber + i) + currentFontSizeUnits;
       textSizeOK = textDiv.getHeight() <= idealTextBoxHeight + wiggleRoom;
     }
@@ -254,19 +254,19 @@ function shrinkCardBits(cardDiv) {
   var nameDiv = cardDiv.getElementsByClassName("cardname")[0];
   var typeDiv = cardDiv.getElementsByClassName("cardtype")[0];
   var rarityDiv = cardDiv.getElementsByClassName("cardrarity")[0];
-  
+
   if (idealTypeHeight < 0) {
     // Oneoff: calculate ideal height of type bar (global variable)
     // defined as this card's type bar if the text size is teenytiny
     var typeBarDiv = typeDiv.parentNode;
     var typeSpan = typeDiv.childElements()[0];
-    origLetterSpacing = typeSpan.getStyles().letterSpacing; 
-    typeSpan.style.letterSpacing = "-20px"; 
+    origLetterSpacing = typeSpan.getStyles().letterSpacing;
+    typeSpan.style.letterSpacing = "-20px";
     idealTypeHeight = typeBarDiv.getHeight();
     idealTitleHeight = typeBarDiv.getHeight() + 2;
-    typeSpan.style.letterSpacing = origLetterSpacing; 
+    typeSpan.style.letterSpacing = origLetterSpacing;
   }
-  
+
   if (cardDiv.hasClassName("token")) {
     var artDiv = cardDiv.getElementsByClassName("cardart")[0];
     sizeTokenName(nameDiv, typeDiv);
@@ -283,7 +283,7 @@ function shrinkCardBits(cardDiv) {
 function makeAllCardsFit() {
   $A(document.getElementsByClassName("card")).each(shrinkCardBits);
   return;
-  
+
   t0 = (new Date()).getTime();
   var names = $A(document.getElementsByClassName("cardname"));
   t05 = (new Date()).getTime();
@@ -318,11 +318,11 @@ var month_names = new Array("January", "February", "March", "April", "May", "Jun
 
 function renderDate(span) {
     //Date Format: 'Y-m-d H:i:s'
-    var matches = /(\d+)-(\d+)-(\d+)\ (\d+):(\d+):(\d+)/.exec(span.innerHTML);   
+    var matches = /(\d+)-(\d+)-(\d+)\ (\d+):(\d+):(\d+)/.exec(span.innerHTML);
     if (matches) {
         var LocaleDate = new Date();
         LocaleDate.setUTCFullYear(matches[1], matches[2] - 1, matches[3]);
-        LocaleDate.setUTCHours(matches[4], matches[5], matches[6], 0);  
+        LocaleDate.setUTCHours(matches[4], matches[5], matches[6], 0);
         hours   = LocaleDate.getHours() + "";
         minutes = LocaleDate.getMinutes() + "";
         seconds = LocaleDate.getSeconds() + "";
@@ -341,17 +341,18 @@ cardTooltipParams = {
   hook: { tip: 'topLeft', mouse: true },
   offset: { x: 14, y: -54 }
 };
-function createBlackBorderImage(src) {
-  div = new Element('div', {'class': 'blackborder wizardsimage'});
+function createWizardsCardImage(src) {
+  div = new Element('div', {'class': 'wizardsimage'});
   div.appendChild(new Element('img', {'src': src, 'alt': "No card by that name found"}));
-  div.appendChild(new Element('br'));
-  div.appendChild(document.createTextNode("No card by that name found"));
+  //div.appendChild(new Element('br'));
+  //div.appendChild(new Element('br'));
+  //div.appendChild(document.createTextNode("No card by that name found"));
   return div
 }
 // Add tooltips for Wizards cards
 document.observe('dom:loaded', function() {
   $$('a.wizardscard[name]').each(function(element) {
-    new Tip(element, createBlackBorderImage(element.name), cardTooltipParams);
+    new Tip(element, createWizardsCardImage(element.name), cardTooltipParams);
   });
 });
 // Add tooltips for Multiverse mockups
@@ -360,7 +361,7 @@ document.observe('dom:loaded', function() {
   var site_url = /(^.*:\/\/[^\/]+)/.exec(window.location.href)[1];
   var card_link_regex = new RegExp ( "^(" + site_url + ")?/cards\/([0-9]+)($|[#?])");
   $$("a[href]").each( function(link_element){
-    if ((matches = card_link_regex.exec(link_element.href)) && !link_element.hasClassName("tab_link")) {
+    if ((matches = card_link_regex.exec(link_element.href)) && !link_element.hasClassName("no_tooltip")) {
       card_id = matches[2];
       tooltip_div = makeTooltipDiv(link_element, card_id);
       link_element.tip = new Tip( link_element, tooltip_div, cardTooltipParams );
@@ -370,11 +371,11 @@ document.observe('dom:loaded', function() {
       link_element.observe('prototip:shown', function() {
           // "this" is the link_element
           getTooltipContent(this.card_id, this.mockup_wrapper);
-      }); 
+      });
     }
   });
 });
-// Function to create a unique wrapper div for each intra-MV link 
+// Function to create a unique wrapper div for each intra-MV link
 function makeTooltipDiv(parent_element, card_id){
   div_id = "card_tooltip_" + card_id;
   while ( $(div_id) ) {
@@ -401,7 +402,7 @@ function getTooltipContent(card_id, mockup_wrapper){
     // Create the Ajax request
     new Ajax.Updater(mockup_wrapper, '/cards/' + card_id_string + '/mockup', {
       method: "get",
-      parameters: card_id_string, 
+      parameters: card_id_string,
       onComplete: function(transport) {
         mockup_wrapper = transport.request.container.success;
         card_id_string = mockup_wrapper.card_id;

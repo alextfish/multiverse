@@ -19,10 +19,10 @@
   <td class="cardcell"> <!-- card -->
    <ul class="cardtabs" id="tabs">
     <% if !@card.image_url.blank? %>
-      <li><a href="#cardimage" id="cardimage_link" class="tab_link">Image</a></li>
+      <li><a href="#cardimage" id="cardimage_link" class="no_tooltip">Image</a></li>
     <% end %>
-    <li><a href="#mockup"      id="mockup_link"    class="tab_link" onclick="setTimeout(makeAllCardsFit, 100);">Mockup</a></li>
-    <li><a href="#plaincard"   id="plaincard_link" class="tab_link">Plain</a></li>
+    <li><a href="#mockup"      id="mockup_link"    class="no_tooltip" onclick="setTimeout(makeAllCardsFit, 100);">Mockup</a></li>
+    <li><a href="#plaincard"   id="plaincard_link" class="no_tooltip">Plain</a></li>
    </ul>
    <% if permission_to?(:edit, @card.cardset) %>
      <ul class="cardtabs">
@@ -69,7 +69,7 @@
      <%= render "cardsets/setviews" %>
 
      <% if @card.cardset.configuration.card_show_code %>
-       <p><b>Code:</b> 
+       <p><b>Code:</b>
        <% if !@card.cardset.skeleton.nil? && !@card.code.blank? %>
          <%= link_to @card.code, skeleton_cardset_path(@card.cardset), :title => "Skeleton" %>
        <% else %>
@@ -82,8 +82,9 @@
      <p>
        <b>History:</b>
        <% card_history = @card.get_history %>
-       <% if card_history.length > 3 %> 
-         <%= link_to_function "[-]", visual_effect(:toggle_blind, :history_list, :duration => 0.5) %>
+       <% if card_history.length > 3 %>
+         <%= link_to_function "[-]", visual_effect(:toggle_blind, :history_list, :duration => 0.5),
+             :class => "no_tooltip" %>
        <% end %>
        <%= render "history" %>
      </p>

@@ -17,7 +17,7 @@ module ApplicationHelper
       link_to user_name, user
     end
   end
-  
+
   def by_last_edit_user_if_available(object)
     uid = object.last_edit_by
     user, user_name = User.user_and_name_for(uid)
@@ -27,7 +27,7 @@ module ApplicationHelper
       "by #{link_to user_name, user}".html_safe
     end
   end
-  
+
   def show_printable_name(object)
     if object.kind_of? Card
       object.printable_name
@@ -66,11 +66,12 @@ module ApplicationHelper
     markdown_text = RDiscount.new(formatted_text)
     embed_card_renders(markdown_text.to_html).html_safe
   end
-  
+
   def mana_symbol_url ( symbol )
     my_symbol = "" << symbol
     my_symbol.gsub!(/[\{\}\(\)\/]/, "")
-    if %w{wr wg uw ug bu bw rb ru gr gb w2 u2 b2 r2 g2 w3 u3 b3 r3 g3}.include? my_symbol.downcase 
+    # Reverse the wrong-order pairs
+    if %w{wr wg uw ug bu bw rb ru gr gb w2 u2 b2 r2 g2 w3 u3 b3 r3 g3 wp up bp rp gp}.include? my_symbol.downcase
       my_symbol.reverse!
     end
     my_symbol.gsub!(/S/, "snow")
@@ -112,7 +113,7 @@ module ApplicationHelper
     unfishify(my_text)
     my_text.html_safe
   end
-  
+
   def fishify(text)
     text.gsub!( "0", "zznofish" )
     text.gsub!( "1", "zzonefish" )
@@ -125,7 +126,7 @@ module ApplicationHelper
     text.gsub!( "8", "zzeightfish" )
     text.gsub!( "9", "zzninefish" )
   end
-  
+
   def unfishify(text)
     text.gsub!( "zznofish"   ,  "0" )
     text.gsub!( "zzonefish"  ,  "1" )
@@ -138,10 +139,10 @@ module ApplicationHelper
     text.gsub!( "zzeightfish",  "8" )
     text.gsub!( "zzninefish" ,  "9" )
   end
-  
+
   def format_mechanics(text, cardset)
     text_out = text
-    cardset && cardset.mechanics.each do |mech| 
+    cardset && cardset.mechanics.each do |mech|
       src_no_reminder, src_with_reminder, target_no_reminder, target_with_reminder = mech.regexps
       # Rails.logger.info [src_no_reminder, src_with_reminder, target_no_reminder, target_with_reminder].join(" --- ")
       # Need the two following lines to be ordered by stricter first
@@ -155,7 +156,7 @@ module ApplicationHelper
   def format_links(text_in, cardset)
     # Returns [text-out, out-fcn]
     # Translate [[[-links and (((-links into Maruku links
-    
+
     cardset_image_regexp = /\(\(([^)]*)\)\)/
     wizards_image_regexp = /\[\[([^\]]*)\]\]/
     cardset_card_regexp = /\(\(\(([^)]*)\)\)\)/
@@ -163,14 +164,14 @@ module ApplicationHelper
     any_brackets_regexp    = /([(\[][(\[][(\[]?)(.*?[^)\]])([)\]][)\]][)\]]?)/
     remove_brackets_regexp = /([(\[])\1\1?(.*[^)\]])([)\]])\3\3?/
     any_internal_links = text_in =~ /\(\(/
-    
+
     # If there are any double-paren links
     if cardset && any_internal_links
       # Build lookup tables so we don't need to do lots of cards.find_by_name
       cardset_cardnames_and_codes = []
       cardset_cards_from_name_or_code = {}
-      cardset.cards.each do |card| 
-        if card.name 
+      cardset.cards.each do |card|
+        if card.name
           cardset_cardnames_and_codes << card.name
           cardset_cards_from_name_or_code[card.name] = card
         end
@@ -180,14 +181,14 @@ module ApplicationHelper
         end
       end
     end
-    
+
     text_out = text_in
     match_count = 0
     text_out.gsub!(any_brackets_regexp) do |matched_link|
       actual_cardname = matched_link.gsub(remove_brackets_regexp, '\2')
       cardset_present = !!cardset
       image_frame = cardset && cardset.configuration && cardset.configuration.frame == "image"
-      case 
+      case
         when matched_link =~ wizards_card_regexp:
           wizards_card_link(actual_cardname, actual_cardname)
         when matched_link =~ wizards_image_regexp:
@@ -224,7 +225,7 @@ module ApplicationHelper
       # Link to a (valid & safe) code that doesn't yet exist: offer to create it
       link_to "(#{link_content})", new_card_path(:cardset_id => cardset.id, :code => link_content)
     else
-      "\(\(\(#{link_content})))" 
+      "\(\(\(#{link_content})))"
     end
   end
   def wizards_card_link(cardname, link_content)
@@ -234,8 +235,10 @@ module ApplicationHelper
     wizards_card_link(cardname, image_tag(wizards_card_image_path(cardname), :alt => "[[#{cardname}]]", :class => "CardImage"))
   end
   def wizards_card_image_path(cardname)
-    image_name = ActiveSupport::Inflector::parameterize(cardname.gsub("'", ''), '_').gsub('-','_')
-    "http://www.wizards.com/global/images/magic/general/#{image_name}.jpg"
+    # image_name = ActiveSupport::Inflector::parameterize(cardname.gsub("'", ''), '_').gsub('-','_')
+    # "http://www.wizards.com/global/images/magic/general/#{image_name}.jpg"
+    image_name = cardname.gsub(" ", '+').downcase
+    "http://gatherer.wizards.com/Handlers/Image.ashx?type=card&name=#{image_name}"
   end
   def cardset_card_image(cardset, cardname, cardset_cardnames_and_codes, cardset_cards_from_name_or_code)
     if cardset_cardnames_and_codes.include?(cardname)
@@ -273,7 +276,7 @@ module ApplicationHelper
       end
     }.join
   end
-  
+
   def format_skeleton_table(text)
     text.sub!("<th></th>", "")
     text.gsub!(/<tr>\n<td>(\&\#173;)?/, "<tr><td>")
@@ -291,7 +294,7 @@ module ApplicationHelper
     text_out.gsub!(/<td><\/td>\n<\/tr>/, "</tr>")
     text_out.html_safe
   end
-  
+
   def select_random(num_to_choose, array_in)
      chosen = []
      while chosen.length < num_to_choose
@@ -313,7 +316,7 @@ module ApplicationHelper
      end
      chosen
   end
-  
+
   def link_to_comment(comment) # logic is duplicated in searches_controller
     parent = comment.parent
     case parent
@@ -328,7 +331,7 @@ module ApplicationHelper
   def link_to_comment_user(comment)
     link_to_unless comment.user.nil?, comment.display_user, comment.user
   end
-  
+
   def link_to_log_object(log)
     if log.nil?
       # Can't get anything from this
@@ -357,7 +360,7 @@ module ApplicationHelper
           cardset = obj.cardset
           return log.past_tense_verb(true) + link_to(cardset.name, cardset_mechanics_path(cardset))
         when Log.kind(:mechanic_delete):
-          return log.past_tense_verb(true) + link_to(obj.name, cardset_mechanics_path(obj)) 
+          return log.past_tense_verb(true) + link_to(obj.name, cardset_mechanics_path(obj))
         # For details pages / skeletons, links are nested resources
         when Log.kind(:details_page_create), Log.kind(:details_page_edit), Log.kind(:comment_details_page), Log.kind(:skeleton_generate), Log.kind(:skeleton_edit):
           return log.past_tense_verb(true) + link_to(obj.title, cardset_details_page_path(obj.cardset, obj))
@@ -366,7 +369,7 @@ module ApplicationHelper
           # This is complicated by the way I didn't originally store the id for cardset comments
           if obj.kind_of?(Comment)
             # We have a new-style link with a comment id: link to it
-            return log.past_tense_verb(true) + link_to(obj.cardset.name, 
+            return log.past_tense_verb(true) + link_to(obj.cardset.name,
                            cardset_comments_path(obj.cardset, :anchor => obj.anchor_name))
           else
             # We have an old-style link with just the cardset id
@@ -389,7 +392,7 @@ module ApplicationHelper
           if obj.card
             return log.past_tense_verb(true) + link_to(obj.card.printable_name, card_path(obj.card, :anchor => obj.anchor_name))
           else
-            return log.past_tense_verb(true) + link_to(obj.cardset.name, 
+            return log.past_tense_verb(true) + link_to(obj.cardset.name,
                            cardset_comments_path(obj.cardset, :anchor => obj.anchor_name))
           end
         # For deleted comments, link to the card if there was one, cardset otherwise
@@ -402,14 +405,14 @@ module ApplicationHelper
           end
         # For cards, just give name and path to the object
         when Log.kind(:card_create), Log.kind(:card_edit):
-          if obj 
+          if obj
             return log.past_tense_verb(true) + link_to(obj.printable_name, obj)
           else
             return log.past_tense_verb(false)
           end
         # For cardsets, just give name and path to the object
         when Log.kind(:cardset_create), Log.kind(:cardset_options), Log.kind(:cardset_import), Log.kind(:card_delete), Log.kind(:details_page_delete):
-          if obj 
+          if obj
             return log.past_tense_verb(true) + link_to(obj.name, obj)
           else
             return log.past_tense_verb(false)
