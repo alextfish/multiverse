@@ -1,7 +1,7 @@
-<% 
-  update_date = Time.gm(2011,4,18,00,43,11);
-  update_title = "April Update: Anti-Spam Measures and Bug Fixes";
-  
+<%
+  update_date = Time.gm(2011,6,19,18,56,40);
+  update_title = "June Update: Phyrexian Mana, Tooltips for Planes and Schemes, and Mechanic Card Lists";
+
 news_latest_update = {
   :date => update_date,
   :title => update_title,
@@ -10,6 +10,12 @@ news_latest_update = {
 
 ----
 ### #{update_title}
+#### Sun Jun 19 18:56:40 2011
+
+Hm, it's been a long time since I've updated Multiverse. This is actually quite a small update. Firstly, Phyrexian mana symbols are available. You can insert {WP}, {UP} and friends into your cards' text, costs, and comments by typing \{WP\} or \(WP\), \{UP\} or \(UP\), and so on. Secondly, links and tooltips for _Archenemy_ schemes, _Planechase_ planes, and _Vanguard_ cards will now work, as in [the comment here](http://multiverse.heroku.com/cards/8219). And finally, cardsets with mechanics pages will now list and link to all the cards using the mechanic, [like this](http://multiverse.heroku.com/cardsets/32/mechanics).
+
+
+### April Update: Anti-Spam Measures and Bug Fixes
 #### Mon Apr 18 00:43:11 2011
 
 I'd like to apologise for the large spam incursion this weekend. I've put in some anti-spam measures, and will be watching closely to see if any more spam comes in. If it does, I'll ratchet up the protection. I'll be trying to keep the site as smooth and usable for legitimate users as possible.
@@ -37,9 +43,9 @@ This means that discussions like [this one](http://multiverse.heroku.com/cards/2
 
 ### New Feature: Front Page
 #### Wed Feb 23 21:36:41 2011
-A new feature today, for those of you who've been wanting to customise your cardset's first impressions. You can now create a details page called "Front Page", which won't display in the normal list of details pages; instead, it'll display at the top of your cardset's main page, just after the cardset description and before any highlighted comments. You can use this to show off some of your most interesting cards, by typing ((Cardname)) into the text of the details page. See [Clockwork Wings](http://multiverse.heroku.com/cardsets/32) for an example. 
+A new feature today, for those of you who've been wanting to customise your cardset's first impressions. You can now create a details page called "Front Page", which won't display in the normal list of details pages; instead, it'll display at the top of your cardset's main page, just after the cardset description and before any highlighted comments. You can use this to show off some of your most interesting cards, by typing ((Cardname)) into the text of the details page. See [Clockwork Wings](http://multiverse.heroku.com/cardsets/32) for an example.
 
-A few other minor tweaks have gone in too. Cardsets can have gold borders; recent changes lists display the time when they were generated (in your browser's time zone); skeletons have got a bit nicer; and there's a new type of link supported, which lets you link to a card in a way that'll display whatever the card's name is. You can add these links by using three parentheses and a dash, followed by the card's code: (((-CW01))). 
+A few other minor tweaks have gone in too. Cardsets can have gold borders; recent changes lists display the time when they were generated (in your browser's time zone); skeletons have got a bit nicer; and there's a new type of link supported, which lets you link to a card in a way that'll display whatever the card's name is. You can add these links by using three parentheses and a dash, followed by the card's code: (((-CW01))).
 
 ----
 
@@ -61,7 +67,7 @@ The card edit page also now tells people how to insert Planeswalker loyalty symb
 
 ### New Feature: Card Contents Shrink-To-Fit, Edits Show in Card History
 #### Tue Feb 8 01:01:37
-The update this week is simple: your card text will now fit on your card. 
+The update this week is simple: your card text will now fit on your card.
 
 No longer will your excessively-long cardnames push the mana cost out of the title bar, or the too-long type line disappear behind the rarity, or your overly-wordy text box stretch the card too much vertically. Now all these elements will be smoothly resized in your browser by a little Javascript. Even the ridiculously over-worded [Sienira's Facets](http://multiverse.heroku.com/cardsets/1) cards all fit, even if some of their [text boxes](http://multiverse.heroku.com/cards/222) or [type lines](http://multiverse.heroku.com/cards/1732) are still too dense for Wizards to actually print.
 
@@ -89,7 +95,7 @@ Secondly, Multiverse now supports and generates Set Skeletons! These are a speci
 
 ----
 ### New Features: (((Card Code)))
-#### Sat Jan 15 00:16:46 
+#### Sat Jan 15 00:16:46
 
 You can now include (((triple parenthesis links))) to card codes like CW01 that _don't exist yet_. Clicking on these links will take you to the card creation page, with the appropriate fields already filled in. This is useful for set skeletons such as those on [Arcunda](http://multiverse.heroku.com/cardsets/14/details_pages/29). I'm expecting to provide a way to generate these skeletons for any cardset within the week.
 
@@ -97,7 +103,7 @@ You can now include (((triple parenthesis links))) to card codes like CW01 that 
 ### New Features: Basic and Token Rarities, Supertypes Clearer
 #### Mon Jan 10 02:00:51 2011
 
-There are now two more options for card rarities: Basic and Token. These will each appear in the appropriate slot in the virtual boosters. If a cardset has any tokens, this means the booster will now be 16 cards. (If a cardset doesn't contain any basic cards, it'll just use a random basic land as it always did. If a cardset doesn't contain any tokens, the boosters will remain 15 cards rather than 16.) The token frame is quite flashy - check out [an example](http://multiverse.heroku.com/cards/2657) :) 
+There are now two more options for card rarities: Basic and Token. These will each appear in the appropriate slot in the virtual boosters. If a cardset has any tokens, this means the booster will now be 16 cards. (If a cardset doesn't contain any basic cards, it'll just use a random basic land as it always did. If a cardset doesn't contain any tokens, the boosters will remain 15 cards rather than 16.) The token frame is quite flashy - check out [an example](http://multiverse.heroku.com/cards/2657) :)
 
 I've also done some work on the card editing form, specifically the type line. The three text boxes were always meant to be supertype, type and subtype, but many people were using the leftmost one (supertype) for card types such as Creature or Artifact, and frankly I can't blame them. I've tried to make the interface a lot clearer: the type and subtype boxes are as they were, but the supertype box is now a supertype dropdown, with options for each of the current supertypes: Legendary, Basic, World and Snow. But if you want to combine multiple of those, or make up your own supertypes, there's another option in the dropdown, Custom, which will restore the free text entry supertype field. I'm hoping this will make it a lot easier for people to use Multiverse easily and correctly. I've gone through all the cards which had a card type (like Creature or Artifact) in the supertype box and fixed them up.
 
@@ -113,9 +119,9 @@ The new kinds of activity - deleting cards and comments, updating mechanics, and
 ### New Features: Embed Images / Mockups with Double Brackets
 #### Thu Jan 6 09:36:56 2011
 
-I've finally introduced a feature I've always meant to add. The triple-bracket syntaxes for links to \\[\\[\\[printed cards]]] and (((cards in the same cardset))) were always designed to allow me to introduce **double**-bracket links. These will appear not as just a hyperlink, but embed the full image of the card into the comment or details page where you use them. 
+I've finally introduced a feature I've always meant to add. The triple-bracket syntaxes for links to \\[\\[\\[printed cards]]] and (((cards in the same cardset))) were always designed to allow me to introduce **double**-bracket links. These will appear not as just a hyperlink, but embed the full image of the card into the comment or details page where you use them.
 
-This lets you do some very cool things. On details pages you can include the mockups of several cards, to allow you to show examples, like [this](http://multiverse.heroku.com/cardsets/1/details_pages/1), and of course any embedded mockups like this will always show the latest state of the card. (This will also be useful when I let you embed a details page into the front page of your set, so that certain showcase cards are always shown off.) You can do these in comments too, such as [this one](http://multiverse.heroku.com/cards/1463#comment_1467), so that in certain cases where the substance of your comment would be enhanced by showing the text of a card, you can do that. 
+This lets you do some very cool things. On details pages you can include the mockups of several cards, to allow you to show examples, like [this](http://multiverse.heroku.com/cardsets/1/details_pages/1), and of course any embedded mockups like this will always show the latest state of the card. (This will also be useful when I let you embed a details page into the front page of your set, so that certain showcase cards are always shown off.) You can do these in comments too, such as [this one](http://multiverse.heroku.com/cards/1463#comment_1467), so that in certain cases where the substance of your comment would be enhanced by showing the text of a card, you can do that.
 
 Those of you who visit [draw3cards.com](http://draw3cards.com) will note that the Markdown for embedding card links and card images is identical on Multiverse to how it is there, and that's of course deliberate.
 
@@ -123,7 +129,7 @@ Those of you who visit [draw3cards.com](http://draw3cards.com) will note that th
 ### New Features: Recent Activity View
 #### Mon Jan 3 00:36:34 2011
 
-The "Cardsets" link at the top-centre of every Multiverse page has been replaced with a "Recent updates" link. This still shows you a list of all cardsets, but now they're sorted by how recently anything happened on the cardset. It shows you what the most recent activity was and who it was by. The time link (like "2 hours ago") goes to the list of *all* recent activity for the cardset in question, so you can see what all of the hot topics are in each cardset you're interested in. 
+The "Cardsets" link at the top-centre of every Multiverse page has been replaced with a "Recent updates" link. This still shows you a list of all cardsets, but now they're sorted by how recently anything happened on the cardset. It shows you what the most recent activity was and who it was by. The time link (like "2 hours ago") goes to the list of *all* recent activity for the cardset in question, so you can see what all of the hot topics are in each cardset you're interested in.
 
 The cardsets view is now sortable, so you can always still sort it alphabetically, or by number of cards in the cardset, or any of the other columns if you want. And a number of new types of activity are now being logged that didn't show up in recent activity logs before. Deleting cards/comments/details pages now shows up, although there's less information available on things that have been deleted. Creating, editing and deleting mechanics also shows up now.
 
