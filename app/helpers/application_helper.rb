@@ -63,7 +63,7 @@ module ApplicationHelper
                        )
                      )
 
-    markdown_text = RDiscount.new(formatted_text)
+    markdown_text = RDiscount.new(formatted_text, :autolink)
     embed_card_renders(markdown_text.to_html).html_safe
   end
 
@@ -91,7 +91,7 @@ module ApplicationHelper
       my_text.upcase!
     end
     Card.mana_symbols_extensive.each do |sym|
-      target = "<img src='#{mana_symbol_url(sym)}'>"
+      target = "<img src='#{mana_symbol_url(sym)}' alt='#{sym}' title='#{sym}'>"
       fishify(target)
       target.downcase!
       sym1 = sym.tr("{}", "()")
@@ -104,7 +104,7 @@ module ApplicationHelper
     end
     if force
       Card.mana_symbols_extensive.each do |sym|
-        target = "<img src='#{mana_symbol_url(sym)}'>".downcase
+        target = "<img src='#{mana_symbol_url(sym)}' alt='#{sym}' title='#{sym}'>".downcase
         fishify(target)
         sym_bare = sym.delete("{}").upcase
         my_text.gsub!( sym_bare, target )
@@ -162,7 +162,7 @@ module ApplicationHelper
     cardset_card_regexp = /\(\(\(([^)]*)\)\)\)/
     wizards_card_regexp = /\[\[\[([^\]]*)\]\]\]/
     any_brackets_regexp    = /([(\[][(\[][(\[]?)(.*?[^)\]])([)\]][)\]][)\]]?)/
-    remove_brackets_regexp = /([(\[])\1\1?(.*[^)\]])([)\]])\3\3?/
+    remove_brackets_regexp = /([(\[])\1\1?([^(\[].*?[^)\]])([)\]])\3\3?/
     any_internal_links = text_in =~ /\(\(/
 
     # If there are any double-paren links
@@ -184,7 +184,7 @@ module ApplicationHelper
 
     text_out = text_in
     match_count = 0
-    text_out.gsub!(any_brackets_regexp) do |matched_link|
+    text_out.gsub!(remove_brackets_regexp) do |matched_link|
       actual_cardname = matched_link.gsub(remove_brackets_regexp, '\2')
       cardset_present = !!cardset
       image_frame = cardset && cardset.configuration && cardset.configuration.frame == "image"

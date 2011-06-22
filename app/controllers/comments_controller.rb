@@ -25,7 +25,7 @@ class CommentsController < ApplicationController
     body_text = params[:comment][:body]
     # Look for Markdown links or HTML links
     # We allow autocard links [[[]]] or ((())) - so call Markdown without first calling format_links
-    formatted_comment_text = RDiscount.new(body_text).to_html.html_safe
+    formatted_comment_text = RDiscount.new(body_text, :autolink).to_html.html_safe
     Rails.logger.info "Inspecting comment with body #{body_text} - formats to #{formatted_comment_text}"
     if formatted_comment_text =~ /<a[^>]*href/i
       redirect_to spam_path
@@ -56,7 +56,7 @@ class CommentsController < ApplicationController
       @cardset = @comment.cardset
     end
   end
-  
+
   def parent_view(comment)
     if comment.cardset
       cardset_comments_path(comment.cardset)
@@ -71,7 +71,7 @@ class CommentsController < ApplicationController
   end
 
   # INDEX: only exists for cardset comments
-  # Includes a form to create new comment, 
+  # Includes a form to create new comment,
   def index
     @comment = @cardset.comments.build
   end
