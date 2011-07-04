@@ -24,6 +24,8 @@
 #  art_url      :string(255)
 #  artist       :string(255)
 #  image_url    :string(255)
+#  multipart    :integer
+#  link_id      :integer
 #  last_edit_by :integer
 #
 
@@ -32,7 +34,7 @@ class Card < ActiveRecord::Base
   has_many :comments, :dependent => :destroy
   has_many :old_cards, :dependent => :destroy
   attr_accessor :foil, :blank  # not saved
-
+  belongs_to :link, :class_name => "Card"
   # has_many :highlighted_comments, :class_name => 'Comment', :conditions => ['status = ?', COMMENT_HIGHLIGHTED]
   # has_many :unaddressed_comments, :class_name => 'Comment', :conditions => ['status = ?', COMMENT_UNADDRESSED]
 
@@ -49,6 +51,13 @@ class Card < ActiveRecord::Base
   end
   # Ensure code is either blank or unique within cardset
   validates_uniqueness_of :code, :scope => [:cardset_id], :allow_blank => true
+  # Validate multipart
+  def Card.STANDALONE; 0; end
+  def Card.SPLIT1;     1; end
+  def Card.SPLIT2;     2; end
+  def Card.FLIP1;      3; end
+  def Card.FLIP2;      4; end
+  validates_inclusion_of :multipart, :in => [Card.STANDALONE, Card.SPLIT1, Card.SPLIT2, Card.FLIP1, Card.FLIP2]
 
   def regularise_fields
     # Enforce rarity; Default rarity to common
@@ -190,11 +199,18 @@ class Card < ActiveRecord::Base
   end
   @@colour_regexps = [/w/i, /u/i, /b/i, /r/i, /g/i]
   @@nonhybrid_colour_regexps = [
-      /(^|[^\/{(])w|[({]w[})]/i,  # match w either at the start ^, or after anything other than / { (
-      /(^|[^\/{(])u|[({]u[})]/i,
-      /(^|[^\/{(])b|[({]b[})]/i,
-      /(^|[^\/{(])r|[({]r[})]/i,
-      /(^|[^\/{(])g|[({]g[})]/i]
+    /(^|[^\/{(])w|[({]w[})]/i,  # match w either at the start ^, or after anything other than / { (
+    /(^|[^\/{(])u|[({]u[})]/i,
+    /(^|[^\/{(])b|[({]b[})]/i,
+    /(^|[^\/{(])r|[({]r[})]/i,
+    /(^|[^\/{(])g|[({]g[})]/i]
+  @@colour_affiliation_regexps = {
+    :White => /(\(W\)|\{W\}|[Pp]lains)/,
+    :Blue =>  /(\(U\)|\{U\}|[Ii]sland)/, 
+    :Black => /(\(B\)|\{B\}|[Ss]wamp)/, 
+    :Red =>   /(\(R\)|\{R\}|[Mm]ountain)/, 
+    :Green => /(\(G\)|\{G\}|[Ff]orest)/, 
+  }
 
   def colours_in_cost
     out = @@colour_regexps.map do |re|
@@ -333,8 +349,22 @@ class Card < ActiveRecord::Base
         if /land/i.match(cardtype) # Land
           # Could try to detect the text box here, but that's really fiddly to get right
           # Consider Coastal Tower, Arcane Sanctum, Hallowed Fountain, Flooded Strand, and Vivid Creek
-          # So we just let them override it
-          return "Land (colourless)"
+          landColours = []
+          @@colour_affiliation_regexps.each do |this_colour, this_regexp|
+            if this_regexp.match(rulestext)
+              landColours << this_colour.to_s
+            end
+          end
+          case landColours.length
+            when 0:
+              return "Land (colourless)"
+            when 1:
+              return "Land (#{landColours[0].downcase})"
+            when 2:
+              return "Land (#{landColours[0].downcase}-#{landColours[1].downcase})"
+            when 3..5:
+              return "Land (multicolour)"
+          end
         elsif /artifact/i.match(cardtype)
           return "Artifact"
         else
@@ -342,7 +372,10 @@ class Card < ActiveRecord::Base
         end
     end
   end
-
+  
+  def new_linked_card
+    Card.new(:cardset_id => cardset_id, :frame => frame, :rarity => rarity)
+  end
 
   PLAINS = Card.new(
     :name => "Plains",
@@ -391,6 +424,19 @@ class Card < ActiveRecord::Base
     out = Card.new(:rulestext => text)
     out.blank = true
     out
+  end
+  
+  def multipart?
+   [Card.SPLIT1, Card.SPLIT2, Card.FLIP1, Card.FLIP2].include?(self.multipart)
+  end
+  def split?
+   [Card.SPLIT1, Card.SPLIT2].include?(self.multipart)
+  end
+  def flip?
+   [Card.FLIP1, Card.FLIP2].include?(self.multipart)
+  end
+  def secondary?
+   [Card.SPLIT2, Card.FLIP2].include?(self.multipart)
   end
 
   def <=>(c2)

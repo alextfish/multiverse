@@ -11,6 +11,7 @@ Multiverse::Application.routes.draw do
   match '/help',    :to => 'pages#help'
   match '/news',    :to => 'pages#news'
   match '/spam',    :to => 'pages#spam'
+  match '/card_back', :to => 'pages#card_back'
 
   get 'pages/home'
 
@@ -20,10 +21,11 @@ Multiverse::Application.routes.draw do
 
   resources :comments, :only => [:create, :destroy, :edit, :update]
 
-  resources :cards, :only => [:new, :create, :destroy, :edit, :update, :show, :move]
+  resources :cards, :only => [:new, :create, :destroy, :edit, :update, :show]
   resources :cards do
     member do
       get 'move'
+      put 'process_move'
       get 'mockup'
     end
   end

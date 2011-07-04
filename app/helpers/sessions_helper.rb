@@ -43,10 +43,12 @@ module SessionsHelper
   def require_permission_to(action, cardset)
     if !permission_to?(action, cardset)
       if !signed_in?
-        interrupt_for_login :notice => cardset.permission_message(action)
+        interrupt_for_login :notice => cardset.permission_message(action) and return false
       else
-        redirect_to :back, :notice => cardset.permission_message(action)
+        redirect_to :back, :notice => cardset.permission_message(action) and return false
       end
+    else
+      return true
     end
   end
   def require_permission_to_edit_comment(comment)

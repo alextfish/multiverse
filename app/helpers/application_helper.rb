@@ -410,6 +410,14 @@ module ApplicationHelper
           else
             return log.past_tense_verb(false)
           end
+        # For card moves, give a nicer syntax
+        when Log.kind(:card_move_in), Log.kind(:card_move_out):
+          if obj
+            part1, part2 = log.past_tense_verb(true)
+            return part1 + link_to(obj.printable_name, obj) + part2
+          else
+            return log.past_tense_verb(false)
+          end
         # For cardsets, just give name and path to the object
         when Log.kind(:cardset_create), Log.kind(:cardset_options), Log.kind(:cardset_import), Log.kind(:card_delete), Log.kind(:details_page_delete):
           if obj

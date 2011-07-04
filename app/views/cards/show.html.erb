@@ -40,24 +40,24 @@
      <%= render :partial => "shared/prettycard", :locals => { :link => false } %>
    </div>
    <% show_edit_link = permission_to?(:edit, @card.cardset) %>
-   <% show_move_link = false && permission_to?(:admin, @card.cardset) %>
+   <% show_move_link = permission_to?(:admin, @card.cardset) %>
    <% show_delete_link = permission_to?(:delete, @card.cardset) %>
    <% if show_edit_link || show_move_link || show_delete_link %>
      <div class="card_controls_below">
        <% if show_edit_link %>
-         <%= link_to "Edit", edit_card_path(@card) %>
+         <%= link_to "Edit", edit_card_path(@card), :class => "card_edit_link" %>
        <% end %>
        <% if show_edit_link && (show_move_link || show_delete_link) %>
          |
        <% end %>
        <% if show_move_link %>
-         <%= link_to "Move", move_card_path(@card) %>
+         <%= link_to "Move", move_card_path(@card), :class => "card_move_link" %>
        <% end %>
        <% if show_move_link && show_delete_link %>
          |
        <% end %>
        <% if show_delete_link %>
-         <%= link_to "Delete", @card, :confirm => "Really DELETE #{@card.printable_name}?", :method => :delete %>
+         <%= link_to "Delete", @card, :confirm => "Really DELETE #{@card.printable_name}?", :method => :delete, :class => "card_delete_link" %>
        <% end %>
      </div>
    <% end %>

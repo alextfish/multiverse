@@ -1,9 +1,10 @@
 <table class="setviews"><tr><td>
     <b><%= link_to_unless_current @cardset.name, @cardset %></b>:
-    <%= link_to_unless_current "Full cardlist", cardlist_cardset_path(@cardset) %> |
+    <%= link_to_unless_current "Cardlist", cardlist_cardset_path(@cardset) %> |
     <%= link_to_unless_current "Visual spoiler", visualspoiler_cardset_path(@cardset) %> |
     <%= link_to_unless_current "Export", export_cardset_path(@cardset) %> |
     <%= link_to_unless_current "Booster", booster_cardset_path(@cardset) %> |
+    <%= link_to_unless_current "Comments", comments_cardset_path(@cardset) %> |
     <%= link_to_unless_current "Recent activity", recent_cardset_path(@cardset) %>
 </td></tr>
 <% if !@cardset.details_pages_except_front_page.empty? || !@cardset.mechanics.empty? %>

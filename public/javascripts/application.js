@@ -71,6 +71,13 @@ function update_card_supertype(new_value) {
 
 function update_frame() {
   var cardframe = $("card_frame").value;
+  if (cardframe == "splitflip") { 
+    // If they've selected the split-flip frame option, don't do normal recalculation - just show the split-flip dropdown
+    $("card_multipart").show();
+    $('card_frame').select('option[value=splitflip]')[0].remove();
+    $("card_frame").value = "Auto";
+    return;
+  }
   var cost = $("card_cost").value;
   var cardtype = $("card_cardtype").value;
   var colours = [
@@ -121,10 +128,32 @@ function update_card_rarity(rarity_in) {
   } else {
     $("card").className = $("card").className.replace(/ token/,"");
   }
+  
+  if ($("card").hasClassName("split")) {
+   $("card_rarity").value = rarity_in;
+   $("card2_rarity").value = rarity_in;
+  }
 }
 
 function update_details_pages(new_text) {
   $( "details_pages" ).update(new_text);
+}
+
+
+function updateMultipartStyle(){
+ var multipart = $("card_multipart").value;
+ if (multipart == MULTIPART_SPLIT1) {
+   $("card2").show();
+   $("card").addClassName("split");
+   $("card").removeClassName("flip");
+   $("card2_rarity").value = $("card_rarity").value;
+ } else if (multipart == MULTIPART_FLIP1) {
+   $("card2").show();
+   $("card").addClassName("flip");
+   $("card").removeClassName("split");
+ } else { // Neither
+   $("card2").hide();
+ }
 }
 
 ////// Comments //////

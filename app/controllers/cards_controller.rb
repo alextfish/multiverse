@@ -14,8 +14,14 @@ class CardsController < ApplicationController
   before_filter :only => :move do
     require_permission_to(:admin, @cardset)
   end
-  before_filter do
+  before_filter :except => :mockup do
     require_permission_to_view(@cardset)
+  end
+  # For the embedded views, if authentication fails just return an appropriate blank
+  before_filter :only => :mockup do
+    if !permission_to?(:view, @cardset)
+      redirect_to :card_back
+    end
   end
 
   helper CardsHelper
@@ -47,6 +53,7 @@ class CardsController < ApplicationController
   # GET /cards/1.xml
   def show
     @card = Card.find(params[:id])
+    @card2 = @card.link
     @comment = Comment.new(:card => @card)
 
     respond_to do |format|
@@ -57,6 +64,7 @@ class CardsController < ApplicationController
 
   # GET /cards/new
   def new
+    @cardset = Cardset.find(params[:cardset_id])
     @card = Card.new(:cardset_id => params[:cardset_id])
     if params[:code] =~ Card.code_regexp
       @card.code = params[:code]
@@ -66,10 +74,7 @@ class CardsController < ApplicationController
       @card.frame = "Auto"
       @card.rarity = "common"
     end
-    unless @cardset && @cardset.new_record? 
-      # why is this here? under what circumstances will I be going to /cards/new when the @cardset is a new_record?
-      @cardset = Cardset.find(params[:cardset_id])
-    end
+    @card2 = @card.new_linked_card
   end
   
   def move
@@ -86,6 +91,7 @@ class CardsController < ApplicationController
     else
       Rails.logger.info "Not using Auto frame as calculated_frame is '#{@card.calculated_frame}' but frame is '#{@card.frame}'..."
     end
+    @card2 = @card.link || @card.new_linked_card
   end
 
   def process_card
@@ -98,6 +104,7 @@ class CardsController < ApplicationController
   # POST /cards
   def create
     @card = Card.new(params[:card])
+    # TODO for multipart
     process_card
     set_last_edit @card
 
@@ -111,8 +118,8 @@ class CardsController < ApplicationController
 
   # PUT /cards/1
   def update
+    # TODO for multipart
     @card = Card.find(params[:id])
-
     if @card.update_attributes(params[:card])
       process_card
       set_last_edit @card
@@ -124,16 +131,41 @@ class CardsController < ApplicationController
     end
   end
   
+  def process_move
+    @cardset1 = @card.cardset
+    @cardset2 = Cardset.find(params[:card][:cardset_id])
+    require_permission_to(:admin, @cardset1) or return
+    require_permission_to_edit(@cardset2) or return
+    if @card.update_attributes(params[:card])
+      process_card
+      set_last_edit @card
+      @cardset1.log :kind=>:card_move_out, :user=>current_user, :object_id=>@card.id, :text=>@cardset2.name
+      @cardset2.log :kind=>:card_move_in, :user=>current_user, :object_id=>@card.id, :text=>@cardset1.name
+      
+      if (@card2 = @card.link)
+        @card2.cardset = @card.cardset  # no logs needed for secondary cards
+      end
+
+      redirect_to @card, :notice => "Card was moved from #{@cardset1.name} to #{@cardset2.name}."
+    else
+      render :action => "edit"
+    end
+  end
+  
   # GET /cards/1/mockup - via Ajax
   def mockup
     @printable = true
     @embedded = true
+    @card2 = @card.link 
   end
 
   # DELETE /cards/1
   def destroy
     @card = Card.find(params[:id])
     @cardset = @card.cardset
+    if (@card2 = @card.link)
+      @card2.destroy
+    end
     @card.destroy
 
     respond_to do |format|

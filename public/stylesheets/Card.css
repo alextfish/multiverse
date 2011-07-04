@@ -8,16 +8,20 @@
   border-style: solid; }
 
 .blackborder {
-  border-color: black; }
+  border-color: black;
+  background-color: black; }
 
 .silverborder {
-  border-color: #a3a3a3; }
+  border-color: #a3a3a3;
+  background-color: #a3a3a3; }
 
 .goldborder {
-  border-color: #ccaa00; }
+  border-color: #ccaa00;
+  background-color: #ccaa00; }
 
 .purpleborder {
-  border-color: #aa66ff; }
+  border-color: #aa66ff;
+  background-color: #aa66ff; }
 
 .whiteborder {
   border-color: black;
@@ -573,6 +577,80 @@
   -webkit-border-radius: 44px 32px;
   -khtml-border-radius: 44px / 32px;
   border-radius: 44px / 32px; }
+
+/***** Split and Flip cards *****/
+.split.cardborder {
+  min-height: 200px;
+  width: 380px; }
+
+.split .card {
+  min-height: 200px; }
+
+.split .part1, .split .part2 {
+  display: inline-block;
+  width: 179px; }
+
+.split .part2 {
+  float: right; }
+
+.split .cardart {
+  min-height: 100px; }
+
+.split .cardtext {
+  min-height: 90px; }
+
+.split .cardtypebar {
+  font-size: 7.5pt; }
+
+.flip .card {
+  min-height: 0px; }
+
+.flip .part1 .cardart_container {
+  display: none; }
+
+.flip .part2 .cardrarity {
+  display: none; }
+
+.flip .cardtext {
+  min-height: 50px; }
+
+.flip .cardart {
+  min-height: 70px; }
+
+.flip .part1 .typebox {
+  position: absolute;
+  z-index: 2;
+  top: 78px;
+  width: 190px; }
+
+.flip .part1 .ptbox_container {
+  z-index: 2;
+  left: 6px; }
+
+.flip .part1 .cardrarity {
+  top: 180px;
+  z-index: 2; }
+
+.flip .part2 .namebox {
+  position: absolute;
+  z-index: 2;
+  top: 150px; }
+
+.flip .part2 .cardtypebar {
+  margin-left: 30px; }
+
+.flip .part2 .ptbox_container {
+  z-index: 2;
+  left: -147px;
+  top: -74px; }
+
+.flip .part2 .cardtext, .flip .part2 .namebox, .flip .part2 .cardtypebar, .flip .part2 .ptbox {
+  /* Safari */
+  -webkit-transform: rotate(-180deg);
+  /* Firefox */
+  -moz-transform: rotate(-180deg);
+  /* Internet Explorer */
+  filter: progid:DXImageTransform.Microsoft.BasicImage(rotation=2); }
 
 /***** Colours *****/
 .Colourless.card, .Colourless .cardart {

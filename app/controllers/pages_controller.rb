@@ -7,5 +7,10 @@ class PagesController < ApplicationController
   def contact
     @title = "Contact"
   end
+  
+  def card_back
+    @printable = true
+    @embedded = true
+  end
 
 end

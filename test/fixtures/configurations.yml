@@ -1,5 +1,5 @@
 # == Schema Information
-# Schema version: 20101215230231
+# Schema version: 20110626144600
 #
 # Table name: configurations
 #
@@ -21,6 +21,7 @@
 #  editability            :string(255)
 #  adminability           :string(255)
 #  last_edit_by           :integer
+#  border_colour          :string(255)
 #
 
 # Read about fixtures at http://ar.rubyonrails.org/classes/Fixtures.html

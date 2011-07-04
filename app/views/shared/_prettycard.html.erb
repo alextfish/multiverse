@@ -4,81 +4,89 @@
  <% if false && !@card.active && @card.cardset && @card.cardset.configuration.card_show_active %>
    <div class="banner">INACTIVE</div>
  <% end %>
- <div class="card <%= @card.display_class %>">
-  <div class="pinline pinline_box namebox">
-   <div class="cardtitlebar">
-    <div class="cardname">
-     <% if link %>
-      <%= link_to @card.printable_name, @card, :title => @card.code %>
-     <% else %>
-      <span title="<%= @card.code %>"><%= @card.name %></span>
-     <% end %>
-    </div>
-    <% if @card.rarity != "token" %>
-      <div class="cardmanacost"> <%= format_mana_symbols(@card.cost, true) %> </div>
-      &nbsp;<% "required to give some height to the cardtitlebar" %>
-    <% end %>
-   </div>
-  </div>
-  <div class="cardart_container">
-   <div class="pinline pinline_sides">
-    <% if !@card.art_url.blank? %>
-     <div class="cardart image">
-      <img src="<%= @card.art_url %>">
-     </div>
-    <% else %>
-     <div class="cardart noart">
-     </div>
-    <% end %>
-   </div>
-  </div>
-  <div class="pinline pinline_box">
-   <div class="cardtypebar">
-    <div class="cardrarity <%= @card.rarity %>">
-      <% if !@card.rarity.blank? %>
-        &nbsp;<%= @card.rarity[0].chr.upcase %>&nbsp;
+ <% if @card.link.nil? 
+      cards = [@card]
+    else
+      cards = [@card, @card.link]
+    end %>
+ <% cards.each_with_index do |card, card_index| %>
+
+   <div class="card <%= card.display_class %>">
+    <div class="pinline pinline_box namebox">
+     <div class="cardtitlebar">
+      <div class="cardname">
+       <% if link && card_index==1 %>
+        <%= link_to card.printable_name, card, :title => card.code %>
+       <% else %>
+        <span title="<%= card.code %>"><%= card.name %></span>
+       <% end %>
+      </div>
+      <% if card.rarity != "token" %>
+        <div class="cardmanacost"> <%= format_mana_symbols(card.cost, true) %> </div>
+        &nbsp;<% "required to give some height to the cardtitlebar" %>
       <% end %>
-    </div>
-    <div class="cardtype"><span>
-     <% my_type = displayed_type(@card) %>
-     <% if !my_type.blank? %>
-       <%= my_type %>
-     <% else %>
-       &nbsp;
-     <% end %>
-    </span></div>
-    <% " &nbsp; required to give some height to the cardtypebar " %>
-   </div>
-  </div>
-  <% textbox_length = (@card.rulestext.blank?   ? 0 : textbox_chars_displayed(@card, :rulestext  )) + 
-                      (@card.flavourtext.blank? ? 0 : textbox_chars_displayed(@card, :flavourtext)) %>
-  <% case textbox_length
-     when 0..150:   textboxclass = "cardtext"
-     when 151..170: textboxclass = "cardtext minitext"
-     when 171..200: textboxclass = "cardtext microtext"
-     else           textboxclass = "cardtext nanotext"
-   end %>
-  <div class="cardtext_container<% if textbox_length == 0 %> notext<% end %>">
-   <div class="pinline pinline_sidesbottom">
-     <div class="<%= textboxclass %>"><% Rails.logger.info "#{@card.printable_name}'s textbox has #{textbox_length} chars"%><% if !@card.rulestext.blank? %><%= content_tag(:div, format_card_text(@card, :rulestext), :class => "rulestext") %><% end %>
-      <% if !@card.flavourtext.blank? %><%= content_tag(:div, format_card_text(@card, :flavourtext), :class => "flavourtext") %><% end %></div>
-    </div>
-   </div>
-  <div class="bottombox">
-   <% if !@card.artist.blank? %>
-     <span class="artist">Illus. <%= @card.artist %></span>
-   <% else %>&nbsp;<% end %>
-   <% if !@card.power.blank? || !@card.toughness.blank? %>
-   <div class="ptbox_container">
-    <div class="pinline pinline_box pinline_ptbox">
-     <div class="ptbox"><%= @card.power %><% if !@card.power.blank? && !@card.toughness.blank? %>/<% end %><%= @card.toughness %>
      </div>
     </div>
+    <div class="cardart_container">
+     <div class="pinline pinline_sides">
+      <% if !card.art_url.blank? %>
+       <div class="cardart image">
+        <img src="<%= card.art_url %>">
+       </div>
+      <% else %>
+       <div class="cardart noart">
+       </div>
+      <% end %>
+     </div>
+    </div>
+    <div class="pinline pinline_box typebox">
+     <div class="cardtypebar">
+      <div class="cardrarity <%= card.rarity %>">
+        <% if !card.rarity.blank? %>
+          &nbsp;<%= card.rarity[0].chr.upcase %>&nbsp;
+        <% end %>
+      </div>
+      <div class="cardtype"><span>
+       <% my_type = displayed_type(card) %>
+       <% if !my_type.blank? %>
+         <%= my_type %>
+       <% else %>
+         &nbsp;
+       <% end %>
+      </span></div>
+      <% " &nbsp; required to give some height to the cardtypebar " %>
+     </div>
+    </div>
+    <% textbox_length = (card.rulestext.blank?   ? 0 : textbox_chars_displayed(card, :rulestext  )) + 
+                        (card.flavourtext.blank? ? 0 : textbox_chars_displayed(card, :flavourtext)) %>
+    <% case textbox_length
+       when 0..150:   textboxclass = "cardtext"
+       when 151..170: textboxclass = "cardtext minitext"
+       when 171..200: textboxclass = "cardtext microtext"
+       else           textboxclass = "cardtext nanotext"
+     end %>
+    <div class="cardtext_container<% if textbox_length == 0 %> notext<% end %>">
+     <div class="pinline pinline_sidesbottom">
+       <div class="<%= textboxclass %>"><% Rails.logger.info "#{card.printable_name}'s textbox has #{textbox_length} chars"%><% if !card.rulestext.blank? %><%= content_tag(:div, format_card_text(card, :rulestext), :class => "rulestext") %><% end %>
+        <% if !card.flavourtext.blank? %><%= content_tag(:div, format_card_text(card, :flavourtext), :class => "flavourtext") %><% end %></div>
+      </div>
+     </div>
+    <div class="bottombox">
+     <% if !card.artist.blank? %>
+       <span class="artist">Illus. <%= card.artist %></span>
+     <% else %>&nbsp;<% end %>
+     <% if !card.power.blank? || !card.toughness.blank? %>
+     <div class="ptbox_container">
+      <div class="pinline pinline_box pinline_ptbox">
+       <div class="ptbox"><%= card.power %><% if !card.power.blank? && !card.toughness.blank? %>/<% end %><%= card.toughness %>
+       </div>
+      </div>
+     </div>
+     <% end %>
+    </div>
+    <% if card.foil %>
+    <div class="foil">&nbsp;</div>
+     <% end %>
    </div>
-   <% end %>
-  </div>
-  <% if @card.foil %>
-  <div class="foil">&nbsp;</div>
-   <% end %>
- </div>
+ <% end %>
 </div>

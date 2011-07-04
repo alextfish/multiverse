@@ -53,13 +53,13 @@
     @include round_corners(10px);
     border-width: 10px;
     border-style: solid; }
-  .blackborder { border-color: black; }
+  .blackborder { border-color: black; background-color: black; }
   $SilverBorder: #a3a3a3;
-  .silverborder { border-color: $SilverBorder; }
+  .silverborder { border-color: $SilverBorder; background-color: $SilverBorder; }
   $GoldBorder: #ca0;
-  .goldborder { border-color: $GoldBorder; }
+  .goldborder { border-color: $GoldBorder; background-color: $GoldBorder; }
   $PurpleBorder: #a6f;
-  .purpleborder { border-color: $PurpleBorder; }
+  .purpleborder { border-color: $PurpleBorder; background-color: $PurpleBorder; }
   .whiteborder {
     border-color: black;
     border-width: 1px;
@@ -403,6 +403,41 @@ border: none;
 .token .cardart_container {
   @include elliptical_corners(44px, 32px);
  }
+ 
+/***** Split and Flip cards *****/
+ 
+.split.cardborder { min-height: 200px; width: 380px;}
+.split .card { min-height: 200px;}
+
+.split .part1, .split .part2 { display: inline-block; width: 179px;}
+.split .part2 { float: right;}
+
+.split .cardart { min-height: 100px; }
+.split .cardtext { min-height: 90px; }
+.split .cardtypebar{ font-size: 7.5pt; }
+
+.flip .card { min-height: 0px; }
+.flip .part1 .cardart_container { display: none; }
+.flip .part2 .cardrarity { display: none; }
+.flip .cardtext { min-height: 50px; }
+.flip .cardart { min-height: 70px;  }
+
+.flip .part1 .typebox { position: absolute; z-index: +2; top: +78px; width: 190px; }
+.flip .part1 .ptbox_container { z-index: +2; left: +6px;}
+.flip .part1 .cardrarity { top: 180px; z-index: +2; }
+
+.flip .part2 .namebox {  position: absolute; z-index: +2; top: 150px; }
+.flip .part2 .cardtypebar { margin-left: 30px; }
+.flip .part2 .ptbox_container { z-index: +2; left: -147px; top: -74px; }
+
+.flip .part2 .cardtext, .flip .part2 .namebox, .flip .part2 .cardtypebar, .flip .part2 .ptbox{
+/* Safari */
+-webkit-transform: rotate(-180deg);
+/* Firefox */
+-moz-transform: rotate(-180deg);
+/* Internet Explorer */
+filter: progid:DXImageTransform.Microsoft.BasicImage(rotation=2);
+}
 
 /***** Colours *****/
 

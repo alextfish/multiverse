@@ -19,7 +19,8 @@
 class Log < ActiveRecord::Base
   belongs_to :cardset
   belongs_to :user
-  validates_inclusion_of :kind, :in => (1..20)
+  HIGHEST_LOG_KIND = 22
+  validates_inclusion_of :kind, :in => (1..HIGHEST_LOG_KIND)
   default_scope :order => 'logs.datestamp DESC'
   
   def Log.kind(sym)
@@ -44,7 +45,9 @@ class Log < ActiveRecord::Base
       when :comment_edit:        18
       when :skeleton_generate:   19
       when :skeleton_edit:       20
-
+      when :card_move_out:       21
+      when :card_move_in:        22
+      # when added new log types, update the definition of HIGHEST_LOG_KIND above
       else
         raise "Unknown log kind specified: #{sym}"
     end
@@ -52,7 +55,7 @@ class Log < ActiveRecord::Base
   def Log.kinds_to_not_show(situation)
     case situation
       when :card_history:
-        [Log.kind(:comment_edit), Log.kind(:comment_delete)]
+        [Log.kind(:comment_edit), Log.kind(:comment_delete), Log.kind(:card_move_out)]
       when :cardset_recent:
         [Log.kind(:comment_edit)]
       else
@@ -105,8 +108,12 @@ class Log < ActiveRecord::Base
         specific ? "imported cards (#{self.text}) into " : "imported cards (#{self.text})"
       when Log.kind(:skeleton_generate):
         specific ? "generated part of a set skeleton in " : "generated part of a set skeleton"
-      when Log.kind(:skeleton_edited):
+      when Log.kind(:skeleton_edit):
         specific ? "edited the set skeleton in " : "edited the set skeleton"
+      when Log.kind(:card_move_out):
+        specific ? ["moved the card ", " from #{self.cardset.name} into #{self.text}"] : "moved a card out"
+      when Log.kind(:card_move_in):
+        specific ? ["moved the card ", " from #{self.text} into #{self.cardset.name}"] : "moved a card in"
       else
         raise "Unknown log kind #{self.kind} found in log #{self.id}"
     end
@@ -138,7 +145,7 @@ class Log < ActiveRecord::Base
       when Log.kind(:cardset_delete)
         return nil
       # cards
-      when Log.kind(:card_create), Log.kind(:card_edit):
+      when Log.kind(:card_create), Log.kind(:card_edit), Log.kind(:card_move_in), Log.kind(:card_move_out):
         card = Card.find_by_id(self.object_id)
         return card
       # details pages

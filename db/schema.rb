@@ -10,7 +10,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20110126214800) do
+ActiveRecord::Schema.define(:version => 20110630090600) do
 
   create_table "cards", :force => true do |t|
     t.string   "code"
@@ -34,6 +34,8 @@ ActiveRecord::Schema.define(:version => 20110126214800) do
     t.string   "artist"
     t.string   "image_url"
     t.integer  "last_edit_by"
+    t.integer  "multipart"
+    t.integer  "link_id"
   end
 
   add_index "cards", ["cardset_id"], :name => "index_cards_on_cardset_id"
@@ -109,6 +111,8 @@ ActiveRecord::Schema.define(:version => 20110126214800) do
 
   add_index "logs", ["cardset_id"], :name => "index_logs_on_cardset_id"
   add_index "logs", ["datestamp"], :name => "index_logs_on_datestamp"
+  add_index "logs", ["kind"], :name => "index_logs_on_kind"
+  add_index "logs", ["object_id"], :name => "index_logs_on_object_id"
 
   create_table "mechanics", :force => true do |t|
     t.string   "name"
@@ -151,6 +155,17 @@ ActiveRecord::Schema.define(:version => 20110126214800) do
 
   add_index "sessions", ["session_id"], :name => "index_sessions_on_session_id"
   add_index "sessions", ["updated_at"], :name => "index_sessions_on_updated_at"
+
+  create_table "symbols", :force => true do |t|
+    t.string   "string"
+    t.integer  "cardset_id"
+    t.string   "url"
+    t.text     "description"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "symbols", ["cardset_id"], :name => "index_symbols_on_cardset_id"
 
   create_table "users", :force => true do |t|
     t.string   "name"

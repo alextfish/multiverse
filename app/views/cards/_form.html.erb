@@ -150,10 +150,32 @@
     <% end %>
     <tr>
      <td><%= f.label :frame %></td>
-     <% frames_keys = Card.display_frames %>
-     <% frames_values = Card.frames %>
-     <% frames = frames_keys.zip(frames_values) %>
-     <td><%= f.select :frame, frames.unshift(["Auto", "Auto"]), {},
+      <% if @card.multipart?
+       multipartSelectVisible = true
+       showSplitFlipFrameOption = false
+      else
+       multipartSelectVisible = false
+       showSplitFlipFrameOption = true
+      end
+      multipartSelectOptions = [["Normal", Card.STANDALONE], ["Split", Card.SPLIT1], ["Flip", Card.FLIP1]]
+      %>
+      <td><%= f.select :multipart, multipartSelectOptions, {}, 
+        { :style => ( multipartSelectVisible ? "" : "display:none;"), 
+        :onchange => "updateMultipartStyle()" } %>
+        <script language="JavaScript">
+          MULTIPART_STANDALONE = <%= Card.STANDALONE %>;
+          MULTIPART_SPLIT1 = <%= Card.SPLIT1 %>;
+          MULTIPART_FLIP1  = <%= Card.FLIP1 %>;
+        </script>
+      <% frames_keys = Card.display_frames 
+         frames_values = Card.frames 
+         frames = frames_keys.zip(frames_values) 
+         frames.unshift(["Auto", "Auto"])
+         if showSplitFlipFrameOption 
+           frames.unshift(["Split / Flip", "splitflip"])
+         end
+         %>
+      <%= f.select :frame, frames, {},
           { :onchange => "update_frame()" } %></td>
     </tr>
     <% if !@card.new_record? %>
