@@ -120,7 +120,15 @@ function update_frame() {
 
 function update_card_rarity(rarity_in) {
   var new_rarity = rarity_in.toLowerCase();
-  $("raritycell").className = "cardrarity " + new_rarity;
+  $$(".raritycell").each(function(this_div) {
+    this_div.removeClassName("basic");
+    this_div.removeClassName("token");
+    this_div.removeClassName("common");
+    this_div.removeClassName("uncommon");
+    this_div.removeClassName("rare");
+    this_div.removeClassName("mythic");
+    this_div.addClassName(new_rarity);
+  });
   if (new_rarity == "token") {
     if ($("card").className.search(/token/) == -1) {
       $("card").className += " token";
@@ -129,9 +137,9 @@ function update_card_rarity(rarity_in) {
     $("card").className = $("card").className.replace(/ token/,"");
   }
   
-  if ($("card").hasClassName("split")) {
+  if ($("cardborder").hasClassName("split")) {
    $("card_rarity").value = rarity_in;
-   $("card2_rarity").value = rarity_in;
+   $("card_link_attributes_rarity").value = rarity_in;
   }
 }
 
@@ -144,14 +152,16 @@ function updateMultipartStyle(){
  var multipart = $("card_multipart").value;
  if (multipart == MULTIPART_SPLIT1) {
    $("card2").show();
-   $("card").addClassName("split");
-   $("card").removeClassName("flip");
-   $("card2_rarity").value = $("card_rarity").value;
+   $("cardborder").addClassName("split");
+   $("cardborder").removeClassName("flip");
+   $("card_link_attributes_rarity").value = $("card_rarity").value;
  } else if (multipart == MULTIPART_FLIP1) {
    $("card2").show();
-   $("card").addClassName("flip");
-   $("card").removeClassName("split");
+   $("cardborder").addClassName("flip");
+   $("cardborder").removeClassName("split");
  } else { // Neither
+   $("cardborder").removeClassName("split");
+   $("cardborder").removeClassName("flip");
    $("card2").hide();
  }
 }

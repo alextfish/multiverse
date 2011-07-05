@@ -107,8 +107,6 @@ class Cardset < ActiveRecord::Base
                      :user=>in_hash[:user], 
                      :object_id=>in_hash[:object_id],
                      :text=>in_hash[:text]
-    Rails.logger.info "Created log object #{new_log}"
-    Rails.logger.info "Is valid: #{new_log.valid?}"
   end
   
   def public_access

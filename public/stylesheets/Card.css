@@ -583,6 +583,9 @@
   min-height: 200px;
   width: 380px; }
 
+.split.form#cardborder {
+  width: 500px; }
+
 .split .card {
   min-height: 200px; }
 
@@ -593,6 +596,9 @@
 .split .part2 {
   float: right; }
 
+.split.form .part1, .split.form .part2 {
+  width: 240px; }
+
 .split .cardart {
   min-height: 100px; }
 
@@ -601,6 +607,12 @@
 
 .split .cardtypebar {
   font-size: 7.5pt; }
+
+.split.form .cardrarity {
+  top: 27px; }
+
+.split input {
+  width: 100px; }
 
 .flip .card {
   min-height: 0px; }

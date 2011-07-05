@@ -407,14 +407,19 @@ border: none;
 /***** Split and Flip cards *****/
  
 .split.cardborder { min-height: 200px; width: 380px;}
+.split.form#cardborder { width: 500px; }
 .split .card { min-height: 200px;}
 
 .split .part1, .split .part2 { display: inline-block; width: 179px;}
 .split .part2 { float: right;}
+.split.form .part1, .split.form .part2 { width: 240px;;}
 
 .split .cardart { min-height: 100px; }
 .split .cardtext { min-height: 90px; }
 .split .cardtypebar{ font-size: 7.5pt; }
+
+.split.form .cardrarity { top: 27px; }
+.split input { width: 100px; }
 
 .flip .card { min-height: 0px; }
 .flip .part1 .cardart_container { display: none; }

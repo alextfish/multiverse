@@ -35,6 +35,7 @@ class Card < ActiveRecord::Base
   has_many :old_cards, :dependent => :destroy
   attr_accessor :foil, :blank  # not saved
   belongs_to :link, :class_name => "Card"
+  accepts_nested_attributes_for :link
   # has_many :highlighted_comments, :class_name => 'Comment', :conditions => ['status = ?', COMMENT_HIGHLIGHTED]
   # has_many :unaddressed_comments, :class_name => 'Comment', :conditions => ['status = ?', COMMENT_UNADDRESSED]
 
@@ -57,7 +58,7 @@ class Card < ActiveRecord::Base
   def Card.SPLIT2;     2; end
   def Card.FLIP1;      3; end
   def Card.FLIP2;      4; end
-  validates_inclusion_of :multipart, :in => [Card.STANDALONE, Card.SPLIT1, Card.SPLIT2, Card.FLIP1, Card.FLIP2]
+  validates_inclusion_of :multipart, :in => [nil, Card.STANDALONE, Card.SPLIT1, Card.SPLIT2, Card.FLIP1, Card.FLIP2]
 
   def regularise_fields
     # Enforce rarity; Default rarity to common
@@ -69,6 +70,10 @@ class Card < ActiveRecord::Base
       if self.attributes[field]
         self.attributes[field].strip!
       end
+    end
+    # Default multipart
+    if self.multipart.nil?
+      self.multipart = Card.STANDALONE
     end
   end
 
@@ -437,6 +442,9 @@ class Card < ActiveRecord::Base
   end
   def secondary?
    [Card.SPLIT2, Card.FLIP2].include?(self.multipart)
+  end
+  def multipart_class
+    self.split? ? "split" : self.flip? ? "flip" : ""
   end
 
   def <=>(c2)

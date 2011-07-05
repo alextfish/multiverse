@@ -1,6 +1,6 @@
 <% # prettycard helper takes boolean param "link"
 #link = false if local_assigns[:link].nil?
-%><div class="cardborder <%= @card.border_colour %>border">
+%><div class="cardborder <%= @card.border_colour %>border <%= @card.multipart_class %>">
  <% if false && !@card.active && @card.cardset && @card.cardset.configuration.card_show_active %>
    <div class="banner">INACTIVE</div>
  <% end %>
@@ -11,7 +11,7 @@
     end %>
  <% cards.each_with_index do |card, card_index| %>
 
-   <div class="card <%= card.display_class %>">
+   <div class="card <%= card.display_class %> part<%= card_index+1 %>">
     <div class="pinline pinline_box namebox">
      <div class="cardtitlebar">
       <div class="cardname">

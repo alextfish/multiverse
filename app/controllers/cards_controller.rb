@@ -74,7 +74,7 @@ class CardsController < ApplicationController
       @card.frame = "Auto"
       @card.rarity = "common"
     end
-    @card2 = @card.new_linked_card
+    @card.link = @card.new_linked_card
   end
   
   def move
@@ -91,7 +91,7 @@ class CardsController < ApplicationController
     else
       Rails.logger.info "Not using Auto frame as calculated_frame is '#{@card.calculated_frame}' but frame is '#{@card.frame}'..."
     end
-    @card2 = @card.link || @card.new_linked_card
+    @card.link ||= @card.new_linked_card
   end
 
   def process_card
@@ -120,10 +120,21 @@ class CardsController < ApplicationController
   def update
     # TODO for multipart
     @card = Card.find(params[:id])
+    @card2 = @card.link
+    old_multipart = @card.multipart?
     if @card.update_attributes(params[:card])
+      new_multipart = @card.multipart?
       process_card
       set_last_edit @card
       @cardset.log :kind=>:card_edit, :user=>current_user, :object_id=>@card.id, :text=>params[:edit_comment]
+      if old_multipart && !new_multipart
+        # Delete the old partner
+        @card2.destroy
+      elsif !old_multipart && new_multipart 
+        # Create a new partner
+        @card2 = Card.new(params[:card][:link])
+        @card.link = @card2
+      end
 
       redirect_to @card   #, :notice => 'Card was successfully updated.'
     else
