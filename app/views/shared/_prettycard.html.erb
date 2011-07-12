@@ -4,7 +4,7 @@
  <% if false && !@card.active && @card.cardset && @card.cardset.configuration.card_show_active %>
    <div class="banner">INACTIVE</div>
  <% end %>
- <% if @card.link.nil? 
+ <% if @card.link.nil? || !@card.multipart?
       cards = [@card]
     else
       cards = [@card, @card.link]

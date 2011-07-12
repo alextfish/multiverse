@@ -1,3 +1,11 @@
+@mixin rotate_180 {
+  /* Safari */
+  -webkit-transform: rotate(-180deg);
+  /* Firefox */
+  -moz-transform: rotate(-180deg);
+  /* Internet Explorer */
+  filter: progid:DXImageTransform.Microsoft.BasicImage(rotation=2);
+}
 @mixin gradient_horz($start, $end) {
   filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#{$start}', endColorstr='#{$end}', GradientType=1);
   background: -webkit-gradient(linear, left top, right top, from($start), to($end));
@@ -412,7 +420,7 @@ border: none;
 
 .split .part1, .split .part2 { display: inline-block; width: 179px;}
 .split .part2 { float: right;}
-.split.form .part1, .split.form .part2 { width: 240px;;}
+.split.form .part1, .split.form .part2 { width: 240px;}
 
 .split .cardart { min-height: 100px; }
 .split .cardtext { min-height: 90px; }
@@ -422,26 +430,42 @@ border: none;
 .split input { width: 100px; }
 
 .flip .card { min-height: 0px; }
-.flip .part1 .cardart_container { display: none; }
+.flip .part1 .cardart_container, .flip .part1 .artist_area { display: none; }
 .flip .part2 .cardrarity { display: none; }
 .flip .cardtext { min-height: 50px; }
 .flip .cardart { min-height: 70px;  }
 
 .flip .part1 .typebox { position: absolute; z-index: +2; top: +78px; width: 190px; }
 .flip .part1 .ptbox_container { z-index: +2; left: +6px;}
-.flip .part1 .cardrarity { top: 180px; z-index: +2; }
+.flip .part2 .cardart_container { position: relative; top: -32px;}
+.flip .part1 .cardrarity { top: 190px; z-index: +2; }
 
-.flip .part2 .namebox {  position: absolute; z-index: +2; top: 150px; }
-.flip .part2 .cardtypebar { margin-left: 30px; }
-.flip .part2 .ptbox_container { z-index: +2; left: -147px; top: -74px; }
+.flip .part2 .namebox { /* position: absolute; */ z-index: +2; top: 215px; }
+.flip .part2 .typebox { top:-32px; position: relative; }
+.flip .part2 .pinline_ptbox { right: 147px; top: -101px; z-index: 2; }
+.flip .part2 .cardtext_container { top: -32px; position: relative; }
+.flip .part2 .bottombox { width: 188px; position: absolute; top: 167px; bottom: 0px; z-index: +1; margin-bottom: 0px; }
 
-.flip .part2 .cardtext, .flip .part2 .namebox, .flip .part2 .cardtypebar, .flip .part2 .ptbox{
-/* Safari */
--webkit-transform: rotate(-180deg);
-/* Firefox */
--moz-transform: rotate(-180deg);
-/* Internet Explorer */
-filter: progid:DXImageTransform.Microsoft.BasicImage(rotation=2);
+.flip .part2 .cardtext, .flip .part2 .namebox, .flip .part2 .cardtypebar, .flip .part2 .pinline_ptbox, .rotated {
+  @include rotate_180; 
+}
+
+.flip.form .part1 .cardtext_container { position: relative; top: -42px; }
+.flip.form .part1 .typebox { position: relative; width: auto; top: 93px; /* top: 148px; */ }
+.flip.form .part1 .ptbox_container { top: -38px; }
+.flip.form .type_field { width: 65px; }
+.flip.form .part2 .cardart_container { height: 50px; top: -45px;}
+.flip.form .part2 .bottombox { position: relative; margin-top: 23px; top: 0px; }
+.flip.form .part2 .pinline_ptbox { right: 110px; top: -234px; }
+.flip.form .part2 .namebox { top: 220px; }
+.flip.form .part1 .cardrarity { /* right: -170px; */ top: 342px; z-index: +3; }
+
+@-moz-document url-prefix() { /* Firefox override */
+  .flip.form .part1 .cardtext_container { top: -32px; }
+  .flip.form .part1 .ptbox_container { top: -26px; }
+  .flip.form .part2 .namebox { top: 200px; }
+  .flip.form .part2 .pinline_ptbox { top: -197px; }
+  .flip.form .part1 .cardrarity { top: 300px; }
 }
 
 /***** Colours *****/
@@ -659,21 +683,25 @@ text-transform:uppercase;
 
 /***** Card editing *****/
 
-#card_supertype, #card_cardtype, #card_subtype { width: 100px; }
-#card_rarity { margin-top: 6px; margin-bottom: 6px; }
-#card_power, #card_toughness { width: 20px; }
+input.type_field { width: 100px; }
+input.rarity_selector { margin-top: 6px; margin-bottom: 6px; }
+input.powerfield, input.toughnessfield { width: 20px; }
 .flavourtextfield { font-style: italic;
                   width: 98%; }
 .rulestextfield { width: 98%; }
 .art_url_field  { width: 98%; }
 .image_url_field, .edit_comment_field  { width: 400px; }
-form #raritycell { border: 1px solid black; }
+form .raritycell { border: 1px solid black; }
 .Planeswalker #power_field, .Planeswalker #pt_slash { display: none; }
 .Planeswalker .notptbox { border: none;
     background-image: url(/images/loyalty_big.png);
     width: 80px; height: 41px; /* img is 51px high, minus the 10px top padding */
     padding: 10px 0px 0px 0px; }
 .Planeswalker.form .pinline_ptbox.pinline { top: -36px; }
+.flip .flavourtextfield { display: none; }
+
+.multipart_selector_div { text-align: center; margin-bottom: 8px; }
+#multipart_selector_wrapper { padding: 8px; }
 
 div.history_box_limited { overflow: auto;
  height: 50%;

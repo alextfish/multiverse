@@ -69,17 +69,20 @@ function update_card_supertype(new_value) {
   }
 }
 
-function update_frame() {
-  var cardframe = $("card_frame").value;
+function update_frame(card_id) {
+  var this_card = $(card_id);
+  var frame_selector = this_card.select(".frame_selector")[0];
+  var cardframe = frame_selector.value;
   if (cardframe == "splitflip") { 
     // If they've selected the split-flip frame option, don't do normal recalculation - just show the split-flip dropdown
     $("card_multipart").show();
-    $('card_frame').select('option[value=splitflip]')[0].remove();
-    $("card_frame").value = "Auto";
+    $("multipart_selector_wrapper").highlight({startcolor: "#ff8800", duration: 1})
+    frame_selector.select('option[value=splitflip]')[0].remove();
+    frame_selector.value = "Auto";
     return;
   }
-  var cost = $("card_cost").value;
-  var cardtype = $("card_cardtype").value;
+  var cost = this_card.select(".cost_field")[0].value;
+  var cardtype = this_card.select(".type_field")[0].value;
   var colours = [
     (cost.search(/w/i)>-1 ? "White" : ""),
     (cost.search(/u/i)>-1 ? "Blue" : ""),
@@ -106,7 +109,7 @@ function update_frame() {
       // this case 2 is buggy for Twinclaws cases, but meh
     }
   }
-  if ( num_colours == 2) {
+  if (num_colours == 2) {
     var pinline = " " + colours.join("").toLowerCase();
   } else {
     var pinline = "";
@@ -114,8 +117,10 @@ function update_frame() {
   var newClass = outer + inner + pinline;
 
   var universalClass = "form card ";
-  if ($("card").className.search(/token/) > -1) { universalClass += "token "; }
-  $("card").className = universalClass + newClass;
+  if (this_card.hasClassName("token")) { universalClass += "token "; }
+  if (this_card.hasClassName("part1")) { universalClass += "part1 "; }
+  if (this_card.hasClassName("part2")) { universalClass += "part2 "; }
+  this_card.className = universalClass + newClass;
 }
 
 function update_card_rarity(rarity_in) {
@@ -130,11 +135,13 @@ function update_card_rarity(rarity_in) {
     this_div.addClassName(new_rarity);
   });
   if (new_rarity == "token") {
-    if ($("card").className.search(/token/) == -1) {
-      $("card").className += " token";
-    }
+    $$(".card").each(function(card) {
+      card.addClassName("token");
+    });
   } else {
-    $("card").className = $("card").className.replace(/ token/,"");
+    $$(".card").each(function(card) {
+      card.removeClassName("token");
+    });
   }
   
   if ($("cardborder").hasClassName("split")) {

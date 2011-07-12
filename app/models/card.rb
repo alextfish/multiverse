@@ -35,7 +35,7 @@ class Card < ActiveRecord::Base
   has_many :old_cards, :dependent => :destroy
   attr_accessor :foil, :blank  # not saved
   belongs_to :link, :class_name => "Card"
-  accepts_nested_attributes_for :link
+  accepts_nested_attributes_for :link, :reject_if => proc { |attributes| attributes["rulestext"].blank? && attributes["name"].blank? }
   # has_many :highlighted_comments, :class_name => 'Comment', :conditions => ['status = ?', COMMENT_HIGHLIGHTED]
   # has_many :unaddressed_comments, :class_name => 'Comment', :conditions => ['status = ?', COMMENT_UNADDRESSED]
 
@@ -232,7 +232,11 @@ class Card < ActiveRecord::Base
   end
   def display_class
     if self.frame == "Auto"
-      cardclass = "" << self.calculated_frame
+      if self.new_record? && !self.link.new_record?
+        cardclass = "" << self.link.calculated_frame
+      else
+        cardclass = "" << self.calculated_frame
+      end
     else
       cardclass = "" << self.frame
     end
@@ -379,7 +383,7 @@ class Card < ActiveRecord::Base
   end
   
   def new_linked_card
-    Card.new(:cardset_id => cardset_id, :frame => frame, :rarity => rarity)
+    Card.new(:cardset_id => cardset_id, :frame => frame, :rarity => rarity, :link=>self)
   end
 
   PLAINS = Card.new(

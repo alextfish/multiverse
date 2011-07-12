@@ -22,10 +22,34 @@
      <img src="">
    </div>
    <div class="onetab" id="prettycard"><a name="mockup"></a -->
+   <% if @card.multipart?
+       multipart_select_visible = true
+       show_split_flip_frame_option = false
+      else
+       multipart_select_visible = false
+       show_split_flip_frame_option = true
+      end
+   %>
+   <div class="multipart_selector_div">
+    <span id="multipart_selector_wrapper">
+     <script language="JavaScript">
+      MULTIPART_STANDALONE = <%= Card.STANDALONE %>;
+      MULTIPART_SPLIT1 = <%= Card.SPLIT1 %>;
+      MULTIPART_FLIP1  = <%= Card.FLIP1 %>;
+     </script>
+     <% 
+      multipart_select_options = [["Normal", Card.STANDALONE], ["Split", Card.SPLIT1], ["Flip", Card.FLIP1]]
+      %>
+     <%= outer_form.select :multipart, multipart_select_options, {}, 
+        { :style => ( multipart_select_visible ? "" : "display:none;"), 
+        :onchange => "updateMultipartStyle()", :onkeyup => "updateMultipartStyle()" } %>
+    </div>
+   </div>
+   <!-- The two card forms -->
    <div class="<%= @card.border_colour %>border form <%= @card.multipart_class %>" id="cardborder">
-     <%= render :partial => "onecardform", :locals => { :f => outer_form, :card => @card, :card_index => 1 } %>
+     <%= render :partial => "onecardform", :locals => { :f => outer_form, :card => @card, :card_index => 1, :show_split_flip_frame_option => show_split_flip_frame_option } %>
      <%= outer_form.fields_for :link do |f| %>
-       <%= render :partial => "onecardform", :locals => { :f => f, :card => @card.link, :card_index => 2 } %>
+       <%= render :partial => "onecardform", :locals => { :f => f, :card => @card.link, :card_index => 2, :show_split_flip_frame_option => false } %>
      <% end %>
   </div>
   </td>                    <!-- end of card -->
@@ -68,36 +92,6 @@
       <td><%= outer_form.check_box :active %></td>
      </tr>
     <% end %>
-    <tr>
-     <td><%= outer_form.label :frame %></td>
-      <% if @card.multipart?
-       multipartSelectVisible = true
-       showSplitFlipFrameOption = false
-      else
-       multipartSelectVisible = false
-       showSplitFlipFrameOption = true
-      end
-      multipartSelectOptions = [["Normal", Card.STANDALONE], ["Split", Card.SPLIT1], ["Flip", Card.FLIP1]]
-      %>
-      <td><%= outer_form.select :multipart, multipartSelectOptions, {}, 
-        { :style => ( multipartSelectVisible ? "" : "display:none;"), 
-        :onchange => "updateMultipartStyle()", :onkeyup => "updateMultipartStyle()" } %>
-        <script language="JavaScript">
-          MULTIPART_STANDALONE = <%= Card.STANDALONE %>;
-          MULTIPART_SPLIT1 = <%= Card.SPLIT1 %>;
-          MULTIPART_FLIP1  = <%= Card.FLIP1 %>;
-        </script>
-      <% frames_keys = Card.display_frames 
-         frames_values = Card.frames 
-         frames = frames_keys.zip(frames_values) 
-         frames.unshift(["Auto", "Auto"])
-         if showSplitFlipFrameOption 
-           frames.unshift(["Split / Flip", "splitflip"])
-         end
-         %>
-      <%= outer_form.select :frame, frames, {},
-          { :onchange => "update_frame()", :onkeyup => "update_frame()"  } %></td>
-    </tr>
     <% if !@card.new_record? %>
      <tr>
       <td colspan="2">
