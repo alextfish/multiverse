@@ -52,23 +52,51 @@
       <th colspan="3" class="nosort">&nbsp;</th>
     <% end %>
   </tr>
-<% all_cards = Card.find_all_by_cardset_id(@cardset.id, :include => :comments) %>
+<% all_cards = @cardset.listable_cards %>
 <% if all_cards && !all_cards.empty? %>
   <% all_cards.sort.each_with_index do |card, index| %>
     <tr id="card_row_<%= card.id %>">
       <td><%= index+1 %></td>
-      <td><%= link_to card.printable_name, card %></td>
+      <% "Fields that don't vary with multipart cards" %>
+      <td><%= link_to card.listable_name, card %></td>
       <td><%= card.category %></td>
       <td><%= card.rarity.capitalize %></td>
-      <td><span style="display:none;"><%= card.converted_mana_cost %></span><%= format_mana_symbols(card.cost, true) %></td>
-      <td><%= displayed_type(card) %></td>
-      <td><%= card.power %></td>
-      <td><%= card.toughness %></td>
-      <td class="code" <%= code_display %>><%= card.code %></td>
-      <td class="active" <%= active_display %>><%= card.active ? "Yes" : "" %></td>
-      <td class="card_text">
-        <%= format_card_text(card, :rulestext) %>
-      </td>
+      <% "Fields that vary with multipart cards" %>
+      <% if !card.multipart? %>
+        <td><span style="display:none;"><%= card.converted_mana_cost %></span><%= format_mana_symbols(card.cost, true) %></td>
+        <td><%= displayed_type(card) %></td>
+        <td><%= card.power %></td>
+        <td><%= card.toughness %></td>
+        <td class="code" <%= code_display %>><%= card.code %></td>
+        <td class="active" <%= active_display %>><%= card.active ? "Yes" : "" %></td>
+        <td class="card_text">
+          <%= format_card_text(card, :rulestext) %>
+        </td>
+      <% else %>
+        <% "Multipart. We know card is the primary." %>
+        <% card2 = card.link 
+           sep = card.separator %>
+        <td><span style="display:none;"><%= card.converted_mana_cost %></span>
+        <% if card.cost.blank? || card2.cost.blank? %>
+          <%= nowrap(format_mana_symbols(card.cost, true)) %>
+          <%= nowrap(format_mana_symbols(card2.cost, true)) %>
+        <% else %>
+          <%= nowrap(format_mana_symbols(card.cost, true)) %>
+          <%= sep %>
+          <%= nowrap(format_mana_symbols(card2.cost, true)) %>
+        <% end %>
+        </td>
+        <td><%= separate_if_both_nonblank(displayed_type(card), displayed_type(card2), sep).html_safe %></td>
+        <td><%= separate_if_both_nonblank(card.power, card2.power, sep) %></td>
+        <td><%= separate_if_both_nonblank(card.toughness, card2.toughness, sep) %></td>
+        <td class="code" <%= code_display %>><%= card.code %></td>
+        <td class="active" <%= active_display %>><%= card.active ? "Yes" : "" %></td>
+        <td class="card_text">
+          <%= separate_if_both_nonblank(format_card_text(card, :rulestext),
+                                        format_card_text(card2, :rulestext), sep) %>
+        </td>
+      <% end %>
+      
       <td class="updated" <%= update_display %>>
         <span style="display:none;"><%= card.updated_at.to_i %></span>
         <%= format_datetime(card.updated_at) %> <%= by_last_edit_user_if_available card %>
@@ -90,7 +118,7 @@
         <td><%= link_to "Edit", edit_card_path(card) %></td>
       <% end %>
       <% if permission_to?(:delete, @cardset) %>
-        <td><%= link_to "Delete", card, :confirm => "Really DELETE #{card.printable_name}?", :method => :delete, :remote => true %></td>
+        <td><%= link_to "Delete", card, {:confirm => "Really DELETE #{card.printable_name}?", :method => :delete, :remote => true, :class => "no_tooltip" } %></td>
       <% end %>
     </tr>
   <% end %>

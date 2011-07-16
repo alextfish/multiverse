@@ -38,6 +38,40 @@ class Cardset < ActiveRecord::Base
     end
     out
   end
+  
+  def log(in_hash)
+    new_log = self.logs.create :kind=>Log.kind(in_hash[:kind]), 
+                     :datestamp=>Time.now, 
+                     :user=>in_hash[:user], 
+                     :object_id=>in_hash[:object_id],
+                     :text=>in_hash[:text]
+  end
+  
+  def recent_action
+    out = self.logs.first
+    logs_to_not_show = Log.kinds_to_not_show(:cardset_recent)
+    if logs_to_not_show.include?(out.kind) 
+      out = self.logs.reject{ |l| logs_to_not_show.include?(l.kind) }.first
+    end
+    out
+  end
+  
+  def datestamps_close(d1,d2)
+    (d1-d2).abs < 20.seconds
+  end
+  
+  def public_cards
+    if configuration.card_show_active
+      self.cards.nonsecondary.select {|c| c.active}
+    else
+      self.cards.nonsecondary
+    end
+  end
+  def listable_cards # For cardlists that should include nonactive cards
+    Card.find_all_by_cardset_id(self.id, :include => :comments).select {|c| !c.secondary?}
+  end 
+  
+  ########################## Permissions #########################  
 
   @@permitted_users_are = {
     # DB entry => Text
@@ -100,15 +134,6 @@ class Cardset < ActiveRecord::Base
     end
   end
   
-  def log(in_hash)
-    Rails.logger.info "Moved OK"
-    new_log = self.logs.create :kind=>Log.kind(in_hash[:kind]), 
-                     :datestamp=>Time.now, 
-                     :user=>in_hash[:user], 
-                     :object_id=>in_hash[:object_id],
-                     :text=>in_hash[:text]
-  end
-  
   def public_access
    if ['justme', 'admins', 'selected'].include? configuration.visibility
      "Private"
@@ -119,17 +144,8 @@ class Cardset < ActiveRecord::Base
    end
   end
   
-  def recent_action
-    out = self.logs.first
-    logs_to_not_show = Log.kinds_to_not_show(:cardset_recent)
-    if logs_to_not_show.include?(out.kind) 
-      out = self.logs.reject{ |l| logs_to_not_show.include?(l.kind) }.first
-    end
-    out
-  end
-  def datestamps_close(d1,d2)
-    (d1-d2).abs < 20.seconds
-  end
+  ################### Manual updates ###################
+  
   def make_logs_v2
     updated_card_comment_logs = 0
     new_card_comment_logs = 0
@@ -474,13 +490,13 @@ class Cardset < ActiveRecord::Base
   end
 
   def make_booster()
-    ignore_active = !configuration.card_show_active
-    commons   = self.cards.select { |c| c.rarity == "common"   && (ignore_active || c.active)} 
-    uncommons = self.cards.select { |c| c.rarity == "uncommon" && (ignore_active || c.active)} 
-    rares     = self.cards.select { |c| c.rarity == "rare"     && (ignore_active || c.active)} 
-    mythics   = self.cards.select { |c| c.rarity == "mythic"   && (ignore_active || c.active)}     
-    basics    = self.cards.select { |c| c.rarity == "basic"    && (ignore_active || c.active)}   
-    tokens    = self.cards.select { |c| c.rarity == "token"    && (ignore_active || c.active)}
+    cards_to_use = self.public_cards
+    commons   = cards_to_use.select { |c| c.rarity == "common"   } 
+    uncommons = cards_to_use.select { |c| c.rarity == "uncommon" } 
+    rares     = cards_to_use.select { |c| c.rarity == "rare"     } 
+    mythics   = cards_to_use.select { |c| c.rarity == "mythic"   }     
+    basics    = cards_to_use.select { |c| c.rarity == "basic"    }   
+    tokens    = cards_to_use.select { |c| c.rarity == "token"    }
     if basics.empty? 
       basics = Card.basic_land 
     end

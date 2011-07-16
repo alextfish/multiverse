@@ -1,4 +1,4 @@
-<h1>Editing card</h1>
+<h1><%= link_to @card.printable_name, @card %>: Editing card</h1>
 <% @title = "Editing #{@card.printable_name}" %>
 
 <%= render "form" %>

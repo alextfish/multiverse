@@ -12,7 +12,7 @@
       <% set_viewable = permission_to? :view, cardset %>
       <li><b><%= link_to cardset.name, cardset %></b> by <%= link_to cardset.user.name, cardset.user %>
       <% if set_viewable %>
-        (<%= cardset.cards.count %> cards,
+        (<%= cardset.cards.nonsecondary.count %> cards,
          <%= link_to "last activity", recent_cardset_path(cardset) %> 
          <% action = cardset.recent_action %>
          <%= format_datetime(action.datestamp) %> by 
@@ -29,9 +29,11 @@
 <%= render :partial => "shared/new_features", :locals => { :news_type => :link } %>
 
 <p>
-  <% numcards = Card.count
+  <% numcards = Card.nonsecondary.count
      num_to_show = [numcards, 5].min
-     chosencards = select_random_visible_cards(num_to_show, Card.all)
+     chosencards = select_random_visible_cards(num_to_show, Card.nonsecondary)
+     "chosencards[3] = Card.find(847)"
+     "chosencards[4] = Card.find(863)"
      %>
   There are <%= numcards %> cards in Multiverse right now<% if numcards > 0 %>, including:
     <table>

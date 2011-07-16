@@ -1,4 +1,4 @@
-<h1>Editing comment</h1>
+<h1><%= link_to_comment @comment %>: Editing comment</h1>
 <div class="big_comment_form">
 <% if @comment.cardset %>
   <% @title = @cardset.name + ": Editing comment" %>
@@ -9,5 +9,4 @@
 <% end %>
 </div>
 
-<%= link_to "Show", @comment %> |
 <%= link_to "Back", :back %>

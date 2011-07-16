@@ -1,6 +1,6 @@
 <% # prettycard helper takes boolean param "link"
 #link = false if local_assigns[:link].nil?
-%><div class="cardborder <%= @card.border_colour %>border <%= @card.multipart_class %>">
+%><div class="cardborder <%= @card.border_colour %>border <%= @card.multipart_class %> <%= @extra_styles %>">
  <% if false && !@card.active && @card.cardset && @card.cardset.configuration.card_show_active %>
    <div class="banner">INACTIVE</div>
  <% end %>
@@ -15,8 +15,8 @@
     <div class="pinline pinline_box namebox">
      <div class="cardtitlebar">
       <div class="cardname">
-       <% if link && card_index==1 %>
-        <%= link_to card.printable_name, card, :title => card.code %>
+       <% if link && card_index==0 %>
+        <%= link_to card.individual_name, card, :title => card.code %>
        <% else %>
         <span title="<%= card.code %>"><%= card.name %></span>
        <% end %>
@@ -67,7 +67,7 @@
      end %>
     <div class="cardtext_container<% if textbox_length == 0 %> notext<% end %>">
      <div class="pinline pinline_sidesbottom">
-       <div class="<%= textboxclass %>"><% Rails.logger.info "#{card.printable_name}'s textbox has #{textbox_length} chars"%><% if !card.rulestext.blank? %><%= content_tag(:div, format_card_text(card, :rulestext), :class => "rulestext") %><% end %>
+       <div class="<%= textboxclass %>"><% Rails.logger.info "#{card.individual_name}'s textbox has #{textbox_length} chars"%><% if !card.rulestext.blank? %><%= content_tag(:div, format_card_text(card, :rulestext), :class => "rulestext") %><% end %>
         <% if !card.flavourtext.blank? %><%= content_tag(:div, format_card_text(card, :flavourtext), :class => "flavourtext") %><% end %></div>
       </div>
      </div>

@@ -174,6 +174,10 @@ module ApplicationHelper
         if card.name
           cardset_cardnames_and_codes << card.name
           cardset_cards_from_name_or_code[card.name] = card
+          if card.split? && card.primary? && !card.link.name.blank?
+            cardset_cardnames_and_codes << card.printable_name
+            cardset_cards_from_name_or_code[card.printable_name] = card
+          end
         end
         if card.code
           cardset_cardnames_and_codes << card.code
@@ -263,7 +267,16 @@ module ApplicationHelper
   def embed_card_renders(text)
     text.gsub(/@@MULTIVERSE@RENDER@([0-9]*)@CARD@@/) do |matched_string|
       @card = Card.find($1)
-      "<div class='CardRenderInline'>#{render :partial => 'shared/prettycard', :locals => { :link => true }}</div>"
+      if @card.split?
+        @card = @card.primary_card
+      elsif @card.flip? && @card.secondary?
+        @extra_styles = "rotated"
+        @card = @card.primary_card
+      end
+      Rails.logger.info "Embedding render of #{@card.individual_name}"
+      out = "<div class='CardRenderInline'>#{render :partial => 'shared/prettycard', :locals => { :link => true }}</div>"
+      @extra_styles = ""
+      out
     end
   end
 
@@ -330,6 +343,17 @@ module ApplicationHelper
   end
   def link_to_comment_user(comment)
     link_to_unless comment.user.nil?, comment.display_user, comment.user
+  end
+  
+  def separate_if_both_nonblank(string1, string2, sep)
+    if !string1.blank? && !string2.blank?
+      (sanitize(string1) + sep + sanitize(string2)).html_safe
+    else
+      (sanitize(string1) + sanitize(string2)).html_safe
+    end
+  end
+  def nowrap(string)
+    ("<span class='nowrap'>" + sanitize(string) + "</span>").html_safe
   end
 
   def link_to_log_object(log)

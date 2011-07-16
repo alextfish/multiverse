@@ -60,13 +60,22 @@ function update_generate_totals() {
 
 ////// Card editing //////
 
-function update_card_supertype(new_value) {
+function update_card_supertype(card_index, new_value) {
+  var card_supertype_field = (card_index==1 ? $("card_supertype") : $("card_link_attributes_supertype"));
   if (new_value == "Custom") {
-    $("card_supertype_select").hide();
-    $("card_supertype").show();
+    $("card_supertype_select_" + card_index).hide();
+    card_supertype_field.show();
   } else {
-    $("card_supertype").value = new_value;
+    card_supertype_field.value = new_value;
   }
+}
+
+var colour_affiliation_regexps = {
+    "White": /(\(W\)|\{W\}|[Pp]lains)/,
+    "Blue" : /(\(U\)|\{U\}|[Ii]sland)/, 
+    "Black": /(\(B\)|\{B\}|[Ss]wamp)/, 
+    "Red"  : /(\(R\)|\{R\}|[Mm]ountain)/, 
+    "Green": /(\(G\)|\{G\}|[Ff]orest)/, 
 }
 
 function update_frame(card_id) {
@@ -76,13 +85,14 @@ function update_frame(card_id) {
   if (cardframe == "splitflip") { 
     // If they've selected the split-flip frame option, don't do normal recalculation - just show the split-flip dropdown
     $("card_multipart").show();
-    $("multipart_selector_wrapper").highlight({startcolor: "#ff8800", duration: 1})
+    Effect.Shake("multipart_selector_wrapper");
+    //$("multipart_selector_wrapper").highlight({startcolor: "#ff8800", duration: 1})
     frame_selector.select('option[value=splitflip]')[0].remove();
-    frame_selector.value = "Auto";
-    return;
+    cardframe = frame_selector.value = "Auto";
+    // return;
   }
   var cost = this_card.select(".cost_field")[0].value;
-  var cardtype = this_card.select(".type_field")[0].value;
+  var cardtype = this_card.select(".type_field.cardtype")[0].value;
   var colours = [
     (cost.search(/w/i)>-1 ? "White" : ""),
     (cost.search(/u/i)>-1 ? "Blue" : ""),
@@ -103,10 +113,29 @@ function update_frame(card_id) {
     // calculate frame
     switch ( num_colours ) {
       case 1: inner = colours.join(""); break;
-      case 0: inner = ( cardtype.search(/Land/)>-1 ? "Land" : cardtype.search(/Artifact/)>-1 ? "Artifact" : "Colourless" ); break;
       case 3: case 4: case 5: inner = "Multicolour"; break;
       case 2: inner = (cost.search(/[({][^)}]{2,}[)}]/)>-1 ? "Hybrid" : "Multicolour"); break;
       // this case 2 is buggy for Twinclaws cases, but meh
+      case 0: if (cardtype.search(/Land/)>-1) {
+                // Detect land colour affiliation
+                var cardtext = this_card.select(".rulestextfield")[0].value;
+                var affiliated_colours = [];
+                ["White", "Blue", "Black", "Red", "Green"].each(function(this_colour) {
+                  if (cardtext.search(colour_affiliation_regexps[this_colour])>-1) {
+                    affiliated_colours.push(this_colour);
+                  }
+                });
+                switch ( affiliated_colours.length ) {
+                  case 0: inner = "Land"; break;
+                  case 1: inner = "Land " + affiliated_colours[0].toLowerCase(); break;
+                  case 2: inner = "Land " + affiliated_colours.join("").toLowerCase(); break;
+                  case 3: case 4: case 5: inner = "Land multicolour"; break;
+                }
+              } else { 
+                inner = ( cardtype.search(/Artifact/)>-1 ? "Artifact" : "Colourless" ); 
+              } 
+              break;
+
     }
   }
   if (num_colours == 2) {
@@ -162,14 +191,21 @@ function updateMultipartStyle(){
    $("cardborder").addClassName("split");
    $("cardborder").removeClassName("flip");
    $("card_link_attributes_rarity").value = $("card_rarity").value;
+   $("rotate_link").hide();
+   $("cardborder").removeClassName("rotated");
+      // work around Chrome bug
+   $("card2").hide(); setTimeout('$("card2").show()', 10);
  } else if (multipart == MULTIPART_FLIP1) {
    $("card2").show();
    $("cardborder").addClassName("flip");
    $("cardborder").removeClassName("split");
+   $("rotate_link").show();
  } else { // Neither
    $("cardborder").removeClassName("split");
    $("cardborder").removeClassName("flip");
    $("card2").hide();
+   $("rotate_link").hide();
+   $("cardborder").removeClassName("rotated");
  }
 }
 
@@ -273,10 +309,9 @@ function shrinkType(typeDiv) { //, rarityDiv) {
   }
 }
 
-function shrinkTextBox(textDiv, isPlaneswalker) {
-  //cardDiv = textDiv.up('.card');
+function shrinkTextBox(textDiv, isPlaneswalker, isFlip) {
   var wiggleRoom = (isPlaneswalker ? 5 : 0);
-  var idealTextBoxHeight = 109;
+  var idealTextBoxHeight = (isFlip ? 40+2+2 : 109);
   var currentFontSize = textDiv.getStyles().fontSize;
   var currentFontSizeNumber = parseInt(currentFontSize);
   var currentFontSizeUnits = currentFontSize.slice(-2); // assumes "px" or "pt"
@@ -318,10 +353,11 @@ function shrinkCardBits(cardDiv) {
     sizeTokenName(nameDiv, typeDiv);
     sizeTokenArt(cardDiv, artDiv);
   } else {
-    var isPlaneswalker = cardDiv.hasClassName("Planeswalker")
+    var isPlaneswalker = cardDiv.hasClassName("Planeswalker");
+    var isFlip = cardDiv.parentNode.hasClassName("flip");
     var textDiv = cardDiv.getElementsByClassName("cardtext")[0];
     shrinkName(nameDiv, typeDiv);
-    shrinkTextBox(textDiv, isPlaneswalker);
+    shrinkTextBox(textDiv, isPlaneswalker, isFlip);
   }
   shrinkType(typeDiv, rarityDiv);
 }
@@ -472,7 +508,7 @@ function shrinkTooltipCardBits(cardDiv) {
   tooltip = cardDiv.up("div.prototip");
   wasVisible = tooltip.visible();
   tooltip.show();
-  shrinkCardBits(cardDiv);
+  tooltip.select(".card").each(shrinkCardBits);
   if (!wasVisible) {
     tooltip.hide();
   }

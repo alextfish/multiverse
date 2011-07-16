@@ -6,6 +6,14 @@
   /* Internet Explorer */
   filter: progid:DXImageTransform.Microsoft.BasicImage(rotation=2);
 }
+@mixin hide_but_allow_children {
+  position: absolute;
+  left: -5000px;
+}
+@mixin show_children_of_hidden {
+  position: relative;
+  left: +5000px;
+}
 @mixin gradient_horz($start, $end) {
   filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#{$start}', endColorstr='#{$end}', GradientType=1);
   background: -webkit-gradient(linear, left top, right top, from($start), to($end));
@@ -56,10 +64,10 @@
 }
 
 /***** Card display *****/
-
+  $BorderWidth: 10px;
   .blackborder, .silverborder, .whiteborder, .purpleborder, .goldborder {
-    @include round_corners(10px);
-    border-width: 10px;
+    @include round_corners($BorderWidth);
+    border-width: $BorderWidth;
     border-style: solid; }
   .blackborder { border-color: black; background-color: black; }
   $SilverBorder: #a3a3a3;
@@ -71,7 +79,7 @@
   .whiteborder {
     border-color: black;
     border-width: 1px;
-    padding: 9px;
+    padding: $BorderWidth - 1;
     background-color: white;
   }
 
@@ -79,8 +87,10 @@
   $CardHeight: 280px;
   $CardPaddingTop: 4px;
   $CardPaddingBottom: 3px;
+  $SplitCardWidth: 380px;
   .whiteborder .card, .whiteborder .editborder_inner { border: 1px solid #888; }
   .cardborder { width: $CardWidth; min-height: $CardHeight; }
+  .distinct_mockup_container { width: $SplitCardWidth + 2 * $BorderWidth; }
   .card { background: #0ff;
           padding-top: $CardPaddingTop; padding-bottom: $CardPaddingBottom;
           padding-left: 3px; padding-right: 3px;
@@ -411,10 +421,10 @@ border: none;
 .token .cardart_container {
   @include elliptical_corners(44px, 32px);
  }
- 
+
 /***** Split and Flip cards *****/
- 
-.split.cardborder { min-height: 200px; width: 380px;}
+
+.split.cardborder { min-height: 200px; width: $SplitCardWidth;}
 .split.form#cardborder { width: 500px; }
 .split .card { min-height: 200px;}
 
@@ -423,6 +433,7 @@ border: none;
 .split.form .part1, .split.form .part2 { width: 240px;}
 
 .split .cardart { min-height: 100px; }
+.split .cardart img { width: 165px; }
 .split .cardtext { min-height: 90px; }
 .split .cardtypebar{ font-size: 7.5pt; }
 
@@ -430,42 +441,53 @@ border: none;
 .split input { width: 100px; }
 
 .flip .card { min-height: 0px; }
-.flip .part1 .cardart_container, .flip .part1 .artist_area { display: none; }
+.flip .part1 .cardart_container { @include hide_but_allow_children; }
+.flip .part1 .artist_area { display: none; }
 .flip .part2 .cardrarity { display: none; }
-.flip .cardtext { min-height: 50px; }
-.flip .cardart { min-height: 70px;  }
+.flip .cardtext { min-height: 40px; }
+.flip .cardart { min-height: 105px;  }
 
-.flip .part1 .typebox { position: absolute; z-index: +2; top: +78px; width: 190px; }
+.flip .part1 .typebox { position: absolute; z-index: +2; top: +73px; width: 190px; }
 .flip .part1 .ptbox_container { z-index: +2; left: +6px;}
+.flip .part1 .pinline_ptbox { top: -3px; }
 .flip .part2 .cardart_container { position: relative; top: -32px;}
-.flip .part1 .cardrarity { top: 190px; z-index: +2; }
+.flip .part1 .cardrarity { z-index: +2; top: 215px; }
 
-.flip .part2 .namebox { /* position: absolute; */ z-index: +2; top: 215px; }
+.flip .part2 .namebox { /* position: absolute; */ z-index: +2; top: 169px; }
 .flip .part2 .typebox { top:-32px; position: relative; }
-.flip .part2 .pinline_ptbox { right: 147px; top: -101px; z-index: 2; }
+.flip .part2 .pinline_ptbox { z-index: 2; right: 147px; top: -93px; }
 .flip .part2 .cardtext_container { top: -32px; position: relative; }
-.flip .part2 .bottombox { width: 188px; position: absolute; top: 167px; bottom: 0px; z-index: +1; margin-bottom: 0px; }
+.flip .part2 .bottombox { z-index: +1; width: 188px; position: absolute; top: 195px; bottom: 0px; margin-bottom: 0px; }
 
-.flip .part2 .cardtext, .flip .part2 .namebox, .flip .part2 .cardtypebar, .flip .part2 .pinline_ptbox, .rotated {
-  @include rotate_180; 
+.flip .part2 .cardtext, .flip .part2 .namebox, .flip .part2 .typebox, .flip .part2 .pinline_ptbox,
+.flip.form .part2 .frame_selector_wrapper {
+  @include rotate_180;
+}
+.rotated {
+  @include rotate_180;
 }
 
 .flip.form .part1 .cardtext_container { position: relative; top: -42px; }
 .flip.form .part1 .typebox { position: relative; width: auto; top: 93px; /* top: 148px; */ }
 .flip.form .part1 .ptbox_container { top: -38px; }
+.flip.form .part1 .frame_selector_wrapper { @include show_children_of_hidden; top: +100px;}
+.flip.form .part1 .bottombox { height: 20px; }
+.flip.form .cardart { text-align: left; }
 .flip.form .type_field { width: 65px; }
-.flip.form .part2 .cardart_container { height: 50px; top: -45px;}
+.flip.form .part2 .cardart_container { height: 50px; top: -65px;}
 .flip.form .part2 .bottombox { position: relative; margin-top: 23px; top: 0px; }
 .flip.form .part2 .pinline_ptbox { right: 110px; top: -234px; }
+.flip.form .part2 .typebox { top: -32px; }
+/* .flip.form .part2 .cardtext_container { top: -52px; } */
 .flip.form .part2 .namebox { top: 220px; }
-.flip.form .part1 .cardrarity { /* right: -170px; */ top: 342px; z-index: +3; }
+.flip.form .part1 .cardrarity { /* right: -170px; */ top: 362px; z-index: +3; }
 
 @-moz-document url-prefix() { /* Firefox override */
   .flip.form .part1 .cardtext_container { top: -32px; }
   .flip.form .part1 .ptbox_container { top: -26px; }
   .flip.form .part2 .namebox { top: 200px; }
   .flip.form .part2 .pinline_ptbox { top: -197px; }
-  .flip.form .part1 .cardrarity { top: 300px; }
+  .flip.form .part1 .cardrarity { top: 320px; }
 }
 
 /***** Colours *****/
@@ -613,6 +635,18 @@ $Multicolour_Background: #CAB86C;
 .Hybrid.redwhite, .Hybrid.whitered { @include gradient_horz_padded($Red_Card, $White_Card); }
 .Hybrid.greenwhite, .Hybrid.whitegreen { @include gradient_horz_padded($Green_Card, $White_Card); }
 .Hybrid.greenblue, .Hybrid.bluegreen { @include gradient_horz_padded($Green_Card, $Blue_Card); }
+
+.flip .part2.Hybrid.whiteblue  { @include gradient_horz_padded($Blue_Card , $White_Card ); }
+.flip .part2.Hybrid.whiteblack { @include gradient_horz_padded($Black_Card, $White_Card ); }
+.flip .part2.Hybrid.blueblack  { @include gradient_horz_padded($Black_Card, $Blue_Card  ); }
+.flip .part2.Hybrid.bluered    { @include gradient_horz_padded($Red_Card  , $Blue_Card  ); }
+.flip .part2.Hybrid.blackred   { @include gradient_horz_padded($Red_Card  , $Black_Card ); }
+.flip .part2.Hybrid.blackgreen { @include gradient_horz_padded($Green_Card, $Black_Card ); }
+.flip .part2.Hybrid.redgreen   { @include gradient_horz_padded($Green_Card, $Red_Card   ); }
+.flip .part2.Hybrid.redwhite,   .flip .part2.Hybrid.whitered { @include gradient_horz_padded(  $White_Card, $Red_Card  ); }
+.flip .part2.Hybrid.greenwhite, .flip .part2.Hybrid.whitegreen { @include gradient_horz_padded($White_Card, $Green_Card); }
+.flip .part2.Hybrid.greenblue,  .flip .part2.Hybrid.bluegreen { @include gradient_horz_padded( $Blue_Card , $Green_Card); }
+
 
 .whiteblue .cardtext { @include gradient_horz_padded($White_Text, $Blue_Text); }
 .whiteblack .cardtext { @include gradient_horz_padded($White_Text, $Black_Text); }

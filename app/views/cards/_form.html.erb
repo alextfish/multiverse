@@ -43,7 +43,9 @@
      <%= outer_form.select :multipart, multipart_select_options, {}, 
         { :style => ( multipart_select_visible ? "" : "display:none;"), 
         :onchange => "updateMultipartStyle()", :onkeyup => "updateMultipartStyle()" } %>
-    </div>
+    <span id="rotate_link" <% if !@card.flip? %> style="display:none;"<% end %>>
+      <%= link_to_function "(Rotate)", "$('cardborder').toggleClassName('rotated');", :class => "no_tooltip" %>
+    </span>
    </div>
    <!-- The two card forms -->
    <div class="<%= @card.border_colour %>border form <%= @card.multipart_class %>" id="cardborder">
@@ -103,7 +105,6 @@
     <% end %>
     <tr>
      <td colspan="2">
-      <%= outer_form.hidden_field :cardset_id, :value => @card.cardset_id %>
       <%= outer_form.submit %>
      </td>
     </tr>

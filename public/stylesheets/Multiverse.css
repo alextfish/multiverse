@@ -25,6 +25,7 @@ a > img:hover { background-color: #fff; }
             padding-top: 10px; }
 
 .card_controls_below { text-align: center; }
+.card_rotate_link { font-size: larger; }
 .card_edit_link { font-size: larger; }
 .card_move_link, .card_delete_link { font-size: smaller; }
 
@@ -204,6 +205,9 @@ div#mockup { padding-top: 4px; }
 }
 th.manacost {
   min-width: 45px;
+}
+.nowrap {
+  white-space: nowrap;
 }
 
 /***** Search *****/

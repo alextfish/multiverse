@@ -35,6 +35,7 @@ class Card < ActiveRecord::Base
   has_many :old_cards, :dependent => :destroy
   attr_accessor :foil, :blank  # not saved
   belongs_to :link, :class_name => "Card"
+  belongs_to :parent, :class_name => "Card"
   accepts_nested_attributes_for :link, :reject_if => proc { |attributes| attributes["rulestext"].blank? && attributes["name"].blank? }
   # has_many :highlighted_comments, :class_name => 'Comment', :conditions => ['status = ?', COMMENT_HIGHLIGHTED]
   # has_many :unaddressed_comments, :class_name => 'Comment', :conditions => ['status = ?', COMMENT_UNADDRESSED]
@@ -43,7 +44,7 @@ class Card < ActiveRecord::Base
   # after_save do  - Can't do this, as we don't have access to session methods in model callbacks :/
   #   set_last_edit(self)
   # end
-
+  
   DEFAULT_RARITY = "common"
   STRING_FIELDS = ["name","cost","supertype","cardtype","subtype","rarity","rulestext","flavourtext","code","frame","art_url","artist","image_url"]
   LONG_TEXT_FIELDS = ["rulestext", "flavourtext"]
@@ -83,8 +84,15 @@ class Card < ActiveRecord::Base
   def formatted_flavour_text
     format_card_text(flavourtext)
   end
-
-  def printable_name
+  
+  def primary_card
+    secondary? ? parent : self
+  end
+  def secondary_card
+    primary? ? link : self
+  end
+  
+  def individual_name
     case
       when !name.blank?
         name
@@ -92,6 +100,30 @@ class Card < ActiveRecord::Base
         code
       else
         "Card#{id}"
+    end
+  end
+
+  def printable_name
+    if !multipart?
+      individual_name
+    else # printable name for a multipart card
+      primary_name = primary_card.individual_name
+      secondary_name = secondary_card.individual_name
+      if split?
+        name_out = primary_name + " // " + secondary_name
+      else
+        name_out = primary_name 
+      end
+    end
+  end
+  
+  def listable_name
+    if !flip?
+      printable_name
+    else # In cardlists, flip cards' names are "unflipped (flipped)"
+      primary_name = primary_card.individual_name
+      secondary_name = secondary_card.individual_name
+      "#{primary_name} (#{secondary_name})"
     end
   end
 
@@ -138,7 +170,7 @@ class Card < ActiveRecord::Base
     %w{Legendary Basic World Snow}
   end
   def self.category_order
-    %w{Colourless White Blue Black Red Green Multicolour Hybrid Artifact Land}
+    %w{Colourless White Blue Black Red Green Multicolour Hybrid Split Artifact Land}
   end
   def self.frame_code_letters
     %w{C W U B R G M Z H A L}
@@ -209,13 +241,13 @@ class Card < ActiveRecord::Base
     /(^|[^\/{(])b|[({]b[})]/i,
     /(^|[^\/{(])r|[({]r[})]/i,
     /(^|[^\/{(])g|[({]g[})]/i]
-  @@colour_affiliation_regexps = {
-    :White => /(\(W\)|\{W\}|[Pp]lains)/,
-    :Blue =>  /(\(U\)|\{U\}|[Ii]sland)/, 
-    :Black => /(\(B\)|\{B\}|[Ss]wamp)/, 
-    :Red =>   /(\(R\)|\{R\}|[Mm]ountain)/, 
-    :Green => /(\(G\)|\{G\}|[Ff]orest)/, 
-  }
+  @@colour_affiliation_regexps = [
+    ["White", /(\(W\)|\{W\}|[Pp]lains)/],
+    ["Blue",  /(\(U\)|\{U\}|[Ii]sland)/], 
+    ["Black", /(\(B\)|\{B\}|[Ss]wamp)/], 
+    ["Red",   /(\(R\)|\{R\}|[Mm]ountain)/], 
+    ["Green", /(\(G\)|\{G\}|[Ff]orest)/], 
+  ]
 
   def colours_in_cost
     out = @@colour_regexps.map do |re|
@@ -240,6 +272,7 @@ class Card < ActiveRecord::Base
     else
       cardclass = "" << self.frame
     end
+    cardclass.gsub!(/[()-]/, "")
     if self.cardtype =~ /Planeswalker/
       cardclass << " Planeswalker"
     end
@@ -251,6 +284,9 @@ class Card < ActiveRecord::Base
     end
     if self.rarity == "token"
       cardclass << " token"
+    end
+    if @extra_styles
+      cardclass << " " + @extra_styles
     end
     cardclass
   end
@@ -311,7 +347,16 @@ class Card < ActiveRecord::Base
   end
 
   def category
-    f = frame || calculated_frame
+    if split?
+      f = primary_card.frame || primary_card.calculated_frame
+      f2 = secondary_card.frame || secondary_card.calculated_frame
+      if f != f2
+        return "Split"
+      end # if they have the same category, list the card in that category
+    else
+      f = frame || calculated_frame
+    end
+      
     case f
       when /^Land/
         return "Land"
@@ -358,21 +403,21 @@ class Card < ActiveRecord::Base
         if /land/i.match(cardtype) # Land
           # Could try to detect the text box here, but that's really fiddly to get right
           # Consider Coastal Tower, Arcane Sanctum, Hallowed Fountain, Flooded Strand, and Vivid Creek
-          landColours = []
+          land_colours = []
           @@colour_affiliation_regexps.each do |this_colour, this_regexp|
             if this_regexp.match(rulestext)
-              landColours << this_colour.to_s
+              land_colours << this_colour
             end
           end
-          case landColours.length
+          case land_colours.length
             when 0:
-              return "Land (colourless)"
+              return "Land (colourless)" # "Land" # 
             when 1:
-              return "Land (#{landColours[0].downcase})"
+              return "Land (#{land_colours[0].downcase})" # "Land " + land_colours[0] # 
             when 2:
-              return "Land (#{landColours[0].downcase}-#{landColours[1].downcase})"
+              return "Land (#{land_colours[0].downcase}-#{land_colours[1].downcase})" # "Land " + land_colours.join("").downcase # 
             when 3..5:
-              return "Land (multicolour)"
+              return "Land (multicolour)" # "Land multicolour" # 
           end
         elsif /artifact/i.match(cardtype)
           return "Artifact"
@@ -382,8 +427,18 @@ class Card < ActiveRecord::Base
     end
   end
   
+  def separator
+    if self.split?
+      " // "
+    elsif self.flip?
+      "<br>&#8209;&#8209;&#8209;&#8209;<br>".html_safe
+    else
+      ""
+    end
+  end
+  
   def new_linked_card
-    Card.new(:cardset_id => cardset_id, :frame => frame, :rarity => rarity, :link=>self)
+    Card.new(:cardset => cardset, :frame => frame, :rarity => rarity, :link=>self)
   end
 
   PLAINS = Card.new(
@@ -444,8 +499,14 @@ class Card < ActiveRecord::Base
   def flip?
    [Card.FLIP1, Card.FLIP2].include?(self.multipart)
   end
+  def primary?
+   [Card.SPLIT1, Card.FLIP1].include?(self.multipart)
+  end
   def secondary?
    [Card.SPLIT2, Card.FLIP2].include?(self.multipart)
+  end
+  def Card.nonsecondary
+    select {|c| !c.secondary?}
   end
   def multipart_class
     self.split? ? "split" : self.flip? ? "flip" : ""
@@ -472,10 +533,14 @@ class Card < ActiveRecord::Base
                 ]
             when 4
               pair_order = [ "WhiteBlueBlackRed", "BlueBlackRedGreen", "WhiteBlackRedGreen", "WhiteBlueRedGreen", "WhiteBlueBlackGreen" ]
+            else
+              # Both cards are marked as multi or hybrid, but their actual costs have a number of colours 
+              # that's either <=1 or >=5. Either way, we don't bother sorting them.
+              pair_order = nil
           end
           pair1 = colour_strings_present.join
           pair2 = c2.colour_strings_present.join
-          if pair1 != pair2
+          if (!pair_order.nil?) && (pair1 != pair2)
             return pair_order.find_index(pair1) <=> pair_order.find_index(pair2)
           else
             # Just sort by name

@@ -1,4 +1,4 @@
-<% ### NOTE: This is identical to .html.erb except this version does not contain .html_safe calls
+<% ### NOTE: Takes a local boolean plaintext. If this is true, contents will NOT BE ESCAPED - it will have html_safe called on it.
 
    # produces output like:
    # CardName: Compulsive Sculptor
@@ -8,7 +8,7 @@
    # Rules Text: Whenever Compulsive Sculptor becomes tapped, put a 1/1 Construct artifact creature token onto the battlefield.
    # "Call to arms? I'll be there in a moment! Just let me finish this walker!"
    # Set/Rarity: Sienira's Facets Common
-%>
+%><% if !@card.multipart? %>
 CardName: <%= @card.name %>
 Cost: <%= @card.cost %>
 Type: <%= @card.supertype
@@ -17,7 +17,47 @@ Type: <%= @card.supertype
       %><% if !@card.subtype.blank? %> - <%= @card.subtype %><% end
       %>
 Pow/Tgh: <%= @card.power %><% if @card.power && @card.toughness %>/<% end %><%= @card.toughness %>
-Rules Text: <%= word_wrap format_card_text(@card, :rulestext, false, false), 70 %>
-Flavour Text: <%= word_wrap format_card_text(@card, :flavourtext, false, false), 70 %>
+Rules Text: <% text = word_wrap(format_card_text(@card, :rulestext, false, false), 60) %><% if plaintext %><%= text.html_safe %><% else %><%= text %><% end %>
+Flavour Text: <% text = word_wrap(format_card_text(@card, :flavourtext, false, false), 60) %><% if plaintext %><%= text.html_safe %><% else %><%= text %><% end %>
 Set/Rarity: <%= @cardset.name %> <%= @card.rarity.capitalize %>
-
+<% else
+  card2 = @card.secondary_card
+  sep = @card.separator
+  if @card.split? %><% "------------------ Split card ------------------" %>
+CardName: <%= @card.printable_name %>
+Cost: <%= separate_if_both_nonblank(@card.cost, card2.cost, sep) %>
+Type: <%= separate_if_both_nonblank(displayed_type(@card, false), displayed_type(card2, false), sep) %>
+Pow/Tgh: <%= @card.power %><% if @card.power && @card.toughness %>/<% end %><%= @card.toughness %><% if (@card.power || @card.toughness) && (card2.power || card2.toughness) %><%= sep %><% end %><%= card2.power %><% if card2.power && card2.toughness %>/<% end %><%= card2.toughness %>
+Rules Text: <% text = word_wrap(format_card_text(@card, :rulestext, false, false), 60) 
+               text2 = word_wrap(format_card_text(card2, :rulestext, false, false), 60) 
+  %><% if plaintext %><%= separate_if_both_nonblank(text.html_safe, text2.html_safe, sep) %><% else %><%= separate_if_both_nonblank(text, text2, sep) %><% end %>
+Flavour Text:  <% text = word_wrap(format_card_text(@card, :flavourtext, false, false), 60) 
+               text2 = word_wrap(format_card_text(card2, :flavourtext, false, false), 60) 
+  %><% if plaintext %><%= separate_if_both_nonblank(text.html_safe, text2.html_safe, sep) %><% else %><%= separate_if_both_nonblank(text, text2, sep) %><% end %>
+Set/Rarity: <%= @cardset.name %> <%= @card.rarity.capitalize %>
+<% else %><% "------------------ Flip card ------------------" %>
+CardName: <%= @card.individual_name %>
+Cost: <%= @card.cost %>
+Type: <%= @card.supertype
+      %><% if !@card.supertype.blank? %> <% end
+      %><%= @card.cardtype
+      %><% if !@card.subtype.blank? %> - <%= @card.subtype %><% end
+      %>
+Pow/Tgh: <%= @card.power %><% if @card.power && @card.toughness %>/<% end %><%= @card.toughness %>
+Rules Text: <% text = word_wrap(format_card_text(@card, :rulestext, false, false), 60) %><% if plaintext %><%= text.html_safe %><% else %><%= text %><% end %>
+Flavour Text: <% text = word_wrap(format_card_text(@card, :flavourtext, false, false), 60) %><% if plaintext %><%= text.html_safe %><% else %><%= text %><% end %><%
+  if card2 %>
+Flips Into: 
+CardName: <%= card2.individual_name %>
+Cost: <%= card2.cost %>
+Type: <%= card2.supertype
+      %><% if !card2.supertype.blank? %> <% end
+      %><%= card2.cardtype
+      %><% if !card2.subtype.blank? %> - <%= card2.subtype %><% end
+      %>
+Pow/Tgh: <%= card2.power %><% if card2.power && card2.toughness %>/<% end %><%= card2.toughness %>
+Rules Text: <% text = word_wrap(format_card_text(card2, :rulestext, false, false), 60) %><% if plaintext %><%= text.html_safe %><% else %><%= text %><% end %>
+Flavour Text: <% text = word_wrap(format_card_text(card2, :flavourtext, false, false), 60) %><% if plaintext %><%= text.html_safe %><% else %><%= text %><% end %>
+<% end %>
+Set/Rarity: <%= @cardset.name %> <%= @card.rarity.capitalize %>
+<% end %><% end %>

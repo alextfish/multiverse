@@ -3,6 +3,20 @@ class CardsController < ApplicationController
   before_filter :only => [:new, :create, :edit, :update] do
     require_permission_to_edit(@cardset)
   end
+  before_filter :except => [:new, :create] do |controller|
+    # Redirect to secondary
+    @card = Card.find(params[:id])
+    Rails.logger.info "Controller params are: " +controller.params.inspect
+    if @card.secondary?
+      if controller.params["action"] == "mockup" && @card.flip?
+        # Mockups of flip secondaries we allow to render, inverted
+        @card = @card.primary_card
+        @extra_styles = "rotated"
+      else
+        redirect_to :action => controller.params["action"], :id => @card.parent_id
+      end
+    end
+  end
   before_filter :only => [:update] do
     if !signed_in?
       ensure_not_spam
@@ -52,7 +66,6 @@ class CardsController < ApplicationController
   # GET /cards/1
   # GET /cards/1.xml
   def show
-    @card = Card.find(params[:id])
     @card2 = @card.link
     @comment = Comment.new(:card => @card)
 
@@ -78,12 +91,10 @@ class CardsController < ApplicationController
   end
   
   def move
-    @card = Card.find(params[:id])
   end
 
   # GET /cards/1/edit
   def edit
-    @card = Card.find(params[:id])
     @render_frame = @card.frame
     if @card.calculated_frame == @card.frame
       @card.frame = "Auto"
@@ -110,6 +121,14 @@ class CardsController < ApplicationController
 
     if @card.save
       @cardset.log :kind=>:card_create, :user=>current_user, :object_id=>@card.id
+      if @card.link.nil?
+        # The creation failed validation because it was empty
+        # Revert @card.multipart
+        @card.multipart = Card.STANDALONE
+        @card.save!
+      else
+        set_link_fields
+      end
       redirect_to @card, :notice => "#{@card.printable_name} was successfully created." 
     else
       render :action => "new"
@@ -119,7 +138,6 @@ class CardsController < ApplicationController
   # PUT /cards/1
   def update
     # TODO for multipart
-    @card = Card.find(params[:id])
     @card2 = @card.link
     old_multipart = @card.multipart?
     if @card.update_attributes(params[:card])
@@ -129,11 +147,20 @@ class CardsController < ApplicationController
       @cardset.log :kind=>:card_edit, :user=>current_user, :object_id=>@card.id, :text=>params[:edit_comment]
       if old_multipart && !new_multipart
         # Delete the old partner
+        Rails.logger.info "Delete partner"
         @card2.destroy
+        @card.link = nil
+        @card.save!
       elsif !old_multipart && new_multipart 
-        # Create a new partner
-        @card2 = Card.new(params[:card][:link])
-        @card.link = @card2
+        # Creating a new partner should be done automatically via update_attributes
+        if @card.link.nil?
+          # The creation failed validation because it was empty
+          # Revert @card.multipart
+          @card.multipart = Card.STANDALONE
+          @card.save!
+        else
+          set_link_fields
+        end
       end
 
       redirect_to @card   #, :notice => 'Card was successfully updated.'
@@ -155,11 +182,25 @@ class CardsController < ApplicationController
       
       if (@card2 = @card.link)
         @card2.cardset = @card.cardset  # no logs needed for secondary cards
+        @card2.save
       end
 
       redirect_to @card, :notice => "Card was moved from #{@cardset1.name} to #{@cardset2.name}."
     else
       render :action => "edit"
+    end
+  end
+  
+  def set_link_fields
+    case @card.multipart
+      when Card.FLIP1
+        @card.link.multipart = Card.FLIP2
+        @card.link.parent = @card
+        @card.link.save! :validate => false 
+      when Card.SPLIT1
+        @card.link.multipart = Card.SPLIT2
+        @card.link.parent = @card
+        @card.link.save! :validate => false 
     end
   end
   
@@ -172,7 +213,6 @@ class CardsController < ApplicationController
 
   # DELETE /cards/1
   def destroy
-    @card = Card.find(params[:id])
     @cardset = @card.cardset
     if (@card2 = @card.link)
       @card2.destroy

@@ -67,9 +67,9 @@ module CardsHelper
     return out.html_safe
   end
   
-  def displayed_type(card)
+  def displayed_type(card, html=true)
     raw (card.supertype.blank? ? "" : "#{h(card.supertype)} ") +
        (card.cardtype.blank?  ? "" : "#{h(card.cardtype)}") +
-       (card.subtype.blank?   ? "" : " &ndash; #{h(card.subtype)}")
+       (card.subtype.blank?   ? "" : (html ? " &ndash; " : " - ") + "#{h(card.subtype)}")
   end
 end
