@@ -5,14 +5,15 @@
 <%= render "cardsets/setviews" %>
 
 <% "We require admin permission on the source cardset and edit on the destination"
-   valid_cardsets = Cardset.select { |cs| permission_to?(:edit, cs) } - [@cardset] %>
+   valid_cardsets = Cardset.select { |cs| permission_to?(:edit, cs) } - [@cardset] 
+   valid_cardsets = valid_cardsets.sort_by &:name %>
 <% if valid_cardsets.empty? %>
   <div>There are no other cardsets which you have permission to move this card into.</div>
 <% else %>
   <% valid_cardset_names = valid_cardsets.map &:name %>
   Move card to cardset:
   <%= form_for(@card, :url => process_move_card_path(@card)) do |f| %>
-  <%= f.collection_select :cardset_id, valid_cardsets.sort, :id, :name %>
+  <%= f.collection_select :cardset_id, valid_cardsets, :id, :name %>
   <%= hidden_field_tag "special", "move" %>
   <%= f.submit "Move card" %>
   <%= link_to "Cancel", :back %>

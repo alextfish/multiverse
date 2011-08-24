@@ -37,7 +37,7 @@
   min-height: 300px; }
 
 .distinct_mockup_container {
-  width: 400px; }
+  width: 320px; }
 
 .card {
   background: #0ff;
@@ -86,6 +86,16 @@
   padding-left: 2px;
   padding-right: 2px;
   padding-bottom: 2px; }
+
+.split .pinline_box {
+  padding: 1px; }
+.split .pinline_sides {
+  padding-left: 1px;
+  padding-right: 1px; }
+.split .pinline_sidesbottom {
+  padding-left: 1px;
+  padding-right: 1px;
+  padding-bottom: 1px; }
 
 .pinline_box {
   border-left: 1px solid black;
@@ -144,7 +154,7 @@
 .cardtitlebar, .cardtypebar {
   font: bold 9pt serif;
   padding-top: 1px;
-  padding-bottom: 1px; }
+  /* padding-bottom: 1px; */ }
 
 .cardname {
   float: left;
@@ -589,17 +599,19 @@
 /***** Split and Flip cards *****/
 .split.cardborder {
   min-height: 200px;
-  width: 380px; }
+  width: 300px; }
 
 .split.form#cardborder {
   width: 500px; }
 
 .split .card {
-  min-height: 200px; }
+  min-height: 196px;
+  padding-top: 2px;
+  padding-bottom: 2px; }
 
 .split .part1, .split .part2 {
   display: inline-block;
-  width: 179px; }
+  width: 139px; }
 
 .split .part2 {
   float: right; }
@@ -608,16 +620,25 @@
   width: 240px; }
 
 .split .cardart {
-  min-height: 100px; }
+  min-height: 76px; }
 
 .split .cardart img {
-  width: 165px; }
+  width: 126px;
+  height: 76px; }
 
 .split .cardtext {
-  min-height: 90px; }
+  min-height: 65px;
+  font-size: 8pt; }
 
 .split .cardtypebar {
   font-size: 7.5pt; }
+
+.split .bottombox {
+  margin-bottom: -2px;
+  font-size: 7pt; }
+
+.split .pinlinebox {
+  padding: 1px; }
 
 .split.form .cardrarity {
   top: 27px; }
@@ -639,7 +660,7 @@
   display: none; }
 
 .flip .cardtext {
-  min-height: 40px; }
+  min-height: 38px; }
 
 .flip .cardart {
   min-height: 105px; }
@@ -647,7 +668,7 @@
 .flip .part1 .typebox {
   position: absolute;
   z-index: 2;
-  top: 73px;
+  top: 70px;
   width: 190px; }
 
 .flip .part1 .ptbox_container {
@@ -663,21 +684,21 @@
 
 .flip .part1 .cardrarity {
   z-index: 2;
-  top: 215px; }
+  top: 211px; }
 
 .flip .part2 .namebox {
   /* position: absolute; */
   z-index: 2;
-  top: 169px; }
+  top: 162px; }
 
 .flip .part2 .typebox {
-  top: -32px;
+  top: -33px;
   position: relative; }
 
 .flip .part2 .pinline_ptbox {
   z-index: 2;
   right: 147px;
-  top: -93px; }
+  top: -90px; }
 
 .flip .part2 .cardtext_container {
   top: -32px;
@@ -687,7 +708,7 @@
   z-index: 1;
   width: 188px;
   position: absolute;
-  top: 195px;
+  top: 190px;
   bottom: 0px;
   margin-bottom: 0px; }
 
@@ -707,6 +728,16 @@
   -moz-transform: rotate(-180deg);
   /* Internet Explorer */
   filter: progid:DXImageTransform.Microsoft.BasicImage(rotation=2); }
+
+.split.upright {
+  /* Safari */
+  -webkit-transform: rotate(-90deg);
+  /* Firefox */
+  -moz-transform: rotate(-90deg);
+  /* Internet Explorer */
+  filter: progid:DXImageTransform.Microsoft.BasicImage(rotation=1);
+  left: -50px;
+  top: 50px; }
 
 .flip.form .part1 .cardtext_container {
   position: relative;

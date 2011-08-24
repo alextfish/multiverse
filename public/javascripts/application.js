@@ -6,6 +6,7 @@ C_cardHeightMinusPadding = 300 - 4 - 3; // card height minus top and bottom padd
 C_tokenNamePadding = 12; // cardtitlebar p-left=3=3; namebox p-left=p-right=2; 2px wiggle room
 C_defaultNameFontSize = 9; // points, as defined in Card.scss
 C_idealFlipTextBoxHeight = 40+2+2;
+C_idealSplitTextBoxHeight = 65+2+2;
 C_idealTextBoxHeight = 99;
 
 // ------------ Skeletons
@@ -312,9 +313,9 @@ function shrinkType(typeDiv) { //, rarityDiv) {
   }
 }
 
-function shrinkTextBox(textDiv, isPlaneswalker, isFlip) {
+function shrinkTextBox(textDiv, isPlaneswalker, isFlip, isSplit) {
   var wiggleRoom = (isPlaneswalker ? 5 : 0);
-  var desiredHeight = (isFlip ? C_idealFlipTextBoxHeight : C_idealTextBoxHeight);
+  var desiredHeight = (isFlip ? C_idealFlipTextBoxHeight : isSplit ? C_idealSplitTextBoxHeight : C_idealTextBoxHeight);
   var currentFontSize = textDiv.getStyles().fontSize;
   var currentFontSizeNumber = parseInt(currentFontSize);
   var currentFontSizeUnits = currentFontSize.slice(-2); // assumes "px" or "pt"
@@ -358,9 +359,10 @@ function shrinkCardBits(cardDiv) {
   } else {
     var isPlaneswalker = cardDiv.hasClassName("Planeswalker");
     var isFlip = cardDiv.parentNode.hasClassName("flip");
+    var isSplit = cardDiv.parentNode.hasClassName("split");
     var textDiv = cardDiv.getElementsByClassName("cardtext")[0];
     shrinkName(nameDiv, typeDiv);
-    shrinkTextBox(textDiv, isPlaneswalker, isFlip);
+    shrinkTextBox(textDiv, isPlaneswalker, isFlip, isSplit);
   }
   shrinkType(typeDiv, rarityDiv);
 }
