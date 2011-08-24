@@ -2,8 +2,8 @@
   <%= @title = @cardset.name %>
 </h1>
 
-<% @allmycards = @cardset.cards %>
-<% @myactivecards = @allmycards.map{ |card| card.active? } %>
+<% @allmycards = @cardset.cards.nonsecondary %>
+<% @myactivecards = @cardset.public_cards %>
 <% @owner = @cardset.user %>
 <% card_comments = Comment.find(:all, :include => :card,
      :conditions => ["cards.cardset_id = ?", @cardset.id])  %>
@@ -18,9 +18,9 @@
     <%= @cardset.name %> by <%= link_to @owner.name, @owner %>
   </h1>
   <p>
-    <%= pluralize @allmycards.length, "card" %> in Multiverse
+    <%= pluralize @myactivecards.length, "card" %> in Multiverse
     <% if @myactivecards.any? && !@myactivecards.all? %>
-      (<%= @myactivecards.length %> active)
+      (plus <%= @allmycards.length - @myactivecards.length %> inactive)
     <% end %>
   </p>
   <p>
@@ -108,7 +108,7 @@
 <% end %>
 
 
-<% recentcards = Card.order("updated_at DESC").find_all_by_cardset_id(@cardset.id, :limit => 5) %>
+<% recentcards = Card.order("updated_at DESC").find_all_by_cardset_id(@cardset.id, :limit => 5).reject {|c| c.secondary? } %>
 
 <p>
   <% if !recentcards.empty? %>

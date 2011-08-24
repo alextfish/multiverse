@@ -41,7 +41,7 @@ a > img:hover { background-color: #fff; }
 
 /***** Templates used in multiple places *****/
 
-div.CardRenderInline { display: inline-block; margin-bottom: 3px; }
+div.CardRenderInline { display: inline-block; margin-bottom: 3px; vertical-align: top;}
 img.CardImage        { display: inline-block; }
 
 /***** Visual spoiler *****/

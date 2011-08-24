@@ -1,7 +1,14 @@
-// Place your application-specific JavaScript functions and classes here
+// Multiverse JavaScript functions and classes here
 // This file is automatically included by javascript_include_tag :defaults
 
-// Skeletons
+// ------------ Constants
+C_cardHeightMinusPadding = 300 - 4 - 3; // card height minus top and bottom padding
+C_tokenNamePadding = 12; // cardtitlebar p-left=3=3; namebox p-left=p-right=2; 2px wiggle room
+C_defaultNameFontSize = 9; // points, as defined in Card.scss
+C_idealFlipTextBoxHeight = 40+2+2;
+C_idealTextBoxHeight = 99;
+
+// ------------ Skeletons
 // - Skeleton View
 function toggle_frame_letter(letter_elem) {
   if (letter_elem.className.search(/code_shown/) > -1) {
@@ -249,15 +256,14 @@ function shrinkName(nameDiv, typeDiv) {
   var titleBarDiv = nameDiv.parentNode;
   var manaCostDiv = titleBarDiv.select("div.cardmanacost")[0];
   // Non-token algorithm:
-  var defaultNameFontSize = 9; // points, as defined in Card.scss
   var nameSizeOK = 0;
-  var fontSize = defaultNameFontSize;
+  var fontSize = C_defaultNameFontSize;
   // .cardtitlebar, .cardtypebar { font: bold 9pt serif; }
   for(var i=0; !nameSizeOK && i>-3; i-=0.25) {
     nameDiv.style.letterSpacing = i + "px";
     nameSizeOK = (manaCostDiv.offsetTop == nameDiv.offsetTop) && titleBarDiv.clientHeight <= idealTitleHeight;
     if (!nameSizeOK) {
-      nameDiv.style.fontSize = (defaultNameFontSize + i) + "pt";
+      nameDiv.style.fontSize = (C_defaultNameFontSize + i) + "pt";
       nameSizeOK = (manaCostDiv.offsetTop == nameDiv.offsetTop) && titleBarDiv.clientHeight <= idealTitleHeight;
     }
   }
@@ -266,19 +272,17 @@ function sizeTokenName(nameDiv, typeDiv) {
   // Token algorithm
   var titleBarDiv = nameDiv.parentNode;
   var titlePinline = titleBarDiv.parentNode;
-  var tokenNamePadding = 12; // cardtitlebar p-left=3=3; namebox p-left=p-right=2; 2px wiggle room
-  var defaultNameFontSize = 9; // points, as defined in Card.scss
   var nameWidth = nameDiv.getWidth();
-  var nameSizeOK = (nameWidth + tokenNamePadding < titlePinline.getWidth()) && (titleBarDiv.clientHeight <= idealTitleHeight);
+  var nameSizeOK = (nameWidth + C_tokenNamePadding < titlePinline.getWidth()) && (titleBarDiv.clientHeight <= idealTitleHeight);
   if (nameSizeOK) {
-    titlePinline.style.width = nameWidth + tokenNamePadding + "px";
+    titlePinline.style.width = nameWidth + C_tokenNamePadding + "px";
   } else {
     for(var i=0; !nameSizeOK && i>-3; i-=0.25) {
       nameDiv.style.letterSpacing = i + "px";
-      nameSizeOK = (nameWidth + tokenNamePadding < titlePinline.getWidth()) && (titleBarDiv.clientHeight <= idealTitleHeight)
+      nameSizeOK = (nameWidth + C_tokenNamePadding < titlePinline.getWidth()) && (titleBarDiv.clientHeight <= idealTitleHeight)
       if (!nameSizeOK) {
-        nameDiv.style.fontSize = (defaultNameFontSize + i) + "pt";
-        nameSizeOK = (nameWidth + tokenNamePadding < titlePinline.getWidth()) && (titleBarDiv.clientHeight <= idealTitleHeight)
+        nameDiv.style.fontSize = (C_defaultNameFontSize + i) + "pt";
+        nameSizeOK = (nameWidth + C_tokenNamePadding < titlePinline.getWidth()) && (titleBarDiv.clientHeight <= idealTitleHeight)
       }
     }
   }
@@ -288,10 +292,9 @@ function sizeTokenArt(cardDiv, artDiv) {
   var bottomBox = cardDiv.getElementsByClassName("bottombox")[0];
   var artHeight = artDiv.getHeight();
   var bottomHeight = bottomBox.getHeight();
-  var cardHeight = cardDiv.getHeight();
   // The art's minHeight is based on its current height, plus or minus whatever
   // the offset of the bottomBox is
-  artDiv.style.minHeight = artHeight + cardHeight - (bottomBox.offsetTop + bottomHeight) + "px";
+  artDiv.style.minHeight = artHeight + C_cardHeightMinusPadding - (bottomBox.offsetTop + bottomHeight) + "px";
 }
 
 function shrinkType(typeDiv) { //, rarityDiv) {
@@ -311,18 +314,18 @@ function shrinkType(typeDiv) { //, rarityDiv) {
 
 function shrinkTextBox(textDiv, isPlaneswalker, isFlip) {
   var wiggleRoom = (isPlaneswalker ? 5 : 0);
-  var idealTextBoxHeight = (isFlip ? 40+2+2 : 109);
+  var desiredHeight = (isFlip ? C_idealFlipTextBoxHeight : C_idealTextBoxHeight);
   var currentFontSize = textDiv.getStyles().fontSize;
   var currentFontSizeNumber = parseInt(currentFontSize);
   var currentFontSizeUnits = currentFontSize.slice(-2); // assumes "px" or "pt"
-  var textSizeOK = textDiv.getHeight() <= idealTextBoxHeight + wiggleRoom;
+  var textSizeOK = textDiv.getHeight() <= desiredHeight + wiggleRoom;
   if (textSizeOK) {
     // It started out OK: let's try to centre stuff
   } else {
     // It's stretched: shrink stuff
     for(var i=0; !textSizeOK && i>-5; i-=0.25) {
       textDiv.style.fontSize = (currentFontSizeNumber + i) + currentFontSizeUnits;
-      textSizeOK = textDiv.getHeight() <= idealTextBoxHeight + wiggleRoom;
+      textSizeOK = textDiv.getHeight() <= desiredHeight + wiggleRoom;
     }
   }
 }

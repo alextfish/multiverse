@@ -170,7 +170,7 @@ class Card < ActiveRecord::Base
     %w{Legendary Basic World Snow}
   end
   def self.category_order
-    %w{Colourless White Blue Black Red Green Multicolour Hybrid Split Artifact Land}
+    %w{Colourless White Blue Black Red Green Multicolour Hybrid Split Artifact Land unspecified}
   end
   def self.frame_code_letters
     %w{C W U B R G M Z H A L}
@@ -273,7 +273,7 @@ class Card < ActiveRecord::Base
       cardclass = "" << self.frame
     end
     cardclass.gsub!(/[()-]/, "")
-    if self.cardtype =~ /Planeswalker/
+    if self.is_planeswalker?
       cardclass << " Planeswalker"
     end
     if self.cardtype =~ /Artifact/ && self.frame != "Artifact"
@@ -282,7 +282,7 @@ class Card < ActiveRecord::Base
     if self.num_colours == 2
       cardclass << " " + self.colour_strings_present.join("").downcase
     end
-    if self.rarity == "token"
+    if self.is_token?
       cardclass << " token"
     end
     if @extra_styles
@@ -365,6 +365,14 @@ class Card < ActiveRecord::Base
       when /^Hybrid/
         return "Hybrid"
     end
+  end
+  
+  def is_token?
+    rarity == "token"
+  end
+  
+  def is_planeswalker?
+    cardtype =~ /Planeswalker/
   end
 
   def frame

@@ -34,7 +34,7 @@
 
 .cardborder {
   width: 200px;
-  min-height: 280px; }
+  min-height: 300px; }
 
 .distinct_mockup_container {
   width: 400px; }
@@ -46,8 +46,7 @@
   padding-left: 3px;
   padding-right: 3px;
   position: relative;
-  min-height: 275px;
-  /* + 2px for some unknown reason */ }
+  min-height: 293px; }
 
 .foil {
   position: absolute;
@@ -164,8 +163,10 @@
 
 .cardart {
   position: relative;
-  min-height: 131px;
-  text-align: center; }
+  min-height: 123px;
+  text-align: center;
+  overflow: hidden;
+  /* make rounded borders clipping (tokens, planeswalkers) */ }
 
 .cardart img {
   position: absolute;
@@ -193,7 +194,7 @@
 
 .cardtext {
   /*width: *; */
-  min-height: 105px;
+  min-height: 95px;
   padding: 2px; }
 
 .cardtext br {
@@ -309,7 +310,7 @@
 /***** Planeswalkers *****/
 .card.Planeswalker {
   padding-top: 0px;
-  min-height: 277px; }
+  min-height: 297px; }
 
 .Planeswalker .namebox {
   padding-top: 0px; }
@@ -355,7 +356,13 @@
   border-radius: 7px / 40px;
   border-right: 1px solid black;
   border-left: 1px solid white;
-  min-height: 121px; }
+  min-height: 141px; }
+
+.Planeswalker .cardart.image {
+  -webkit-background-size: 200px 150px;
+  -moz-background-size: 200px 150px;
+  -o-background-size: 200px 150px;
+  background-size: 200px 150px; }
 
 .Planeswalker .cardtext {
   -moz-border-radius: 4px 4px 8px 8px;
@@ -500,9 +507,7 @@
   padding: 0px;
   display: none; }
 
-.token.card {
-  height: 262px; }
-
+/* .token.card { height: 262px;} */
 .token.card.form {
   height: inherit; }
 

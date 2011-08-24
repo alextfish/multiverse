@@ -2,7 +2,7 @@
 
 <%= will_paginate %>
 
-<%= render @users %>
+<%= render @users.sort_by &:name %>
 
 <%= will_paginate %>
 

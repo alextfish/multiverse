@@ -62,6 +62,12 @@
   -khtml-border-radius:  #{$tophorz} #{$tophorz} #{$topvert} #{$topvert} / #{$bottomhorz} #{$bottomhorz} #{$bottomvert} #{$bottomvert};
   border-radius:         #{$tophorz} #{$tophorz} #{$topvert} #{$topvert} / #{$bottomhorz} #{$bottomhorz} #{$bottomvert} #{$bottomvert};
 }
+@mixin background_size($width, $height) {
+  -webkit-background-size: $width $height; 
+  -moz-background-size: $width $height; 
+  -o-background-size: $width $height; 
+  background-size: $width $height; 
+}
 
 /***** Card display *****/
   $BorderWidth: 10px;
@@ -84,7 +90,7 @@
   }
 
   $CardWidth: 200px;
-  $CardHeight: 280px;
+  $CardHeight: 300px;
   $CardPaddingTop: 4px;
   $CardPaddingBottom: 3px;
   $SplitCardWidth: 380px;
@@ -95,8 +101,7 @@
           padding-top: $CardPaddingTop; padding-bottom: $CardPaddingBottom;
           padding-left: 3px; padding-right: 3px;
           position: relative;
-          min-height: $CardHeight - $CardPaddingTop - $CardPaddingBottom + 2;
-          /* + 2px for some unknown reason */
+          min-height: $CardHeight - $CardPaddingTop - $CardPaddingBottom;
         }
   .foil {
     position: absolute; top: 0px; background-image: url(/images/foil_highlight.png);
@@ -159,7 +164,8 @@
   .cardmanacost { float: right; padding-right: 3px; }
   .cardart_container, .cardtext_container { background: inherit; padding-left: 4px; padding-right: 4px; }
   .cardart {  position: relative;
-              min-height: 131px; text-align: center; }
+              min-height: 123px; text-align: center; 
+              overflow: hidden; /* make rounded borders clipping (tokens, planeswalkers) */ }
   .cardart img { position: absolute; left: 0px;
               width: 180px;
               z-index: 0;}
@@ -175,7 +181,8 @@
   @-moz-document url-prefix() { /* Firefox wants it just fractionally lower... */
     .cardrarity { top: -0.5px; }
   }
-  .cardtext { /*width: *; */ min-height: 105px;
+  .cardtext { /*width: *; */
+              min-height: 95px;  
               padding: 2px; }
   .cardtext br { margin-bottom: 0.25em; }
   .cardtext .flavourtext br { margin-bottom: 0px; }
@@ -266,7 +273,10 @@
   @include elliptical_corners(7px, 40px);
   border-right: 1px solid black;
   border-left: 1px solid white;
-  min-height: 121px;
+  min-height: 141px;
+}
+.Planeswalker .cardart.image {
+  @include background_size(200px, 150px);
 }
 
 
@@ -373,7 +383,7 @@ border: none;
 
 .token .cardtext { min-height: 0px; }
 .token .cardtext_container.notext { padding: 0px; display: none; }
-.token.card { height: 262px;}
+/* .token.card { height: 262px;} */
 .token.card.form { height: inherit; }
 .token .cardname, .token .cardname a {
   color: #ba8;

@@ -1,6 +1,6 @@
 <%= link_to_unless_current user.name, user %>:
 
-<% @cardsets = Cardset.find_all_by_user_id(user.id) %>
+<% @cardsets = Cardset.find_all_by_user_id(user.id).sort_by &:name %>
 <%= pluralize(  (@cardsets ? @cardsets.length : 0), "set") %><% if @cardsets.any? %>:
   <%= raw(cardset_links(@cardsets).join(", ")) %>
 <% end %>
