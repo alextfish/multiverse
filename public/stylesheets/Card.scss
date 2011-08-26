@@ -103,6 +103,7 @@
   $CardPaddingBottom: 3px;
   $SplitCardWidth: 300px;
   .whiteborder .card, .whiteborder .editborder_inner { border: 1px solid #888; }
+  .editborder_inner { background: white; }
   .cardborder { width: $CardWidth; min-height: $CardHeight; }
   .distinct_mockup_container { width: $SplitCardWidth + 2 * $BorderWidth; }
   .card { background: #0ff;
@@ -194,12 +195,23 @@
   @-moz-document url-prefix() { /* Firefox wants it just fractionally lower... */
     .cardrarity { top: -0.5px; }
   }
+  .watermark { background-repeat: no-repeat !important; 
+              background-position: center !important; 
+              z-index: 1; 
+              position: absolute; 
+              left: -2px;
+              top: -2px;
+              height: 100%;
+              width: 100%;}
   .cardtext { /*width: *; */
               min-height: 95px;  
               padding: 2px; }
+  .rulestext, .flavourtext {  
+              z-index: 2; }
   .cardtext br { margin-bottom: 0.25em; }
   .cardtext .flavourtext br { margin-bottom: 0px; }
   .cardtext div, .cardtext p { margin: 0px; }
+  
   .bottombox { background: inherit;
               margin-bottom: 4px; padding-right: 6px;
               position: relative;
@@ -227,6 +239,7 @@
   .minitext, .nameminitext  { font-size: 9pt; }
   .microtext { font-size: 8pt; }
   .nanotext  { font-size: 7.5pt; }
+  .cardtext.enlarged { font-size: 10pt; }
   .condensedtypeline { font-size: 8pt; letter-spacing: -2px; }
   .flavourtext { font-style: italic; margin-top: .25em !important; }
   .flavourtext i, .flavourtext em { font-style: normal; }
@@ -458,6 +471,7 @@ border: none;
 .split .cardart { min-height: 76px; }
 .split .cardart img { width: 126px; height: 76px; }
 .split .cardtext { min-height: 65px; font-size: 8pt; }
+.split .watermark { background-size: 50px; }
 .split .cardtypebar{ font-size: 7.5pt; }
 .split .bottombox { margin-bottom: -2px; font-size: 7pt; }
 .split .pinlinebox { padding: 1px; }
@@ -763,6 +777,8 @@ form .raritycell { border: 1px solid black; }
     padding: 10px 0px 0px 0px; }
 .Planeswalker.form .pinline_ptbox.pinline { top: -36px; }
 .flip .flavourtextfield { display: none; }
+.form .watermark { position: relative; }
+.form .watermark textarea { background: transparent; }
 
 .multipart_selector_div { text-align: center; margin-bottom: 8px; }
 #multipart_selector_wrapper { padding: 8px; }
@@ -771,6 +787,8 @@ div.history_box_limited { overflow: auto;
  height: 50%;
 }
 td.form_info_cell { color: #666; }
+.Black .cardart label { color: #fff; }
+.Black .artist_area label, .Hybrid.blackgreen .artist_area label, .Hybrid.blackred .artist_area label { color: #fff; }
 
 /***** Skeletons *****/
 .skeleton_letter_toggle.code_shown#rarity_C_toggle { @extend .cardrarity.common; }

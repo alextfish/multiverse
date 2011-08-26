@@ -41,6 +41,7 @@ class Card < ActiveRecord::Base
   # has_many :unaddressed_comments, :class_name => 'Comment', :conditions => ['status = ?', COMMENT_UNADDRESSED]
 
   before_create :regularise_fields
+  before_save :canonicalise_types
   # after_save do  - Can't do this, as we don't have access to session methods in model callbacks :/
   #   set_last_edit(self)
   # end
@@ -413,7 +414,7 @@ class Card < ActiveRecord::Base
           # Consider Coastal Tower, Arcane Sanctum, Hallowed Fountain, Flooded Strand, and Vivid Creek
           land_colours = []
           @@colour_affiliation_regexps.each do |this_colour, this_regexp|
-            if this_regexp.match(rulestext)
+            if this_regexp.match(rulestext) || this_regexp.match(subtype)
               land_colours << this_colour
             end
           end
@@ -570,4 +571,28 @@ class Card < ActiveRecord::Base
     end
   end
 
+  SUPERTYPES_AND_REGEXPS = Card.supertypes.map do |supertype|
+    [supertype, Regexp.new(supertype, true)]   # true -> case-insensitive
+  end
+  SUBTYPE_DELIMITERS = [" -- ", " - ", "--", "-"]
+  def canonicalise_types 
+    # Move supertypes to correct places
+    SUPERTYPES_AND_REGEXPS.each do |this_supertype, this_regexp|
+      if self.cardtype.downcase =~ this_regexp
+        if self.supertype.blank?
+          self.supertype = this_supertype
+        else
+          self.supertype += " " + this_supertype
+        end
+        self.cardtype.slice!(this_regexp)
+      end
+    end
+    # Move subtypes to correct places
+    SUBTYPE_DELIMITERS.each do |delimiter|
+      if self.cardtype.include?(delimiter) && self.subtype.blank?
+        self.cardtype, self.subtype = self.cardtype.split(delimiter)
+      end
+    end
+  end
+  
 end

@@ -606,10 +606,6 @@ class Cardset < ActiveRecord::Base
       "mythic rare" => "mythic", "mystic" => "mythic", "mythicrare" => "mythic"
     }
   }
-  SUPERTYPES_AND_REGEXPS = Card.supertypes.map do |supertype|
-    [supertype, Regexp.new(supertype, true)]   # true -> case-insensitive
-  end
-  SUBTYPE_DELIMITERS = [" -- ", " - ", "--", "-"]
 
   def import_data(params, current_user)
     # Returns [success, message, log_text, changed_cards]
@@ -689,23 +685,7 @@ class Cardset < ActiveRecord::Base
           carddatahash[field] = ENUM_ALIASES[field].has_key?(inputval) ? ENUM_ALIASES[field][inputval] : inputval
         end
       end
-      if got_type
-        Rails.logger.info "cardtype is #{carddatahash['cardtype']}"
-        # Move supertypes to correct places
-        SUPERTYPES_AND_REGEXPS.each do |supertype, regexp|
-          if carddatahash["cardtype"].downcase =~ regexp
-            carddatahash["supertype"] =  (carddatahash["supertype"] || "") + " " + supertype
-            carddatahash["cardtype"].slice!(regexp)
-          end
-        end
-        # Move subtypes to correct places
-        SUBTYPE_DELIMITERS.each do |delimiter|
-          if carddatahash["cardtype"].include?(delimiter) && carddatahash["subtype"].blank?
-            carddatahash["cardtype"], carddatahash["subtype"] = carddatahash["cardtype"].split(delimiter)
-          end
-        end
-      end
-
+  
       # Remove the comment from the card data, as we do something different with the comment
       if got_comment
         comment = carddatahash.delete("comment")

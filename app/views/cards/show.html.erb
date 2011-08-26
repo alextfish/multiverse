@@ -48,14 +48,19 @@
        <% if show_rotate_link %>
          <%= link_to_function "Rotate", "$$('.cardborder')[0].toggleClassName('rotated');", :class => "card_rotate_link no_tooltip" %>
        <% end %>
-       <% if show_rotate_link && (show_edit_link  || show_move_link || show_delete_link) %>
+       <% if show_rotate_link %> 
+         |
+       <% end %>
+       <%= link_to_function "Expand text", "expand_text()", :id => "expand_text_link", :class => "expand_text_link no_tooltip"  %>
+       <% if (show_edit_link  || show_move_link || show_delete_link) %>
          |
        <% end %>
        <% if show_edit_link %>
          <%= link_to "Edit", edit_card_path(@card), :class => "card_edit_link" %>
        <% end %>
-       <% if show_edit_link && (show_move_link || show_delete_link) %>
-         |
+       <% "End of first row" %>
+       <% if show_move_link || show_delete_link %>
+         <br>
        <% end %>
        <% if show_move_link %>
          <%= link_to "Move", move_card_path(@card), :class => "card_move_link" %>
@@ -64,7 +69,7 @@
          |
        <% end %>
        <% if show_delete_link %>
-         <%= link_to "Delete", @card, :confirm => "Really DELETE #{@card.printable_name}?", :method => :delete, :class => "card_delete_link" %>
+         <%= link_to "Delete", @card, :confirm => "Really DELETE #{@card.printable_name}?", :method => :delete, :class => "card_delete_link no_tooltip" %>
        <% end %>
      </div>
    <% end %>

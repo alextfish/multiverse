@@ -37,7 +37,7 @@
     </td>
     <td><!-- Cardset configuration -->
     <%= fields_for @cardset.configuration do |config_fields| %>
-      <div class="config_section">
+      <div class="config_section" style="margin-bottom: 10px;">
         Border colour:
         <% %w{black white silver gold purple}.each do |colour| %>
           <span class="<%= colour %>border">

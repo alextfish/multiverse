@@ -45,6 +45,23 @@
              :onchange => update_frame_call, 
              :onkeyup => update_frame_call } %>
       </div>
+     <br>
+      <div>
+       <%= f.label :watermark %>
+       <% 
+        watermark_options = [["None", ""], ["Custom", "CUSTOM"]] + 
+          %w{White Blue Black Red Green}.map {|col| ["#{col} Mana", "{#{col} Mana}"]} +
+          %w{Boros Selesnya Golgari Dimir Gruul Izzet Orzhov Azorius Simic Rakdos}.map {|guild| [guild, "{#{guild}}"]}
+        %>
+       <script type="text/javascript">
+         standard_watermark_urls = { <% watermark_options.each do |this_watermark| %><% if (this_filename = standard_watermark_filename(this_watermark[1])).present? %>
+           "<%= this_watermark[1] %>": "<%= this_filename %>", <% end %><% end %>
+         }
+       </script>
+       <%= f.select :watermark, watermark_options, {}, 
+          { :class => "watermark_selector", 
+            :onchange => "updateWatermark()", :onkeyup => "updateWatermark()" } %>
+      </div>
      </div>
     </div>
    </div>
@@ -66,7 +83,9 @@
          { :class => "type_field cardtype", 
            :onchange => update_frame_call,
            :onkeyup => update_frame_call } %> &ndash;
-         <%= f.text_field :subtype, { :class => "type_field subtype" } %>
+         <%= f.text_field :subtype, { :class => "type_field subtype", 
+           :onchange => update_frame_call,
+           :onkeyup => update_frame_call  } %>
        </div>
       </td>
       <td>
@@ -85,17 +104,24 @@
    <div class="cardtext_container">
     <div class="pinline pinline_sidesbottom">
      <div class="cardtext">
-      <%= f.text_area :rulestext,   :class => "rulestextfield", 
+      <% if card.watermark.present? && card.watermark =~ /^[{].*[}]$/ && (watermark_url = standard_watermark_filename(card.watermark)).present?
+        "got the url"
+        else 
+          watermark_url = card.watermark
+        end %>
+      <div class="watermark" <% if watermark_url.present? %> style="background-image: url(<%= watermark_url %>);"<% end %>>
+       <%= f.text_area :rulestext,   :class => "rulestextfield", 
            :onchange => update_frame_call,
            :onkeyup => update_frame_call   %>
-      <div class="flavourtext">
-       <%= f.text_area :flavourtext, :class => "flavourtextfield" %>
+       <div class="flavourtext">
+        <%= f.text_area :flavourtext, :class => "flavourtextfield" %>
+       </div>
       </div>
      </div>
     </div>
    </div>
    <div class="bottombox">
-    <span class="artist_area">Artist: <%= f.text_field :artist %></span>
+    <span class="artist_area"><%= f.label :artist, "Artist:" %> <%= f.text_field :artist %></span>
     <div class="ptbox_container">
      <div class="pinline pinline_box pinline_ptbox">
       <div class="notptbox">

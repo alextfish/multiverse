@@ -101,6 +101,7 @@ function update_frame(card_id) {
   }
   var cost = this_card.select(".cost_field")[0].value;
   var cardtype = this_card.select(".type_field.cardtype")[0].value;
+  var cardsubtype = this_card.select(".type_field.subtype")[0].value;
   var colours = [
     (cost.search(/w/i)>-1 ? "White" : ""),
     (cost.search(/u/i)>-1 ? "Blue" : ""),
@@ -129,7 +130,7 @@ function update_frame(card_id) {
                 var cardtext = this_card.select(".rulestextfield")[0].value;
                 var affiliated_colours = [];
                 ["White", "Blue", "Black", "Red", "Green"].each(function(this_colour) {
-                  if (cardtext.search(colour_affiliation_regexps[this_colour])>-1) {
+                  if (cardtext.search(colour_affiliation_regexps[this_colour])>-1 || cardsubtype.search(colour_affiliation_regexps[this_colour])>-1 ) {
                     affiliated_colours.push(this_colour);
                   }
                 });
@@ -517,4 +518,37 @@ function shrinkTooltipCardBits(cardDiv) {
   if (!wasVisible) {
     tooltip.hide();
   }
+}
+
+// ------------ Expand/shrink text
+function expand_text() {
+ $$(".card").each(function(card){
+   textbox = card.select(".cardtext")[0];
+   if (/font-size/.match(textbox.getAttribute('style'))) {
+     // "Expand": remove size, and set
+     // button to "Expand further"
+     textbox.style.fontSize = "";
+     $("expand_text_link").innerHTML = "Expand further";
+   } else if (!textbox.hasClassName("enlarged")) {
+     // "Expand further": add enlarged
+     // class, and set button to "Shrink"
+     textbox.addClassName("enlarged");
+     $("expand_text_link").innerHTML = "Shrink text";
+   } else {
+     // Shrink again, and set button text
+     // to "Expand text"
+     textbox.removeClassName("enlarged");
+     shrinkCardBits(card);
+     $("expand_text_link").innerHTML = "Expand text";
+   }
+ });
+}
+
+// ------------ Watermarks
+function updateWatermark() {
+ $$(".card").each(function(card){
+  var new_watermark = $F(card.select('.watermark_selector')[0]);
+  var watermark_div = card.select('.watermark')[0];
+  watermark_div.style.backgroundImage = 'url(' + standard_watermark_urls[new_watermark] + ")"
+ });
 }

@@ -72,7 +72,17 @@
      end %>
     <div class="cardtext_container<% if textbox_length == 0 %> notext<% end %>">
      <div class="pinline pinline_sidesbottom">
-       <div class="<%= textboxclass %>"><% Rails.logger.info "#{card.individual_name}'s textbox has #{textbox_length} chars"%><% if !card.rulestext.blank? %><%= content_tag(:div, format_card_text(card, :rulestext), :class => "rulestext") %><% end %>
+       <div class="<%= textboxclass %>">
+         <% if card.watermark.present? %>
+           <% if card.watermark =~ /^[{].*[}]$/ && (watermark_url = standard_watermark_filename(card.watermark)).present?
+                "got the url"
+              else 
+                watermark_url = card.watermark
+              end %>
+            <div class="watermark" id="watermark" style="background-image:url(<%= watermark_url %>)">
+            </div>
+         <% end %>
+        <% Rails.logger.info "#{card.individual_name}'s textbox has #{textbox_length} chars"%><% if !card.rulestext.blank? %><%= content_tag(:div, format_card_text(card, :rulestext), :class => "rulestext") %><% end %>
         <% if !card.flavourtext.blank? %><%= content_tag(:div, format_card_text(card, :flavourtext), :class => "flavourtext") %><% end %></div>
       </div>
      </div>
