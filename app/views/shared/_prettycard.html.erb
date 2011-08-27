@@ -82,8 +82,11 @@
             <div class="watermark" id="watermark" style="background-image:url(<%= watermark_url %>)">
             </div>
          <% end %>
-        <% Rails.logger.info "#{card.individual_name}'s textbox has #{textbox_length} chars"%><% if !card.rulestext.blank? %><%= content_tag(:div, format_card_text(card, :rulestext), :class => "rulestext") %><% end %>
-        <% if !card.flavourtext.blank? %><%= content_tag(:div, format_card_text(card, :flavourtext), :class => "flavourtext") %><% end %></div>
+         <div class="rulestext_wrapper">
+           <% Rails.logger.info "#{card.individual_name}'s textbox has #{textbox_length} chars"%><% if !card.rulestext.blank? %><%= content_tag(:div, format_card_text(card, :rulestext), :class => "rulestext") %><% end %>
+           <% if !card.flavourtext.blank? %><%= content_tag(:div, format_card_text(card, :flavourtext), :class => "flavourtext") %><% end %>
+         </div>
+        </div>
       </div>
      </div>
     <div class="bottombox">

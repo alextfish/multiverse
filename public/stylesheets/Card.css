@@ -220,8 +220,9 @@
   min-height: 95px;
   padding: 2px; }
 
-.rulestext, .flavourtext {
-  z-index: 2; }
+.rulestext_wrapper {
+  z-index: 2;
+  /*position: absolute;*/ }
 
 .cardtext br {
   margin-bottom: 0.25em; }
@@ -751,7 +752,7 @@
   /* Internet Explorer */
   filter: progid:DXImageTransform.Microsoft.BasicImage(rotation=2); }
 
-.split.upright {
+.split.rotated {
   /* Safari */
   -webkit-transform: rotate(-90deg);
   /* Firefox */
@@ -759,7 +760,9 @@
   /* Internet Explorer */
   filter: progid:DXImageTransform.Microsoft.BasicImage(rotation=1);
   left: -50px;
-  top: 50px; }
+  top: 50px;
+  margin-bottom: 100px;
+  margin-right: -100px; }
 
 .flip.form .part1 .cardtext_container {
   position: relative;
@@ -853,7 +856,7 @@
 .Artifact .ptbox {
   background-color: #A8BFC7; }
 
-.Artifact .cardtitlebar, .Artifact .cardtypebar {
+.Artifact .cardtitlebar, .Artifact .cardtypebar, .Land.Coloured_Artifact .cardtitlebar, .Land.Coloured_Artifact .cardtypebar {
   background: #B0C4C8;
   background: -webkit-gradient(linear, left top, left bottom, from(#b0c4c8), color-stop(0.5, #d2d7db), to(#b0c4c8));
   background: -moz-linear-gradient(top, #b0c4c8, #d2d7db, #b0c4c8); }
@@ -955,7 +958,13 @@
 .Multicolour .ptbox {
   background: #C6AF71 !important; }
 
-.Land, .Land .cardart {
+.Land, .Land.Coloured_Artifact {
+  /*#A4968E*/
+  filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#deccc1', endColorstr='#6a514a', GradientType=2) !important;
+  background: -webkit-gradient(linear, left top, left bottom, from(#deccc1), to(#6a514a)) !important;
+  background: -moz-linear-gradient(top, #deccc1, #6a514a) !important; }
+
+.Land .cardart {
   background-color: #b9aea2; }
 
 .Land .pinline {
@@ -967,6 +976,9 @@
 .Land .cardtext, .Land .pinline_ptbox {
   background-color: #d8cfc8;
   /* #eee6df; */ }
+
+.Land .bottombox, .Land .cardtext_container, .Land .cardart_container {
+  background: transparent; }
 
 .Land.white .cardtitlebar, .Land.white .cardtypebar {
   background-color: #fffff6; }

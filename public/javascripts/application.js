@@ -78,6 +78,24 @@ function update_card_supertype(card_index, new_value) {
   }
 }
 
+function updateWatermarks() {
+ $$(".card_watermark_select").each(function(selector){
+  var new_watermark = $F(selector);
+  var card = selector.up(".card");
+  var watermark_field = card.select(".type_field.watermark")[0];
+  if (new_watermark == "CUSTOM") {
+    card.select(".card_watermark_select")[0].hide();
+    card.select(".watermark_label")[0].innerHTML = "Watermark URL"
+    watermark_field.show();
+  } else {
+    var watermark_div = card.select(".cardtext_container")[0].select(".watermark")[0];
+    watermark_field.value = new_watermark;
+    watermark_div.style.backgroundImage = 'url(' + standard_watermark_urls[new_watermark] + ")";
+  }
+ });
+}
+
+
 var colour_affiliation_regexps = {
     "White": /(\(W\)|\{W\}|[Pp]lains)/,
     "Blue" : /(\(U\)|\{U\}|[Ii]sland)/, 
@@ -541,14 +559,5 @@ function expand_text() {
      shrinkCardBits(card);
      $("expand_text_link").innerHTML = "Expand text";
    }
- });
-}
-
-// ------------ Watermarks
-function updateWatermark() {
- $$(".card").each(function(card){
-  var new_watermark = $F(card.select('.watermark_selector')[0]);
-  var watermark_div = card.select('.watermark')[0];
-  watermark_div.style.backgroundImage = 'url(' + standard_watermark_urls[new_watermark] + ")"
  });
 }

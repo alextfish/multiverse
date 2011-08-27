@@ -35,6 +35,11 @@
   background: -webkit-gradient(linear, right top, left bottom, from($startend), color-stop(0.5, $middle), to($startend));
   background: -moz-linear-gradient(right top, $startend, $middle, $startend);
 }
+@mixin gradient_vert_important($start, $end) {
+  filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#{$start}', endColorstr='#{$end}', GradientType=2) !important;
+  background: -webkit-gradient(linear, left top, left bottom, from($start), to($end)) !important;
+  background: -moz-linear-gradient(top,  $start,  $end) !important;
+}
 @mixin gradient_vert_highlight($startend, $middle) {
   background: -webkit-gradient(linear, left top, left bottom, from($startend), color-stop(0.5, $middle), to($startend));
   background: -moz-linear-gradient(top, $startend, $middle, $startend);
@@ -206,8 +211,8 @@
   .cardtext { /*width: *; */
               min-height: 95px;  
               padding: 2px; }
-  .rulestext, .flavourtext {  
-              z-index: 2; }
+  .rulestext_wrapper { z-index: 2; /*position: absolute;*/ }
+  .rulestext, .flavourtext {}
   .cardtext br { margin-bottom: 0.25em; }
   .cardtext .flavourtext br { margin-bottom: 0px; }
   .cardtext div, .cardtext p { margin: 0px; }
@@ -505,10 +510,12 @@ border: none;
 .rotated {
   @include rotate_180;
 }
-.split.upright {
+.split.rotated {
   @include rotate_90;
   left: -50px;
   top: 50px;
+  margin-bottom: 100px;
+  margin-right: -100px;
 }
 
 .flip.form .part1 .cardtext_container { position: relative; top: -42px; }
@@ -580,7 +587,7 @@ $Multicolour_Background: #CAB86C;
 .Artifact .pinline { background-color: #eee; }
 .Artifact .pinline_ptbox { background-color: #9CB7BE; }
 .Artifact .ptbox { background-color: #A8BFC7; }
-.Artifact .cardtitlebar, .Artifact .cardtypebar {
+.Artifact .cardtitlebar, .Artifact .cardtypebar, .Land.Coloured_Artifact .cardtitlebar, .Land.Coloured_Artifact .cardtypebar,  {
    background: #B0C4C8;
    background: -webkit-gradient(linear, left top, left bottom, from(#B0C4C8), color-stop(0.5, #D2D7DB), to(#B0C4C8));
    background: -moz-linear-gradient(top, #B0C4C8, #D2D7DB, #B0C4C8);
@@ -623,10 +630,14 @@ $Multicolour_Background: #CAB86C;
 .Multicolour .pinline_ptbox { background: #C6AF71 !important; }
 .Multicolour .ptbox { background: #C6AF71 !important; }
 
-.Land, .Land .cardart { background-color: #b9aea2 /*#A4968E*/; }
+.Land, .Land.Coloured_Artifact {  /*#A4968E*/; 
+@include gradient_vert_important(#DECCC1, #6A514A); 
+}
+.Land .cardart { background-color: #b9aea2; }
 .Land .pinline { background-color: #d7cDbF /*C7BDAF*/; }
 .Land .cardtitlebar, .Land .cardtypebar { background-color: $Land_Colourless_Bar; }
 .Land .cardtext, .Land .pinline_ptbox { background-color: $Land_Text; /* #eee6df; */}
+.Land .bottombox, .Land .cardtext_container, .Land .cardart_container,  { background: transparent; }
 
 .Land.white .cardtitlebar, .Land.white .cardtypebar { background-color: $Land_White_Bar; }
 .Land.white .cardtext, .Land.white .pinline_ptbox { background-color: $Land_White_Text; }
