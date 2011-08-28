@@ -117,16 +117,10 @@ function update_frame(card_id) {
     cardframe = frame_selector.value = "Auto";
     // return;
   }
-  var cost = this_card.select(".cost_field")[0].value;
   var cardtype = this_card.select(".type_field.cardtype")[0].value;
   var cardsubtype = this_card.select(".type_field.subtype")[0].value;
-  var colours = [
-    (cost.search(/w/i)>-1 ? "White" : ""),
-    (cost.search(/u/i)>-1 ? "Blue" : ""),
-    (cost.search(/b/i)>-1 ? "Black" : ""),
-    (cost.search(/r/i)>-1 ? "Red" : ""),
-    (cost.search(/g/i)>-1 ? "Green" : "")
-  ];
+  var cost = this_card.select(".cost_field")[0].value;
+  var colours = get_cost_colours(this_card);
   var num_colours = 0;
   for( i=0; i<5; i++ ) {
     if ( colours[i] != "") num_colours++;
@@ -165,10 +159,18 @@ function update_frame(card_id) {
 
     }
   }
+  if (card_id == "card2" && inner == "Colourless") {
+    // get card 1 instead
+    inner = $("card").getAttribute("class").replace("part1","");
+  }
+  var pinline;
   if (num_colours == 2) {
-    var pinline = " " + colours.join("").toLowerCase();
+    pinline = " " + colours.join("").toLowerCase();
+  } else if (card_id == "card2" && num_colours == 0) {
+    var card1_colours = get_cost_colours($("card"));
+    pinline = " " + card1_colours.join("").toLowerCase();
   } else {
-    var pinline = "";
+    pinline = "";
   }
   var newClass = outer + inner + pinline;
 
@@ -177,6 +179,18 @@ function update_frame(card_id) {
   if (this_card.hasClassName("part1")) { universalClass += "part1 "; }
   if (this_card.hasClassName("part2")) { universalClass += "part2 "; }
   this_card.className = universalClass + newClass;
+}
+
+function get_cost_colours(this_card) {
+  var cost = this_card.select(".cost_field")[0].value;
+  var colours = [
+    (cost.search(/w/i)>-1 ? "White" : ""),
+    (cost.search(/u/i)>-1 ? "Blue" : ""),
+    (cost.search(/b/i)>-1 ? "Black" : ""),
+    (cost.search(/r/i)>-1 ? "Red" : ""),
+    (cost.search(/g/i)>-1 ? "Green" : "")
+  ];
+  return colours;
 }
 
 function update_card_rarity(rarity_in) {

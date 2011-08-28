@@ -280,9 +280,17 @@ class Card < ActiveRecord::Base
     if self.cardtype =~ /Artifact/ && self.frame != "Artifact"
       cardclass << " Coloured_Artifact"
     end
+    # If a flip-half has nothing by this point, remove Colourless class and inherit from parent
+    if cardclass == "Colourless" && self.multipart == Card.FLIP2 
+      cardclass = self.parent.display_class
+    end
+    # Add gold pinlines
     if self.num_colours == 2
       cardclass << " " + self.colour_strings_present.join("").downcase
+    elsif self.num_colours == 0 && self.parent && self.parent.num_colours == 2
+      cardclass << " " + self.parent.colour_strings_present.join("").downcase
     end
+    
     if self.is_token?
       cardclass << " token"
     end
