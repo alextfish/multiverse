@@ -466,7 +466,8 @@ class Card < ActiveRecord::Base
     :cardtype => "Land",
     :subtype => "Plains",
     :frame => "Land white",
-    :rarity => "basic"
+    :rarity => "basic",
+    :watermark => "{White Mana}"
   )
   ISLAND = Card.new(
     :name => "Island",
@@ -474,7 +475,8 @@ class Card < ActiveRecord::Base
     :cardtype => "Land",
     :subtype => "Island",
     :frame => "Land blue",
-    :rarity => "basic"
+    :rarity => "basic",
+    :watermark => "{Blue Mana}"
   )
   SWAMP = Card.new(
     :name => "Swamp",
@@ -482,7 +484,8 @@ class Card < ActiveRecord::Base
     :cardtype => "Land",
     :subtype => "Swamp",
     :frame => "Land black",
-    :rarity => "basic"
+    :rarity => "basic",
+    :watermark => "{Black Mana}"
   )
   MOUNTAIN = Card.new(
     :name => "Mountain",
@@ -490,7 +493,8 @@ class Card < ActiveRecord::Base
     :cardtype => "Land",
     :subtype => "Mountain",
     :frame => "Land red",
-    :rarity => "basic"
+    :rarity => "basic",
+    :watermark => "{Red Mana}"
   )
   FOREST = Card.new(
     :name => "Forest",
@@ -498,7 +502,8 @@ class Card < ActiveRecord::Base
     :cardtype => "Land",
     :subtype => "Forest",
     :frame => "Land green",
-    :rarity => "basic"
+    :rarity => "basic",
+    :watermark => "{Green Mana}"
   )
   def Card.basic_land
     [PLAINS, ISLAND, SWAMP, MOUNTAIN, FOREST]
