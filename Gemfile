@@ -6,6 +6,6 @@ gem 'sqlite3-ruby', :require => 'sqlite3'
 gem 'will_paginate', '3.0.pre2'
 gem 'rdiscount'
 
-group :development do
-  gem 'annotate-models', '1.0.4'
-end
+#group :development do
+#  gem 'annotate-models', '1.0.4'
+#end

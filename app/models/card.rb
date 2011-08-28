@@ -1,5 +1,5 @@
 # == Schema Information
-# Schema version: 20101215230231
+# Schema version: 20110824232900
 #
 # Table name: cards
 #
@@ -24,9 +24,11 @@
 #  art_url      :string(255)
 #  artist       :string(255)
 #  image_url    :string(255)
+#  last_edit_by :integer
 #  multipart    :integer
 #  link_id      :integer
-#  last_edit_by :integer
+#  parent_id    :integer
+#  watermark    :string(255)
 #
 
 class Card < ActiveRecord::Base

@@ -72,7 +72,6 @@ PLATFORMS
   ruby
 
 DEPENDENCIES
-  annotate-models (= 1.0.4)
   rails (= 3.0.0)
   rdiscount
   sqlite3-ruby
