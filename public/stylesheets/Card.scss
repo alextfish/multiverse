@@ -449,6 +449,7 @@ border: none;
   border-left: 1px solid white;
   height: 100%;
   min-height: 175px;
+  @include background_size(178px, 225px);
  }
 .token .cardart_container .pinline_sides {
   @include elliptical_corners(45px, 32px);

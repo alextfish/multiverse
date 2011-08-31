@@ -588,7 +588,11 @@
   border-right: 1px solid black;
   border-left: 1px solid white;
   height: 100%;
-  min-height: 175px; }
+  min-height: 175px;
+  -webkit-background-size: 178px 225px;
+  -moz-background-size: 178px 225px;
+  -o-background-size: 178px 225px;
+  background-size: 178px 225px; }
 
 .token .cardart_container .pinline_sides {
   -moz-border-radius: 45px;
