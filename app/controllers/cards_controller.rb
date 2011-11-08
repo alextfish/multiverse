@@ -37,6 +37,13 @@ class CardsController < ApplicationController
       redirect_to :card_back
     end
   end
+  before_filter :only => :update do
+    if params[:is_preview] == "true"
+      # Manually call the edit function and then render edit instead
+      edit()
+      render :action => "edit"
+    end
+  end
 
   helper CardsHelper
 
@@ -97,6 +104,14 @@ class CardsController < ApplicationController
 
   # GET /cards/1/edit
   def edit
+    if params[:is_preview] == "true"
+      Rails.logger.info "PREVIEW happening"
+      @card.attributes = params[:card] # like update_attributes but no save
+      if @card.attributes["frame"] == "Auto"
+        @card.frame = @card.calculated_frame
+      end
+      Rails.logger.info @card.inspect
+    end
     @render_frame = @card.frame
     if @card.calculated_frame == @card.frame
       @card.frame = "Auto"

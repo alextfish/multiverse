@@ -19,9 +19,9 @@ module CardsHelper
     /\_\_([^_]+)\_\_/ => '<b>\1</b>',
     /(^|[^*])\*([^*]+)\*/ => '\1<i>\2</i>',
     /(^|[^_])\_([^_]+)\_/ => '\1<i>\2</i>',
-    /\[(\+[0-9X]+)\]/ => '<span class="loyalty_container"><span class="loyalty positive">\1</span></span>',
-    /\[(\-[0-9X]+)\]/ => '<span class="loyalty_container"><span class="loyalty negative">\1</span></span>',
-    /\[(0)\]/ => '<span class="loyalty_container"><span class="loyalty neutral">\1</span></span>',
+    /\[(\+[1-9X][0-9X]*)\]/ => '<span class="loyaltyContainer"><span class="loyalty positive">\1</span></span>',
+    /\[(\-[1-9X][0-9X]*)\]/ => '<span class="loyaltyContainer"><span class="loyalty negative">\1</span></span>',
+    /\[(0|\+0|-0)\]/ => '<span class="loyaltyContainer"><span class="loyalty neutral">\1</span></span>',
   }
   AFTER_SUBSTITUTIONS = {
     ": until" => ": Until",

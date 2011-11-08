@@ -43,7 +43,7 @@
   width: 320px; }
 
 .card {
-  background: #0ff;
+  /* background: #0ff; */
   padding-top: 4px;
   padding-bottom: 3px;
   padding-left: 3px;
@@ -424,7 +424,7 @@
   position: relative;
   padding-top: 4px; }
 
-.loyalty_container {
+.loyaltyContainer {
   position: relative;
   width: 32px;
   display: inline-block;
@@ -449,10 +449,11 @@
 .Planeswalker .loyalty {
   left: -34px; }
 
-.Planeswalker .loyalty_container {
+.Planeswalker .loyaltyContainer {
   width: 0px;
   display: inline;
-  top: 0px; }
+  top: 0px;
+  /* padding-bottom: 5px; */ }
 
 .Planeswalker .cardtext br {
   margin-bottom: 5px; }
@@ -469,10 +470,11 @@
 
 .Planeswalker .pinline_ptbox.pinline {
   border: none;
-  background: none !important;
   padding-right: 2px;
   top: -16px;
-  right: -4px; }
+  right: -4px;
+  background: none !important;
+  filter: none !important; }
 
 .Planeswalker .pinline_ptbox .ptbox {
   background: none !important;
@@ -964,7 +966,7 @@
 
 .Land, .Land.Coloured_Artifact {
   /*#A4968E*/
-  filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#deccc1', endColorstr='#6a514a', GradientType=2) !important;
+  filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#deccc1', endColorstr='#6a514a', GradientType=0) !important;
   background: -webkit-gradient(linear, left top, left bottom, from(#deccc1), to(#6a514a)) !important;
   background: -moz-linear-gradient(top, #deccc1, #6a514a) !important; }
 

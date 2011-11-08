@@ -575,3 +575,15 @@ function expand_text() {
    }
  });
 }
+
+// ------------ Rotate cards
+function rotate_card() {
+  var activeTab = $$(".active-tab")[0];
+  if (activeTab && activeTab.id == "cardimage_link") {
+    // Rotate the image
+    $("cardimage").toggleClassName('rotated');
+  } else {
+    // Rotate the mockup
+    $$('.cardborder')[0].toggleClassName('rotated');
+  }
+}

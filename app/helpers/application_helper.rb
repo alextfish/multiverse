@@ -77,6 +77,7 @@ module ApplicationHelper
     my_symbol.gsub!(/S/, "snow")
     my_symbol.gsub!(/T/, "tap")
     my_symbol.gsub!(/Q/, "untap")
+    my_symbol.gsub!(/\?/, "question")
     my_symbol.gsub!(/inf.*/i, "Infinity")
     "/images/mana/mana_#{my_symbol}.png"
     # "http://gatherer.wizards.com/Handlers/Image.ashx?size=small&name=#{my_symbol}&type=symbol"
@@ -94,13 +95,16 @@ module ApplicationHelper
       target = "<img src='#{mana_symbol_url(sym)}' alt='#{sym}' title='#{sym}'>"
       fishify(target)
       target.downcase!
-      sym1 = sym.tr("{}", "()")
-      sym2 = sym.delete("/")
+      sym0 = Regexp.escape(sym)
+      sym1 = sym0.tr("{}", "()")
+      sym2 = sym0.delete("/")
       sym3 = sym1.delete("/")
-      my_text.gsub!( sym, target )
-      my_text.gsub!( sym1, target )
-      my_text.gsub!( sym2, target )
-      my_text.gsub!( sym3, target )
+      any_symbol = ("(#{sym0}|#{sym1}|#{sym2}|#{sym3})")
+      any_symbol_re = Regexp.new(any_symbol)
+      my_text.gsub!( any_symbol_re, target )
+      #my_text.gsub!( sym1, target )
+      #my_text.gsub!( sym2, target )
+      #my_text.gsub!( sym3, target )
     end
     if force
       Card.mana_symbols_extensive.each do |sym|

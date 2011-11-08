@@ -17,7 +17,7 @@
  <th>Owner</th>
  <th>Public access</th>
  <th>Cards</th>
- <th class="sortfirstasc">Recent activity</th>
+ <th class="sortfirstasc" style="width:20em;">Recent activity</th>
  <th>Description</th>
  </tr>
  <% Cardset.all.sort_by{|cs|cs.recent_action.datestamp}.reverse.each_with_index do |@cardset, index| %>

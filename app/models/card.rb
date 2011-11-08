@@ -49,7 +49,7 @@ class Card < ActiveRecord::Base
   # end
   
   DEFAULT_RARITY = "common"
-  STRING_FIELDS = ["name","cost","supertype","cardtype","subtype","rarity","rulestext","flavourtext","code","frame","art_url","artist","image_url"]
+  STRING_FIELDS = ["name","cost","supertype","cardtype","subtype","rarity","rulestext","flavourtext","code","frame","art_url","artist","image_url","watermark"]
   LONG_TEXT_FIELDS = ["rulestext", "flavourtext"]
   (STRING_FIELDS-LONG_TEXT_FIELDS).each do |field|
     validates field.to_sym, :length     => { :maximum => 255 }
@@ -198,7 +198,7 @@ class Card < ActiveRecord::Base
   mana_symbols += colour_letters.map {|s| "{#{s}/2}" }
   mana_symbols += colour_letters.map {|s| "{#{s}/3}" }
   mana_symbols += colour_letters.map {|s| "{P#{s}}" }
-  mana_symbols += ( colour_letters + %w{1000000 100 10 11 12 13 14 15 16 17 18 19 20 -3 1 2 3 4 5 6 7 8 9 0 X Y T Q S C} ) .map {|s| "{#{s}}" }
+  mana_symbols += ( colour_letters + %w{1000000 100 10 11 12 13 14 15 16 17 18 19 20 -3 1 2 3 4 5 6 7 8 9 0 X Y T Q S C ?} ) .map {|s| "{#{s}}" }
   MANA_SYMBOLS = mana_symbols
 
   def self.mana_symbols_extensive

@@ -46,7 +46,7 @@
    <% if show_rotate_link || show_edit_link || show_move_link || show_delete_link %>
      <div class="card_controls_below">
        <% if show_rotate_link %>
-         <%= link_to_function "Rotate", "$$('.cardborder')[0].toggleClassName('rotated');", :class => "card_rotate_link no_tooltip" %>
+         <%= link_to_function "Rotate", "rotate_card()", :class => "card_rotate_link no_tooltip" %>
        <% end %>
        <% if show_rotate_link %> 
          |

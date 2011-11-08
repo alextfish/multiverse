@@ -1,10 +1,21 @@
 <h1><%= link_to @card.printable_name, @card %>: Editing card</h1>
 <% @title = "Editing #{@card.printable_name}" %>
 
+<% if params[:is_preview] %>
+  <p>Preview:
+  <%= render :partial => "shared/card", :locals => { :link => false } %>
+  <br>These changes are not yet saved!
+  </p>
+<% end %>
+
 <%= render "form" %>
 
 <% if permission_to?(:delete, @card.cardset) %>
   <%= link_to "Delete card", @card, :confirm => "Really DELETE #{@card.printable_name}?", :method => :delete %> |
 <% end %>
 <%= link_to "Back to card", @card %> |
+<% show_move_link = permission_to?(:admin, @card.cardset) %>
+<% if show_move_link %>
+  <%= link_to "Move card to another cardset", move_card_path(@card) %> | 
+<% end %>
 <%= link_to "Back to cardset", @card.cardset %>

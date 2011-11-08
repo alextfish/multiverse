@@ -35,11 +35,6 @@ class Configuration < ActiveRecord::Base
     :admins => "Admins only",
     # :selected => "Selected users:"
   }
-  signedin_people_options = {
-    :signedin => "Signed-in users",
-    :admins => "Admins only",
-    # :selected => "Selected users:"
-  }
   admin_options = {
     :anyone => "Anyone",
     :signedin => "Signed-in users",
@@ -58,7 +53,7 @@ class Configuration < ActiveRecord::Base
     },
     :visibility => people_options,
     :commentability => people_options,
-    :editability => signedin_people_options,
+    :editability => people_options,
     :adminability => admin_options,
     :border_colour => {
       "black" => "Black",

@@ -243,11 +243,14 @@ class Cardset < ActiveRecord::Base
     self.details_pages.reject{|dp| dp.title == DetailsPage.FRONT_PAGE_TITLE }
   end
   
+  def Cardset.rarity_initials 
+    "CURMBT"
+  end
   def Cardset.skeleton_line_regexp_MD
-    /^\(\(\((?:[-]?)([CURM])([A-Z])([0-9][0-9])/
+    /^\(\(\((?:[-]?)([#{rarity_initials}])([A-Z])([0-9][0-9])/
   end
   def Cardset.skeleton_line_regexp_HTML
-    /(?:>[(]?)([CURM])([A-Z])([0-9][0-9])/
+    /(?:>[(]?)([#{rarity_initials}])([A-Z])([0-9][0-9])/
   end
   
   def get_skeleton_row(code)
@@ -289,7 +292,7 @@ class Cardset < ActiveRecord::Base
     end
     # Generate virtual params for blue, black, red and green, equal to white
     %w{blue black red green}.each do |colour|
-      %w{C U R M}.each do |rarity_letter|
+      rarity_initials.split("").each do |rarity_letter|
         params["skeletonform_#{colour}_rarity#{rarity_letter}"] = params["skeletonform_white_rarity#{rarity_letter}"]
       end
     end
@@ -417,7 +420,8 @@ class Cardset < ActiveRecord::Base
     # now insert lines into lines_out, from the end first so the line numbers stay valid
     frame_offsets = {}
     Card.frame_code_letters.each_with_index {|letter, index| frame_offsets[letter] = 0.05*index }
-    rarity_offsets = {"C" => 0, "U" => 0.01, "R" => 0.02, "M" => 0.03}
+    # could deduce from rarity_initials, but fiddly
+    rarity_offsets = {"C" => 0, "U" => 0.01, "R" => 0.02, "M" => 0.03, "B" => 0.04, "T" => 0.05}
     insertions.sort_by {|codes, line_num| line_num + rarity_offsets[codes[0][0].chr] + frame_offsets[codes[0][1].chr]}.reverse_each do |codes, line_num|
       # To insert lines for [a b c] at position 5, we insert c at 5, then b at 5, then a at 5
       codes.reverse.each do |code|
@@ -595,7 +599,7 @@ class Cardset < ActiveRecord::Base
     "art" => "art_url",
     "image" => "image_url",
   }
-  FIELDS = ["","name","cost","supertype","cardtype","subtype","rarity","rulestext","flavourtext","power","toughness","loyalty","code","frame","art_url","artist","image_url","comment","active"]
+  FIELDS = ["","name","cost","supertype","cardtype","subtype","rarity","rulestext","flavourtext","power","toughness","loyalty","code","frame","art_url","artist","image_url","comment","active","watermark"]
   ENUM_ALIASES = {
     "frame" => {  # keys need to be strings, not symbols
       "w" => "white", "u" => "blue", "b" => "black", "r" => "red", "g" => "green", "a" => "artifact", "z" => "multicolour", "m" => "multicolour", "l" => "land", "h" => "hybrid",

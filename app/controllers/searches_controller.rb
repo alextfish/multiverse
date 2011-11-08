@@ -138,11 +138,12 @@ class SearchesController < ApplicationController
       condition = queries.reduce(["",[]]) do |memo, obj|
         string, inputs = memo
         field, value, exact = obj
+        searchable_value = make_even_safer(value.downcase)
         !string.empty? && string += " AND "
         if exact
-          [string + "lower(#{field}) = ?", inputs << value.downcase]
+          [string + "lower(#{field}) = ?", inputs << searchable_value]
         else
-          [string + "lower(#{field}) LIKE ?", inputs << "%#{value.downcase}%"] 
+          [string + "lower(#{field}) LIKE ?", inputs << "%#{searchable_value}%"] 
         end
       end.flatten
           Rails.logger.info "Searching for #{queries.inspect}: condition is #{condition.inspect}"
@@ -177,6 +178,9 @@ class SearchesController < ApplicationController
       end    
     end
     
+    def make_even_safer(val)
+      return val.gsub(".","_")   # SQL single-char wildcard
+    end
     
     def db_concat(*args)
       # By aNoble, from http://stackoverflow.com/questions/2986405/database-independant-sql-string-concatenation-in-rails
