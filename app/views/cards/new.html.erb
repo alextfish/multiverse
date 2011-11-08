@@ -2,6 +2,13 @@
 
 <% @title = "#{@cardset.name}: Add card" %>
 
+<% if params[:is_preview] %>
+  <p>Preview:
+  <%= render :partial => "shared/card", :locals => { :link => false } %>
+  <br>This card is not yet saved!
+  </p>
+<% end %>
+
 <%= render "cardsets/setviews" %>
 <%= render "form" %>
 

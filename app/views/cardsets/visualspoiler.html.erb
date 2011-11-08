@@ -3,6 +3,10 @@
 </h1>
 <% @title = "#{@cardset.name}: Visual Spoiler" %>
 
+   <p style="float:right;">
+     <%= link_to "Printable", request.fullpath + "?printable" %>
+   </p>
+
 <%= render "setviews" %>
 
 <% cards_to_show = @cardset.public_cards %>

@@ -3,6 +3,9 @@ class CardsController < ApplicationController
   before_filter :only => [:new, :create, :edit, :update] do
     require_permission_to_edit(@cardset)
   end
+  before_filter do
+    @printable = params.has_key?(:printable)
+  end
   before_filter :except => [:new, :create] do |controller|
     # Redirect to secondary
     @card = Card.find(params[:id])
@@ -42,6 +45,14 @@ class CardsController < ApplicationController
       # Manually call the edit function and then render edit instead
       edit()
       render :action => "edit"
+    end
+  end
+  before_filter :only => :create do
+    if params[:is_preview] == "true"
+      # Render new without calling the new function 
+      @card = Card.new(params[:card])
+      @card.link = @card.new_linked_card
+      render :action => "new"
     end
   end
 

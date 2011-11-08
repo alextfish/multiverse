@@ -10,6 +10,9 @@ class CardsetsController < ApplicationController
   before_filter :only => [:edit, :update, :destroy, :todo, :generate_skeleton] do
     require_permission_to_admin(@cardset)
   end
+  before_filter do
+    @printable = params.has_key?(:printable)
+  end
 
   # GET /cardsets
   # GET /cardsets.xml
