@@ -595,6 +595,7 @@ function changeCardZoom(multiplyingFactor) {
   if (cardSizeRule.style.MozTransform) {
     cardSizeRule.style.MozTransform = "scale(" + (cardSizeRule.style.MozTransform.split(/[()]/)[1] * multiplyingFactor) + ")";
   }
+  makeAllCardsFit();
 }
 
 // ------------ Rotate cards
