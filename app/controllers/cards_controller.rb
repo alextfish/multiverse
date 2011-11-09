@@ -51,7 +51,7 @@ class CardsController < ApplicationController
     if params[:is_preview] == "true"
       # Render new without calling the new function 
       @card = Card.new(params[:card])
-      @card.link = @card.new_linked_card
+      @card.link = Card.new(params[:card][:link]) # @card.new_linked_card
       render :action => "new"
     end
   end

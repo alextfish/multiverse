@@ -1,3 +1,4 @@
+<% if !@printable %>
 <table class="setviews"><tr><td>
     <b><%= link_to_unless_current @cardset.name, @cardset %></b>:
     <%= link_to_unless_current "Cardlist", cardlist_cardset_path(@cardset) %> |
@@ -31,3 +32,4 @@
 </td></tr>
 <% end %>
 </table>
+<% end %>

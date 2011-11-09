@@ -15,7 +15,7 @@
     <div class="pinline pinline_box namebox">
      <div class="cardtitlebar">
       <div class="cardname">
-       <% if link && card_index==0 %>
+       <% if link && !@printable && card_index==0 %>
         <%= link_to card.individual_name, card, :title => card.code %>
        <% else %>
         <span title="<%= card.code %>"><%= card.name %></span>
