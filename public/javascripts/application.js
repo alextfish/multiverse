@@ -576,6 +576,27 @@ function expand_text() {
  });
 }
 
+function changeCardZoom(multiplyingFactor) { 
+  var theSheet = $A(document.styleSheets).select(function(s){
+    return /Multiverse.css/.match(s.href);
+  })[0];
+  var theRules = new Array(); 
+  if (theSheet.cssRules) { 
+    theRules = theSheet.cssRules; 
+  } else if (theSheet.rules) { 
+    theRules = theSheet.rules; 
+  } 
+  var cardSizeRule = $A(theRules).select(function(r){
+    return r.selectorText.toLowerCase() == "div.cardrenderinline"; // IE has it as "DIV.CardRenderInline"
+  })[0];
+  if (cardSizeRule.style.zoom) {
+    cardSizeRule.style.zoom = parseInt(cardSizeRule.style.zoom) * multiplyingFactor + "%";
+  }
+  if (cardSizeRule.style.MozTransform) {
+    cardSizeRule.style.MozTransform = "scale(" + (cardSizeRule.style.MozTransform.split(/[()]/)[1] * multiplyingFactor) + ")";
+  }
+}
+
 // ------------ Rotate cards
 function rotate_card() {
   var activeTab = $$(".active-tab")[0];

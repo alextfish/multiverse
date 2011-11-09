@@ -3,18 +3,18 @@
   <h1>
     <%= @title %>
    <p style="float:right;">
-     <%= link_to "Printable", url_for([@cardset, @details_page]) + "?printable" %>
      <% if permission_to?(:admin, @cardset) %>
-       | <%= link_to "Edit", edit_cardset_details_page_path(@cardset, @details_page) %>
+       <%= link_to "Edit", edit_cardset_details_page_path(@cardset, @details_page) %>
        | <%= link_to "Destroy", cardset_details_page_path(@cardset.id, @details_page),
               :confirm => "Are you sure you want to permanently delete the #{@details_page.title} page?",
               :method => :delete %>
      <% end %>
    </p>
   </h1>
-
-  <%= render "cardsets/setviews" %>
 <% end %>
+
+  <%= render "shared/printcontrols" %>
+  <%= render "cardsets/setviews" %>
 
 <p>
   <%= format_all_markup @details_page.body, @details_page.cardset %>
