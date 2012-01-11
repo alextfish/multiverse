@@ -11,16 +11,24 @@
 <br>
 <span class="helptext">Generated at <%= format_datetime_absolute Time.now %></span>
 
+<% page_beyond_1 = (!params[:page].nil? && params[:page]>"1") %>
+<% items_to_show = Cardset.all.sort_by{|cs|cs.recent_action.datestamp}.reverse %>
+<% items_to_show = items_to_show.paginate(:page => params[:page], :per_page => 30) %>
+<% if page_beyond_1 %>
+  <%= will_paginate items_to_show %>
+  <% "Show the pagination" %>
+<% end %>
+      
 <table class="sortable">
  <tr>
- <th>Set name</th>
- <th>Owner</th>
- <th>Public access</th>
- <th>Cards</th>
- <th class="sortfirstasc" style="width:20em;">Recent activity</th>
- <th>Description</th>
+ <th class="nosort">Set name</th>
+ <th class="nosort">Owner</th>
+ <th class="nosort">Public access</th>
+ <th class="nosort">Cards</th>
+ <th class="nosort" style="width:20em;">Recent activity</th>
+ <th class="nosort">Description</th>
  </tr>
- <% Cardset.all.sort_by{|cs|cs.recent_action.datestamp}.reverse.each_with_index do |cardset, index| %>
+ <% items_to_show.each_with_index do |cardset, index| %>
    <% @cardset = cardset %>
    <tr>
      <% set_viewable = permission_to? :view, @cardset %>
@@ -46,4 +54,5 @@
    </tr>
  <% end %>
 </table>
+<%= will_paginate items_to_show  %>
 

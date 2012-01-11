@@ -49,6 +49,9 @@ table.sortable td, table.sortable th {
   /*white-space: nowrap;
   overflow: hidden;*/
 }
+table.sortable th {
+  background-color: #d3d3d3;
+}
 
 /*th {
    white-space: pre;
