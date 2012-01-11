@@ -10,7 +10,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20110824232900) do
+ActiveRecord::Schema.define(:version => 20120102223301) do
 
   create_table "cards", :force => true do |t|
     t.string   "code"
@@ -38,6 +38,7 @@ ActiveRecord::Schema.define(:version => 20110824232900) do
     t.integer  "link_id"
     t.integer  "parent_id"
     t.string   "watermark"
+    t.boolean  "colour_indicator"
   end
 
   add_index "cards", ["cardset_id"], :name => "index_cards_on_cardset_id"
@@ -49,6 +50,7 @@ ActiveRecord::Schema.define(:version => 20110824232900) do
     t.datetime "created_at"
     t.datetime "updated_at"
     t.integer  "last_edit_by"
+    t.integer  "last_edit_log_id"
   end
 
   create_table "comments", :force => true do |t|
@@ -111,6 +113,20 @@ ActiveRecord::Schema.define(:version => 20110824232900) do
 
   add_index "glyphs", ["cardset_id"], :name => "index_glyphs_on_cardset_id"
 
+  create_table "last_edit_logs", :force => true do |t|
+    t.integer  "cardset_id"
+    t.datetime "datestamp"
+    t.integer  "kind"
+    t.integer  "user_id"
+    t.integer  "object_id"
+    t.text     "text"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "last_edit_logs", ["cardset_id"], :name => "index_last_edit_logs_on_cardset_id"
+  add_index "last_edit_logs", ["datestamp"], :name => "index_last_edit_logs_on_datestamp"
+
   create_table "logs", :force => true do |t|
     t.integer  "cardset_id"
     t.datetime "datestamp"
@@ -139,6 +155,16 @@ ActiveRecord::Schema.define(:version => 20110824232900) do
   end
 
   add_index "mechanics", ["cardset_id"], :name => "index_mechanics_on_cardset_id"
+
+  create_table "news_lists", :force => true do |t|
+    t.integer  "cardset_id"
+    t.datetime "datestamp"
+    t.string   "log_ids"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "news_lists", ["cardset_id"], :name => "index_news_lists_on_cardset_id"
 
   create_table "old_cards", :force => true do |t|
     t.integer  "card_id"

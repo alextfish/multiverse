@@ -8,7 +8,7 @@
      <% card_history.each do |history_item| %>
        <!-- id: <%= history_item.id %> -->
        <% case history_item.what_are_you %>
-         <% when "Log": %>
+         <% when "Log" %>
            <% @log = history_item %>
            <% verb = @log.past_tense_verb(true)
               if verb == "edited "
@@ -32,7 +32,7 @@
              <% end %> -->
            </div>
            <% end %>
-         <% when "Comment": %>
+         <% when "Comment" %>
            <% @comment = history_item %>
            <% last_item_blank_edit = false %>
            <%= render :partial => "shared/comment", :locals => { :show_buttons => true, :show_date => true } %>

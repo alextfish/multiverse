@@ -1,4 +1,5 @@
-<%= form_for @comment do |@f| %>
+<%= form_for @comment do |f| %>
+  <% @f = f %>
   <%= @f.hidden_field :card_id %>
   <%= render 'shared/common_comment_form' %>
 <% end %>

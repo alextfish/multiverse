@@ -1,6 +1,6 @@
 <%
-  update_date = Time.gm(2011,11,8,02,04,31);
-  update_title = "November Update: Preview Button";
+  update_date = Time.gm(2012,01,11,00,45,59);
+  update_title = "January Update: Performance, Double-Faced Cards, Easier Card Links";
 
 news_latest_update = {
   :date => update_date,
@@ -10,6 +10,18 @@ news_latest_update = {
 
 ----
 ### #{update_title}
+#### Wed Jan 11 00:45:59 2012
+
+The principal purpose in this Multiverse update is performance. I've put in a series of changes which should hopefully mean that the Recent Updates pages are much faster to load now, both for individual cardsets and for the site as a whole. My apologies for the performance problems previously.
+
+But there are a couple of fun new features added too. One of them is that Multiverse now supports double-faced cards, such as _Innistrad_'s werewolves. They're multipart cards in the same category as split cards and flip cards, and they're created the same way: select the "Split / Flip / Double-Faced" option at the top of the "Frame" dropdown when editing a card, and then fill in the details for the front ("sun side") and back ("moon side"). Because most DFCs require a colour indicator, I've added support for that as well; and because cards like Transguild Courier and Ancestral Visions have errata to use a colour indicator, it's an option on all cards, not just DFCs.
+
+The other notable new feature is that it's rather easier to make your comments link to cards now. Previously, the (((Cardname))) link syntax only worked for cards in the same cardset as the comment being posted. Now it'll work for cards anywhere in Multiverse, although it'll prefer those in the same cardset in case of conflict. There's also a way to link to a particular card uniquely, in a way that'll keep working even if the card's name and code both change. The syntax is (((C12345))), where 12345 is the ID of the card in question (the number visible in the card's URL). There are the natural double-paren versions of these link syntaxes as well.
+
+Coming up in the next update: personal watchlists. That probably won't be until February or March though.
+
+----
+### November Update: Preview Button
 #### Tue Nov 8 02:04:31 2011
 
 My apologies for the reduced rate of updates! This is mainly just a bug-fix update. The one notable feature is the [Preview button](http://multiverse.heroku.com/cards/8533), which will let you get a proper view of precisely how your edits to a card will look. Useful for seeing whether your attempts to reduce the wordiness of a card have succeeded or not.

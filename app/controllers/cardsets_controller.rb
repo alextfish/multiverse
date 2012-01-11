@@ -1,5 +1,6 @@
 class CardsetsController < ApplicationController
 
+  
   before_filter :except => [:index, :new, :create] do
     @cardset = Cardset.find(params[:id])
     require_permission_to_view(@cardset)

@@ -17,7 +17,8 @@
   <% slice_size = (@booster.length == 16 ? 4 : 5) %>
   <% @booster.each_slice(slice_size) do |cards| %>
     <tr>
-      <% cards.each do |@card| %>
+      <% cards.each do |card| %>
+        <% @card = card %>
         <td>
           <% do_link = !@card.cardset.nil? %>
           <%= render :partial => "shared/card", :locals => {:link => do_link} %>
@@ -28,11 +29,11 @@
 </table>
 
 <p>
-  <% @booster.each do |@card| %>
-    <% if !@card.blank %>
-      <% do_link = !@card.cardset.nil? %>
-      <%= link_to_if do_link, @card.printable_name, @card %>
-      (<%= @card.rarity %><% if @card.foil %>, foil<% end %>)
+  <% @booster.each do |card| %>
+    <% if !card.blank %>
+      <% do_link = !card.cardset.nil? %>
+      <%= link_to_if do_link, card.printable_name, card %>
+      (<%= card.rarity %><% if card.foil %>, foil<% end %>)
       <br>
     <% end %>
   <% end %>

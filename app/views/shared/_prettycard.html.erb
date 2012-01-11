@@ -10,8 +10,9 @@
       cards = [@card, @card.link]
     end %>
  <% cards.each_with_index do |card, card_index| %>
-
+  <div class="innercardborder">
    <div class="card <%= card.display_class %> part<%= card_index+1 %>">
+    <span class="left_of_namebox"></span>
     <div class="pinline pinline_box namebox">
      <div class="cardtitlebar">
       <div class="cardname">
@@ -52,6 +53,10 @@
         <% end %>
       </div>
       <div class="cardtype"><span>
+       <% my_indic_string = card.colour_indicator_string %>
+       <% if !my_indic_string.blank? %>
+         <%= image_tag "colour_indic_#{my_indic_string}.png", :alt => "Colour indicator #{my_indic_string.upcase}", :class => "colour_indicator" %>
+       <% end %>
        <% my_type = displayed_type(card) %>
        <% if !my_type.blank? %>
          <%= my_type %>
@@ -65,10 +70,10 @@
     <% textbox_length = (card.rulestext.blank?   ? 0 : textbox_chars_displayed(card, :rulestext  )) + 
                         (card.flavourtext.blank? ? 0 : textbox_chars_displayed(card, :flavourtext)) %>
     <% case textbox_length
-       when 0..150:   textboxclass = "cardtext"
-       when 151..170: textboxclass = "cardtext minitext"
-       when 171..200: textboxclass = "cardtext microtext"
-       else           textboxclass = "cardtext nanotext"
+       when 0..150 then   textboxclass = "cardtext"
+       when 151..170 then textboxclass = "cardtext minitext"
+       when 171..200 then textboxclass = "cardtext microtext"
+       else               textboxclass = "cardtext nanotext"
      end %>
     <div class="cardtext_container<% if textbox_length == 0 %> notext<% end %>">
      <div class="pinline pinline_sidesbottom">
@@ -106,5 +111,6 @@
     <div class="foil">&nbsp;</div>
      <% end %>
    </div>
+  </div>
  <% end %>
 </div>

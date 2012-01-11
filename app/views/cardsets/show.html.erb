@@ -92,7 +92,8 @@
       <table>
       <% highlightedcomments.each_slice(5) do |comments_slice| %>
         <tr>
-        <% comments_slice.each do |@comment| %>
+        <% comments_slice.each do |comment| %>
+          <% @comment = comment %>
           <td class="comment_cell">
           <% target = @comment.parent %>
           <% reply_link = @comment.card || new_cardset_comment_path(@comment.cardset) %>
@@ -113,7 +114,8 @@
 <p>
   <% if !recentcards.empty? %>
     Recently updated cards: (<%= link_to "all recent activity", recent_cardset_path %>)    
-   <% recentcards.each do |@card| %>
+   <% recentcards.each do |card| %>
+     <% @card = card %>
      <div class="CardRenderInline">
        <%= render :partial => "shared/card", :locals => { :link => true } %>
        <%= render :partial => "shared/cardcommentcount" %>
@@ -144,7 +146,8 @@
     Recent comments: (<%= link_to "all recent activity", recent_cardset_path %>)
     <div class="commentlist">
       <% num_comments_to_show = 10 %>
-      <% sorted_comments.take(num_comments_to_show).each do |@comment| %>
+      <% sorted_comments.take(num_comments_to_show).each do |comment| %>
+        <% @comment = comment %>
         <% if @comment.nil? %>
           <% if Rails.env.development? %>
             NIL

@@ -52,6 +52,7 @@ class CommentsController < ApplicationController
       @cardset = Cardset.find_by_id(params[:comment][:cardset_id])
     elsif @card
       @cardset = @card.cardset
+      Rails.logger.info "Setting @cardset to #{@cardset.name}"
     elsif @comment && @comment.cardset
       @cardset = @comment.cardset
     end

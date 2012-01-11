@@ -29,13 +29,13 @@ class Mechanic < ActiveRecord::Base
       sep = " "                    # "|"
       src_start = "\\[#{self.codename}"
       case self.parameters 
-        when 0:
+        when 0
           src_main = src_start
           target = self.name 
-       when 1:
+       when 1
           src_main = src_start + sep + Mechanic.one_param
           target = self.name + ' \\1'
-       when 2:
+       when 2
           src_main = src_start + sep + Mechanic.one_param + sep + Mechanic.one_param
           target = self.name + ' \\1 - \\2'
       end

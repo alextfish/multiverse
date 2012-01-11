@@ -4,7 +4,7 @@ rulestext flavourtext power toughness artist art_url image_url frame
 active } 
    fields_to_format = %w{ supertype cardtype subtype rulestext flavourtext }%>
 <%= fields.join separator %>
-<% @cardset.cards.sort.each do |@card| %>
+<% @cardset.cards.sort.each do |card| %><% @card = card %>
 <% fields.each_with_index do |field, index| %>"<%= 
   if fields_to_format.include? field
     format_card_text(@card, field, false, false).gsub('"', '""') 

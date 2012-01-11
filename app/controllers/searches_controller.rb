@@ -65,16 +65,16 @@ class SearchesController < ApplicationController
     if number_results == 1
       target = flat_results[0]
       case target
-        when Card, Cardset:
+        when Card, Cardset
           destination = target 
-        when DetailsPage:
+        when DetailsPage
           destination = [target.cardset, target] 
-        when Comment:
+        when Comment
           parent = target.parent
           case parent
-            when Card:
+            when Card
               destination = card_path(parent, :anchor => target.anchor_name)
-            when Cardset:
+            when Cardset
               destination = cardset_comments_path(parent, :anchor => target.anchor_name)
             else
               raise "Don't know how to link_to_comment with parent #{parent}"

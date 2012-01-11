@@ -39,9 +39,10 @@
     <table>
      <tr>
           
-       <% chosencards.each do |@card| %>
-         <td><%= link_to @card.printable_name, @card %>
-         <br>from <%= link_to @card.cardset.name, @card.cardset %>
+       <% chosencards.each do |card| %>
+         <td><%= link_to card.printable_name, card %>
+         <br>from <%= link_to card.cardset.name, card.cardset %>
+         <% @card = card %>
          <%= render :partial => "shared/prettycard", :locals => { :link => true } %>
          <%= link_to "Comments (#{@card.comments.count})", @card %>
        <% end %>

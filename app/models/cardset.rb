@@ -25,6 +25,8 @@ class Cardset < ActiveRecord::Base
   has_one :configuration, :dependent => :destroy
   has_many :comments, :dependent => :destroy
   has_many :logs
+  has_one :news_list, :dependent => :destroy
+  # has_one :last_edit_log, :dependent => :destroy
 
   validates_length_of :name, :within => 2..40
 
@@ -40,17 +42,40 @@ class Cardset < ActiveRecord::Base
   end
   
   def log(in_hash)
+    # Create the Log
     new_log = self.logs.create :kind=>Log.kind(in_hash[:kind]), 
-                     :datestamp=>Time.now, 
-                     :user=>in_hash[:user], 
-                     :object_id=>in_hash[:object_id],
-                     :text=>in_hash[:text]
+                    :datestamp=>Time.now, 
+                    :user=>in_hash[:user], 
+                    :object_id=>in_hash[:object_id],
+                    :text=>in_hash[:text]
+
+    logs_to_not_show = Log.kinds_to_not_show(:cardset_recent)
+    if logs_to_not_show.include?(new_log.kind)
+      Rails.logger.info("Not logging to speedy-RC because this log type shouldn't be shown")
+    else
+      # Create the LastEditLog
+      #desired_attributes = new_log.attributes.except("object_id").except("id")
+      #if last_edit_log
+      #  last_edit_log.delete
+      #end
+      #last_edit_log = LastEditLog.new desired_attributes
+      #last_edit_log.update_attributes desired_attributes
+      last_edit_log_id = new_log.id
+      
+      # Create the NewsList log
+      news_list.add_log(new_log)
+    end
   end
   
   def recent_action
-    out = self.logs.first
+    if last_edit_log_id
+      out = Log.find(last_edit_log_id)
+    else
+      out = self.logs.first
+    end
+    # out = self.last_edit_log || self.logs.first
     logs_to_not_show = Log.kinds_to_not_show(:cardset_recent)
-    if logs_to_not_show.include?(out.kind) 
+    if out.nil? || logs_to_not_show.include?(out.kind) 
       out = self.logs.reject{ |l| logs_to_not_show.include?(l.kind) }.first
     end
     out
@@ -144,92 +169,20 @@ class Cardset < ActiveRecord::Base
    end
   end
   
+  
+  def is_card_name?(some_name)
+    !!self.cards.find_by_name(some_name)
+  end
+  
   ################### Manual updates ###################
-  
-  def make_logs_v2
-    updated_card_comment_logs = 0
-    new_card_comment_logs = 0
-    updated_cardset_comment_logs = 0
-    new_cardset_comment_logs = 0
-  
-    comment_card = Log.kind(:comment_card)
-    comment_cardset = Log.kind(:comment_cardset)
-    comment_edit = Log.kind(:comment_edit)
-    self.cards.each do |card|
-      card.comments.each do |comment|
-        # find creation
-        orig_create_log = self.logs.select { |l| l.kind == comment_card &&
-                         datestamps_close(l.datestamp, comment.created_at) &&
-                         l.user == comment.user }[0]
-        if orig_create_log
-          updated_card_comment_logs += 1
-          orig_create_log.object_id = comment.id
-          orig_create_log.save
-        else
-          new_card_comment_logs += 1
-          self.logs.create :kind => comment_card,
-                           :datestamp => comment.created_at, 
-                           :user => comment.user,
-                           :object_id => comment.id,
-                           :text => "created by make_logs_v2"
-        end
-        
-        # if !datestamps_close(comment.created_at, comment.updated_at)
-          # # find edit
-          # orig_update_log = self.logs.select { |l| l.kind == comment_edit &&
-                           # datestamps_close(l.datestamp, comment.updated_at) &&
-                           # l.user == comment.user }[0]
-          # if orig_update_log
-            # updated_card_comment_logs += 1
-            # orig_update_log.object_id = comment.id
-            # orig_update_log.save
-          # else
-            # new_card_comment_logs += 1
-            # self.logs.create :kind => comment_edit,
-                             # :datestamp => comment.updated_at, 
-                             # :user => comment.user,
-                             # :object_id => comment.id
-          # end
-        # end
-      end
+
+  def Cardset.add_news_lists
+    kinds_to_not_show = Log.kinds_to_not_show(:cardset_recent)
+    Cardset.all.each do |cs|
+      cs.news_list ||= NewsList.new
+      recent_logs = cs.logs.reject{ |l| kinds_to_not_show.include?(l.kind) }
+      recent_logs.take(51).reverse.each {|l| cs.news_list.add_log(l)}
     end
-    self.comments.each do |comment|
-      # find creation
-      orig_create_log = self.logs.select { |l| l.kind == comment_cardset &&
-                       datestamps_close(l.datestamp, comment.created_at) &&
-                       l.user == comment.user }[0]
-      if orig_create_log
-        updated_cardset_comment_logs += 1
-        orig_create_log.object_id = comment.id
-        orig_create_log.save
-      else
-        new_cardset_comment_logs += 1
-        self.logs.create :kind => comment_cardset,
-                         :datestamp => comment.created_at, 
-                         :user => comment.user,
-                         :object_id => comment.id,
-                         :text => "created by make_logs_v2"
-      end
-      
-      # if !datestamps_close(comment.created_at, comment.updated_at)
-        # # find update
-        # orig_update_log = self.logs.select { |l| l.kind == comment_edit &&
-                         # datestamps_close(l.datestamp, comment.updated_at) &&
-                         # l.user == comment.user }[0]
-        # if orig_update_log
-          # updated_cardset_comment_logs += 1
-          # orig_update_log.object_id = comment.id
-          # orig_update_log.save
-        # else
-          # new_cardset_comment_logs += 1
-          # self.logs.create :kind => comment_edit,
-                           # :datestamp => comment.updated_at, 
-                           # :user => comment.user,
-                           # :object_id => comment.id
-        # end
-      # end
-    end
-    Rails.logger.info "Updated #{self.name} logs: card comment logs new #{new_card_comment_logs}, updated #{updated_card_comment_logs}; cardset comment logs new #{new_cardset_comment_logs}, updated #{updated_cardset_comment_logs}"
   end
   
   ########################## Skeletons #########################  
@@ -292,7 +245,7 @@ class Cardset < ActiveRecord::Base
     end
     # Generate virtual params for blue, black, red and green, equal to white
     %w{blue black red green}.each do |colour|
-      rarity_initials.split("").each do |rarity_letter|
+      Cardset.rarity_initials.split("").each do |rarity_letter|
         params["skeletonform_#{colour}_rarity#{rarity_letter}"] = params["skeletonform_white_rarity#{rarity_letter}"]
       end
     end
@@ -318,15 +271,15 @@ class Cardset < ActiveRecord::Base
       frame_code = param_key.match(rarity_frame_regexp)[1]
       rarity_letter = param_key.match(rarity_frame_regexp)[2]
       case frame_code
-        when "white": frame_letter = "W"
-        when "blue": frame_letter = "U"
-        when "black": frame_letter = "B"
-        when "red": frame_letter = "R"
-        when "green": frame_letter = "G"
-        when "artifact": frame_letter = "A"
-        when "land": frame_letter = "L"
-        when "gold": frame_letter = "Z"; number_in *= 5
-        when "hybrid": frame_letter = "H"; number_in *= 5
+        when "white" then frame_letter = "W"
+        when "blue" then frame_letter = "U"
+        when "black" then frame_letter = "B"
+        when "red" then frame_letter = "R"
+        when "green" then frame_letter = "G"
+        when "artifact" then frame_letter = "A"
+        when "land" then frame_letter = "L"
+        when "gold" then frame_letter = "Z"; number_in *= 5
+        when "hybrid" then frame_letter = "H"; number_in *= 5
         else raise "Unexpected frame_code #{frame_code}"
       end
       Rails.logger.info "Rarity #{rarity_letter}, frame #{frame_letter}: making #{number_in}"
@@ -354,10 +307,10 @@ class Cardset < ActiveRecord::Base
         if !existing_codes_this_frame.empty?
           #existing_rarities = existing_codes_this_frame.map{|code| code[1].chr}
           existing_codes_previous_rarities = case rarity_letter
-            when "C": []
-            when "U": existing_codes_this_frame.select {|code| code[0]==?C}
-            when "R": existing_codes_this_frame.select {|code| [?C,?U].include? code[0]}
-            when "M": existing_codes_this_frame # already established there are no mythics
+            when "C" then []
+            when "U" then existing_codes_this_frame.select {|code| code[0]==?C}
+            when "R" then existing_codes_this_frame.select {|code| [?C,?U].include? code[0]}
+            when "M" then existing_codes_this_frame # already established there are no mythics
             else
               raise "Unexpected rarity letter #{rarity_letter}"
           end
@@ -487,9 +440,9 @@ class Cardset < ActiveRecord::Base
   ########################## Boosters ##########################
   def cards_per_line
     case configuration.frame
-      when "prettycard": 5
-      when "plain": 2
-      when "image": 3
+      when "prettycard" then 5
+      when "plain" then 2
+      when "image" then 3
     end
   end
 
@@ -522,12 +475,12 @@ class Cardset < ActiveRecord::Base
       # got a foil
       foil_type = rand(15)
       case foil_type
-        when 1:
-          foil_src = rares_and_mythics.choice
-        when 2..4:
-          foil_src = uncommons.choice
+        when 1 then
+          foil_src = rares_and_mythics.sample
+        when 2..4 then
+          foil_src = uncommons.sample
         else
-          foil_src = commons.choice 
+          foil_src = commons.sample 
       end
       if foil_src.nil?
         foil = nil
@@ -547,7 +500,7 @@ class Cardset < ActiveRecord::Base
     if rares_and_mythics.empty?
       chosen_rare = Card.blank("No more rares or mythics")
     else
-      chosen_rare = rares_and_mythics.choice
+      chosen_rare = rares_and_mythics.sample
     end
     @booster << chosen_rare
     chosen_uncommons = []
@@ -555,7 +508,7 @@ class Cardset < ActiveRecord::Base
       if uncommons.empty?
         chosen_uncommons << Card.blank("No more uncommons")
       else
-        new_candidate = uncommons.choice
+        new_candidate = uncommons.sample
         chosen_uncommons << new_candidate 
         uncommons -= [new_candidate]
       end
@@ -570,17 +523,17 @@ class Cardset < ActiveRecord::Base
       if commons.empty?
         chosen_commons << Card.blank("No more commons")
       else
-        new_candidate = commons.choice
+        new_candidate = commons.sample
         chosen_commons << new_candidate 
         commons -= [new_candidate]
       end
     end
     @booster += chosen_commons
     if @m10_collation
-      @booster << basics.choice
+      @booster << basics.sample
     end
     if tokens_present
-      @booster << tokens.choice
+      @booster << tokens.sample
     end
     
     data_out = [@m10_collation, tokens_present]
@@ -616,21 +569,28 @@ class Cardset < ActiveRecord::Base
 
     # Initial informative error messages
     @cardset = Cardset.find(params[:id])
-    if params[:separator].blank?
-      return false, "Separator character is required", "", []
+    if params[:data].blank?
+      return false, "No data supplied", "", []
     end
     if params[:formatting_line].blank?
       return false, "Formatting line is required", "", []
     end
-    if params[:data].blank?
-      return false, "No data supplied", "", []
+    # Deduce separator from formatting line
+    non_alpha = params[:formatting_line].split(/[a-z]/).keep_if {|c| c=~ /^.$/}
+    case non_alpha.length
+      when 0
+        return false, "Could not deduce CSV separator from formatting line", "", []
+      when 1
+        separator = non_alpha[0]
+      else
+        return false, "Too many non-alphabetic characters in formatting line to deduce CSV separator character", "", []
     end
     if params[:id].blank?
       return false, "No cardset ID supplied - please re-navigate to this page via the cardset", "", []
     end
 
     # Validate the supplied formatting line
-    inputfields = params[:formatting_line].downcase.split(params[:separator])
+    inputfields = params[:formatting_line].downcase.split(separator)
     canonfields = inputfields.map{ |f| ALIASES.has_key?(f) ? ALIASES[f] : f.strip }
     validfields = canonfields.select{ |f| FIELDS.include?(f) }
     if validfields != canonfields
@@ -660,7 +620,7 @@ class Cardset < ActiveRecord::Base
     # Read the CSV
     # Use CSV.parse, which takes care of quoting and newlines for us
     begin
-      cardsdata = CSV.parse(params[:data], params[:separator]);
+      cardsdata = CSV.parse(params[:data], separator);
     rescue CSV::IllegalFormatError => ie
       return false, "I'm sorry, but your CSV wasn't valid. Try splitting it into chunks and importing them separately.", "", []      
     end
@@ -728,7 +688,7 @@ class Cardset < ActiveRecord::Base
           elsif params[:duplicates] == "replace"
             # Overwrite this card with the new card
             overwritten_cards+=1
-            Rails.logger.info "Overwriting #{carddatahash['name']} with its new version"
+            Rails.logger.info "Updating #{carddatahash['name']} with new data"
             card = existing_card
             # Don't use update_attributes, because we don't want to save! the card yet
             card.attributes = carddatahash

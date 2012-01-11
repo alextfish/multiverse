@@ -97,23 +97,23 @@ function updateWatermarks() {
 
 
 var colour_affiliation_regexps = {
-    "White": /(\(W\)|\{W\}|[Pp]lains)/,
-    "Blue" : /(\(U\)|\{U\}|[Ii]sland)/, 
-    "Black": /(\(B\)|\{B\}|[Ss]wamp)/, 
-    "Red"  : /(\(R\)|\{R\}|[Mm]ountain)/, 
-    "Green": /(\(G\)|\{G\}|[Ff]orest)/, 
+    "White": /(\([Ww]\)|\{[Ww]\}|[Pp]lains)/,
+    "Blue" : /(\([Uu]\)|\{[Uu]\}|[Ii]sland)/, 
+    "Black": /(\([Bb]\)|\{[Bb]\}|[Ss]wamp)/, 
+    "Red"  : /(\([Rr]\)|\{[Rr]\}|[Mm]ountain)/, 
+    "Green": /(\([Gg]\)|\{[Gg]\}|[Ff]orest)/, 
 }
 
 function update_frame(card_id) {
   var this_card = $(card_id);
   var frame_selector = this_card.select(".frame_selector")[0];
   var cardframe = frame_selector.value;
-  if (cardframe == "splitflip") { 
+  if (cardframe == "multipart") { 
     // If they've selected the split-flip frame option, don't do normal recalculation - just show the split-flip dropdown
     $("card_multipart").show();
     Effect.Shake("multipart_selector_wrapper");
     //$("multipart_selector_wrapper").highlight({startcolor: "#ff8800", duration: 1})
-    frame_selector.select('option[value=splitflip]')[0].remove();
+    frame_selector.select('option[value=multipart]')[0].remove();
     cardframe = frame_selector.value = "Auto";
     // return;
   }
@@ -159,10 +159,20 @@ function update_frame(card_id) {
 
     }
   }
-  if (card_id == "card2" && inner == "Colourless") {
+  if (card_id == "card2" && inner == "Colourless" && cardframe != "Colourless") {
     // get card 1 instead
     inner = $("card").getAttribute("class").replace("part1","");
   }
+  
+  if (/Land/.test(inner)) {
+    // Disable colour indicator for lands
+    get_colour_indicator(this_card).setValue(false).disable();
+    $("colour_indicator_label_" + card_id).style.setProperty("color", "#888");
+  } else {
+    get_colour_indicator(this_card).enable();
+    $("colour_indicator_label_" + card_id).style.setProperty("color", "inherit");
+  }
+  
   var pinline;
   if (num_colours == 2) {
     pinline = " " + colours.join("").toLowerCase();
@@ -179,6 +189,10 @@ function update_frame(card_id) {
   if (this_card.hasClassName("part1")) { universalClass += "part1 "; }
   if (this_card.hasClassName("part2")) { universalClass += "part2 "; }
   this_card.className = universalClass + newClass;
+}
+
+function get_colour_indicator(this_card) {
+  return (this_card.id == "card" ? this_card.select("#card_colour_indicator")[0] : this_card.select("#card_link_attributes_colour_indicator")[0]);
 }
 
 function get_cost_colours(this_card) {
@@ -214,7 +228,7 @@ function update_card_rarity(rarity_in) {
     });
   }
   
-  if ($("cardborder").hasClassName("split")) {
+  if ($("cardborder").hasClassName("split") || $("cardborder").hasClassName("dfc")) {
    $("card_rarity").value = rarity_in;
    $("card_link_attributes_rarity").value = rarity_in;
   }
@@ -228,25 +242,31 @@ function update_details_pages(new_text) {
 function updateMultipartStyle(){
  var multipart = $("card_multipart").value;
  if (multipart == MULTIPART_SPLIT1) {
-   $("card2").show();
    $("cardborder").addClassName("split");
-   $("cardborder").removeClassName("flip");
+   $("cardborder").removeClassName("flip").removeClassName("dfc");
    $("card_link_attributes_rarity").value = $("card_rarity").value;
    $("rotate_link").hide();
    $("cardborder").removeClassName("rotated");
+   //get_colour_indicator($("card2")).setValue(false);
       // work around Chrome bug
-   $("card2").hide(); setTimeout('$("card2").show()', 10);
- } else if (multipart == MULTIPART_FLIP1) {
-   $("card2").show();
-   $("cardborder").addClassName("flip");
-   $("cardborder").removeClassName("split");
-   $("rotate_link").show();
- } else { // Neither
-   $("cardborder").removeClassName("split");
-   $("cardborder").removeClassName("flip");
-   $("card2").hide();
+ } else if (multipart == MULTIPART_DFCFRONT) {
+   $("cardborder").addClassName("dfc");
+   $("cardborder").removeClassName("flip").removeClassName("split");
+   $("card_link_attributes_rarity").value = $("card_rarity").value;
    $("rotate_link").hide();
    $("cardborder").removeClassName("rotated");
+   //get_colour_indicator($("card2")).setValue(true);
+      // work around Chrome bug
+ } else if (multipart == MULTIPART_FLIP1) {
+   $("cardborder").addClassName("flip");
+   $("cardborder").removeClassName("split").removeClassName("dfc");
+   $("rotate_link").show();
+   //get_colour_indicator($("card2")).setValue(false);
+ } else { // Neither
+   $("cardborder").removeClassName("split").removeClassName("flip").removeClassName("dfc");
+   $("rotate_link").hide();
+   $("cardborder").removeClassName("rotated");
+   //get_colour_indicator($("card2")).setValue(false);
  }
 }
 
@@ -391,8 +411,8 @@ function shrinkCardBits(cardDiv) {
     sizeTokenArt(cardDiv, artDiv);
   } else {
     var isPlaneswalker = cardDiv.hasClassName("Planeswalker");
-    var isFlip = cardDiv.parentNode.hasClassName("flip");
-    var isSplit = cardDiv.parentNode.hasClassName("split");
+    var isFlip = cardDiv.parentNode.parentNode.hasClassName("flip");
+    var isSplit = cardDiv.parentNode.parentNode.hasClassName("split");
     var textDiv = cardDiv.getElementsByClassName("cardtext")[0];
     shrinkName(nameDiv, typeDiv);
     shrinkTextBox(textDiv, isPlaneswalker, isFlip, isSplit);

@@ -84,38 +84,53 @@
 
 /***** Card display *****/
   $BorderWidth: 10px;
-  .blackborder, .silverborder, .whiteborder, .purpleborder, .goldborder {
+  .blackborder, .silverborder, .whiteborder, .purpleborder, .goldborder, .dfc .innercardborder {
     @include round_corners($BorderWidth);
     border-width: $BorderWidth;
-    border-style: solid; }
-  .blackborder { border-color: black; background-color: black; }
-  $SilverBorder: #a3a3a3;
-  .silverborder { border-color: $SilverBorder; background-color: $SilverBorder; }
-  $GoldBorder: #ca0;
-  .goldborder { border-color: $GoldBorder; background-color: $GoldBorder; }
-  $PurpleBorder: #a6f;
-  .purpleborder { border-color: $PurpleBorder; background-color: $PurpleBorder; }
-  .whiteborder {
-    border-color: black;
+    border-style: solid; 
     border-width: 1px;
     padding: $BorderWidth - 1;
+  }
+  .blackborder, .blackborder.dfc .innercardborder { border-color: black; background-color: black; }
+  $SilverBorder: #a3a3a3;
+  .silverborder, .silverborder.dfc .innercardborder { border-color: $SilverBorder; background-color: $SilverBorder; }
+  $GoldBorder: #ca0;
+  .goldborder, .goldborder.dfc .innercardborder { border-color: $GoldBorder; background-color: $GoldBorder; }
+  $PurpleBorder: #a6f;
+  .purpleborder, .purpleborder.dfc .innercardborder { border-color: $PurpleBorder; background-color: $PurpleBorder; }
+  .whiteborder, .whiteborder.dfc .innercardborder {
+    border-color: black;
     background-color: white;
+  }
+  .dfc.cardborder { 
+    // No border on the cardborder elements - it goes on the innercardborder instead
+    border: none;
+    padding: 0px;
+    background-color: transparent;
   }
 
   $CardWidth: 200px;
   $CardHeight: 300px;
   $CardPaddingTop: 4px;
   $CardPaddingBottom: 3px;
+  $CardPaddingLeft: 3px;
+  $CardPaddingRight: 3px;
   $SplitCardWidth: 300px;
+  $CardFormWidth: 350px;
   .whiteborder .card, .whiteborder .editborder_inner { border: 1px solid #888; }
   .editborder_inner { background: white; }
-  .cardborder { width: $CardWidth; min-height: $CardHeight; }
+  
+  .innercardborder { width: $CardWidth; min-height: $CardHeight; }
+  .flip .innercardborder { min-height: 0px; }
+  .split .innercardborder { width: auto; min-height: $CardWidth; }
+  
   .distinct_mockup_container { width: $SplitCardWidth + 2 * $BorderWidth; }
   .card { /* background: #0ff; */
           padding-top: $CardPaddingTop; padding-bottom: $CardPaddingBottom;
-          padding-left: 3px; padding-right: 3px;
+          padding-left: $CardPaddingLeft; padding-right: $CardPaddingRight;
           position: relative;
           min-height: $CardHeight - $CardPaddingTop - $CardPaddingBottom;
+          width: $CardWidth - $CardPaddingLeft - $CardPaddingRight;
         }
   .foil {
     position: absolute; top: 0px; background-image: url(/images/foil_highlight.png);
@@ -124,6 +139,7 @@
   }
   .cardborder {
     position: relative;
+    width: $CardWidth;
   }
   .banner {
     position: absolute;
@@ -191,7 +207,8 @@
   .cardtypebar { padding-right: 0px !important;
                 position: relative; }
   .cardtype { }
-  .cardrarity { position: absolute; right: 0px;
+  .cardrarity { position: absolute; 
+              right: 0px;
               top: -1px;
               padding-left: 3px;
               padding-right: 3px;
@@ -200,6 +217,7 @@
   @-moz-document url-prefix() { /* Firefox wants it just fractionally lower... */
     .cardrarity { top: -0.5px; }
   }
+  .form .cardrarity { position: relative; right: auto; left: 20px; }
   .watermark { background-repeat: no-repeat !important; 
               background-position: center !important; 
               z-index: 1; 
@@ -217,11 +235,12 @@
   .cardtext .flavourtext br { margin-bottom: 0px; }
   .cardtext div, .cardtext p { margin: 0px; }
   
-  .bottombox { background: inherit;
+  .bottombox { /* background: inherit; */
               margin-bottom: 4px; padding-right: 6px;
               position: relative;
               font: 8pt serif; }
   .ptbox_container { float: right; position: relative; height: 10px; min-width: 25%; }
+  .Planeswalker .ptbox_container { height: auto; }
   .pinline_ptbox { float: right;
       position: absolute; top: -7px; right: 0px;
       min-width: 80%;
@@ -258,17 +277,22 @@
 .microtext img { width: 11px; height: 11px; }
 .nanotext  img { width: 10px; height: 10px; } */
 
-.cardrarity.common, .cardrarity.token, .cardrarity.basic {  color: #fff;
-  background-color: #000;}
+.cardrarity.common, .cardrarity.token, .cardrarity.basic {
+  color: #fff;
+  background-color: #000;
+}
 .uncommon {
+  color: #000;
   background: #ccc;
   @include gradient_diag_highlight(#999, #ccd3d6);
- }
-.rare   {  color: #000;
+}
+.rare   {
+  color: #000;
   background: #e0d060;
   @include gradient_diag_highlight(#998044, #e0d060);
 }
-.mythic { color: #fff;
+.mythic {
+  color: #fff;
   background: #933;
   @include gradient_diag_highlight(#a43, #e86);
 }
@@ -371,6 +395,7 @@
   background: none !important;
   filter: none !important;
 }
+.dfc .part2.Planeswalker .ptbox_container { display: none; }
 
 .Planeswalker .pinline_ptbox .ptbox {
   background: none !important;
@@ -467,15 +492,23 @@ border: none;
   @include elliptical_corners(44px, 32px);
  }
 
-/***** Split and Flip cards *****/
+/***** Split / Flip / Double-Faced Cards *****/
 
 .split.cardborder { min-height: 200px; width: $SplitCardWidth;}
+.dfc.form .card { width: $CardFormWidth; }
 .split.form#cardborder { width: 500px; }
 .split .card { min-height: 196px; padding-top: 2px; padding-bottom: 2px;}
 
 .split .part1, .split .part2 { display: inline-block; width: 139px;}
-.split .part2 { float: right;}
+.split .innercardborder, .dfc .innercardborder { display: inline-block; }
+.dfc .part1,   .dfc .part2 { display: inline-block; }
+.split .part2, .dfc .part2 { float: right;}
 .split.form .part1, .split.form .part2 { width: 240px;}
+/* .dfc.form .part1, .dfc.form .part2 { width: auto;} */
+
+.dfc .innercardborder, .split .innercardborder { vertical-align: top; }
+.dfc.cardborder.form { width: $CardFormWidth + $BorderWidth * 2; }
+.dfc.cardborder { width: $CardWidth * 2 + $BorderWidth * 4 + 5; background-color: #999; }
 
 .split .cardart { min-height: 76px; }
 .split .cardart img { width: 126px; height: 76px; }
@@ -485,8 +518,9 @@ border: none;
 .split .bottombox { margin-bottom: -2px; font-size: 7pt; }
 .split .pinlinebox { padding: 1px; }
 
-.split.form .cardrarity { top: 27px; }
+.split.form .cardrarity { /* top: 27px; */ left: 0px; }
 .split input { width: 100px; }
+.split input[type="checkbox"] { width: auto; }
 
 .flip .card { min-height: 0px; }
 .flip .part1 .cardart_container { @include hide_but_allow_children; }
@@ -545,14 +579,56 @@ border: none;
   .flip.form .part1 .cardrarity { top: 320px; }
 }
 
+$DFCSunMoonSize: 20px;
+.dfc .pinline_box.namebox {
+  display: inline-block;
+  margin-left: 0px;
+  width: $CardWidth - $DFCSunMoonSize - 18;
+  vertical-align: top;
+  margin-top: 0px;
+  //float: right; 
+}
+
+.dfc.form .pinline_box.namebox { width: auto; float: none; }
+
+.dfc .left_of_namebox {
+  display: inline-block;
+  width: $DFCSunMoonSize;
+  height: $DFCSunMoonSize;
+}
+.dfc .part1 .left_of_namebox {
+  background-image: url(/images/dfc_front.png);
+}
+.dfc .part2 .left_of_namebox {
+  background-image: url(/images/dfc_back.png);
+}
+/*
+.dfc .part1 .left_of_namebox:before {
+  content: url(/images/dfc_front.png);
+}
+.dfc .part2 .left_of_namebox:before {
+  content: url(/images/dfc_back.png);
+}*/
+.dfc.form .left_of_namebox {
+  position: relative;
+  top: 20px;
+}
+//.dfc .cardart { width: 100%; }
+
+/***** Colour Indicators *****/
+
+img.colour_indicator { 
+  vertical-align: text-bottom; 
+}
+.split .colour_indicator {
+  width: 10px;
+  height: 10px;
+  vertical-align: top;
+}
+
 /***** Colours *****/
 
-.Colourless.card, .Colourless .cardart  { background-color: #ccc6cc; }
-.Colourless .pinline { background-color: #ddd; }
-.Colourless .cardtitlebar, .Colourless .cardtypebar { background-color: #eee9ee; }
-.Colourless .cardtext, .Colourless .pinline_ptbox { background: #f2ecf2 !important; }
-
-$White_Card: #FBF9EA;
+$White_Card: #efe8d4; /* #FBF9EA; */
 $White_Pinline: #F2EFEA;
 $White_Bar: #fffff9;
 $White_Text: #fff;
@@ -588,51 +664,138 @@ $Land_Text: #D8CFC8;
 $Multicolour_Text: #ffd;
 $Multicolour_Background: #CAB86C;
 
+$White_DFC_Bar: #887b6b;
+$White_DFC_Text: #beb7a7;
+$Blue_DFC_Bar: #3188b4;
+$Blue_DFC_Text: #b8cad3;
+$Black_DFC_Bar: #625f5e;
+$Black_DFC_Text: #b9b7b8;
+$Red_DFC_Bar: #c56244;
+$Red_DFC_Text: #d6bbb4;
+$Green_DFC_Bar: #406649;
+$Green_DFC_Text: #afb8b2;
+$Hybrid_DFC_Bar: #786860;
+$Hybrid_DFC_Text: #bebcba;
+$Colourless_DFC_Bar: #886b6b;
+$Colourless_DFC_Text: #BEa0A7;
+$Artifact_DFC_Bar: #709498;
+$Artifact_DFC_Text: #7895A5;
+
+.dfc .part2 .cardtitlebar, .dfc .part2 .cardtypebar, .dfc .part2 .pinline_ptbox { color: #fff; }
+
+.Colourless.card, .Colourless .cardart  { background-color: #ccc6cc; }
+.Colourless .pinline { background-color: #ddd; }
+.Colourless .cardtitlebar, .Colourless .cardtypebar { background-color: #eee9ee; }
+.Colourless .cardtext, .Colourless .pinline_ptbox { background: #f2ecf2 !important; }
+.dfc .part2.Colourless {
+  .cardtitlebar, .cardtypebar { background-color: $Colourless_DFC_Bar; }
+  .cardtext { background: $Colourless_DFC_Text !important; }
+  .pinline_ptbox  { background: $Colourless_DFC_Bar !important; }
+}
+
 .Artifact .pinline { background-color: #eee; }
 .Artifact .pinline_ptbox { background-color: #9CB7BE; }
 .Artifact .ptbox { background-color: #A8BFC7; }
-.Artifact .cardtitlebar, .Artifact .cardtypebar, .Land.Coloured_Artifact .cardtitlebar, .Land.Coloured_Artifact .cardtypebar,  {
+.Artifact .cardtitlebar, .Artifact .cardtypebar, .Land.Coloured_Artifact .cardtitlebar, .Land.Coloured_Artifact .cardtypebar  {
    background: #B0C4C8;
-   background: -webkit-gradient(linear, left top, left bottom, from(#B0C4C8), color-stop(0.5, #D2D7DB), to(#B0C4C8));
-   background: -moz-linear-gradient(top, #B0C4C8, #D2D7DB, #B0C4C8);
+   @include gradient_vert_highlight(#B0C4C8, #D2D7DB);
    }
 .Artifact .cardtext, .Artifact .pinline_ptbox { background-color: $Artifact_Text; }
 .Artifact, .Artifact .cardart { background-color: #ABC1CE; }
-.Coloured_Artifact { background: #ABC1CE !important; }
+.Coloured_Artifact { background: #ABC1CE !important; filter: none !important; }
+.dfc .part2.Artifact {
+  .cardtitlebar, .cardtypebar { 
+    background-color: $Artifact_DFC_Bar; 
+    @include gradient_vert_highlight($Artifact_DFC_Bar, #90B4B8);
+  }
+  .cardtext { background: $Artifact_DFC_Text !important; }
+  .pinline_ptbox, .ptbox  { background: $Artifact_DFC_Bar !important; }
+}
 
-.White.card, .White .cardart  { background-color: $White_Card /* #fcf9f0; */ }
+.White.card, .White .cardart  { background-color: $White_Card;
+/* @include gradient_vert_important(#fcf9f0, #e3d9bb); */
+}
 .White .pinline, .Land.white .pinline { background-color: $White_Pinline; }
 .White .cardtitlebar, .White .cardtypebar { background-color: $White_Bar; }
 .White .cardtext, .White .pinline_ptbox { background: $White_Text !important; }
+.dfc .part2.White, .dfc .part2.Land.white {
+  .cardtitlebar, .cardtypebar { background-color: $White_DFC_Bar; }
+  .cardtext { background: $White_DFC_Text !important; }
+  .pinline_ptbox  { background: $White_DFC_Bar !important; }
+}
 
 .Blue.card, .Blue .cardart  { background-color: $Blue_Card; /* #5bf; */ }
 .Blue .pinline, .Land.blue .pinline { background-color: $Blue_Pinline; }
 .Blue .cardtitlebar, .Blue .cardtypebar { background-color: $Blue_Bar;
   @include gradient_horz_highlight(#B7CEDA, #C8DCE4);}
 .Blue .cardtext, .Blue .pinline_ptbox { background: $Blue_Text !important; }
+.dfc .part2.Blue, .dfc .part2.Land.blue {
+  .cardtitlebar, .cardtypebar { background-color: $Blue_DFC_Bar; 
+    @include gradient_horz_highlight(#2a84b6, #4d95c1);
+  }
+  .cardtext { background: $Blue_DFC_Text !important; }
+  .pinline_ptbox  { background: $Blue_DFC_Bar !important; }
+}
 
 .Black.card, .Black .cardart  { background-color: $Black_Card; }
 .Black .pinline, .Land.black .pinline { background-color: $Black_Pinline; }
 .Black .cardtitlebar, .Black .cardtypebar { background-color: $Black_Bar; }
 .Black .cardtext, .Black .pinline_ptbox { background: $Black_Text !important; }
+.dfc .part2.Black, .dfc .part2.Land.black { 
+  .cardtitlebar, .cardtypebar { background-color: $Black_DFC_Bar; }
+  .cardtext { background: $Black_DFC_Text !important; }
+  .pinline_ptbox  { background: $Black_DFC_Bar !important; }
+}
 
 .Red.card, .Red .cardart  { background-color: $Red_Card; /* #f76; */ }
 .Red .pinline, .Land.red .pinline { background-color: $Red_Pinline; }
 .Red .cardtitlebar, .Red .cardtypebar { background-color: $Red_Bar; }
 .Red .cardtext, .Red .pinline_ptbox { background: $Red_Text !important; }
+.dfc .part2.Red, .dfc .part2.Land.red {
+  .cardtitlebar, .cardtypebar { background-color: $Red_DFC_Bar; }
+  .cardtext { background: $Red_DFC_Text !important; }
+  .pinline_ptbox  { background: $Red_DFC_Bar !important; }
+}
 
 .Green.card, .Green .cardart { background-color: $Green_Card; /* #6b7 */}
 .Green .pinline, .Land.green .pinline { background-color: $Green_Pinline; }
 .Green .cardtitlebar, .Green .cardtypebar { background-color: $Green_Bar; }
 .Green .cardtext, .Green .pinline_ptbox { background: $Green_Text !important; /* #efe; */}
+.dfc .part2.Green, .dfc .part2.Land.green {
+  .cardtitlebar, .cardtypebar { background-color: $Green_DFC_Bar; }
+  .cardtext { background: $Green_DFC_Text !important; }
+  .pinline_ptbox  { background: $Green_DFC_Bar !important; }
+}
 
 .Multicolour, .Multicolour .cardart { background-color: $Multicolour_Background; /*#DAC87C;*/ }
-.Multicolour .pinline, .Land.multicolour .pinline { background-color: #eAd88C; /* #C6AF71;*/ }
-.Multicolour .cardtitlebar, .Multicolour .cardtypebar, .Land.multicolour .cardtitlebar, .Land.multicolour .cardtypebar { background-color: #DAC87C;
-    @include gradient_horz_highlight(#B9A566, #DBC68F);}
-.Multicolour .cardtext, .Land.multicolour .cardtext { background-color: $Multicolour_Text; }
+.Multicolour, .Land.multicolour {
+  .pinline { background-color: #eAd88C; /* #C6AF71;*/ }
+  .cardtitlebar, .cardtypebar { 
+    background-color: #DAC87C;
+    @include gradient_horz_highlight(#B9A566, #DBC68F);
+  }
+  .cardtext { background-color: $Multicolour_Text; }
+}
 .Multicolour .pinline_ptbox { background: #C6AF71 !important; }
 .Multicolour .ptbox { background: #C6AF71 !important; }
+
+.dfc .part2.Multicolour, .dfc .part2.Land.multicolour {
+  .cardtitlebar, .cardtypebar { 
+    background-color: #957526;
+    @include gradient_horz_highlight(#957526, #bBa66F); 
+  }
+  .pinline_ptbox, .ptbox { background: #957526 !important; }
+  .cardtext { background: $Hybrid_DFC_Text !important; filter: none; }
+}
+.dfc .part2.Hybrid {
+  .cardtext { background: $Hybrid_DFC_Text !important; filter: none; }
+}
+.dfc {
+  .part2.Hybrid, .part2.Land.whiteblue, .part2.Land.whiteblack, .part2.Land.whitered, .part2.Land.whitegreen, .part2.Land.blueblack, .part2.Land.bluered, .part2.Land.bluegreen, .part2.Land.blackred, .part2.Land.blackgreen, .part2.Land.redgreen {
+    .cardtitlebar, .cardtypebar { background-color: $Hybrid_DFC_Bar; }
+    .pinline_ptbox, .ptbox { background: $Hybrid_DFC_Bar !important; }
+  }
+}
 
 .Land, .Land.Coloured_Artifact {  /*#A4968E*/; 
 @include gradient_vert_important(#DECCC1, #6A514A); 
@@ -643,20 +806,30 @@ $Multicolour_Background: #CAB86C;
 .Land .cardtext, .Land .pinline_ptbox { background-color: $Land_Text; /* #eee6df; */}
 .Land .bottombox, .Land .cardtext_container, .Land .cardart_container,  { background: transparent; }
 
-.Land.white .cardtitlebar, .Land.white .cardtypebar { background-color: $Land_White_Bar; }
-.Land.white .cardtext, .Land.white .pinline_ptbox { background-color: $Land_White_Text; }
+.Land.white {
+  .cardtitlebar, .cardtypebar { background-color: $Land_White_Bar; }
+  .cardtext, .pinline_ptbox { background-color: $Land_White_Text; }
+}
 
-.Land.blue .cardtitlebar, .Land.blue .cardtypebar { background-color: $Land_Blue_Bar; }
-.Land.blue .cardtext, .Land.blue .pinline_ptbox { background-color: $Land_Blue_Text; }
+.Land.blue {
+  .cardtitlebar, .cardtypebar { background-color: $Land_Blue_Bar; }
+  .cardtext, .pinline_ptbox { background-color: $Land_Blue_Text; }
+}
 
-.Land.black .cardtitlebar, .Land.black .cardtypebar { background-color: $Land_Black_Bar; }
-.Land.black .cardtext, .Land.black .pinline_ptbox { background-color: $Land_Black_Text; }
+.Land.black {
+  .cardtitlebar, .cardtypebar { background-color: $Land_Black_Bar; }
+  .cardtext, .pinline_ptbox { background-color: $Land_Black_Text; }
+}
 
-.Land.red .cardtitlebar, .Land.red .cardtypebar { background-color: $Land_Red_Bar; }
-.Land.red .cardtext, .Land.red .pinline_ptbox { background-color: $Land_Red_Text; }
+.Land.red {
+  .cardtitlebar, .cardtypebar { background-color: $Land_Red_Bar; }
+  .cardtext, .pinline_ptbox { background-color: $Land_Red_Text; }
+}
 
-.Land.green .cardtitlebar, .Land.green .cardtypebar { background-color: $Land_Green_Bar; }
-.Land.green .cardtext, .Land.green .pinline_ptbox { background-color: $Land_Green_Text; }
+.Land.green {
+  .cardtitlebar, .cardtypebar { background-color: $Land_Green_Bar; }
+  .cardtext, .pinline_ptbox { background-color: $Land_Green_Text; }
+}
 
 /* .Land.whiteblue .cardtitlebar, .Land.whiteblue .cardtypebar { @include gradient_horz($Land_White_Bar, $Land_Blue_Bar); } */
 .Land.whiteblue .pinline { @include gradient_horz_padded($White_Pinline, $Blue_Pinline); }
@@ -775,8 +948,10 @@ text-transform:uppercase;
 
 
 /***** Card editing *****/
+.form.cardborder, .form .innercardborder, .form .card  { width: auto; }
 
 input.type_field { width: 100px; }
+.form #card_cost, .form #card_link_attributes_cost { width: 60px; }
 input.rarity_selector { margin-top: 6px; margin-bottom: 6px; }
 input.powerfield, input.toughnessfield { width: 20px; }
 .flavourtextfield { font-style: italic;
@@ -804,6 +979,9 @@ div.history_box_limited { overflow: auto;
 td.form_info_cell { color: #666; }
 .Black .cardart label { color: #fff; }
 .Black .artist_area label, .Hybrid.blackgreen .artist_area label, .Hybrid.blackred .artist_area label { color: #fff; }
+
+#card2wrapper { display: none; }
+.split #card2wrapper, .flip #card2wrapper, .dfc #card2wrapper { display: inline-block; }
 
 /***** Skeletons *****/
 .skeleton_letter_toggle.code_shown#rarity_C_toggle { @extend .cardrarity.common; }

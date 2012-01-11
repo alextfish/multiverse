@@ -62,7 +62,9 @@ class Card < ActiveRecord::Base
   def Card.SPLIT2;     2; end
   def Card.FLIP1;      3; end
   def Card.FLIP2;      4; end
-  validates_inclusion_of :multipart, :in => [nil, Card.STANDALONE, Card.SPLIT1, Card.SPLIT2, Card.FLIP1, Card.FLIP2]
+  def Card.DFCFRONT;   5; end
+  def Card.DFCBACK;    6; end
+  validates_inclusion_of :multipart, :in => [nil, Card.STANDALONE, Card.SPLIT1, Card.SPLIT2, Card.FLIP1, Card.FLIP2, Card.DFCFRONT, Card.DFCBACK]
 
   def regularise_fields
     # Enforce rarity; Default rarity to common
@@ -121,7 +123,7 @@ class Card < ActiveRecord::Base
   end
   
   def listable_name
-    if !flip?
+    if !flip? && !dfc?
       printable_name
     else # In cardlists, flip cards' names are "unflipped (flipped)"
       primary_name = primary_card.individual_name
@@ -144,6 +146,10 @@ class Card < ActiveRecord::Base
 
   def self.colours
     ["White", "Blue", "Black", "Red", "Green"]
+  end
+  COLOUR_LETTERS = %w{W U B R G}
+  def self.colour_letters
+    COLOUR_LETTERS
   end
 
   COLOUR_PAIRS = Card.colours.combination(2).to_a
@@ -179,26 +185,25 @@ class Card < ActiveRecord::Base
     %w{C W U B R G M Z H A L}
   end
 
-  colour_letters = %w{W U B R G}
   mana_symbols = []
   # First the misformed ones
-  mana_symbols += colour_letters.map {|s| "{2/#{s}}" }
-  mana_symbols += colour_letters.map {|s| "{3/#{s}}" }
-  mana_symbols += colour_letters.map {|s| "{#{s}P}" }
+  mana_symbols += COLOUR_LETTERS.map {|s| "{2/#{s}}" }
+  mana_symbols += COLOUR_LETTERS.map {|s| "{3/#{s}}" }
+  mana_symbols += COLOUR_LETTERS.map {|s| "{#{s}P}" }
   mana_symbols += (0..4).map do |i1|
     i1a = (i1+3).modulo(5)
     i1b = (i1+4).modulo(5)
-    ["{#{colour_letters[i1]}/#{colour_letters[i1a]}}", "{#{colour_letters[i1]}/#{colour_letters[i1b]}}"]
+    ["{#{COLOUR_LETTERS[i1]}/#{COLOUR_LETTERS[i1a]}}", "{#{COLOUR_LETTERS[i1]}/#{COLOUR_LETTERS[i1b]}}"]
   end.flatten
   mana_symbols  += (0..4).map do |i1|
     i1a = (i1+1).modulo(5)
     i1b = (i1+2).modulo(5)
-    ["{#{colour_letters[i1]}/#{colour_letters[i1a]}}", "{#{colour_letters[i1]}/#{colour_letters[i1b]}}"]
+    ["{#{COLOUR_LETTERS[i1]}/#{COLOUR_LETTERS[i1a]}}", "{#{COLOUR_LETTERS[i1]}/#{COLOUR_LETTERS[i1b]}}"]
   end.flatten
-  mana_symbols += colour_letters.map {|s| "{#{s}/2}" }
-  mana_symbols += colour_letters.map {|s| "{#{s}/3}" }
-  mana_symbols += colour_letters.map {|s| "{P#{s}}" }
-  mana_symbols += ( colour_letters + %w{1000000 100 10 11 12 13 14 15 16 17 18 19 20 -3 1 2 3 4 5 6 7 8 9 0 X Y T Q S C ?} ) .map {|s| "{#{s}}" }
+  mana_symbols += COLOUR_LETTERS.map {|s| "{#{s}/2}" }
+  mana_symbols += COLOUR_LETTERS.map {|s| "{#{s}/3}" }
+  mana_symbols += COLOUR_LETTERS.map {|s| "{P#{s}}" }
+  mana_symbols += ( COLOUR_LETTERS + %w{1000000 100 10 11 12 13 14 15 16 17 18 19 20 -3 1 2 3 4 5 6 7 8 9 0 X Y T Q S C ?} ) .map {|s| "{#{s}}" }
   MANA_SYMBOLS = mana_symbols
 
   def self.mana_symbols_extensive
@@ -219,23 +224,23 @@ class Card < ActiveRecord::Base
     BAR_CODE_REGEXP
   end
 
-  def self.interpret_code ( code )
-    rarity_out = Card.rarities.select {|r| r[0] == code.downcase[0]}
-    frame_out = case code[1]
-      when ?C: "Colourless"
-      when ?W: "White"
-      when ?U: "Blue"
-      when ?B: "Black"
-      when ?R: "Red"
-      when ?G: "Green"
-      when ?M, ?Z: "Multicolour"
-      when ?H: "Auto"
-      when ?S: "Auto"
-      when ?A: "Artifact"
-      when ?L: "Land colourless"
-      else nil
+  def Card.interpret_code ( code )
+    rarity = Card.rarities.select {|r| r[0] == code.downcase[0]}
+    fc_pair = case code[1]
+      when ?C then ["Colourless", ""]
+      when ?W then ["White", ""]
+      when ?U then ["Blue", ""]
+      when ?B then ["Black", ""]
+      when ?R then ["Red", ""]
+      when ?G then ["Green", ""]
+      when ?M, ?Z then ["Multicolour", ""]
+      when ?H then ["Auto", ""]
+      when ?S then ["Auto", ""]
+      when ?A then ["Artifact", "Artifact"]
+      when ?L then ["Auto", "Land"]
+      else ["Auto", ""]
     end
-    [rarity_out, frame_out]
+    rarity + fc_pair
   end
   @@colour_regexps = [/w/i, /u/i, /b/i, /r/i, /g/i]
   @@nonhybrid_colour_regexps = [
@@ -245,17 +250,20 @@ class Card < ActiveRecord::Base
     /(^|[^\/{(])r|[({]r[})]/i,
     /(^|[^\/{(])g|[({]g[})]/i]
   @@colour_affiliation_regexps = [
-    ["White", /(\(W\)|\{W\}|[Pp]lains)/],
-    ["Blue",  /(\(U\)|\{U\}|[Ii]sland)/], 
-    ["Black", /(\(B\)|\{B\}|[Ss]wamp)/], 
-    ["Red",   /(\(R\)|\{R\}|[Mm]ountain)/], 
-    ["Green", /(\(G\)|\{G\}|[Ff]orest)/], 
+    ["White", /(\([Ww]\)|\{[Ww]\}|[Pp]lains)/],
+    ["Blue",  /(\([Uu]\)|\{[Uu]\}|[Ii]sland)/], 
+    ["Black", /(\([Bb]\)|\{[Bb]\}|[Ss]wamp)/], 
+    ["Red",   /(\([Rr]\)|\{[Rr]\}|[Mm]ountain)/], 
+    ["Green", /(\([Gg]\)|\{[Gg]\}|[Ff]orest)/], 
   ]
 
   def colours_in_cost
     out = @@colour_regexps.map do |re|
       re.match(cost) ? true : false
     end
+  end
+  def colour_letters_in_cost
+    colours_in_cost.zip(Card.colour_letters).map {|boo, col| (boo ? col : "")}
   end
   def num_colours
     colours_in_cost.count{|x|x}
@@ -283,7 +291,7 @@ class Card < ActiveRecord::Base
       cardclass << " Coloured_Artifact"
     end
     # If a flip-half has nothing by this point, remove Colourless class and inherit from parent
-    if cardclass == "Colourless" && self.multipart == Card.FLIP2 
+    if cardclass == "Colourless" && (self.multipart == Card.FLIP2 || self.multipart == Card.DFCBACK)
       cardclass = self.parent.display_class
     end
     # Add gold pinlines
@@ -356,6 +364,47 @@ class Card < ActiveRecord::Base
       Configuration.DEFAULT_VALUES[:border_colour]
     end
   end
+  def colour_indicator_string
+    if !colour_indicator
+      ""
+    else
+      frame_to_check = (frame!="Auto" ? frame : calculated_frame)
+      case frame_to_check
+        when /^(White|Blue|Black|Red|Green)$/
+          indic_string = colour_letter_for_colour_name(frame_to_check)
+        when /^(Land|Artifact|Colourless)/
+          indic_string = ""
+        when /^(Hybrid)/
+          colour_regexp = /(white|blue|black|red|green)/i
+          col1, col2 = frame_to_check.scan(colour_regexp).flatten
+          indic_string = colour_letter_for_colour_name(col1) + colour_letter_for_colour_name(col2)
+        when /^(Multicolour)/
+          # Calculate whether two colours or not
+          num_to_check = num_colours
+          letters_to_use = colour_letters_in_cost
+          if secondary? && num_to_check==0 # Use parent's number
+            num_to_check = parent.num_colours
+            letters_to_use = parent.colour_letters_in_cost
+          end
+          if num_to_check==2
+            indic_string = letters_to_use.join
+          else
+            indic_string = "multi"
+          end
+      end
+      indic_string
+    end
+  end
+  def colour_letter_for_colour_name(colour_name)
+    case colour_name
+      when /White/i then "w"
+      when /Blue/i  then "u"
+      when /Black/i then "b"
+      when /Red/i   then "r"
+      when /Green/i then "g"
+      else ""
+    end
+  end
 
   def category
     if split?
@@ -371,10 +420,12 @@ class Card < ActiveRecord::Base
     case f
       when /^Land/
         return "Land"
-      when /^(White|Blue|Black|Red|Green|Multicolour|Artifact|Colourless)$/:
+      when /^(White|Blue|Black|Red|Green|Multicolour|Artifact|Colourless)$/
         return f
       when /^Hybrid/
         return "Hybrid"
+      else
+        return f
     end
   end
   
@@ -395,17 +446,24 @@ class Card < ActiveRecord::Base
   end
 
   def calculated_frame
-
+    out = single_card_calculated_frame
+    if secondary? && out == "Colourless"
+      out = parent.single_card_calculated_frame
+    end
+    out
+  end
+    
+  def single_card_calculated_frame
     case num_colours
-      when 1:     # Monocolour is the simplest case
+      when 1      # Monocolour is the simplest case
         case cost
-          when /w/i: return "White"
-          when /u/i: return "Blue"
-          when /b/i: return "Black"
-          when /r/i: return "Red"
-          when /g/i: return "Green"
+          when /w/i then return "White"
+          when /u/i then return "Blue"
+          when /b/i then return "Black"
+          when /r/i then return "Red"
+          when /g/i then return "Green"
         end
-      when 2:     # Two-colour: distinguish between gold and hybrid
+      when 2      # Two-colour: distinguish between gold and hybrid
                   # We say a card for 1W(W/U)U is gold, but 1W(W/G) is hybrid
         # Count the number of colours present outside hybrid symbols
         colours_present = @@nonhybrid_colour_regexps.reduce(0) do |total, re|
@@ -416,9 +474,9 @@ class Card < ActiveRecord::Base
         else
           return "Hybrid " + colour_strings_present.join("").downcase
         end
-      when 3..5:  # Multicolour is easy
+      when 3..5  # Multicolour is easy
         return "Multicolour"
-      when 0:     # Colourless is either artifact, land, or neither, based on type
+      when 0     # Colourless is either artifact, land, or neither, based on type
         if /land/i.match(cardtype) # Land
           # Could try to detect the text box here, but that's really fiddly to get right
           # Consider Coastal Tower, Arcane Sanctum, Hallowed Fountain, Flooded Strand, and Vivid Creek
@@ -429,13 +487,13 @@ class Card < ActiveRecord::Base
             end
           end
           case land_colours.length
-            when 0:
+            when 0
               return "Land (colourless)" # "Land" # 
-            when 1:
+            when 1
               return "Land (#{land_colours[0].downcase})" # "Land " + land_colours[0] # 
-            when 2:
+            when 2
               return "Land (#{land_colours[0].downcase}-#{land_colours[1].downcase})" # "Land " + land_colours.join("").downcase # 
-            when 3..5:
+            when 3..5
               return "Land (multicolour)" # "Land multicolour" # 
           end
         elsif /artifact/i.match(cardtype)
@@ -449,7 +507,7 @@ class Card < ActiveRecord::Base
   def separator
     if self.split?
       " // "
-    elsif self.flip?
+    elsif self.flip? || self.dfc?
       "<br>&#8209;&#8209;&#8209;&#8209;<br>".html_safe
     else
       ""
@@ -458,6 +516,17 @@ class Card < ActiveRecord::Base
   
   def new_linked_card
     Card.new(:cardset => cardset, :frame => frame, :rarity => rarity, :link=>self)
+  end
+  
+  @@printed_card_regexp = ""
+  def Card.is_printed_card_name?(some_name)
+    if @@printed_card_regexp.blank?
+      #file_handle = File.new("singleword.txt")
+      #file_contents = file_handle.read(1000000)
+      #@@printed_card_regexp = Regexp.new(file_contents)
+      @@printed_card_regexp = CardNameRegexps.all_card_names_regexp
+    end
+    !!(some_name =~ @@printed_card_regexp)
   end
 
   PLAINS = Card.new(
@@ -515,7 +584,7 @@ class Card < ActiveRecord::Base
   end
   
   def multipart?
-   [Card.SPLIT1, Card.SPLIT2, Card.FLIP1, Card.FLIP2].include?(self.multipart)
+   [Card.SPLIT1, Card.SPLIT2, Card.FLIP1, Card.FLIP2, Card.DFCFRONT, Card.DFCBACK].include?(self.multipart)
   end
   def split?
    [Card.SPLIT1, Card.SPLIT2].include?(self.multipart)
@@ -523,17 +592,20 @@ class Card < ActiveRecord::Base
   def flip?
    [Card.FLIP1, Card.FLIP2].include?(self.multipart)
   end
+  def dfc?
+   [Card.DFCFRONT, Card.DFCBACK].include?(self.multipart)
+  end
   def primary?
-   [Card.SPLIT1, Card.FLIP1].include?(self.multipart)
+   [Card.SPLIT1, Card.FLIP1, Card.DFCFRONT].include?(self.multipart)
   end
   def secondary?
-   [Card.SPLIT2, Card.FLIP2].include?(self.multipart)
+   [Card.SPLIT2, Card.FLIP2, Card.DFCBACK].include?(self.multipart)
   end
   def Card.nonsecondary
     select {|c| !c.secondary?}
   end
   def multipart_class
-    self.split? ? "split" : self.flip? ? "flip" : ""
+    self.split? ? "split" : self.flip? ? "flip" : self.dfc? ? "dfc" : ""
   end
 
   def <=>(c2)

@@ -15,6 +15,9 @@ class CardsController < ApplicationController
         # Mockups of flip secondaries we allow to render, inverted
         @card = @card.primary_card
         @extra_styles = "rotated"
+      elsif controller.params["action"] == "mockup" && @card.dfc?
+        # Mockups of DFC backs we allow to render
+        @card = @card.primary_card
       else
         redirect_to :action => controller.params["action"], :id => @card.parent_id
       end
@@ -97,10 +100,11 @@ class CardsController < ApplicationController
   def new
     @cardset = Cardset.find(params[:cardset_id])
     @card = Card.new(:cardset_id => params[:cardset_id])
+    
     if params[:code] =~ Card.code_regexp
       @card.code = params[:code]
-      @card.rarity, @card.frame = Card.interpret_code params[:code]
-      Rails.logger.info "Detected valid code #{params[:code]}: using rarity #{@card.rarity} and frame #{@card.frame}"
+      @card.rarity, @card.frame, @card.cardtype = Card.interpret_code params[:code]
+      Rails.logger.info "Detected valid code #{params[:code]}: using rarity #{@card.rarity}, type #{@card.cardtype} and frame #{@card.frame}"
     elsif params[:colour] && Card.frames.include?(params[:colour])
       @card.frame = params[:colour]
     else
@@ -227,6 +231,10 @@ class CardsController < ApplicationController
         @card.link.save! :validate => false 
       when Card.SPLIT1
         @card.link.multipart = Card.SPLIT2
+        @card.link.parent = @card
+        @card.link.save! :validate => false 
+      when Card.DFCFRONT
+        @card.link.multipart = Card.DFCBACK
         @card.link.parent = @card
         @card.link.save! :validate => false 
     end

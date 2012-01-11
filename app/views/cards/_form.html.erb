@@ -24,21 +24,22 @@
    <div class="onetab" id="prettycard"><a name="mockup"></a -->
    <% if @card.multipart?
        multipart_select_visible = true
-       show_split_flip_frame_option = false
+       show_multipart_frame_option = false
       else
        multipart_select_visible = false
-       show_split_flip_frame_option = true
+       show_multipart_frame_option = true
       end
    %>
    <div class="multipart_selector_div">
     <span id="multipart_selector_wrapper">
      <script language="JavaScript">
       MULTIPART_STANDALONE = <%= Card.STANDALONE %>;
-      MULTIPART_SPLIT1 = <%= Card.SPLIT1 %>;
-      MULTIPART_FLIP1  = <%= Card.FLIP1 %>;
+      MULTIPART_SPLIT1     = <%= Card.SPLIT1 %>;
+      MULTIPART_FLIP1      = <%= Card.FLIP1 %>;
+      MULTIPART_DFCFRONT   = <%= Card.DFCFRONT %>;
      </script>
      <% 
-      multipart_select_options = [["Normal", Card.STANDALONE], ["Split", Card.SPLIT1], ["Flip", Card.FLIP1]]
+      multipart_select_options = [["Normal", Card.STANDALONE], ["Split", Card.SPLIT1], ["Flip", Card.FLIP1], ["Double-Faced", Card.DFCFRONT]]
       %>
      <%= outer_form.select :multipart, multipart_select_options, {}, 
         { :style => ( multipart_select_visible ? "" : "display:none;"), 
@@ -48,10 +49,10 @@
     </span>
    </div>
    <!-- The two card forms -->
-   <div class="<%= @card.border_colour %>border form <%= @card.multipart_class %>" id="cardborder">
-     <%= render :partial => "onecardform", :locals => { :f => outer_form, :card => @card, :card_index => 1, :show_split_flip_frame_option => show_split_flip_frame_option } %>
+   <div class="<%= @card.border_colour %>border form <%= @card.multipart_class %> cardborder" id="cardborder">
+     <%= render :partial => "onecardform", :locals => { :f => outer_form, :card => @card, :card_index => 1, :show_multipart_frame_option => show_multipart_frame_option } %>
      <%= outer_form.fields_for :link do |f| %>
-       <%= render :partial => "onecardform", :locals => { :f => f, :card => @card.link, :card_index => 2, :show_split_flip_frame_option => false } %>
+       <%= render :partial => "onecardform", :locals => { :f => f, :card => @card.link, :card_index => 2, :show_multipart_frame_option => false } %>
      <% end %>
   </div>
   </td>                    <!-- end of card -->
@@ -148,6 +149,7 @@
 <br><code>~</code>, <code>~this~</code> and <code>CARDNAME</code>
 become the card's name
 <br>Surround with asterisks for <i>*italics*</i> and double-asterisks for <b>**bold**</b>
+<br>Note that text in <i>(parentheses)</i> is reminder text and is italicised automatically
       </p>
     </div>
     <% if !@card.new_record? %>

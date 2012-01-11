@@ -100,7 +100,7 @@ module ApplicationHelper
       sym2 = sym0.delete("/")
       sym3 = sym1.delete("/")
       any_symbol = ("(#{sym0}|#{sym1}|#{sym2}|#{sym3})")
-      any_symbol_re = Regexp.new(any_symbol)
+      any_symbol_re = Regexp.new(any_symbol, Regexp::IGNORECASE)
       my_text.gsub!( any_symbol_re, target )
       #my_text.gsub!( sym1, target )
       #my_text.gsub!( sym2, target )
@@ -161,12 +161,14 @@ module ApplicationHelper
     # Returns [text-out, out-fcn]
     # Translate [[[-links and (((-links into Maruku links
 
-    cardset_image_regexp = /\(\(([^)]*)\)\)/
-    wizards_image_regexp = /\[\[([^\]]*)\]\]/
-    cardset_card_regexp = /\(\(\(([^)]*)\)\)\)/
-    wizards_card_regexp = /\[\[\[([^\]]*)\]\]\]/
+    cardset_mockup_regexp   = /\(\(([^)]*)\)\)/
+    wizards_image_regexp   = /\[\[([^\]]*)\]\]/
+    cardset_link_regexp    = /\(\(\(([^)]*)\)\)\)/
+    wizards_link_regexp    = /\[\[\[([^\]]*)\]\]\]/
+    card_id_link_regexp    = /\(\(\(C([0-9]+)\)\)\)/
+    card_id_mockup_regexp  = /\(\(C([0-9]+)\)\)/
     any_brackets_regexp    = /([(\[][(\[][(\[]?)(.*?[^)\]])([)\]][)\]][)\]]?)/
-    remove_brackets_regexp = /([(\[])\1\1?([^(\[].*?[^)\]])([)\]])\3\3?/
+    remove_brackets_regexp = /([(\[])\1\1?([^(\[].*?[^)\]])([)\]])\3\3?/    # wants to be universal enough to include all the above
     any_internal_links = text_in =~ /\(\(/
 
     # If there are any double-paren links
@@ -193,21 +195,25 @@ module ApplicationHelper
     text_out = text_in
     match_count = 0
     text_out.gsub!(remove_brackets_regexp) do |matched_link|
-      actual_cardname = matched_link.gsub(remove_brackets_regexp, '\2')
+      bracket_contents = matched_link.gsub(remove_brackets_regexp, '\2')
       cardset_present = !!cardset
       image_frame = cardset && cardset.configuration && cardset.configuration.frame == "image"
       case
-        when matched_link =~ wizards_card_regexp:
-          wizards_card_link(actual_cardname, actual_cardname)
-        when matched_link =~ wizards_image_regexp:
-          wizards_card_image(actual_cardname)
-        when cardset && any_internal_links && matched_link =~ cardset_card_regexp:
-          cardset_card_link(cardset, actual_cardname, actual_cardname, cardset_cardnames_and_codes, cardset_cards_from_name_or_code)
-        when cardset && any_internal_links && matched_link =~ cardset_image_regexp:
+        when matched_link =~ card_id_link_regexp
+          card_id_link(bracket_contents[1..999]) # skip the initial C
+        when matched_link =~ card_id_mockup_regexp
+          card_id_mockup(bracket_contents[1..999]) # skip the initial C
+        when matched_link =~ wizards_link_regexp
+          wizards_card_link(bracket_contents, bracket_contents)
+        when matched_link =~ wizards_image_regexp
+          wizards_card_image(bracket_contents)
+        when cardset && any_internal_links && matched_link =~ cardset_link_regexp
+          cardset_card_link(cardset, bracket_contents, bracket_contents, cardset_cardnames_and_codes, cardset_cards_from_name_or_code)
+        when cardset && any_internal_links && matched_link =~ cardset_mockup_regexp
           if image_frame
-            cardset_card_image(cardset, actual_cardname, cardset_cardnames_and_codes, cardset_cards_from_name_or_code)
+            cardset_card_image(cardset, bracket_contents, cardset_cardnames_and_codes, cardset_cards_from_name_or_code)
           else
-            cardset_card_mockup(cardset, actual_cardname, cardset_cardnames_and_codes, cardset_cards_from_name_or_code)
+            cardset_card_mockup(cardset, bracket_contents, cardset_cardnames_and_codes, cardset_cards_from_name_or_code)
           end
         else matched_link
       end
@@ -215,6 +221,20 @@ module ApplicationHelper
     text_out
   end
 
+  def card_id_mockup(this_id)
+    if Card.find_by_id(this_id)
+      "@@MULTIVERSE@RENDER@#{this_id}@CARD@@"
+    else
+      "((C#{this_id}))"
+    end
+  end
+  def card_id_link(this_id)
+    if (card = Card.find_by_id(this_id))
+      "<a class=\"cardmockup\" name=\"#{card.id}\" href=\"#{url_for(card)}\">#{card.printable_name}</a>"
+    else
+      "((C#{this_id}))"
+    end
+  end
   def cardset_card_link(cardset, cardname, link_content, cardset_cardnames_and_codes, cardset_cards_from_name_or_code)
     if cardset_cardnames_and_codes.include?(cardname)
       card = cardset_cards_from_name_or_code[cardname]
@@ -271,7 +291,7 @@ module ApplicationHelper
   def embed_card_renders(text)
     text.gsub(/@@MULTIVERSE@RENDER@([0-9]*)@CARD@@/) do |matched_string|
       @card = Card.find($1)
-      if @card.split?
+      if @card.split? || @card.dfc?
         @card = @card.primary_card
       elsif @card.flip? && @card.secondary?
         @extra_styles = "rotated"
@@ -315,7 +335,7 @@ module ApplicationHelper
   def select_random(num_to_choose, array_in)
      chosen = []
      while chosen.length < num_to_choose
-       candidate = array_in.choice # i.e. random element
+       candidate = array_in.sample # i.e. random element
        if !chosen.include?(candidate)
          chosen << candidate
        end
@@ -326,7 +346,7 @@ module ApplicationHelper
   def select_random_visible_cards(num_to_choose, cards_array)
      chosen = []
      while chosen.length < num_to_choose
-       candidate = cards_array.choice # i.e. random element
+       candidate = cards_array.sample # i.e. random element
        if permission_to?(:view, candidate.cardset) && !chosen.include?(candidate)
          chosen << candidate
        end
@@ -337,9 +357,9 @@ module ApplicationHelper
   def link_to_comment(comment) # logic is duplicated in searches_controller
     parent = comment.parent
     case parent
-      when Card:
+      when Card
         link_to parent.printable_name, card_path(parent, :anchor => comment.anchor_name)
-      when Cardset:
+      when Cardset
         link_to parent.name, cardset_comments_path(parent, :anchor => comment.anchor_name)
       else
         raise "Don't know how to link_to_comment with parent #{parent}"
@@ -371,7 +391,7 @@ module ApplicationHelper
       # Just return the kind of object we were expecting
       case log.kind
         # Comments: complicated by the way I didn't originally store the id of the comment itself
-        when Log.kind(:comment_cardset):
+        when Log.kind(:comment_cardset)
           # There may be a cardset id still available
           if log.cardset
             return log.past_tense_verb(true) + link_to(log.cardset.name, log.cardset)
@@ -384,16 +404,16 @@ module ApplicationHelper
     else
       case log.kind
         # For mechanics, return the cardset name and the mechanics path
-        when Log.kind(:mechanic_create), Log.kind(:mechanic_edit):
+        when Log.kind(:mechanic_create), Log.kind(:mechanic_edit)
           cardset = obj.cardset
           return log.past_tense_verb(true) + link_to(cardset.name, cardset_mechanics_path(cardset))
-        when Log.kind(:mechanic_delete):
+        when Log.kind(:mechanic_delete)
           return log.past_tense_verb(true) + link_to(obj.name, cardset_mechanics_path(obj))
         # For details pages / skeletons, links are nested resources
-        when Log.kind(:details_page_create), Log.kind(:details_page_edit), Log.kind(:comment_details_page), Log.kind(:skeleton_generate), Log.kind(:skeleton_edit):
+        when Log.kind(:details_page_create), Log.kind(:details_page_edit), Log.kind(:comment_details_page), Log.kind(:skeleton_generate), Log.kind(:skeleton_edit)
           return log.past_tense_verb(true) + link_to(obj.title, cardset_details_page_path(obj.cardset, obj))
         # For cardset comments, return the cardset name and the cardset comments path
-        when Log.kind(:comment_cardset):
+        when Log.kind(:comment_cardset)
           # This is complicated by the way I didn't originally store the id for cardset comments
           if obj.kind_of?(Comment)
             # We have a new-style link with a comment id: link to it
@@ -404,7 +424,7 @@ module ApplicationHelper
             return log.past_tense_verb(true) + link_to(obj.name, cardset_comments_path(obj))
           end
         # For card comments, return the card name and the card comment anchor
-        when Log.kind(:comment_card):
+        when Log.kind(:comment_card)
           # This is complicated by the way I didn't originally store the id for card comments
           if obj.kind_of?(Comment)
             # We have a new-style link with a comment id: link to it
@@ -416,7 +436,7 @@ module ApplicationHelper
             return log.past_tense_verb(true) + link_to(obj.name, obj)
           end
         # For edited comments, link to either the card, or the cardset comments
-        when Log.kind(:comment_edit):
+        when Log.kind(:comment_edit)
           if obj.card
             return log.past_tense_verb(true) + link_to(obj.card.printable_name, card_path(obj.card, :anchor => obj.anchor_name))
           else
@@ -424,7 +444,7 @@ module ApplicationHelper
                            cardset_comments_path(obj.cardset, :anchor => obj.anchor_name))
           end
         # For deleted comments, link to the card if there was one, cardset otherwise
-        when Log.kind(:comment_delete):
+        when Log.kind(:comment_delete)
           # And again, sometimes this was the comment id.
           if obj.kind_of?(Card)
             return log.past_tense_verb(true) + link_to(obj.printable_name, obj)
@@ -432,14 +452,14 @@ module ApplicationHelper
             return log.past_tense_verb(true) + link_to(log.cardset.name, log.cardset)
           end
         # For cards, just give name and path to the object
-        when Log.kind(:card_create), Log.kind(:card_edit):
+        when Log.kind(:card_create), Log.kind(:card_edit)
           if obj
             return log.past_tense_verb(true) + link_to(obj.printable_name, obj)
           else
             return log.past_tense_verb(false)
           end
         # For card moves, give a nicer syntax
-        when Log.kind(:card_move_in), Log.kind(:card_move_out):
+        when Log.kind(:card_move_in), Log.kind(:card_move_out)
           if obj
             part1, part2 = log.past_tense_verb(true)
             return part1 + link_to(obj.printable_name, obj) + part2
@@ -447,7 +467,7 @@ module ApplicationHelper
             return log.past_tense_verb(false)
           end
         # For cardsets, just give name and path to the object
-        when Log.kind(:cardset_create), Log.kind(:cardset_options), Log.kind(:cardset_import), Log.kind(:card_delete), Log.kind(:details_page_delete):
+        when Log.kind(:cardset_create), Log.kind(:cardset_options), Log.kind(:cardset_import), Log.kind(:card_delete), Log.kind(:details_page_delete)
           if obj
             return log.past_tense_verb(true) + link_to(obj.name, obj)
           else

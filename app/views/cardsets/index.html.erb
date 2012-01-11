@@ -20,7 +20,8 @@
  <th class="sortfirstasc" style="width:20em;">Recent activity</th>
  <th>Description</th>
  </tr>
- <% Cardset.all.sort_by{|cs|cs.recent_action.datestamp}.reverse.each_with_index do |@cardset, index| %>
+ <% Cardset.all.sort_by{|cs|cs.recent_action.datestamp}.reverse.each_with_index do |cardset, index| %>
+   <% @cardset = cardset %>
    <tr>
      <% set_viewable = permission_to? :view, @cardset %>
      <td><b><%= link_to @cardset.name, @cardset %></b></td>
