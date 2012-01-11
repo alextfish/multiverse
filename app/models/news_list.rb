@@ -1,6 +1,8 @@
 class NewsList < ActiveRecord::Base
   def NewsList.MAX_LENGTH
-    50
+    30  # this many log IDs, comma-separated, need to fit into the log_ids field
+    # which is currently a varchar(255)
+    # so this lets me go up to 8 digits, which should be fine
   end
   def get_log_ids
     if log_ids 

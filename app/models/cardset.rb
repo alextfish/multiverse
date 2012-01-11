@@ -181,7 +181,7 @@ class Cardset < ActiveRecord::Base
     Cardset.all.each do |cs|
       cs.news_list ||= NewsList.new
       recent_logs = cs.logs.reject{ |l| kinds_to_not_show.include?(l.kind) }
-      recent_logs.take(51).reverse.each {|l| cs.news_list.add_log(l)}
+      recent_logs.take(NewsList.MAX_LENGTH + 1).reverse.each {|l| cs.news_list.add_log(l)}
     end
   end
   
