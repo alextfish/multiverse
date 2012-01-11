@@ -985,7 +985,7 @@ img.colour_indicator {
   background: -webkit-gradient(linear, left top, left bottom, from(#709498), color-stop(0.5, #90b4b8), to(#709498));
   background: -moz-linear-gradient(top, #709498, #90b4b8, #709498); }
 .dfc .part2.Artifact .cardtext {
-  background: #7895a5 !important; }
+  background: #c2ccd0 !important; }
 .dfc .part2.Artifact .pinline_ptbox, .dfc .part2.Artifact .ptbox {
   background: #709498 !important; }
 

@@ -679,7 +679,7 @@ $Hybrid_DFC_Text: #bebcba;
 $Colourless_DFC_Bar: #886b6b;
 $Colourless_DFC_Text: #BEa0A7;
 $Artifact_DFC_Bar: #709498;
-$Artifact_DFC_Text: #7895A5;
+$Artifact_DFC_Text: #c2ccd0;
 
 .dfc .part2 .cardtitlebar, .dfc .part2 .cardtypebar, .dfc .part2 .pinline_ptbox { color: #fff; }
 
@@ -706,7 +706,7 @@ $Artifact_DFC_Text: #7895A5;
 .dfc .part2.Artifact {
   .cardtitlebar, .cardtypebar { 
     background-color: $Artifact_DFC_Bar; 
-    @include gradient_vert_highlight($Artifact_DFC_Bar, #90B4B8);
+    @include gradient_vert_highlight($Artifact_DFC_Bar, #90a4b0);
   }
   .cardtext { background: $Artifact_DFC_Text !important; }
   .pinline_ptbox, .ptbox  { background: $Artifact_DFC_Bar !important; }
