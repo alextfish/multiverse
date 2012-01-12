@@ -46,7 +46,9 @@ class Comment < ActiveRecord::Base
     # "+?" = not greedy
     Rails.logger.info "Checking body for bad links"
     body.gsub!(/\(\(\((.+?)\)\)\)/) {|link_contents| fix_internal_link(link_contents, $1)}
-    body.gsub!(/\[\[\[(.+?)\]\]\]/) {|link_contents| fix_external_link(link_contents, $1)}
+    ############# COMMENTED OUT: the is_printed_card_name regexp
+    ############# causes errors on production server!
+    # body.gsub!(/\[\[\[(.+?)\]\]\]/) {|link_contents| fix_external_link(link_contents, $1)}
     Rails.logger.info "After fixing links, body is:\n#{body}"
   end
 
@@ -70,9 +72,11 @@ class Comment < ActiveRecord::Base
       return "(((C#{possible_targets[0].id})))"
     end
     # One more chance: it might not be an internal link at all, but a mistake for an external link.
-    if Card.is_printed_card_name? inside_link
-      return "[[[#{inside_link}]]]"
-    end
+    ############# COMMENTED OUT: the is_printed_card_name regexp
+    ############# causes errors on production server!
+    #if Card.is_printed_card_name? inside_link
+    #  return "[[[#{inside_link}]]]"
+    #end
     # Out of ideas: just return the bad link
     return full_link
   end
