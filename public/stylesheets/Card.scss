@@ -124,7 +124,9 @@
   .flip .innercardborder { min-height: 0px; }
   .split .innercardborder { width: auto; min-height: $CardWidth; }
   
-  .distinct_mockup_container { width: $SplitCardWidth + 2 * $BorderWidth; }
+  .distinct_mockup_container.split { width: $SplitCardWidth + 2 * $BorderWidth; }
+  .distinct_mockup_container.dfc { width: 2 * $CardWidth + 4 * $BorderWidth + 5; }
+  .distinct_mockup_container.portrait { width: $CardWidth + 2 * $BorderWidth; }
   .card { /* background: #0ff; */
           padding-top: $CardPaddingTop; padding-bottom: $CardPaddingBottom;
           padding-left: $CardPaddingLeft; padding-right: $CardPaddingRight;

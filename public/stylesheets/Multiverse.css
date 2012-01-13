@@ -146,7 +146,9 @@ table.skeleton_generate input { width: 3em; }
 
 /***** Card display *****/
 
-div#mockup { padding-top: 4px; }
+div#mockup { 
+  padding-top: 4px; 
+}
 .cardtabs {
   list-style: none;
   padding: 0;

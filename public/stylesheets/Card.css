@@ -51,8 +51,14 @@
   width: auto;
   min-height: 200px; }
 
-.distinct_mockup_container {
+.distinct_mockup_container.split {
   width: 320px; }
+
+.distinct_mockup_container.dfc {
+  width: 445px; }
+
+.distinct_mockup_container.portrait {
+  width: 220px; }
 
 .card {
   /* background: #0ff; */
@@ -982,8 +988,8 @@ img.colour_indicator {
 
 .dfc .part2.Artifact .cardtitlebar, .dfc .part2.Artifact .cardtypebar {
   background-color: #709498;
-  background: -webkit-gradient(linear, left top, left bottom, from(#709498), color-stop(0.5, #90b4b8), to(#709498));
-  background: -moz-linear-gradient(top, #709498, #90b4b8, #709498); }
+  background: -webkit-gradient(linear, left top, left bottom, from(#709498), color-stop(0.5, #90a4b0), to(#709498));
+  background: -moz-linear-gradient(top, #709498, #90a4b0, #709498); }
 .dfc .part2.Artifact .cardtext {
   background: #c2ccd0 !important; }
 .dfc .part2.Artifact .pinline_ptbox, .dfc .part2.Artifact .ptbox {

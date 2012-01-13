@@ -605,7 +605,22 @@ class Card < ActiveRecord::Base
     select {|c| !c.secondary?}
   end
   def multipart_class
-    self.split? ? "split" : self.flip? ? "flip" : self.dfc? ? "dfc" : ""
+    split? ? "split" : flip? ? "flip" : dfc? ? "dfc" : ""
+  end
+  def tooltip_shape
+    if cardset.configuration.frame == "image"
+      out = "image "
+    else
+      out = ""
+    end
+    # Now divide by shape
+    if split?  # Split cards are small + landscape
+      out += "split"
+    elsif dfc? # DFCs are large+landscape
+      out += "dfc"
+    else       # Don't have schemes at the mo, so small+portrait
+      out += "portrait"
+    end
   end
 
   def <=>(c2)

@@ -516,17 +516,17 @@ document.observe('dom:loaded', function() {
   });
 });
 // Function to create a unique wrapper div for each intra-MV link
-function makeTooltipDiv(parent_element, card_id){
+function makeTooltipDiv(parent_link_element, card_id){
   div_id = "card_tooltip_" + card_id;
   while ( $(div_id) ) {
     div_id += "_2"
   }
   // now we have an unused id
-  div = new Element("div", {"class": "distinct_mockup_container", "id": div_id});
+  div = new Element("div", {"class": "distinct_mockup_container " + parent_link_element.className, "id": div_id});
   div.appendChild(new Element("div", {"class": "cardborder blackborder card_loading"}));
   // $() in the while loop above will only find this if it's added into the DOM somewhere,
   // so we append it to the parent element for now
-  parent_element.appendChild(div.hide());
+  parent_link_element.appendChild(div.hide());
   // store the card id for easy access by the Ajax onSuccess callback
   div.card_id = card_id;
   return div;

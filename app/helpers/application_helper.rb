@@ -221,6 +221,15 @@ module ApplicationHelper
     text_out
   end
 
+  def link_to_card(card, content = nil)
+    # HTML <a> link to a Multiverse card
+    # Content of the link will be card's printable-name unless overridden
+    if content.blank?
+      content = card.printable_name
+    end
+    # Determine the shape of the desired JS AJAX tooltip
+    "<a class=\"cardmockup #{card.tooltip_shape}\" name=\"#{card.id}\" href=\"#{url_for(card)}\">#{content}</a>"
+  end
   def card_id_mockup(this_id)
     if Card.find_by_id(this_id)
       "@@MULTIVERSE@RENDER@#{this_id}@CARD@@"
@@ -230,7 +239,7 @@ module ApplicationHelper
   end
   def card_id_link(this_id)
     if (card = Card.find_by_id(this_id))
-      "<a class=\"cardmockup\" name=\"#{card.id}\" href=\"#{url_for(card)}\">#{card.printable_name}</a>"
+      link_to_card(card)
     else
       "((C#{this_id}))"
     end
@@ -238,14 +247,14 @@ module ApplicationHelper
   def cardset_card_link(cardset, cardname, link_content, cardset_cardnames_and_codes, cardset_cards_from_name_or_code)
     if cardset_cardnames_and_codes.include?(cardname)
       card = cardset_cards_from_name_or_code[cardname]
-      "<a class=\"cardmockup\" name=\"#{card.id}\" href=\"#{url_for(card)}\">#{link_content}</a>"
+      link_to_card(card, link_content)
     elsif link_content =~ Card.bar_code_regexp
       # Link to a bar code. If the cardset has this code, link to that card by name
       # If the cardset doesn't have this code, offer to create it
       actual_code = link_content.slice(Card.code_regexp)
       if cardset_cardnames_and_codes.include?(actual_code)
         card = cardset_cards_from_name_or_code[actual_code]
-        "<a class=\"cardmockup\" name=\"#{card.id}\" href=\"#{url_for(card)}\">#{actual_code} #{card.name}</a>"
+        link_to_card(card, "#{actual_code} #{card.name}")
       else
         link_to "(#{actual_code})", new_card_path(:cardset_id => cardset.id, :code => actual_code)
       end
@@ -274,7 +283,8 @@ module ApplicationHelper
       if card.image_url.blank?
         cardset_card_mockup(cardset, cardname, cardset_cardnames_and_codes, cardset_cards_from_name_or_code)
       else
-        cardset_card_link(cardset, cardname, image_tag(card.image_url, :alt => "((#{cardname}))", :class => "CardImage"), cardset_cardnames_and_codes, cardset_cards_from_name_or_code)
+        link_content = image_tag(card.image_url, :alt => "((#{cardname}))", :class => "CardImage")
+        link_to_card(card, link_content)
       end
     else
       "((#{cardname}))"
