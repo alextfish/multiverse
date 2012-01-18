@@ -164,14 +164,14 @@ function update_frame(card_id) {
     inner = $("card").getAttribute("class").replace("part1","");
   }
   
-  if (/Land/.test(inner)) {
+  /* if (/Land/.test(inner)) {
     // Disable colour indicator for lands
     get_colour_indicator(this_card).setValue(false).disable();
     $("colour_indicator_label_" + card_id).style.setProperty("color", "#888");
   } else {
     get_colour_indicator(this_card).enable();
     $("colour_indicator_label_" + card_id).style.setProperty("color", "inherit");
-  }
+  } */
   
   var pinline;
   if (num_colours == 2) {

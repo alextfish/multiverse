@@ -415,7 +415,8 @@
   border-radius: 7px / 40px;
   border-right: 1px solid black;
   border-left: 1px solid white;
-  min-height: 141px; }
+  min-height: 141px;
+  /* 131px; */ }
 
 .Planeswalker .cardart.image {
   -webkit-background-size: 200px 150px;

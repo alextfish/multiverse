@@ -138,10 +138,10 @@ class CardsetsController < ApplicationController
     @cardset.user_id = current_user.id
 
     configuration = @cardset.build_configuration(params[:configuration])
-    cs.news_list ||= NewsList.new
+    @cardset.news_list ||= NewsList.new
     ok = @cardset.save
     ok &= configuration.save
-    ok &= cs.news_list.save
+    ok &= @cardset.news_list.save
 
     if ok
       set_last_edit @cardset 

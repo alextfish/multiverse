@@ -372,12 +372,14 @@ class Card < ActiveRecord::Base
       case frame_to_check
         when /^(White|Blue|Black|Red|Green)$/
           indic_string = colour_letter_for_colour_name(frame_to_check)
-        when /^(Land|Artifact|Colourless)/
-          indic_string = ""
-        when /^(Hybrid)/
+        when /^(Hybrid|Land)/
           colour_regexp = /(white|blue|black|red|green)/i
-          col1, col2 = frame_to_check.scan(colour_regexp).flatten
-          indic_string = colour_letter_for_colour_name(col1) + colour_letter_for_colour_name(col2)
+          matches = frame_to_check.scan(colour_regexp).flatten
+          letters = matches.map {|c| colour_letter_for_colour_name(c)}
+          indic_string = letters.join("")
+        
+        when /^(Artifact|Colourless)/
+          indic_string = ""
         when /^(Multicolour)/
           # Calculate whether two colours or not
           num_to_check = num_colours
@@ -391,6 +393,8 @@ class Card < ActiveRecord::Base
           else
             indic_string = "multi"
           end
+        else
+          indic_string = ""
       end
       indic_string
     end
@@ -402,6 +406,7 @@ class Card < ActiveRecord::Base
       when /Black/i then "b"
       when /Red/i   then "r"
       when /Green/i then "g"
+      when /multicolour/i then "multi"
       else ""
     end
   end
