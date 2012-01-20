@@ -11,19 +11,22 @@
   <% items_to_show = @cardset.news_list.get_logs.reverse %>
 <% end %>
 
+<% if use_proper_list %>
+  <% pages_list = will_paginate(items_to_show) %>
+<% else %>
+  <% pages_list = "<br><i>Page 1</i>" %>
+  <% if items_to_show.length >= NewsList.MAX_LENGTH %>
+    <% pages_list += " - " + link_to("Older activity", recent_cardset_path(@cardset, :page => 2)) %>
+  <% end %>
+  <% pages_list = pages_list.html_safe %>
+<% end %>
+
+
 <p>
   <% if true || !items_to_show.empty? %>
     Recent updates to <%= @cardset.name %>: <span class="helptext">(Generated at <%= format_datetime_absolute Time.now %>)</span>
 
-    <% if use_proper_list %>
-      <%= will_paginate items_to_show  %>
-    <% else %>
-      <br>
-      <i>Page 1</i>
-      <% if items_to_show.length >= NewsList.MAX_LENGTH %>
-        - <%= link_to "Older activity", recent_cardset_path(@cardset, :page => 2) %>
-      <% end %>
-    <% end %>
+    <%= pages_list %>
 
     <ul class="commentlist compact">
       <% items_to_show.each do |log| %>
@@ -39,12 +42,12 @@
       <% end %>
     </ul>
 
-    <% if use_proper_list %>
-      <%= will_paginate items_to_show  %>
-    <% end %>
+    <%= pages_list %>
   <% else %>
     There are no cards in <%= @cardset.name %>. There's been no activity.
   <% end %>
 </div>
 
+<div>
 <%= link_to "See other cardsets", cardsets_path %>
+</div>

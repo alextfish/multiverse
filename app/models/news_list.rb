@@ -21,7 +21,7 @@ class NewsList < ActiveRecord::Base
   end
   def add_log(new_log)
     new_ids = get_log_ids
-    if new_ids.length >= NewsList.MAX_LENGTH
+    while new_ids.length >= NewsList.MAX_LENGTH
       new_ids.shift
     end
     new_ids.push new_log.id
