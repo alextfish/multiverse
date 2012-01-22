@@ -682,6 +682,8 @@ $Colourless_DFC_Bar: #886b6b;
 $Colourless_DFC_Text: #BEa0A7;
 $Artifact_DFC_Bar: #709498;
 $Artifact_DFC_Text: #c2ccd0;
+$Land_Colourless_DFC_Bar: #A89878;
+$Land_Colourless_DFC_Text: #D8CFC8;
 
 .dfc .part2 .cardtitlebar, .dfc .part2 .cardtypebar, .dfc .part2 .pinline_ptbox { color: #fff; }
 
@@ -793,18 +795,20 @@ $Artifact_DFC_Text: #c2ccd0;
   .cardtext { background: $Hybrid_DFC_Text !important; filter: none; }
 }
 .dfc {
-  .part2.Hybrid, .part2.Land.whiteblue, .part2.Land.whiteblack, .part2.Land.whitered, .part2.Land.whitegreen, .part2.Land.blueblack, .part2.Land.bluered, .part2.Land.bluegreen, .part2.Land.blackred, .part2.Land.blackgreen, .part2.Land.redgreen {
+  .part2.Hybrid, .part2.Land.colourless, .part2.Land.whiteblue, .part2.Land.whiteblack, .part2.Land.whitered, .part2.Land.whitegreen, .part2.Land.blueblack, .part2.Land.bluered, .part2.Land.bluegreen, .part2.Land.blackred, .part2.Land.blackgreen, .part2.Land.redgreen {
     .cardtitlebar, .cardtypebar { background-color: $Hybrid_DFC_Bar; }
     .pinline_ptbox, .ptbox { background: $Hybrid_DFC_Bar !important; }
   }
-}
+} 
 
 .Land, .Land.Coloured_Artifact {  /*#A4968E*/; 
 @include gradient_vert_important(#DECCC1, #6A514A); 
 }
 .Land .cardart { background-color: #b9aea2; }
 .Land .pinline { background-color: #d7cDbF /*C7BDAF*/; }
-.Land .cardtitlebar, .Land .cardtypebar { background-color: $Land_Colourless_Bar; }
+.Land .cardtitlebar, .Land .cardtypebar { 
+  background-color: $Land_Colourless_Bar; 
+}
 .Land .cardtext, .Land .pinline_ptbox { background-color: $Land_Text; /* #eee6df; */}
 .Land .bottombox, .Land .cardtext_container, .Land .cardart_container,  { background: transparent; }
 
