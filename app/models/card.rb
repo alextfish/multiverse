@@ -263,7 +263,7 @@ class Card < ActiveRecord::Base
     end
   end
   def colour_letters_in_cost
-    colours_in_cost.zip(Card.colour_letters).map {|boo, col| (boo ? col : "")}
+    colours_in_cost.zip(Card.colour_letters).map {|boo, col| (boo ? col.downcase : "")}
   end
   def num_colours
     colours_in_cost.count{|x|x}
