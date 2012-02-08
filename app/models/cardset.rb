@@ -622,7 +622,7 @@ class Cardset < ActiveRecord::Base
     # Use CSV.parse, which takes care of quoting and newlines for us
     begin
       cardsdata = CSV.parse(params[:data], :col_sep => separator);
-    rescue e
+    rescue => e
       return false, "I'm sorry, but your CSV wasn't valid. Try splitting it into chunks and importing them separately. The error returned was: #{e.message}", "", []      
     end
     cards_and_comments = []
