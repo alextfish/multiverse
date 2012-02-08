@@ -576,14 +576,15 @@ class Cardset < ActiveRecord::Base
       return false, "Formatting line is required", "", []
     end
     # Deduce separator from formatting line
-    non_alpha = params[:formatting_line].split(/[a-z]/).keep_if {|c| c=~ /^.$/}
+    non_alpha = params[:formatting_line].split(/[a-z]/).select {|c| c=~ /^.$/}
+    non_alpha.uniq!
     case non_alpha.length
       when 0
         return false, "Could not deduce CSV separator from formatting line", "", []
       when 1
         separator = non_alpha[0]
       else
-        return false, "Too many non-alphabetic characters in formatting line to deduce CSV separator character", "", []
+        return false, "Too many non-alphabetic characters in formatting line to deduce CSV separator character. There should only be one, but I found the following: '#{non_alpha.join("','")}'", "", []
     end
     if params[:id].blank?
       return false, "No cardset ID supplied - please re-navigate to this page via the cardset", "", []
@@ -620,9 +621,9 @@ class Cardset < ActiveRecord::Base
     # Read the CSV
     # Use CSV.parse, which takes care of quoting and newlines for us
     begin
-      cardsdata = CSV.parse(params[:data], separator);
-    rescue CSV::IllegalFormatError => ie
-      return false, "I'm sorry, but your CSV wasn't valid. Try splitting it into chunks and importing them separately.", "", []      
+      cardsdata = CSV.parse(params[:data], :col_sep => separator);
+    rescue CSV::MalformedCSVError => e
+      return false, "I'm sorry, but your CSV wasn't valid. Try splitting it into chunks and importing them separately. The error returned was: #{e.message}", "", []      
     end
     cards_and_comments = []
     skipped_cards = overwritten_cards = new_cards = 0

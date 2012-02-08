@@ -14,9 +14,10 @@
       <% if set_viewable %>
         (<%= cardset.cards.nonsecondary.count %> cards,
          <%= link_to "last activity", recent_cardset_path(cardset) %> 
-         <% action = cardset.recent_action %>
-         <%= format_datetime(action.datestamp) %> by 
-         <% if action.user %><%= link_to action.user, action.user %><% else %><%= User.name_for(action.user_id) %><% end %>)<% if !cardset.description.blank? %>: <%= cardset.description %><% end %>
+         <% if !(action = cardset.recent_action).nil? %>
+           <%= format_datetime(action.datestamp) %> by 
+           <% if action.user %><%= link_to action.user, action.user %><% else %><%= User.name_for(action.user_id) %><% end %>)<% if !cardset.description.blank? %>: <%= cardset.description %><% end %>
+        <% end %>
       <% end %>
     <% end %>
     </ul>
