@@ -47,6 +47,16 @@ zoom: 100%; -moz-transform: scale(1);
 }
 img.CardImage        { display: inline-block; /* height: 318px; */ }
 
+@media print {
+  .nonprinting {
+    display: none;
+  }
+  
+  * {
+    -webkit-print-color-adjust:exact;
+  }
+}
+
 /***** Visual spoiler *****/
 
 div.visualspoiler { padding-top: 2px; padding-bottom: 2px; }

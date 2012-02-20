@@ -62,7 +62,7 @@
            "<%= this_watermark[1] %>": "<%= this_filename %>", <% end %><% end %>
          }
        </script>
-         <% if card.watermark.blank? || standard_watermark_options_values.include?(card.supertype) %>
+         <% if card.watermark.blank? || standard_watermark_options_values.include?(card.watermark) %>
            <%= select_tag "card_watermark_select_#{card_index}", options_for_select(standard_watermark_options, :selected => card.watermark),
              { :class => "card_watermark_select",
              :onchange => "updateWatermarks()",
@@ -72,7 +72,7 @@
            <% watermark_visibility = "inline"; %>
          <% end %>
          <%= f.text_field :watermark, { :class => "type_field watermark", :style => "display:#{watermark_visibility};" } %>
-       <% f.select :watermark, standard_watermark_options, {}, 
+         <% f.select :watermark, standard_watermark_options, {}, 
           { :class => "watermark_selector", 
             :onchange => "updateWatermarks()", :onkeyup => "updateWatermarks()" } %>
       </div>
@@ -122,7 +122,7 @@
     <div class="pinline pinline_sidesbottom">
      <div class="cardtext">
       <% if card.watermark.present? && card.watermark =~ /^[{].*[}]$/ && (watermark_url = standard_watermark_filename(card.watermark)).present?
-        "got the url"
+          "got the url"
         else 
           watermark_url = card.watermark
         end %>
