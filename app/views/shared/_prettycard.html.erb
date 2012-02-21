@@ -17,7 +17,7 @@
      <div class="cardtitlebar">
       <div class="cardname">
        <% if link && !@printable && card_index==0 %>
-        <%= link_to card.individual_name, card, :title => card.code %>
+        <%= link_to_card(card, card.individual_name) %>
        <% else %>
         <span title="<%= card.code %>"><%= card.name %></span>
        <% end %>

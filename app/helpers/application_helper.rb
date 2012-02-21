@@ -228,7 +228,7 @@ module ApplicationHelper
       content = card.printable_name
     end
     # Determine the shape of the desired JS AJAX tooltip
-    "<a class=\"cardmockup #{card.tooltip_shape}\" name=\"#{card.id}\" href=\"#{url_for(card)}\">#{content}</a>"
+    "<a class=\"cardmockup #{card.tooltip_shape}\" name=\"#{card.id}\" href=\"#{url_for(card)}\">#{content}</a>".html_safe
   end
   def card_id_mockup(this_id)
     if Card.find_by_id(this_id)

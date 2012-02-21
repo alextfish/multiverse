@@ -1,6 +1,6 @@
 <% conf = @cardset.configuration # Requires @cardset defined as well as @card! %>
 <% if conf.frame == "image" && !@card.image_url.blank? %>
-   <div><img src="<%= @card.image_url %>"></div>
+   <div><img src="<%= @card.image_url %>"<% if @embedded %> class="tooltip_image <%= @card.tooltip_shape %>"<% end %>></div>
 <% elsif conf.frame == "prettycard" || conf.frame == "image" %>
    <%= render :partial => "shared/prettycard", :locals => { :link => link } %>
 <% elsif conf.frame == "plain" %>

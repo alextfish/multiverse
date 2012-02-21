@@ -51,6 +51,19 @@
   width: auto;
   min-height: 200px; }
 
+img.tooltip_image.portrait {
+  /* We force it to size down */
+  width: 200px;
+  height: 300px; }
+
+img.tooltip_image.split {
+  width: 300px;
+  height: 200px; }
+
+img.tooltip_image.dfc {
+  width: 445px;
+  height: 300px; }
+
 .distinct_mockup_container.split {
   width: 320px; }
 

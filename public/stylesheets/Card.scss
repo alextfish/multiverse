@@ -129,15 +129,28 @@
   $CardPaddingRight: 3px;
   $SplitCardWidth: 300px;
   $CardFormWidth: 350px;
+  $DFCCardWidth: 2 * $CardWidth + 4 * $BorderWidth + 5;
   .whiteborder .card, .whiteborder .editborder_inner { border: 1px solid #888; }
   .editborder_inner { background: white; }
   
   .innercardborder { width: $CardWidth; min-height: $CardHeight; }
   .flip .innercardborder { min-height: 0px; }
   .split .innercardborder { width: auto; min-height: $CardWidth; }
+
+
+img.tooltip_image.portrait {
+  /* We force it to size down */
+  width: $CardWidth; height: $CardHeight;
+}
+img.tooltip_image.split {
+  width: $CardHeight; height: $CardWidth;
+}
+img.tooltip_image.dfc {
+  width: $DFCCardWidth; height: $CardHeight;
+}
   
   .distinct_mockup_container.split { width: $SplitCardWidth + 2 * $BorderWidth; }
-  .distinct_mockup_container.dfc { width: 2 * $CardWidth + 4 * $BorderWidth + 5; }
+  .distinct_mockup_container.dfc { width: $DFCCardWidth; }
   .distinct_mockup_container.portrait { width: $CardWidth + 2 * $BorderWidth; }
   .card { /* background: #0ff; */
           padding-top: $CardPaddingTop; padding-bottom: $CardPaddingBottom;
