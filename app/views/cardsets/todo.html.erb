@@ -22,15 +22,7 @@
         <% comments_slice.each do |comment| %>
           <% @comment = comment %>
           <td class="comment_cell">
-          <% target = @comment.parent %>
-          <% target_name = target.name %>
-          <% if target == @cardset %>
-            <% target = cardset_comments_path(@comment.cardset) %>
-          <% elsif target.printable_name %>
-            <% target_name = target.printable_name %>
-          <% end %>
-          <% reply_link = @comment.card || new_cardset_comment_path(@comment.cardset) %>
-          On <%= link_to target_name, target %> (<%= link_to "reply", reply_link %>):
+          On <%= link_to_comment @comment %> (<%= link_to "reply", reply_to_comment_link(@comment) %>):
           <%= render :partial => "shared/comment", :locals => { :show_buttons => true, :show_date => true } %>
           </td>
         <% end %>

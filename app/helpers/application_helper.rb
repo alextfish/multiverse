@@ -378,6 +378,14 @@ module ApplicationHelper
   def link_to_comment_user(comment)
     link_to_unless comment.user.nil?, comment.display_user, comment.user
   end
+  def reply_to_comment_link(comment)
+    case comment.parent
+      when Card
+        comment.parent
+      when Cardset
+        new_cardset_comment_path(comment.parent)
+    end
+  end
   
   def separate_if_both_nonblank(string1, string2, sep)
     if !string1.blank? && !string2.blank?

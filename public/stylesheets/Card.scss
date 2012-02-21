@@ -24,29 +24,41 @@
 }
 @mixin gradient_horz($start, $end) {
   filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#{$start}', endColorstr='#{$end}', GradientType=1);
-  background: -webkit-gradient(linear, left top, right top, from($start), to($end));
+  @media screen { 
+    background: -webkit-gradient(linear, left top, right top, from($start), to($end));
+  }
   background: -moz-linear-gradient(left,  $start,  $end);
 }
 @mixin gradient_horz_highlight($startend, $middle) {
-  background: -webkit-gradient(linear, left top, right top, from($startend), color-stop(0.5, $middle), to($startend));
+  @media screen { 
+    background: -webkit-gradient(linear, left top, right top, from($startend), color-stop(0.5, $middle), to($startend));
+  }
   background: -moz-linear-gradient(left, $startend, $middle, $startend);
 }
 @mixin gradient_diag_highlight($startend, $middle) {
-  background: -webkit-gradient(linear, right top, left bottom, from($startend), color-stop(0.5, $middle), to($startend));
+  @media screen { 
+    background: -webkit-gradient(linear, right top, left bottom, from($startend), color-stop(0.5, $middle), to($startend));
+  }
   background: -moz-linear-gradient(right top, $startend, $middle, $startend);
 }
 @mixin gradient_vert_important($start, $end) {
   filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#{$start}', endColorstr='#{$end}', GradientType=0) !important;
-  background: -webkit-gradient(linear, left top, left bottom, from($start), to($end)) !important;
+  @media screen { 
+    background: -webkit-gradient(linear, left top, left bottom, from($start), to($end)) !important;
+  }
   background: -moz-linear-gradient(top,  $start,  $end) !important;
 }
 @mixin gradient_vert_highlight($startend, $middle) {
-  background: -webkit-gradient(linear, left top, left bottom, from($startend), color-stop(0.5, $middle), to($startend));
+  @media screen { 
+    background: -webkit-gradient(linear, left top, left bottom, from($startend), color-stop(0.5, $middle), to($startend));
+  }
   background: -moz-linear-gradient(top, $startend, $middle, $startend);
 }
 @mixin gradient_horz_padded($start, $end) {
   filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#{$start}', endColorstr='#{$end}', GradientType=1);
-  background: -webkit-gradient(linear, left top, right top, from($start), color-stop(0.4, $start), color-stop(0.6, $end), to($end));
+  @media screen { 
+    background: -webkit-gradient(linear, left top, right top, from($start), color-stop(0.4, $start), color-stop(0.6, $end), to($end));
+  }
   background: -moz-linear-gradient(left, $start, $start, $end, $end);
 }
 @mixin round_corners($radius) {
