@@ -221,14 +221,19 @@ module ApplicationHelper
     text_out
   end
 
-  def link_to_card(card, content = nil)
+  def link_to_card(card, content = nil, anchor = nil)
     # HTML <a> link to a Multiverse card
     # Content of the link will be card's printable-name unless overridden
     if content.blank?
       content = card.printable_name
     end
+    if anchor.blank?
+      anchor = "";
+    else    
+      anchor = "#" + anchor;
+    end  
     # Determine the shape of the desired JS AJAX tooltip
-    "<a class=\"cardmockup #{card.tooltip_shape}\" name=\"#{card.id}\" href=\"#{url_for(card)}\">#{content}</a>".html_safe
+    "<a class=\"cardmockup #{card.tooltip_shape}\" name=\"#{card.id}\" href=\"#{url_for(card)}#{anchor}\">#{content}</a>".html_safe
   end
   def card_id_mockup(this_id)
     if Card.find_by_id(this_id)
@@ -368,7 +373,7 @@ module ApplicationHelper
     parent = comment.parent
     case parent
       when Card
-        link_to parent.printable_name, card_path(parent, :anchor => comment.anchor_name)
+        link_to_card(parent, nil, comment.anchor_name)
       when Cardset
         link_to parent.name, cardset_comments_path(parent, :anchor => comment.anchor_name)
       else
@@ -446,17 +451,17 @@ module ApplicationHelper
           # This is complicated by the way I didn't originally store the id for card comments
           if obj.kind_of?(Comment)
             # We have a new-style link with a comment id: link to it
-            return log.past_tense_verb(true) + link_to(obj.card.printable_name, card_path(obj.card, :anchor => obj.anchor_name))
+            return log.past_tense_verb(true) + link_to_card(obj.card, nil, obj.anchor_name)
           elsif obj.kind_of?(Card)
             # We have an old-style link with just the card id
-            return log.past_tense_verb(true) + link_to(obj.printable_name, obj)
+            return log.past_tense_verb(true) + link_to_card(obj)
           else
             return log.past_tense_verb(true) + link_to(obj.name, obj)
           end
         # For edited comments, link to either the card, or the cardset comments
         when Log.kind(:comment_edit)
           if obj.card
-            return log.past_tense_verb(true) + link_to(obj.card.printable_name, card_path(obj.card, :anchor => obj.anchor_name))
+            return log.past_tense_verb(true) + link_to_card(obj.card, nil, obj.anchor_name)
           else
             return log.past_tense_verb(true) + link_to(obj.cardset.name,
                            cardset_comments_path(obj.cardset, :anchor => obj.anchor_name))
@@ -465,14 +470,14 @@ module ApplicationHelper
         when Log.kind(:comment_delete)
           # And again, sometimes this was the comment id.
           if obj.kind_of?(Card)
-            return log.past_tense_verb(true) + link_to(obj.printable_name, obj)
+            return log.past_tense_verb(true) + link_to_card(obj)
           else
             return log.past_tense_verb(true) + link_to(log.cardset.name, log.cardset)
           end
         # For cards, just give name and path to the object
         when Log.kind(:card_create), Log.kind(:card_edit)
           if obj
-            return log.past_tense_verb(true) + link_to(obj.printable_name, obj)
+            return log.past_tense_verb(true) + link_to_card(obj)
           else
             return log.past_tense_verb(false)
           end
@@ -480,7 +485,7 @@ module ApplicationHelper
         when Log.kind(:card_move_in), Log.kind(:card_move_out)
           if obj
             part1, part2 = log.past_tense_verb(true)
-            return part1 + link_to(obj.printable_name, obj) + part2
+            return part1 + link_to_card(obj) + part2
           else
             return log.past_tense_verb(false)
           end

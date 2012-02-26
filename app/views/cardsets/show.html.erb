@@ -151,8 +151,7 @@
             NIL
           <% end %>
         <% else %>
-          <% object = @comment.parent %>
-          <div>On <%= link_to show_printable_name(object), object %>:
+          <div>On <%= link_to_comment(@comment) %>:
             <%= render :partial => "shared/comment", :locals => { :show_buttons => true, :show_date => true } %>
           </div>
         <% end %>
