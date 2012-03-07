@@ -33,6 +33,8 @@
 
 class Card < ActiveRecord::Base
   belongs_to :cardset
+  attr_protected :cardset_id
+  
   has_many :comments, :dependent => :destroy
   has_many :old_cards, :dependent => :destroy
   attr_accessor :foil, :blank  # not saved

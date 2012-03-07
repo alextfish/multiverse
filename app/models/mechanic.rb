@@ -16,6 +16,8 @@
 
 class Mechanic < ActiveRecord::Base
   belongs_to :cardset 
+  attr_protected :cardset_id
+  
   validates :name, :presence => true
   validates :codename, :presence => true
   validates_inclusion_of :parameters, :in => (0..2)

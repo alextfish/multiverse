@@ -12,7 +12,13 @@
 <span class="helptext">Generated at <%= format_datetime_absolute Time.now %></span>
 
 <% page_beyond_1 = (!params[:page].nil? && params[:page]>"1") %>
-<% items_to_show = Cardset.all.sort_by{|cs|cs.recent_action.datestamp}.reverse %>
+<% items_to_show = Cardset.all.sort_by { |cs|
+  if permission_to? :view, cs
+    cs.recent_action.datestamp
+  else
+    Time.at(0)
+  end
+}.reverse %>
 <% items_to_show = items_to_show.paginate(:page => params[:page], :per_page => 30) %>
 <% if page_beyond_1 %>
   <%= will_paginate items_to_show %>

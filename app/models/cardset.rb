@@ -387,7 +387,7 @@ class Cardset < ActiveRecord::Base
     # Existing lines and inserted lines all end with "\n", so we just join() them
     if @skeleton.nil?
       @skeleton = self.details_pages.build(:title => "Skeleton")
-      lines_out = ["|Code | Slot | Card name |\n", "|:---:|------|---------|\n"] + lines_out
+      lines_out = ["|Code | Slot | Notes |\n", "|:---:|------|---------|\n"] + lines_out
     end
     @skeleton.body = lines_out.join
     @skeleton.save!

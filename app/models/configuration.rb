@@ -25,7 +25,7 @@
 #
 
 class Configuration < ActiveRecord::Base
-  attr_protected :id
+  attr_protected :id, :cardset_id
 
   belongs_to :cardset
 

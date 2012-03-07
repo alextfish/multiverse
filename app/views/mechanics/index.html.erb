@@ -14,16 +14,17 @@
         mechanic_index_span = "mechanic_#{index}"
       %>
       <span class="helptext">Used on <%= mechanic_cards.count %> cards:
-      <% if mechanic_cards.count > 20 %>
-        <%= link_to_function "(show)",
-          visual_effect(:toggle_blind, mechanic_index_span, :duration => 0.5),
-          :class => "no_tooltip"%></span>
-        <% show_mechanic_cards = 'style="display:none;"'; %>
-      <% else %>
-        <% show_mechanic_cards = ''; %>
-      <% end %>
-      <span id="<%= mechanic_index_span %>" <%= show_mechanic_cards %>>
-      <%= mechanic_cards.map {|card| link_to card.printable_name, card}.join(", ").html_safe %>
+        <% if mechanic_cards.count > 20 %>
+          <%= link_to_function "(show)",
+            visual_effect(:toggle_blind, mechanic_index_span, :duration => 0.5),
+            :class => "no_tooltip"%>
+          <% show_mechanic_cards = 'style="display:none;"'; %>
+        <% else %>
+          <% show_mechanic_cards = ''; %>
+        <% end %>
+        <span id="<%= mechanic_index_span %>" <%= show_mechanic_cards %>>
+          <%= mechanic_cards.map {|card| link_to card.printable_name, card}.join(", ").html_safe %>
+        </span>
       </span>
     </div>
     <% if mechanic_editor %>

@@ -14,6 +14,7 @@
 
 class Glyph < ActiveRecord::Base
   belongs_to :cardset 
+  attr_protected :cardset_id
   validates :url, :presence => true
   
   validates_format_of :string, :with => /^(\[.*\]|\(.*\)|\{.*\}|<.*>)$/,
