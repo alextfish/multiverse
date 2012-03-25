@@ -12,7 +12,11 @@ class UsersController < ApplicationController
   # GET /users
   # GET /users.xml
   def index
-    @users = User.all.sort_by &:name
+    if params[:order] == "alpha"
+      @users = User.all.sort_by &:name
+    else
+      @users = User.all.sort_by &:created_at
+    end
     @users = @users.paginate(:page => params[:page], :per_page => 50 )
 
     respond_to do |format|

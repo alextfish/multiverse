@@ -3,10 +3,8 @@
 <div>
   <% if params[:order] == "alpha" %>
     (<%= link_to "By join date", users_path %> | Alphabetical)
-    <% @users.sort_by! &:name %>
   <% else %>
     (By join date | <%= link_to "Alphabetical", users_path(:order => :alpha) %>)
-    <% @users.sort_by! &:created_at %>
   <% end %>
 </div>
 
