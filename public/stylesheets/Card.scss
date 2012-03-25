@@ -152,9 +152,14 @@ img.tooltip_image.dfc {
 div.card_loading {
   height: $CardHeight;
   text-align: center;
-  background-color: white;
   padding-top: 20px;
+  background-color: white;
   opacity: 0.5;
+}
+.commentcount {
+  background-color: white;
+  opacity: 0.8;
+  padding: 2px;
 }
   
   .distinct_mockup_container.split { width: $SplitCardWidth + 2 * $BorderWidth; }

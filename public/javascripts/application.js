@@ -477,10 +477,15 @@ Event.observe(window, 'load', renderAllDatesAndTimes);
 
 
 ///// Preview card images /////
-cardTooltipParams = {
-  hook: { target: 'topLeft', tip: 'rightMiddle' }, // 'topLeft', mouse: true },
-  offset: { x: 0, y: 0 }//offset: { x: 14, y: -54 }
+cardTooltipParamsLeft = {
+  hook: { target: 'topLeft', tip: 'rightMiddle' }, 
+  offset: { x: 0, y: 0 }
 };
+cardTooltipParamsRight = {
+  hook: { target: 'topRight', tip: 'leftMiddle' }, 
+};
+// hook: { 'topLeft', mouse: true },
+//offset: { x: 14, y: -54 }
 function createWizardsCardImage(src) {
   div = new Element('div', {'class': 'wizardsimage'});
   div.appendChild(new Element('img', {'src': src, 'alt': "No card by that name found"}));

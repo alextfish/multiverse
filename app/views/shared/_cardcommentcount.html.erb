@@ -1,8 +1,6 @@
-<% if !@printable %>
-  <%= link_to "Comments (#{@card.comments.count})", @card
-  # Could alternatively be pluralize(@card.comments.count, "comment")
-  %>
-  <% if permission_to?(:edit, @cardset) %>
-   | <%= link_to "Edit", edit_card_path(@card) %>
-  <% end %>
+<span class="commentcount"><%= link_to_unless @embedded, pluralize(@card.comments.count, "comment"), @card
+# Used to be "Comments (#{@card.comments.count})"
+%></span>
+<% if !@embedded && permission_to?(:edit, @cardset) %>
+ | <%= link_to "Edit", edit_card_path(@card) %>
 <% end %>

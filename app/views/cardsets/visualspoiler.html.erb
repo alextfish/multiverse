@@ -23,7 +23,9 @@
     <% @card = card %>
     <div class="CardRenderInline visualspoiler">
       <%= render :partial => "shared/card", :locals => {:link => true} %>
-      <%= render :partial => "shared/cardcommentcount" %>
+      <% if !@printable %>
+        <%= render :partial => "shared/cardcommentcount" %>
+      <% end %>
     </div>
   <% end %>
 </p>
