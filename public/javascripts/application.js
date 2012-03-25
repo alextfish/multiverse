@@ -497,9 +497,16 @@ function createWizardsCardImage(src) {
 // Add tooltips for Wizards cards
 document.observe('dom:loaded', function() {
   $$('a.wizardscard[name]').each(function(element) {
-    new Tip(element, createWizardsCardImage(element.name), cardTooltipParams);
+    new Tip(element, createWizardsCardImage(element.name), chooseTooltipParams(element));
   });
 });
+function chooseTooltipParams(element) {
+  if (element.cumulativeOffset().left > 250) {
+    return cardTooltipParamsLeft;
+  } else {
+    return cardTooltipParamsRight;
+  }
+}
 // Add tooltips for Multiverse mockups
 document.observe('dom:loaded', function() {
   card_tooltips = {} // global hash
@@ -509,7 +516,7 @@ document.observe('dom:loaded', function() {
     if ((matches = card_link_regex.exec(link_element.href)) && !link_element.hasClassName("no_tooltip")) {
       card_id = matches[2];
       tooltip_div = makeTooltipDiv(link_element, card_id);
-      link_element.tip = new Tip( link_element, tooltip_div, cardTooltipParams );
+      link_element.tip = new Tip( link_element, tooltip_div, chooseTooltipParams(link_element) );
       // Store some useful data
       link_element.card_id = card_id;
       link_element.mockup_wrapper = tooltip_div;

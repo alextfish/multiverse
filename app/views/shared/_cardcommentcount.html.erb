@@ -1,6 +1,7 @@
 <span class="commentcount"><%= link_to_unless @embedded, pluralize(@card.comments.count, "comment"), @card
 # Used to be "Comments (#{@card.comments.count})"
-%></span>
+%><% if @card.comments %> - last <%= format_datetime(@card.comments.sort_by {|c| c.created_at}.last.created_at) %>
+<% end %></span>
 <% if !@embedded && permission_to?(:edit, @cardset) %>
  | <%= link_to "Edit", edit_card_path(@card) %>
 <% end %>
