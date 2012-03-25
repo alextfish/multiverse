@@ -74,7 +74,8 @@ div.card_loading {
 .commentcount {
   background-color: white;
   opacity: 0.8;
-  padding: 2px; }
+  padding: 2px;
+  font-size: 10px; }
 
 .distinct_mockup_container.split {
   width: 320px; }
