@@ -148,6 +148,14 @@ img.tooltip_image.split {
 img.tooltip_image.dfc {
   width: $DFCCardWidth; height: $CardHeight;
 }
+
+div.card_loading {
+  height: $CardHeight;
+  text-align: center;
+  background-color: white;
+  padding-top: 20px;
+  opacity: 0.5;
+}
   
   .distinct_mockup_container.split { width: $SplitCardWidth + 2 * $BorderWidth; }
   .distinct_mockup_container.dfc { width: $DFCCardWidth; }

@@ -62,12 +62,12 @@ class CardsController < ApplicationController
   helper CardsHelper
 
   def find_cardset
-    if !params[:cardset_id].nil?
+    if params[:cardset_id].present?
       @cardset = Cardset.find(params[:cardset_id])
-    elsif !params[:id].nil?
+    elsif params[:id].present?
       @card = Card.find(params[:id])
       @cardset = @card.cardset
-    elsif params[:card] && !params[:card][:cardset_id].nil?
+    elsif params[:card] && params[:card][:cardset_id].present?
       @cardset = Cardset.find(params[:card][:cardset_id])
     else
       redirect_to root_path, :notice => "Cards must be in a cardset"

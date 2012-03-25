@@ -26,7 +26,7 @@ class Cardset < ActiveRecord::Base
   has_many :comments, :dependent => :destroy
   has_many :logs
   has_one :news_list, :dependent => :destroy
-  # has_one :last_edit_log, :dependent => :destroy
+  has_one :last_edit_log, :class_name => "Log", :dependent => :destroy
 
   validates_length_of :name, :within => 2..40
 
@@ -210,7 +210,7 @@ class Cardset < ActiveRecord::Base
     if !skeleton
       return nil
     end
-    skeleton.body.lines.find {|line| line =~ Regexp.new(code)}
+    skeleton.body.lines.find {|line| line.include? code}
   end
   def get_skeleton_header_rows
     if !skeleton
@@ -252,11 +252,19 @@ class Cardset < ActiveRecord::Base
 
     # For each frame-rarity combo (which all start with skeletonform_):
     rarity_frame_regexp = /skeletonform_([a-z]*)_rarity([A-Z])/
-    if params[:allyhybrid] || params[:enemyhybrid]
-      params[:hybrid] = (params.delete(:allyhybrid) || 0) + (params.delete(:enemyhybrid) || 0)
-    end
-    if params[:allygold] || params[:enemygold]
-      params[:gold] = (params.delete(:allygold) || 0) + (params.delete(:enemygold) || 0)
+    %w{C U R M}.each do |rarity|
+      if params[:"skeletonform_allyhybrid_rarity#{rarity}"] || 
+          params[:"skeletonform_enemyhybrid_rarity#{rarity}"]
+        params[:"skeletonform_hybrid_rarity#{rarity}"] = 
+          (params.delete(:"skeletonform_allyhybrid_rarity#{rarity}") || 0) + 
+          (params.delete(:"skeletonform_enemyhybrid_rarity#{rarity}") || 0)
+      end
+      if params[:"skeletonform_allygold_rarity#{rarity}"] || 
+          params[:"skeletonform_enemygold_rarity#{rarity}"]
+        params[:"skeletonform_gold_rarity#{rarity}"] = 
+          (params.delete(:"skeletonform_allygold_rarity#{rarity}") || 0) + 
+          (params.delete(:"skeletonform_enemygold_rarity#{rarity}") || 0)
+      end
     end
     params.select{|param_key, param_value| param_key =~ /^skeletonform_/}.each do |param_key, param_value|
       if !param_key =~ rarity_frame_regexp

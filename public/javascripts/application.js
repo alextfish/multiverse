@@ -478,8 +478,8 @@ Event.observe(window, 'load', renderAllDatesAndTimes);
 
 ///// Preview card images /////
 cardTooltipParams = {
-  hook: { tip: 'topLeft', mouse: true },
-  offset: { x: 14, y: -54 }
+  hook: { target: 'topLeft', tip: 'rightMiddle' }, // 'topLeft', mouse: true },
+  offset: { x: 0, y: 0 }//offset: { x: 14, y: -54 }
 };
 function createWizardsCardImage(src) {
   div = new Element('div', {'class': 'wizardsimage'});
@@ -524,6 +524,7 @@ function makeTooltipDiv(parent_link_element, card_id){
   // now we have an unused id
   div = new Element("div", {"class": "distinct_mockup_container " + parent_link_element.className, "id": div_id});
   div.appendChild(new Element("div", {"class": "cardborder blackborder card_loading"}));
+  div.appendChild(new Element("div", {"class": "tooltip_footer"}));
   // $() in the while loop above will only find this if it's added into the DOM somewhere,
   // so we append it to the parent element for now
   parent_link_element.appendChild(div.hide());

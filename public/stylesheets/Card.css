@@ -64,6 +64,13 @@ img.tooltip_image.dfc {
   width: 445px;
   height: 300px; }
 
+div.card_loading {
+  height: 300px;
+  text-align: center;
+  background-color: white;
+  padding-top: 20px;
+  opacity: 0.5; }
+
 .distinct_mockup_container.split {
   width: 320px; }
 
