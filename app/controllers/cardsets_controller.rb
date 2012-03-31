@@ -14,9 +14,21 @@ class CardsetsController < ApplicationController
   before_filter do
     @printable = params.has_key?(:printable)
   end
-
-  # GET /cardsets
-  # GET /cardsets.xml
+  
+  # All static views
+  caches_action :visualspoiler, :layout => false
+  caches_action :cardlist, :layout => false
+  caches_action :skeleton, :layout => false
+  caches_action :show, :layout => false
+  def expire_all_caches
+    expire_action :action => :visualspoiler
+    expire_action :action => :cardlist
+    expire_action :action => :skeleton
+    expire_action :action => :show
+  end    
+                              
+  # GET /cardsets             
+  # GET /cardsets.xml         
   def index
     @cardsets = Cardset.all
 
@@ -95,6 +107,7 @@ class CardsetsController < ApplicationController
     Rails.logger.info "User #{current_user} importing data"
     success, message, log_text, changed_cards = @cardset.import_data(params, current_user)
     if success
+      expire_all_caches
       changed_cards.each do |card|
         set_last_edit card 
       end
@@ -111,6 +124,7 @@ class CardsetsController < ApplicationController
     Rails.logger.info "Generating skeleton for #{@cardset.name}"
     success = @cardset.generate_skeleton(params)
     if success
+      expire_all_caches
       @cardset.log :kind=>:skeleton_generate, :user=>current_user, :object_id=>@cardset.skeleton.id
       redirect_to skeleton_cardset_path(@cardset)
     else # need to figure out a message here... but there's currently no way generate_skeleton can return false
@@ -144,6 +158,7 @@ class CardsetsController < ApplicationController
     ok &= @cardset.news_list.save
 
     if ok
+      expire_all_caches
       set_last_edit @cardset 
       @cardset.log :kind=>:cardset_create, :user=>current_user, :object_id=>@cardset.id
       redirect_to @cardset, :notice => 'Cardset was successfully created.' 
@@ -157,6 +172,7 @@ class CardsetsController < ApplicationController
     ok = @cardset.update_attributes(params[:cardset])
     ok &= @cardset.configuration.update_attributes(params[:configuration])
     if ok
+      expire_all_caches
       set_last_edit @cardset 
       @cardset.log :kind=>:cardset_options, :user=>current_user, :object_id=>@cardset.id
       redirect_to @cardset, :notice => 'Cardset was successfully updated.' 
@@ -169,6 +185,7 @@ class CardsetsController < ApplicationController
   def destroy
     @cardset.log :kind=>:cardset_delete, :user=>current_user, :object_id=>@cardset.id
     @cardset.destroy
+    expire_all_caches
 
     redirect_to(cardsets_url)
   end
