@@ -140,6 +140,21 @@ module SessionsHelper
   def clear_return_to
     session[:return_to] = nil
   end
+  
+  #### Caching
+  
+  def expire_all_cardset_caches
+    expire_fragment :controller => 'cardsets', :id => @cardset.id, :action => :visualspoiler
+    expire_fragment :controller => 'cardsets', :id => @cardset.id, :action => :cardlist
+    expire_fragment :controller => 'cardsets', :id => @cardset.id, :action => :show
+  end
+  def expire_all_caches
+    expire_action :action => :visualspoiler
+    expire_action :action => :cardlist
+    expire_action :action => :show
+  end
+  
+  #### Private
 
   private
 

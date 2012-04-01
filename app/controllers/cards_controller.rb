@@ -142,6 +142,7 @@ class CardsController < ApplicationController
       @card.frame = @card.calculated_frame
       @card.save!
     end
+    expire_all_cardset_caches
   end
 
   # POST /cards
@@ -254,6 +255,7 @@ class CardsController < ApplicationController
       @card2.destroy
     end
     @card.destroy
+    expire_all_cardset_caches
 
     respond_to do |format|
       format.html do

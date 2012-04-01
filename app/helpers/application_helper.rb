@@ -368,6 +368,8 @@ module ApplicationHelper
      end
      chosen
   end
+  
+  #### Link helpers
 
   def link_to_comment(comment) # logic is duplicated in searches_controller
     parent = comment.parent
