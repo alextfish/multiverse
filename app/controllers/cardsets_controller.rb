@@ -100,7 +100,7 @@ class CardsetsController < ApplicationController
     Rails.logger.info "User #{current_user} importing data"
     success, message, log_text, changed_cards = @cardset.import_data(params, current_user)
     if success
-      expire_all_caches
+      expire_all_cardset_caches
       changed_cards.each do |card|
         set_last_edit card 
       end
@@ -151,7 +151,7 @@ class CardsetsController < ApplicationController
     ok &= @cardset.news_list.save
 
     if ok
-      expire_all_caches
+      expire_all_cardset_caches
       set_last_edit @cardset 
       @cardset.log :kind=>:cardset_create, :user=>current_user, :object_id=>@cardset.id
       redirect_to @cardset, :notice => 'Cardset was successfully created.' 
@@ -165,7 +165,7 @@ class CardsetsController < ApplicationController
     ok = @cardset.update_attributes(params[:cardset])
     ok &= @cardset.configuration.update_attributes(params[:configuration])
     if ok
-      expire_all_caches
+      expire_all_cardset_caches
       set_last_edit @cardset 
       @cardset.log :kind=>:cardset_options, :user=>current_user, :object_id=>@cardset.id
       redirect_to @cardset, :notice => 'Cardset was successfully updated.' 
@@ -178,7 +178,7 @@ class CardsetsController < ApplicationController
   def destroy
     @cardset.log :kind=>:cardset_delete, :user=>current_user, :object_id=>@cardset.id
     @cardset.destroy
-    expire_all_caches
+    expire_all_cardset_caches
 
     redirect_to(cardsets_url)
   end

@@ -148,11 +148,6 @@ module SessionsHelper
     expire_fragment :controller => 'cardsets', :id => @cardset.id, :action => :cardlist
     expire_fragment :controller => 'cardsets', :id => @cardset.id, :action => :show
   end
-  def expire_all_caches
-    expire_action :action => :visualspoiler
-    expire_action :action => :cardlist
-    expire_action :action => :show
-  end
   
   #### Private
 
