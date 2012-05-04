@@ -119,6 +119,7 @@ class CommentsController < ApplicationController
     if params[:comment][:body]
       # Log the comment itself's ID for comment editing
       @cardset.log :kind=>:comment_edit, :user=>current_user, :object_id=>@comment.id
+      expire_cardset_frontpage_content_cache
       # set_last_edit(@comment) - comments don't have an editor stored right now
     end
 
