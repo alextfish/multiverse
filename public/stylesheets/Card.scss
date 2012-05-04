@@ -613,7 +613,7 @@ border: none;
 .flip.form .part1 .typebox { position: relative; width: auto; top: 93px; /* top: 148px; */ }
 .flip.form .part1 .ptbox_container { top: -38px; }
 .flip.form .part1 .frame_selector_wrapper { @include show_children_of_hidden; top: +100px;}
-.flip.form .part1 .bottombox { height: 20px; }
+.flip.form .part1 .bottombox { height: 0px; /*20px;*/ }
 .flip.form .cardart { text-align: left; }
 .flip.form .type_field { width: 65px; }
 .flip.form .part2 .cardart_container { height: 50px; top: -65px;}
@@ -621,7 +621,7 @@ border: none;
 .flip.form .part2 .pinline_ptbox { right: 110px; top: -234px; }
 .flip.form .part2 .typebox { top: -32px; }
 /* .flip.form .part2 .cardtext_container { top: -52px; } */
-.flip.form .part2 .namebox { top: 220px; }
+.flip.form .part2 .namebox { top: 240px; }
 .flip.form .part1 .cardrarity { /* right: -170px; */ top: 362px; z-index: +3; }
 
 @-moz-document url-prefix() { /* Firefox override */

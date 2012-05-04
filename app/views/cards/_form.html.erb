@@ -31,6 +31,7 @@
        show_frame_select_button = false
    %>
    <div class="multipart_selector_div">
+     Frame: 
     <span id="multipart_selector_wrapper">
      <script language="JavaScript">
       MULTIPART_STANDALONE = <%= Card.STANDALONE %>;
@@ -39,12 +40,13 @@
       MULTIPART_DFCFRONT   = <%= Card.DFCFRONT %>;
      </script>
      <% 
-      frame_select_options = [["Normal", Card.STANDALONE], ["Split", "multipart_#{Card.SPLIT1}"], ["Flip", "multipart_#{Card.FLIP1}"], ["Double-Faced", "multipart_#{Card.DFCFRONT}"], ["Planeswalker", "Planeswalker"], ["Scheme", "Scheme"], ["Plane", "Plane"], ["Vanguard", "Vanguard"], ["Token", "Token"], ["Emblem", "Emblem"]]
+      frame_select_options = [["Normal", Card.STANDALONE], ["Split", Card.SPLIT1], ["Flip", Card.FLIP1], ["Double-Faced", Card.DFCFRONT]] # , ["Planeswalker", "Planeswalker"], ["Scheme", "Scheme"], ["Plane", "Plane"], ["Vanguard", "Vanguard"], ["Token", "Token"], ["Emblem", "Emblem"]]
+      # frame_select_options = [["Normal", Card.STANDALONE], ["Split", "multipart_#{Card.SPLIT1}"], ["Flip", "multipart_#{Card.FLIP1}"], ["Double-Faced", "multipart_#{Card.DFCFRONT}"], ["Planeswalker", "Planeswalker"], ["Scheme", "Scheme"], ["Plane", "Plane"], ["Vanguard", "Vanguard"], ["Token", "Token"], ["Emblem", "Emblem"]]
       %>
      <%= outer_form.select :multipart, frame_select_options, {}, 
         { :style => ( frame_select_visible ? "" : "display:none;"), 
         :onchange => "updateMultipartStyle()", :onkeyup => "updateMultipartStyle()" } %>
-     <%= outer_form.hidden_field :multipart %>
+     <% "outer_form.hidden_field :multipart" %>
     <span id="rotate_link" <% if !@card.flip? %> style="display:none;"<% end %>>
       <%= link_to_function "(Rotate)", "$('cardborder').toggleClassName('rotated');", :class => "no_tooltip" %>
     </span>

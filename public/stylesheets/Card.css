@@ -886,7 +886,8 @@ div.card_loading {
   top: 100px; }
 
 .flip.form .part1 .bottombox {
-  height: 20px; }
+  height: 0px;
+  /*20px;*/ }
 
 .flip.form .cardart {
   text-align: left; }
@@ -912,7 +913,7 @@ div.card_loading {
 
 /* .flip.form .part2 .cardtext_container { top: -52px; } */
 .flip.form .part2 .namebox {
-  top: 220px; }
+  top: 240px; }
 
 .flip.form .part1 .cardrarity {
   /* right: -170px; */
