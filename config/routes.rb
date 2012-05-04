@@ -11,6 +11,7 @@ Multiverse::Application.routes.draw do
   match '/help',    :to => 'pages#help'
   match '/news',    :to => 'pages#news'
   match '/spam',    :to => 'pages#spam'
+  match '/random',    :to => 'pages#random'
   match '/card_back', :to => 'pages#card_back'
 
   get 'pages/home'

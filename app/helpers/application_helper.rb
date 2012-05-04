@@ -394,6 +394,14 @@ module ApplicationHelper
     end
   end
   
+  def link_to_log_user(log)
+    if (log.comment? && (comment = log.return_object).kind_of?(Comment))
+      link_to_comment_user(comment)
+    else 
+      friendly_link_to_user_id log.user_id
+    end
+  end
+  
   def separate_if_both_nonblank(string1, string2, sep)
     if !string1.blank? && !string2.blank?
       (sanitize(string1) + sep + sanitize(string2)).html_safe

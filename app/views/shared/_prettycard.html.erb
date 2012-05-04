@@ -1,6 +1,6 @@
 <% # prettycard helper takes boolean param "link"
 #link = false if local_assigns[:link].nil?
-%><div class="cardborder <%= @card.border_colour %>border <%= @card.multipart_class %> <%= @extra_styles %>">
+%><div class="cardborder <%= @card.border_colour %>border <%= @card.cardframe_class %> <%= @extra_styles %>">
  <% if false && !@card.active && @card.cardset && @card.cardset.configuration.card_show_active %>
    <div class="banner">INACTIVE</div>
  <% end %>
@@ -48,7 +48,7 @@
     <div class="pinline pinline_box typebox">
      <div class="cardtypebar">
       <div class="cardrarity <%= card.rarity %>">
-        <% if !card.rarity.blank? %>
+        <% if !card.rarity.blank? && card.rarity != "none" %>
           &nbsp;<%= card.rarity[0].chr.upcase %>&nbsp;
         <% end %>
       </div>

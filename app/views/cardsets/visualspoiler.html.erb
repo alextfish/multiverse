@@ -7,28 +7,31 @@
 
 <%= render "setviews" %>
 
-<% cards_to_show = @cardset.public_cards %>
-<% if !@printable %>
-  <% num_cards_to_show = cards_to_show.count %>
-  <% num_total_cards = @cardset.cards.nonsecondary.count %>
-  <% if num_cards_to_show == num_total_cards %>
-    <p>Showing all <%= pluralize cards_to_show.count, "card" %>
-  <% else %>
-    <p>Showing <%= pluralize cards_to_show.count, "active card" %>, of <%= num_total_cards %> total
+<% cache do %>
+  <% cards_to_show = @cardset.public_cards %>
+  <% if !@printable %>
+    <% num_cards_to_show = cards_to_show.count %>
+    <% num_total_cards = @cardset.cards.nonsecondary.count %>
+    <% if num_cards_to_show == num_total_cards %>
+      <p>Showing all <%= pluralize cards_to_show.count, "card" %>
+    <% else %>
+      <p>Showing <%= pluralize cards_to_show.count, "active card" %>, of <%= num_total_cards %> total
+    <% end %>
+    </p>
   <% end %>
+  <p>
+    <% cards_to_show.sort.each do |card| %>
+      <% @card = card %>
+      <div class="CardRenderInline visualspoiler">
+        <%= render :partial => "shared/card", :locals => {:link => true} %>
+        <% if !@printable %>
+          <%= render :partial => "shared/cardcommentcount" %>
+        <% end %>
+      </div>
+    <% end %>
   </p>
 <% end %>
-<p>
-  <% cards_to_show.sort.each do |card| %>
-    <% @card = card %>
-    <div class="CardRenderInline visualspoiler">
-      <%= render :partial => "shared/card", :locals => {:link => true} %>
-      <% if !@printable %>
-        <%= render :partial => "shared/cardcommentcount" %>
-      <% end %>
-    </div>
-  <% end %>
-</p>
+
 <p><br>
   <%= render "setviews" %>
 </p>

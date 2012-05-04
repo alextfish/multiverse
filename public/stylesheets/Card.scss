@@ -127,9 +127,15 @@
   $CardPaddingBottom: 3px;
   $CardPaddingLeft: 3px;
   $CardPaddingRight: 3px;
-  $SplitCardWidth: 300px;
   $CardFormWidth: 350px;
   $DFCCardWidth: 2 * $CardWidth + 4 * $BorderWidth + 5;
+  $SmallLandscapeCardWidth: $CardHeight;
+  $SmallLandscapeCardHeight: $CardWidth;
+  $LargeLandscapeCardWidth: 2 * $CardWidth;
+  $LargeLandscapeCardHeight: $CardHeight;
+  $LargePortraitCardWidth: $CardHeight;
+  $LargePortraitCardHeight: 2 * $CardWidth;
+  
   .whiteborder .card, .whiteborder .editborder_inner { border: 1px solid #888; }
   .editborder_inner { background: white; }
   
@@ -143,10 +149,16 @@ img.tooltip_image.portrait {
   width: $CardWidth; height: $CardHeight;
 }
 img.tooltip_image.split {
-  width: $CardHeight; height: $CardWidth;
+  width: $SmallLandscapeCardWidth; height: $SmallLandscapeCardHeight;
 }
 img.tooltip_image.dfc {
   width: $DFCCardWidth; height: $CardHeight;
+}
+img.tooltip_image.plane {
+  width: $LargeLandscapeCardWidth; height: $LargeLandscapeCardHeight;
+}
+img.tooltip_image.scheme, img.tooltip_image.vanguard {
+  width: $LargePortraitCardWidth; height: $LargePortraitCardHeight;
 }
 
 div.card_loading {
@@ -163,7 +175,7 @@ div.card_loading {
   font-size: 10px;
 }
   
-  .distinct_mockup_container.split { width: $SplitCardWidth + 2 * $BorderWidth; }
+  .distinct_mockup_container.split { width: $SmallLandscapeCardWidth + 2 * $BorderWidth; }
   .distinct_mockup_container.dfc { width: $DFCCardWidth; }
   .distinct_mockup_container.portrait { width: $CardWidth + 2 * $BorderWidth; }
   .card { /* background: #0ff; */
@@ -535,7 +547,7 @@ border: none;
 
 /***** Split / Flip / Double-Faced Cards *****/
 
-.split.cardborder { min-height: 200px; width: $SplitCardWidth;}
+.split.cardborder { min-height: $SmallLandscapeCardHeight; width: $SmallLandscapeCardWidth;}
 .dfc.form .card { width: $CardFormWidth; }
 .split.form#cardborder { width: 500px; }
 .split .card { min-height: 196px; padding-top: 2px; padding-bottom: 2px;}
@@ -655,6 +667,50 @@ $DFCSunMoonSize: 20px;
   top: 20px;
 }
 //.dfc .cardart { width: 100%; }
+
+/***** Large Cards *****/
+
+.plane { 
+  &.cardborder { 
+    min-height: $LargeLandscapeCardHeight; 
+    width: $LargeLandscapeCardWidth;
+  }
+}
+
+$SchemeTopBorder: 10px;
+$SchemeOtherBorders: 20px;
+$SchemeBGColour: #D0D0D0;
+.scheme { 
+  &.cardborder { 
+    min-height: $LargePortraitCardHeight; 
+    width: $LargePortraitCardWidth;
+  }
+  .innercardborder {
+    border: 4px ridge #C94;
+    width: auto;
+    height: auto;
+    background-color: #226;
+    padding: $SchemeOtherBorders;
+    padding-top: $SchemeTopBorder;
+  }
+  .card {
+    border: 3px ridge #C94;
+    background-color: #888;
+    min-height: $LargePortraitCardHeight - $SchemeTopBorder - $SchemeOtherBorders - 3*2 - 4*2;
+    width: $LargePortraitCardWidth - 2 * $SchemeOtherBorders - 3*2 - 4*2;
+  }
+  .pinlinebox {
+    @include round_corners(0px);
+  }
+  .cardtitlebar {
+    @include round_corners(0px);
+    border-bottom: 3px ridge #C94;
+  }
+}
+
+.vanguard { }
+
+.emblem { }
 
 /***** Colour Indicators *****/
 

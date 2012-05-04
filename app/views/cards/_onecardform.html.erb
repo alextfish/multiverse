@@ -34,14 +34,11 @@
      <%= f.text_field :art_url, :class => "art_url_field" %>
      <br>
       <div class="frame_selector_wrapper">
-       <%= f.label :frame %>
+       <%= f.label :frame, "Colour" %>
        <% frames_keys = Card.display_frames 
           frames_values = Card.frames 
           frames = frames_keys.zip(frames_values) 
           frames.unshift(["Auto", "Auto"])
-          if show_multipart_frame_option 
-            frames.unshift(["Split / Flip / Double-Faced", "multipart"])
-          end
           %>
        <%= f.select :frame, frames, {},
            { :class => "frame_selector", 
@@ -106,7 +103,7 @@
       <td>
        <div style="position: relative;">
         <div class="cardrarity <%= card.rarity %> raritycell">
-         <%= f.select :rarity, Card.rarities.map{|r| [r.capitalize, r]},
+         <%= f.select :rarity, Card.rarities.map{|r| [r.capitalize.gsub("None", "Rarity:"), r]},
          { :selected => card.rarity },
          { :class => "rarity_selector", 
            :onchange => "update_card_rarity(this.value)",

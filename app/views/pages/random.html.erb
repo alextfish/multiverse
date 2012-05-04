@@ -1,0 +1,24 @@
+<h1><%= link_to (@title = "Random Cards"), random_path %></h1>
+<p>
+  <% numcards = Card.nonsecondary.count
+     num_to_show = [numcards, 15].min
+     chosencards = select_random_visible_cards(num_to_show, Card.nonsecondary)
+     %>
+  There are <%= numcards %> cards in Multiverse right now<% if numcards > 0 %>, including:
+     
+       <% chosencards.each_with_index do |card, index| %>
+         <% @card = card
+            @cardset = @card.cardset %>
+         <div class="CardRenderInline">
+           <%= render :partial => "shared/card", :locals => { :link => true } %>
+           from <%= link_to @cardset.name, @cardset %>
+           <br>
+           <%= render :partial => "shared/cardcommentcount" %>
+         </div>
+       <% end %>
+  <% end %>
+  
+</p>
+<p>
+  <%= link_to "More random cards", random_path %>
+</p>

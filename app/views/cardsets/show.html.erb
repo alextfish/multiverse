@@ -2,52 +2,56 @@
   <%= @title = @cardset.name %>
 </h1>
 
-<% @allmycards = @cardset.cards.nonsecondary %>
-<% @myactivecards = @cardset.public_cards %>
-<% @owner = @cardset.user %>
-<% card_comments = Comment.find(:all, :include => :card,
-     :conditions => ["cards.cardset_id = ?", @cardset.id])  %>
-<% cardset_comments = Comment.find(:all,
-     :conditions => ["cardset_id = ?", @cardset.id])  %>
-<% sorted_comments = (card_comments + cardset_comments).sort { |c1,c2| c2.recency <=> c1.recency } %>
-<% highlightedcomments = sorted_comments.select { |c| c.highlighted? } %>
-<% stats = @cardset.get_stats %>
+<% "Minimal computation outside cache block"
+  can_comment = permission_to?(:comment, @cardset)
+  can_edit = permission_to?(:edit, @cardset)
+%>
 
-<div class="infobox">
-  <h1>
-    <%= @cardset.name %> by <%= link_to @owner.name, @owner %>
-  </h1>
-  <p>
-    <%= pluralize @myactivecards.length, "card" %> in Multiverse
-    <% if @myactivecards.any? && !@myactivecards.all? %>
-      (plus <%= @allmycards.length - @myactivecards.length %> inactive)
-    <% end %>
-  </p>
-  <p>
-    <% rarity_stats = stats[:by_rarity].map { |rarity, count| pluralize(count, rarity) } %>
-    <%= rarity_stats.join(", ") %>
-  </p>
-  <p>
-    <% category_stats = stats[:by_category].map { |category, count| [category, count] } %>
-    <% num_second_row = category_stats.length > 5 ? category_stats.length/2 : 0 %>
-    <% num_first_row = category_stats.length - num_second_row %>
-    <% sorted_cats = category_stats.sort { |pair1, pair2|
-          (Card.category_order.index(pair1[0]) || 0) <=> (Card.category_order.index(pair2[0]) || 0)
-        } %>
-    <%= sorted_cats.take(num_first_row).map { |category, count|
-          "#{count} #{category}"
-        }.join(", ").downcase %><% if num_second_row > 0 %>,
-      <br>
-      <%= sorted_cats[num_first_row..sorted_cats.length].map { |category, count|
+<% cache(:action => "show", :action_suffix => "infobox") do %>
+
+  <% @allmycards = @cardset.cards.nonsecondary %>
+  <% @myactivecards = @cardset.public_cards %>
+  <% @owner = @cardset.user %>
+  <% @sorted_comments = @cardset.all_comments.sort { |c1,c2| c2.recency <=> c1.recency } %>
+  <% stats = @cardset.get_stats %>
+       
+  <div class="infobox">
+    <h1>
+      <%= @cardset.name %> by <%= link_to @owner.name, @owner %>
+    </h1>
+    <p>
+      <%= pluralize @myactivecards.length, "card" %> in Multiverse
+      <% if @myactivecards.any? && !@myactivecards.all? %>
+        (plus <%= @allmycards.length - @myactivecards.length %> inactive)
+      <% end %>
+    </p>
+    <p>
+      <% rarity_stats = stats[:by_rarity].map { |rarity, count| pluralize(count, rarity) } %>
+      <%= rarity_stats.join(", ") %>
+    </p>
+    <p>
+      <% category_stats = stats[:by_category].map { |category, count| [category, count] } %>
+      <% num_second_row = category_stats.length > 5 ? category_stats.length/2 : 0 %>
+      <% num_first_row = category_stats.length - num_second_row %>
+      <% sorted_cats = category_stats.sort { |pair1, pair2|
+            (Card.category_order.index(pair1[0]) || 0) <=> (Card.category_order.index(pair2[0]) || 0)
+          } %>
+      <%= sorted_cats.take(num_first_row).map { |category, count|
             "#{count} #{category}"
-          }.join(", ").downcase %>
-    <% end %>
-  </p>
-  <p>
-    <%= sorted_comments.count %> comments total
-  </p>
+          }.join(", ").downcase %><% if num_second_row > 0 %>,
+        <br>
+        <%= sorted_cats[num_first_row..sorted_cats.length].map { |category, count|
+              "#{count} #{category}"
+            }.join(", ").downcase %>
+      <% end %>
+    </p>
+    <p>
+      <%= @sorted_comments.count %> comments total
+    </p>
 
-</div>
+  </div>
+  
+<% end # Cache infobox %>
 
 <p>
   <%= @cardset.description %>
@@ -72,8 +76,7 @@
 <% end %>
 
 <p>
-  <% existing_comments = !@cardset.comments.empty?
-     can_comment = permission_to?(:comment, @cardset) %>
+  <% existing_comments = !@cardset.comments.empty? %>
   <% if existing_comments %>
     <%= link_to "Cardset comments (#{@cardset.comments.count})", cardset_comments_path( @cardset) %> 
   <% end %>
@@ -85,79 +88,87 @@
   <% end %>
 </p>
 
+<% cache(:action => "show", :action_suffix => (can_edit ? "edityes" : "editno")) do %>
 
-<% if @cardset.configuration.use_highlighting %>
-  <% if !highlightedcomments.empty? %>
-    <p>The set creator would like to draw your attention to these comments:
-      <table>
-      <% highlightedcomments.each_slice(5) do |comments_slice| %>
-        <tr>
-        <% comments_slice.each do |comment| %>
-          <% @comment = comment %>
-          <td class="comment_cell">
-          On <%= link_to_comment @comment %> (<%= link_to "reply", reply_to_comment_link(@comment)%>):
-          <%= render :partial => "shared/comment", :locals => { :show_buttons => true, :show_date => true } %>
-          </td>
-        <% end %>
-        </tr>
-      <% end %>
-      </table>
-    </p>
-  <% end %>
-<% end %>
-
-
-<% recentcards = Card.order("updated_at DESC").find_all_by_cardset_id(@cardset.id, :limit => 5).reject {|c| c.secondary? } %>
-
-<p>
-  <% if !recentcards.empty? %>
-    Recently updated cards: (<%= link_to "all recent activity", recent_cardset_path %>)    
-   <% recentcards.each do |card| %>
-     <% @card = card %>
-     <div class="CardRenderInline">
-       <%= render :partial => "shared/card", :locals => { :link => true } %>
-       <%= render :partial => "shared/cardcommentcount" %>
-     </div>
-   <% end %>
-  <% else %>
-    There are no cards in this cardset.
-    <% if permission_to?(:edit, @cardset) %>
-      Why not
-      <%= link_to "add a card", new_card_path(:cardset_id => @cardset.id) %>
-      or
-      <%= link_to "import some", import_cardset_path %>?
-    <% end %>
-  <% end %>
-</p>
-
-<div>
-  <% if sorted_comments.empty? %>
-    There are no comments on any cards in the cardset.
-    <% if !recentcards.empty? %>
-      <% if permission_to?(:edit, @cardset) %>
-        Why not ask for some feedback on a few cards from visitors, by posting some comments and highlighting them?
-      <% else %>
-        Why not browse the cards and add your thoughts?
-      <% end %>
-    <% end %>
-  <% else %>
-    Recent comments: (<%= link_to "all recent activity", recent_cardset_path %>)
-    <div class="commentlist">
-      <% num_comments_to_show = 10 %>
-      <% sorted_comments.take(num_comments_to_show).each do |comment| %>
-        <% @comment = comment %>
-        <% if @comment.nil? %>
-          <% if Rails.env.development? %>
-            NIL
-          <% end %>
-        <% else %>
-          <div>On <%= link_to_comment(@comment) %>:
+  <% "@sorted_comments may have been calculated if we evaluated the earlier cache block, or it may not, so we ||= calculate it here" %>
+  
+  <% @sorted_comments ||= @cardset.all_comments.sort { |c1,c2| c2.recency <=> c1.recency } %>
+  <% highlightedcomments = @sorted_comments.select { |c| c.highlighted? } %>
+  
+  <% if @cardset.configuration.use_highlighting %>
+    <% if !highlightedcomments.empty? %>
+      <p>The set creator would like to draw your attention to these comments:
+        <table>
+        <% highlightedcomments.each_slice(5) do |comments_slice| %>
+          <tr>
+          <% comments_slice.each do |comment| %>
+            <% @comment = comment %>
+            <td class="comment_cell">
+            On <%= link_to_comment @comment %> (<%= link_to "reply", reply_to_comment_link(@comment)%>):
             <%= render :partial => "shared/comment", :locals => { :show_buttons => true, :show_date => true } %>
-          </div>
+            </td>
+          <% end %>
+          </tr>
+        <% end %>
+        </table>
+      </p>
+    <% end %>
+  <% end %>
+
+
+  <% recentcards = Card.order("updated_at DESC").find_all_by_cardset_id(@cardset.id, :limit => 5).reject {|c| c.secondary? } %>
+
+  <p>
+    <% if !recentcards.empty? %>
+      Recently updated cards: (<%= link_to "all recent activity", recent_cardset_path %>)    
+     <% recentcards.each do |card| %>
+       <% @card = card %>
+       <div class="CardRenderInline">
+         <%= render :partial => "shared/card", :locals => { :link => true } %>
+         <%= render :partial => "shared/cardcommentcount" %>
+       </div>
+     <% end %>
+    <% else %>
+      There are no cards in this cardset.
+      <% if can_edit %>
+        Why not
+        <%= link_to "add a card", new_card_path(:cardset_id => @cardset.id) %>
+        or
+        <%= link_to "import some", import_cardset_path %>?
+      <% end %>
+    <% end %>
+  </p>
+
+  <div>
+    <% if @sorted_comments.empty? %>
+      There are no comments on any cards in the cardset.
+      <% if !recentcards.empty? %>
+        <% if can_edit %>
+          Why not ask for some feedback on a few cards from visitors, by posting some comments and highlighting them?
+        <% else %>
+          Why not browse the cards and add your thoughts?
         <% end %>
       <% end %>
-    </div>
-  <% end %>
-</div>
+    <% else %>
+      Recent comments: (<%= link_to "all recent activity", recent_cardset_path %>)
+      <div class="commentlist">
+        <% num_comments_to_show = 10 %>
+        <% @sorted_comments.take(num_comments_to_show).each do |comment| %>
+          <% @comment = comment %>
+          <% if @comment.nil? %>
+            <% if Rails.env.development? %>
+              NIL
+            <% end %>
+          <% else %>
+            <div>On <%= link_to_comment(@comment) %>:
+              <%= render :partial => "shared/comment", :locals => { :show_buttons => true, :show_date => "absolute" } %>
+            </div>
+          <% end %>
+        <% end %>
+      </div>
+    <% end %>
+  </div>
+
+<% end # Cache %>
 
 <%= link_to "See other cardsets", cardsets_path %>

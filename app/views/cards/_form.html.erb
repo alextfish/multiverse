@@ -22,13 +22,13 @@
      <img src="">
    </div>
    <div class="onetab" id="prettycard"><a name="mockup"></a -->
-   <% if @card.multipart?
-       multipart_select_visible = true
-       show_multipart_frame_option = false
+   <% "if @card.nonstandard_frame?
       else
-       multipart_select_visible = false
-       show_multipart_frame_option = true
-      end
+       frame_select_visible = false
+       show_frame_select_button = true
+      end"
+       frame_select_visible = true
+       show_frame_select_button = false
    %>
    <div class="multipart_selector_div">
     <span id="multipart_selector_wrapper">
@@ -39,20 +39,21 @@
       MULTIPART_DFCFRONT   = <%= Card.DFCFRONT %>;
      </script>
      <% 
-      multipart_select_options = [["Normal", Card.STANDALONE], ["Split", Card.SPLIT1], ["Flip", Card.FLIP1], ["Double-Faced", Card.DFCFRONT]]
+      frame_select_options = [["Normal", Card.STANDALONE], ["Split", "multipart_#{Card.SPLIT1}"], ["Flip", "multipart_#{Card.FLIP1}"], ["Double-Faced", "multipart_#{Card.DFCFRONT}"], ["Planeswalker", "Planeswalker"], ["Scheme", "Scheme"], ["Plane", "Plane"], ["Vanguard", "Vanguard"], ["Token", "Token"], ["Emblem", "Emblem"]]
       %>
-     <%= outer_form.select :multipart, multipart_select_options, {}, 
-        { :style => ( multipart_select_visible ? "" : "display:none;"), 
+     <%= outer_form.select :multipart, frame_select_options, {}, 
+        { :style => ( frame_select_visible ? "" : "display:none;"), 
         :onchange => "updateMultipartStyle()", :onkeyup => "updateMultipartStyle()" } %>
+     <%= outer_form.hidden_field :multipart %>
     <span id="rotate_link" <% if !@card.flip? %> style="display:none;"<% end %>>
       <%= link_to_function "(Rotate)", "$('cardborder').toggleClassName('rotated');", :class => "no_tooltip" %>
     </span>
    </div>
    <!-- The two card forms -->
-   <div class="<%= @card.border_colour %>border form <%= @card.multipart_class %> cardborder" id="cardborder">
-     <%= render :partial => "onecardform", :locals => { :f => outer_form, :card => @card, :card_index => 1, :show_multipart_frame_option => show_multipart_frame_option } %>
+   <div class="<%= @card.border_colour %>border form <%= @card.cardframe_class %> cardborder" id="cardborder">
+     <%= render :partial => "onecardform", :locals => { :f => outer_form, :card => @card, :card_index => 1, :show_frame_select_button => show_frame_select_button } %>
      <%= outer_form.fields_for :link do |f| %>
-       <%= render :partial => "onecardform", :locals => { :f => f, :card => @card.link, :card_index => 2, :show_multipart_frame_option => false } %>
+       <%= render :partial => "onecardform", :locals => { :f => f, :card => @card.link, :card_index => 2, :show_frame_select_button => false } %>
      <% end %>
   </div>
   </td>                    <!-- end of card -->

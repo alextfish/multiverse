@@ -50,7 +50,7 @@ class Card < ActiveRecord::Base
   #   set_last_edit(self)
   # end
   
-  DEFAULT_RARITY = "common"
+  DEFAULT_RARITY = "none"
   STRING_FIELDS = ["name","cost","supertype","cardtype","subtype","rarity","rulestext","flavourtext","code","frame","art_url","artist","image_url","watermark"]
   LONG_TEXT_FIELDS = ["rulestext", "flavourtext"]
   (STRING_FIELDS-LONG_TEXT_FIELDS).each do |field|
@@ -69,7 +69,7 @@ class Card < ActiveRecord::Base
   validates_inclusion_of :multipart, :in => [nil, Card.STANDALONE, Card.SPLIT1, Card.SPLIT2, Card.FLIP1, Card.FLIP2, Card.DFCFRONT, Card.DFCBACK]
 
   def regularise_fields
-    # Enforce rarity; Default rarity to common
+    # Enforce rarity; default rarity
     if (self.rarity.blank?) || !Card.rarities.include?(self.rarity)
       self.rarity = DEFAULT_RARITY
     end
@@ -158,6 +158,10 @@ class Card < ActiveRecord::Base
   def self.colour_pairs
     COLOUR_PAIRS
   end
+  
+  def self.default_rarity
+    DEFAULT_RARITY
+  end
 
   DISPLAY_FRAMES =
     Card.colours + ["Artifact", "Multicolour", "Colourless"] +
@@ -175,7 +179,7 @@ class Card < ActiveRecord::Base
   end
 
   def self.rarities
-    %w{common uncommon rare mythic basic token}
+    %w{none common uncommon rare mythic basic token}
   end
   def self.supertypes
     %w{Legendary Basic World Snow}
@@ -275,7 +279,12 @@ class Card < ActiveRecord::Base
       re.match(cost) ? colour : nil
     end.compact
   end
+  
   def display_class
+    if self.nontraditional_frame?
+      # Frames with no other display options
+      return self.frame
+    end
     if self.frame == "Auto"
       if self.new_record? && !self.link.new_record?
         cardclass = "" << self.link.calculated_frame
@@ -437,15 +446,15 @@ class Card < ActiveRecord::Base
   end
   
   def is_token?
-    rarity == "token"
+    rarity == "token" || frame =~ /Token/i
   end
   
   def is_planeswalker?
-    cardtype =~ /Planeswalker/
+    cardtype =~ /Planeswalker/ || frame =~ /Planeswalker/i
   end
 
   def frame
-    if Card.frames.include?(attributes["frame"]) || attributes["frame"] == "Auto"
+    if true # Card.frames.include?(attributes["frame"]) || attributes["frame"] == "Auto"
       attributes["frame"]
     else
       calculated_frame
@@ -590,6 +599,15 @@ class Card < ActiveRecord::Base
     out
   end
   
+  # The frames which appear in the Frame dropdown
+  def nonstandard_frame?
+    self.nontraditional_frame? || self.multipart?
+  end
+  # Specific frames which don't have colour
+  def nontraditional_frame?
+    ["Scheme", "Plane", "Vanguard", "Emblem"].include?(self.frame)
+  end
+  
   def multipart?
    [Card.SPLIT1, Card.SPLIT2, Card.FLIP1, Card.FLIP2, Card.DFCFRONT, Card.DFCBACK].include?(self.multipart)
   end
@@ -611,8 +629,8 @@ class Card < ActiveRecord::Base
   def Card.nonsecondary
     select {|c| !c.secondary?}
   end
-  def multipart_class
-    split? ? "split" : flip? ? "flip" : dfc? ? "dfc" : ""
+  def cardframe_class
+    nontraditional_frame? ? frame.downcase : split? ? "split" : flip? ? "flip" : dfc? ? "dfc" : ""
   end
   def tooltip_shape
     if cardset.configuration.frame == "image"

@@ -109,7 +109,7 @@ class CardsController < ApplicationController
       @card.frame = params[:colour]
     else
       @card.frame = "Auto"
-      @card.rarity = "common"
+      @card.rarity = Card.default_rarity
     end
     @card.link = @card.new_linked_card
   end
@@ -170,8 +170,10 @@ class CardsController < ApplicationController
 
   # PUT /cards/1
   def update
-    # TODO for multipart
     @card2 = @card.link
+    # Don't allow cardset moves via update action
+    params.delete_if {|key, value| key == :cardset } 
+    
     old_multipart = @card.multipart?
     if @card.update_attributes(params[:card])
       new_multipart = @card.multipart?
@@ -217,6 +219,11 @@ class CardsController < ApplicationController
         @card2.cardset = @card.cardset  # no logs needed for secondary cards
         @card2.save
       end
+      
+      @cardset = @cardset1
+      expire_all_cardset_caches
+      @cardset = @cardset2
+      expire_all_cardset_caches
 
       redirect_to @card, :notice => "Card was moved from #{@cardset1.name} to #{@cardset2.name}."
     else

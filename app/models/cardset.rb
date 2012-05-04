@@ -41,6 +41,16 @@ class Cardset < ActiveRecord::Base
     out
   end
   
+  def all_comments
+    # Includes comments directly on the cardset and those on
+    # cards in the cardset
+    card_comments = Comment.find :all, :include => :card,
+       :conditions => ["cards.cardset_id = ?", self.id]
+    cardset_comments = Comment.find :all,
+       :conditions => ["cardset_id = ?", self.id]
+    (cardset_comments + card_comments)
+  end
+  
   def log(in_hash)
     # Create the Log
     new_log = self.logs.create :kind=>Log.kind(in_hash[:kind]), 

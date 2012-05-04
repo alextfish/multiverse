@@ -6,6 +6,12 @@ class DetailsPagesController < ApplicationController
   before_filter :only => [:new, :create, :edit, :update, :destroy] do
     require_permission_to_admin(@cardset)
   end
+  
+  def expire_if_skeleton
+    if @details_page.title == "Skeleton"
+      expire_skeleton_cache
+    end
+  end
 
   # GET /details_pages/1
   # GET /details_pages/1.xml
@@ -35,6 +41,7 @@ class DetailsPagesController < ApplicationController
 
     if @details_page.save
       set_last_edit @details_page
+      expire_if_skeleton
       @cardset.log :kind=>:details_page_create, :user=>current_user, :object_id=>@details_page.id
       redirect_to([@cardset, @details_page], :notice => 'Details page was successfully created.')
     else
@@ -59,6 +66,7 @@ class DetailsPagesController < ApplicationController
       # Normal update
       if @details_page.update_attributes(params[:details_page])
         set_last_edit @details_page
+        expire_if_skeleton
         @cardset.log :kind=>:details_page_edit, :user=>current_user, :object_id=>@details_page.id
         redirect_to([@cardset, @details_page], :notice => 'Details page was successfully updated.')
       else

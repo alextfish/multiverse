@@ -15,10 +15,10 @@ class CardsetsController < ApplicationController
   end
   
   # All static views
-  caches_action :visualspoiler, :layout => false
-  caches_action :cardlist, :layout => false
-  caches_action :skeleton, :layout => false
-  caches_action :show, :layout => false
+  # caches_action :visualspoiler, :layout => false
+  # caches_action :cardlist, :layout => false
+  # caches_action :skeleton, :layout => false
+  # caches_action :show, :layout => false
                               
   # GET /cardsets             
   # GET /cardsets.xml         
@@ -117,7 +117,7 @@ class CardsetsController < ApplicationController
     Rails.logger.info "Generating skeleton for #{@cardset.name}"
     success = @cardset.generate_skeleton(params)
     if success
-      expire_action :action => :skeleton
+      expire_skeleton_cache # ==expire_action :action => :skeleton
       @cardset.log :kind=>:skeleton_generate, :user=>current_user, :object_id=>@cardset.skeleton.id
       redirect_to skeleton_cardset_path(@cardset)
     else # need to figure out a message here... but there's currently no way generate_skeleton can return false

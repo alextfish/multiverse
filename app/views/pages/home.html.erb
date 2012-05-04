@@ -32,24 +32,7 @@
 <%= render :partial => "shared/new_features", :locals => { :news_type => :link } %>
 
 <p>
-  <% numcards = Card.nonsecondary.count
-     num_to_show = [numcards, 5].min
-     chosencards = select_random_visible_cards(num_to_show, Card.nonsecondary)
-     %>
-  There are <%= numcards %> cards in Multiverse right now<% if numcards > 0 %>, including:
-    <table>
-     <tr>
-          
-       <% chosencards.each do |card| %>
-         <td><%= link_to card.printable_name, card %>
-         <br>from <%= link_to card.cardset.name, card.cardset %>
-         <% @card = card %>
-         <%= render :partial => "shared/prettycard", :locals => { :link => true } %>
-         <%= link_to "Comments (#{@card.comments.count})", @card %>
-       <% end %>
-    </tr>
-   </table>
-  <% end %>
+  You might like to <%= link_to "see a random selection", random_path %> of all the cards on Multiverse.
 </p>
 <p>
   <% if signed_in? %>

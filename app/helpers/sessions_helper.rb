@@ -145,8 +145,29 @@ module SessionsHelper
   
   def expire_all_cardset_caches
     expire_fragment :controller => 'cardsets', :id => @cardset.id, :action => :visualspoiler
-    expire_fragment :controller => 'cardsets', :id => @cardset.id, :action => :cardlist
-    expire_fragment :controller => 'cardsets', :id => @cardset.id, :action => :show
+    expire_cardset_cardlist_cache
+    expire_cardset_frontpage_cache
+    expire_skeleton_cache
+  end
+  def expire_skeleton_cache
+    expire_fragment :controller => 'cardsets', :id => @cardset.id, :action => :skeleton
+  end
+  def expire_cardset_frontpage_cache
+    ["edityes", "editno", "infobox"].each {|suffix| 
+      expire_fragment :controller => 'cardsets', :id => @cardset.id, :action => 'show', :action_suffix => suffix
+    }
+  end
+  def expire_cardset_frontpage_content_cache
+    ["edityes", "editno"].each {|suffix| 
+      expire_fragment :controller => 'cardsets', :id => @cardset.id, :action => 'show', :action_suffix => suffix
+    }
+  end
+  def expire_cardset_cardlist_cache
+    ["edityes", "editno"].each {|editsuffix| 
+      ["deleteyes", "deleteno"].each {|deletesuffix| 
+        expire_fragment :controller => 'cardsets', :id => @cardset.id, :action => 'cardlist', :action_suffix => (editsuffix + "_" + deletesuffix)
+      }
+    }
   end
   
   #### Private

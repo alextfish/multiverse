@@ -72,7 +72,7 @@ class CommentsController < ApplicationController
   end
 
   # INDEX: only exists for cardset comments
-  # Includes a form to create new comment,
+  # Includes a form to create new comment
   def index
     @comment = @cardset.comments.build
   end
@@ -90,6 +90,9 @@ class CommentsController < ApplicationController
       if ok
         log_kind = ( @comment.card ? :comment_card : :comment_cardset )
         @cardset.log :kind=>log_kind, :user=>current_user, :object_id=>@comment.id
+        
+        expire_cardset_cardlist_cache
+        expire_cardset_frontpage_cache
       else
         flash[:error] = "Error creating comment: #{@comment.errors}"
       end
@@ -100,7 +103,19 @@ class CommentsController < ApplicationController
   # PUT /comments/1
   def update
     @comment = Comment.find(params[:id])
+    old_addr = @comment.addressed?
+    old_hili = @comment.highlighted?
+    
     @comment.update_attributes(params[:comment])
+    new_addr = @comment.addressed?
+    new_hili = @comment.highlighted?
+    
+    if new_addr != old_addr
+      expire_cardset_cardlist_cache
+      expire_cardset_frontpage_content_cache
+    elsif new_hili != old_hili
+      expire_cardset_frontpage_content_cache
+    end
     if params[:comment][:body]
       # Log the comment itself's ID for comment editing
       @cardset.log :kind=>:comment_edit, :user=>current_user, :object_id=>@comment.id

@@ -10,7 +10,15 @@
   active_display = @cardset.configuration.cardlist_show_active ? "" : "style='display:none;'" 
   comment_display = @cardset.configuration.cardlist_show_comments ? "" : "style='display:none;'" 
   update_display = "style='display:none;'" 
+  
+  can_edit = permission_to?(:edit, @cardset)
+  can_delete = permission_to?(:delete, @cardset)
+  unaddressed_column = can_edit && @cardset.configuration.use_addressing 
+  cache_suffix = (can_edit ? "edityes" : "editno") + "_" + (can_delete ? "deleteyes" : "deleteno")
 %>
+
+<% cache(:action => "cardlist", :action_suffix => cache_suffix) do %>
+
 <div><span class="controls">
   <% toggleable_fields = [
       ["card_text", "card text", true],
@@ -18,8 +26,7 @@
       ["active", "active", @cardset.configuration.cardlist_show_active],
       ["updated", "last update", false],
       ["comments", "comments", @cardset.configuration.cardlist_show_comments]
-    ]
-    unaddressed_column = permission_to?(:edit, @cardset) && @cardset.configuration.use_addressing %>
+    ]%>
   <% toggleable_fields.each do |field_class, field_text, initially_shown| %>
     <span class="one_control" onclick="$$('.<%= field_class %>').invoke('toggle');"
       ><span class="<%= field_class %> shown_control" <%= initially_shown ? "" : "style='display:none;'" %>>Hide <%= field_text %></span
@@ -48,7 +55,7 @@
     <% if unaddressed_column %>
       <th class="comments" <%= comment_display %>>Unaddressed</th>
     <% end %>
-    <% if permission_to?(:edit, @cardset) || permission_to?(:delete, @cardset) %>
+    <% if can_edit || can_delete %>
       <th colspan="3" class="nosort">&nbsp;</th>
     <% end %>
   </tr>
@@ -111,13 +118,13 @@
           <%= format_datetime(card_comments_sorted[0].created_at) %> by <%= link_to_comment_user card_comments_sorted[0] %>
         <% end %>
       </td>
-      <% if permission_to?(:edit, @cardset) && @cardset.configuration.use_addressing %>
+      <% if unaddressed_column %>
         <td class="comments" <%= comment_display %>><%= card_comments_sorted.select { |c| c.unaddressed? }.count %></td>
       <% end %>
-      <% if permission_to?(:edit, @cardset) %>
+      <% if can_edit %>
         <td><%= link_to "Edit", edit_card_path(card) %></td>
       <% end %>
-      <% if permission_to?(:delete, @cardset) %>
+      <% if can_delete %>
         <td><%= link_to "Delete", card, {:confirm => "Really DELETE #{card.printable_name}?", :method => :delete, :remote => true, :class => "no_tooltip" } %></td>
       <% end %>
     </tr>
@@ -127,5 +134,7 @@
   </table>
   No cards in this cardset!
 <% end %>
+
+<% end # "Cache" %>
 
 <%= render "setviews" %>

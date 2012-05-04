@@ -64,6 +64,14 @@ img.tooltip_image.dfc {
   width: 445px;
   height: 300px; }
 
+img.tooltip_image.plane {
+  width: 400px;
+  height: 300px; }
+
+img.tooltip_image.scheme, img.tooltip_image.vanguard {
+  width: 300px;
+  height: 400px; }
+
 div.card_loading {
   height: 300px;
   text-align: center;
@@ -960,6 +968,38 @@ div.card_loading {
 .dfc.form .left_of_namebox {
   position: relative;
   top: 20px; }
+
+/***** Large Cards *****/
+.plane.cardborder {
+  min-height: 300px;
+  width: 400px; }
+
+.scheme.cardborder {
+  min-height: 400px;
+  width: 300px; }
+.scheme .innercardborder {
+  border: 4px ridge #C94;
+  width: auto;
+  height: auto;
+  background-color: #226;
+  padding: 20px;
+  padding-top: 10px; }
+.scheme .card {
+  border: 3px ridge #C94;
+  background-color: #888;
+  min-height: 356px;
+  width: 246px; }
+.scheme .pinlinebox {
+  -moz-border-radius: 0px;
+  -webkit-border-radius: 0px;
+  -khtml-border-radius: 0px;
+  border-radius: 0px; }
+.scheme .cardtitlebar {
+  -moz-border-radius: 0px;
+  -webkit-border-radius: 0px;
+  -khtml-border-radius: 0px;
+  border-radius: 0px;
+  border-bottom: 3px ridge #C94; }
 
 /***** Colour Indicators *****/
 img.colour_indicator {

@@ -1,7 +1,12 @@
 <% "Takes one parameter, show_date" %>
 <% if show_date %>
 <div class="commentdetails">
-  <%= format_datetime @comment.created_at %> by
+  <% if show_date == "absolute" %>
+    on <%= format_datetime_absolute @comment.created_at %>
+  <% else %>
+    <%= format_datetime @comment.created_at %>
+  <% end %>
+  by
   <%= link_to_comment_user @comment %>:
 <% end %>
   <% target_of_links = @comment # (@comment.cardset_id ? [@cardset, @comment] : @comment) %>

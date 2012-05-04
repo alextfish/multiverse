@@ -10,7 +10,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20120102223301) do
+ActiveRecord::Schema.define(:version => 20120414175800) do
 
   create_table "cards", :force => true do |t|
     t.string   "code"
@@ -39,6 +39,7 @@ ActiveRecord::Schema.define(:version => 20120102223301) do
     t.integer  "parent_id"
     t.string   "watermark"
     t.boolean  "colour_indicator"
+    t.string   "colour"
   end
 
   add_index "cards", ["cardset_id"], :name => "index_cards_on_cardset_id"
