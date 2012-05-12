@@ -267,6 +267,8 @@ div.card_loading {
               padding-right: 3px;
               margin-right: 2px;
               border: 1px solid black; }
+  .cardrarity.none { border: none; }
+              
   @-moz-document url-prefix() { /* Firefox wants it just fractionally lower... */
     .cardrarity { top: -0.5px; }
   }
@@ -279,8 +281,9 @@ div.card_loading {
               top: -2px;
               height: 100%;
               width: 100%;}
+  $CardTextHeight: 95px;
   .cardtext { /*width: *; */
-              min-height: 95px;  
+              min-height: $CardTextHeight;
               padding: 2px; }
   .rulestext_wrapper { z-index: 2; /*position: absolute;*/ }
   .rulestext, .flavourtext {}
@@ -680,31 +683,88 @@ $DFCSunMoonSize: 20px;
 $SchemeTopBorder: 10px;
 $SchemeOtherBorders: 20px;
 $SchemeBGColour: #D0D0D0;
+$SchemeRidgeColour: #C94;
+$SchemeInnerHeight: $LargePortraitCardHeight - $SchemeTopBorder - $SchemeOtherBorders - 3*2 - 4*2;
+$PinlineBoxHeight: 16px;
+$SchemeArtHeight: $SchemeInnerHeight - (3 + $PinlineBoxHeight + 3)*2 - ($CardTextHeight + 2 + 2);
 .scheme { 
   &.cardborder { 
     min-height: $LargePortraitCardHeight; 
     width: $LargePortraitCardWidth;
   }
   .innercardborder {
-    border: 4px ridge #C94;
+    border: 4px ridge $SchemeRidgeColour;
     width: auto;
     height: auto;
-    background-color: #226;
+    background-color: rgba(32, 32, 64, 0.5);
     padding: $SchemeOtherBorders;
     padding-top: $SchemeTopBorder;
   }
   .card {
-    border: 3px ridge #C94;
-    background-color: #888;
-    min-height: $LargePortraitCardHeight - $SchemeTopBorder - $SchemeOtherBorders - 3*2 - 4*2;
+    border: 1px ridge $SchemeRidgeColour;
+    border-top: none;
+    background-color: rgba(128, 128, 128, 0.5);
+    min-height: $SchemeInnerHeight;
     width: $LargePortraitCardWidth - 2 * $SchemeOtherBorders - 3*2 - 4*2;
+    padding: 0px;
   }
-  .pinlinebox {
+  .pinline, .pinline > div, .pinline_box, .pinline_box > div {
+    border: none;
+    padding: 0px;
+  }
+  .pinline_box {
     @include round_corners(0px);
+    border-top: 3px ridge $SchemeRidgeColour;
+    border-bottom: 3px ridge $SchemeRidgeColour;
   }
   .cardtitlebar {
     @include round_corners(0px);
-    border-bottom: 3px ridge #C94;
+    border-bottom: 3px ridge $SchemeRidgeColour;
+    background-color: rgba(255, 255, 255, 0.9);
+  }
+  .cardname {
+    float: none;
+    text-align: center;
+  }
+  .cardmanacost {
+    display: none;
+  }
+  .cardtext_container, .cardtype {
+    background-image: none;
+    background-color: rgba(255, 255, 255, 0.8);
+  }
+  .cardart {
+    height: $SchemeArtHeight;
+  }
+  /* Fading around artbox and textbox: two layers
+    - one of mostly-solid darkish grey, 
+    the other of faintly-solid medium grey */
+  .cardart_container, .cardtext_container {
+    padding: 0px;
+    border-left: 2px solid rgba(64, 64, 64, 0.8);
+    border-right: 2px solid rgba(64, 64, 64, 0.8);
+  }
+  .cardtext_container {
+    border-bottom: 2px solid rgba(64, 64, 64, 0.8);
+  }
+  .pinline_sides, .pinline_sidesbottom {
+    border-left: 2px solid rgba(128, 128, 128, 0.4);
+    border-right: 2px solid rgba(128, 128, 128, 0.4);
+  }
+  .pinline_sidesbottom {
+    border-bottom: 2px solid rgba(128, 128, 128, 0.4);
+  }
+  .cardtype {
+    padding-left: 5px;
+  }
+  .bottombox {
+    position: absolute;
+    text-align: center;
+    width: 100%;
+    color: white;
+  }
+  div.cardtext { /* "div" required because of the "> div" rule above */
+    padding: 8px;
   }
 }
 
@@ -724,7 +784,8 @@ img.colour_indicator {
 }
 
 /***** Colours *****/
-
+$Colourless_Card: #ccc6cc;
+$Colourless_Text: #f2ecf2;
 $White_Card: #efe8d4; /* #FBF9EA; */
 $White_Pinline: #F2EFEA;
 $White_Bar: #fffff9;
@@ -782,10 +843,10 @@ $Land_Colourless_DFC_Text: #D8CFC8;
 
 .dfc .part2 .cardtitlebar, .dfc .part2 .cardtypebar, .dfc .part2 .pinline_ptbox { color: #fff; }
 
-.Colourless.card, .Colourless .cardart  { background-color: #ccc6cc; }
+.Colourless.card, .Colourless .cardart  { background-color: $Colourless_Card; }
 .Colourless .pinline { background-color: #ddd; }
 .Colourless .cardtitlebar, .Colourless .cardtypebar { background-color: #eee9ee; }
-.Colourless .cardtext, .Colourless .pinline_ptbox { background: #f2ecf2 !important; }
+.Colourless .cardtext, .Colourless .pinline_ptbox { background: $Colourless_Text !important; }
 .dfc .part2.Colourless {
   .cardtitlebar, .cardtypebar { background-color: $Colourless_DFC_Bar; }
   .cardtext { background: $Colourless_DFC_Text !important; }
@@ -1089,33 +1150,32 @@ td.form_info_cell { color: #666; }
 .skeleton_letter_toggle.code_shown#rarity_U_toggle { @extend .uncommon; }
 .skeleton_letter_toggle.code_shown#rarity_R_toggle { @extend .rare; }
 .skeleton_letter_toggle.code_shown#rarity_M_toggle { @extend .mythic; }
-.code_frame_W { background-color: $Land_White_Text; }
-.code_frame_U { background-color: $Land_Blue_Text; }
-.code_frame_B { background-color: $Land_Black_Text; }
-.code_frame_R { background-color: $Land_Red_Text; }
-.code_frame_G { background-color: $Land_Green_Text; }
-.code_frame_A { background-color: $Artifact_Text; }
-.code_frame_M, .code_frame_Z { background-color: $Multicolour_Background; }
-.code_frame_H { @include gradient_horz_padded($Land_White_Text, $Land_Black_Text); }
-.code_frame_L { background-color: $Land_Colourless_Bar; }
-.code_rarity_C td.code_link, .code_rarity_C td.code_link a {
-  @extend .cardrarity.common;
-  text-shadow: 1px 0 #888888;
+tr, span {
+  &.code_frame_C { background-color: $Colourless_Text; }
+  &.code_frame_W { background-color: $Land_White_Text; }
+  &.code_frame_U { background-color: $Land_Blue_Text; }
+  &.code_frame_B { background-color: $Land_Black_Text; }
+  &.code_frame_R { background-color: $Land_Red_Text; }
+  &.code_frame_G { background-color: $Land_Green_Text; }
+  &.code_frame_A { background-color: $Artifact_Text; }
+  &.code_frame_M, .code_frame_Z { background-color: $Multicolour_Background; }
+  &.code_frame_H { @include gradient_horz_padded($Land_White_Text, $Land_Black_Text); }
+  &.code_frame_L { background-color: $Land_Colourless_Bar; }
+  &.code_rarity_C td.code_link, &.code_rarity_C td.code_link a {
+    @extend .cardrarity.common;
+    text-shadow: 1px 0 #888888;
+  }
 }
 .code_rarity_U td.code_link { @extend .uncommon; }
 .code_rarity_R td.code_link { @extend .rare; }
 .code_rarity_M td.code_link { @extend .mythic; }
 /* td.code_link { text-align: center; } */
 
-.code_frame_W.code_not_shown,
-.code_frame_U.code_not_shown,
-.code_frame_B.code_not_shown,
-.code_frame_R.code_not_shown,
-.code_frame_G.code_not_shown,
-.code_frame_A.code_not_shown,
-.code_frame_H.code_not_shown,
-.code_frame_M.code_not_shown, .code_frame_Z.code_not_shown,
-.code_frame_L.code_not_shown { background-color: white; background: white; }
+
+.skeleton_letter_toggle { margin: auto; padding-left: 6px; padding-right: 6px; border: 1px solid black; }
+.code_shown { color: black; font-style: normal; }
+.code_not_shown { color: #999; font-style: italic; }
+.skeleton_letter_toggle.code_not_shown { background-color: white; background: white; }
 
 div.wizardsimage {
   /* @extend .blackborder;

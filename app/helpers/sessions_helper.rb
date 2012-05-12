@@ -23,21 +23,21 @@ module SessionsHelper
 
   def require_any_login
     if !signed_in?
-      interrupt_for_login :notice => "Please sign in to access this page."
+      interrupt_for_login :notice => "Please sign in to access this."
     end
   end
   def require_login_as_admin(cardset)
     if !signed_in?
-      interrupt_for_login :notice => "Please sign in. Only admins of #{cardset.name} are permitted to access that page."
+      interrupt_for_login :notice => "Please sign in. Only admins of #{cardset.name} are permitted to access that."
     elsif !signed_in_as_admin?(cardset)
-      redirect_to :back, :notice => "Only admins of #{cardset.name} are permitted to access that page."
+      redirect_back :notice => "Only admins of #{cardset.name} are permitted to access that."
     end
   end
   def require_login_as_moderator
     if !signed_in?
-      interrupt_for_login :notice => "Only moderators are permitted to access that page."
+      interrupt_for_login :notice => "Only moderators are permitted to access that."
     elsif !signed_in_as_moderator?
-      redirect_to :back, :notice => "Only moderators are permitted to access that page."
+      redirect_back :notice => "Only moderators are permitted to access that."
     end
   end
   def require_permission_to(action, cardset)
@@ -45,7 +45,7 @@ module SessionsHelper
       if !signed_in?
         interrupt_for_login :notice => cardset.permission_message(action) and return false
       else
-        redirect_to :back, :notice => cardset.permission_message(action) and return false
+        redirect_back :notice => cardset.permission_message(action) and return false
       end
     else
       return true
@@ -56,7 +56,7 @@ module SessionsHelper
       if !signed_in?
         interrupt_for_login :notice => "Only the comment's author may edit it."
       else
-        redirect_to :back, :notice => "Only the comment's author may edit it."
+        redirect_back :notice => "Only the comment's author may edit it."
       end
     end
   end
@@ -125,7 +125,13 @@ module SessionsHelper
 
   def interrupt_for_login(noticehash)
     store_location
+    Rails.logger.info "Interrupting for login - #{noticehash[:notice]}"
     redirect_to signin_path, noticehash
+  end
+  
+  def redirect_back(noticehash)
+    Rails.logger.info "Returning to previous - #{noticehash[:notice]}"
+    redirect_to :back
   end
 
   def store_location

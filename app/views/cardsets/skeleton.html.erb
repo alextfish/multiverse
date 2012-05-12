@@ -347,18 +347,7 @@
       <% present_frame_letters = @skeleton.body.lines.grep(Cardset.skeleton_line_regexp_MD) do |line|
         line.match(Cardset.skeleton_line_regexp_MD)[2]
       end.uniq %>
-      <% frame_toggle_letters = Card.frame_code_letters.select {|l| present_frame_letters.include?(l)} %>
-      <% if frame_toggle_letters.any? %>
-        Show frames:
-        <% frame_toggle_letters.each do |letter| %>
-          <span id="frame_<%= letter %>_toggle" class="skeleton_letter_toggle code_shown code_frame_<%= letter %>" onclick="toggle_frame_letter(this)"><%= letter %></span>
-        <% end %>
-      <% end %>
-      <br>
-        Show rarities:
-        <% ["C", "U", "R", "M"].each do |letter| %>
-          <span id="rarity_<%= letter %>_toggle" class="skeleton_letter_toggle code_shown" onclick="toggle_rarity_letter(this)"><%= letter %></span>
-        <% end %>
+      <%= render :partial => "card_category_buttons", :locals => { :present_frame_letters => present_frame_letters, :present_rarity_letters => ["C" "U" "R" "M"]} %>
       <%= format_skeleton_table(format_all_markup(@skeleton.body, @cardset)) %>
     </div>
   <% end %>

@@ -254,6 +254,9 @@ div.card_loading {
   margin-right: 2px;
   border: 1px solid black; }
 
+.cardrarity.none {
+  border: none; }
+
 @-moz-document url-prefix() {
   /* Firefox wants it just fractionally lower... */
   .cardrarity {
@@ -372,7 +375,7 @@ div.card_loading {
 .minitext  img { width: 12px; height: 12px; }
 .microtext img { width: 11px; height: 11px; }
 .nanotext  img { width: 10px; height: 10px; } */
-.cardrarity.common, .skeleton_letter_toggle.code_shown#rarity_C_toggle, .code_rarity_C td.code_link, .code_rarity_C td.code_link a, .cardrarity.token, .cardrarity.basic {
+.cardrarity.common, .skeleton_letter_toggle.code_shown#rarity_C_toggle, tr.code_rarity_C td.code_link, tr.code_rarity_C td.code_link a, span.code_rarity_C td.code_link, span.code_rarity_C td.code_link a, .cardrarity.token, .cardrarity.basic {
   color: #fff;
   background-color: #000; }
 
@@ -975,32 +978,75 @@ div.card_loading {
   min-height: 300px;
   width: 400px; }
 
-.scheme.cardborder {
-  min-height: 400px;
-  width: 300px; }
-.scheme .innercardborder {
-  border: 4px ridge #C94;
-  width: auto;
-  height: auto;
-  background-color: #226;
-  padding: 20px;
-  padding-top: 10px; }
-.scheme .card {
-  border: 3px ridge #C94;
-  background-color: #888;
-  min-height: 356px;
-  width: 246px; }
-.scheme .pinlinebox {
-  -moz-border-radius: 0px;
-  -webkit-border-radius: 0px;
-  -khtml-border-radius: 0px;
-  border-radius: 0px; }
-.scheme .cardtitlebar {
-  -moz-border-radius: 0px;
-  -webkit-border-radius: 0px;
-  -khtml-border-radius: 0px;
-  border-radius: 0px;
-  border-bottom: 3px ridge #C94; }
+.scheme {
+  /* Fading around artbox and textbox: two layers
+    - one of mostly-solid darkish grey, 
+    the other of faintly-solid medium grey */ }
+  .scheme.cardborder {
+    min-height: 400px;
+    width: 300px; }
+  .scheme .innercardborder {
+    border: 4px ridge #cc9944;
+    width: auto;
+    height: auto;
+    background-color: rgba(32, 32, 64, 0.5);
+    padding: 20px;
+    padding-top: 10px; }
+  .scheme .card {
+    border: 1px ridge #cc9944;
+    border-top: none;
+    background-color: rgba(128, 128, 128, 0.5);
+    min-height: 356px;
+    width: 246px;
+    padding: 0px; }
+  .scheme .pinline, .scheme .pinline > div, .scheme .pinline_box, .scheme .pinline_box > div {
+    border: none;
+    padding: 0px; }
+  .scheme .pinline_box {
+    -moz-border-radius: 0px;
+    -webkit-border-radius: 0px;
+    -khtml-border-radius: 0px;
+    border-radius: 0px;
+    border-top: 3px ridge #cc9944;
+    border-bottom: 3px ridge #cc9944; }
+  .scheme .cardtitlebar {
+    -moz-border-radius: 0px;
+    -webkit-border-radius: 0px;
+    -khtml-border-radius: 0px;
+    border-radius: 0px;
+    border-bottom: 3px ridge #cc9944;
+    background-color: rgba(255, 255, 255, 0.9); }
+  .scheme .cardname {
+    float: none;
+    text-align: center; }
+  .scheme .cardmanacost {
+    display: none; }
+  .scheme .cardtext_container, .scheme .cardtype {
+    background-image: none;
+    background-color: rgba(255, 255, 255, 0.8); }
+  .scheme .cardart {
+    height: 213px; }
+  .scheme .cardart_container, .scheme .cardtext_container {
+    padding: 0px;
+    border-left: 2px solid rgba(64, 64, 64, 0.8);
+    border-right: 2px solid rgba(64, 64, 64, 0.8); }
+  .scheme .cardtext_container {
+    border-bottom: 2px solid rgba(64, 64, 64, 0.8); }
+  .scheme .pinline_sides, .scheme .pinline_sidesbottom {
+    border-left: 2px solid rgba(128, 128, 128, 0.4);
+    border-right: 2px solid rgba(128, 128, 128, 0.4); }
+  .scheme .pinline_sidesbottom {
+    border-bottom: 2px solid rgba(128, 128, 128, 0.4); }
+  .scheme .cardtype {
+    padding-left: 5px; }
+  .scheme .bottombox {
+    position: absolute;
+    text-align: center;
+    width: 100%;
+    color: white; }
+  .scheme div.cardtext {
+    /* "div" required because of the "> div" rule above */
+    padding: 8px; }
 
 /***** Colour Indicators *****/
 img.colour_indicator {
@@ -1787,50 +1833,49 @@ td.form_info_cell {
   display: inline-block; }
 
 /***** Skeletons *****/
-.code_frame_W {
+tr.code_frame_C, span.code_frame_C {
+  background-color: #f2ecf2; }
+tr.code_frame_W, span.code_frame_W {
   background-color: #ffffcc; }
-
-.code_frame_U {
+tr.code_frame_U, span.code_frame_U {
   background-color: #99c5ff; }
-
-.code_frame_B {
+tr.code_frame_B, span.code_frame_B {
   background-color: #bbbbbb; }
-
-.code_frame_R {
+tr.code_frame_R, span.code_frame_R {
   background-color: #ff9988; }
-
-.code_frame_G {
+tr.code_frame_G, span.code_frame_G {
   background-color: #ccffcc; }
-
-.code_frame_A {
+tr.code_frame_A, span.code_frame_A {
   background-color: #d5dde0; }
-
-.code_frame_M, .code_frame_Z {
+tr.code_frame_M, tr .code_frame_Z, span.code_frame_M, span .code_frame_Z {
   background-color: #cab86c; }
-
-.code_frame_H {
+tr.code_frame_H, span.code_frame_H {
   filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#ffffcc', endColorstr='#bbbbbb', GradientType=1);
   background: -moz-linear-gradient(left, #ffffcc, #ffffcc, #bbbbbb, #bbbbbb); }
   @media screen {
-    .code_frame_H {
+    tr.code_frame_H, span.code_frame_H {
       background: -webkit-gradient(linear, left top, right top, from(#ffffcc), color-stop(0.4, #ffffcc), color-stop(0.6, #bbbbbb), to(#bbbbbb)); } }
-
-.code_frame_L {
+tr.code_frame_L, span.code_frame_L {
   background-color: #d8cfc8; }
-
-.code_rarity_C td.code_link, .code_rarity_C td.code_link a {
+tr.code_rarity_C td.code_link, tr.code_rarity_C td.code_link a, span.code_rarity_C td.code_link, span.code_rarity_C td.code_link a {
   text-shadow: 1px 0 #888888; }
 
 /* td.code_link { text-align: center; } */
-.code_frame_W.code_not_shown,
-.code_frame_U.code_not_shown,
-.code_frame_B.code_not_shown,
-.code_frame_R.code_not_shown,
-.code_frame_G.code_not_shown,
-.code_frame_A.code_not_shown,
-.code_frame_H.code_not_shown,
-.code_frame_M.code_not_shown, .code_frame_Z.code_not_shown,
-.code_frame_L.code_not_shown {
+.skeleton_letter_toggle {
+  margin: auto;
+  padding-left: 6px;
+  padding-right: 6px;
+  border: 1px solid black; }
+
+.code_shown {
+  color: black;
+  font-style: normal; }
+
+.code_not_shown {
+  color: #999;
+  font-style: italic; }
+
+.skeleton_letter_toggle.code_not_shown {
   background-color: white;
   background: white; }
 

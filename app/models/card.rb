@@ -285,8 +285,8 @@ class Card < ActiveRecord::Base
       # Frames with no other display options
       return self.frame
     end
-    if self.frame == "Auto"
-      if self.new_record? && !self.link.new_record?
+    if self.frame.nil? || self.frame == "Auto"
+      if self.new_record? && self.link.present? && !self.link.new_record?
         cardclass = "" << self.link.calculated_frame
       else
         cardclass = "" << self.calculated_frame
@@ -444,6 +444,17 @@ class Card < ActiveRecord::Base
         return f
     end
   end
+  def category_letter
+    case (cat = category)
+      when "Blue"
+        "U"
+      else
+        cat[0]
+    end
+  end
+  def rarity_letter
+    rarity[0].upcase
+  end
   
   def is_token?
     rarity == "token" || frame =~ /Token/i
@@ -518,6 +529,23 @@ class Card < ActiveRecord::Base
           return "Colourless"
         end
     end
+  end
+  
+  def show_whole_card_image?
+    is_planeswalker? || is_scheme? || is_plane?
+  end
+  def show_mana_cost?
+    !is_token? && !nontraditional_frame? 
+  end
+  def show_art_box?
+    !art_url.blank? && !show_whole_card_image?
+  end
+  
+  def is_scheme?
+    frame == "Scheme"
+  end
+  def is_plane?
+    frame == "Plane"
   end
   
   def separator
@@ -603,7 +631,7 @@ class Card < ActiveRecord::Base
   def nonstandard_frame?
     self.nontraditional_frame? || self.multipart?
   end
-  # Specific frames which don't have colour
+  # Specific frames which don't have colour or mana cost
   def nontraditional_frame?
     ["Scheme", "Plane", "Vanguard", "Emblem"].include?(self.frame)
   end

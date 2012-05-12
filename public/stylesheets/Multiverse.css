@@ -148,10 +148,6 @@ margin-bottom: 10px; }
 
 /***** Skeletons *****/
 
-.skeleton_letter_toggle { margin: auto; padding-left: 6px; padding-right: 6px; border: 1px solid black; }
-.code_shown { color: black; font-weight: normal; }
-.code_not_shown { color: #888; font-weight: normal; }
-
 table.skeleton_generate input { width: 3em; }
 
 /***** Card display *****/
@@ -242,6 +238,26 @@ strong.highlight {
   background-color: yellow;
 }
 
+
+/**** Recent changes / cardlist index ****/
+.rowodd td.access_Editable {
+  background-color: #E0F5FF;
+}
+.rowodd td.access_Viewable {
+  background-color: #EFE;
+}
+.rowodd td.access_Private {
+  background-color: #FEE;
+}
+.roweven td.access_Editable {
+  background-color: #CDF;
+}
+.roweven td.access_Viewable {
+  background-color: #CEC;
+}
+.roweven td.access_Private {
+  background-color: #EDD;
+}
 
 /**** Tooltips ****/
 div.card_loading:after {

@@ -13,6 +13,7 @@ class CardsetsController < ApplicationController
   before_filter do
     @printable = params.has_key?(:printable)
   end
+  before_filter :nocache_param
   
   # All static views
   # caches_action :visualspoiler, :layout => false

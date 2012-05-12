@@ -10,8 +10,8 @@
       cards = [@card, @card.link]
     end %>
  <% cards.each_with_index do |card, card_index| %>
-  <div class="innercardborder">
-   <div class="card <%= card.display_class %> part<%= card_index+1 %>">
+  <div class="innercardborder" <%if card.show_whole_card_image? %>style="background-image:url(<%= card.art_url %>);<% end %>">
+   <div class="card <%= card.display_class %> part<%= card_index+1 %>" <%if card.show_whole_card_image? %>style="background-image:url(<%= card.art_url %>);<% end %>">
     <span class="left_of_namebox"></span>
     <div class="pinline pinline_box namebox">
      <div class="cardtitlebar">
@@ -22,7 +22,7 @@
         <span title="<%= card.code %>"><%= card.name %></span>
        <% end %>
       </div>
-      <% if !card.is_token? %>
+      <% if card.show_mana_cost? %>
         <div class="cardmanacost"> <%= format_mana_symbols(card.cost, true) %> </div>
         &nbsp;<% "required to give some height to the cardtitlebar" %>
       <% end %>
@@ -30,7 +30,7 @@
     </div>
     <div class="cardart_container">
      <div class="pinline pinline_sides">
-      <% if !card.art_url.blank? %>
+      <% if card.show_art_box? %>
        <% if card.is_token? || card.is_planeswalker? %>
         <div class="cardart image" style="background-image: url(<%= card.art_url %>);">
         </div>

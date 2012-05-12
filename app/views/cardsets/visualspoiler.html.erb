@@ -20,9 +20,16 @@
     </p>
   <% end %>
   <p>
+    <% present_frame_letters = cards_to_show.map &:category_letter
+       present_rarity_letters = cards_to_show.map &:rarity_letter
+       Rails.logger.info(present_rarity_letters)
+    %>
+    <%= render :partial => "card_category_buttons", :locals => { :present_frame_letters => present_frame_letters, :present_rarity_letters => present_rarity_letters} %>
+  </p>
+  <p>
     <% cards_to_show.sort.each do |card| %>
       <% @card = card %>
-      <div class="CardRenderInline visualspoiler">
+      <div class="CardRenderInline visualspoiler code_frame_<%= @card.category_letter %> code_rarity_<%= @card.rarity_letter %>">
         <%= render :partial => "shared/card", :locals => {:link => true} %>
         <% if !@printable %>
           <%= render :partial => "shared/cardcommentcount" %>

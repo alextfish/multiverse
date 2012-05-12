@@ -1,5 +1,7 @@
 class CardsController < ApplicationController
   before_filter :find_cardset
+  before_filter :nocache_param
+  
   before_filter :only => [:new, :create, :edit, :update] do
     require_permission_to_edit(@cardset)
   end
