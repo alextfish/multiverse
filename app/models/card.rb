@@ -453,7 +453,7 @@ class Card < ActiveRecord::Base
     end
   end
   def rarity_letter
-    rarity[0].upcase
+    rarity.upcase[0]
   end
   
   def is_token?
