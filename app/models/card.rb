@@ -449,11 +449,11 @@ class Card < ActiveRecord::Base
       when "Blue"
         "U"
       else
-        cat[0]
+        cat[0].chr
     end
   end
   def rarity_letter
-    rarity.upcase[0]
+    rarity[0].chr.upcase
   end
   
   def is_token?
