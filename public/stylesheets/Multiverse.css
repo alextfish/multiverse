@@ -241,7 +241,7 @@ strong.highlight {
 
 /**** Recent changes / cardlist index ****/
 .rowodd td.access_Editable {
-  background-color: #E0F5FF;
+  background-color: #E9F5FF;
 }
 .rowodd td.access_Viewable {
   background-color: #EFE;
@@ -250,10 +250,10 @@ strong.highlight {
   background-color: #FEE;
 }
 .roweven td.access_Editable {
-  background-color: #CDF;
+  background-color: #D5E5F5;
 }
 .roweven td.access_Viewable {
-  background-color: #CEC;
+  background-color: #DED;
 }
 .roweven td.access_Private {
   background-color: #EDD;
