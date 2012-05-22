@@ -1,4 +1,4 @@
-<span class="commentcount"><%= link_to_unless @embedded, pluralize(@card.comments.count, "comment"), @card
+<div class="commentcount"><%= link_to_unless @embedded, pluralize(@card.comments.count, "comment"), @card
 # Used to be "Comments (#{@card.comments.count})"
 %><% if @card.comments.present? %><br><% if @card.comments.count > 1 %>last <% end %>
 <% comment = @card.comments.reject{|c| c.nil?}.sort_by {|c| c.created_at}.last %>
@@ -7,4 +7,4 @@
 <% else %>
   <%= format_datetime_absolute comment.created_at %>
 <% end %> by <%= comment.display_user %> 
-<% end %></span>
+<% end %></div>

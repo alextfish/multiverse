@@ -9,6 +9,6 @@
 <% end %>
 <br>
   Show rarities:
-  <% ["C", "U", "R", "M"].select {|l| present_rarity_letters.include?(l)}.each do |letter| %>
+  <% Card.rarity_letters.select {|l| present_rarity_letters.include?(l)}.each do |letter| %>
     <span id="rarity_<%= letter %>_toggle" class="skeleton_letter_toggle code_shown" onclick="toggle_rarity_letter(this)"><%= letter %></span>
   <% end %>

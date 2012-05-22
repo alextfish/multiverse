@@ -343,11 +343,11 @@
 
 <% if !@skeleton.nil? %>
   <% cache do %>
-    <div class="onetab" id="view"><a name="view"></a>
-      <% present_frame_letters = @skeleton.body.lines.grep(Cardset.skeleton_line_regexp_MD) do |line|
-        line.match(Cardset.skeleton_line_regexp_MD)[2]
-      end.uniq %>
-      <%= render :partial => "card_category_buttons", :locals => { :present_frame_letters => present_frame_letters, :present_rarity_letters => ["C" "U" "R" "M"]} %>
+    <div class="onetab skeleton" id="view"><a name="view"></a>
+      <% present_rarity_letters, present_frame_letters = @skeleton.body.lines.grep(Cardset.skeleton_line_regexp_MD) do |line|
+        line.match(Cardset.skeleton_line_regexp_MD)[1,2]
+      end.transpose %>
+      <%= render :partial => "card_category_buttons", :locals => { :present_frame_letters => present_frame_letters, :present_rarity_letters => present_rarity_letters} %>
       <%= format_skeleton_table(format_all_markup(@skeleton.body, @cardset)) %>
     </div>
   <% end %>

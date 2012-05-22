@@ -19,7 +19,15 @@
 
 <% cache(:action => "cardlist", :action_suffix => cache_suffix) do %>
 
-<div><span class="controls">
+<% all_cards = @cardset.listable_cards %>
+
+<div class="controls">
+  <% present_frame_letters = all_cards.map &:category_letter
+     present_rarity_letters = all_cards.map &:rarity_letter
+     Rails.logger.info(present_rarity_letters)
+  %>
+  <%= render :partial => "card_category_buttons", :locals => { :present_frame_letters => present_frame_letters, :present_rarity_letters => present_rarity_letters} %>
+  <br>
   <% toggleable_fields = [
       ["card_text", "card text", true],
       ["code", "code", @cardset.configuration.cardlist_show_code],
@@ -33,7 +41,7 @@
       ><span class="<%= field_class %> hidden_control" <%= initially_shown ? "style='display:none;'" : "" %>>Show <%= field_text %></span
     ></span>
   <% end %>  
-</span></div>
+</div>
 <br>
 <div>
 <table class="sortable resizable">
@@ -59,13 +67,12 @@
       <th colspan="3" class="nosort">&nbsp;</th>
     <% end %>
   </tr>
-<% all_cards = @cardset.listable_cards %>
 <% if all_cards && !all_cards.empty? %>
   <% all_cards.sort.each_with_index do |card, index| %>
-    <tr id="card_row_<%= card.id %>">
+    <tr id="card_row_<%= card.id %>" class="code_hideable code_frame_<%= card.category_letter %> code_rarity_<%= card.rarity_letter %>">
       <td><%= index+1 %></td>
       <% "Fields that don't vary with multipart cards" %>
-      <td><%= link_to card.listable_name, card %></td>
+      <td><%= link_to_card card, card.listable_name %></td>
       <td><%= card.category %></td>
       <td><%= card.rarity.capitalize %></td>
       <% "Fields that vary with multipart cards" %>

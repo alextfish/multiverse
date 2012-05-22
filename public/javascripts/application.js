@@ -7,6 +7,8 @@ C_tokenNamePadding = 12; // cardtitlebar p-left=3=3; namebox p-left=p-right=2; 2
 C_defaultNameFontSize = 9; // points, as defined in Card.scss
 C_idealFlipTextBoxHeight = 40+2+2;
 C_idealSplitTextBoxHeight = 65+2+2;
+C_idealPlaneTextBoxHeight = 75;
+C_idealSchemeTextBoxHeight = 111;
 C_idealTextBoxHeight = 99;
 
 // ------------ Skeletons
@@ -119,70 +121,76 @@ function update_frame(card_id) {
   }
   var cardtype = this_card.select(".type_field.cardtype")[0].value;
   var cardsubtype = this_card.select(".type_field.subtype")[0].value;
-  var cost = this_card.select(".cost_field")[0].value;
-  var colours = get_cost_colours(this_card);
-  var num_colours = 0;
-  for( i=0; i<5; i++ ) {
-    if ( colours[i] != "") num_colours++;
-  }
-  var outer = "";
-  outer += cardtype.search(/Artifact/)>-1 ? "Coloured_Artifact " : "";
-  outer += cardtype.search(/Planeswalker/)>-1 ? "Planeswalker " : "";
-  if (cardframe != "Auto") {
-    var inner = cardframe;
+  var newClass;
+  if (nontraditional_frame(this_card)) {
+    // Can skip a lot of the colour-determining code
+    newClass = "";
   } else {
-    // calculate frame
-    switch ( num_colours ) {
-      case 1: inner = colours.join(""); break;
-      case 3: case 4: case 5: inner = "Multicolour"; break;
-      case 2: inner = (cost.search(/[({][^)}]{2,}[)}]/)>-1 ? "Hybrid" : "Multicolour"); break;
-      // this case 2 is buggy for Twinclaws cases, but meh
-      case 0: if (cardtype.search(/Land/)>-1) {
-                // Detect land colour affiliation
-                var cardtext = this_card.select(".rulestextfield")[0].value;
-                var affiliated_colours = [];
-                ["White", "Blue", "Black", "Red", "Green"].each(function(this_colour) {
-                  if (cardtext.search(colour_affiliation_regexps[this_colour])>-1 || cardsubtype.search(colour_affiliation_regexps[this_colour])>-1 ) {
-                    affiliated_colours.push(this_colour);
-                  }
-                });
-                switch ( affiliated_colours.length ) {
-                  case 0: inner = "Land"; break;
-                  case 1: inner = "Land " + affiliated_colours[0].toLowerCase(); break;
-                  case 2: inner = "Land " + affiliated_colours.join("").toLowerCase(); break;
-                  case 3: case 4: case 5: inner = "Land multicolour"; break;
-                }
-              } else { 
-                inner = ( cardtype.search(/Artifact/)>-1 ? "Artifact" : "Colourless" ); 
-              } 
-              break;
-
+    var cost = this_card.select(".cost_field")[0].value;
+    var colours = get_cost_colours(this_card);
+    var num_colours = 0;
+    for( i=0; i<5; i++ ) {
+      if ( colours[i] != "") num_colours++;
     }
+    var outer = "";
+    outer += cardtype.search(/Artifact/)>-1 ? "Coloured_Artifact " : "";
+    outer += cardtype.search(/Planeswalker/)>-1 ? "Planeswalker " : "";
+    if (cardframe != "Auto") {
+      var inner = cardframe;
+    } else {
+      // calculate frame
+      switch ( num_colours ) {
+        case 1: inner = colours.join(""); break;
+        case 3: case 4: case 5: inner = "Multicolour"; break;
+        case 2: inner = (cost.search(/[({][^)}]{2,}[)}]/)>-1 ? "Hybrid" : "Multicolour"); break;
+        // this case 2 is buggy for Twinclaws cases, but meh
+        case 0: if (cardtype.search(/Land/)>-1) {
+                  // Detect land colour affiliation
+                  var cardtext = this_card.select(".rulestextfield")[0].value;
+                  var affiliated_colours = [];
+                  ["White", "Blue", "Black", "Red", "Green"].each(function(this_colour) {
+                    if (cardtext.search(colour_affiliation_regexps[this_colour])>-1 || cardsubtype.search(colour_affiliation_regexps[this_colour])>-1 ) {
+                      affiliated_colours.push(this_colour);
+                    }
+                  });
+                  switch ( affiliated_colours.length ) {
+                    case 0: inner = "Land"; break;
+                    case 1: inner = "Land " + affiliated_colours[0].toLowerCase(); break;
+                    case 2: inner = "Land " + affiliated_colours.join("").toLowerCase(); break;
+                    case 3: case 4: case 5: inner = "Land multicolour"; break;
+                  }
+                } else { 
+                  inner = ( cardtype.search(/Artifact/)>-1 ? "Artifact" : "Colourless" ); 
+                } 
+                break;
+
+      }
+    }
+    if (card_id == "card2" && inner == "Colourless" && cardframe != "Colourless") {
+      // get card 1 instead
+      inner = $("card").getAttribute("class").replace("part1","");
+    }
+    
+    /* if (/Land/.test(inner)) {
+      // Disable colour indicator for lands
+      get_colour_indicator(this_card).setValue(false).disable();
+      $("colour_indicator_label_" + card_id).style.setProperty("color", "#888");
+    } else {
+      get_colour_indicator(this_card).enable();
+      $("colour_indicator_label_" + card_id).style.setProperty("color", "inherit");
+    } */
+    
+    var pinline;
+    if (num_colours == 2) {
+      pinline = " " + colours.join("").toLowerCase();
+    } else if (card_id == "card2" && num_colours == 0) {
+      var card1_colours = get_cost_colours($("card"));
+      pinline = " " + card1_colours.join("").toLowerCase();
+    } else {
+      pinline = "";
+    }
+    newClass = outer + inner + pinline;
   }
-  if (card_id == "card2" && inner == "Colourless" && cardframe != "Colourless") {
-    // get card 1 instead
-    inner = $("card").getAttribute("class").replace("part1","");
-  }
-  
-  /* if (/Land/.test(inner)) {
-    // Disable colour indicator for lands
-    get_colour_indicator(this_card).setValue(false).disable();
-    $("colour_indicator_label_" + card_id).style.setProperty("color", "#888");
-  } else {
-    get_colour_indicator(this_card).enable();
-    $("colour_indicator_label_" + card_id).style.setProperty("color", "inherit");
-  } */
-  
-  var pinline;
-  if (num_colours == 2) {
-    pinline = " " + colours.join("").toLowerCase();
-  } else if (card_id == "card2" && num_colours == 0) {
-    var card1_colours = get_cost_colours($("card"));
-    pinline = " " + card1_colours.join("").toLowerCase();
-  } else {
-    pinline = "";
-  }
-  var newClass = outer + inner + pinline;
 
   var universalClass = "form card ";
   if (this_card.hasClassName("token")) { universalClass += "token "; }
@@ -205,6 +213,16 @@ function get_cost_colours(this_card) {
     (cost.search(/g/i)>-1 ? "Green" : "")
   ];
   return colours;
+}
+
+function nontraditional_frame(this_card) {
+  var actual_card;
+  if (this_card.hasClassName("card")) {
+    actual_card = this_card.parentElement.parentElement;
+  } else {
+    actual_card = this_card;
+  }
+  return (actual_card.hasClassName("scheme") || actual_card.hasClassName("plane") || actual_card.hasClassName("vanguard"));
 }
 
 function update_card_rarity(rarity_in) {
@@ -267,6 +285,34 @@ function updateMultipartStyle(){
    $("rotate_link").hide();
    $("cardborder").removeClassName("rotated");
    //get_colour_indicator($("card2")).setValue(false);
+ }
+ if (multipart == "Scheme" || multipart == "Plane" || multipart == "Vanguard") {
+   // Move to a nontraditional frame
+   var newFrameCap = multipart;
+   var newFrameLower = newFrameCap.toLowerCase();
+   $$(".frame_selector")[0].value = newFrameLower;
+   $$(".frame_selector_wrapper")[0].hide();
+   $$(".form")[0].removeClassName("scheme").removeClassName("plane").removeClassName("vanguard");
+   $$(".form")[0].addClassName(newFrameLower);
+   
+   var frame_hidden = $("frame_disabled");
+   var frame_select = $("card_frame");
+   frame_select.name = "frame_select_disabled";
+   frame_hidden.name = "card[frame]";
+   frame_hidden.value = newFrameCap;
+   update_frame("card");
+ } else {
+   // Back to a traditional frame
+   $$(".form")[0].removeClassName("scheme").removeClassName("plane").removeClassName("vanguard");
+   $$(".frame_selector")[0].value = "Auto";
+   $$(".frame_selector_wrapper")[0].show();
+   
+   var frame_hidden = $("frame_disabled");
+   var frame_select = $("card_frame");
+   frame_select.value = "Auto";
+   frame_hidden.name = "frame_hidden_disabled";
+   frame_select.name = "card[frame]";
+   update_frame("card");
  }
 }
 
@@ -366,9 +412,9 @@ function shrinkType(typeDiv) { //, rarityDiv) {
   }
 }
 
-function shrinkTextBox(textDiv, isPlaneswalker, isFlip, isSplit) {
-  var wiggleRoom = (isPlaneswalker ? 5 : 0);
-  var desiredHeight = (isFlip ? C_idealFlipTextBoxHeight : isSplit ? C_idealSplitTextBoxHeight : C_idealTextBoxHeight);
+function shrinkTextBox(textDiv, frameType) {
+  var wiggleRoom = (frameType=="planeswalker" ? 5 : 0);
+  var desiredHeight = (frameType == "normal" ?C_idealTextBoxHeight : frameType=="flip" ? C_idealFlipTextBoxHeight : frameType=="split" ? C_idealSplitTextBoxHeight : frameType=="plane" ?  C_idealPlaneTextBoxHeight : frameType=="scheme" ?  C_idealSchemeTextBoxHeight :  C_idealTextBoxHeight );
   var currentFontSize = textDiv.getStyles().fontSize;
   var currentFontSizeNumber = parseInt(currentFontSize);
   var currentFontSizeUnits = currentFontSize.slice(-2); // assumes "px" or "pt"
@@ -410,12 +456,26 @@ function shrinkCardBits(cardDiv) {
     sizeTokenName(nameDiv, typeDiv);
     sizeTokenArt(cardDiv, artDiv);
   } else {
-    var isPlaneswalker = cardDiv.hasClassName("Planeswalker");
-    var isFlip = cardDiv.parentNode.parentNode.hasClassName("flip");
-    var isSplit = cardDiv.parentNode.parentNode.hasClassName("split");
+    var frameType;
+    var cardOuterFrame = cardDiv.parentNode.parentNode;
+    if (cardDiv.hasClassName("Planeswalker")) {
+      frameType = "planeswalker";
+    } else if (cardOuterFrame.hasClassName("flip")) {
+      frameType = "flip";
+    } else if (cardOuterFrame.hasClassName("split")) {
+      frameType = "split";
+    } else if (cardOuterFrame.hasClassName("scheme")) {
+      frameType = "scheme";
+    } else if (cardOuterFrame.hasClassName("plane")) {
+      frameType = "plane";
+    } else {
+      frameType = "normal";
+    }
+    if (frameType != "plane" && frameType != "scheme") {
+      shrinkName(nameDiv, typeDiv);
+    }
     var textDiv = cardDiv.getElementsByClassName("cardtext")[0];
-    shrinkName(nameDiv, typeDiv);
-    shrinkTextBox(textDiv, isPlaneswalker, isFlip, isSplit);
+    shrinkTextBox(textDiv, frameType);
   }
   shrinkType(typeDiv, rarityDiv);
 }

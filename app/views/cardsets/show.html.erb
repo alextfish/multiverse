@@ -28,8 +28,13 @@
       <% end %>
     </p>
     <p>
-      <% rarity_stats = stats[:by_rarity].map { |rarity, count| pluralize(count, rarity) } %>
-      <%= rarity_stats.join(", ") %>
+      <% rarity_stats = stats[:by_rarity].sort {|pair1, pair2| (Card.rarities.index(pair1[0]) || 0) <=> (Card.rarities.index(pair2[0]) || 0) }.map { |rarity, count| pluralize(count, rarity) } %>
+      <% display_rarity_stats = rarity_stats.join(", ").sub("nones", "with no rarity") %>
+      <% if stats[:by_rarity].length <= 4 %>
+        <%= display_rarity_stats %>
+      <% else %>
+        <%= display_rarity_stats.sub(/(uncommons(,)?)/, '\\1<br>').html_safe %>
+      <% end %>
     </p>
     <p>
       <% category_stats = stats[:by_category].map { |category, count| [category, count] } %>

@@ -182,13 +182,13 @@ class Card < ActiveRecord::Base
     %w{none common uncommon rare mythic basic token}
   end
   def self.supertypes
-    %w{Legendary Basic World Snow}
+    %w{Legendary Basic World Snow Ongoing}
   end
   def self.category_order
-    %w{Colourless White Blue Black Red Green Multicolour Hybrid Split Artifact Land unspecified}
+    %w{Colourless White Blue Black Red Green Multicolour Hybrid Split Artifact Land Scheme Plane Vanguard unspecified}
   end
   def self.frame_code_letters
-    %w{C W U B R G M Z H A L}
+    %w{C W U B R G M Z H S A L E P V}
   end
 
   mana_symbols = []
@@ -448,12 +448,17 @@ class Card < ActiveRecord::Base
     case (cat = category)
       when "Blue"
         "U"
+      when "Scheme"
+        "E" 
       else
         cat[0].chr
     end
   end
   def rarity_letter
     rarity[0].chr.upcase
+  end
+  def Card.rarity_letters
+    Card.rarities.map {|r| r[0].chr.upcase }
   end
   
   def is_token?
@@ -532,7 +537,7 @@ class Card < ActiveRecord::Base
   end
   
   def show_whole_card_image?
-    is_planeswalker? || is_scheme? || is_plane?
+    is_scheme? || is_plane? # || is_planeswalker? 
   end
   def show_mana_cost?
     !is_token? && !nontraditional_frame? 
@@ -671,7 +676,11 @@ class Card < ActiveRecord::Base
       out += "split"
     elsif dfc? # DFCs are large+landscape
       out += "dfc"
-    else       # Don't have schemes at the mo, so small+portrait
+    elsif is_scheme?
+      out += "scheme"
+    elsif is_plane?
+      out += "plane"
+    else       # Traditional frame
       out += "portrait"
     end
   end

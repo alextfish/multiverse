@@ -75,6 +75,7 @@ module ApplicationHelper
       my_symbol.reverse!
     end
     my_symbol.gsub!(/S/, "snow")
+    my_symbol.gsub!(/C/, "chaos")
     my_symbol.gsub!(/T/, "tap")
     my_symbol.gsub!(/Q/, "untap")
     my_symbol.gsub!(/\?/, "question")
@@ -337,7 +338,7 @@ module ApplicationHelper
         data = line.match(Cardset.skeleton_line_regexp_HTML)
         rarity_letter = data[1]
         frame_letter = data[2]
-        line.sub!("<tr>", "<tr class=\"code_frame_#{frame_letter} code_rarity_#{rarity_letter}\">")
+        line.sub!("<tr>", "<tr class=\"code_hideable code_frame_#{frame_letter} code_rarity_#{rarity_letter}\">")
         line.sub!("<td", "<td class=\"code_link\" ")
       end
       line

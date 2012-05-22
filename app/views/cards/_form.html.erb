@@ -40,7 +40,8 @@
       MULTIPART_DFCFRONT   = <%= Card.DFCFRONT %>;
      </script>
      <% 
-      frame_select_options = [["Normal", Card.STANDALONE], ["Split", Card.SPLIT1], ["Flip", Card.FLIP1], ["Double-Faced", Card.DFCFRONT]] # , ["Planeswalker", "Planeswalker"], ["Scheme", "Scheme"], ["Plane", "Plane"], ["Vanguard", "Vanguard"], ["Token", "Token"], ["Emblem", "Emblem"]]
+      frame_select_options = options_for_select([["Normal", Card.STANDALONE], ["Split", Card.SPLIT1], ["Flip", Card.FLIP1], ["Double-Faced", Card.DFCFRONT], ["Scheme", "Scheme"], ["Plane", "Plane"]], @card.frame)
+      # , ["Vanguard", "Vanguard"], ["Planeswalker", "Planeswalker"], ["Token", "Token"], ["Emblem", "Emblem"]]
       # frame_select_options = [["Normal", Card.STANDALONE], ["Split", "multipart_#{Card.SPLIT1}"], ["Flip", "multipart_#{Card.FLIP1}"], ["Double-Faced", "multipart_#{Card.DFCFRONT}"], ["Planeswalker", "Planeswalker"], ["Scheme", "Scheme"], ["Plane", "Plane"], ["Vanguard", "Vanguard"], ["Token", "Token"], ["Emblem", "Emblem"]]
       %>
      <%= outer_form.select :multipart, frame_select_options, {}, 

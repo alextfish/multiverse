@@ -34,7 +34,7 @@ class Cardset < ActiveRecord::Base
     out = {}
     out[:by_category] = Hash.new(0)
     out[:by_rarity] = Hash.new(0)
-    cards.each do |card|
+    cards.nonsecondary.each do |card|
       out[:by_category][card.category || "unspecified"] += 1
       out[:by_rarity][card.rarity || "unspecified"] += 1
     end

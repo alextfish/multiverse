@@ -15,7 +15,7 @@
       <%= f.text_field :name %>
      </div>
     <!-- /div --></td>
-    <!-- div class="cardmanacost" --><td>
+    <!-- div class="cardmanacost" --><td class="card_cost_container">
      <div class="field">
       <%= f.label :cost %><br />
       <%= f.text_field :cost,
@@ -33,17 +33,33 @@
      <%= f.label :art_url, "URL for art" %>
      <%= f.text_field :art_url, :class => "art_url_field" %>
      <br>
-      <div class="frame_selector_wrapper">
-       <%= f.label :frame, "Colour" %>
-       <% frames_keys = Card.display_frames 
-          frames_values = Card.frames 
-          frames = frames_keys.zip(frames_values) 
-          frames.unshift(["Auto", "Auto"])
-          %>
-       <%= f.select :frame, frames, {},
-           { :class => "frame_selector", 
-             :onchange => update_frame_call, 
-             :onkeyup => update_frame_call } %>
+      <% frames_keys = Card.display_frames 
+        frames_values = Card.frames 
+        frames = frames_keys.zip(frames_values) 
+        frames.unshift(["Auto", "Auto"])
+        %>
+      <div class="frame_selector_wrapper"
+       <% if card.nontraditional_frame? %> style="display:none;">
+         <%= f.label :frame, "Colour" %>
+         <%= f.select :frame, frames, {},
+             { :class => "frame_selector", 
+               :onchange => update_frame_call, 
+               :onkeyup => update_frame_call } %>
+         <%= f.hidden_field :frame, { :id => "frame_disabled" } %>
+         <script>
+           var frame_hidden = document.getElementById("frame_disabled");
+           var frame_select = document.getElementById("card_frame");
+           frame_select.name = "frame_select_disabled";
+           frame_hidden.name = "card[frame]";
+         </script>
+       <% else %>>
+         <%= f.label :frame, "Colour" %>
+         <%= f.select :frame, frames, {},
+             { :class => "frame_selector", 
+               :onchange => update_frame_call, 
+               :onkeyup => update_frame_call } %>
+         <%= hidden_field_tag :frame_disabled %>
+       <% end %>
       </div>
      <br>
       <div>
@@ -91,17 +107,20 @@
          <%= f.text_field :cardtype,
          { :class => "type_field cardtype", 
            :onchange => update_frame_call,
-           :onkeyup => update_frame_call } %> &ndash;
+           :onkeyup => update_frame_call } %>
+         <span class="subtype_container">
+           &ndash;
          <%= f.text_field :subtype, { :class => "type_field subtype", 
            :onchange => update_frame_call,
            :onkeyup => update_frame_call  } %>
+         </span>
        </div>
      <table><tr>
-      <td>
+      <td class="colour_indicator_container">
         <%= f.check_box :colour_indicator %><%= f.label :colour_indicator, "Show colour indicator", :id => "colour_indicator_label_#{this_card_id}" %>
       </td>
       <td>
-       <div style="position: relative;">
+       <div class="cardrarity_container">
         <div class="cardrarity <%= card.rarity %> raritycell">
          <%= f.select :rarity, Card.rarities.map{|r| [r.capitalize.gsub("None", "Rarity:"), r]},
          { :selected => card.rarity },
