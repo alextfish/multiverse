@@ -713,6 +713,8 @@ $SchemeArtHeight: $SchemeInnerHeight - (3 + $PinlineBoxHeight + 3)*2 - ($CardTex
     min-height: $LargePortraitCardHeight; 
     width: $LargePortraitCardWidth;
   }
+  &.distinct_mockup_container { min-height: $LargePortraitCardHeight; 
+    width: $LargePortraitCardWidth; }
   .innercardborder {
     border: 4px ridge $SchemeRidgeColour;
     width: auto;
@@ -800,6 +802,7 @@ $PlaneArtHeight: $PlaneInnerHeight - (3 + $PinlineBoxHeight + 3) - ($CardTextHei
     /* min-height: $LargeLandscapeCardHeight; */
     width: $LargeLandscapeCardWidth;
   }
+  &.distinct_mockup_container { width: $LargeLandscapeCardWidth; }
   .innercardborder {
     border: 2px ridge $PlaneRidgeColour;
     width: auto;

@@ -471,11 +471,9 @@ function shrinkCardBits(cardDiv) {
     } else {
       frameType = "normal";
     }
+    var textDiv = cardDiv.getElementsByClassName("cardtext")[0];
     if (frameType != "plane" && frameType != "scheme") {
       shrinkName(nameDiv, typeDiv);
-    }
-    var textDiv = cardDiv.getElementsByClassName("cardtext")[0];
-    if (frameType != "plane") {
       shrinkTextBox(textDiv, frameType);
     }
   }

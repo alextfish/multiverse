@@ -998,6 +998,9 @@ div.card_loading {
   .scheme.cardborder {
     min-height: 400px;
     width: 300px; }
+  .scheme.distinct_mockup_container {
+    min-height: 400px;
+    width: 300px; }
   .scheme .innercardborder {
     border: 4px ridge #cc9944;
     width: auto;
@@ -1063,6 +1066,8 @@ div.card_loading {
   /* Forms */ }
   .plane.cardborder {
     /* min-height: $LargeLandscapeCardHeight; */
+    width: 400px; }
+  .plane.distinct_mockup_container {
     width: 400px; }
   .plane .innercardborder {
     border: 2px ridge #cc9944;
