@@ -7,8 +7,8 @@ C_tokenNamePadding = 12; // cardtitlebar p-left=3=3; namebox p-left=p-right=2; 2
 C_defaultNameFontSize = 9; // points, as defined in Card.scss
 C_idealFlipTextBoxHeight = 40+2+2;
 C_idealSplitTextBoxHeight = 65+2+2;
-C_idealPlaneTextBoxHeight = 75;
-C_idealSchemeTextBoxHeight = 111;
+C_idealPlaneTextBoxHeight = 72;
+C_idealSchemeTextBoxHeight = 108;
 C_idealTextBoxHeight = 99;
 
 // ------------ Skeletons
