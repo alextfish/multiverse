@@ -723,6 +723,7 @@ $SchemeArtHeight: $SchemeInnerHeight - (3 + $PinlineBoxHeight + 3)*2 - ($CardTex
     padding: $SchemeOtherBorders;
     padding-top: $SchemeTopBorder;
     background-color: $SchemeBGColour;
+    background-size: 300px, 400px;
   }
   .card {
     border: 1px ridge $SchemeRidgeColour;
@@ -810,6 +811,7 @@ $PlaneArtHeight: $PlaneInnerHeight - (3 + $PinlineBoxHeight + 3) - ($CardTextHei
     min-height: 0px;
     padding-top: $PlaneTopPadding;
     background-color: #acc;
+    background-size: 400px, 300px;
     @include elliptical_corners_asymmetric(22px, 14px, 26px, 86px);
   }
   .card {

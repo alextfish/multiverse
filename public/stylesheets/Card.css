@@ -1008,7 +1008,8 @@ div.card_loading {
     background-color: rgba(32, 32, 64, 0.5);
     padding: 20px;
     padding-top: 10px;
-    background-color: #224466; }
+    background-color: #224466;
+    background-size: 300px, 400px; }
   .scheme .card {
     border: 1px ridge #cc9944;
     border-top: none;
@@ -1076,6 +1077,7 @@ div.card_loading {
     min-height: 0px;
     padding-top: 10px;
     background-color: #acc;
+    background-size: 400px, 300px;
     -moz-border-radius: 22px 22px 26px 26px;
     -webkit-border-radius: 22px 22px 26px 26px;
     -khtml-border-radius: 22px 22px 26px 26px;
