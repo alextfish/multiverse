@@ -802,7 +802,7 @@ $PlaneArtHeight: $PlaneInnerHeight - (3 + $PinlineBoxHeight + 3) - ($CardTextHei
     /* min-height: $LargeLandscapeCardHeight; */
     width: $LargeLandscapeCardWidth;
   }
-  &.distinct_mockup_container { width: $LargeLandscapeCardWidth; }
+  &.distinct_mockup_container { width: $LargeLandscapeCardWidth + 20; }
   .innercardborder {
     border: 2px ridge $PlaneRidgeColour;
     width: auto;

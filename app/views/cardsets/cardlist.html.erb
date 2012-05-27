@@ -24,7 +24,6 @@
 <div class="controls">
   <% present_frame_letters = all_cards.map &:category_letter
      present_rarity_letters = all_cards.map &:rarity_letter
-     Rails.logger.info(present_rarity_letters)
   %>
   <%= render :partial => "card_category_buttons", :locals => { :present_frame_letters => present_frame_letters, :present_rarity_letters => present_rarity_letters} %>
   <br>

@@ -13,7 +13,7 @@
   <tr>
     <% these_fields.each do |object_type| %>
     <td class="search_cell">
-      <% form_tag("/search", :class => "search_form") do %>
+      <%= form_tag("/search", :class => "search_form") do %>
         <h3><%= object_type.humanize.pluralize %></h3>
         <% object_field_name = object_type.underscore %>
         <table>

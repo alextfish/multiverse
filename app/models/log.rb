@@ -114,9 +114,9 @@ class Log < ActiveRecord::Base
       when Log.kind(:skeleton_edit)
         specific ? "edited the set skeleton in " : "edited the set skeleton"
       when Log.kind(:card_move_out)
-        specific ? ["moved the card ", " from #{self.cardset.name} into #{self.text}"] : "moved a card out"
+        specific ? ["moved the card ", " from #{self.cardset ? self.cardset.name : "a cardset"} into #{self.text}"] : "moved a card out"
       when Log.kind(:card_move_in)
-        specific ? ["moved the card ", " from #{self.text} into #{self.cardset.name}"] : "moved a card in"
+        specific ? ["moved the card ", " from #{self.text} into #{self.cardset ? self.cardset.name : "a cardset"}"] : "moved a card in"
       else
         raise "Unknown log kind #{self.kind} found in log #{self.id}"
     end
