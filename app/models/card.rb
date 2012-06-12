@@ -34,7 +34,7 @@
 class Card < ActiveRecord::Base
   belongs_to :cardset
   # attr_protected :cardset_id
-  
+
   has_many :comments, :dependent => :destroy
   has_many :old_cards, :dependent => :destroy
   attr_accessor :foil, :blank  # not saved
@@ -49,7 +49,7 @@ class Card < ActiveRecord::Base
   # after_save do  - Can't do this, as we don't have access to session methods in model callbacks :/
   #   set_last_edit(self)
   # end
-  
+
   DEFAULT_RARITY = "none"
   STRING_FIELDS = ["name","cost","supertype","cardtype","subtype","rarity","rulestext","flavourtext","code","frame","art_url","artist","image_url","watermark"]
   LONG_TEXT_FIELDS = ["rulestext", "flavourtext"]
@@ -91,14 +91,14 @@ class Card < ActiveRecord::Base
   def formatted_flavour_text
     format_card_text(flavourtext)
   end
-  
+
   def primary_card
     secondary? ? parent : self
   end
   def secondary_card
     primary? ? link : self
   end
-  
+
   def individual_name
     case
       when !name.blank?
@@ -119,11 +119,11 @@ class Card < ActiveRecord::Base
       if split?
         name_out = primary_name + " // " + secondary_name
       else
-        name_out = primary_name 
+        name_out = primary_name
       end
     end
   end
-  
+
   def listable_name
     if !flip? && !dfc?
       printable_name
@@ -158,7 +158,7 @@ class Card < ActiveRecord::Base
   def self.colour_pairs
     COLOUR_PAIRS
   end
-  
+
   def self.default_rarity
     DEFAULT_RARITY
   end
@@ -257,10 +257,10 @@ class Card < ActiveRecord::Base
     /(^|[^\/{(])g|[({]g[})]/i]
   @@colour_affiliation_regexps = [
     ["White", /(\([Ww]\)|\{[Ww]\}|[Pp]lains)/],
-    ["Blue",  /(\([Uu]\)|\{[Uu]\}|[Ii]sland)/], 
-    ["Black", /(\([Bb]\)|\{[Bb]\}|[Ss]wamp)/], 
-    ["Red",   /(\([Rr]\)|\{[Rr]\}|[Mm]ountain)/], 
-    ["Green", /(\([Gg]\)|\{[Gg]\}|[Ff]orest)/], 
+    ["Blue",  /(\([Uu]\)|\{[Uu]\}|[Ii]sland)/],
+    ["Black", /(\([Bb]\)|\{[Bb]\}|[Ss]wamp)/],
+    ["Red",   /(\([Rr]\)|\{[Rr]\}|[Mm]ountain)/],
+    ["Green", /(\([Gg]\)|\{[Gg]\}|[Ff]orest)/],
   ]
 
   def colours_in_cost
@@ -279,7 +279,7 @@ class Card < ActiveRecord::Base
       re.match(cost) ? colour : nil
     end.compact
   end
-  
+
   def display_class
     if self.nontraditional_frame?
       # Frames with no other display options
@@ -311,7 +311,7 @@ class Card < ActiveRecord::Base
     elsif self.num_colours == 0 && self.parent && self.parent.num_colours == 2
       cardclass << " " + self.parent.colour_strings_present.join("").downcase
     end
-    
+
     if self.is_token?
       cardclass << " token"
     end
@@ -388,7 +388,7 @@ class Card < ActiveRecord::Base
           matches = frame_to_check.scan(colour_regexp).flatten
           letters = matches.map {|c| colour_letter_for_colour_name(c)}
           indic_string = letters.join("")
-        
+
         when /^(Artifact|Colourless)/
           indic_string = ""
         when /^(Multicolour)/
@@ -432,7 +432,7 @@ class Card < ActiveRecord::Base
     else
       f = frame || calculated_frame
     end
-      
+
     case f
       when /^Land/
         return "Land"
@@ -449,7 +449,7 @@ class Card < ActiveRecord::Base
       when "Blue"
         "U"
       when "Scheme"
-        "E" 
+        "E"
       else
         cat[0].chr
     end
@@ -460,11 +460,11 @@ class Card < ActiveRecord::Base
   def Card.rarity_letters
     Card.rarities.map {|r| r[0].chr.upcase }
   end
-  
+
   def is_token?
     rarity == "token" || frame =~ /Token/i
   end
-  
+
   def is_planeswalker?
     cardtype =~ /Planeswalker/ || frame =~ /Planeswalker/i
   end
@@ -484,7 +484,7 @@ class Card < ActiveRecord::Base
     end
     out
   end
-    
+
   def single_card_calculated_frame
     case num_colours
       when 1      # Monocolour is the simplest case
@@ -520,13 +520,13 @@ class Card < ActiveRecord::Base
           end
           case land_colours.length
             when 0
-              return "Land (colourless)" # "Land" # 
+              return "Land (colourless)" # "Land" #
             when 1
-              return "Land (#{land_colours[0].downcase})" # "Land " + land_colours[0] # 
+              return "Land (#{land_colours[0].downcase})" # "Land " + land_colours[0] #
             when 2
-              return "Land (#{land_colours[0].downcase}-#{land_colours[1].downcase})" # "Land " + land_colours.join("").downcase # 
+              return "Land (#{land_colours[0].downcase}-#{land_colours[1].downcase})" # "Land " + land_colours.join("").downcase #
             when 3..5
-              return "Land (multicolour)" # "Land multicolour" # 
+              return "Land (multicolour)" # "Land multicolour" #
           end
         elsif /artifact/i.match(cardtype)
           return "Artifact"
@@ -535,24 +535,24 @@ class Card < ActiveRecord::Base
         end
     end
   end
-  
+
   def show_whole_card_image?
-    is_scheme? || is_plane? # || is_planeswalker? 
+    is_scheme? || is_plane? # || is_planeswalker?
   end
   def show_mana_cost?
-    !is_token? && !nontraditional_frame? 
+    !is_token? && !nontraditional_frame?
   end
   def show_art_box?
     !art_url.blank? && !show_whole_card_image?
   end
-  
+
   def is_scheme?
     frame == "Scheme"
   end
   def is_plane?
     frame == "Plane"
   end
-  
+
   def separator
     if self.split?
       " // "
@@ -562,11 +562,11 @@ class Card < ActiveRecord::Base
       ""
     end
   end
-  
+
   def new_linked_card
     Card.new(:cardset => cardset, :frame => frame, :rarity => rarity, :link=>self)
   end
-  
+
   @@printed_card_regexp = ""
   def Card.is_printed_card_name?(some_name)
     if @@printed_card_regexp.blank?
@@ -631,7 +631,7 @@ class Card < ActiveRecord::Base
     out.blank = true
     out
   end
-  
+
   # The frames which appear in the Frame dropdown
   def nonstandard_frame?
     self.nontraditional_frame? || self.multipart?
@@ -640,7 +640,7 @@ class Card < ActiveRecord::Base
   def nontraditional_frame?
     ["Scheme", "Plane", "Vanguard", "Emblem"].include?(self.frame)
   end
-  
+
   def multipart?
    [Card.SPLIT1, Card.SPLIT2, Card.FLIP1, Card.FLIP2, Card.DFCFRONT, Card.DFCBACK].include?(self.multipart)
   end
@@ -688,7 +688,9 @@ class Card < ActiveRecord::Base
   def <=>(c2)
     if category != c2.category
       # Sort by category
-      return Card.category_order.find_index(category) <=> Card.category_order.find_index(c2.category)
+      c1order = Card.category_order.find_index(category) || 0
+      c2order = Card.category_order.find_index(c2.category) || 0
+      return c1order <=> c2order
     else
       if ["Multicolour", "Hybrid"].include?(category)
         # Within a category, sort by colour-pair (hybrid / gold), then name
@@ -707,7 +709,7 @@ class Card < ActiveRecord::Base
             when 4
               pair_order = [ "WhiteBlueBlackRed", "BlueBlackRedGreen", "WhiteBlackRedGreen", "WhiteBlueRedGreen", "WhiteBlueBlackGreen" ]
             else
-              # Both cards are marked as multi or hybrid, but their actual costs have a number of colours 
+              # Both cards are marked as multi or hybrid, but their actual costs have a number of colours
               # that's either <=1 or >=5. Either way, we don't bother sorting them.
               pair_order = nil
           end
@@ -739,7 +741,7 @@ class Card < ActiveRecord::Base
     [supertype, Regexp.new(supertype, true)]   # true -> case-insensitive
   end
   SUBTYPE_DELIMITERS = [" -- ", " - ", "--", "-"]
-  def canonicalise_types 
+  def canonicalise_types
     # Move supertypes to correct places
     SUPERTYPES_AND_REGEXPS.each do |this_supertype, this_regexp|
       if self.cardtype.downcase =~ this_regexp
@@ -758,5 +760,5 @@ class Card < ActiveRecord::Base
       end
     end
   end
-  
+
 end
