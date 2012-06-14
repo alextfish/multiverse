@@ -2097,7 +2097,7 @@ td.form_info_cell {
   font-style: normal; }
 
 .code_not_shown {
-  color: #999;
+  color: #999 !important;
   font-style: italic; }
 
 .skeleton_letter_toggle.code_not_shown {

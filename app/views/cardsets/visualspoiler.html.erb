@@ -1,3 +1,4 @@
+<% time_at_start = Time.now %>
 <h1 class="nonprinting">
   <%= link_to @cardset.name, @cardset %>
 </h1>
@@ -28,13 +29,17 @@
   </p>
   <p>
     <% cards_to_show.sort.each do |card| %>
-      <% @card = card %>
-      <div class="CardRenderInline visualspoiler code_hideable code_frame_<%= @card.category_letter %> code_rarity_<%= @card.rarity_letter %>">
-        <%= render :partial => "shared/card", :locals => {:link => true} %>
-        <% if !@printable %>
-          <%= render :partial => "shared/cardcommentcount" %>
-        <% end %>
-      </div>
+      <% if false && Time.now - time_at_start > 20 %>
+        <div>...but I need to stop this message from being cached... 
+      <% else %>
+        <% @card = card %>
+        <div class="CardRenderInline visualspoiler code_hideable code_frame_<%= @card.category_letter %> code_rarity_<%= @card.rarity_letter %>">
+          <%= render :partial => "shared/card", :locals => {:link => true} %>
+          <% if !@printable %>
+            <%= render :partial => "shared/cardcommentcount" %>
+          <% end %>
+        </div>
+      <% end %>
     <% end %>
   </p>
 <% end %>

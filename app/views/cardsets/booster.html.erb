@@ -6,10 +6,16 @@
 <%= render "setviews" %>
 
 <div class="helptext">
-  <% m10_collation, token_present = @booster_info %>
-  <% if m10_collation %>This booster was generated with modern collation since the cardset contains mythics: 1 rare / mythic, 3 uncommons, 10 commons, 1 basic land<% if token_present %>, 1 token<% end %>.
+  <% collation, token_present = @booster_info %>
+  <% if collation == "flat" %>
+    15 random cards from the set. <br>You could alternatively have 
+    <%= link_to "a booster in the usual rarity pattern", request.fullpath.split("?")[0] %>.
+  <% elsif collation == "m10" %>
+    This booster was generated with modern collation since the cardset contains mythics: 1 rare / mythic, 3 uncommons, 10 commons, 1 basic land<% if token_present %>, 1 token<% end %>. <br>You could alternatively have 
+    <%= link_to "15 random cards regardless of rarity", request.fullpath.split("?")[0] + "?flat" %>.
   <% else %>
-    This booster was generated with pre-<i>Magic 2010</i> collation since the cardset contains no mythics: 1 rare, 3 uncommons, 11 commons<% if token_present %>, 1 token<% end %>.
+    This booster was generated with pre-<i>Magic 2010</i> collation since the cardset contains no mythics: 1 rare, 3 uncommons, 11 commons<% if token_present %>, 1 token<% end %>. <br>You could alternatively have 
+    <%= link_to "15 random cards regardless of rarity", request.fullpath.split("?")[0] + "?flat" %>.
   <% end %>
 </div>
 

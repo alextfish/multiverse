@@ -84,8 +84,9 @@ class CardsetsController < ApplicationController
   end
 
   def booster 
+    flat = params.has_key?(:flat)
     begin
-      @booster, err_message, @booster_info = @cardset.make_booster()
+      @booster, err_message, @booster_info = @cardset.make_booster(flat)
       if @booster.nil?
         flash[:error] = err_message
         redirect_to :back #, :error => err_message

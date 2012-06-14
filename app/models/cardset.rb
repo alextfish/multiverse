@@ -464,97 +464,135 @@ class Cardset < ActiveRecord::Base
     end
   end
 
-  def make_booster()
+  def make_booster(flat)
     cards_to_use = self.public_cards
-    commons   = cards_to_use.select { |c| c.rarity == "common"   } 
-    uncommons = cards_to_use.select { |c| c.rarity == "uncommon" } 
-    rares     = cards_to_use.select { |c| c.rarity == "rare"     } 
-    mythics   = cards_to_use.select { |c| c.rarity == "mythic"   }     
-    basics    = cards_to_use.select { |c| c.rarity == "basic"    }   
-    tokens    = cards_to_use.select { |c| c.rarity == "token"    }
-    if basics.empty? 
-      basics = Card.basic_land 
-    end
-    rares_and_mythics = rares + rares + mythics 
-    tokens_present = !tokens.empty?
-    # if uncommons.empty? || commons.empty? || rares_and_mythics.empty?
-    #   raise "Set doesn't have cards of enough rarities to assemble boosters. Commons, uncommons, and either rares or mythics are required."
-    # end
-    # min_commons = 11
-    # min_uncommons = 3
-    # if (1..min_commons-1).include? commons.length 
-      # return [nil, "Not enough commons to create a diverse booster pack: we require #{ min_commons } commons, but the cardset only has #{ commons.length }."]
-    # elsif (1..min_uncommons-1).include? uncommons.length 
-      # return [nil, "Not enough uncommons to create a diverse booster pack: we require #{ min_uncommons } uncommons, but the cardset only has #{ uncommons.length }."]
-    # end
-      
-    @m10_collation = mythics.any?
-    if rand(60) < ( @m10_collation  ? 14 : 15 )
-      # got a foil
-      foil_type = rand(15)
-      case foil_type
-        when 1 then
-          foil_src = rares_and_mythics.sample
-        when 2..4 then
-          foil_src = uncommons.sample
-        else
-          foil_src = commons.sample 
-      end
-      if foil_src.nil?
-        foil = nil
-      else
-        foil = foil_src.clone # so that if the unfoil one is in the booster too, that isn't foiled
-        foil.foil = true
-      end
-    else
-      foil = nil
-    end
-    num_booster_commons = ( @m10_collation ? 10 : 11 ) - ( foil.nil? ? 0 : 1 )
-
     @booster = []
-    if foil
-      @booster << foil
-    end
-    if rares_and_mythics.empty?
-      chosen_rare = Card.blank("No more rares or mythics")
+    
+    if flat   
+      tokens = cards_to_use.select{|c| c.rarity == "token"}
+      cards_to_use -= tokens
+      tokens_present = !tokens.empty?
+      num_cards = (tokens_present ? 14 : 15)
+      while @booster.length < 15
+        if cards_to_use.empty?
+          @booster << Card.blank("No more cards")
+        else
+          new_candidate = cards_to_use.sample
+          @booster << new_candidate 
+          cards_to_use -= [new_candidate]
+        end
+      end
+      if tokens_present
+        @booster << tokens.sample
+      end
+      collation = "flat"
     else
-      chosen_rare = rares_and_mythics.sample
-    end
-    @booster << chosen_rare
-    chosen_uncommons = []
-    while chosen_uncommons.length < 3
-      if uncommons.empty?
-        chosen_uncommons << Card.blank("No more uncommons")
-      else
-        new_candidate = uncommons.sample
-        chosen_uncommons << new_candidate 
-        uncommons -= [new_candidate]
+      # Use rarities
+      commons   = cards_to_use.select { |c| c.rarity == "common"   } 
+      uncommons = cards_to_use.select { |c| c.rarity == "uncommon" } 
+      rares     = cards_to_use.select { |c| c.rarity == "rare"     } 
+      mythics   = cards_to_use.select { |c| c.rarity == "mythic"   }     
+      basics    = cards_to_use.select { |c| c.rarity == "basic"    }   
+      tokens    = cards_to_use.select { |c| c.rarity == "token"    }
+      if basics.empty? 
+        basics = Card.basic_land 
       end
-    end
-    @booster += chosen_uncommons
-    
-    # For commons we do something slightly different: we distribute the chosen points
-    # evenly-ish along the list of commons
-    commons.sort!
-    chosen_commons = []
-    while chosen_commons.length < num_booster_commons
-      if commons.empty?
-        chosen_commons << Card.blank("No more commons")
+      rares_and_mythics = rares + rares + mythics 
+      tokens_present = !tokens.empty?
+      # if uncommons.empty? || commons.empty? || rares_and_mythics.empty?
+      #   raise "Set doesn't have cards of enough rarities to assemble boosters. Commons, uncommons, and either rares or mythics are required."
+      # end
+      # min_commons = 11
+      # min_uncommons = 3
+      # if (1..min_commons-1).include? commons.length 
+        # return [nil, "Not enough commons to create a diverse booster pack: we require #{ min_commons } commons, but the cardset only has #{ commons.length }."]
+      # elsif (1..min_uncommons-1).include? uncommons.length 
+        # return [nil, "Not enough uncommons to create a diverse booster pack: we require #{ min_uncommons } uncommons, but the cardset only has #{ uncommons.length }."]
+      # end
+          
+      collation = mythics.any? ? "m10" : "old"
+      if rand(60) < ( collation == "m10" ? 14 : 15 )
+        # got a foil
+        foil_type = rand(15)
+        case foil_type
+          when 1 then
+            foil_src = rares_and_mythics.sample
+          when 2..4 then
+            foil_src = uncommons.sample
+          else
+            foil_src = commons.sample 
+        end
+        if foil_src.nil?
+          foil = nil
+        else
+          foil = foil_src.clone # so that if the unfoil one is in the booster too, that isn't foiled
+          foil.foil = true
+        end
       else
-        new_candidate = commons.sample
-        chosen_commons << new_candidate 
-        commons -= [new_candidate]
+        foil = nil
       end
-    end
-    @booster += chosen_commons
-    if @m10_collation
-      @booster << basics.sample
-    end
-    if tokens_present
-      @booster << tokens.sample
+      num_booster_commons = ( collation=="m10" ? 10 : 11 ) - ( foil.nil? ? 0 : 1 )
+
+      if foil
+        @booster << foil
+      end
+      if rares_and_mythics.empty?
+        chosen_rare = Card.blank("No more rares or mythics")
+      else
+        chosen_rare = rares_and_mythics.sample
+      end
+      @booster << chosen_rare
+      chosen_uncommons = []
+      while chosen_uncommons.length < 3
+        if uncommons.empty?
+          chosen_uncommons << Card.blank("No more uncommons")
+        else
+          new_candidate = uncommons.sample
+          chosen_uncommons << new_candidate 
+          uncommons -= [new_candidate]
+        end
+      end
+      @booster += chosen_uncommons
+      
+      # For commons we do something slightly different: we distribute the chosen points
+      # evenly-ish along the list of commons
+      commons.sort!
+      chosen_commons = []
+      top_endpoint = commons.length 
+      endpoints = []
+      endpoints[0] = 0
+      between_endpoints = 1.0 * top_endpoint / num_booster_commons 
+      (1..num_booster_commons).each do |n|
+        endpoints[n] = (between_endpoints * n)
+        chosen_commons[n-1] = commons[rand*between_endpoints + endpoints[n-1]]
+      end
+      chosen_commons.uniq! # because some groups may overlap
+      chosen_commons -= [nil] # in case there are /no/ commons
+      if chosen_commons.length < num_booster_commons
+        commons -= chosen_commons
+        while chosen_commons.length < num_booster_commons
+          if commons.empty?
+            chosen_commons << Card.blank("No more uncommons")
+          else
+            new_candidate = commons.sample
+            chosen_commons << new_candidate 
+            commons -= [new_candidate]
+          end
+        end
+      end
+      chosen_commons.shuffle!
+      
+      @booster += chosen_commons
+      if collation == "m10"
+        @booster << basics.sample
+      end
+      if tokens_present
+        @booster << tokens.sample
+      end
+    
     end
     
-    data_out = [@m10_collation, tokens_present]
+    data_out = [collation, tokens_present]
     return [@booster, "", data_out]
   end
   

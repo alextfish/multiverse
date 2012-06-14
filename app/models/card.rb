@@ -627,7 +627,7 @@ class Card < ActiveRecord::Base
     [PLAINS, ISLAND, SWAMP, MOUNTAIN, FOREST]
   end
   def Card.blank(text)
-    out = Card.new(:rulestext => text)
+    out = Card.new(:rulestext => text, :rarity => "none")
     out.blank = true
     out
   end
@@ -688,8 +688,8 @@ class Card < ActiveRecord::Base
   def <=>(c2)
     if category != c2.category
       # Sort by category
-      c1order = Card.category_order.find_index(category) || 0
-      c2order = Card.category_order.find_index(c2.category) || 0
+      c1order = Card.category_order.find_index(category) || 99
+      c2order = Card.category_order.find_index(c2.category) || 99
       return c1order <=> c2order
     else
       if ["Multicolour", "Hybrid"].include?(category)

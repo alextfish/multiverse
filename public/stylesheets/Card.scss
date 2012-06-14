@@ -1393,7 +1393,7 @@ td.form_info_cell { color: #666; }
 
 .skeleton_letter_toggle { margin: auto; padding-left: 6px; padding-right: 6px; border: 1px solid black; }
 .code_shown { color: black; font-style: normal; }
-.code_not_shown { color: #999; font-style: italic; }
+.code_not_shown { color: #999 !important; font-style: italic; }
 .skeleton_letter_toggle.code_not_shown { background-color: white; background: white; border: 1px solid black; }
 
 div.wizardsimage {

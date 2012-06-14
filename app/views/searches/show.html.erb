@@ -64,7 +64,7 @@
       <% if show_flavourtext %><th>Flavour text</th><% end %>
     </tr>
     <% cards.each do |card| %>
-      <tr><td><b><%= link_to highlight(card.individual_name, name_highlight), card %></b></td>
+      <tr><td><b><%= link_to_card card, highlight(card.individual_name, name_highlight) %></b></td>
       <td>from <%= link_to card.cardset.name, card.cardset %></td>
       <td><%= highlight(displayed_type(card), type_highlight) %></td>
       <td class="costcell"><span style="display:none;"><%= card.converted_mana_cost %></span><%= format_mana_symbols(card.cost, true) %></td>
