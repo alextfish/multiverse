@@ -572,7 +572,7 @@ class Cardset < ActiveRecord::Base
         commons -= chosen_commons
         while chosen_commons.length < num_booster_commons
           if commons.empty?
-            chosen_commons << Card.blank("No more uncommons")
+            chosen_commons << Card.blank("No more commons")
           else
             new_candidate = commons.sample
             chosen_commons << new_candidate 
