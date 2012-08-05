@@ -2,6 +2,15 @@
 <html>
   <% if !@embedded %>
   <head>
+  
+  <% "Rails 3 head: begin...
+  <title>RailsApp</title>
+  <%= stylesheet_link_tag    "application", :media => "all" % >
+  <%= javascript_include_tag "application" % >
+  <%= csrf_meta_tags % >
+  ...end"
+  %>
+
     <title><% if Rails.env.development? %>MV Dev<% elsif request.domain =~ /staging/ %>MV Staging<% else %>Multiverse<% end %>: <%= @title %></title>
     <%= stylesheet_link_tag "Card", :media => "all" %>
     <%= stylesheet_link_tag "Multiverse", :media => "all" %>
@@ -45,4 +54,5 @@
     <% end %>
 
   </body>
+
 </html>

@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <title>We're sorry, but something went wrong (500)</title>
+  <title>Multiverse: Something went wrong (500)</title>
   <style type="text/css">
     body { background-color: #fff; color: #666; text-align: center; font-family: arial, sans-serif; }
     div.dialog {
@@ -18,6 +18,31 @@
 
 <body>
   <!-- This file lives in public/500.html -->
+  <header>
+  <%= link_to_unless_current logo, root_path do
+    image_tag("multiverse_logo_big.png", :alt => "Multiverse", :class => "square")
+  end %>
+  <nav>
+    <ul>
+      <li class="first"><%= link_to "Recent updates", cardsets_path %></li>
+      <li class="subsequent"><%= link_to "Search:", advanced_search_path %>
+        <% 'form_tag("/quicksearch", :method => "get") do' 
+        %>
+        <form action="<%= quicksearch_path %>" method="get">
+          <%= text_field_tag "q", @quicksearch_query %>
+        </form>
+        <% "end" %>
+      </li>
+      <% if signed_in? %>
+      <li class="subsequent">Signed in as <%= link_to current_user.name, current_user %></li>
+      <li class="subsequent"><%= link_to "Sign out", signout_path, :method => :delete %></li>
+      <% else %>
+      <li class="subsequent"><%= link_to "Sign in", signin_path %></li>
+      <% end %>
+    </ul>
+  </nav>
+</header>
+
   <div class="dialog">
     <h1>We're sorry, but something went wrong.</h1>
     <p>We've been notified about this issue and we'll take a look at it shortly.</p>

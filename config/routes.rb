@@ -64,7 +64,6 @@ Multiverse::Application.routes.draw do
   match '/search',          :to => 'searches#do_search'
   match '/quicksearch',     :to => 'searches#do_quicksearch'
 
-
   # The priority is based upon order of creation:
   # first created -> highest priority.
 
