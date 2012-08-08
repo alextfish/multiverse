@@ -1,18 +1,19 @@
-<<<<<<< HEAD
 source 'http://mirror1.prod.rhcloud.com/mirror/ruby/'
 source 'http://rubygems.org'
 
 gem 'rails', '3.0.0' # '3.2.6'
-gem 'mysql2'
-gem 'sqlite3'
+group :production do
+  gem 'mysql2'
+end
+# gem 'sqlite3'
 gem 'sqlite3-ruby', :require => 'sqlite3'
 # gem 'sqlite3-ruby', '1.2.5', :require => 'sqlite3'
 
 # Gems used only for assets and not required
 # in production environments by default.
 group :assets do
-  gem 'sass-rails',   '~> 3.2.3'
-  gem 'coffee-rails', '~> 3.2.1'
+  # gem 'sass-rails',   '~> 3.2.3'
+  # gem 'coffee-rails', '~> 3.2.1'
 
   # See https://github.com/sstephenson/execjs#readme for more supported runtimes
   # gem 'therubyracer', :platforms => :ruby
@@ -37,7 +38,7 @@ gem 'thor', '= 0.14.6'
 gem 'minitest'
 
 group :development do
-  gem 'annotate-models', '1.0.4'
+  # gem 'annotate-models', '1.0.4' - seems to have disappeared!
 end
 
 ## OpenScript options:

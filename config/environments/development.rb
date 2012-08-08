@@ -28,16 +28,18 @@ Multiverse::Application.configure do
   # Try to avoid crashing
   config.log_level = :warn
 
-  # Raise exception on mass assignment protection for Active Record models
-  config.active_record.mass_assignment_sanitizer = :strict
+  if Rails::VERSION::STRING != '3.0.0'
+    # Do not compress assets
+    config.assets.compress = false
 
-  # Log the query plan for queries taking more than this (works
-  # with SQLite, MySQL, and PostgreSQL)
-  config.active_record.auto_explain_threshold_in_seconds = 0.5
+    # Expands the lines which load the assets
+    config.assets.debug = true
 
-  # Do not compress assets
-  config.assets.compress = false
+    # Raise exception on mass assignment protection for Active Record models
+    config.active_record.mass_assignment_sanitizer = :strict
 
-  # Expands the lines which load the assets
-  config.assets.debug = true
+    # Log the query plan for queries taking more than this (works
+    # with SQLite, MySQL, and PostgreSQL)
+    config.active_record.auto_explain_threshold_in_seconds = 0.5
+  end
 end
