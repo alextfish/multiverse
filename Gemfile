@@ -5,9 +5,12 @@ gem 'rails', '3.0.0' # '3.2.6'
 group :production do
   gem 'mysql2'
 end
-# gem 'sqlite3'
-gem 'sqlite3-ruby', :require => 'sqlite3'
-# gem 'sqlite3-ruby', '1.2.5', :require => 'sqlite3'
+
+group :development, :test do
+  # gem 'sqlite3'
+  gem 'sqlite3-ruby', :require => 'sqlite3'
+  # gem 'sqlite3-ruby', '1.2.5', :require => 'sqlite3'
+end
 
 # Gems used only for assets and not required
 # in production environments by default.
