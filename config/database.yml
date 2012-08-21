@@ -17,6 +17,8 @@ production:
   encoding: utf8
   reconnect: false
   pool: 5
+  host: <%=ENV['OPENSHIFT_DB_HOST']%>
+  port: <%=ENV['OPENSHIFT_DB_PORT']%>
   database: <%=ENV['OPENSHIFT_APP_NAME']%>
   username: <%=ENV['OPENSHIFT_DB_USERNAME']%>
   password: <%=ENV['OPENSHIFT_DB_PASSWORD']%>
