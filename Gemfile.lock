@@ -47,7 +47,9 @@ GEM
     minitest (3.3.0)
     multi_json (1.3.6)
     mysql (2.8.1)
+    mysql (2.8.1-x86-mingw32)
     mysql2 (0.3.11)
+    mysql2 (0.3.11-x86-mingw32)
     newrelic_rpm (3.3.2.1)
     polyglot (0.3.3)
     rack (1.2.5)
@@ -90,6 +92,7 @@ PLATFORMS
 DEPENDENCIES
   dalli
   minitest
+  mysql
   mysql2
   newrelic_rpm
   rails (= 3.0.0)
