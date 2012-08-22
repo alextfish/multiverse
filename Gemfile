@@ -3,6 +3,7 @@ source 'http://rubygems.org'
 
 gem 'rails', '3.0.0' # '3.2.6'
 group :production do
+  gem 'mysql'
   gem 'mysql2'
 end
 
