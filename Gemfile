@@ -2,9 +2,23 @@ source 'http://mirror1.prod.rhcloud.com/mirror/ruby/'
 source 'http://rubygems.org'
 
 gem 'rails', '3.0.0' # '3.2.6'
-group :production do
-  gem 'mysql'
-  gem 'mysql2'
+# gem 'prototype-rails' # depends on rails 3.2
+
+#group :production do
+#  gem 'mysql'
+#  gem "mysql2", "~> 0.3.11"
+#end
+
+platforms :mri_18, :mingw_18 do
+  group :mysql do
+    gem "mysql"
+  end
+end
+
+platforms :mri_19, :mingw_19 do
+  group :mysql do
+    gem "mysql2", "~> 0.3.11"
+  end
 end
 
 group :development, :test do
@@ -27,7 +41,6 @@ end
 
 # gem 'jquery-rails'
 
-# gem 'prototype-rails' # depends on rails 3.2
 gem 'will_paginate', '3.0.pre4'
 gem 'rdiscount'
 gem 'newrelic_rpm'
