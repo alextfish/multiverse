@@ -6,11 +6,13 @@
 <%= render "setviews" %>
 
 <br>
-<% code_display = @cardset.configuration.cardlist_show_code ? "" : "style='display:none;'" 
-  active_display = @cardset.configuration.cardlist_show_active ? "" : "style='display:none;'" 
-  comment_display = @cardset.configuration.cardlist_show_comments ? "" : "style='display:none;'" 
-  creator_display = @cardset.public_access == "Editable" ? "" : "style='display:none;'" 
-  update_display = "style='display:none;'" 
+<% 
+  hidden = 'style="display:none;"'.html_safe
+  code_display = @cardset.configuration.cardlist_show_code ? "" : hidden
+  active_display = @cardset.configuration.cardlist_show_active ? "" : hidden
+  comment_display = @cardset.configuration.cardlist_show_comments ? "" : hidden
+  creator_display = @cardset.public_access == "Editable" ? "" : hidden
+  update_display = hidden
   
   can_edit = permission_to?(:edit, @cardset)
   can_delete = permission_to?(:delete, @cardset)
@@ -37,8 +39,8 @@
     ]%>
   <% toggleable_fields.each do |field_class, field_text, initially_shown| %>
     <span class="one_control" onclick="$$('.<%= field_class %>').invoke('toggle');"
-      ><span class="<%= field_class %> shown_control" <%= initially_shown ? "" : "style='display:none;'" %>>Hide <%= field_text %></span
-      ><span class="<%= field_class %> hidden_control" <%= initially_shown ? "style='display:none;'" : "" %>>Show <%= field_text %></span
+      ><span class="<%= field_class %> shown_control" <%= initially_shown ? "" : hidden %>>Hide <%= field_text %></span
+      ><span class="<%= field_class %> hidden_control" <%= initially_shown ? hidden : "" %>>Show <%= field_text %></span
     ></span>
   <% end %>  
 </div>
