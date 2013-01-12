@@ -26,9 +26,9 @@ Multiverse::Application.configure do
   config.action_dispatch.best_standards_support = :builtin
   
   # Try to avoid crashing
-  config.log_level = :warn
+  config.log_level = :info
 
-  if Rails::VERSION::STRING != '3.0.0'
+  if Rails::VERSION::STRING >= '3.1'
     # Do not compress assets
     config.assets.compress = false
 

@@ -36,17 +36,31 @@ module ApplicationHelper
     end
   end
 
-  def format_datetime(dt)
-    if dt < 1.week.ago
-      # Show older dates in absolute time
-      "on " + dt.to_date.to_formatted_s(:rfc822)
-    else
-      time_ago_in_words(dt, :seconds => true) + " ago"
-    end
+  def format_datetime(dt, where = :server)
+    formatted_date = dt.utc.to_formatted_s(:db)
+    case where
+      when :client
+        content_tag(:span, :title => formatted_date, :class => "date relative") do
+          formatted_date
+        end
+	  when :server
+        content_tag(:span, :title => formatted_date) do
+          if dt < 1.week.ago
+            # Show older dates in absolute time
+            "on " + dt.to_date.to_formatted_s(:rfc822)
+          else
+            time_ago_in_words(dt, :seconds => true) + " ago"
+          end
+	    end
+	end
   end
+  
+  # format_datetime_absolute: Writes the input datetime to the page. It's given a
+  # class that will make it formatted as an absolute datetime in the user's locale.
   def format_datetime_absolute(dt)
-    content_tag(:span, :class => "date") do
-      dt.utc.to_formatted_s(:db)
+    formatted_date = dt.utc.to_formatted_s(:db)
+    content_tag(:span, :class => "date", :title => formatted_date) do
+      formatted_date
     end
   end
   def datestamps_close(d1, d2)

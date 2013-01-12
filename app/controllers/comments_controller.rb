@@ -20,6 +20,11 @@ class CommentsController < ApplicationController
       require_permission_to_edit(@cardset)
     end
   end
+  after_filter :only => [:create, :update, :destroy] do
+    expire_cardset_recentchanges_line_cache
+    expire_cardset_frontpage_cache
+    expire_cardset_cardlist_cache
+  end
 
   def ensure_not_spam
     body_text = params[:comment][:body]

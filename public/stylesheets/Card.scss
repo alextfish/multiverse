@@ -144,7 +144,8 @@
   $LargePortraitCardHeight: 2 * $CardWidth;
   
   .whiteborder .card, .whiteborder .editborder_inner { border: 1px solid #888; }
-  .editborder_inner { background: white; }
+  .editborder_inner { background: white; padding-right: 5px; }
+  .editborder_outer { display: inline-block; margin: 10px 2px 10px 0px; }
   
   .innercardborder { width: $CardWidth; min-height: $CardHeight; }
   .flip .innercardborder { min-height: 0px; }
@@ -266,6 +267,7 @@ div.card_loading {
   .cardart {  position: relative;
               min-height: 123px; text-align: center; 
               overflow: hidden; /* make rounded borders clipping (tokens, planeswalkers) */ }
+  .cardart.image { background:url('/images/loading.gif') no-repeat center;}
   .cardart img { position: absolute; left: 0px;
               width: 180px;
               z-index: 0;}
@@ -1154,7 +1156,7 @@ $Land_Colourless_DFC_Text: #D8CFC8;
     @include gradient_horz_highlight(#957526, #bBa66F); 
   }
   .pinline_ptbox, .ptbox { background: #957526 !important; }
-  .cardtext { background: $Hybrid_DFC_Text !important; filter: none; }
+  .cardtext { background: $Hybrid_DFC_Text; }
 }
 .dfc .part2.Hybrid {
   .cardtext { background: $Hybrid_DFC_Text !important; filter: none; }
@@ -1250,6 +1252,19 @@ $Land_Colourless_DFC_Text: #D8CFC8;
 .flip .part2.Hybrid.greenwhite, .flip .part2.Hybrid.whitegreen { @include gradient_horz_padded($White_Card, $Green_Card); }
 .flip .part2.Hybrid.greenblue,  .flip .part2.Hybrid.bluegreen { @include gradient_horz_padded( $Blue_Card , $Green_Card); }
 
+.dfc .part2 {
+  &.whiteblue .cardtext { @include gradient_horz_padded($White_DFC_Text, $Blue_DFC_Text); }
+  &.whiteblack .cardtext { @include gradient_horz_padded($White_DFC_Text, $Black_DFC_Text); }
+  &.blueblack .cardtext { @include gradient_horz_padded($Blue_DFC_Text, $Black_DFC_Text); }
+  &.bluered .cardtext { @include gradient_horz_padded($Blue_DFC_Text, $Red_DFC_Text); }
+  &.blackred .cardtext { @include gradient_horz_padded($Black_DFC_Text, $Red_DFC_Text); }
+  &.blackgreen .cardtext { @include gradient_horz_padded($Black_DFC_Text, $Green_DFC_Text); }
+  &.redgreen .cardtext { @include gradient_horz_padded($Red_DFC_Text, $Green_DFC_Text); }
+  &.redwhite .cardtext, &.whitered .cardtext { @include gradient_horz_padded($Red_DFC_Text, $White_DFC_Text); }
+  &.greenwhite .cardtext, &.whitegreen .cardtext { @include gradient_horz_padded($Green_DFC_Text, $White_DFC_Text); }
+  &.greenblue .cardtext, &.bluegreen .cardtext { @include gradient_horz_padded($Green_DFC_Text, $Blue_DFC_Text); }
+}
+
 
 .whiteblue .cardtext { @include gradient_horz_padded($White_Text, $Blue_Text); }
 .whiteblack .cardtext { @include gradient_horz_padded($White_Text, $Black_Text); }
@@ -1261,7 +1276,6 @@ $Land_Colourless_DFC_Text: #D8CFC8;
 .redwhite .cardtext, .whitered .cardtext { @include gradient_horz_padded($Red_Text, $White_Text); }
 .greenwhite .cardtext, .whitegreen .cardtext { @include gradient_horz_padded($Green_Text, $White_Text); }
 .greenblue .cardtext, .bluegreen .cardtext { @include gradient_horz_padded($Green_Text, $Blue_Text); }
-
 
 
 .Hybrid .cardtitlebar, .Hybrid .cardtypebar {
@@ -1355,10 +1369,10 @@ td.form_info_cell { color: #666; }
 .split #card2wrapper, .flip #card2wrapper, .dfc #card2wrapper { display: inline-block; }
 
 /***** Skeletons *****/
-.skeleton_letter_toggle.code_shown#rarity_C_toggle, .skeleton_letter_toggle.code_shown#rarity_B_toggle, .skeleton_letter_toggle.code_shown#rarity_T_toggle { @extend .cardrarity.common; }
-.skeleton_letter_toggle.code_shown#rarity_U_toggle { @extend .uncommon; }
-.skeleton_letter_toggle.code_shown#rarity_R_toggle { @extend .rare; }
-.skeleton_letter_toggle.code_shown#rarity_M_toggle { @extend .mythic; }
+.skeleton_letter_toggle.code_shown.rarity_C_toggle, .skeleton_letter_toggle.code_shown#rarity_B_toggle, .skeleton_letter_toggle.code_shown.rarity_T_toggle { @extend .cardrarity.common; }
+.skeleton_letter_toggle.code_shown.rarity_U_toggle { @extend .uncommon; }
+.skeleton_letter_toggle.code_shown.rarity_R_toggle { @extend .rare; }
+.skeleton_letter_toggle.code_shown.rarity_M_toggle { @extend .mythic; }
 .skeleton_letter_toggle, .skeleton tr {
   &.code_frame_C { background-color: $Colourless_Text; }
   &.code_frame_W { background-color: $Land_White_Text; }

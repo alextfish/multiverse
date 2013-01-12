@@ -47,7 +47,7 @@
 </p>
 <p>
   <% if signed_in? %>
-    You can <%= link_to "create your own cardset now", new_cardset_path %>!
+    Or if none of those suit your needs, you can <%= link_to "create your own cardset now", new_cardset_path %>!
   <% else %>
     To create your own cardset, you must first <%= link_to "sign in", signin_path %> or <%= link_to "sign up", signup_path %>.
   <% end %>

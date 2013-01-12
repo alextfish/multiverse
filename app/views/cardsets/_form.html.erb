@@ -1,3 +1,20 @@
+<% if @cardset.new_record? && current_user.cardsets.empty? %>
+  <% form_initially_hidden = true; %>
+  <h3>Welcome!</h3>
+  
+  <p>If you just want to create a test card or two, visit the
+    <b><a href="http://multiverse.heroku.com/cardsets/2">Testing</a></b> cardset and click Create card. If you have an idea for a card
+    or two but not a whole cardset, <b><a href="http://multiverse.heroku.com/cardsets/74">Cards With No Home</a></b> is the place for
+    them; unless they're silly enough to go in <b><a href="http://multiverse.heroku.com/cardsets/10">Silver-Bordered or Joke Cards</a></b>.
+	<br><br>
+	If you are planning to create a full cardset under development, then click
+    here to fill in its details:
+    <a onclick="$('whole_cardset_form').show();" href="#">Create new cardset</a>
+  </p>
+
+<span id="whole_cardset_form" style="display:none;">
+<% end %>
+
 <%= form_for(@cardset) do |f| %>
   <% errors = @cardset.errors.merge @cardset.configuration.errors %>
   <% if errors.any? %>
@@ -37,15 +54,19 @@
     </td>
     <td><!-- Cardset configuration -->
     <%= fields_for @cardset.configuration do |config_fields| %>
-      <div class="config_section" style="margin-bottom: 10px;">
+      <div class="config_section">
+		<div style="display: inline-block;">
         Border colour:
+		</div>
         <% %w{black white silver gold purple}.each do |colour| %>
-          <span class="<%= colour %>border">
+          <div class="editborder_outer">
+		    <span class="<%= colour %>border">
             <span class="editborder_inner">
               <%= config_fields.radio_button :border_colour, colour, :checked => (@cardset.configuration.border_colour == colour) 
               %><%= config_fields.label :border_colour, colour.capitalize, :value => colour %>
             </span>
-          </span>
+            </span>
+		  </div>
         <% end %>
       </div>
       <div class="config_section">
@@ -102,7 +123,7 @@
       <div class="config_section">
         <% 'link_to_if !@cardset.new_record? && !@cardset.cards.empty?, "single card view", @cardset.cards.first'
         %>
-        <%= config_fields.label :card_show_active, "Enable card 'active' status?" %>
+        <%= config_fields.label :card_show_active, "Enable card \"active\" status?" %>
           <%= config_fields.check_box :card_show_active %>
         <div class="helptext">If you enable the "active" status, some features like boosters will
           only select from the active cards rather than all cards.</div>
@@ -123,4 +144,8 @@
   <div class="actions">
     <%= f.submit %>
   </div>
+<% end %>
+
+<% if form_initially_hidden %>
+  </span>
 <% end %>

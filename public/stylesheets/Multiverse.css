@@ -239,7 +239,16 @@ strong.highlight {
 }
 
 
-/**** Recent changes / cardlist index ****/
+/**** Cardset access colours for recent changes and setviews box ****/
+.access_Editable {
+  background-color: #D5E5F5;
+}
+.access_Viewable {
+  background-color: #DED;
+}
+.access_Private {
+  background-color: #EDD;
+}
 .rowodd td.access_Editable {
   background-color: #E9F5FF;
 }
@@ -248,15 +257,6 @@ strong.highlight {
 }
 .rowodd td.access_Private {
   background-color: #FEE;
-}
-.roweven td.access_Editable {
-  background-color: #D5E5F5;
-}
-.roweven td.access_Viewable {
-  background-color: #DED;
-}
-.roweven td.access_Private {
-  background-color: #EDD;
 }
 
 /**** Tooltips ****/

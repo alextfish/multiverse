@@ -1,4 +1,6 @@
-<% "Takes one parameter, :link_to_recent, true or false" %>
-<%= link_to_if link_to_recent, format_datetime(@log.datestamp), recent_cardset_path(@cardset) %>:
+<% "Takes two parameters: "
+   ":link_to_recent, true or false"
+   ":hard_format_date, true means use format_datetime(), false means let the JS do it (for caching)" %>
+<%= link_to_if link_to_recent, format_datetime(@log.datestamp, (hard_format_date ? :server : :client)), recent_cardset_path(@cardset) %>:
 <%= link_to_log_user @log %>
 <%= link_to_log_object(@log).html_safe %><% if !@log.text.blank? && @log.show_text? %>: <%= format_all_markup @log.text, @cardset %><% end %>

@@ -119,7 +119,7 @@ class Card < ActiveRecord::Base
       if split?
         name_out = primary_name + " // " + secondary_name
       else
-        name_out = primary_name
+        name_out = individual_name # primary_name
       end
     end
   end
@@ -744,13 +744,17 @@ class Card < ActiveRecord::Base
   def canonicalise_types
     # Move supertypes to correct places
     SUPERTYPES_AND_REGEXPS.each do |this_supertype, this_regexp|
-      if self.cardtype.downcase =~ this_regexp
-        if self.supertype.blank?
-          self.supertype = this_supertype
-        else
-          self.supertype += " " + this_supertype
+	  if self.cardtype.present?
+        if self.cardtype.downcase =~ this_regexp
+          if self.supertype.blank?
+            self.supertype = this_supertype
+          else
+            self.supertype += " " + this_supertype
+          end
+          self.cardtype.slice!(this_regexp)
         end
-        self.cardtype.slice!(this_regexp)
+      else
+	    self.cardtype = ""
       end
     end
     # Move subtypes to correct places

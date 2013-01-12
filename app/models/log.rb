@@ -84,7 +84,7 @@ class Log < ActiveRecord::Base
       when Log.kind(:card_edit)
         specific ? "edited " : "edited a card"
       when Log.kind(:card_delete)
-        specific ? "deleted a card from " : "deleted a card"
+        specific ? "deleted the card #{self.text} from " : "deleted a card"
       when Log.kind(:comment_card)
         specific ? "commented on " : "commented on a card"
       when Log.kind(:comment_details_page)

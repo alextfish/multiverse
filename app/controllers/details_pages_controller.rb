@@ -6,6 +6,9 @@ class DetailsPagesController < ApplicationController
   before_filter :only => [:new, :create, :edit, :update, :destroy] do
     require_permission_to_admin(@cardset)
   end
+  after_filter :only => [:create, :update, :destroy] do
+    expire_cardset_recentchanges_line_cache
+  end
   
   def expire_if_skeleton
     if @details_page.title == "Skeleton"

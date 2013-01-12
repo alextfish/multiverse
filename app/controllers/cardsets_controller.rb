@@ -14,6 +14,9 @@ class CardsetsController < ApplicationController
     @printable = params.has_key?(:printable)
   end
   before_filter :nocache_param
+  after_filter :only => [:create, :update, :destroy, :import_data, :generate_skeleton] do
+    expire_cardset_recentchanges_line_cache
+  end
   
   # All static views
   # caches_action :visualspoiler, :layout => false
@@ -25,41 +28,47 @@ class CardsetsController < ApplicationController
   # GET /cardsets.xml         
   def index
     @cardsets = Cardset.all
-
-    respond_to do |format|
-      format.html # index.html.erb
-      format.xml  { render :xml => @cardsets }
+    globalState = GlobalState.instance
+    if stale?(:last_modified => globalState.lastedit, :etag => "recent_changes")
+      respond_to do |format|
+        format.html # index.html.erb
+        format.xml  { render :xml => @cardsets }
+      end
     end
   end
 
   # GET /cardsets/1
   # GET /cardsets/1.xml
   def show
-    respond_to do |format|
-      format.html # show.html.erb
-      format.xml  { render :xml => @cardset }
+    if stale?(:last_modified => @cardset.last_edit_log.updated_at, :etag => @cardset)
+      respond_to do |format|
+        format.html # show.html.erb
+        format.xml  { render :xml => @cardset }
+      end
     end
   end
 
   # GET /cardsets/1/cardlist
   # GET /cardsets/1/cardlist.xml
   def cardlist
-    @cardset = Cardset.find(params[:id])
-
-    respond_to do |format|
-      format.html # cardlist.html.erb
-      format.xml  { render :xml => @cardset.cards }   # ??
-      format.text  { render }  
-      format.csv  { render }  
+    if stale?(:last_modified => @cardset.last_edit_log.updated_at, :etag => "cardset_#{@cardset.id}_cardlist")
+      respond_to do |format|
+        format.html # cardlist.html.erb
+        format.xml  { render :xml => @cardset.cards }   # ??
+        format.text { render }  
+        format.csv  { render }  
+      end
     end
   end
 
   # GET /cardsets/1/visualspoiler
   def visualspoiler
+    fresh_when :last_modified => @cardset.last_edit_log.updated_at, :etag => "cardset_#{@cardset.id}_visualspoiler_p#{params[:page] || ""}_s#{params[:section] || ""}"
   end
 
   # GET /cardsets/1/recent
   def recent
+    fresh_when :last_modified => @cardset.last_edit_log.updated_at, :etag => "cardset_#{@cardset.id}_recent"
   end
 
   # GET /cardsets/1/todo
@@ -69,6 +78,7 @@ class CardsetsController < ApplicationController
   # GET /cardsets/1/todo
   def skeleton
     @skeleton = @cardset.skeleton
+    fresh_when :last_modified => @cardset.last_edit_log.updated_at, :etag => "cardset_#{@cardset.id}_skeleton"
   end
 
   # GET /cardsets/1/import

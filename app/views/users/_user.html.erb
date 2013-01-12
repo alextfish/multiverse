@@ -9,5 +9,6 @@ Joined <%= format_datetime(user.created_at) %>.
     <br>Email (only shown to moderators): <%= link_to user.email, "mailto:#{user.email}" %>
     <span style="float:right;"><%= link_to "Delete user", user, :method => :delete, :confirm => "Really DELETE user #{user.name}?",
                                   :title => "Delete #{user.name}" %></span>
+	<br>
   <% end %>
 <br>

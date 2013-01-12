@@ -10,7 +10,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20120414175800) do
+ActiveRecord::Schema.define(:version => 20130109225800) do
 
   create_table "cards", :force => true do |t|
     t.string   "code"
@@ -102,6 +102,15 @@ ActiveRecord::Schema.define(:version => 20120414175800) do
   end
 
   add_index "details_pages", ["cardset_id"], :name => "index_details_pages_on_cardset_id"
+
+  create_table "global_states", :force => true do |t|
+    t.integer  "singletonguard"
+    t.datetime "lastedit"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "global_states", ["singletonguard"], :name => "index_global_states_on_singletonguard", :unique => true
 
   create_table "glyphs", :force => true do |t|
     t.string   "string"

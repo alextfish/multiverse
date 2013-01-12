@@ -25,7 +25,7 @@
               %>
            <% if !skip_display %>
            <div class="comment log">
-             <%= render :partial => "shared/log_entry", :locals => { :link_to_recent => false } %>
+             <%= render :partial => "shared/log_entry", :locals => { :link_to_recent => false, :hard_format_date => false } %>
              <!-- <span class="logdetails"><%= format_datetime history_item.datestamp %>:
              <%= friendly_link_to_user_id history_item.user_id %> <%= verb %><% if !history_item.text.blank? %>:</span> <%= history_item.text %>
              <% else %></span>

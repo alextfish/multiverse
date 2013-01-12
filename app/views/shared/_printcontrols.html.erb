@@ -1,6 +1,8 @@
 <div class="nonprinting" style="float:right;">
   <% if !@printable %>
-    <%= link_to "Printable", request.fullpath + "?printable" %>
+    <% current_url = request.fullpath
+       separator = (request.fullpath =~ /[?]/ ? "&" : "?") %>
+    <%= link_to "Printable", current_url + separator + "printable" %>
   <% else %>
     <%= link_to_function "[-]", "changeCardZoom(0.9)", :class => "no_tooltip" %>
     <%= link_to_function "[+]", "changeCardZoom(1.1)", :class => "no_tooltip" %>

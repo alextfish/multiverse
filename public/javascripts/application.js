@@ -13,23 +13,34 @@ C_idealTextBoxHeight = 99;
 
 // ------------ Skeletons
 // - Skeleton View
-function toggle_frame_letter(letter_elem) {
+function toggle_frame_letter(letter) {
+  var letter_elems = $$(".frame_" + letter + "_toggle");
+  var letter_elem = letter_elems[0];
   if (letter_elem.className.search(/code_shown/) > -1) {
-    letter_elem.removeClassName("code_shown").addClassName("code_not_shown");
     $$(".code_frame_" + letter_elem.innerHTML).invoke("hide");
-    letter_elem.show();
+    letter_elems.each(function(elem) {
+	  elem.removeClassName("code_shown").addClassName("code_not_shown").show();
+	});
   } else {
-    letter_elem.removeClassName("code_not_shown").addClassName("code_shown");
     $$(".code_frame_" + letter_elem.innerHTML).invoke("show");
+    letter_elems.each(function(elem) {
+	  elem.removeClassName("code_not_shown").addClassName("code_shown").show();
+	});
   }
 }
-function toggle_rarity_letter(letter_elem) {
+function toggle_rarity_letter(letter) {
+  var letter_elems = $$(".rarity_" + letter + "_toggle");
+  var letter_elem = letter_elems[0];
   if (letter_elem.className.search(/code_shown/) > -1) {
-    letter_elem.removeClassName("code_shown").addClassName("code_not_shown");
     $$(".code_rarity_" + letter_elem.innerHTML).invoke("hide");
+    letter_elems.each(function(elem) {
+	  elem.removeClassName("code_shown").addClassName("code_not_shown").show();
+	});
   } else {
-    letter_elem.removeClassName("code_not_shown").addClassName("code_shown");
     $$(".code_rarity_" + letter_elem.innerHTML).invoke("show");
+    letter_elems.each(function(elem) {
+	  elem.removeClassName("code_not_shown").addClassName("code_shown").show();
+	});
   }
 }
 function show_skeleton_row(value) {
@@ -517,18 +528,21 @@ Event.observe(window, 'load', makeAllCardsFit);
 var month_names = new Array("January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December");
 
 function renderDate(span) {
-    //Date Format: 'Y-m-d H:i:s'
-    var matches = /(\d+)-(\d+)-(\d+)\ (\d+):(\d+):(\d+)/.exec(span.innerHTML);
-    if (matches) {
-        var LocaleDate = new Date();
-        LocaleDate.setUTCFullYear(matches[1], matches[2] - 1, matches[3]);
-        LocaleDate.setUTCHours(matches[4], matches[5], matches[6], 0);
-        hours   = LocaleDate.getHours() + "";
-        minutes = LocaleDate.getMinutes() + "";
-        seconds = LocaleDate.getSeconds() + "";
-        var date_out = month_names[LocaleDate.getMonth()] + " " + LocaleDate.getDate() + " " + LocaleDate.getFullYear() + ", " + (hours.length == 1 ? "0" : "") + hours + ":" + (minutes.length == 1 ? "0" : "") + minutes + ":" + (seconds.length == 1 ? "0" : "") + seconds;
-        span.innerHTML = date_out;
-    }
+  // Read the date in UTC
+  var date = moment.utc(span.innerHTML, 'YYYY-MM-DD hh:mm:ss');
+  if (!date.isValid()) { 
+    // We can't do anything here
+    return; 
+  }
+  if (span.hasClassName("relative")) {
+    // Render relatively
+    span.innerHTML = date.fromNow();
+  } else {
+    // Render in absolute (but friendly) local time
+    date.local(); // switch the date object to local time
+    // span.innerHTML = date.format('MMMM Do YYYY, h:mm:ss a');
+    span.innerHTML = date.format('MMMM Do YYYY, H:mm:ss');
+  }
 }
 function renderAllDatesAndTimes() {
     $$("span.date").each(renderDate);

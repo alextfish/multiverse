@@ -95,9 +95,7 @@
       </div>
      </div>
     <div class="bottombox">
-     <% if !card.artist.blank? %>
-       <span class="artist">Illus. <%= card.artist %></span>
-     <% else %>&nbsp;<% end %>
+     <span class="artist"><% if !card.artist.blank? %>Illus. <%= card.artist %><% end %></span>
      <% if !card.power.blank? || !card.toughness.blank? %>
      <div class="ptbox_container">
       <div class="pinline pinline_box pinline_ptbox">

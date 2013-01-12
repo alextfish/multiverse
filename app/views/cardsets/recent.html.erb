@@ -32,7 +32,7 @@
       <% items_to_show.each do |log| %>
         <% @log = log %>
         <li class="recent_item">
-          <%= render :partial => "shared/log_entry", :locals => { :link_to_recent => false } %>
+          <%= render :partial => "shared/log_entry", :locals => { :link_to_recent => false, :hard_format_date => true } %>
           <% if @log.comment? && !kinds_to_not_show.include?(@log.kind) %>
             <% @comment = Comment.find_by_id(@log.object_id) %>
             <% if @comment && @comment.get_cardset == @cardset %>

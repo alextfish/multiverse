@@ -38,7 +38,12 @@
   border: 1px solid #888; }
 
 .editborder_inner {
-  background: white; }
+  background: white;
+  padding-right: 5px; }
+
+.editborder_outer {
+  display: inline-block;
+  margin: 10px 2px 10px 0px; }
 
 .innercardborder {
   width: 200px;
@@ -236,6 +241,9 @@ div.card_loading {
   overflow: hidden;
   /* make rounded borders clipping (tokens, planeswalkers) */ }
 
+.cardart.image {
+  background: url("/images/loading.gif") no-repeat center; }
+
 .cardart img {
   position: absolute;
   left: 0px;
@@ -379,32 +387,32 @@ div.card_loading {
 .minitext  img { width: 12px; height: 12px; }
 .microtext img { width: 11px; height: 11px; }
 .nanotext  img { width: 10px; height: 10px; } */
-.cardrarity.common, .skeleton_letter_toggle.code_shown#rarity_C_toggle, .skeleton_letter_toggle.code_shown#rarity_B_toggle, .skeleton_letter_toggle.code_shown#rarity_T_toggle, .skeleton_letter_toggle.code_rarity_C td.code_link, .skeleton_letter_toggle.code_rarity_C td.code_link a, .skeleton_letter_toggle.code_rarity_B td.code_link, .skeleton_letter_toggle.code_rarity_B td.code_link a, .skeleton_letter_toggle.code_rarity_T td.code_link, .skeleton_letter_toggle.code_rarity_T td.code_link a, .skeleton tr.code_rarity_C td.code_link, .skeleton tr.code_rarity_C td.code_link a, .skeleton tr.code_rarity_B td.code_link, .skeleton tr.code_rarity_B td.code_link a, .skeleton tr.code_rarity_T td.code_link, .skeleton tr.code_rarity_T td.code_link a, .cardrarity.token, .cardrarity.basic {
+.cardrarity.common, .skeleton_letter_toggle.code_shown.rarity_C_toggle, .skeleton_letter_toggle.code_shown#rarity_B_toggle, .skeleton_letter_toggle.code_shown.rarity_T_toggle, .skeleton_letter_toggle.code_rarity_C td.code_link, .skeleton_letter_toggle.code_rarity_C td.code_link a, .skeleton_letter_toggle.code_rarity_B td.code_link, .skeleton_letter_toggle.code_rarity_B td.code_link a, .skeleton_letter_toggle.code_rarity_T td.code_link, .skeleton_letter_toggle.code_rarity_T td.code_link a, .skeleton tr.code_rarity_C td.code_link, .skeleton tr.code_rarity_C td.code_link a, .skeleton tr.code_rarity_B td.code_link, .skeleton tr.code_rarity_B td.code_link a, .skeleton tr.code_rarity_T td.code_link, .skeleton tr.code_rarity_T td.code_link a, .cardrarity.token, .cardrarity.basic {
   color: #fff;
   background-color: #000; }
 
-.uncommon, .skeleton_letter_toggle.code_shown#rarity_U_toggle, .code_rarity_U td.code_link {
+.uncommon, .skeleton_letter_toggle.code_shown.rarity_U_toggle, .code_rarity_U td.code_link {
   color: #000;
   background: #ccc;
   background: -moz-linear-gradient(right top, #999999, #ccd3d6, #999999); }
   @media screen {
-    .uncommon, .skeleton_letter_toggle.code_shown#rarity_U_toggle, .code_rarity_U td.code_link {
+    .uncommon, .skeleton_letter_toggle.code_shown.rarity_U_toggle, .code_rarity_U td.code_link {
       background: -webkit-gradient(linear, right top, left bottom, from(#999999), color-stop(0.5, #ccd3d6), to(#999999)); } }
 
-.rare, .skeleton_letter_toggle.code_shown#rarity_R_toggle, .code_rarity_R td.code_link {
+.rare, .skeleton_letter_toggle.code_shown.rarity_R_toggle, .code_rarity_R td.code_link {
   color: #000;
   background: #e0d060;
   background: -moz-linear-gradient(right top, #998044, #e0d060, #998044); }
   @media screen {
-    .rare, .skeleton_letter_toggle.code_shown#rarity_R_toggle, .code_rarity_R td.code_link {
+    .rare, .skeleton_letter_toggle.code_shown.rarity_R_toggle, .code_rarity_R td.code_link {
       background: -webkit-gradient(linear, right top, left bottom, from(#998044), color-stop(0.5, #e0d060), to(#998044)); } }
 
-.mythic, .skeleton_letter_toggle.code_shown#rarity_M_toggle, .code_rarity_M td.code_link {
+.mythic, .skeleton_letter_toggle.code_shown.rarity_M_toggle, .code_rarity_M td.code_link {
   color: #fff;
   background: #933;
   background: -moz-linear-gradient(right top, #aa4433, #ee8866, #aa4433); }
   @media screen {
-    .mythic, .skeleton_letter_toggle.code_shown#rarity_M_toggle, .code_rarity_M td.code_link {
+    .mythic, .skeleton_letter_toggle.code_shown.rarity_M_toggle, .code_rarity_M td.code_link {
       background: -webkit-gradient(linear, right top, left bottom, from(#aa4433), color-stop(0.5, #ee8866), to(#aa4433)); } }
 
 .rulestext i, .rulestext i i i, .flavourtext i i, .flavourtext i i i i {
@@ -1467,8 +1475,7 @@ img.colour_indicator {
 .dfc .part2.Multicolour .pinline_ptbox, .dfc .part2.Multicolour .ptbox, .dfc .part2.Land.multicolour .pinline_ptbox, .dfc .part2.Land.multicolour .ptbox {
   background: #957526 !important; }
 .dfc .part2.Multicolour .cardtext, .dfc .part2.Land.multicolour .cardtext {
-  background: #bebcba !important;
-  filter: none; }
+  background: #bebcba; }
 
 .dfc .part2.Hybrid .cardtext {
   background: #bebcba !important;
@@ -1822,6 +1829,67 @@ img.colour_indicator {
   @media screen {
     .flip .part2.Hybrid.greenblue, .flip .part2.Hybrid.bluegreen {
       background: -webkit-gradient(linear, left top, right top, from(#63acda), color-stop(0.4, #63acda), color-stop(0.6, #7ea17e), to(#7ea17e)); } }
+
+.dfc .part2.whiteblue .cardtext {
+  filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#beb7a7', endColorstr='#b8cad3', GradientType=1);
+  background: -moz-linear-gradient(left, #beb7a7, #beb7a7, #b8cad3, #b8cad3); }
+  @media screen {
+    .dfc .part2.whiteblue .cardtext {
+      background: -webkit-gradient(linear, left top, right top, from(#beb7a7), color-stop(0.4, #beb7a7), color-stop(0.6, #b8cad3), to(#b8cad3)); } }
+.dfc .part2.whiteblack .cardtext {
+  filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#beb7a7', endColorstr='#b9b7b8', GradientType=1);
+  background: -moz-linear-gradient(left, #beb7a7, #beb7a7, #b9b7b8, #b9b7b8); }
+  @media screen {
+    .dfc .part2.whiteblack .cardtext {
+      background: -webkit-gradient(linear, left top, right top, from(#beb7a7), color-stop(0.4, #beb7a7), color-stop(0.6, #b9b7b8), to(#b9b7b8)); } }
+.dfc .part2.blueblack .cardtext {
+  filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#b8cad3', endColorstr='#b9b7b8', GradientType=1);
+  background: -moz-linear-gradient(left, #b8cad3, #b8cad3, #b9b7b8, #b9b7b8); }
+  @media screen {
+    .dfc .part2.blueblack .cardtext {
+      background: -webkit-gradient(linear, left top, right top, from(#b8cad3), color-stop(0.4, #b8cad3), color-stop(0.6, #b9b7b8), to(#b9b7b8)); } }
+.dfc .part2.bluered .cardtext {
+  filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#b8cad3', endColorstr='#d6bbb4', GradientType=1);
+  background: -moz-linear-gradient(left, #b8cad3, #b8cad3, #d6bbb4, #d6bbb4); }
+  @media screen {
+    .dfc .part2.bluered .cardtext {
+      background: -webkit-gradient(linear, left top, right top, from(#b8cad3), color-stop(0.4, #b8cad3), color-stop(0.6, #d6bbb4), to(#d6bbb4)); } }
+.dfc .part2.blackred .cardtext {
+  filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#b9b7b8', endColorstr='#d6bbb4', GradientType=1);
+  background: -moz-linear-gradient(left, #b9b7b8, #b9b7b8, #d6bbb4, #d6bbb4); }
+  @media screen {
+    .dfc .part2.blackred .cardtext {
+      background: -webkit-gradient(linear, left top, right top, from(#b9b7b8), color-stop(0.4, #b9b7b8), color-stop(0.6, #d6bbb4), to(#d6bbb4)); } }
+.dfc .part2.blackgreen .cardtext {
+  filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#b9b7b8', endColorstr='#afb8b2', GradientType=1);
+  background: -moz-linear-gradient(left, #b9b7b8, #b9b7b8, #afb8b2, #afb8b2); }
+  @media screen {
+    .dfc .part2.blackgreen .cardtext {
+      background: -webkit-gradient(linear, left top, right top, from(#b9b7b8), color-stop(0.4, #b9b7b8), color-stop(0.6, #afb8b2), to(#afb8b2)); } }
+.dfc .part2.redgreen .cardtext {
+  filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#d6bbb4', endColorstr='#afb8b2', GradientType=1);
+  background: -moz-linear-gradient(left, #d6bbb4, #d6bbb4, #afb8b2, #afb8b2); }
+  @media screen {
+    .dfc .part2.redgreen .cardtext {
+      background: -webkit-gradient(linear, left top, right top, from(#d6bbb4), color-stop(0.4, #d6bbb4), color-stop(0.6, #afb8b2), to(#afb8b2)); } }
+.dfc .part2.redwhite .cardtext, .dfc .part2.whitered .cardtext {
+  filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#d6bbb4', endColorstr='#beb7a7', GradientType=1);
+  background: -moz-linear-gradient(left, #d6bbb4, #d6bbb4, #beb7a7, #beb7a7); }
+  @media screen {
+    .dfc .part2.redwhite .cardtext, .dfc .part2.whitered .cardtext {
+      background: -webkit-gradient(linear, left top, right top, from(#d6bbb4), color-stop(0.4, #d6bbb4), color-stop(0.6, #beb7a7), to(#beb7a7)); } }
+.dfc .part2.greenwhite .cardtext, .dfc .part2.whitegreen .cardtext {
+  filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#afb8b2', endColorstr='#beb7a7', GradientType=1);
+  background: -moz-linear-gradient(left, #afb8b2, #afb8b2, #beb7a7, #beb7a7); }
+  @media screen {
+    .dfc .part2.greenwhite .cardtext, .dfc .part2.whitegreen .cardtext {
+      background: -webkit-gradient(linear, left top, right top, from(#afb8b2), color-stop(0.4, #afb8b2), color-stop(0.6, #beb7a7), to(#beb7a7)); } }
+.dfc .part2.greenblue .cardtext, .dfc .part2.bluegreen .cardtext {
+  filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#afb8b2', endColorstr='#b8cad3', GradientType=1);
+  background: -moz-linear-gradient(left, #afb8b2, #afb8b2, #b8cad3, #b8cad3); }
+  @media screen {
+    .dfc .part2.greenblue .cardtext, .dfc .part2.bluegreen .cardtext {
+      background: -webkit-gradient(linear, left top, right top, from(#afb8b2), color-stop(0.4, #afb8b2), color-stop(0.6, #b8cad3), to(#b8cad3)); } }
 
 .whiteblue .cardtext {
   filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='white', endColorstr='#e1eced', GradientType=1);

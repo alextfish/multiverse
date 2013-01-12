@@ -74,6 +74,11 @@ class Cardset < ActiveRecord::Base
       
       # Create the NewsList log
       news_list.add_log(new_log)
+	  
+	  # Update the GlobalState
+	  globalState = GlobalState.instance
+	  globalState.lastedit = new_log.datestamp
+	  globalState.save!
     end
   end
   
@@ -89,6 +94,17 @@ class Cardset < ActiveRecord::Base
       out = self.logs.reject{ |l| logs_to_not_show.include?(l.kind) }.first
     end
     out
+  end
+  
+  def clear_cache
+    # Clear the cardset cache /for anything that uses the iterator/
+    # As of 11th Jan this is only the visual spoiler
+    Rails.cache.write("cardset-#{self.id}-memcache-iterator", self.memcache_iterator + 1)
+  end
+  def memcache_iterator
+    # fetch the cardset's memcache key
+    # If there isn't one yet, assign it to 0
+    Rails.cache.fetch("cardset-#{self.id}-memcache-iterator") { 0 }
   end
   
   def datestamps_close(d1,d2)

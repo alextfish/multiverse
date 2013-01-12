@@ -73,6 +73,9 @@ module SessionsHelper
 
   def permission_to?(action, cardset)
     # This needs to be in sessions_helper because the model doesn't have access to methods like signed_in?
+    if cardset.nil?
+      return false
+    end
     case action
       when :comment
         permitted_people = cardset.configuration.commentability
@@ -150,14 +153,23 @@ module SessionsHelper
   #### Caching
   
   def expire_all_cardset_caches
-    expire_fragment :controller => 'cardsets', :id => @cardset.id, :action => :visualspoiler
+    expire_cardset_visualspoiler_cache
     expire_cardset_cardlist_cache
     expire_cardset_frontpage_cache
     expire_skeleton_cache
+    expire_cardset_recentchanges_line_cache
+  end
+  def expire_cardset_visualspoiler_cache
+    @cardset.clear_cache
   end
   def expire_skeleton_cache
     expire_fragment :controller => 'cardsets', :id => @cardset.id, :action => :skeleton
   end
+  def expire_cardset_recentchanges_line_cache
+    expire_fragment :controller => 'cardsets', :action => "index", :cardset => "#{@cardset.id}"
+      expire_fragment :controller => 'cardsets', :action => "index"
+  end
+  # Two ways to expire the cardset-front-page cache: one expires the infobox as well, the other doesn't
   def expire_cardset_frontpage_cache
     ["edityes", "editno", "infobox"].each {|suffix| 
       expire_fragment :controller => 'cardsets', :id => @cardset.id, :action => 'show', :action_suffix => suffix

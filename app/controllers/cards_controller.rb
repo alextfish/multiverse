@@ -164,6 +164,10 @@ class CardsController < ApplicationController
       else
         set_link_fields
       end
+	  if params[:initial_comment].present?
+        comment = @card.comments.build(:user => current_user, :body => params[:initial_comment])
+        comment.save!
+	  end
       redirect_to @card, :notice => "#{@card.printable_name} was successfully created." 
     else
       render :action => "new"
@@ -184,7 +188,7 @@ class CardsController < ApplicationController
       @cardset.log :kind=>:card_edit, :user=>current_user, :object_id=>@card.id, :text=>params[:edit_comment]
       if old_multipart && !new_multipart
         # Delete the old partner
-        Rails.logger.info "Delete partner"
+        Rails.logger.info "Deleting partner of #{@card.printable_name}"
         @card2.destroy
         @card.link = nil
         @card.save!
@@ -263,12 +267,13 @@ class CardsController < ApplicationController
     if (@card2 = @card.link)
       @card2.destroy
     end
+    card_name = @card.name
     @card.destroy
     expire_all_cardset_caches
 
     respond_to do |format|
       format.html do
-        @cardset.log :kind=>:card_delete, :user=>current_user, :object_id=>@cardset.id
+        @cardset.log :kind=>:card_delete, :user=>current_user, :object_id=>@cardset.id, :text=>card_name
         redirect_to @cardset
       end
       # Horrible MVC violation, but I just can't get .js.erb files to render

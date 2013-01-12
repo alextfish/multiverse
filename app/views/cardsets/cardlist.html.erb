@@ -9,6 +9,7 @@
 <% code_display = @cardset.configuration.cardlist_show_code ? "" : "style='display:none;'" 
   active_display = @cardset.configuration.cardlist_show_active ? "" : "style='display:none;'" 
   comment_display = @cardset.configuration.cardlist_show_comments ? "" : "style='display:none;'" 
+  creator_display = @cardset.public_access == "Editable" ? "" : "style='display:none;'" 
   update_display = "style='display:none;'" 
   
   can_edit = permission_to?(:edit, @cardset)
@@ -25,7 +26,7 @@
   <% present_frame_letters = all_cards.map &:category_letter
      present_rarity_letters = all_cards.map &:rarity_letter
   %>
-  <%= render :partial => "card_category_buttons", :locals => { :present_frame_letters => present_frame_letters, :present_rarity_letters => present_rarity_letters} %>
+  <%= render :partial => "card_category_buttons", :locals => { :present_frame_letters => present_frame_letters, :present_rarity_letters => present_rarity_letters, :frame_links => nil} %>
   <br>
   <% toggleable_fields = [
       ["card_text", "card text", true],
@@ -46,6 +47,7 @@
 <table class="sortable resizable">
   <tr>
     <th class="sortfirstasc">#</th>
+	<!-- th class="creator" <%= creator_display %>>Creator</th -->
     <th>Name</th>
     <th class="colour">Colour</th>
     <th id="rarity">Rarity</th>

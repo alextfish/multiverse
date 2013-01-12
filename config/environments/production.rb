@@ -23,7 +23,7 @@ Multiverse::Application.configure do
   # If you have no front-end server that supports something like X-Sendfile,
   # just comment this out and Rails will serve the files
 
-  if Rails::VERSION::STRING != '3.0.0'
+  if Rails::VERSION::STRING >= '3.1'
     # Compress JavaScripts and CSS
     config.assets.compress = true
     

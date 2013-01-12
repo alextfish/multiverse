@@ -5,6 +5,9 @@ class ConfigurationsController < ApplicationController
   before_filter :only => [:new, :create, :edit, :update, :destroy] do
     require_permission_to_admin @cardset
   end
+  after_filter :only => [:create, :update, :destroy] do
+    expire_cardset_recentchanges_line_cache
+  end
 
   # GET /configurations/1
   def show

@@ -36,6 +36,7 @@
  </tr>
  <% items_to_show.each_with_index do |cardset, index| %>
    <% @cardset = cardset %>
+   <% cache(:action => "index", :cardset => "#{@cardset.id}") do %>
    <tr>
      <% set_viewable = permission_to? :view, @cardset %>
      <td><b><%= link_to @cardset.name, @cardset %></b></td>
@@ -47,7 +48,7 @@
        <td>
          <% @log = @cardset.recent_action  %>
          <span style="display:none;"><%= "%08d" % index %></span><!-- for sorting -->
-         <%= render :partial => "shared/log_entry", :locals => { :link_to_recent => true } %>
+         <%= render :partial => "shared/log_entry", :locals => { :link_to_recent => true, :hard_format_date => false } %>
        </td>
        <td>
          <%= @cardset.description %>
@@ -58,6 +59,7 @@
        <td style="border-left: none;"></td>
      <% end %>
    </tr>
+   <% end %>
  <% end %>
 </table>
 <%= will_paginate items_to_show  %>

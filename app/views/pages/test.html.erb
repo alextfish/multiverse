@@ -1,0 +1,388 @@
+<%
+body = <<ENDBODY 
+
+## FTL Modding Tutorial: Creating a Playable Ship ##
+
+Hi, all! FTL is an awesome game, isn't it? So many different ships to
+play with, so many different weapons to try out, so many encounters.
+
+But if you play it a lot, you may find yourself wanting to go beyond
+those limits. Wanting to make up your own ships, weapons, events.
+Fortunately, FTL is a very moddable game, thanks to some great tools
+the modding community have written.
+
+I'm here to teach you how to create a ship for yourself. There's a
+handy utility called [FTLEdit](http://www.ftlgame.com/forum/viewtopic.php?f=12&t=2959) written by Darkfrost, 
+and we're going
+to use that to do some of the work for us, but we'll still have to do
+quite a bit ourselves. (There's another editor too, called [FTL Ship Creator](http://www.ftlgame.com/forum/viewtopic.php?f=12&t=3197) and
+written by tazardar, but I haven't tried that one.)
+
+If you instead want to create *enemy* ships, to attack the player
+rather than for the player to use, then a lot of this guide will still
+apply, but bits of it won't.
+
+Ready to create a new playable ship? Then let's get started.
+
+## Step 1: Install FTLDat, GMM and a Mod ##
+There are a couple of required steps before you actually start
+modding. There are certain conditions under which all FTL mods must be
+distributed, that basically mean using [Grognak's Mod Manager
+(GMM)](http://www.ftlgame.com/forum/viewtopic.php?f=12&t=2464) is a must. You're going to need to have GMM working if
+you ever want to distribute your mod, and it does some useful things
+to the data files too; not to mention it lets you try out every other
+mod in [the FTL mods forum](http://www.ftlgame.com/forum/viewforum.php?f=11). So you'll need to install it. It
+uses FTLdat, so you'll need to install that as well. A couple of tips:
+
+* Download [FTLEdit from here](http://www.ftlgame.com/forum/viewtopic.php?f=12&t=2959), [GMM from here](http://www.ftlgame.com/forum/viewtopic.php?f=12&t=2464) and
+[FTLdat from here](http://www.ftlgame.com/forum/viewtopic.php?f=12&t=1920).
+* FTLdat gets reported by a few virus scanners as being a virus. It's
+not. Bypass your virus scanner for this one download. Or if you're
+really paranoid, download [the Python source](https://github.com/bwesterb/ftldat) so you can
+convince yourself there's no problem.
+* When you've unzipped GMM, put it in the same directory that
+ftlgame.exe is in. (You can find this by right-clicking the FTL shortcut to start the game,
+clicking Properties, and clicking Find Target or Open File Location. For
+Steam installs, look in C:\Program Files (x86)\Steam\steamapps\common\FTL Faster Than Light , or perhaps without the (x86).) I'll call that directory your FTL install
+directory. After you put the contents of the GMM zip there, this directory should
+contain modman.exe, ftlgame.exe, and a number of subdirectories
+including resources/ and mods/ .
+* I can't provide tech support for these utilities. For problems with
+GMM ask [in the GMM thread](http://www.ftlgame.com/forum/viewtopic.php?f=12&t=2464); for problems with FTLdat ask [in
+the FTLdat thread](http://www.ftlgame.com/forum/viewtopic.php?f=12&t=1920).
+
+When you've got them installed, check it's working. Run GMM, click
+"Beginning Scrap Advantage", click Patch. When GMM finishes, launch
+FTL (you may have to do it directly rather than letting GMM launch it
+for you), and start a new game: if you see a blue option saying "(Mod) Strip a near-by asteroid for scrap", the mod is installed!
+
+Since you'll be creating a .ftl mod, and .ftl files are renamed .zip
+files, you'll also need a zip program installed. I recommend
+[7Zip](http://www.7-zip.org/), but WinZip will do fine as well.
+
+## Step 2: Design ##
+Okay. With those preliminaries out of the way, time to move on to
+actual mod design!
+
+The first step is: Figure out what you want your ship to do! Plan the
+image you're going to use for the ship, what weapons and crew and
+drones you want the ship to have, any augments, what systems you want
+to start off levelled-up or have absent entirely.
+
+## Step 3: Draw the Graphics ##
+Where "draw" may mean draw in a graphics program, or it may mean
+extract them from some other source. For [my Starcraft mod](http://www.ftlgame.com/forum/viewtopic.php?f=11&t=5238), this meant
+loading the Starcraft editor, zooming in on one ship, taking a
+screenshot and then tidying it up in GIMP.
+
+It's worth knowing what you're aiming for. If you look at the images
+for the built-in ships, they're all between 400x400 and about 700x400
+pixels. (If you don't know where to find those images, they're in your
+FTL install directory, under resources/resources.dat-unpacked/img/ship
+. Take a look at all the images in this directory &ndash; it's pretty
+helpful and interesting.)
+
+You'll also want at this point to give a little consideration to mount
+points: where do you want the weapons to appear on the outside of your
+ship?
+
+## Step 4: Floor Plan in FTLEdit ##
+Now it's time to fire up FTLEdit. If you haven't launched it before,
+then once it loads you'll need to click Options and specify the path
+to where your FTL install is. If you've run GMM as I told you to, the
+resources directory ought to contain unpacked versions of data.dat and
+resources.dat. This is what you need to point FTLEdit at. There's no OK button in this dialog - just close it once you've filled in the directories. You'll know it's right if you can edit an existing ship successfully.
+
+Now, edit one of the existing ships. You should choose the ship which
+you want to replace in the hangar with your new ship. (In order for
+your ship to be playable by the player, it has to replace one of the
+18 ships that goes in the hangar.)
+
+FTLEdit will open with the floor layout of that ship. Now do the following:
+
+* Click "Show floor" to remove the grey background to the rooms.
+* Click each room and door in turn and press the Delete key.
+* Click "Load base", and browse to the image you created earlier. Use
+"Move base" to position the ship image behind the grid.
+* Draw the rooms using "Add room". Click-and-drag to initially size a
+room; right-click-and-drag to resize. I recommend you first place all
+the rooms, and only then add all the doors using "Add door".
+* Add systems using the system icons for weapons, shields, etc. You
+need to specify which room will have a system even if you don't want
+the ship to <I>start</I> with that system. If you leave any systems
+unplaced, the ship will be unable to <I>ever</I> gain that system even
+if the player buys the system in a shop.
+
+## Step 5: Options in FTLEdit ##
+Click FTLEdit's Options button. Drag the dialog to somewhere that
+isn't overlapping the main FTLEdit window. Now go through the options
+for crew, weapons, drones etc, adjusting them as you like. A few
+notes:
+
+* In the "Important ship settings" section, it's simplest if you set
+the "Img" and "Layout" to the same thing. For simplicity this should be all lower
+case and with no spaces (but underscores _ are fine).
+* Do not change the "ID" other than to one of the 18 ships in the
+hangar.
+
+When you're done, click "Export Ship" and "Export the .ftl package".
+This will produce a first draft of the .ftl file that will form your
+mod. It's nowhere near finished, but it's a good first step. Copy the
+.ftl file over to your FTL install's mods/ directory. Make a backup
+copy of it somewhere else as well if you like.
+
+## Step 6: Unzip the .ftl file and Add Images ##
+Right, it's time to fill in the gaps in what FTLEdit produced. Rename
+your .ftl file to instead end .zip, and unzip it to a directory
+somewhere. Go into that directory. This I'll call your mod root
+directory. It should contain two subdirectories, data/ and img/. The
+img/ directory needs to contain a subdirectory called ship/ with all
+your ship images in, but FTLEdit doesn't put them in there. So that's
+your first task: copy your ship image into your mod's img/ship
+directory. Give it the name [myship]_base.png , where [myship] is what
+you specified as the "Img" setting in FTLEdit's options.
+
+You also need to add an image called [myship]_floor.png . For most mods
+this is just an empty transparent .png file, but if you feel like it
+you can draw a floor layout. If you don't have an easy way to create a
+transparent png, download [this one](http://toothycat.net/~hologram/FTL/transparent.png) and save it as
+myship_floor.png in the same directory, img/ship inside your mod
+directory.
+
+Once you've done this, you ought to be able to zip up your mod into a
+.ftl file and try it out. It'll have a bunch of glitches that we'll
+fix in later stages, but it ought to be broadly playable. To turn your
+mod directory into a mod and install it, these are the steps:
+
+* Navigate to your mod's root directory in Windows Explorer. You
+should see two directories: img/ and data/ .
+* Select both img/ and data/ (e.g. by dragging a box around both of
+them). Right-click one of them and select "Add to zip file myship.zip"
+or similar.
+* When 7Zip finishes creating the archive, rename it to myship.ftl .
+* Move the .ftl file off into your FTL install's mods/ directory.
+* Run GMM. Select your mod and click Patch.
+* Launch FTL and take a look at your ship in the hangar!
+
+After each of the following steps, you could do this process to test
+out your work.
+
+Incidentally, if you happen to have cygwin installed, you can do all
+the above with this one line:
+
+`pushd mods/myship ; zip -qr myship myship ; mv myship.zip ../myship.ftl
+; popd ; ./modman.exe ; ./ftlgame.exe`
+
+## Step 7: Edit the Blueprint and Add Weapon Mounts ##
+Now, inside your mod's data/ directory is a key file called
+blueprints.xml.append. Open this file in a text editor (Notepad would
+do if you don't have anything else).
+
+You ought to be able to see how the XML in this file matches up to
+what you defined in FTLEdit's options screen. The power levels,
+weapons and so on should all match what you set. If you want to change
+them, you can do that here.
+
+In particular, if you want your ship to have fewer augments, weapons
+or drones than the one you were editing had, then you'll need to
+remove some lines here, because FTLEdit unfortunately leaves them in.
+
+FTLEdit does now produce a layout xml file, including the offset,
+which is great as you don't have to do that yourself any more. (Make
+sure you have the latest version of FTLEdit, version 0.91 as of 31st December 2012, as that
+step is a real pain to do manually.) But you do still need to define
+weapon mount points: that is, the places where weapon images poke out
+from behind the ship.
+
+This is pretty easy. Open the ship image in any image editor. Position
+your mouse cursor over the point where you want the rear corner of the
+first weapon to be. Now look at the editor's status bar for two
+numbers: these are the x and y coordinates of this mount point. Note
+down these numbers. Repeat for each mount point (you usually want 4).
+If your ship has the Artillery Beam as on the Federation Cruiser, do
+the same to get an extra pair of mount point coordinates for where the
+beam should fire from.
+
+Edit the file called [myship].xml that's in the data/ directory of
+your mod root. For each mount point, add a line looking like this:
+
+	<mount x="361" y="59" rotate="true" mirror="false" gib="1" slide="right"/>
+
+The x and y numbers are the coordinates you noted earlier. "rotate"
+should usually be true: true means point to the right, false means
+point upwards. "mirror" should be true for weapons that poke
+up-and-right (usually on top of your ship) and false for weapons that poke down-and-right (on the bottom). "slide" indicates which direction the weapon slides out when you activate it.
+
+## Step 8: Choose a Shield Image ##
+You need to choose a shield image that's about the right size for your
+ship. Look at the existing shield images in your FTL install's
+img/ship/ subdirectory &ndash; everything ending in _shields1.png. They're
+all different sizes, and you want one that's big enough to enclose
+your whole ship. You don't have to use the same image that the
+base-game ships use, but you do need to use something that's an
+ellipse.
+
+If you conclude that, say, the Zoltan Cruiser's 640x400 shield
+will do &ndash; the image energy_cruiser_shields1.png &ndash; then edit
+the blueprint to add 
+    <shieldImage>energy_cruiser</shieldImage>
+(Note that you leave off "_shields1", because FTL adds that at the end.)
+If you're creating your own shield image file called
+myship_shields1.png , you don't need to add <shieldImage> to the
+blueprint; just put the shield image in your mod's img/ship directory.
+
+The second half of this task is to edit the ELLIPSE dimensions in the
+myship.txt file. This is important because if you don't change it,
+then no matter what the image looks like, the shield will only protect
+rooms within a 400x400px circle: outlying rooms can be hit even if
+your shields are up! You need to set the numbers after ELLIPSE to
+<I>half</I> the width and <I>half</I> the height of the shield image.
+
+This would be a good time to rezip your mod and check it out again,
+following the same instructions as in step 6.
+
+## Step 9: Choose Room Images ##
+You should choose or create images for the individual rooms in your
+ship. Go and look in resource.dat-unpacked/img/ship/interior . All
+those images are possibilities to appear in the rooms of your ship.
+This isn't just graphical polish, because you need to select which
+space of the crewable rooms is the one where the operator needs to go.
+By default, FTLEdit doesn't give sensible settings here. Room images
+come out very distorted, and some rooms can end up not crewable at
+all, which imposes a major gameplay penalty.
+
+So what you need to do is bring up your ship, either in FTL with the
+mod installed, or in FTLEdit; simultaneously open the blueprint in a
+text editor; and also have a thumbnails view of img/ship/interior to
+hand. For each of the systems and subsystems on your ship - probably
+all eleven, unless you've deliberately omitted some - you need to do
+the following steps.
+
+* Note the room's size. For example, the weapons room in your ship
+might be width 2 and height 1.
+* Look in img/ship/interior for an image for that system of that size.
+Note that each square of a room is precisely 35x35 pixels: so in the
+example we're looking for a weapons system image that's 70px wide by
+35px high. If you look in img/ship/interior you'll see that weapons_8.png is the only one of that size.
+* Edit the ship blueprint's line for that system to specify the image
+in question. E.g. you should update the `<weapons>` line to say
+`img="room_weapons_8"`.
+* If the system is one of the four crewable systems &ndash; weapons,
+engines, shields or pilot &ndash; you need to look at the image you've
+chosen and see where the computer terminal is. Note which square is it
+in, counting from top-left starting at 0, and which wall the
+terminal's against, i.e. which direction crew should face when they're
+using it. The square numbers start counting at 0 and go in reading
+order, so the square numbers for a 3x2 room would be:
+    0 1 2
+    3 4 5
+* Now you need to change the blueprint lines for those crewable
+systems further. In our example, the weapons terminal is in the right-hand square of
+that 2x1 room, i.e. position 1 (because we start counting at 0), and on the top
+wall. Change the line which before said:
+
+      <weapons power="[whatever]" room="[whatever]" start="true" img="room_weapons_8" />
+	  
+	so that now it says:
+	
+      <weapons power="[whatever]" room="[whatever]" start="true" img="room_weapons_8">
+        <slot>
+          <number>1</number>
+          <direction>up</direction>
+        </slot>
+      </weapons>
+Take particular note that the line used to end `/>` but now it ends `>`.
+* You also need to do this for the medbay. By default, one square of
+the medbay is not standable-in. The <slot><number> setting for the
+medbay specifies which slot is blocked by the med computer. (Don't use
+a <direction> parameter for this one.) E.g. for a 2x2 medbay whose bottom-left square is blocked, you'd say
+      <medbay power="[whatever]" room="[whatever]" start="true" img="room_medbay_7">
+		<slot>
+			<number>2</number> 
+		</slot> 
+      </medbay>
+If you don't want any slot blocked &ndash; likely to be the case if your medbay is 2 spaces or smaller
+&ndash; then the magic code is to use slot *minus two*, i.e. `<number>-2</number>` .
+* What if none of the existing room images fit your room? Then you'll
+have to either redesign the room layout in FTLEdit to fit the
+available room images, or create a room image for your desired size.
+It's easy enough: just choose an image similar to the one you need,
+open it, expand the border to the size you want, and move bits of room
+image around until they're on the appropriate edges. Save it into your
+mod's img/ship/interior directory with a new name, like
+room_weapons_51.png. Then do the same with the three coloured glow
+images for the computer screen, with names room_weapons_51_glow1.png. (These should just need positioning correctly in the new border.)
+Then specify that new name in the blueprint: `img="room_weapons_51"`
+* If you're a stickler for making sure that none of the bits of
+cloaking system or shield system go in front of doors, you may need to
+edit images to move bits around for several other room images.
+* Any images you specify that **aren't** the right size will be
+stretched or shrunk to fit. This looks awful for rooms with computer
+terminals, but can be okay with some others, especially the sensors
+room.
+* For 1x1 system rooms, you may want to just use `img="computer"`, a
+free-standing terminal without any accoutrements around it.
+
+## Step 10: Make a Cloak Image ##
+This technically isn't required, but if you don't do this, whenever
+anyone in your ship cloaks they'll see a sudden black box appear
+behind the ship.
+
+The image you create should be a version of the ship image, but with
+the edges highlighted in grey/white. Importantly, you also need to
+expand it away from the border by 10px in each direction: so the cloak
+image should be 20px larger than the ship image in both x and y. I
+found the following sequence of [GIMP](http://www.gimp.org/) commands produced a
+reasonable cloak image, but you can produce one however you like.
+
+* Open the ship image
+* Layer -> Layer Size -> increase numbers by 20
+* Image -> Fit Canvas to Layers
+* Filter -> Edge Detect -> Laplace
+* Press Shift-O for the Select by Colour tool
+* Click a transparent bit of image
+* Selection -> Invert
+* Fill tool, set tool options to fill whole selection, fill selection
+with #f3f3f3
+* Layer -> Duplicate Layer
+* Page Down to select the lower layer
+* Selection -> Grow -> 1 pixel
+* Selection -> Feather -> 5 pixels
+* Fill whole selection with #57c8fd
+* Set lower layer opacity to 50%
+* Export image as myship_cloak.png into your mod's img/ship directory
+
+## Step 11: Make Miniship Images ##
+We're nearly done. There's still one step you should do before
+releasing your mod, which is to create a thumbnail view of your ship
+for the Select Your Ship screen and the Highscores screen.
+
+It's mainly a case of shrinking the ship image to 191 x 121 px and saving
+it in your mod's img/customizeUI directory. To fit the look of the
+base-game ships, you should probably add a small glow behind the
+thumbnail. You can do this in GIMP using feathered selection similar
+to how I described for creating a cloak image.
+
+Note that in the hangar's Select Your Ship screen, only the primary
+versions (Type A) of each ship are shown. However, you should create thumbnails
+for any secondary versions (Type B) you overwrite too, so that they show up
+correctly in the highscores list.
+
+## Step 12: Gibs ##
+This isn't necessary, and a lot of modders skip this step entirely.
+But if you want to make your ship looks nice when it explodes, then take a look at the existing ships' \_gib1.png through to \_gib6.png, and at the <explosion> section of an existing ship's .xml file such as circle_cruiser.xml (in data.dat-unpacked), and make yourself some images for the different parts of the ship, and define the <explosion> to say which direction each of the gibs should fly off in. Note that gib1 will be on top of the rest, then gib2, and so on, down to your last gib (often gib6) which will be underneath all the others.
+
+## And Finally: Playtest! ##
+Now you've got all the skills you need to make a ship every bit as
+good as the ships in the base game. But odds are, your first design
+will be missing the mark somewhere. It might be too strong, too weak,
+unbalanced in one way or another. The only way to find out is to
+playtest it, and then playtest it some more! Keep on trying changes
+until you're happy with the quality level, and then upload the .ftl
+file somewhere publicly accessible and go and post about it on the
+[FTL Working Mods Forum](http://www.ftlgame.com/forum/viewforum.php?f=11)!
+
+ENDBODY
+%>
+  <% text = RDiscount.new(body).to_html.html_safe %>
+  <%= text %>
