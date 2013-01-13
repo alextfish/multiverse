@@ -240,10 +240,10 @@ class Cardset < ActiveRecord::Base
   end
   def get_skeleton_header_rows
     if !skeleton
-      return nil
+      return ""
     end
-    line1 = skeleton.body.lines.find {|line| line =~ /^[|](.*[|])+/ } # first line with bars
-    line2 = skeleton.body.lines.find {|line| line =~ /^[|]([:-]*[|])+/ } # first line with bars separated only by colons and dashes
+    line1 = skeleton.body.lines.find {|line| line =~ /^[|](.*[|])+/ } || ""    # first line with bars
+    line2 = skeleton.body.lines.find {|line| line =~ /^[|]([:-]*[|])+/ } || "" # first line with bars separated only by colons and dashes
     line1 + line2
   end
   

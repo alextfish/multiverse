@@ -3,5 +3,9 @@ Included in this edit:
 move to Rails 3.0.19; initial comments; recent-changes caching and fresh/stale checks, and add moment.js; split big visual spoilers into pages and cache each page; link special cardsets from front and cardset-new; brighter colour indicators; loading image for card art; colour setviews by cardset access; log name of deleted cards; fix one of the preview bugs
 
 
+
+heroku run rake db:migrate
+heroku restart
+
 --------------
   ====== Problems: ====== 
