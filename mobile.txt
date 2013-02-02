@@ -1,0 +1,43 @@
+<meta name="viewport" content="width=device-width"> <!-- disable auto-zoom-out on mobile devices, so that our responsive CSS gets used instead -->
+
+@media screen and (min-width: 480px) {
+}
+@media screen and (min-width: 320px) {
+}
+@media screen and (min-width: 400px) and (orientation: portrait)
+@media screen and (max-device-width: 480px){
+ /* mobi-only. includes retina devices with res up to 960px. */
+}
+more example resolutions and device-widths: http://www.javascriptkit.com/dhtmltutors/cssmediaqueries2.shtml
+
+@media (-webkit-min-device-pixel-ratio: 2), 
+       (min-resolution: 192dpi) { 
+    /* Retina-specific (2xres) stuff here */
+}
+@media only screen and (-webkit-min-device-pixel-ratio: 1.5), 
+       only screen and (min-resolution: 144dpi) { { /* highish-res mobiles */ }
+
+html { font-size: 62.5%; } 
+body { font-size: 14px; font-size: 1.4rem; } /* =14px. Fallback first, then rem value to override. */
+Use percentages for structural elements (like sidebars, headers, footers, main content). 
+Use pixels only for MAX-WIDTH:
+.wrapper {
+  max-width: 1240px;
+}
+
+
+
+
+/* #### normal background served to browsers #### */
+div#featuredbox{
+  width: 90%;
+  height: 400px;
+  background: url(original_background.jpg) center center no-repeat;
+}
+/* #### CSS for retina devices with larger screens #### */
+@media screen and (-webkit-min-device-pixel-ratio: 2) and (min-device-width: 768px){
+  div#featuredbox{
+    -webkit-background-size: 50% auto; /* shrink image to 50% of its actual dimensions, matching that of the original image's above */
+    background: url(highres_background.jpg) center center no-repeat; /* high res image that's double the size/ resolution of the original's */
+  }
+}

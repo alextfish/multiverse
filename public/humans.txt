@@ -1,0 +1,18 @@
+﻿/* TEAM */
+Designer, programmer and web developer: Alex Churchill
+Email: alex.churchill@cantab.net
+Location: Cambridge, UK
+Homepage: http://toothycat.net/wiki/wiki.pl?AlexChurchill
+Faith: Christian
+
+/* THANKS */
+Name: Yahweh
+Glory: Soli Deo Gloria  http://toothycat.net/wiki/wiki.pl?SoliDeoGloria
+
+/* SITE */
+Framework: Ruby On Rails, SASS
+Software: GIMP, Notepad++, Chrome Developer Tools, Firebug with EditCSS
+
+/* SEE ALSO */
+Random Magic Card Generator: http://toothycat.net/wiki/wiki.pl?AlexChurchill/MagicCardGenerator
+Magic is Turing Complete: http://www.toothycat.net/~hologram/Turing/
