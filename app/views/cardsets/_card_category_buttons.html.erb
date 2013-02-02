@@ -1,23 +1,27 @@
 <% "Takes three parameters: present_frame_letters, present_rarity_letters" 
    "and frame_links, which is either nil (meaning use JS) or a link prefix, to have the frame letter appended"
+   "if frame_links is not nil we also require frames_link_text, an array of [letter, descriptive text] pairs"
 %>
 
 <% frame_toggle_letters = Card.frame_code_letters.select {|l| present_frame_letters.include?(l)} %>
 <% if frame_toggle_letters.any? %>
+ <% if frame_links.nil? %>
   Show frames:
-  <% if frame_links.nil? %>
     <% "Use javascript toggles" %>
     <% frame_toggle_letters.each do |letter| %>
       <span class="frame_<%= letter %>_toggle skeleton_letter_toggle code_shown code_frame_<%= letter %>" onclick="toggle_frame_letter('<%= letter %>')"><%= letter %></span>
     <% end %>
   <% else %>
     <% "Use hyperlinks" %>
-	<% frame_toggle_letters.each do |letter| %>
-	  <a href="<%= frame_links + letter %>"><span id="frame_<%= letter %>_toggle" class="skeleton_letter_toggle code_shown code_frame_<%= letter %>"><%= letter %></span></a>
-	<% end %>
+    Go to section:
+   	<% frames_link_text.each do |letter, text| %>
+	    <a href="<%= frame_links + letter %>"><span id="frame_<%= letter %>_toggle" class="skeleton_letter_toggle code_shown code_frame_<%= letter %>"><%= text %></span></a>
+	  <% end %>
+    <!-- Or <%= link_to "see all on one page", wholevisualspoiler_cardset_path(@cardset) %> -->
   <% end %>
 <% end %>
-<br>
+</p>
+<p>
   Show rarities:
   <% Card.rarity_letters.select {|l| present_rarity_letters.include?(l)}.each do |letter| %>
     <span class="rarity_<%= letter %>_toggle skeleton_letter_toggle code_shown" onclick="toggle_rarity_letter('<%= letter %>')"><%= letter %></span>

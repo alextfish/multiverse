@@ -65,6 +65,9 @@ class CardsetsController < ApplicationController
   def visualspoiler
     fresh_when :last_modified => @cardset.last_edit_log.updated_at, :etag => "cardset_#{@cardset.id}_visualspoiler_p#{params[:page] || ""}_s#{params[:section] || ""}"
   end
+  
+  def wholevisualspoiler
+  end
 
   # GET /cardsets/1/recent
   def recent

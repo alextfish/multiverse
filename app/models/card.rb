@@ -127,7 +127,8 @@ class Card < ActiveRecord::Base
   def listable_name
     if !flip? && !dfc?
       printable_name
-    else # In cardlists, flip cards' names are "unflipped (flipped)"
+    else 
+      # In cardlists, flip cards' names are "unflipped (flipped)" '
       primary_name = primary_card.individual_name
       secondary_name = secondary_card.individual_name
       "#{primary_name} (#{secondary_name})"
@@ -189,6 +190,9 @@ class Card < ActiveRecord::Base
   end
   def self.frame_code_letters
     %w{C W U B R G M Z H S A L E P V}
+  end
+  def self.frames_and_letters
+    {"C"=>"Colourless", "W"=>"White", "U"=>"Blue", "B"=>"Black", "R"=>"Red", "G"=>"Green", "M"=>"Multicolour", "H"=>"Hybrid", "S"=>"Split", "A"=>"Artifact", "L"=>"Land", "E"=>"Scheme", "P"=>"Plane", "V"=>"Vanguard"}
   end
 
   mana_symbols = []

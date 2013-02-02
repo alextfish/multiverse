@@ -1,7 +1,7 @@
 source 'http://mirror1.prod.rhcloud.com/mirror/ruby/'
 source 'http://rubygems.org'
 
-gem 'rails', '3.0.19' # '3.2.11'
+gem 'rails', '3.0.20' # '3.2.11'
 # gem 'prototype-rails' # depends on rails 3.2
 
 #group :production do

@@ -4,9 +4,6 @@
 <%= render "shared/import_help" %>
 <hr>
 <%= form_tag :action => :import_data, :id => @cardset do %>
-  <!-- p><b>Separating character:</b>
-  <%= text_field_tag "separator", params[:separator], :maxlength => 1 %>
-  </p -->
   <p><b>Formatting line:</b>
   <br>
   <%= text_field_tag "formatting_line", params[:formatting_line] %>

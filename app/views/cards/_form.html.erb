@@ -84,13 +84,13 @@
     <% end %>
     <tr>
      <td><%= outer_form.label :image_url, "URL for whole card image" %>
-     <td><%= outer_form.text_field :image_url, :class => "image_url_field" %>
+     <td><%= outer_form.text_field :image_url, :class => "image_url_field", :type => "url", :inputmode => "url lowerCase" %>
      </td>
     </tr>
     <% if @card.cardset.configuration.card_show_code %>
      <tr>
       <td><%= outer_form.label :code %></td>
-      <td><%= outer_form.text_field :code %></td>
+      <td><%= outer_form.text_field :code, :inputmode => "upperCase" %></td>
      </tr>
     <% else %>
      <%= outer_form.hidden_field :code %>
@@ -106,7 +106,7 @@
       <td colspan="2">
        <br>
       <%= label_tag "edit_comment", "Enter a brief summary of the change you made:" %>
-      <br><%= text_field_tag :edit_comment, params[:edit_comment], :class => "edit_comment_field" %>
+      <br><%= text_field_tag :edit_comment, params[:edit_comment], :class => "edit_comment_field", :inputmode => "startUpper"  %>
       </td>
      </tr>
     <% end %>

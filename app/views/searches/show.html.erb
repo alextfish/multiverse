@@ -93,8 +93,13 @@
 <!--    Comments   -->
 <% if @to_show[:comments] && !@to_show[:comments].empty? %>
   <h3>Comments</h3>
+  <% comments = @to_show[:comments].uniq %>
+  <% if comments.length > 100 %>
+    <div>More than 100 comments matched. Please use a more specific query.</div>
+    <% comments = comments[0..99] %>
+  <% end %>
   <table>
-  <% @to_show[:comments].uniq.each do |comment, excerpt| %>
+  <% comments.each do |comment, excerpt| %>
     <% parent = comment.parent %>
     <% cs = comment.get_cardset %>
     <tr>

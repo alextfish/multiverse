@@ -12,7 +12,7 @@
     <!-- div class="cardname" --><table><tr><td>
      <div class="field">
       <%= f.label :name %><br />
-      <%= f.text_field :name %>
+      <%= f.text_field :name, :inputmode => "titleCase" %>
      </div>
     <!-- /div --></td>
     <!-- div class="cardmanacost" --><td class="card_cost_container">
@@ -22,7 +22,8 @@
         { :class => "cost_field", 
           :size => 15,
           :onchange => update_frame_call,
-          :onkeyup => update_frame_call } %>
+          :onkeyup => update_frame_call,
+		  :inputmode => "upperCase"} %>
      </div>
     <!-- /div --></td></tr></table>
    </div>
@@ -31,7 +32,7 @@
    <div class="pinline pinline_sides">
     <div class="cardart">
      <%= f.label :art_url, "URL for art" %>
-     <%= f.text_field :art_url, :class => "art_url_field" %>
+     <%= f.text_field :art_url, :class => "art_url_field", :type => "url", :inputmode => "url lowerCase" %>
      <br>
       <% frames_keys = Card.display_frames 
         frames_values = Card.frames 
@@ -84,7 +85,7 @@
          <% else %>
            <% watermark_visibility = "inline"; %>
          <% end %>
-         <%= f.text_field :watermark, { :class => "type_field watermark", :style => "display:#{watermark_visibility};" } %>
+         <%= f.text_field :watermark, { :class => "type_field watermark", :style => "display:#{watermark_visibility};", :type => "url", :inputmode => "url lowerCase" } %>
          <% f.select :watermark, standard_watermark_options, {}, 
           { :class => "watermark_selector", 
             :onchange => "updateWatermarks()", :onkeyup => "updateWatermarks()" } %>
@@ -103,16 +104,18 @@
          <% else %>
            <% supertype_visibility = "inline"; %>
          <% end %>
-         <%= f.text_field :supertype, { :class => "type_field supertype", :style => "display:#{supertype_visibility};" } %>
+         <%= f.text_field :supertype, { :class => "type_field supertype", :style => "display:#{supertype_visibility};", :inputmode => "titleCase" } %>
          <%= f.text_field :cardtype,
          { :class => "type_field cardtype", 
            :onchange => update_frame_call,
-           :onkeyup => update_frame_call } %>
+           :onkeyup => update_frame_call, 
+		       :inputmode => "titleCase" } %>
          <span class="subtype_container">
            &ndash;
          <%= f.text_field :subtype, { :class => "type_field subtype", 
            :onchange => update_frame_call,
-           :onkeyup => update_frame_call  } %>
+           :onkeyup => update_frame_call,
+		       :inputmode => "titleCase" } %>
          </span>
        </div>
      <table><tr>
@@ -154,14 +157,17 @@
     </div>
    </div>
    <div class="bottombox">
-    <span class="artist_area"><%= f.label :artist, "Artist:" %> <%= f.text_field :artist %></span>
+    <span class="artist_area"><%= f.label :artist, "Artist:" %> <%= f.text_field :artist, 
+		   :inputmode => "titleCase" %></span>
     <div class="ptbox_container">
      <div class="pinline pinline_box pinline_ptbox">
       <div class="notptbox">
        <table style="margin: auto;"><tr>
-        <td id="power_field"><%= f.text_field :power, :size => 5, :class => "powerfield" %></td>
+        <td id="power_field"><%= f.text_field :power, :size => 5, :class => "powerfield",
+		   :inputmode => "digits" %></td>
         <td id="pt_slash">/</td>
-        <td id="toughness_field"><%= f.text_field :toughness, :size => 5, :class => "toughnessfield" %></td>
+        <td id="toughness_field"><%= f.text_field :toughness, :size => 5, :class => "toughnessfield",
+		   :inputmode => "digits" %></td>
        </td></tr></table>
      </div>
     </div>

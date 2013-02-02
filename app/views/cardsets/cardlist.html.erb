@@ -48,26 +48,26 @@
 <div>
 <table class="sortable resizable">
   <tr>
-    <th class="sortfirstasc">#</th>
-	<!-- th class="creator" <%= creator_display %>>Creator</th -->
-    <th>Name</th>
-    <th class="colour">Colour</th>
-    <th id="rarity">Rarity</th>
-    <th class="manacost">Cost</th>
-    <th>Type</th>
-    <th>P</th>
-    <th>T</th>
-    <th class="code" <%= code_display %>>Code</th>
-    <th class="active" <%= active_display %>>Active?</th>
-    <th class="card_text">Card text</th>
-    <th class="updated" <%= update_display %>>Updated</th>
-    <th class="comments" <%= comment_display %>>Comments</th>
-    <th class="comments" <%= comment_display %>>Recent comment</th>
+    <th scope="col" class="sortfirstasc">#</th>
+	<!-- th scope="col" class="creator" <%= creator_display %>>Creator</th -->
+    <th scope="col">Name</th>
+    <th scope="col" class="colour">Colour</th>
+    <th scope="col" id="rarity">Rarity</th>
+    <th scope="col" class="manacost">Cost</th>
+    <th scope="col">Type</th>
+    <th scope="col">P</th>
+    <th scope="col">T</th>
+    <th scope="col" class="code" <%= code_display %>>Code</th>
+    <th scope="col" class="active" <%= active_display %>>Active?</th>
+    <th scope="col" class="card_text">Card text</th>
+    <th scope="col" class="updated" <%= update_display %>>Updated</th>
+    <th scope="col" class="comments" <%= comment_display %>>Comments</th>
+    <th scope="col" class="comments" <%= comment_display %>>Recent comment</th>
     <% if unaddressed_column %>
-      <th class="comments" <%= comment_display %>>Unaddressed</th>
+      <th scope="col" class="comments" <%= comment_display %>>Unaddressed</th>
     <% end %>
     <% if can_edit || can_delete %>
-      <th colspan="3" class="nosort">&nbsp;</th>
+      <th scope="col" colspan="3" class="nosort">&nbsp;</th>
     <% end %>
   </tr>
 <% if all_cards && !all_cards.empty? %>

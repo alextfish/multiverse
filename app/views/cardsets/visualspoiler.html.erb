@@ -14,21 +14,21 @@
       section = params[:section]
       cards_to_show = nil
       num_cards_to_show = nil
-      present_frame_letters = nil
+      card_frame_letters = nil
       "don't calculate these if it's all in the cache anyway"
       showing_all = false
     else
       "we need to do the work up front"
       cards_to_show = @cardset.public_cards 
       num_cards_to_show = cards_to_show.count 
-      present_frame_letters = cards_to_show.map &:category_letter
+      card_frame_letters = cards_to_show.map &:category_letter
        
       if num_cards_to_show <= 275
         showing_all = true
       else
         "first section, whatever that is"
         showing_all = false
-        section = Card.frame_code_letters.detect {|l| present_frame_letters.include?(l)}
+        section = Card.frame_code_letters.detect {|l| card_frame_letters.include?(l)}
       end
     end
     if showing_all
@@ -42,7 +42,7 @@
   <% if cards_to_show.nil?
        cards_to_show = @cardset.public_cards 
        num_cards_to_show = cards_to_show.count 
-       present_frame_letters = cards_to_show.map &:category_letter
+       card_frame_letters = cards_to_show.map &:category_letter
      end %>
   <% if showing_all 
        cards_to_show.sort!
@@ -66,6 +66,7 @@
       <p>Showing <%= num_cards_shown %> of <%= num_cards_to_show %> <%= cards_to_show.first.category %> <%= (num_cards_shown == 1 ? "card" : "cards") %>
     <% end %>
   <% end %>
+  <% cache(:action => "visualspoiler", :iterator => @cardset.memcache_iterator, :action_suffix => "frame_buttons") do %>
   <p>
     <% present_rarity_letters = cards_to_show.map &:rarity_letter
        if showing_all
@@ -73,10 +74,19 @@
        else
          "assemble the url that ends in ...&section= so that the partial can append the section to it"
          frame_links = visualspoiler_cardset_path(@cardset, :section => "")
+         "map link letters to text of frames & cards counts"
+         frames_and_letters = Card.frames_and_letters
+         present_frame_letters = Card.frame_code_letters.select {|l| card_frame_letters.include?(l)}
+         frames_link_text = present_frame_letters.map do |letter|
+           these_letters = card_frame_letters.select{|l2| l2==letter}
+           [letter, "#{frames_and_letters[letter]} (#{these_letters.count})"]
+         end
        end
     %>
-    <%= render :partial => "card_category_buttons", :locals => { :present_frame_letters => present_frame_letters, :present_rarity_letters => present_rarity_letters, :frame_links => frame_links } %>
+    <%= render :partial => "card_category_buttons", :locals => { :present_frame_letters => card_frame_letters, :present_rarity_letters => present_rarity_letters, :frame_links => frame_links, :frames_link_text => frames_link_text } %>
   </p>
+ 
+  <% end %>
   
   <%= will_paginate cards_to_show, :params => {:section => params[:section]} %>
   <p>
@@ -91,10 +101,12 @@
     <% end %>
   </p>
   <%= will_paginate cards_to_show, :params => {:section => params[:section]} %>
-  <p>
-    <% "another copy of the frame and rarity toggles / links" %>
-    <%= render :partial => "card_category_buttons", :locals => { :present_frame_letters => present_frame_letters, :present_rarity_letters => present_rarity_letters, :frame_links => frame_links } %>
-  </p>
+  <% "another copy of the frame and rarity toggles / links. Should definitely be in the cache now, so what goes in-between the cache do...end doesn't really matter" %>
+  <% cache(:action => "visualspoiler", :iterator => @cardset.memcache_iterator, :action_suffix => "frame_buttons") do %>
+    <p>
+      <%= render :partial => "card_category_buttons", :locals => { :present_frame_letters => card_frame_letters, :present_rarity_letters => present_rarity_letters, :frame_links => frame_links, :frames_link_text => frames_link_text } %>
+    </p>
+  <% end %>
 <% end %>
 
 <p><br>

@@ -1,7 +1,7 @@
 /***** Site layout *****/
 
 a > img { border: 0px; vertical-align: bottom; }
-a > img:hover { background-color: #fff; }
+a > img:hover, a > img:active, a > img:focus { background-color: #fff; }
 
 .flash  { margin-left: 2px; width: 50%; }
 .error  { color: #600; background-color: #f99; border: 1px solid #600; }
@@ -73,7 +73,7 @@ div.newfeatures { border: 1px solid black; margin: auto; text-align: center;
 }
 .newfeatures.hot { background-color: #ff9; color: #c00; border: 1px solid red; }
 .newfeatures.hot a { color: #c00; }
-.newfeatures.hot a:hover { background-color:#c00; color: #ff0; }
+.newfeatures.hot a:hover, .newfeatures.hot a:focus, .newfeatures.hot a:active { background-color:#c00; color: #ff0; }
 
 
 /***** Comment display *****/
@@ -173,7 +173,7 @@ div#mockup {
   text-decoration: none;
   color: #000;
 }
-.cardtabs a:hover {
+.cardtabs a:hover, .cardtabs a:focus, .cardtabs a:active {
   background-color: #666;
   color: #FFF;
 }
@@ -338,12 +338,12 @@ ul.licious a{
   text-shadow:none;
 }
 
-nav a:hover {
+nav a:hover, nav a:focus, nav a:active {
   text-decoration: underline;
   color: #fff;
   background: #000;
 }
-ul.licious a:hover{
+ul.licious a:hover, ul.licious a:active, ul.licious a:focus {
   position:relative;
   /*background:none;*/
 }
@@ -407,7 +407,7 @@ pre {
 
 a { color: #000; }
 a:visited { color: #666; }
-a:hover { color: #fff; background-color:#000; }
+a:hover, a:active, a:focus { color: #fff; background-color:#000; }
 
 div.field, div.actions {
   margin-bottom: 10px;

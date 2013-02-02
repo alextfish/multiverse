@@ -1,11 +1,19 @@
-9th Jan:
-Included in this edit:
-move to Rails 3.0.19; initial comments; recent-changes caching and fresh/stale checks, and add moment.js; split big visual spoilers into pages and cache each page; link special cardsets from front and cardset-new; brighter colour indicators; loading image for card art; colour setviews by cardset access; log name of deleted cards; fix one of the preview bugs
+To make whole-VS page:
+
+* Look up syntax to Rails.cache.read
+* Make vs page cache the frame letters for this cardset
+* No need to cache the frame buttons or will_paginate
+* Cache what's inside that instead
+
+* Read my JS for hovers to find Ajax syntax
+* Algorithm for whole-VS page:
+
+- Precalc what pages we're expecting (Split frame letters into pages) & generate JS that knows that
+- Generate JS with an onload to request first fragment. This request has an onSuccess to append this section, increment some counter & request the next fragment.
+* Put a loading spinny at the bottom. Final onSuccess hides the spinny.
 
 
+----------------
 
-heroku run rake db:migrate
-heroku restart
-
---------------
-  ====== Problems: ====== 
+ = Fix guild watermarks to new ones.
+* Got new ones for RtR; still need for Gtc. 

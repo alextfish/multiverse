@@ -553,10 +553,14 @@ Event.observe(window, 'load', renderAllDatesAndTimes);
 ///// Preview card images /////
 cardTooltipParamsLeft = {
   hook: { target: 'topLeft', tip: 'rightMiddle' }, 
-  offset: { x: 0, y: 0 }
+  offset: { x: 0, y: 0 },
+  hideOn: false,
+  hideAfter: 0.5
 };
 cardTooltipParamsRight = {
-  hook: { target: 'topRight', tip: 'leftMiddle' }, 
+  hook: { target: 'topRight', tip: 'leftMiddle' },
+  hideOn: false,
+  hideAfter: 0.5
 };
 // hook: { 'topLeft', mouse: true },
 //offset: { x: 14, y: -54 }
