@@ -4,6 +4,8 @@ source 'http://rubygems.org'
 gem 'rails', '3.0.20' # '3.2.11'
 # gem 'prototype-rails' # depends on rails 3.2
 
+gem 'json', '~>1.7.7' # avoid security vulnerability in json-1.7.6
+
 #group :production do
 #  gem 'mysql'
 #  gem "mysql2", "~> 0.3.11"
@@ -42,7 +44,7 @@ end
 # gem 'jquery-rails'
 
 gem 'will_paginate', '3.0.pre4'
-gem 'rdiscount'
+gem 'rdiscount', '~> 1.6'
 gem 'newrelic_rpm'
 gem 'win32console', :platforms => :mingw
 gem 'dalli'
