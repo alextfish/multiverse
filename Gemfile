@@ -1,8 +1,8 @@
 source 'http://mirror1.prod.rhcloud.com/mirror/ruby/'
 source 'http://rubygems.org'
 
-gem 'rails', '3.0.20' # '3.2.11'
-# gem 'prototype-rails' # depends on rails 3.2
+gem 'rails' #, '~>3.2.11'
+gem 'prototype-rails' # depends on rails 3.2
 
 gem 'json', '~>1.7.7' # avoid security vulnerability in json-1.7.6
 
@@ -32,8 +32,8 @@ end
 # Gems used only for assets and not required
 # in production environments by default.
 group :assets do
-  # gem 'sass-rails',   '~> 3.2.3'
-  # gem 'coffee-rails', '~> 3.2.1'
+  gem 'sass-rails',   '~> 3.2.3'
+  gem 'coffee-rails', '~> 3.2.1'
 
   # See https://github.com/sstephenson/execjs#readme for more supported runtimes
   # gem 'therubyracer', :platforms => :ruby
@@ -41,7 +41,7 @@ group :assets do
   gem 'uglifier', '>= 1.0.3'
 end
 
-# gem 'jquery-rails'
+gem 'jquery-rails'
 
 gem 'will_paginate', '3.0.pre4'
 gem 'rdiscount', '~> 1.6'

@@ -85,7 +85,7 @@
          <% else %>
            <% watermark_visibility = "inline"; %>
          <% end %>
-         <%= f.text_field :watermark, { :class => "type_field watermark", :style => "display:#{watermark_visibility};", :type => "url", :inputmode => "url lowerCase" } %>
+         <%= f.text_field :watermark, { :class => "type_field watermark", :style => "display:#{watermark_visibility};", :type => "", :inputmode => "" } %>
          <% f.select :watermark, standard_watermark_options, {}, 
           { :class => "watermark_selector", 
             :onchange => "updateWatermarks()", :onkeyup => "updateWatermarks()" } %>

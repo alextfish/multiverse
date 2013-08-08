@@ -16,7 +16,7 @@
 <% end %>
 
 <%= form_for(@cardset) do |f| %>
-  <% errors = @cardset.errors.merge @cardset.configuration.errors %>
+  <% errors = @cardset.errors || @cardset.configuration.errors %>
   <% if errors.any? %>
     <div id="error_explanation">
       <h2><%= pluralize(errors.count, "error") %> prohibited this cardset from being saved:</h2>

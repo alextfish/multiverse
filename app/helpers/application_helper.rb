@@ -94,7 +94,7 @@ module ApplicationHelper
     my_symbol.gsub!(/Q/, "untap")
     my_symbol.gsub!(/\?/, "question")
     my_symbol.gsub!(/inf.*/i, "Infinity")
-    "/images/mana/mana_#{my_symbol}.png"
+    "/assets/mana/mana_#{my_symbol}.png"
     # "http://gatherer.wizards.com/Handlers/Image.ashx?size=small&name=#{my_symbol}&type=symbol"
   end
 

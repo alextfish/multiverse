@@ -37,9 +37,11 @@ class Card < ActiveRecord::Base
 
   has_many :comments, :dependent => :destroy
   has_many :old_cards, :dependent => :destroy
+  has_many :decklists, :through => :deck_cards, :uniq => true
+  
   attr_accessor :foil, :blank  # not saved
-  belongs_to :link, :class_name => "Card"
-  belongs_to :parent, :class_name => "Card"
+  belongs_to :link, :class_name => "Card", :inverse_of => :parent
+  belongs_to :parent, :class_name => "Card", :inverse_of => :link
   accepts_nested_attributes_for :link, :reject_if => proc { |attributes| attributes["rulestext"].blank? && attributes["name"].blank? }
   # has_many :highlighted_comments, :class_name => 'Comment', :conditions => ['status = ?', COMMENT_HIGHLIGHTED]
   # has_many :unaddressed_comments, :class_name => 'Comment', :conditions => ['status = ?', COMMENT_UNADDRESSED]

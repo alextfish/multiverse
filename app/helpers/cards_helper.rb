@@ -10,10 +10,9 @@ module CardsHelper
     " // " => "\n",
   }
   MARKUP_SUBSTITUTIONS = {
-    /[(]/ => "<i>(",
-    /[)]/ => ")</i>",
     / - / => " &ndash; ",
     / -- / => " &mdash; ",
+    /(\([^\n]*\))/ => '<i>\1</i>',
     "\n" => "<br>",
     /\*\*([^*]+)\*\*/ => '<b>\1</b>',
     /\_\_([^_]+)\_\_/ => '<b>\1</b>',
@@ -51,7 +50,9 @@ module CardsHelper
     intermediate_text = format_mechanics(intermediate_text, card.cardset)
     marked_text = intermediate_text
     if markup
-      marked_text = MARKUP_SUBSTITUTIONS.reduce(marked_text) do |memo, (match, replace)| memo.gsub(match, replace) end
+      marked_text = MARKUP_SUBSTITUTIONS.reduce(marked_text) do |memo, (match, replace)|
+        memo.gsub(match, replace) 
+      end
     else
     end
     if mana
@@ -93,7 +94,7 @@ module CardsHelper
       "{Phyrexian}" => "phyrexian.png",
     }
     if dict[watermark]
-      "/images/watermarks/" + dict[watermark]
+      "/assets/watermarks/" + dict[watermark]
     else
       ""
     end

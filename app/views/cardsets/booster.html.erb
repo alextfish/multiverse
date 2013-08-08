@@ -1,9 +1,10 @@
-<h1>
+<h1 class="nonprinting">
   <%= link_to @cardset.name, @cardset %>: Virtual Booster
 </h1>
 <% @title = "#{@cardset.name}: Booster " %>
 
 <%= render "setviews" %>
+<%= render "shared/printcontrols" %>
 
 <div class="helptext">
   <% collation, token_present = @booster_info %>
@@ -34,7 +35,7 @@
   <% end %>
 </table>
 
-<p>
+<p class="nonprinting">
   <% @booster.each do |card| %>
     <% if !card.blank %>
       <% do_link = !card.cardset.nil? %>

@@ -56,10 +56,14 @@ class DetailsPagesController < ApplicationController
   # PUT /details_pages/1.js
   def update
     @details_page = DetailsPage.find(params[:id])
+    # Don't allow cardset moves via update action
+    dp_params = params[:details_page].delete_if {|key, value| key == "cardset_id" } 
+    
+    Rails.logger.warn(dp_params)
 
-    if params[:details_page][:order]
+    if dp_params[:order]
       # Do something completely different for reorderings
-      @details_page.set_order(params[:details_page][:order])
+      @details_page.set_order(dp_params[:order])
       respond_to do |format|
         format.js { }
         format.html { redirect_to([@cardset, @details_page]) }
@@ -67,7 +71,7 @@ class DetailsPagesController < ApplicationController
 
     else
       # Normal update
-      if @details_page.update_attributes(params[:details_page])
+      if @details_page.update_attributes(dp_params)
         set_last_edit @details_page
         expire_if_skeleton
         @cardset.log :kind=>:details_page_edit, :user=>current_user, :object_id=>@details_page.id

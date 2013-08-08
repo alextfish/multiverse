@@ -37,6 +37,7 @@ Multiverse::Application.routes.draw do
   resources :cardsets do
     resources :details_pages, :only => [:new, :create, :destroy, :edit, :update, :show]
     resources :mechanics,     :only => [:new, :create, :destroy, :edit, :update, :index]
+    resources :decklists,     :only => [:new, :index]
     resources :comments,      :only => [:new, :create, :destroy, :edit, :update, :index]
     member do
       get 'cardlist' # in addition to /cardsets/:id which goes to cardsets#show
@@ -49,7 +50,9 @@ Multiverse::Application.routes.draw do
   end
 
 
-  resources :users
+  resources :users do
+    resources :decklists
+  end
 
   resources :sessions, :only => [:new, :create, :destroy]
 

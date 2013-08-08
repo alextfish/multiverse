@@ -29,6 +29,11 @@ class Cardset < ActiveRecord::Base
   has_one :last_edit_log, :class_name => "Log", :dependent => :destroy
 
   validates_length_of :name, :within => 2..40
+  validate do |cardset|
+    cardset.configuration.errors.full_messages.each do |msg|
+      cardset.errors.add_to_base(msg)
+    end
+  end
 
   def get_stats
     out = {}
@@ -387,7 +392,11 @@ class Cardset < ActiveRecord::Base
     
     Rails.logger.info "Insertions: #{insertions.inspect}"
     
-    # now handle the insertions
+    # now handle the insertions - if there are any
+    if insertions.empty?
+      return false
+    end
+    
     # first, figure out how many |s there are in the first table line
     # Default table has 3 columns, 3 bars
     number_of_bars = 3

@@ -1,4 +1,15 @@
 <div class="stand_alone_mockup">
   <%= render :partial => "shared/card", :locals => { :link => false } %>
   <%= render :partial => "shared/cardcommentcount" %>
+  <% showlinkid = "show_link_text_card_#{@card.id}"
+      hidelinkid = "hide_link_text_card_#{@card.id}" 
+      linkid = "link_text_card_#{@card.id}" 
+      hintid = "link_hint_#{@card.id}" %>
+  <div id="<%= showlinkid %>">
+    <a href="javascript:selectCardLink('<%= @card.id %>');">Link to this card</a>
+  </div>
+  <div id="<%= hidelinkid %>" style="display:none;">
+    <span id="<%= linkid %>" tabindex=0 onblur="$('<%= hintid %>').hide();">(((C<%= @card.id %>)))</span><span id="<%= hintid %>">
+    <br>Press Ctrl-C to copy link code</span>
+  </div>
 </div>

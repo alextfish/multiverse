@@ -21,7 +21,7 @@
   <% end %>
 <% end %>
 </p>
-<p>
+<p class="nonprinting">
   Show rarities:
   <% Card.rarity_letters.select {|l| present_rarity_letters.include?(l)}.each do |letter| %>
     <span class="rarity_<%= letter %>_toggle skeleton_letter_toggle code_shown" onclick="toggle_rarity_letter('<%= letter %>')"><%= letter %></span>

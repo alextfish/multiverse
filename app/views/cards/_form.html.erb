@@ -124,13 +124,13 @@
        <ul class="cardtabs" id="tabs">
         <li><a class="no_tooltip" href="#editing_help" id="editing_help_link">Help</a></li>
         <% if @card.new_record? %>
-        <li><a class="no_tooltip" href="#comment">Initial comment</a></li>
+        <li><a class="no_tooltip" href="#comment" id="initial_comment_link">Initial comment</a></li>
         <% else %>
         <li><a class="no_tooltip" href="#history">History</a></li>
         <% end %>
        </ul>
      </div>
-   <div class="helptext onetab active-tab-body" id="editing_help">
+   <div class="helptext onetab" id="editing_help">
       <p id="nonplaneswalker">
       Enter mana symbols like this:
       <br><code>{2}{U}{U/R}{PR}, {T}</code> becomes <%= format_mana_symbols("{2}{U}{U/R}{PR}, {T}") %>
@@ -168,7 +168,7 @@ become the card's name
     <% else %>
     <div class="onetab" id="comment">
       <%= label_tag "initial_comment", "Enter any comments you wish to appear with this card:" %>
-      <%= render :partial => 'shared/markdown_short' %>
+      <%= render :partial => "shared/markdown_short" %>
       <div class="field">
       <%= text_area_tag :initial_comment, params[:initial_comment], :class => "edit_comment_field" %>
       </div>
@@ -179,7 +179,7 @@ become the card's name
 </table>
 
    <script type="text/javascript">
-     new Fabtabs("tabs", "editing_help_link");
+     new Fabtabs("tabs", "<%= params[:initial_comment].blank? ? "editing_help_link" : "initial_comment_link" %>");
    </script>
 
 <% end %>

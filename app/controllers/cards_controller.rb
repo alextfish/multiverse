@@ -114,6 +114,9 @@ class CardsController < ApplicationController
       @card.rarity = Card.default_rarity
     end
     @card.link = @card.new_linked_card
+    if params[:relation] && params[:initial_comment].blank?
+      params[:initial_comment] = "See (((C#{params[:relation]})))."
+    end
   end
   
   def move
@@ -167,6 +170,7 @@ class CardsController < ApplicationController
 	  if params[:initial_comment].present?
         comment = @card.comments.build(:user => current_user, :body => params[:initial_comment])
         comment.save!
+        @cardset.log :kind=> :comment_card, :user=>current_user, :object_id=>@comment.id
 	  end
       redirect_to @card, :notice => "#{@card.printable_name} was successfully created." 
     else

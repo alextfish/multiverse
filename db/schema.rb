@@ -1,3 +1,4 @@
+# encoding: UTF-8
 # This file is auto-generated from the current state of the database. Instead
 # of editing this file, please use the migrations feature of Active Record to
 # incrementally modify your database, and then regenerate this schema definition.
@@ -10,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130109225800) do
+ActiveRecord::Schema.define(:version => 20130228231100) do
 
   create_table "cards", :force => true do |t|
     t.string   "code"
@@ -90,6 +91,29 @@ ActiveRecord::Schema.define(:version => 20130109225800) do
     t.integer  "last_edit_by"
     t.string   "border_colour"
   end
+
+  create_table "deck_cards", :force => true do |t|
+    t.integer "card_id"
+    t.integer "decklist_id"
+    t.integer "count"
+    t.integer "status"
+  end
+
+  add_index "deck_cards", ["card_id"], :name => "index_deck_cards_on_card_id"
+  add_index "deck_cards", ["decklist_id"], :name => "index_deck_cards_on_decklist_id"
+
+  create_table "decklists", :force => true do |t|
+    t.string   "name"
+    t.integer  "user_id"
+    t.integer  "cardset_id"
+    t.integer  "status"
+    t.text     "stats"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "decklists", ["cardset_id"], :name => "index_decklists_on_cardset_id"
+  add_index "decklists", ["user_id"], :name => "index_decklists_on_user_id"
 
   create_table "details_pages", :force => true do |t|
     t.integer  "cardset_id"

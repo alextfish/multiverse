@@ -134,7 +134,11 @@ module SessionsHelper
   
   def redirect_back(noticehash)
     Rails.logger.info "Returning to previous - #{noticehash[:notice]}"
-    redirect_to :back
+    if request.env["HTTP_REFERER"]
+      redirect_to :back
+    else
+      redirect_to root_path
+    end
   end
 
   def store_location

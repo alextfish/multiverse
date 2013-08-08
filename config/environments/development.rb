@@ -12,7 +12,6 @@ Multiverse::Application.configure do
   # Show full error reports and disable caching
   config.consider_all_requests_local       = true
 
-  config.action_view.debug_rjs             = true
   # AC: I can't see why I wouldn't want to test my caching locally
   config.action_controller.perform_caching = true
 
@@ -25,8 +24,10 @@ Multiverse::Application.configure do
   # Only use best-standards-support built into browsers
   config.action_dispatch.best_standards_support = :builtin
   
-  # Try to avoid crashing
   config.log_level = :info
+  ##### Try to avoid crashing
+  config.log_level = :warn
+
 
   if Rails::VERSION::STRING >= '3.1'
     # Do not compress assets

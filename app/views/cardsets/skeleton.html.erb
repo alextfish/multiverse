@@ -344,7 +344,9 @@
       <% present_rarity_letters, present_frame_letters = @skeleton.body.lines.grep(Cardset.skeleton_line_regexp_MD) do |line|
         line.match(Cardset.skeleton_line_regexp_MD)[1,2]
       end.transpose %>
-      <%= render :partial => "card_category_buttons", :locals => { :present_frame_letters => present_frame_letters, :present_rarity_letters => present_rarity_letters, :frame_links => nil} %>
+      <% if !present_frame_letters.blank? %>
+        <%= render :partial => "card_category_buttons", :locals => { :present_frame_letters => present_frame_letters, :present_rarity_letters => present_rarity_letters, :frame_links => nil} %>
+      <% end %>
       <%= format_skeleton_table(format_all_markup(@skeleton.body, @cardset)) %>
     </div>
   <% end %>

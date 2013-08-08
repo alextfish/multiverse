@@ -4,6 +4,9 @@
 # or operating system, you probably want to add a global ignore instead:
 #   git config --global core.excludesfile ~/.gitignore_global
 
+# Don't check the secret token into GitHub!
+/config/initializers/secret_token.rb
+
 # Ignore bundler config
 /.bundle
 

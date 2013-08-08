@@ -108,9 +108,18 @@ class SearchesController < ApplicationController
     elsif cards.length > 1
       @to_show[:cards] = cards
     end
+    # One last check: is it a card ID?
+    Rails.logger.warn("Quicksearch for '#{@query}'")
+    card_by_id = Card.find_by_id(@query.to_i)
+    if card_by_id && cards.empty && cardsets.empty
+      redirect_to card_by_id and return
+    end
     # At this point, there are either 0 or 2+ hits: do a non-exact search
     @to_show[:cardsets] = one_search(@query, :cardsets, :name, false)
     @to_show[:cards]    = (one_search(@query, :cards, :name, false) + one_search(@query, :cards, :rulestext, false)).uniq
+    if card_by_id 
+      @to_show[:cards] += [card_by_id]
+    end
     
     number_results = @to_show.values.flatten.length
     Rails.logger.info "Search returned #{number_results} results"

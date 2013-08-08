@@ -1,0 +1,453 @@
+/***** Site layout *****/
+
+a > img { border: 0px; vertical-align: bottom; }
+a > img:hover, a > img:active, a > img:focus { background-color: #fff; }
+
+.flash  { margin-left: 2px; width: 50%; }
+.error  { color: #600; background-color: #f99; border: 1px solid #600; }
+.notice { color: #00a; background-color: #bbf; border: 1px solid #00a; }
+
+.infobox { float: right;
+           border: 2px solid #aaa;
+           margin-right: 10px;
+           padding-left: 2px;
+           padding-right: 2px;
+           padding-top: 6px;
+           padding-bottom: 6px;
+           background-color: #eee;
+           position: relative; /* to stop interference from dropdown */
+           }
+.infobox h1 { font-size: inherit;
+              margin-top: 0px; }
+.infobox p { margin: 2px; }
+
+.cardcell { vertical-align: top;
+            padding-top: 10px; }
+
+.card_controls_below { text-align: center; }
+/* .card_rotate_link { font-size: larger; }
+.card_edit_link { font-size: larger; }
+.expand_text_link { font-size: larger; } */
+.card_move_link, .card_delete_link { font-size: smaller; }
+
+.setviews { border: 1px solid #aaa;
+            margin: 2px;
+            padding: 6px;
+            background-color: #eee; }
+
+.comment_cell { width: 19%;
+            vertical-align: top; }
+
+.helptext { font-size: smaller; margin: 0px; color: #888; }
+
+/***** Templates used in multiple places *****/
+
+div.CardRenderInline { display: inline-block; margin-bottom: 3px; vertical-align: top;
+zoom: 100%; -moz-transform: scale(1);
+}
+img.CardImage        { display: inline-block; /* height: 318px; */ }
+
+@media print {
+  .nonprinting, .helptext {
+    display: none;
+  }
+  
+  * {
+    -webkit-print-color-adjust:exact;
+  }
+}
+
+/***** Visual spoiler *****/
+
+div.visualspoiler { padding-top: 2px; padding-bottom: 2px; }
+
+/***** News *****/
+
+div.news_outer { min-width: 20px; margin: 8px 30px 25px 8px;
+  position: relative; 
+}
+
+div.newfeatures { border: 1px solid black; margin: auto; text-align: center; 
+  position: absolute; 
+  padding: 4px;
+}
+.newfeatures.hot { background-color: #ff9; color: #c00; border: 1px solid red; }
+.newfeatures.hot a { color: #c00; }
+.newfeatures.hot a:hover, .newfeatures.hot a:focus, .newfeatures.hot a:active { background-color:#c00; color: #ff0; }
+
+
+/***** Comment display *****/
+
+.commentdetails { font-style: italic; margin: 0px; line-height: 2em; }
+.commentbody    { margin-top: 0px; }
+.logdetails     { font-style: italic; }
+/* .cardhistory    { height: 500px; overflow: auto; } */
+
+.commentlist    { margin-right: 60px; margin-left: 20px; }
+.commentlist div.comment { border-bottom: 1px solid #888; 
+                         margin-bottom: 4px; }
+li.recent_item div.comment { border-bottom: none;
+                         margin-bottom: 0px; }
+                         
+#history_items div.comment.log p, .commentlist .recent_item p { display: inline; }
+
+.compact p.commentbody { margin-bottom: 0px; }
+
+li.recent_item { border-top: 1px solid black;
+                 list-style: none;
+                 margin-left: none;}
+
+.comment.unaddressed { background-color: #fcc; }
+.comment.highlighted { background-color: #ff9; }
+
+.commentdetails img { vertical-align: middle; }
+.commentdetails input { vertical-align: middle; }
+
+form { display: inline; }
+
+textarea#comment_body { height: 8em; width: 500px; }
+
+.big_comment_form textarea#comment_body { height: 20em; width: 800px; }
+
+.commentbody > p { margin-top: 0px; }
+
+#formatting_info { margin-top: 2px; margin-bottom: 6px; }
+
+/***** Data import / export *****/
+
+code { background-color: #eee; }
+input#separator       { width: 2em; }
+input#formatting_line { width: 600px; }
+textarea#import_data  { width: 600px; height: 15em; }
+
+.plaintext_wrapper { white-space: pre;
+                     font-family: monospace;
+                    }
+.medium_width { width: 600px; }
+
+/***** Cardset details pages *****/
+
+textarea#details_page_body { width: 90%; height: 30em; }
+.image_submit { vertical-align: middle; }
+
+/***** Cardset configuration *****/
+
+div.config_section { margin: 4px; }
+input#cardset_description { width: 30em; }
+form.search_form input { width: 20em !important; }
+
+/***** Mechanics *****/
+
+div.mechanic { /*border-bottom: 1px solid black; */
+padding: 6px; 
+margin-bottom: 10px; }
+.mechanic_name { font-weight: bold; border-bottom: 1px dashed black; }
+.mechanic_reminder { font-style: italic; }
+.mechanic_label { width: 15em; }
+.mechanic label { font-weight: bold; }
+
+/***** Skeletons *****/
+
+table.skeleton_generate input { width: 3em; }
+
+/***** Card display *****/
+
+div#mockup { 
+  padding-top: 4px; 
+}
+.cardtabs {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+.cardtabs li {
+  position: relative;
+  float: left;
+}
+.cardtabs a {
+  float: left;
+  padding: 5px 8px;
+  /* margin-right: 6px; */
+  border: 1px solid #aaa;
+  border-width: 1px 1px 0 1px;
+  text-decoration: none;
+  color: #000;
+}
+.cardtabs a:hover, .cardtabs a:focus, .cardtabs a:active {
+  background-color: #666;
+  color: #FFF;
+}
+.cardtabs a.active-tab {
+  background-color: #aaa;
+  color: #000;
+}
+.onetab {
+  display: none;
+  clear: both;
+}
+.onetab.active-tab-body {
+  display: block;
+  clear: both;
+}
+.timestamp {
+  font-size: smaller;
+  font-style: italic;
+  color: #999;
+}
+
+/***** Cardlist *****/
+
+.controls { 
+  margin-left: 10px;
+  border: 1px solid #888;
+  padding-left: 2px;
+  padding-right: 2px;
+  padding-top: 4px;
+  padding-bottom: 4px;
+}
+.one_control {
+  border: 1px solid #444;
+  margin-left: 2px;
+  margin-right: 2px;
+}
+.hidden_control {
+  background: #ccc;
+  color: #666;
+}
+th.manacost {
+  min-width: 45px;
+}
+.nowrap {
+  white-space: nowrap;
+}
+
+/***** Search *****/
+/* Advanced search */
+td.search_cell {
+  vertical-align: top;
+}
+td.search_cell div.search_submit {
+  text-align: center;
+}
+
+/* Results */
+td.textcell, td.costcell {
+  padding-left: 4px;
+}
+strong.highlight {
+  background-color: yellow;
+}
+
+
+/**** Cardset access colours for recent changes and setviews box ****/
+.access_Editable {
+  background-color: #D5E5F5;
+}
+.access_Viewable {
+  background-color: #DED;
+}
+.access_Private {
+  background-color: #EDD;
+}
+.rowodd td.access_Editable {
+  background-color: #E9F5FF;
+}
+.rowodd td.access_Viewable {
+  background-color: #EFE;
+}
+.rowodd td.access_Private {
+  background-color: #FEE;
+}
+
+/**** Tooltips ****/
+div.card_loading:after {
+  content: "Loading..."
+}
+div.tooltip_footer {
+  height: 20px;
+}
+
+
+/**** Nav ****/
+/* Navigation */
+
+header nav {
+  float: right;
+}
+footer nav {
+  display: block;
+  margin-top: 20px;
+  border-top: 1px solid #ddd;
+  padding-top: 10px;
+}
+nav {
+  background-color: white;
+  padding: 0 0.7em;
+  white-space: nowrap;
+}
+/*#nav{
+  position:relative;
+  width:820px;
+  list-style:none;
+  margin:0 auto;
+  padding:0;
+  list-style:none;
+  font-size:1em;
+}*/
+
+nav ul {
+  margin: 0;
+  padding: 0;
+}
+
+nav ul li {
+  list-style-type: none;
+  display: inline-block;
+  padding: 0.2em 0em;
+  /* vertical-align: top; */
+}
+
+nav ul li.subsequent:before
+{
+  content: "| ";
+  padding: 0px;
+  margin: 0px;
+}
+
+nav a {
+  font-weight: bold;
+  color: #09c;
+  padding-top: 8px;
+  padding-bottom: 8px;
+  padding-left: 4px;
+  padding-right: 4px;
+}
+nav a:visited {
+  color: #09c;
+}
+ul.licious a{
+  position:relative;
+  z-index:999;
+  font-weight:bold;
+  margin:0;
+  /*background:none;*/
+  display:block;
+  text-decoration:none;
+  padding:5px;
+  background:#f3f3f3;
+  text-shadow:none;
+}
+
+nav a:hover, nav a:focus, nav a:active {
+  text-decoration: underline;
+  color: #fff;
+  background: #000;
+}
+ul.licious a:hover, ul.licious a:active, ul.licious a:focus {
+  position:relative;
+  /*background:none;*/
+}
+
+li.drops_parent {
+  text-align: right;
+}
+
+a.drops {
+}
+
+ul.licious {
+  text-align:left;
+  width:150px;
+  /* font-size:.8em; */
+  background:#444;
+  margin:0;
+  padding:0;
+  position: relative;
+    position:absolute;
+  left:0px;
+  /*top:28px;*/
+}
+/* ie
+html>body ul.licious{
+  position:absolute;
+  top:18px;
+} */
+
+ul.licious li {
+  position:relative;
+  /* display: block;*/
+  display:inline;
+  margin:0;
+  padding:0;
+}
+
+/**** scaffold ****/
+body {
+  background-color: #fff;
+  color: #333;
+  margin: 0px;
+}
+
+body, p, ol, ul, td {
+  font-family: verdana, arial, helvetica, sans-serif;
+  font-size:   13px;
+  /*line-height: 18px;  */
+}
+
+br {
+  line-height: 13px;
+}
+
+
+pre {
+  background-color: #eee;
+  padding: 10px;
+  font-size: 11px;
+}
+
+a { color: #000; }
+a:visited { color: #666; }
+a:hover, a:active, a:focus { color: #fff; background-color:#000; }
+
+div.field, div.actions {
+  margin-bottom: 10px;
+}
+
+textarea {
+  height: 6em;
+}
+
+#notice {
+  color: green;
+}
+
+.field_with_errors {
+  padding: 2px;
+  background-color: red;
+  display: table;
+}
+
+#error_explanation {
+  width: 450px;
+  border: 2px solid red;
+  padding: 7px;
+  padding-bottom: 0;
+  margin-bottom: 20px;
+  background-color: #f0f0f0;
+}
+
+#error_explanation h2 {
+  text-align: left;
+  font-weight: bold;
+  padding: 5px 5px 5px 15px;
+  font-size: 12px;
+  margin: -7px;
+  margin-bottom: 0px;
+  background-color: #c00;
+  color: #fff;
+}
+
+#error_explanation ul li {
+  font-size: 12px;
+  list-style: square;
+}

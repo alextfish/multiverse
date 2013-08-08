@@ -135,8 +135,8 @@ class CardsetsController < ApplicationController
       expire_skeleton_cache # ==expire_action :action => :skeleton
       @cardset.log :kind=>:skeleton_generate, :user=>current_user, :object_id=>@cardset.skeleton.id
       redirect_to skeleton_cardset_path(@cardset)
-    else # need to figure out a message here... but there's currently no way generate_skeleton can return false
-      flash[:error] = message
+    else # there's currently only one way generate_skeleton can return false: if the user didn't specify any new fields
+      flash[:error] = "No new skeleton rows generated"
       redirect_to skeleton_cardset_path(@cardset)
     end
   end

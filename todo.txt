@@ -1,3 +1,10 @@
+Bugs to fix before push:
+* Card page autofloating doesn't wait for card images to load
+ - Make that function set the wider of the image and mockup tabs, and Set an extra onload trigger for the image load to do the same.
+ - Or better, in fact, edit the tab onswitch function to adjust the width then. Plus set an onload trigger on the image.
+
+------
+
 To make whole-VS page:
 
 * Look up syntax to Rails.cache.read

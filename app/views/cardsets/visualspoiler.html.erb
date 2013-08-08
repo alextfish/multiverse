@@ -53,7 +53,7 @@
        cards_to_show = cards_to_show.paginate(:page => params[:page], :per_page => 50)
        num_cards_shown = cards_to_show.count 
      end %>
-  <% if !@printable %>
+  <div class="nonprinting">
     <% if showing_all %>
       <% num_total_cards = @cardset.cards.nonsecondary.count %>
       <% if num_cards_to_show == num_total_cards %>
@@ -63,11 +63,11 @@
       <% end %>
       </p>
     <% else %>
-      <p>Showing <%= num_cards_shown %> of <%= num_cards_to_show %> <%= cards_to_show.first.category %> <%= (num_cards_shown == 1 ? "card" : "cards") %>
+      <p>Showing <%= num_cards_shown %> of <%= num_cards_to_show %> <%= cards_to_show.first.category %> <%= (num_cards_shown == 1 ? "card" : "cards") %></p>
     <% end %>
-  <% end %>
+  </div>
   <% cache(:action => "visualspoiler", :iterator => @cardset.memcache_iterator, :action_suffix => "frame_buttons") do %>
-  <p>
+  <p class="nonprinting">
     <% present_rarity_letters = cards_to_show.map &:rarity_letter
        if showing_all
          frame_links = nil
@@ -87,8 +87,7 @@
   </p>
  
   <% end %>
-  
-  <%= will_paginate cards_to_show, :params => {:section => params[:section]} %>
+  <span class="nonprinting"><%= will_paginate cards_to_show, :params => {:section => params[:section]} %></span>
   <p>
     <% cards_to_show.each do |card| %>
         <% @card = card %>
@@ -99,16 +98,17 @@
           <% end %>
         </div>
     <% end %>
+    <% @card = nil %>
   </p>
-  <%= will_paginate cards_to_show, :params => {:section => params[:section]} %>
+  <span class="nonprinting"><%= will_paginate cards_to_show, :params => {:section => params[:section]} %></span>
   <% "another copy of the frame and rarity toggles / links. Should definitely be in the cache now, so what goes in-between the cache do...end doesn't really matter" %>
   <% cache(:action => "visualspoiler", :iterator => @cardset.memcache_iterator, :action_suffix => "frame_buttons") do %>
-    <p>
+    <p class="nonprinting">
       <%= render :partial => "card_category_buttons", :locals => { :present_frame_letters => card_frame_letters, :present_rarity_letters => present_rarity_letters, :frame_links => frame_links, :frames_link_text => frames_link_text } %>
     </p>
   <% end %>
 <% end %>
 
-<p><br>
+<p class="nonprinting"><br>
   <%= render "setviews" %>
 </p>

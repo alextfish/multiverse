@@ -16,7 +16,7 @@
 <% end %>
 <% if permission_to?(:edit, @cardset) %>
 <tr><td>
-    <%= link_to_unless_current "New card", new_card_path(:cardset_id => @cardset.id) %> |
+    <%= link_to "New card", new_card_path(:cardset_id => @cardset.id) %> <% if @card && !@card.new_record? %> (<%= link_to "related to this one", new_card_path(:cardset_id => @cardset.id, :relation => @card.id) %>)<%end %> |
     <%= link_to_unless_current "Import data", import_cardset_path(@cardset) %> |
     <%= link_to_unless_current "Unaddressed", todo_cardset_path(@cardset) %>
     <% if permission_to?(:admin, @cardset) %>

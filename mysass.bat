@@ -1,1 +1,1 @@
-sass --watch public\stylesheets\Card.scss 
+sass --watch app\assets\stylesheets\Card.scss 

@@ -5,4 +5,4 @@
 # Make sure the secret is at least 30 characters and all random,
 # no regular words or you'll be exposed to dictionary attacks.
 
-Multiverse::Application.config.secret_token = 'af879fc7cafaf43cca2b748d33ba6ea4721e1ccb0160b901b00c783361f30f1f85f64394c523ce5821cd75f171b5830e2a6d8687f7004870e71d8639bea1f721489a'
+Multiverse::Application.config.secret_token = 'af498465651386451879fc7cafaf43cca2b748d33ba6ea4721e1ccb0160b61f30f1f85f64394c523ce5821cd75f171b5830e2a6d8687f7004870e71d8639bea1f721489aabc'
