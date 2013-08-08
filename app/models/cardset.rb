@@ -30,8 +30,10 @@ class Cardset < ActiveRecord::Base
 
   validates_length_of :name, :within => 2..40
   validate do |cardset|
-    cardset.configuration.errors.full_messages.each do |msg|
-      cardset.errors.add_to_base(msg)
+    if cardset.configuration.errors
+      cardset.configuration.errors.full_messages.each do |msg|
+        cardset.errors.add_to_base(msg)
+      end
     end
   end
 
