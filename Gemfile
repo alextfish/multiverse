@@ -7,10 +7,12 @@ gem 'prototype-rails' # depends on rails 3.2
 
 gem 'json', '~>1.7.7' # avoid security vulnerability in json-1.7.6
 
-#group :production do
+group :production do
+  gem 'pg'
+  gem 'thin'
 #  gem 'mysql'
 #  gem "mysql2", "~> 0.3.11"
-#end
+end
 
 #platforms :mri_18, :mingw_18 do
 #  group :production do
@@ -70,7 +72,7 @@ end
 # gem 'jbuilder'
 
 # Use unicorn as the app server
-# gem 'unicorn'
+#gem 'unicorn'
 
 # Deploy with Capistrano
 # gem 'capistrano'
