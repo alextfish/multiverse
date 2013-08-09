@@ -2,6 +2,6 @@ class DeckCard < ActiveRecord::Base
   belongs_to :card
   belongs_to :decklist
   
-  validates :count, :positive
+  validates_numericality_of  :count, :only_integer => true, :greater_than_or_equal_to => 1
   
 end

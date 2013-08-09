@@ -1,0 +1,1428 @@
+@mixin rotate_180 {
+  /* Safari */
+  -webkit-transform: rotate(-180deg);
+  /* Firefox */
+  -moz-transform: rotate(-180deg);
+  /* Internet Explorer */
+  filter: progid:DXImageTransform.Microsoft.BasicImage(rotation=2);
+}
+@mixin rotate_90 {
+  /* Safari */
+  -webkit-transform: rotate(-90deg);
+  /* Firefox */
+  -moz-transform: rotate(-90deg);
+  /* Internet Explorer */
+  filter: progid:DXImageTransform.Microsoft.BasicImage(rotation=1);
+}
+@mixin hide_but_allow_children {
+  position: absolute;
+  left: -5000px;
+}
+@mixin show_children_of_hidden {
+  position: relative;
+  left: +5000px;
+}
+@mixin gradient_horz($start, $end) {
+  filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#{$start}', endColorstr='#{$end}', GradientType=1);
+  @media screen { 
+    background: -webkit-gradient(linear, left top, right top, from($start), to($end));
+  }
+  background: -moz-linear-gradient(left,  $start,  $end);
+}
+@mixin gradient_horz_highlight($startend, $middle) {
+  @media screen { 
+    background: -webkit-gradient(linear, left top, right top, from($startend), color-stop(0.5, $middle), to($startend));
+  }
+  background: -moz-linear-gradient(left, $startend, $middle, $startend);
+}
+@mixin gradient_diag_highlight($startend, $middle) {
+  @media screen { 
+    background: -webkit-gradient(linear, right top, left bottom, from($startend), color-stop(0.5, $middle), to($startend));
+  }
+  background: -moz-linear-gradient(right top, $startend, $middle, $startend);
+}
+@mixin gradient_vert_important($start, $end) {
+  filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#{$start}', endColorstr='#{$end}', GradientType=0) !important;
+  @media screen { 
+    background: -webkit-gradient(linear, left top, left bottom, from($start), to($end)) !important;
+  }
+  background: -moz-linear-gradient(top,  $start,  $end) !important;
+}
+@mixin gradient_vert_highlight($startend, $middle) {
+  @media screen { 
+    background: -webkit-gradient(linear, left top, left bottom, from($startend), color-stop(0.5, $middle), to($startend));
+  }
+  background: -moz-linear-gradient(top, $startend, $middle, $startend);
+}
+@mixin gradient_horz_padded($start, $end) {
+  filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#{$start}', endColorstr='#{$end}', GradientType=1);
+  @media screen { 
+    background: -webkit-gradient(linear, left top, right top, from($start), color-stop(0.4, $start), color-stop(0.6, $end), to($end));
+  }
+  background: -moz-linear-gradient(left, $start, $start, $end, $end);
+}
+@mixin twotone_horz($left, $right) {
+  filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#{$left}', endColorstr='#{$right}', GradientType=1);
+  @media screen { 
+    background: -webkit-gradient(linear, left top, right top, from($left), color-stop(0.5, $left), color-stop(0.5, $right), to($right));
+  }
+  background: -moz-linear-gradient(left, $left, $left, $right, $right);
+}
+@mixin round_corners($radius) {
+  -moz-border-radius:    $radius;
+  -webkit-border-radius: $radius;
+  -khtml-border-radius:  $radius;
+  border-radius:         $radius;
+}
+@mixin elliptical_corners($horz, $vert) {
+  -moz-border-radius:    $horz;
+  -webkit-border-radius: $horz;
+  -khtml-border-radius:  $horz;
+  border-radius:         $horz;
+  -moz-border-radius:    #{$horz} / #{$vert};
+  -webkit-border-radius: $horz $vert;
+  -khtml-border-radius:  #{$horz} / #{$vert};
+  border-radius:         #{$horz} / #{$vert};
+}
+@mixin elliptical_corners_asymmetric($tophorz, $topvert, $bottomhorz, $bottomvert) {
+  -moz-border-radius:    $tophorz $tophorz $bottomhorz $bottomhorz;
+  -webkit-border-radius: $tophorz $tophorz $bottomhorz $bottomhorz;
+  -khtml-border-radius:  $tophorz $tophorz $bottomhorz $bottomhorz;
+  border-radius:         $tophorz $tophorz $bottomhorz $bottomhorz;
+  -moz-border-radius:    #{$tophorz} #{$tophorz} #{$topvert} #{$topvert} / #{$bottomhorz} #{$bottomhorz} #{$bottomvert} #{$bottomvert};
+  -webkit-border-radius: #{$tophorz} #{$tophorz} #{$topvert} #{$topvert} #{$bottomhorz} #{$bottomhorz} #{$bottomvert} #{$bottomvert};
+  -khtml-border-radius:  #{$tophorz} #{$tophorz} #{$topvert} #{$topvert} / #{$bottomhorz} #{$bottomhorz} #{$bottomvert} #{$bottomvert};
+  border-radius:         #{$tophorz} #{$tophorz} #{$topvert} #{$topvert} / #{$bottomhorz} #{$bottomhorz} #{$bottomvert} #{$bottomvert};
+}
+@mixin background_size($width, $height) {
+  -webkit-background-size: $width $height; 
+  -moz-background-size: $width $height; 
+  -o-background-size: $width $height; 
+  background-size: $width $height; 
+}
+
+/***** Card display *****/
+  $BorderWidth: 10px;
+  .blackborder, .silverborder, .whiteborder, .purpleborder, .goldborder, .dfc .innercardborder {
+    @include round_corners($BorderWidth);
+    border-width: $BorderWidth;
+    border-style: solid; 
+    border-width: 1px;
+    padding: $BorderWidth - 1;
+  }
+  .blackborder, .blackborder.dfc .innercardborder { border-color: black; background-color: black; }
+  $SilverBorder: #a3a3a3;
+  .silverborder, .silverborder.dfc .innercardborder { border-color: $SilverBorder; background-color: $SilverBorder; }
+  $GoldBorder: #ca0;
+  .goldborder, .goldborder.dfc .innercardborder { border-color: $GoldBorder; background-color: $GoldBorder; }
+  $PurpleBorder: #a6f;
+  .purpleborder, .purpleborder.dfc .innercardborder { border-color: $PurpleBorder; background-color: $PurpleBorder; }
+  .whiteborder, .whiteborder.dfc .innercardborder {
+    border-color: black;
+    background-color: white;
+  }
+  .dfc.cardborder { 
+    // No border on the cardborder elements - it goes on the innercardborder instead
+    border: none;
+    padding: 0px;
+    background-color: transparent;
+  }
+
+  $CardWidth: 200px;
+  $CardHeight: 300px;
+  $CardPaddingTop: 4px;
+  $CardPaddingBottom: 3px;
+  $CardPaddingLeft: 3px;
+  $CardPaddingRight: 3px;
+  $CardFormWidth: 350px;
+  $DFCCardWidth: 2 * $CardWidth + 4 * $BorderWidth + 5;
+  $SmallLandscapeCardWidth: $CardHeight;
+  $SmallLandscapeCardHeight: $CardWidth;
+  $LargeLandscapeCardWidth: 2 * $CardWidth;
+  $LargeLandscapeCardHeight: $CardHeight;
+  $LargePortraitCardWidth: $CardHeight;
+  $LargePortraitCardHeight: 2 * $CardWidth;
+  
+  .whiteborder .card, .whiteborder .editborder_inner { border: 1px solid #888; }
+  .editborder_inner { background: white; padding-right: 5px; }
+  .editborder_outer { display: inline-block; margin: 10px 2px 10px 0px; }
+  
+  .innercardborder { width: $CardWidth; min-height: $CardHeight; }
+  .flip .innercardborder { min-height: 0px; }
+  .split .innercardborder { width: auto; min-height: $CardWidth; }
+
+
+img.tooltip_image.portrait {
+  /* We force it to size down */
+  width: $CardWidth; 
+  height: $CardHeight;
+}
+img.tooltip_image.split {
+  width: $SmallLandscapeCardWidth; 
+  height: $SmallLandscapeCardHeight;
+}
+img.tooltip_image.dfc {
+  width: $DFCCardWidth; 
+  height: $CardHeight;
+}
+img.tooltip_image.plane {
+  width: $LargeLandscapeCardWidth; 
+  height: $LargeLandscapeCardHeight;
+}
+img.tooltip_image.scheme, img.tooltip_image.vanguard {
+  width: $LargePortraitCardWidth; height: $LargePortraitCardHeight;
+}
+
+div.card_loading {
+  height: $CardHeight;
+  text-align: center;
+  padding-top: 20px;
+  background-color: white;
+  opacity: 0.5;
+}
+.commentcount {
+  width: $CardWidth;
+  background-color: white;
+  opacity: 1;
+  padding: 2px;
+  font-size: 10px;
+}
+.distinct_mockup_container {
+  background-color: white;
+  opacity: 1;
+  padding: 5px;
+}
+  
+  .distinct_mockup_container.split { width: $SmallLandscapeCardWidth + 2 * $BorderWidth; }
+  .distinct_mockup_container.dfc { width: $DFCCardWidth; }
+  .distinct_mockup_container.portrait { width: $CardWidth + 2 * $BorderWidth; }
+  .card { /* background: #0ff; */
+          padding-top: $CardPaddingTop; padding-bottom: $CardPaddingBottom;
+          padding-left: $CardPaddingLeft; padding-right: $CardPaddingRight;
+          position: relative;
+          min-height: $CardHeight - $CardPaddingTop - $CardPaddingBottom;
+          width: $CardWidth - $CardPaddingLeft - $CardPaddingRight;
+        }
+  .foil {
+    position: absolute; top: 0px; background-image: url(<%= asset_path 'foil_highlight.png' %>);
+    top: 0; bottom: 0; left: 0; right: 0;
+    /* width: $CardWidth;  height: 285px; */
+  }
+  .cardborder {
+    position: relative;
+    width: $CardWidth;
+  }
+  .banner {
+    position: absolute;
+    top: 40px;
+    padding: 8px 0px;
+    font-size: 20pt;
+    background-color: #888;
+    z-index: 4;
+    width: $CardWidth;
+    text-align: center;
+  }
+  .pinline { position: relative; z-index: 1; }
+  .pinline_box { padding: 2px;}
+  .pinline_sides { padding-left: 2px; padding-right: 2px; }
+  .pinline_sidesbottom { padding-left: 2px; padding-right: 2px; padding-bottom: 2px; }
+  .split {
+    .pinline_box { padding: 1px;}
+    .pinline_sides { padding-left: 1px; padding-right: 1px; }
+    .pinline_sidesbottom { padding-left: 1px; padding-right: 1px; padding-bottom: 1px; }
+  }
+  .pinline_box {
+      border-left: 1px solid black;
+      border-right: 1px solid black;
+      border-bottom: 1px solid black;
+      @include elliptical_corners(6px, 12px); }
+  .pinline_box > div { border: 1px solid black;
+      @include elliptical_corners(4px, 8px);
+      padding-left: 3px;
+      padding-right: 3px; }
+  /* Left side outer */
+  .pinline_sides, .pinline_sidesbottom {
+    border-left: 1px solid black; }
+  /* Left side inner */
+  .pinline_sides > div, .pinline_sidesbottom  > div {
+    border-left: none; }
+  /* Right side inner */
+  .pinline_sides > div, .pinline_sidesbottom  > div {
+    border-right: 1px solid black; }
+  /* Right side outer */
+  .pinline_sides, .pinline_sidesbottom {
+    border-right: none; }
+  /* Bottom inner */
+  .pinline_sidesbottom > div {
+    border-bottom: none; }
+  /* Bottom outer */
+  .pinline_sidesbottom {
+    border-bottom: 1px solid black; }
+  /* .pinline_sides, .pinline_sides > div {
+     border-left: 1px solid black; border-right: 1px solid black; }
+  .pinline_sidesbottom, .pinline_sidesbottom > div {
+     border-left: 1px solid black; border-right: 1px solid black; border-bottom: 1px solid black; } */
+
+  .cardtitlebar, .cardtypebar { font: bold 9pt serif; padding-top: 1px; /* padding-bottom: 1px; */ }
+  .cardname { float: left;
+     position: relative; z-index: +5;  /* so that foils' names are still clickable */
+  }
+  .cardmanacost { float: right; padding-right: 3px; }
+  .cardart_container, .cardtext_container { background: inherit; padding-left: 4px; padding-right: 4px; }
+  .cardart {  position: relative;
+              min-height: 123px; text-align: center; 
+              overflow: hidden; /* make rounded borders clipping (tokens, planeswalkers) */ }
+  .cardart.image { background:url(<%= asset_path 'loading.gif' %>) no-repeat center;}
+  .cardart img { position: absolute; left: 0px;
+              width: 180px;
+              z-index: 0;}
+  .cardtypebar { padding-right: 0px !important;
+                position: relative; }
+  .cardtype { }
+  .cardrarity { position: absolute; 
+              right: 0px;
+              top: -1px;
+              padding-left: 3px;
+              padding-right: 3px;
+              margin-right: 2px;
+              border: 1px solid black; }
+  .cardrarity.none { border: none; }
+              
+  @-moz-document url-prefix() { /* Firefox wants it just fractionally lower... */
+    .cardrarity { top: -0.5px; }
+  }
+  .form .cardrarity_container { position: relative; }
+  .form .cardrarity { position: relative; right: auto; left: 20px; }
+  .watermark { background-repeat: no-repeat !important; 
+              background-position: center !important; 
+              z-index: 1; 
+              position: absolute; 
+              left: -2px;
+              top: -2px;
+              height: 100%;
+              width: 100%;}
+  $CardTextHeight: 95px;
+  .cardtext { /*width: *; */
+              min-height: $CardTextHeight;
+              padding: 2px; }
+  .rulestext_wrapper { z-index: 2; /*position: absolute;*/ }
+  .rulestext, .flavourtext {}
+  .cardtext br { margin-bottom: 0.25em; }
+  .cardtext .flavourtext br { margin-bottom: 0px; line-height: 1em; }
+  .cardtext div, .cardtext p { margin: 0px; }
+  
+  .bottombox { /* background: inherit; */
+              margin-bottom: 4px; padding-right: 6px;
+              position: relative;
+              font: 8pt serif; }
+  .ptbox_container { float: right; position: relative; height: 10px; min-width: 25%; }
+  .Planeswalker .ptbox_container { height: auto; }
+  .pinline_ptbox { float: right;
+      position: absolute; top: -7px; right: 0px;
+      min-width: 80%;
+      text-align: center;
+      padding-right: 0px; }
+  .ptbox { min-width: 90%;
+          font: 11pt serif;
+          padding: 0px !important; }
+  .pinline_ptbox {
+    border-right-color: #ccc;
+    border-top-color: #ccc;
+   }
+ .pinline_ptbox div {
+    border-left-color: #ccc;
+    border-bottom-color: #ccc;
+   }
+
+  /* .manacost { align: right; } */
+  .cardtext { font-size: 9pt /*serif*/; }
+  .minitext, .nameminitext  { font-size: 9pt; }
+  .microtext { font-size: 8pt; }
+  .nanotext  { font-size: 7.5pt; }
+  .cardtext.enlarged { font-size: 10pt; }
+  .condensedtypeline { font-size: 8pt; letter-spacing: -2px; }
+  .flavourtext { font-style: italic; margin-top: .25em !important; }
+  .flavourtext i, .flavourtext em { font-style: normal; }
+
+/* Mana symbol sizes */
+.cardmanacost img { width: 14px; height: 14px; /*vertical-align: middle;*/}
+.cardtext  img { height: 1em; vertical-align: middle; }
+/*
+.cardtext  img { width: 13px; height: 13px; vertical-align: middle; }
+.minitext  img { width: 12px; height: 12px; }
+.microtext img { width: 11px; height: 11px; }
+.nanotext  img { width: 10px; height: 10px; } */
+
+.cardrarity.common, .cardrarity.token, .cardrarity.basic {
+  color: #fff;
+  background-color: #000;
+}
+.uncommon {
+  color: #000;
+  background: #ccc;
+  @include gradient_diag_highlight(#999, #ccd3d6);
+}
+.rare   {
+  color: #000;
+  background: #e0d060;
+  @include gradient_diag_highlight(#998044, #e0d060);
+}
+.mythic {
+  color: #fff;
+  background: #933;
+  @include gradient_diag_highlight(#a43, #e86);
+}
+
+.rulestext i, .rulestext i i i, .flavourtext i i, .flavourtext i i i i {
+  font-style: italic;
+}
+.rulestext i i, .rulestext i i i i, .flavourtext i, .flavourtext i i i {
+  font-style: normal;
+}
+
+
+/***** Planeswalkers *****/
+
+.card.Planeswalker {
+  padding-top: 0px;
+  min-height: $CardHeight - $CardPaddingBottom;
+}
+
+.Planeswalker .namebox { padding-top: 0px; }
+
+.Planeswalker .pinline_box {
+  @include elliptical_corners_asymmetric(8px, 2px, 12px, 2px);
+}
+.Planeswalker .cardtitlebar, .Planeswalker .cardtypebar {
+  @include elliptical_corners_asymmetric(8px, 2px, 12px, 2px);
+}
+
+.Planeswalker .cardart_container .pinline_sides {
+  @include elliptical_corners(4px, 42px);
+}
+.Planeswalker .cardart {
+  @include elliptical_corners(7px, 40px);
+  border-right: 1px solid black;
+  border-left: 1px solid white;
+  min-height: 141px; /* 131px; */
+}
+.Planeswalker .cardart.image {
+  @include background_size(200px, 150px);
+}
+
+
+.Planeswalker .cardtext {
+  @include elliptical_corners_asymmetric(4px, 18px, 8px, 12px); /* 4 18 8 32 */
+  border-left: 1px solid black;
+  border-bottom: 1px solid black;
+  padding-left: 8px;
+}
+.Planeswalker .cardtext_container .pinline_sidesbottom {
+  @include elliptical_corners_asymmetric(0px, 18px, 0px, 16px); /* 0 18 0 32 */
+  padding-left: 16px;
+}
+
+.Planeswalker .cardtext {
+  position: relative;
+  padding-top: 4px;
+}
+.loyaltyContainer {
+  position: relative;
+  width: 32px;
+  display: inline-block;
+  top: -2px;
+  vertical-align: text-top;
+}
+.loyalty {
+  position: absolute;
+  top: -2px;
+  color: white;
+  padding-top: 5px;
+  padding-left: 1px;
+  background-repeat: no-repeat;
+  background-position: 3px 0px;
+  width: 32px;
+  height: 30px;
+  text-align: center;
+  font-weight: bold;
+  font-size: 8pt;
+  letter-spacing: -1px;
+}
+.Planeswalker .loyalty {
+  left: -34px;
+}
+.Planeswalker .loyaltyContainer {
+  width: 0px;
+  display: inline; 
+  top: 0px;
+  /* padding-bottom: 5px; */
+}
+.Planeswalker .cardtext br { margin-bottom: 5px; }
+.loyalty.positive { background-image: url(<%= asset_path 'loyaltyup.png' %>); }
+.loyalty.neutral  { background-image: url(<%= asset_path 'loyaltynaught.png' %>);
+  padding-top: 3px;}
+.loyalty.negative { background-image: url(<%= asset_path 'loyaltydown.png' %>); }
+
+.Planeswalker .pinline_ptbox.pinline {
+  border: none;
+  padding-right: 2px;
+  top: -16px;
+  right: -4px;
+  background: none !important;
+  filter: none !important;
+}
+.dfc .part2.Planeswalker .ptbox_container { display: none; }
+
+.Planeswalker .pinline_ptbox .ptbox {
+  background: none !important;
+  background-image: url(<%= asset_path 'loyalty.png' %>) !important;
+  background-repeat: no-repeat !important;
+border: none;
+  color: white !important;
+  height: 40px;
+  width: 40px;
+  position: absolute;
+  padding-top: 4px !important;
+ }
+
+
+.Planeswalker .bottombox {
+  position: relative;
+  margin: 0 auto;
+  text-align: left; }
+.Planeswalker .artist {
+  font-size: 7pt;
+  position: absolute; width: 80%; left: 15%; top: -2px;
+  padding-left: 20px;
+  @include elliptical_corners_asymmetric(30px, 0px, 12px, 0px);
+}
+.blackborder .Planeswalker .artist {
+  color: white; background: black;
+}
+.whiteborder .Planeswalker .artist {
+  color: black; background: white;
+}
+.silverborder .Planeswalker .artist {
+  color: black; background: $SilverBorder;
+}
+.goldborder .Planeswalker .artist {
+  color: black; background: $GoldBorder;
+}
+.purpleborder .Planeswalker .artist {
+  color: white; background: $PurpleBorder;
+}
+
+.Planeswalker .powerfield#card_power { width: 0px; }
+
+/***** Tokens *****/
+
+.token .cardtext { min-height: 0px; }
+.token .cardtext_container.notext { padding: 0px; display: none; }
+/* .token.card { height: 262px;} */
+.token.card.form { height: inherit; }
+.token .cardname, .token .cardname a {
+  color: #ba8;
+  text-shadow: #ff9 1px -1px;
+}
+.token .cardname {
+  float: none; display: inline;
+  padding-right: 2px; /* to balance the text-shadow */
+  text-transform: uppercase;
+}
+.token .cardtitlebar {
+  background-color: #000 !important;
+  background: #000 !important;
+  text-align: center;
+ }
+.token .cardtitlebar label { color: #fff; }
+.token .cardmanacost { display: none;}
+.token .pinline.namebox { background: #ba8;
+  border-top: 1px solid #ff9;
+  padding-top: 1px;
+  /* width: 120px; */
+  margin: auto;
+}
+.token.form  .pinline.namebox {
+  width: inherit;}
+.token .cardtitlebar {
+  border-bottom: 1px solid #ff9;
+}
+.token .cardart {
+  @include elliptical_corners(50px, 30px);
+  border-right: 1px solid black;
+  border-left: 1px solid white;
+  height: 100%;
+  min-height: 175px;
+  @include background_size(178px, 225px);
+ }
+.token .cardart_container .pinline_sides {
+  @include elliptical_corners(45px, 32px);
+  border-left: 1px solid black;
+  border-top: 1px solid white;
+  border-bottom: 1px solid black;
+  padding-left: 2px;
+  padding-right: 3px;
+  height: 100%;
+ }
+.token .cardart_container {
+  @include elliptical_corners(44px, 32px);
+ }
+
+/***** Split / Flip / Double-Faced Cards *****/
+
+.split.cardborder { min-height: $SmallLandscapeCardHeight; width: $SmallLandscapeCardWidth;}
+.dfc.form .card { width: $CardFormWidth; }
+.split.form#cardborder { width: 500px; }
+.split .card { min-height: 196px; padding-top: 2px; padding-bottom: 2px;}
+
+.split .part1, .split .part2 { display: inline-block; width: 139px;}
+.split .innercardborder, .dfc .innercardborder { display: inline-block; }
+.dfc .part1,   .dfc .part2 { display: inline-block; }
+.split .part2, .dfc .part2 { float: right;}
+.split.form .part1, .split.form .part2 { width: 240px;}
+/* .dfc.form .part1, .dfc.form .part2 { width: auto;} */
+
+.dfc .innercardborder, .split .innercardborder { vertical-align: top; }
+.dfc.cardborder.form { width: $CardFormWidth + $BorderWidth * 2; }
+.dfc.cardborder { width: $CardWidth * 2 + $BorderWidth * 4 + 5; background-color: #999; }
+
+.split .cardart { min-height: 76px; }
+.split .cardart img { width: 126px; height: 76px; }
+.split .cardtext { min-height: 65px; font-size: 8pt; }
+.split .watermark { background-size: 50px; }
+.split .cardtypebar{ font-size: 7.5pt; }
+.split .bottombox { margin-bottom: -2px; font-size: 7pt; }
+.split .pinlinebox { padding: 1px; }
+
+.split.form .cardrarity { /* top: 27px; */ left: 0px; }
+.split input { width: 100px; }
+.split input[type="checkbox"] { width: auto; }
+
+.flip .card { min-height: 0px; }
+.flip .part1 .cardart_container { @include hide_but_allow_children; }
+.flip .part1 .artist_area { display: none; }
+.flip .part2 .cardrarity { display: none; }
+.flip .cardtext { min-height: 38px; }
+.flip .cardart { min-height: 105px;  }
+
+.flip .part1 .typebox { position: absolute; z-index: +2; top: +70px; width: 190px; }
+.flip .part1 .ptbox_container { z-index: +2; left: +6px;}
+.flip .part1 .pinline_ptbox { top: -3px; }
+.flip .part2 .cardart_container { position: relative; top: -32px;}
+.flip .part1 .cardrarity { z-index: +2; top: 211px; }
+
+.flip .part2 .namebox { /* position: absolute; */ z-index: +2; top: 162px; }
+.flip .part2 .typebox { top:-33px; position: relative; }
+.flip .part2 .pinline_ptbox { z-index: 2; right: 147px; top: -90px; }
+.flip .part2 .cardtext_container { top: -32px; position: relative; }
+.flip .part2 .bottombox { z-index: +1; width: 188px; position: absolute; top: 190px; bottom: 0px; margin-bottom: 0px; }
+
+.flip .part2 .cardtext, .flip .part2 .namebox, .flip .part2 .typebox, .flip .part2 .pinline_ptbox,
+.flip.form .part2 .frame_selector_wrapper {
+  @include rotate_180;
+}
+.rotated {
+  @include rotate_180;
+}
+.split.rotated {
+  @include rotate_90;
+  left: -50px;
+  top: 50px;
+  margin-bottom: 100px;
+  margin-right: -100px;
+}
+
+.flip.form .part1 .cardtext_container { position: relative; top: -42px; }
+.flip.form .part1 .typebox { position: relative; width: auto; top: 93px; /* top: 148px; */ }
+.flip.form .part1 .ptbox_container { top: -38px; }
+.flip.form .part1 .frame_selector_wrapper { @include show_children_of_hidden; top: +100px;}
+.flip.form .part1 .bottombox { height: 0px; /*20px;*/ }
+.flip.form .cardart { text-align: left; }
+.flip.form .type_field { width: 65px; }
+.flip.form .part2 .cardart_container { height: 50px; top: -65px;}
+.flip.form .part2 .bottombox { position: relative; margin-top: 23px; top: 0px; }
+.flip.form .part2 .pinline_ptbox { right: 110px; top: -234px; }
+.flip.form .part2 .typebox { top: -32px; }
+/* .flip.form .part2 .cardtext_container { top: -52px; } */
+.flip.form .part2 .namebox { top: 240px; }
+.flip.form .part1 .cardrarity { /* right: -170px; */ top: 362px; z-index: +3; }
+
+@-moz-document url-prefix() { /* Firefox override */
+  .flip.form .part1 .cardtext_container { top: -32px; }
+  .flip.form .part1 .ptbox_container { top: -26px; }
+  .flip.form .part2 .namebox { top: 200px; }
+  .flip.form .part2 .pinline_ptbox { top: -197px; }
+  .flip.form .part1 .cardrarity { top: 320px; }
+}
+
+$DFCSunMoonSize: 20px;
+.dfc .pinline_box.namebox {
+  display: inline-block;
+  margin-left: 0px;
+  width: $CardWidth - $DFCSunMoonSize - 18;
+  vertical-align: top;
+  margin-top: 0px;
+  //float: right; 
+}
+
+.dfc.form .pinline_box.namebox { width: auto; float: none; }
+
+.dfc .left_of_namebox {
+  display: inline-block;
+  width: $DFCSunMoonSize;
+  height: $DFCSunMoonSize;
+}
+.dfc .part1 .left_of_namebox {
+  background-image: url(<%= asset_path 'dfc_front.png' %>);
+}
+.dfc .part2 .left_of_namebox {
+  background-image: url(<%= asset_path 'dfc_back.png' %>);
+}
+.dfc.form .left_of_namebox {
+  position: relative;
+  top: 20px;
+}
+//.dfc .cardart { width: 100%; }
+
+/***** Large Cards *****/
+
+.scheme, .plane, .vanguard {
+  .pinline, .pinline > div, .pinline_box, .pinline_box > div {
+    border: none;
+    padding: 0px;
+    @include round_corners(0px);
+  }
+  .cardmanacost {
+    display: none;
+  }
+  .form {
+    .cardart {
+      height: auto;
+    }
+  }
+}
+$SchemeTopBorder: 10px;
+$SchemeOtherBorders: 20px;
+$SchemeBGColour: #246;
+$SchemeRidgeColour: #C94;
+$SchemeInnerHeight: $LargePortraitCardHeight - $SchemeTopBorder - $SchemeOtherBorders - 3*2 - 4*2;
+$PinlineBoxHeight: 16px;
+$SchemeArtHeight: $SchemeInnerHeight - (3 + $PinlineBoxHeight + 3)*2 - ($CardTextHeight + 2 + 2);
+.scheme { 
+  &.cardborder { 
+    min-height: $LargePortraitCardHeight; 
+    width: $LargePortraitCardWidth;
+  }
+  &.distinct_mockup_container { min-height: $LargePortraitCardHeight; 
+    width: $LargePortraitCardWidth + 20; }
+  .innercardborder {
+    border: 4px ridge $SchemeRidgeColour;
+    width: auto;
+    height: auto;
+    background-color: rgba(32, 32, 64, 0.5);
+    padding: $SchemeOtherBorders;
+    padding-top: $SchemeTopBorder;
+    background-color: $SchemeBGColour;
+    background-size: 300px, 400px;
+  }
+  .card {
+    border: 1px ridge $SchemeRidgeColour;
+    border-top: none;
+    background-color: rgba(128, 128, 128, 0.5);
+    min-height: $SchemeInnerHeight;
+    width: $LargePortraitCardWidth - 2 * $SchemeOtherBorders - 3*2 - 4*2;
+    padding: 0px;
+  }
+  .pinline_box {
+    border-top: 3px ridge $SchemeRidgeColour;
+    border-bottom: 3px ridge $SchemeRidgeColour;
+  }
+  .cardtitlebar {
+    @include round_corners(0px);
+    border-bottom: 3px ridge $SchemeRidgeColour;
+    background-color: rgba(255, 255, 255, 0.9);
+  }
+  .cardname {
+    float: none;
+    text-align: center;
+  }
+  .cardtext_container, .cardtypebar {
+    background-image: none;
+    background-color: rgba(255, 255, 255, 0.8);
+  }
+  .cardart {
+    height: $SchemeArtHeight;
+  }
+  /* Fading around artbox and textbox: two layers
+    - one of mostly-solid darkish grey, 
+    the other of faintly-solid medium grey */
+  .cardart_container, .cardtext_container {
+    padding: 0px;
+    border-left: 2px solid rgba(64, 64, 64, 0.8);
+    border-right: 2px solid rgba(64, 64, 64, 0.8);
+  }
+  .cardtext_container {
+    border-bottom: 2px solid rgba(64, 64, 64, 0.8);
+  }
+  .pinline_sides, .pinline_sidesbottom {
+    border-left: 2px solid rgba(128, 128, 128, 0.4);
+    border-right: 2px solid rgba(128, 128, 128, 0.4);
+  }
+  .pinline_sidesbottom {
+    border-bottom: 2px solid rgba(128, 128, 128, 0.4);
+  }
+  .cardtype {
+    padding-left: 5px;
+  }
+  .bottombox {
+    position: absolute;
+    text-align: center;
+    width: 100%;
+    color: white;
+  }
+  div.cardtext { /* "div" required because of the "> div" rule above */
+    padding: 8px;
+  }
+  
+  /* Forms */
+  .form {
+    margin-bottom: 40px;
+    .ptbox_container, .card_cost_container, .subtype_container, .colour_indicator_container {
+      display: none;
+    }
+  }
+}
+
+$PlaneRidgeColour: #C94;
+$PlaneTopPadding: 10px;
+$PlaneTextBottomPadding: 10px;
+$PlaneInnerHeight: $LargeLandscapeCardHeight - $PlaneTopPadding - - 3*2 - 4*2;
+$PlaneArtHeight: $PlaneInnerHeight - (3 + $PinlineBoxHeight + 3) - ($CardTextHeight) - (2 + $PlaneTextBottomPadding);
+.plane { 
+  &.cardborder { 
+    /* min-height: $LargeLandscapeCardHeight; */
+    width: $LargeLandscapeCardWidth;
+  }
+  &.distinct_mockup_container { width: $LargeLandscapeCardWidth + 20; }
+  .innercardborder {
+    border: 2px ridge $PlaneRidgeColour;
+    width: auto;
+    height: auto;
+    min-height: 0px;
+    padding-top: $PlaneTopPadding;
+    background-color: #acc;
+    background-size: 400px, 300px;
+    @include elliptical_corners_asymmetric(22px, 14px, 26px, 86px);
+  }
+  .card {
+    border: 2px ridge $PlaneRidgeColour;
+    border-top: none;
+    border-bottom: none;
+    padding: 0px;
+    width: auto;
+    min-height: 0px;
+    @include elliptical_corners_asymmetric(50px, 40px, 80px, 186px);
+  }
+  .pinline_box {
+    padding: 0px;
+  }
+  .namebox {
+    position: absolute;
+    border: 2px ridge $PlaneRidgeColour;
+    left: 10px;
+    top: -12px;
+    width: 368px;
+    height: 26px;
+    background-color: rgb(200, 200, 200);  /* for IE7-8 */
+    background-color: rgba(255, 255, 255, 0.7);
+  }
+  .namebox, div.cardtitlebar {
+    @include elliptical_corners_asymmetric(4px, 160px, 12px, 12px);
+  }
+  .namebox div.cardtitlebar { /* ".namebox div"  necessary to override */
+    border: 2px solid rgba(128, 128, 128, 0.5);
+    height: 23px;
+  }
+  .cardname {
+    float: none;
+    text-align: center;
+    font-size: 11pt;
+    padding-top: 2px;
+  }
+  .cardart_container, .cardtext_container {
+    background: none;
+  }
+  .cardart {
+    height: $PlaneArtHeight;
+  }
+  .typebox {
+    position: absolute;
+    border: 2px ridge $PlaneRidgeColour;
+    left: 75px;
+    width: 250px;
+    background-color: rgb(200, 200, 200);  /* for IE7-8 */
+    background-color: rgba(255, 255, 255, 0.7);
+    z-index: +2;
+  }
+  .typebox, .typebar {
+    @include elliptical_corners_asymmetric(160px, 4px, 12px, 12px);
+  }
+  .typebar {
+    border: 1px solid rgba(128, 128, 128, 0.5);
+  }
+  .cardtype {
+    text-align: center;
+  }
+  .cardtext_container {
+    margin-left: 30px;
+    margin-right: 30px;
+    border: 2px ridge $PlaneRidgeColour;
+    border-bottom: none;
+    margin-top: 16px;
+    padding: 0px;
+    /* height: 105px; */
+    background-color: rgba(128, 128, 128, 0.4);
+  }
+  .cardtext_container {
+    @include elliptical_corners_asymmetric(50px, 6px, 18px, 6px);
+  }
+  .rulestext, .form textarea.rulestextfield{
+    @include elliptical_corners_asymmetric(50px, 0px, 18px, 0px);
+  }
+  .cardtext {
+    min-height: 65px;
+  }
+  /* Rules text */
+  .rulestext, .form textarea.rulestextfield {
+    background-color: rgb(200, 200, 200);  /* for IE7-8 */
+    background-color: rgba(255, 255, 255, 0.6);
+  }
+  .rulestext {
+    padding: 10px 10px 5px 10px;
+  }
+  .form textarea.rulestextfield {
+    border: none;
+    padding: 10px 0px 0px 10px;
+  }
+  /* Flavour text */
+  .flavourtext, .form textarea.flavourtextfield {
+    font-style: normal;
+  }
+  .flavourtext {
+    padding: 10px 10px 20px 10px;
+    background-color: rgb(140, 140, 140);  /* for IE7-8 */
+    background-color: rgba(170, 170, 170, 0.5);
+    margin-top: 0px !important;
+  }
+  .form textarea.flavourtextfield {
+    border: none;
+    padding-left: 50px;
+    width: 85%;
+  }
+  .flavourtext:before {
+    content: url(<%= asset_path 'chaos_tiny.png' %>);
+    display: inline-block;
+    vertical-align: top;
+    float: left;
+    margin-right: 3px;
+  }
+  .form .flavourtext:before {
+    position: absolute;
+  }
+  .bottombox {
+    position: relative;
+    float: left;
+    left: 80px;
+    top: -10px;
+    z-index: +2;
+    background-color: black;
+    color: white;
+    width: 240px;
+    text-align: center;
+    border-top: 2px ridge $PlaneRidgeColour;
+    @include elliptical_corners_asymmetric(60px, 0px, 10px, 0px);
+    height: 18px;
+  }
+  
+  /* Forms */
+  .form {
+    .namebox, .typebox {
+      position: relative;
+      left: auto;
+      width: auto;
+    }
+    .ptbox_container, .card_cost_container, .colour_indicator_container {
+      display: none;
+    }
+    .cardtitlebar .field {
+      padding-left: 50px;
+      top: -4px;
+      position: relative;
+      br {
+        display: none;
+      }
+    }
+    .cardtype {
+      text-align: left;
+    }
+    .cardrarity_container {
+      position: absolute;
+      right: 0px;
+      top: 0px;
+    }
+    .bottombox {
+      top: -30px;
+      height: 30px;
+    }
+  }
+}
+
+.vanguard { }
+
+.emblem { }
+
+/***** Colour Indicators *****/
+
+img.colour_indicator { 
+  vertical-align: text-bottom; 
+}
+.split .colour_indicator {
+  width: 10px;
+  height: 10px;
+  vertical-align: top;
+}
+
+/***** Colours *****/
+$Colourless_Card: #ccc6cc;
+$Colourless_Text: #f2ecf2;
+$White_Card: #efe8d4; /* #FBF9EA; */
+$White_Pinline: #F2EFEA;
+$White_Bar: #fffff9;
+$White_Text: #fff;
+$Blue_Card: #63ACDA;
+$Blue_Pinline: #197D9E; /* #195D7E; */
+$Blue_Bar: #C5DADF;
+$Blue_Text: #E1ECED;
+$Black_Card: #444;
+$Black_Pinline: #333;
+$Black_Bar: #bbb7b7;
+$Black_Text: #ddd9d3;
+$Red_Card: #E0664F;
+$Red_Pinline: #C23D34;
+$Red_Bar: #F9D5C0;
+$Red_Text: #F7E6DE;
+$Green_Card: #7ea17e;
+$Green_Pinline: #483;
+$Green_Bar: #cdc;
+$Green_Text: #DEEADE;
+$Land_White_Bar: #fffff6;
+$Land_White_Text: #ffc;
+$Land_Blue_Bar: #afcfff;
+$Land_Blue_Text: #99c5ff;
+$Land_Black_Bar: #cfc9c3;
+$Land_Black_Text: #bbb;
+$Land_Red_Bar: #ffd0c0;
+$Land_Red_Text: #f98;
+$Land_Green_Bar: #dfd;
+$Land_Green_Text: #cfc;
+$Artifact_Text: #D5DDE0;
+$Land_Colourless_Bar: #D8CFC8;
+$Land_Text: #D8CFC8;
+$Multicolour_Text: #ffd;
+$Multicolour_Background: #CAB86C;
+
+$White_DFC_Bar: #887b6b;
+$White_DFC_Text: #beb7a7;
+$Blue_DFC_Bar: #3188b4;
+$Blue_DFC_Text: #b8cad3;
+$Black_DFC_Bar: #625f5e;
+$Black_DFC_Text: #b9b7b8;
+$Red_DFC_Bar: #c56244;
+$Red_DFC_Text: #d6bbb4;
+$Green_DFC_Bar: #406649;
+$Green_DFC_Text: #afb8b2;
+$Hybrid_DFC_Bar: #786860;
+$Hybrid_DFC_Text: #bebcba;
+$Colourless_DFC_Bar: #886b6b;
+$Colourless_DFC_Text: #BEa0A7;
+$Artifact_DFC_Bar: #709498;
+$Artifact_DFC_Text: #c2ccd0;
+$Land_Colourless_DFC_Bar: #A89878;
+$Land_Colourless_DFC_Text: #D8CFC8;
+
+.dfc .part2 .cardtitlebar, .dfc .part2 .cardtypebar, .dfc .part2 .pinline_ptbox { color: #fff; }
+
+.Colourless.card, .Colourless .cardart  { background-color: $Colourless_Card; }
+.Colourless .pinline { background-color: #ddd; }
+.Colourless .cardtitlebar, .Colourless .cardtypebar { background-color: #eee9ee; }
+.Colourless .cardtext, .Colourless .pinline_ptbox { background: $Colourless_Text !important; }
+.dfc .part2.Colourless {
+  .cardtitlebar, .cardtypebar { background-color: $Colourless_DFC_Bar; }
+  .cardtext { background: $Colourless_DFC_Text !important; }
+  .pinline_ptbox  { background: $Colourless_DFC_Bar !important; }
+}
+
+.Artifact .pinline { background-color: #eee; }
+.Artifact .pinline_ptbox { background-color: #9CB7BE; }
+.Artifact .ptbox { background-color: #A8BFC7; }
+.Artifact .cardtitlebar, .Artifact .cardtypebar, .Land.Coloured_Artifact .cardtitlebar, .Land.Coloured_Artifact .cardtypebar  {
+   background: #B0C4C8;
+   @include gradient_vert_highlight(#B0C4C8, #D2D7DB);
+   }
+.Artifact .cardtext, .Artifact .pinline_ptbox { background-color: $Artifact_Text; }
+.Artifact, .Artifact .cardart { background-color: #ABC1CE; }
+.Coloured_Artifact { background: #ABC1CE !important; filter: none !important; }
+.dfc .part2.Artifact {
+  .cardtitlebar, .cardtypebar { 
+    background-color: $Artifact_DFC_Bar; 
+    @include gradient_vert_highlight($Artifact_DFC_Bar, #90a4b0);
+  }
+  .cardtext { background: $Artifact_DFC_Text !important; }
+  .pinline_ptbox, .ptbox  { background: $Artifact_DFC_Bar !important; }
+}
+
+.White.card, .White .cardart  { background-color: $White_Card;
+/* @include gradient_vert_important(#fcf9f0, #e3d9bb); */
+}
+.White .pinline, .Land.white .pinline { background-color: $White_Pinline; }
+.White .cardtitlebar, .White .cardtypebar { background-color: $White_Bar; }
+.White .cardtext, .White .pinline_ptbox { background: $White_Text !important; }
+.dfc .part2.White, .dfc .part2.Land.white {
+  .cardtitlebar, .cardtypebar { background-color: $White_DFC_Bar; }
+  .cardtext { background: $White_DFC_Text !important; }
+  .pinline_ptbox  { background: $White_DFC_Bar !important; }
+}
+
+.Blue.card, .Blue .cardart  { background-color: $Blue_Card; /* #5bf; */ }
+.Blue .pinline, .Land.blue .pinline { background-color: $Blue_Pinline; }
+.Blue .cardtitlebar, .Blue .cardtypebar { background-color: $Blue_Bar;
+  @include gradient_horz_highlight(#B7CEDA, #C8DCE4);}
+.Blue .cardtext, .Blue .pinline_ptbox { background: $Blue_Text !important; }
+.dfc .part2.Blue, .dfc .part2.Land.blue {
+  .cardtitlebar, .cardtypebar { background-color: $Blue_DFC_Bar; 
+    @include gradient_horz_highlight(#2a84b6, #4d95c1);
+  }
+  .cardtext { background: $Blue_DFC_Text !important; }
+  .pinline_ptbox  { background: $Blue_DFC_Bar !important; }
+}
+
+.Black.card, .Black .cardart  { background-color: $Black_Card; }
+.Black .pinline, .Land.black .pinline { background-color: $Black_Pinline; }
+.Black .cardtitlebar, .Black .cardtypebar { background-color: $Black_Bar; }
+.Black .cardtext, .Black .pinline_ptbox { background: $Black_Text !important; }
+.dfc .part2.Black, .dfc .part2.Land.black { 
+  .cardtitlebar, .cardtypebar { background-color: $Black_DFC_Bar; }
+  .cardtext { background: $Black_DFC_Text !important; }
+  .pinline_ptbox  { background: $Black_DFC_Bar !important; }
+}
+
+.Red.card, .Red .cardart  { background-color: $Red_Card; /* #f76; */ }
+.Red .pinline, .Land.red .pinline { background-color: $Red_Pinline; }
+.Red .cardtitlebar, .Red .cardtypebar { background-color: $Red_Bar; }
+.Red .cardtext, .Red .pinline_ptbox { background: $Red_Text !important; }
+.dfc .part2.Red, .dfc .part2.Land.red {
+  .cardtitlebar, .cardtypebar { background-color: $Red_DFC_Bar; }
+  .cardtext { background: $Red_DFC_Text !important; }
+  .pinline_ptbox  { background: $Red_DFC_Bar !important; }
+}
+
+.Green.card, .Green .cardart { background-color: $Green_Card; /* #6b7 */}
+.Green .pinline, .Land.green .pinline { background-color: $Green_Pinline; }
+.Green .cardtitlebar, .Green .cardtypebar { background-color: $Green_Bar; }
+.Green .cardtext, .Green .pinline_ptbox { background: $Green_Text !important; /* #efe; */}
+.dfc .part2.Green, .dfc .part2.Land.green {
+  .cardtitlebar, .cardtypebar { background-color: $Green_DFC_Bar; }
+  .cardtext { background: $Green_DFC_Text !important; }
+  .pinline_ptbox  { background: $Green_DFC_Bar !important; }
+}
+
+.Multicolour, .Multicolour .cardart { background-color: $Multicolour_Background; /*#DAC87C;*/ }
+.Multicolour, .Land.multicolour {
+  .pinline { background-color: #eAd88C; /* #C6AF71;*/ }
+  .cardtitlebar, .cardtypebar { 
+    background-color: #DAC87C;
+    @include gradient_horz_highlight(#B9A566, #DBC68F);
+  }
+  .cardtext { background-color: $Multicolour_Text; }
+}
+.Multicolour .pinline_ptbox { background: #C6AF71 !important; }
+.Multicolour .ptbox { background: #C6AF71 !important; }
+
+.dfc .part2.Multicolour, .dfc .part2.Land.multicolour {
+  .cardtitlebar, .cardtypebar { 
+    background-color: #957526;
+    @include gradient_horz_highlight(#957526, #bBa66F); 
+  }
+  .pinline_ptbox, .ptbox { background: #957526 !important; }
+  .cardtext { background: $Hybrid_DFC_Text; }
+}
+.dfc .part2.Hybrid {
+  .cardtext { background: $Hybrid_DFC_Text !important; filter: none; }
+}
+.dfc {
+  .part2.Hybrid, .part2.Land.colourless, .part2.Land.whiteblue, .part2.Land.whiteblack, .part2.Land.whitered, .part2.Land.whitegreen, .part2.Land.blueblack, .part2.Land.bluered, .part2.Land.bluegreen, .part2.Land.blackred, .part2.Land.blackgreen, .part2.Land.redgreen {
+    .cardtitlebar, .cardtypebar { background-color: $Hybrid_DFC_Bar; }
+    .pinline_ptbox, .ptbox { background: $Hybrid_DFC_Bar !important; }
+  }
+} 
+
+.Land, .Land.Coloured_Artifact {  /*#A4968E*/; 
+@include gradient_vert_important(#DECCC1, #6A514A); 
+}
+.Land .cardart { background-color: #b9aea2; }
+.Land .pinline { background-color: #d7cDbF /*C7BDAF*/; }
+.Land .cardtitlebar, .Land .cardtypebar { 
+  background-color: $Land_Colourless_Bar; 
+}
+.Land .cardtext, .Land .pinline_ptbox { background-color: $Land_Text; /* #eee6df; */}
+.Land .bottombox, .Land .cardtext_container, .Land .cardart_container,  { background: transparent; }
+
+.Land.white {
+  .cardtitlebar, .cardtypebar { background-color: $Land_White_Bar; }
+  .cardtext, .pinline_ptbox { background-color: $Land_White_Text; }
+}
+
+.Land.blue {
+  .cardtitlebar, .cardtypebar { background-color: $Land_Blue_Bar; }
+  .cardtext, .pinline_ptbox { background-color: $Land_Blue_Text; }
+}
+
+.Land.black {
+  .cardtitlebar, .cardtypebar { background-color: $Land_Black_Bar; }
+  .cardtext, .pinline_ptbox { background-color: $Land_Black_Text; }
+}
+
+.Land.red {
+  .cardtitlebar, .cardtypebar { background-color: $Land_Red_Bar; }
+  .cardtext, .pinline_ptbox { background-color: $Land_Red_Text; }
+}
+
+.Land.green {
+  .cardtitlebar, .cardtypebar { background-color: $Land_Green_Bar; }
+  .cardtext, .pinline_ptbox { background-color: $Land_Green_Text; }
+}
+
+/* .Land.whiteblue .cardtitlebar, .Land.whiteblue .cardtypebar { @include gradient_horz($Land_White_Bar, $Land_Blue_Bar); } */
+.Land.whiteblue .pinline { @include gradient_horz_padded($White_Pinline, $Blue_Pinline); }
+.Land.whiteblue .cardtext { @include gradient_horz_padded($Land_White_Text, $Land_Blue_Text); }
+
+.whiteblue .pinline { @include gradient_horz_padded($White_Pinline, $Blue_Pinline); }
+.whiteblack .pinline { @include gradient_horz_padded($White_Pinline, $Black_Pinline); }
+.blueblack .pinline { @include gradient_horz_padded($Blue_Pinline, $Black_Pinline); }
+.bluered .pinline { @include gradient_horz_padded($Blue_Pinline, $Red_Pinline); }
+.blackred .pinline { @include gradient_horz_padded($Black_Pinline, $Red_Pinline); }
+.redgreen .pinline { @include gradient_horz_padded($Red_Pinline, $Green_Pinline); }
+.redwhite .pinline, .whitered .pinline { @include gradient_horz_padded($Red_Pinline, $White_Pinline); }
+.blackgreen .pinline { @include gradient_horz_padded($Black_Pinline, $Green_Pinline); }
+.greenwhite .pinline, .whitegreen .pinline { @include gradient_horz_padded($Green_Pinline, $White_Pinline); }
+.greenblue .pinline, .bluegreen .pinline { @include gradient_horz_padded($Green_Pinline, $Blue_Pinline); }
+
+.Land.whiteblue .cardtext { @include gradient_horz_padded($Land_White_Text, $Land_Blue_Text); }
+.Land.whiteblack .cardtext { @include gradient_horz_padded($Land_White_Text, $Land_Black_Text); }
+.Land.blueblack .cardtext { @include gradient_horz_padded($Land_Blue_Text, $Land_Black_Text); }
+.Land.bluered .cardtext { @include gradient_horz_padded($Land_Blue_Text, $Land_Red_Text); }
+.Land.blackred .cardtext { @include gradient_horz_padded($Land_Black_Text, $Land_Red_Text); }
+.Land.blackgreen .cardtext { @include gradient_horz_padded($Land_Black_Text, $Land_Green_Text); }
+.Land.redgreen .cardtext { @include gradient_horz_padded($Land_Red_Text, $Land_Green_Text); }
+.Land.redwhite .cardtext, .Land.whitered .cardtext { @include gradient_horz_padded($Land_Red_Text, $Land_White_Text); }
+.Land.greenwhite .cardtext, .Land.whitegreen .cardtext { @include gradient_horz_padded($Land_Green_Text, $Land_White_Text); }
+.Land.greenblue .cardtext, .Land.bluegreen .cardtext { @include gradient_horz_padded($Land_Green_Text, $Land_Blue_Text); }
+
+.Hybrid.whiteblue { @include gradient_horz_padded($White_Card, $Blue_Card); }
+.Hybrid.whiteblack { @include gradient_horz_padded($White_Card, $Black_Card); }
+.Hybrid.blueblack { @include gradient_horz_padded($Blue_Card, $Black_Card); }
+.Hybrid.bluered { @include gradient_horz_padded($Blue_Card, $Red_Card); }
+.Hybrid.blackred { @include gradient_horz_padded($Black_Card, $Red_Card); }
+.Hybrid.blackgreen { @include gradient_horz_padded($Black_Card, $Green_Card); }
+.Hybrid.redgreen { @include gradient_horz_padded($Red_Card, $Green_Card); }
+.Hybrid.redwhite, .Hybrid.whitered { @include gradient_horz_padded($Red_Card, $White_Card); }
+.Hybrid.greenwhite, .Hybrid.whitegreen { @include gradient_horz_padded($Green_Card, $White_Card); }
+.Hybrid.greenblue, .Hybrid.bluegreen { @include gradient_horz_padded($Green_Card, $Blue_Card); }
+
+.flip .part2.Hybrid.whiteblue  { @include gradient_horz_padded($Blue_Card , $White_Card ); }
+.flip .part2.Hybrid.whiteblack { @include gradient_horz_padded($Black_Card, $White_Card ); }
+.flip .part2.Hybrid.blueblack  { @include gradient_horz_padded($Black_Card, $Blue_Card  ); }
+.flip .part2.Hybrid.bluered    { @include gradient_horz_padded($Red_Card  , $Blue_Card  ); }
+.flip .part2.Hybrid.blackred   { @include gradient_horz_padded($Red_Card  , $Black_Card ); }
+.flip .part2.Hybrid.blackgreen { @include gradient_horz_padded($Green_Card, $Black_Card ); }
+.flip .part2.Hybrid.redgreen   { @include gradient_horz_padded($Green_Card, $Red_Card   ); }
+.flip .part2.Hybrid.redwhite,   .flip .part2.Hybrid.whitered { @include gradient_horz_padded(  $White_Card, $Red_Card  ); }
+.flip .part2.Hybrid.greenwhite, .flip .part2.Hybrid.whitegreen { @include gradient_horz_padded($White_Card, $Green_Card); }
+.flip .part2.Hybrid.greenblue,  .flip .part2.Hybrid.bluegreen { @include gradient_horz_padded( $Blue_Card , $Green_Card); }
+
+.dfc .part2 {
+  &.whiteblue .cardtext { @include gradient_horz_padded($White_DFC_Text, $Blue_DFC_Text); }
+  &.whiteblack .cardtext { @include gradient_horz_padded($White_DFC_Text, $Black_DFC_Text); }
+  &.blueblack .cardtext { @include gradient_horz_padded($Blue_DFC_Text, $Black_DFC_Text); }
+  &.bluered .cardtext { @include gradient_horz_padded($Blue_DFC_Text, $Red_DFC_Text); }
+  &.blackred .cardtext { @include gradient_horz_padded($Black_DFC_Text, $Red_DFC_Text); }
+  &.blackgreen .cardtext { @include gradient_horz_padded($Black_DFC_Text, $Green_DFC_Text); }
+  &.redgreen .cardtext { @include gradient_horz_padded($Red_DFC_Text, $Green_DFC_Text); }
+  &.redwhite .cardtext, &.whitered .cardtext { @include gradient_horz_padded($Red_DFC_Text, $White_DFC_Text); }
+  &.greenwhite .cardtext, &.whitegreen .cardtext { @include gradient_horz_padded($Green_DFC_Text, $White_DFC_Text); }
+  &.greenblue .cardtext, &.bluegreen .cardtext { @include gradient_horz_padded($Green_DFC_Text, $Blue_DFC_Text); }
+}
+
+
+.whiteblue .cardtext { @include gradient_horz_padded($White_Text, $Blue_Text); }
+.whiteblack .cardtext { @include gradient_horz_padded($White_Text, $Black_Text); }
+.blueblack .cardtext { @include gradient_horz_padded($Blue_Text, $Black_Text); }
+.bluered .cardtext { @include gradient_horz_padded($Blue_Text, $Red_Text); }
+.blackred .cardtext { @include gradient_horz_padded($Black_Text, $Red_Text); }
+.blackgreen .cardtext { @include gradient_horz_padded($Black_Text, $Green_Text); }
+.redgreen .cardtext { @include gradient_horz_padded($Red_Text, $Green_Text); }
+.redwhite .cardtext, .whitered .cardtext { @include gradient_horz_padded($Red_Text, $White_Text); }
+.greenwhite .cardtext, .whitegreen .cardtext { @include gradient_horz_padded($Green_Text, $White_Text); }
+.greenblue .cardtext, .bluegreen .cardtext { @include gradient_horz_padded($Green_Text, $Blue_Text); }
+
+
+.Hybrid .cardtitlebar, .Hybrid .cardtypebar {
+  background: #D2CCC0;
+}
+.Hybrid .ptbox {
+  background: #D2CCC0 !important;
+}
+.Hybrid .pinline_ptbox, .Land .pinline_ptbox {
+  background: #e2dCd0 !important;
+}
+.Hybrid .cardart {
+  background-color: #eeeeee;
+}
+
+/***** Dominion *****/
+.Dominion.card {
+  padding-left: 0px;
+  padding-right: 0px;
+}
+.Dominion.Treasure {
+  background-color: #ec6;
+}
+.Dominion .pinline_box, .Dominion .pinline_sides, .Dominion .pinline_sidesbottom, .Dominion .pinline_sides > div, .Dominion .pinline_sidesbottom > div, .Dominion .cardtitlebar { border: 0px; padding: 0px 0px 0px 0px;
+}
+.Dominion .cardname {
+  float: none;
+  display: inline;
+  padding-right: 2px;}
+.Dominion .cardtitlebar {
+  text-align: center;
+text-transform:uppercase;
+font-size: 18px;
+}
+.Dominion .cardart {
+  background: white;
+  padding: 0px;
+}
+.Dominion .cardtext {
+  background: #bbb;
+  text-align: center;
+  padding: 0px;
+}
+.Dominion .cardart_container, .Dominion .cardtext_container {
+  padding: 0px;
+}
+.Dominion .cardtypebar { position: absolute; bottom: 0px; width: 100%; border: 0px;
+  text-align: center;
+text-transform:uppercase;
+}
+.Dominion .cardtext img { height: 3em;}
+
+.Dominion .cardmanacost { position: absolute; bottom: 0px; left: 4px; }
+.Dominion .cardmanacost img { height: 1em; width: 1em; }
+
+
+/***** Card editing *****/
+.form.cardborder, .form .innercardborder, .form .card  { width: auto; }
+
+input.type_field { width: 100px; }
+.form #card_cost, .form #card_link_attributes_cost { width: 60px; }
+input.rarity_selector { margin-top: 6px; margin-bottom: 6px; }
+input.powerfield, input.toughnessfield { width: 20px; }
+.flavourtextfield { font-style: italic;
+                  width: 98%; }
+.rulestextfield { width: 98%; }
+.art_url_field  { width: 98%; }
+.image_url_field, .edit_comment_field  { width: 400px; }
+form .raritycell { border: 1px solid black; }
+.Planeswalker #power_field, .Planeswalker #pt_slash { display: none; }
+.Planeswalker .notptbox { border: none;
+    background-image: url(<%= asset_path 'loyalty_big.png' %>);
+    width: 80px; height: 41px; /* img is 51px high, minus the 10px top padding */
+    padding: 10px 0px 0px 0px; }
+.Planeswalker.form .pinline_ptbox.pinline { top: -36px; }
+.flip .flavourtextfield { display: none; }
+.form .watermark { position: relative; }
+.form .watermark textarea { background: transparent; }
+
+.multipart_selector_div { text-align: center; margin-bottom: 8px; }
+#multipart_selector_wrapper { padding: 8px; }
+
+div.history_box_limited { overflow: auto;
+ height: 50%;
+}
+td.form_info_cell { color: #666; }
+.Black .cardart label { color: #fff; }
+.Black .artist_area label, .Hybrid.blackgreen .artist_area label, .Hybrid.blackred .artist_area label { color: #fff; }
+
+#card2wrapper { display: none; }
+.split #card2wrapper, .flip #card2wrapper, .dfc #card2wrapper { display: inline-block; }
+
+/***** Skeletons *****/
+.skeleton_letter_toggle.code_shown.rarity_C_toggle, .skeleton_letter_toggle.code_shown#rarity_B_toggle, .skeleton_letter_toggle.code_shown.rarity_T_toggle { @extend .cardrarity.common; }
+.skeleton_letter_toggle.code_shown.rarity_U_toggle { @extend .uncommon; }
+.skeleton_letter_toggle.code_shown.rarity_R_toggle { @extend .rare; }
+.skeleton_letter_toggle.code_shown.rarity_M_toggle { @extend .mythic; }
+.skeleton_letter_toggle, .skeleton tr {
+  &.code_frame_C { background-color: $Colourless_Text; }
+  &.code_frame_W { background-color: $Land_White_Text; }
+  &.code_frame_U { background-color: $Land_Blue_Text; }
+  &.code_frame_B { background-color: $Land_Black_Text; }
+  &.code_frame_R { background-color: $Land_Red_Text; }
+  &.code_frame_G { background-color: $Land_Green_Text; }
+  &.code_frame_A { background-color: $Artifact_Text; }
+  &.code_frame_M, &.code_frame_Z { background-color: $Multicolour_Background; }
+  &.code_frame_H { @include gradient_horz_padded($Land_White_Text, $Land_Black_Text); }
+  &.code_frame_S { @include twotone_horz($Land_Red_Text, $Land_Blue_Text); }
+  &.code_frame_L { background-color: $Land_Colourless_Bar; }
+  &.code_rarity_C, &.code_rarity_B, &.code_rarity_T { 
+    td.code_link, td.code_link a {
+      @extend .cardrarity.common;
+      text-shadow: 1px 0 #888888;
+    }
+  }
+  &.code_frame_E { 
+    background-color: $SchemeBGColour; color: #fff; 
+    border: 3px ridge $SchemeRidgeColour;
+    }
+  &.code_frame_P { 
+    @include round_corners(4px);
+    border: 2px ridge $PlaneRidgeColour;}
+}
+.code_rarity_U td.code_link { @extend .uncommon; }
+.code_rarity_R td.code_link { @extend .rare; }
+.code_rarity_M td.code_link { @extend .mythic; }
+/* td.code_link { text-align: center; } */
+
+
+.skeleton_letter_toggle { margin: auto; padding-left: 6px; padding-right: 6px; border: 1px solid black; }
+.code_shown { color: black; font-style: normal; }
+.code_not_shown { color: #999 !important; font-style: italic; }
+.skeleton_letter_toggle.code_not_shown { background-color: white; background: white; border: 1px solid black; }
+
+div.wizardsimage {
+  /* @extend .blackborder;
+  width: 200px;
+  height: 285px; */
+  align: center;
+  background-color: white;
+  color: red;
+}
+
+
+@media print {
+  .commentcount {
+    display: none;
+  }
+  .cardname a {
+    text-decoration: none;
+  }
+}

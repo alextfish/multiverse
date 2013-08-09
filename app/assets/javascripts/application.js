@@ -10,7 +10,25 @@
 // WARNING: THE FIRST BLANK LINE MARKS THE END OF WHAT'S TO BE PROCESSED, ANY BLANK LINE SHOULD
 // GO AFTER THE REQUIRES BELOW.
 //
-//= require jquery
-//= require jquery_ujs
+////  oh, how I wish I could //= require jquery
+////  oh, how I wish I could //= require jquery_ujs
+//
+// OK, in order. First Prototype.
+//= require prototype
+// Then scriptaculous effects.
+//= require effects
+// And the rest of my vendor JS.
+//= require controls
+//= require dragdrop
+//= require droplicious
+//= require fabtabulous
+//= require fastinit
+//= require menu
+//= require moment.min
+//= require prototip
+//= require rails
+//= require tablekit
+//= require TSorter_1
+// Then everything else.
 //= require_tree .
 //= require multiverse

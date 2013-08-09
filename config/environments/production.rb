@@ -8,7 +8,7 @@ Multiverse::Application.configure do
   # Disable Rails's static asset server
   # In production, Apache or Heroku will already do this
   config.serve_static_assets = false
-  # config.serve_static_assets = true
+  config.serve_static_assets = true
 
   # Full error reports are disabled and caching is turned on
   config.consider_all_requests_local       = false
@@ -42,7 +42,7 @@ Multiverse::Application.configure do
 
   # Specifies the header that your server uses for sending files
   # config.action_dispatch.x_sendfile_header = "X-Sendfile" # for apache
-  # config.action_dispatch.x_sendfile_header = 'X-Accel-Redirect' # for nginx
+  config.action_dispatch.x_sendfile_header = 'X-Accel-Redirect' # for nginx
 
   # Force all access to the app over SSL, use Strict-Transport-Security, and use secure cookies.
   # config.force_ssl = true

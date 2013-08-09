@@ -1,5 +1,6 @@
 source 'http://mirror1.prod.rhcloud.com/mirror/ruby/'
 source 'http://rubygems.org'
+ruby "1.9.2"
 
 gem 'rails' #, '~>3.2.11'
 gem 'prototype-rails' # depends on rails 3.2
@@ -11,19 +12,19 @@ gem 'json', '~>1.7.7' # avoid security vulnerability in json-1.7.6
 #  gem "mysql2", "~> 0.3.11"
 #end
 
-platforms :mri_18, :mingw_18 do
-  group :mysql do
-    gem "mysql"
-  end
-end
+#platforms :mri_18, :mingw_18 do
+#  group :production do
+#    gem "mysql"
+#  end
+#end
+#
+#platforms :mri_19, :mingw_19 do
+#  group :production do
+#    gem "mysql2", "~> 0.3.11"
+#  end
+#end
 
-platforms :mri_19, :mingw_19 do
-  group :mysql do
-    gem "mysql2", "~> 0.3.11"
-  end
-end
-
-group :development, :test do
+group :development, :test, :production do
   # gem 'sqlite3'
   gem 'sqlite3-ruby', :require => 'sqlite3'
   # gem 'sqlite3-ruby', '1.2.5', :require => 'sqlite3'

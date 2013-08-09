@@ -6,6 +6,7 @@
  * http://creativecommons.org/licenses/by-sa/2.5/
  *
  * Modified by Alex Churchill 2010-11-13 to add initial_tab input string
+ * and again on 2013-08-08 to add onActivate callback function
  */
 var Fabtabs = Class.create();
 

@@ -12,14 +12,8 @@ development:
   timeout: 5000
 
 production:
-  # adapter: sqlite3
-  adapter: mysql2
-  encoding: utf8
-  reconnect: false
+  # Heroku IGNORES all this anyway, so set up for local "test production" with SQLite
+  adapter: sqlite3
+  database: db/development.sqlite3
   pool: 5
-  host: <%=ENV['OPENSHIFT_DB_HOST']%>
-  port: <%=ENV['OPENSHIFT_DB_PORT']%>
-  database: <%=ENV['OPENSHIFT_APP_NAME']%>
-  username: <%=ENV['OPENSHIFT_DB_USERNAME']%>
-  password: <%=ENV['OPENSHIFT_DB_PASSWORD']%>
-  socket:   <%=ENV['OPENSHIFT_DB_SOCKET']%>
+  timeout: 5000

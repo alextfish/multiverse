@@ -2,44 +2,14 @@
 <html>
   <% if !@embedded %>
   <head>
-  
-  <% 'Rails 3.2 head: begin...
-  <title>RailsApp</title>
-  < %= stylesheet_link_tag    "application", :media => "all" % >
-  < %= javascript_include_tag "application" % >
-  < %= csrf_meta_tags % >
-  ...end'
-  %>
+    <%= stylesheet_link_tag    "application", :media => "all" %>
+    <%= javascript_include_tag "application" %>
+    <%= csrf_meta_tags %>
 
     <title><% if Rails.env.development? %>MV Dev<% elsif request.domain =~ /staging/ %>MV Staging<% else %>Multiverse<% end %>: <%= @title %></title>
-    <%= stylesheet_link_tag "Card", :media => "all" %>
-    <%= stylesheet_link_tag "Multiverse", :media => "all" %>
-    <%= stylesheet_link_tag "tablekit", :media => "screen" %>
-    <%= stylesheet_link_tag "prototip", :media => "screen" %>
-    <!--[if lt IE 8]>
-      <%= stylesheet_link_tag "Card_ie" %>
-    <![endif]-->
     
-    <!-- Include prototype via Google APIs -->
-    <!-- script type="text/javascript" src="https://www.google.com/jsapi?key=ABQIAAAAamsVepxMT6ljrz3EN5w4RRQT-wLRTWe_ovoHgr2bIcWdkH-CwhRxqsVXAlZ_m7hwKPIO68bYiAMoXQ"></script -->
-    <!-- script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/prototype/1.7.1.0/prototype.js"></script -->
-    <!-- %= javascript_include_tag :defaults %-->
-    <%= csrf_meta_tag %>
-    <!--[if lt IE 9]>
-    <script src="http://html5shiv.googlecode.com/svn/trunk/html5.js"></script>
-    <![endif]-->
-    <%= javascript_include_tag "prototype.js" %>
-    <%= javascript_include_tag "rails.js" %>
-    <%= javascript_include_tag "multiverse.js" %>
-
-    <%= javascript_include_tag "fastinit.js" %>
-    <%= javascript_include_tag "tablekit.js" %>
-    <%= javascript_include_tag "droplicious.js" %>
-    <%= javascript_include_tag "prototip.js" %>
-    <%= javascript_include_tag "fabtabulous.js" %>
-    <%= javascript_include_tag "moment.min.js" %>
     <link rel="shortcut icon" href="/favicon.ico" />
-	<link rel="author" href="humans.txt" />
+	  <link rel="author" href="humans.txt" />
   </head>
   <% end %>
   <body>

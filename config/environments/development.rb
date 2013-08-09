@@ -34,7 +34,10 @@ Multiverse::Application.configure do
     config.assets.compress = false
 
     # Expands the lines which load the assets
-    config.assets.debug = true
+    config.assets.debug = false
+    
+    # Dodge precompiled assets
+    config.assets.prefix = "/dev-assets"
 
     # Raise exception on mass assignment protection for Active Record models
     config.active_record.mass_assignment_sanitizer = :strict
