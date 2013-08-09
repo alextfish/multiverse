@@ -1,6 +1,6 @@
 source 'http://mirror1.prod.rhcloud.com/mirror/ruby/'
 source 'http://rubygems.org'
-ruby "1.9.2"
+# ruby "1.9.2"
 
 gem 'rails' #, '~>3.2.11'
 gem 'prototype-rails' # depends on rails 3.2
