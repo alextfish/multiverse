@@ -15,7 +15,7 @@
 
 class DetailsPage < ActiveRecord::Base
   belongs_to :cardset
-  attr_protected :cardset_id
+  # attr_protected :cardset_id
   
   validates_presence_of :title
   # validates_length_of :title, :within => 1..140

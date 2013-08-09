@@ -223,12 +223,14 @@ ENDBODY
   <% else %>
     <% news_class = "newfeatures" %>
   <% end %>
-  <div class="news_outer">
-  <div class="<%= news_class %>">
-    <%= link_to news_latest_update[:title], news_path %>
-    <span class="helptext">(<%= format_datetime(news_latest_update[:date]) %>)</span>
-  </div>&nbsp;
-  </div>
+  <% if news_latest_update[:date] > 180.days.ago %>
+    <div class="news_outer">
+    <div class="<%= news_class %>">
+      <%= link_to news_latest_update[:title], news_path %>
+      <span class="helptext">(<%= format_datetime(news_latest_update[:date]) %>)</span>
+    </div>&nbsp;
+    </div>
+  <% end %>
 <% elsif news_type == :show %>
   <% text = RDiscount.new(news_latest_update[:body]).to_html.html_safe %>
   <%= text %>
