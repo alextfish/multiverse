@@ -1,6 +1,6 @@
 GEM
-  remote: http://mirror1.prod.rhcloud.com/mirror/ruby/
   remote: http://rubygems.org/
+  remote: http://mirror1.prod.rhcloud.com/mirror/ruby/
   specs:
     actionmailer (3.2.14)
       actionpack (= 3.2.14)
@@ -55,6 +55,7 @@ GEM
     mail (2.5.4)
       mime-types (~> 1.16)
       treetop (~> 1.4.8)
+    memcachier (0.0.2)
     mime-types (1.23)
     minitest (5.0.6)
     multi_json (1.7.8)
@@ -64,6 +65,8 @@ GEM
     polyglot (0.3.3)
     prototype-rails (3.2.1)
       rails (~> 3.2)
+    quiet_assets (1.0.2)
+      railties (>= 3.1, < 5.0)
     rack (1.4.5)
     rack-cache (1.2)
       rack (>= 0.4)
@@ -129,10 +132,12 @@ DEPENDENCIES
   dalli
   jquery-rails
   json (~> 1.7.7)
+  memcachier
   minitest
   newrelic_rpm
   pg
   prototype-rails
+  quiet_assets
   rails
   rdiscount (~> 1.6)
   sass-rails (~> 3.2.3)

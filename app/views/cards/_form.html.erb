@@ -14,22 +14,6 @@
 <table border="0">         <!-- grouping table -->
  <tr>
   <td style="vertical-align: top;">                      <!-- card -->
-   <!-- div class="cardtabs" id="tabs">
-    <a href="#cardimage">Image</a>
-    <a href="#mockup">Mockup</a>
-   </div>
-   <div class="onetab" id="cardimage"><a name="cardimage"></a>
-     <img src="">
-   </div>
-   <div class="onetab" id="prettycard"><a name="mockup"></a -->
-   <% "if @card.nonstandard_frame?
-      else
-       frame_select_visible = false
-       show_frame_select_button = true
-      end"
-       frame_select_visible = true
-       show_frame_select_button = false
-   %>
    <div class="multipart_selector_div">
      Frame: 
     <span id="multipart_selector_wrapper">
@@ -40,25 +24,25 @@
       MULTIPART_DFCFRONT   = <%= Card.DFCFRONT %>;
      </script>
      <% 
-      default_frame = (@card.multipart == Card.STANDALONE ? @card.frame : @card.multipart)
-      frame_select_options = options_for_select([["Normal", Card.STANDALONE], ["Split", Card.SPLIT1], ["Flip", Card.FLIP1], ["Double-Faced", Card.DFCFRONT], ["Scheme", "Scheme"], ["Plane", "Plane"]], default_frame)
+      default_structure = @card.structure_display
       
-      # , ["Vanguard", "Vanguard"], ["Planeswalker", "Planeswalker"], ["Token", "Token"], ["Emblem", "Emblem"]]
-      # frame_select_options = [["Normal", Card.STANDALONE], ["Split", "multipart_#{Card.SPLIT1}"], ["Flip", "multipart_#{Card.FLIP1}"], ["Double-Faced", "multipart_#{Card.DFCFRONT}"], ["Planeswalker", "Planeswalker"], ["Scheme", "Scheme"], ["Plane", "Plane"], ["Vanguard", "Vanguard"], ["Token", "Token"], ["Emblem", "Emblem"]]
+      structure_select_options = options_for_select([["Normal", Card.STANDALONE], ["Split", Card.SPLIT1], ["Flip", Card.FLIP1], ["Double-Faced", Card.DFCFRONT], ["Scheme", "Scheme"], ["Plane", "Plane"]], default_structure)
+      
+      structure_select_options = [["Normal", Card.STANDALONE], ["Split", "multipart_#{Card.SPLIT1}"], ["Flip", "multipart_#{Card.FLIP1}"], ["Double-Faced", "multipart_#{Card.DFCFRONT}"], ["Planeswalker", "Planeswalker"], ["Scheme", "Scheme"], ["Plane", "Plane"], ["Token", "Token"]]
+      ', ["Vanguard", "Vanguard"], ["Emblem", "Emblem"]]'
       %>
-     <%= outer_form.select :multipart, frame_select_options, {}, 
-        { :style => ( frame_select_visible ? "" : "display:none;"), 
-        :onchange => "updateMultipartStyle()", :onkeyup => "updateMultipartStyle()" } %>
-     <% "outer_form.hidden_field :multipart" %>
+     <%= outer_form.select :structure_display, structure_select_options, {:selected => default_structure }, 
+        { :onchange => "updateFrameAndMultipart()", :onkeyup => "updateFrameAndMultipart()" } %>
+     <%= outer_form.hidden_field :multipart %>
     <span id="rotate_link" <% if !@card.flip? %> style="display:none;"<% end %>>
       <%= link_to_function "(Rotate)", "$('cardborder').toggleClassName('rotated');", :class => "no_tooltip" %>
     </span>
    </div>
    <!-- The two card forms -->
    <div class="<%= @card.border_colour %>border form <%= @card.cardframe_class %> cardborder" id="cardborder">
-     <%= render :partial => "onecardform", :locals => { :f => outer_form, :card => @card, :card_index => 1, :show_frame_select_button => show_frame_select_button } %>
+     <%= render :partial => "onecardform", :locals => { :f => outer_form, :card => @card, :card_index => 1 } %>
      <%= outer_form.fields_for :link do |f| %>
-       <%= render :partial => "onecardform", :locals => { :f => f, :card => @card.link, :card_index => 2, :show_frame_select_button => false } %>
+       <%= render :partial => "onecardform", :locals => { :f => f, :card => @card.link, :card_index => 2 } %>
      <% end %>
   </div>
   </td>                    <!-- end of card -->

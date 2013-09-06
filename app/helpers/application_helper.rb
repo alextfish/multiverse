@@ -500,7 +500,7 @@ module ApplicationHelper
             return log.past_tense_verb(true) + link_to(log.cardset.name, log.cardset)
           end
         # For cards, just give name and path to the object
-        when Log.kind(:card_create), Log.kind(:card_edit)
+        when Log.kind(:card_create), Log.kind(:card_edit), Log.kind(:card_create_and_comment)
           if obj
             return log.past_tense_verb(true) + link_to_card(obj)
           else

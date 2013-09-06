@@ -16,6 +16,9 @@ Multiverse::Application.configure do
 
   # Specifies the header that your server uses for sending files
   config.action_dispatch.x_sendfile_header = "X-Sendfile"
+  
+  # For Memcachier, need to use Dalli 
+  config.cache_store = :dalli_store
 
   # For nginx:
   # config.action_dispatch.x_sendfile_header = 'X-Accel-Redirect'

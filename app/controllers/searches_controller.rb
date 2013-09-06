@@ -111,7 +111,7 @@ class SearchesController < ApplicationController
     # One last check: is it a card ID?
     Rails.logger.warn("Quicksearch for '#{@query}'")
     card_by_id = Card.find_by_id(@query.to_i)
-    if card_by_id && cards.empty && cardsets.empty
+    if card_by_id && cards.empty? && cardsets.empty?
       redirect_to card_by_id and return
     end
     # At this point, there are either 0 or 2+ hits: do a non-exact search
@@ -194,7 +194,7 @@ class SearchesController < ApplicationController
     def db_concat(*args)
       # By aNoble, from http://stackoverflow.com/questions/2986405/database-independant-sql-string-concatenation-in-rails
       # Symbols should be used for field names, everything else will be quoted as a string
-      adapter = ActiveRecord::Base.configurations[RAILS_ENV]['adapter'].to_sym
+      adapter = ActiveRecord::Base.configurations[Rails.env]['adapter'].to_sym
       args.map!{ |arg| arg.class==Symbol ? arg.to_s : "'#{arg}'" }
 
       case adapter

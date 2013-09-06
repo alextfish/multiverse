@@ -19,7 +19,7 @@
 class Log < ActiveRecord::Base
   belongs_to :cardset
   belongs_to :user
-  HIGHEST_LOG_KIND = 22
+  HIGHEST_LOG_KIND = 23
   def Log.HIGHEST_LOG_KIND
     HIGHEST_LOG_KIND
   end
@@ -28,28 +28,29 @@ class Log < ActiveRecord::Base
   
   def Log.kind(sym)
     case sym
-      when :cardset_create then       1
-      when :card_create then          2
-      when :card_edit then            3
-      when :comment_card then         4
-      when :details_page_create then  5
-      when :details_page_edit then    6
-      when :comment_details_page then 7
-      when :comment_cardset then      8
-      when :cardset_options then      9
-      when :cardset_delete then      10
-      when :card_delete then         11
-      when :details_page_delete then 12
-      when :comment_delete then      13
-      when :mechanic_create then     14
-      when :mechanic_edit then       15
-      when :mechanic_delete then     16
-      when :cardset_import then      17
-      when :comment_edit then        18
-      when :skeleton_generate then   19
-      when :skeleton_edit then       20
-      when :card_move_out then       21
-      when :card_move_in then        22
+      when :cardset_create then           1
+      when :card_create then              2
+      when :card_edit then                3
+      when :comment_card then             4
+      when :details_page_create then      5
+      when :details_page_edit then        6
+      when :comment_details_page then     7
+      when :comment_cardset then          8
+      when :cardset_options then          9
+      when :cardset_delete then          10
+      when :card_delete then             11
+      when :details_page_delete then     12
+      when :comment_delete then          13
+      when :mechanic_create then         14
+      when :mechanic_edit then           15
+      when :mechanic_delete then         16
+      when :cardset_import then          17
+      when :comment_edit then            18
+      when :skeleton_generate then       19
+      when :skeleton_edit then           20
+      when :card_move_out then           21
+      when :card_move_in then            22
+      when :card_create_and_comment then 23
       # when added new log types, update the definition of HIGHEST_LOG_KIND above
       else
         raise "Unknown log kind specified: #{sym}"
@@ -81,6 +82,8 @@ class Log < ActiveRecord::Base
         specific ? "changed the cardset options for " : "changed a cardset's options"
       when Log.kind(:card_create)
         specific ? "created the card " : "created a card"
+      when Log.kind(:card_create_and_comment)
+        specific ? "created and commented on the card " : "created and commented on a card"
       when Log.kind(:card_edit)
         specific ? "edited " : "edited a card"
       when Log.kind(:card_delete)
@@ -148,7 +151,7 @@ class Log < ActiveRecord::Base
       when Log.kind(:cardset_delete)
         return nil
       # cards
-      when Log.kind(:card_create), Log.kind(:card_edit), Log.kind(:card_move_in), Log.kind(:card_move_out)
+      when Log.kind(:card_create), Log.kind(:card_edit), Log.kind(:card_move_in), Log.kind(:card_move_out), Log.kind(:card_create_and_comment)
         card = Card.find_by_id(self.object_id)
         return card
       # details pages

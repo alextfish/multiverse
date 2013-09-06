@@ -26,7 +26,7 @@ Multiverse::Application.configure do
   
   config.log_level = :info
   ##### Try to avoid crashing
-  config.log_level = :warn
+  #config.log_level = :warn
 
 
   if Rails::VERSION::STRING >= '3.1'
@@ -34,7 +34,7 @@ Multiverse::Application.configure do
     config.assets.compress = false
 
     # Expands the lines which load the assets
-    config.assets.debug = false
+    config.assets.debug = true
     
     # Dodge precompiled assets
     config.assets.prefix = "/dev-assets"

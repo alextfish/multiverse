@@ -1,5 +1,5 @@
-source 'http://mirror1.prod.rhcloud.com/mirror/ruby/'
 source 'http://rubygems.org'
+source 'http://mirror1.prod.rhcloud.com/mirror/ruby/'
 # ruby "1.9.2"
 
 gem 'rails' #, '~>3.2.11'
@@ -51,6 +51,8 @@ gem 'rdiscount', '~> 1.6'
 gem 'newrelic_rpm'
 gem 'win32console', :platforms => :mingw
 gem 'dalli'
+gem 'memcachier'
+gem 'quiet_assets', :group => :development
 # gem "doc_raptor"
 
 # This version needs to be hardcoded for OpenShift compatability

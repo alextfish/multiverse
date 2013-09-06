@@ -700,6 +700,10 @@ $DFCSunMoonSize: 20px;
       height: auto;
     }
   }
+  .frame_selector_wrapper {
+    display: none;
+  }
+  
 }
 $SchemeTopBorder: 10px;
 $SchemeOtherBorders: 20px;
@@ -708,6 +712,18 @@ $SchemeRidgeColour: #C94;
 $SchemeInnerHeight: $LargePortraitCardHeight - $SchemeTopBorder - $SchemeOtherBorders - 3*2 - 4*2;
 $PinlineBoxHeight: 16px;
 $SchemeArtHeight: $SchemeInnerHeight - (3 + $PinlineBoxHeight + 3)*2 - ($CardTextHeight + 2 + 2);
+.vanguard { 
+  &.cardborder { 
+    min-height: $LargePortraitCardHeight; 
+    width: $LargePortraitCardWidth;
+  }
+  &.distinct_mockup_container { min-height: $LargePortraitCardHeight; 
+    width: $LargePortraitCardWidth + 20; }
+  .cardname {
+    float: none;
+    text-align: center;
+  }
+}
 .scheme { 
   &.cardborder { 
     min-height: $LargePortraitCardHeight; 

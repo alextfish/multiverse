@@ -96,14 +96,16 @@ function updateWatermarks() {
   var new_watermark = $F(selector);
   var card = selector.up(".card");
   var watermark_field = card.select(".type_field.watermark")[0];
+  var watermark_div = card.select(".cardtext_container")[0].select(".watermark")[0];
   if (new_watermark == "CUSTOM") {
     card.select(".card_watermark_select")[0].hide();
     card.select(".watermark_label")[0].innerHTML = "Watermark URL"
     watermark_field.show();
     /* watermark_field.setAttribute("type","url");
     watermark_field.setAttribute("inputmode","url lowerCase");*/
+  } else if (new_watermark == "") {
+    watermark_div.style.backgroundImage = "none";
   } else {
-    var watermark_div = card.select(".cardtext_container")[0].select(".watermark")[0];
     watermark_field.value = new_watermark;
     watermark_div.style.backgroundImage = 'url(' + standard_watermark_urls[new_watermark] + ")";
   }
@@ -120,24 +122,19 @@ var colour_affiliation_regexps = {
 }
 
 function update_frame(card_id) {
+  // Only applies to editing cards in a form
   var this_card = $(card_id);
   var frame_selector = this_card.select(".frame_selector")[0];
+  var outer_frame_selector = $("card_structure_display").value;
   var cardframe = frame_selector.value;
-  if (cardframe == "multipart") { 
-    // If they've selected the split-flip frame option, don't do normal recalculation - just show the split-flip dropdown
-    $("card_multipart").show();
-    Effect.Shake("multipart_selector_wrapper");
-    //$("multipart_selector_wrapper").highlight({startcolor: "#ff8800", duration: 1})
-    frame_selector.select('option[value=multipart]')[0].remove();
-    cardframe = frame_selector.value = "Auto";
-    // return;
-  }
   var cardtype = this_card.select(".type_field.cardtype")[0].value;
   var cardsubtype = this_card.select(".type_field.subtype")[0].value;
+  var cardTrueFrameField = this_card.select(".frame_selector_wrapper")[0].select("input[type=hidden]")[0];
   var newClass;
   if (nontraditional_frame(this_card)) {
     // Can skip a lot of the colour-determining code
-    newClass = "";
+    newClass = cardframe;
+    newTrueFrame = cardframe;
   } else {
     var cost = this_card.select(".cost_field")[0].value;
     var colours = get_cost_colours(this_card);
@@ -146,10 +143,18 @@ function update_frame(card_id) {
       if ( colours[i] != "") num_colours++;
     }
     var outer = "";
-    outer += cardtype.search(/Artifact/)>-1 ? "Coloured_Artifact " : "";
-    outer += cardtype.search(/Planeswalker/)>-1 ? "Planeswalker " : "";
+    if (num_colours > 0 && cardtype.search(/Artifact/) >- 1) {
+      outer += "Coloured_Artifact ";
+    }
+    if (isPlaneswalker()) {
+      outer += "Planeswalker ";
+    }
+    if (isToken()) {
+      outer += "token ";
+    }
+    var inner;
     if (cardframe != "Auto") {
-      var inner = cardframe;
+      inner = cardframe;
     } else {
       // calculate frame
       switch ( num_colours ) {
@@ -173,6 +178,7 @@ function update_frame(card_id) {
                     case 3: case 4: case 5: inner = "Land multicolour"; break;
                   }
                 } else { 
+                  // Nonland: either Artifact or Colourless
                   inner = ( cardtype.search(/Artifact/)>-1 ? "Artifact" : "Colourless" ); 
                 } 
                 break;
@@ -181,17 +187,8 @@ function update_frame(card_id) {
     }
     if (card_id == "card2" && inner == "Colourless" && cardframe != "Colourless") {
       // get card 1 instead
-      inner = $("card").getAttribute("class").replace("part1","");
+      inner = $("card").getAttribute("class").replace(/(part1|form |card )/g,"");
     }
-    
-    /* if (/Land/.test(inner)) {
-      // Disable colour indicator for lands
-      get_colour_indicator(this_card).setValue(false).disable();
-      $("colour_indicator_label_" + card_id).style.setProperty("color", "#888");
-    } else {
-      get_colour_indicator(this_card).enable();
-      $("colour_indicator_label_" + card_id).style.setProperty("color", "inherit");
-    } */
     
     var pinline;
     if (num_colours == 2) {
@@ -203,13 +200,16 @@ function update_frame(card_id) {
       pinline = "";
     }
     newClass = outer + inner + pinline;
+    newTrueFrame = outer + inner;
   }
 
   var universalClass = "form card ";
-  if (this_card.hasClassName("token")) { universalClass += "token "; }
+  if (isToken()) { universalClass += "token "; }
   if (this_card.hasClassName("part1")) { universalClass += "part1 "; }
   if (this_card.hasClassName("part2")) { universalClass += "part2 "; }
   this_card.className = universalClass + newClass;
+  
+  cardTrueFrameField.value = newTrueFrame;
 }
 
 function get_colour_indicator(this_card) {
@@ -249,20 +249,13 @@ function update_card_rarity(rarity_in) {
     this_div.removeClassName("mythic");
     this_div.addClassName(new_rarity);
   });
-  if (new_rarity == "token") {
-    $$(".card").each(function(card) {
-      card.addClassName("token");
-    });
-  } else {
-    $$(".card").each(function(card) {
-      card.removeClassName("token");
-    });
-  }
   
   if ($("cardborder").hasClassName("split") || $("cardborder").hasClassName("dfc")) {
    $("card_rarity").value = rarity_in;
    $("card_link_attributes_rarity").value = rarity_in;
   }
+  // Add or remove token frame if necessary
+  updateFrameAndMultipart();
 }
 
 function update_details_pages(new_text) {
@@ -270,63 +263,102 @@ function update_details_pages(new_text) {
 }
 
 
-function updateMultipartStyle(){
- var multipart = $("card_multipart").value;
- if (multipart == MULTIPART_SPLIT1) {
-   $("cardborder").addClassName("split");
-   $("cardborder").removeClassName("flip").removeClassName("dfc");
-   $("card_link_attributes_rarity").value = $("card_rarity").value;
-   $("rotate_link").hide();
-   $("cardborder").removeClassName("rotated");
-   //get_colour_indicator($("card2")).setValue(false);
-      // work around Chrome bug
- } else if (multipart == MULTIPART_DFCFRONT) {
-   $("cardborder").addClassName("dfc");
-   $("cardborder").removeClassName("flip").removeClassName("split");
-   $("card_link_attributes_rarity").value = $("card_rarity").value;
-   $("rotate_link").hide();
-   $("cardborder").removeClassName("rotated");
-   //get_colour_indicator($("card2")).setValue(true);
-      // work around Chrome bug
- } else if (multipart == MULTIPART_FLIP1) {
-   $("cardborder").addClassName("flip");
-   $("cardborder").removeClassName("split").removeClassName("dfc");
-   $("rotate_link").show();
-   //get_colour_indicator($("card2")).setValue(false);
- } else { // Neither
-   $("cardborder").removeClassName("split").removeClassName("flip").removeClassName("dfc");
-   $("rotate_link").hide();
-   $("cardborder").removeClassName("rotated");
-   //get_colour_indicator($("card2")).setValue(false);
- }
- if (multipart == "Scheme" || multipart == "Plane" || multipart == "Vanguard") {
-   // Move to a nontraditional frame
-   var newFrameCap = multipart;
-   var newFrameLower = newFrameCap.toLowerCase();
-   $$(".frame_selector")[0].value = newFrameLower;
-   $$(".frame_selector_wrapper")[0].hide();
-   $$(".form")[0].removeClassName("scheme").removeClassName("plane").removeClassName("vanguard");
-   $$(".form")[0].addClassName(newFrameLower);
+function updateFrameAndMultipart(){
+  var new_frame = $("card_structure_display").value;
+  var multipartPrefix = "multipart_";
+  var form = $$(".form")[0];
+  
+  if (new_frame.substring(0, multipartPrefix.length) == multipartPrefix) {
+    // The new setting is multipart
+    // Specify it for the server
+    $("card_multipart").value = new_frame.substring(multipartPrefix.length);
+    
+    // Now apply multipart setting
+    if (new_frame == multipartPrefix + MULTIPART_SPLIT1) {
+      $("cardborder").addClassName("split");
+      $("cardborder").removeClassName("flip").removeClassName("dfc");
+      $("card_link_attributes_rarity").value = $("card_rarity").value;
+      $("rotate_link").hide();
+      $("cardborder").removeClassName("rotated");
+      //get_colour_indicator($("card2")).setValue(false);
+         // work around Chrome bug
+    } else if (new_frame == multipartPrefix + MULTIPART_DFCFRONT) {
+      $("cardborder").addClassName("dfc");
+      $("cardborder").removeClassName("flip").removeClassName("split");
+      $("card_link_attributes_rarity").value = $("card_rarity").value;
+      $("rotate_link").hide();
+      $("cardborder").removeClassName("rotated");
+      //get_colour_indicator($("card2")).setValue(true);
+         // work around Chrome bug
+    } else if (new_frame == multipartPrefix + MULTIPART_FLIP1) {
+      $("cardborder").addClassName("flip");
+      $("cardborder").removeClassName("split").removeClassName("dfc");
+      $("rotate_link").show();
+      //get_colour_indicator($("card2")).setValue(false);
+    }
+    
+  } else {
+    // The new setting is not multipart. 
+    // Remove multipart classes
+    $("cardborder").removeClassName("split").removeClassName("flip").removeClassName("dfc");
+    $("rotate_link").hide();
+    $("cardborder").removeClassName("rotated");
+    // and specify not multipart
+    $("card_multipart").value = MULTIPART_STANDALONE;
+  }
+  
+  // Remove scheme/plane/vanguard classes - we'll add them back later if necessary
+  var wasNontrad = form.hasClassName("scheme") || form.hasClassName("plane") || form.hasClassName("vanguard");
+  form.removeClassName("scheme").removeClassName("plane").removeClassName("vanguard");
    
-   var frame_hidden = $("frame_disabled");
-   var frame_select = $("card_frame");
-   frame_select.name = "frame_select_disabled";
-   frame_hidden.name = "card[frame]";
-   frame_hidden.value = newFrameCap;
-   update_frame("card");
- } else {
-   // Back to a traditional frame
-   $$(".form")[0].removeClassName("scheme").removeClassName("plane").removeClassName("vanguard");
-   $$(".frame_selector")[0].value = "Auto";
-   $$(".frame_selector_wrapper")[0].show();
-   
-   var frame_hidden = $("frame_disabled");
-   var frame_select = $("card_frame");
-   frame_select.value = "Auto";
-   frame_hidden.name = "frame_hidden_disabled";
-   frame_select.name = "card[frame]";
-   update_frame("card");
- }
+  var frame_hidden = $("card_frame");
+  var frame_select = $("card_frame_display");
+  if (new_frame == "Scheme" || new_frame == "Plane" || new_frame == "Vanguard") {
+    // Move to a nontraditional frame
+    var newFrameCap = new_frame;
+    var newFrameLower = newFrameCap.toLowerCase();
+    $$(".form")[0].addClassName(newFrameLower);
+    // The frame selector hides by virtue of having the CSS class plane/scheme/vanguard
+    frame_hidden.value = newFrameCap;
+  } else if (wasNontrad) {
+    // Back to a traditional frame
+    //frame_select.value = "Auto";
+  }
+  update_frame("card");
+ 
+  // Recalculate trad-frame special classes (token, planeswalker)
+  
+  if (isPlaneswalker()) {
+    $$(".card").each(function(card) {
+      card.addClassName("Planeswalker");
+    });
+  } else {
+    $$(".card").each(function(card) {
+      card.removeClassName("Planeswalker");
+    });
+  };
+  if (isToken()) {
+    $$(".card").each(function(card) {
+      card.addClassName("token");
+    });
+  } else {
+    $$(".card").each(function(card) {
+      card.removeClassName("token");
+    });
+  };
+}
+
+function isPlaneswalker() {
+  // Only applies to card edit form
+  var new_frame = $("card_structure_display").value;
+  var cardtype = $("card").select(".type_field.cardtype")[0].value;
+  return (new_frame == "Planeswalker" || cardtype.search(/Planeswalker/)>-1);
+}
+function isToken() {
+  // Only applies to card edit form
+  var new_frame = $("card_structure_display").value;
+  var cardrarity = $("card_rarity").value;
+  return (new_frame == "Token" || cardrarity == "token");
 }
 
 ////// Comments //////
@@ -390,7 +422,8 @@ function sizeTokenName(nameDiv, typeDiv) {
   if (nameSizeOK) {
     titlePinline.style.width = nameWidth + C_tokenNamePadding + "px";
   } else {
-    for(var i=0; !nameSizeOK && i>-3; i-=0.25) {
+    // Only go down to -2
+    for(var i=0; !nameSizeOK && i>-2; i-=0.25) {
       nameDiv.style.letterSpacing = i + "px";
       nameSizeOK = (nameWidth + C_tokenNamePadding < titlePinline.getWidth()) && (titleBarDiv.clientHeight <= idealTitleHeight)
       if (!nameSizeOK) {
@@ -494,7 +527,8 @@ function shrinkCardBits(cardDiv) {
 }
 
 function makeAllCardsFit() {
-  $A(document.getElementsByClassName("card")).each(shrinkCardBits);
+  // Don't try to shrink form cards! 
+  $A(document.getElementsByClassName("card")).filter(function(elm){return !elm.hasClassName("form")}).each(shrinkCardBits);
   return;
 
   t0 = (new Date()).getTime();

@@ -130,20 +130,35 @@ class CardsController < ApplicationController
       if @card.attributes["frame"] == "Auto"
         @card.frame = @card.calculated_frame
       end
-      Rails.logger.info @card.inspect
     end
-    @render_frame = @card.frame
+    @render_frame = @card.frame # is this still needed?
+    structure, frame = @card.derive_structure_and_frame
     if @card.calculated_frame == @card.frame
-      @card.frame = "Auto"
+      frame = @card.frame = "Auto"
       Rails.logger.info "Using Auto frame"
     else
       Rails.logger.info "Not using Auto frame as calculated_frame is '#{@card.calculated_frame}' but frame is '#{@card.frame}'..."
     end
-    @card.link ||= @card.new_linked_card
+    
+    @card.frame_display = frame
+    @card.structure_display = structure
+    
+    if @card.link.nil?
+      @card.link ||= @card.new_linked_card
+    else
+      if @card.link.calculated_frame == @card.link.frame
+        @card.link.frame = "Auto"
+        Rails.logger.info "Using Auto frame for secondary card"
+      end
+      @card.link.frame_display = @card.link.frame
+    end
   end
 
   def process_card
-    if @card.attributes["frame"] == "Auto"
+    if Card.nontraditional_frames.include? @card.structure_display
+      @card.frame = @card.structure_display
+      @card.save!
+    elsif @card.attributes["frame"] == "Auto"
       @card.frame = @card.calculated_frame
       @card.save!
     end
@@ -158,7 +173,6 @@ class CardsController < ApplicationController
     set_last_edit @card
 
     if @card.save
-      @cardset.log :kind=>:card_create, :user=>current_user, :object_id=>@card.id
       if @card.link.nil?
         # The creation failed validation because it was empty
         # Revert @card.multipart
@@ -167,11 +181,15 @@ class CardsController < ApplicationController
       else
         set_link_fields
       end
-	  if params[:initial_comment].present?
+	    if params[:initial_comment].present?
+        # Log the creation before the comment
+        @cardset.log :kind=> :card_create_and_comment, :user=>current_user, :object_id=>@card.id
         comment = @card.comments.build(:user => current_user, :body => params[:initial_comment])
         comment.save!
-        @cardset.log :kind=> :comment_card, :user=>current_user, :object_id=>comment.id
-	  end
+      else
+        # Log the creation
+        @cardset.log :kind=> :card_create, :user=>current_user, :object_id=>@card.id
+	    end
       redirect_to @card, :notice => "#{@card.printable_name} was successfully created." 
     else
       render :action => "new"

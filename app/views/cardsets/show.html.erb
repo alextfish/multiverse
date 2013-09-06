@@ -29,7 +29,7 @@
     </p>
     <p>
       <% rarity_stats = stats[:by_rarity].sort {|pair1, pair2| (Card.rarities.index(pair1[0]) || 0) <=> (Card.rarities.index(pair2[0]) || 0) }.map { |rarity, count| pluralize(count, rarity) } %>
-      <% display_rarity_stats = rarity_stats.join(", ").sub("nones", "with no rarity") %>
+      <% display_rarity_stats = rarity_stats.join(", ").sub(/none(s)?/, "with no rarity") %>
       <% if stats[:by_rarity].length <= 4 %>
         <%= display_rarity_stats %>
       <% else %>

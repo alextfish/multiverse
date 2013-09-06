@@ -214,16 +214,18 @@ Object.extend(Object.extend(MenuItem.prototype, MenuContainer.prototype), {
 });
 
 
-var menu;
-
-
-function configMenu() {
-  this.closeDelayTime = 300;
-}
-
-function initMenu() {
-  menu = new Menu('cardsets_dropdown', 'menu', configMenu);
-}
-
-
-Event.observe(window, 'load', initMenu, false);
+/*var menu;
+ *
+ *
+ *function configMenu() {
+ *  this.closeDelayTime = 300;
+ *}
+ *
+ *function initMenu() {
+ *  menu = new Menu('cardsets_dropdown', 'menu', configMenu);
+ *}
+ *
+ *
+ *Event.observe(window, 'load', initMenu, false);
+ */
+ 

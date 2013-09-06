@@ -41,26 +41,31 @@
         %>
       <div class="frame_selector_wrapper"
        <% if card.nontraditional_frame? %> style="display:none;">
-         <%= f.label :frame, "Colour" %>
-         <%= f.select :frame, frames, {},
+         <%= f.label :frame_display, "Colour" %>
+         <%= f.select :frame_display, frames, {},
              { :class => "frame_selector", 
                :onchange => update_frame_call, 
                :onkeyup => update_frame_call } %>
-         <%= f.hidden_field :frame, { :id => "frame_disabled" } %>
-         <script>
+         
+         <% f.hidden_field :frame, { :id => "frame_disabled" } %>
+         <% 'script>
            var frame_hidden = document.getElementById("frame_disabled");
            var frame_select = document.getElementById("card_frame");
            frame_select.name = "frame_select_disabled";
            frame_hidden.name = "card[frame]";
-         </script>
+         </script'
+         %>
+         
        <% else %>>
-         <%= f.label :frame, "Colour" %>
-         <%= f.select :frame, frames, {},
+         <%= f.label :frame_display, "Colour" %>
+         <%= f.select :frame_display, frames, {},
              { :class => "frame_selector", 
                :onchange => update_frame_call, 
                :onkeyup => update_frame_call } %>
-         <%= hidden_field_tag :frame_disabled %>
+         <% hidden_field_tag :frame_disabled %>
        <% end %>
+       <% "Note the hidden_field below must be the FIRST hidden_field in the frame_selector_wrapper for the JS update_frame() to work" %>
+       <%= f.hidden_field :frame %>
       </div>
      <br>
       <div>

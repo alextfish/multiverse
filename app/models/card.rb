@@ -39,7 +39,7 @@ class Card < ActiveRecord::Base
   has_many :old_cards, :dependent => :destroy
   has_many :decklists, :through => :deck_cards, :uniq => true
   
-  attr_accessor :foil, :blank  # not saved
+  attr_accessor :foil, :blank, :frame_display, :structure_display  # not saved
   belongs_to :link, :class_name => "Card", :inverse_of => :parent
   belongs_to :parent, :class_name => "Card", :inverse_of => :link
   accepts_nested_attributes_for :link, :reject_if => proc { |attributes| attributes["rulestext"].blank? && attributes["name"].blank? }
@@ -326,6 +326,38 @@ class Card < ActiveRecord::Base
     end
     cardclass
   end
+  
+  def derive_structure_and_frame
+    if self.nontraditional_frame?
+      structure = self.frame
+      frame = ""
+    else
+      # Calculate structure
+      if self.multipart?
+        structure = "multipart_#{self.multipart}"
+      elsif self.is_planeswalker? && !(cardtype =~ /Planeswalker/)
+        structure = "Planeswalker"
+      elsif self.is_token? && (self.rarity != "token")
+        structure = "Token"
+      else
+        structure = Card.STANDALONE
+      end
+      # Calculate frame
+      if self.frame.nil? || self.frame == "Auto"
+        frame = self.calculated_frame
+      else
+        frame = self.frame.gsub(/Planeswalker/,"").gsub(/Token/,"")
+      end
+      # Remove structure from frame, where they can overlap
+      frame.gsub!(/token/i, "")
+      frame.gsub!(/planeswalker/i, "")
+      frame.gsub!(/coloured_artifact/i, "")
+      #end
+      frame.strip!
+    end
+    return [structure, frame]
+  end
+  
   def converted_mana_cost
     if cost.nil?
       return 0
@@ -643,8 +675,12 @@ class Card < ActiveRecord::Base
     self.nontraditional_frame? || self.multipart?
   end
   # Specific frames which don't have colour or mana cost
+  NONTRADITIONAL_FRAMES = ["Scheme", "Plane", "Vanguard", "Emblem"]
+  def Card.nontraditional_frames
+    NONTRADITIONAL_FRAMES
+  end
   def nontraditional_frame?
-    ["Scheme", "Plane", "Vanguard", "Emblem"].include?(self.frame)
+    NONTRADITIONAL_FRAMES.include?(self.frame)
   end
 
   def multipart?
