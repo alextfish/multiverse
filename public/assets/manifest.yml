@@ -445,10 +445,10 @@ watermarks/w.png: watermarks/w-9aaf5ffb9ebf02c78fd347c102634325.png
 watermarks/w/index.png: watermarks/w-9aaf5ffb9ebf02c78fd347c102634325.png
 watermarks/watermark_u.png: watermarks/watermark_u-98729bf538c868911daf9fcb3880f22d.png
 watermarks/watermark_u/index.png: watermarks/watermark_u-98729bf538c868911daf9fcb3880f22d.png
-application.js: application-b1c13d34b61a6ca3c1fd958e91d4b386.js
-application/index.js: application-b1c13d34b61a6ca3c1fd958e91d4b386.js
-application.css: application-571a54044edace54c1ecb49411066e17.css
-application/index.css: application-571a54044edace54c1ecb49411066e17.css
+application.js: application-a2843ce3335e11a628961159ea01d408.js
+application/index.js: application-a2843ce3335e11a628961159ea01d408.js
+application.css: application-9e9a108ba5a5031be99784b2c8f36c43.css
+application/index.css: application-9e9a108ba5a5031be99784b2c8f36c43.css
 prototip/loader.gif: prototip/loader-09edc817215a54e05f8a9a763e2909de.gif
 prototip/loader/index.gif: prototip/loader-09edc817215a54e05f8a9a763e2909de.gif
 prototip/styles/default/foil_highlight.png: prototip/styles/default/foil_highlight-3edd2213507667d63502b82239f65b61.png
