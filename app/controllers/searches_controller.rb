@@ -194,7 +194,7 @@ class SearchesController < ApplicationController
     def db_concat(*args)
       # By aNoble, from http://stackoverflow.com/questions/2986405/database-independant-sql-string-concatenation-in-rails
       # Symbols should be used for field names, everything else will be quoted as a string
-      adapter = ActiveRecord::Base.configurations[Rails.env]['adapter'].to_sym
+      adapter = ((ActiveRecord::Base.configurations[Rails.env] && ActiveRecord::Base.configurations[Rails.env]['adapter']) || 'sqlserver').to_sym
       args.map!{ |arg| arg.class==Symbol ? arg.to_s : "'#{arg}'" }
 
       case adapter
