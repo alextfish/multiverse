@@ -26,6 +26,7 @@
 
 class Configuration < ActiveRecord::Base
   attr_protected :id, :cardset_id
+  attr_accessor :admins
 
   belongs_to :cardset
 

@@ -133,8 +133,12 @@ textarea#details_page_body { width: 90%; height: 30em; }
 /***** Cardset configuration *****/
 
 div.config_section { margin: 4px; }
+div.config_subsection { margin-left: 24px; }
 input#cardset_description { width: 30em; }
 form.search_form input { width: 20em !important; }
+
+div.user_selectors td { text-align:center; vertical-align: top; }
+div.user_selectors select { width: 150px; height: 200px; }
 
 /***** Mechanics *****/
 
