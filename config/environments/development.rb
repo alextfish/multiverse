@@ -38,6 +38,8 @@ Multiverse::Application.configure do
     
     # Dodge precompiled assets
     config.assets.prefix = "/dev-assets"
+    
+    config.serve_static_assets = true
 
     # Raise exception on mass assignment protection for Active Record models
     config.active_record.mass_assignment_sanitizer = :strict
