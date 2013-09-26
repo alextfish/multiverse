@@ -30,6 +30,11 @@ Multiverse::Application.configure do
 
 
   if Rails::VERSION::STRING >= '3.1'
+  
+    config.assets.enabled = true
+    config.assets.version = '1.0'
+    config.assets.compile = true
+    
     # Do not compress assets
     config.assets.compress = false
 
