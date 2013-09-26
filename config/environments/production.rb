@@ -8,7 +8,7 @@ Multiverse::Application.configure do
   # Disable Rails's static asset server
   # In production, Apache or Heroku will already do this
   config.serve_static_assets = false
-  config.serve_static_assets = true
+  #config.serve_static_assets = true
 
   # Full error reports are disabled and caching is turned on
   config.consider_all_requests_local       = false
