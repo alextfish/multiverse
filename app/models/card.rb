@@ -470,6 +470,10 @@ class Card < ActiveRecord::Base
     else
       f = frame || calculated_frame
     end
+    
+    f.gsub! /Planeswalker/i, ""
+    f.gsub! /Coloured_Artifact/i, ""
+    f.strip!
 
     case f
       when /^Land/

@@ -42,7 +42,7 @@ Multiverse::Application.configure do
     config.assets.debug = true
     
     # Dodge precompiled assets
-    config.assets.prefix = "/dev-assets"
+    #config.assets.prefix = "/dev-assets"
     
     config.serve_static_assets = true
 
