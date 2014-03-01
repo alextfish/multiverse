@@ -1,0 +1,26 @@
+<% if @cardset.nil? 
+     @title = "Multiverse: Not Found"
+     context = ""
+   else 
+     @title = @cardset.name + ": Not Found" 
+     context = " in @cardset.name"
+   end %>
+  <h1>
+    <%= @title %>
+  </h1>
+
+<% if @cardset.present? %>
+  <%= render "cardsets/setviews" %>
+<% end %>
+
+<p>
+  Sorry, it looks like you're trying to access something <%= context%> that's not there. <%= @not_found_path %><% if @not_found_path.present? %>.<% end %>
+</p>
+<% if @cardset.nil? %>
+  <p>You might like to <%= link_to "return to the home page", root_path %> or <%= link_to "see all recent activity on Multiverse", cardsets_path %>.
+</p>
+<% else %>
+  <p>You might like to <%= link_to "return to the main cardset page", @cardset %>, 
+      <%= link_to "see recent activity in " + @cardset.name, recent_cardset_path(@cardset) %> or <%= link_to "see all recent activity on Multiverse", cardsets_path %>.
+  </p>
+<% end %>

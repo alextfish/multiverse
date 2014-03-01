@@ -104,6 +104,7 @@ function updateWatermarks() {
     /* watermark_field.setAttribute("type","url");
     watermark_field.setAttribute("inputmode","url lowerCase");*/
   } else if (new_watermark == "") {
+    watermark_field.value = new_watermark;
     watermark_div.style.backgroundImage = "none";
   } else {
     watermark_field.value = new_watermark;

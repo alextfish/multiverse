@@ -40,11 +40,12 @@
      <div id="mockup" class="onetab<%= tab_display["mockup"] ? show_this_tab : "" %>"><a name="mockup"></a>
        <%= render :partial => "shared/prettycard", :locals => { :link => false } %>
      </div>
+     <% show_expand_link = true %>
      <% show_rotate_link = @card.flip? || @card.split? %>
      <% show_edit_link = permission_to?(:edit, @card.cardset) %>
      <% show_move_link = permission_to?(:admin, @card.cardset) %>
      <% show_delete_link = permission_to?(:delete, @card.cardset) %>
-     <% if show_rotate_link || show_edit_link || show_move_link || show_delete_link %>
+     <% if show_expand_link || show_rotate_link || show_edit_link || show_move_link || show_delete_link %>
        <div class="card_controls_below">
          <% if show_rotate_link %>
            <%= link_to_function "Rotate", "rotate_card()", :class => "card_rotate_link no_tooltip" %>
