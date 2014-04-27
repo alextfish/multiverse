@@ -64,6 +64,7 @@ gem 'minitest'
 
 group :development do
   # gem 'annotate-models', '1.0.4' - seems to have disappeared!
+  # gem 'utf8-cleaner' - just don't type £ signs in source code...
 end
 
 ## OpenScript options:

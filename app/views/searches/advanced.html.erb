@@ -1,13 +1,57 @@
 <h1><%= @title = "Advanced Search" %></h1>
 <p>Enter one or more strings to search for:</p>
   <% searchable_text_fields = {
-    "cardset"      => ["name", "description"],
-    "card"         => ["name", "types", "rules_text", "flavour_text"],
-    "details_page" => ["title", "body"],
-    "comment"      => ["body"]
+      "cardset"      => ["name", "description"],
+      "card"         => ["name", "types", "rules_text", "flavour_text"],
+      "details_page" => ["title", "body"],
+      "comment"      => ["body"]
     } 
+    restrictions = {
+      "cardset"      => ["user"],
+      "card"         => ["user", "cardset"],
+      "details_page" => [],
+      "comment"      => ["user", "cardset"]
+    }
     text_fields_order = ["cardset", "details_page", "card", "comment"]
+    
+   valid_cardsets = Cardset.select { |cs| permission_to?(:view, cs) }
+   valid_cardsets = valid_cardsets.sort_by &:name 
+   valid_users = User.all.sort_by &:name
     %>
+<script language="javascript">
+  // handleSearchRestrict: toggle visibility of restriction fields
+  function handleSearchRestrict(checkbox) {
+    // get reference to related content to display/hide
+    var idToShow = checkbox.id.replace(/_check/, "");
+    var el = document.getElementById(idToShow);
+    var input = el.down("select");
+    
+    if ( checkbox.checked === true ) {
+        el.style.visibility = 'visible';
+        input.enable();
+    } else {
+        el.style.visibility = 'hidden';
+        input.disable();
+    }
+  }
+  function handleAllRestricts() {
+    $$("input.restriction[type='checkbox']").each(handleSearchRestrict);
+  }
+  
+  // handleSearchRestrictions: get the form fields to match the restrictions
+  function handleSearchRestrictions(button, objectName) {
+    var form = button.up("form");
+    $(form.getElementsByClassName("restriction")).each(function(elem){
+      if (!elem.checked) {
+        // disable the corresponding input
+        
+      }
+    });
+  }
+  
+  // update checkboxes on document load to handle things like back button causing visible content to be hidden
+  document.observe("dom:loaded", handleAllRestricts);
+</script>
 <table border="1px solid #888">
   <% text_fields_order.each_slice(2) do |these_fields| %>
   <tr>
@@ -26,9 +70,21 @@
               <%= text_field_tag input_id, field.humanize, :value => params[object_field_name.to_sym] && params[object_field_name.to_sym][field_name.to_sym] %>
             </td></tr>
           <% end %>
+          <% if restrictions[object_type].include? "user" %>
+            <tr><td><%= label_tag "restrict_user_check_#{object_field_name}", "Restrict by user:" %>
+            <td><%= check_box_tag "restrict_user_check_#{object_field_name}", "yes", false, :onclick => "handleSearchRestrict(this)", :class => "restriction" %><span id="restrict_user_<%= object_field_name %>" style="visibility: hidden;">
+              <%= collection_select "#{object_field_name}", :user_id, valid_users, :id, :name, :class => "restricted", :disabled => "true", :selected => current_user.id  %>
+            </span>
+          <% end %>
+          <% if restrictions[object_type].include? "cardset" %>
+            <tr><td><%= label_tag "restrict_cardset_check_#{object_field_name}", "Restrict by cardset:" %>
+            <td><%= check_box_tag "restrict_cardset_check_#{object_field_name}", "yes", false, :onclick => "handleSearchRestrict(this)", :class => "restriction" %><span id="restrict_cardset_<%= object_field_name %>" style="visibility: hidden;">
+            <%= collection_select "#{object_field_name}", :cardset_id, valid_cardsets, :id, :name %>
+            </span>
+          <% end %>
         </table>
         <%= hidden_field_tag "search_type", object_field_name %>
-        <div class="search_submit"><%= submit_tag "Search #{object_type.titleize.pluralize}" %></div>
+        <div class="search_submit"><%= submit_tag "Search #{object_type.titleize.pluralize}", :onclick => "handleSearchRestrictions(this, '#{object_field_name}')" %></div>
       <% end %>
     </td>
     <% end %>

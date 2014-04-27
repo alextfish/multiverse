@@ -1,5 +1,36 @@
 <h1><%= @title = "Search results" %></h1>
-<div>You searched for: <%= @query %><br><br></div>
+<div>You searched for:
+<% if @quicksearch_query %><%= quicksearch_query %>
+<% else %>
+  <%= @object_type.pluralize %> with
+<% query_to_display = @query_conditions
+   if query_to_display.has_key?("cardset_id")
+     query_cardset = Cardset.find(query_to_display["cardset_id"])
+     query_to_display.delete("cardset_id")
+     query_to_display["cardset"] = link_to query_cardset.name, query_cardset
+   end
+   if query_to_display.has_key?("user_id")
+     query_user = User.find(query_to_display["user_id"])
+     query_to_display.delete("user_id")
+     query_to_display["user"] = link_to query_user.name, query_user
+   end
+   query_displayed = query_to_display.reduce("") { |memo, pair|
+     key, val = pair
+     if val.blank? 
+       out = memo
+     else
+       out = "#{key}: \"#{val}\"" 
+       if memo.blank?
+         out
+       else
+         [memo, out].join(", ")
+       end
+     end
+   }.html_safe
+   %>
+   <%= query_displayed %>
+<% end %>
+<br><br></div>
 <% if @to_show.empty? || @to_show.values.flatten.length == 0 %>
   <div>Sorry, no search results were found.<br><br></div>
 <% end %>

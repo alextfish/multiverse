@@ -2,6 +2,9 @@
 <% mechanic_editor = permission_to? :admin, @cardset %>
 <%= render :partial => "cardsets/setviews" %>
 <br>
+<% if mechanic_editor %>
+  <p><%= link_to "Add mechanic", new_cardset_mechanic_path(@cardset) %></p>
+<% end %>
 <% @cardset.mechanics.each_with_index do |mechanic, index| %>
   <% @mechanic = mechanic %>
   <% src_no_reminder, src_with_reminder, target_no_reminder, target_with_reminder = @mechanic.regexps %>

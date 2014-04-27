@@ -3,7 +3,7 @@
 
 // ------------ Constants
 C_cardHeightMinusPadding = 300 - 4 - 3; // card height minus top and bottom padding
-C_tokenNamePadding = 12; // cardtitlebar p-left=3=3; namebox p-left=p-right=2; 2px wiggle room
+C_tokenNamePadding = 12; // cardtitlebar p-left=p-right=3; namebox p-left=p-right=2; 2px wiggle room
 C_defaultNameFontSize = 9; // points, as defined in Card.scss
 C_idealFlipTextBoxHeight = 40+2+2;
 C_idealSplitTextBoxHeight = 65+2+2;

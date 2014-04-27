@@ -5,29 +5,29 @@ class SearchesController < ApplicationController
   end
   def do_search
     @to_show = {}
-    object_type = params[:search_type]
-    if object_type.nil? || object_type.empty? 
+    @object_type = params[:search_type]
+    if @object_type.nil? || @object_type.empty? 
       redirect_to :advanced_search and return
     end
-    inputs = params[object_type.to_sym]
+    inputs = params[@object_type.to_sym]
     if inputs.nil? || inputs.empty? 
       redirect_to :advanced_search and return
     end
     @query_hash = inputs.clone
     hide_type_string = false
-    case object_type
+    case @object_type
       when "cardset"
         # Fields are all valid SQL fields: just use multi_search
-        valid_keys = ["name", "description"]
+        valid_keys = ["name", "description", "user_id"]
       when "details_page"
         # Fields are all valid SQL fields: just use multi_search
         valid_keys = ["title", "body"]
       when "comment"
         # Fields are all valid SQL fields: just use multi_search
-        valid_keys = ["body"]
+        valid_keys = ["body", "user_id", "cardset_id"]
       when "card"
         # Field "types" needs processing, and the underscores need removing
-        valid_keys = ["name", "rulestext", "flavourtext"]
+        valid_keys = ["name", "rulestext", "flavourtext", "user_id", "cardset_id"]
         if !inputs["types"].blank?
           # Assemble a string for the full type line in DB-independent fashion
           type_string = db_concat(:"cards.supertype", " ", :"cards.cardtype", " - ", :"cards.subtype")
@@ -44,18 +44,18 @@ class SearchesController < ApplicationController
         redirect_to :advanced_search and return
     end
     
-    
     if !(inputs.keys - valid_keys).empty?
-      raise "Unexpected #{object_type} search field found. Fields were: #{inputs.keys.join(", ")}"
+      raise "Unexpected #{@object_type} search field found. Fields were: #{inputs.keys.join(", ")}"
     end
     conditions = inputs.map do |key, val| 
       val.blank? ? nil : [key, val, false]
     end.compact
-    object_symbol = (object_type + "s").to_sym # because helpers aren't available here
+    object_symbol = (@object_type + "s").to_sym # because helpers aren't available here
     @to_show[object_symbol] = multi_search(object_symbol, conditions)
-    @query = conditions.map { |key, val, f| "#{object_type} #{key}: \"#{val}\"" }.join(", ")
+    @query_conditions = inputs
     if hide_type_string
-      @query.sub!(type_string, "type")
+      # replace the ugly multi-part type string with "type"
+      @query_conditions["type"] = @query_conditions.delete(type_string)
     end
     
     flat_results = @to_show.values.flatten.compact

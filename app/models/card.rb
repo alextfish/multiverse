@@ -43,6 +43,7 @@ class Card < ActiveRecord::Base
   belongs_to :link, :class_name => "Card", :inverse_of => :parent
   belongs_to :parent, :class_name => "Card", :inverse_of => :link
   accepts_nested_attributes_for :link, :reject_if => proc { |attributes| attributes["rulestext"].blank? && attributes["name"].blank? }
+  belongs_to :user
   # has_many :highlighted_comments, :class_name => 'Comment', :conditions => ['status = ?', COMMENT_HIGHLIGHTED]
   # has_many :unaddressed_comments, :class_name => 'Comment', :conditions => ['status = ?', COMMENT_UNADDRESSED]
 
@@ -147,6 +148,10 @@ class Card < ActiveRecord::Base
     logs_to_not_show = Log.kinds_to_not_show(:card_history)
     my_logs.reject!{|l| logs_to_not_show.include? l.kind}
     out = (comments + my_logs).sort_by &:recency
+  end
+  def get_creation_log
+    possible_logs = Log.find(:all, :conditions => ["object_id = ? AND kind IN (?)", id, [Log.kind(:card_create), Log.kind(:card_create_and_comment)]])
+    my_log = possible_logs.find{|l| l.return_object == self}
   end
 
   def self.colours
@@ -810,5 +815,25 @@ class Card < ActiveRecord::Base
       end
     end
   end
-
+  def get_user
+    # First: does the database have a user set?
+    if self.user.present?
+      self.user
+    else
+      # Second: is there a creation log for this card?
+      log = self.get_creation_log
+      if log && log.user
+        log.user
+      else
+        # Third: have to guess it's the cardset creator
+        self.cardset.user
+      end
+    end
+  end
+  def set_user_if_unset
+    if self.user.nil?
+      self.user = self.get_user
+      self.save_without_timestamping!
+    end
+  end
 end

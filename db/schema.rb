@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130228231100) do
+ActiveRecord::Schema.define(:version => 20130919234500) do
 
   create_table "cards", :force => true do |t|
     t.string   "code"
@@ -41,9 +41,11 @@ ActiveRecord::Schema.define(:version => 20130228231100) do
     t.string   "watermark"
     t.boolean  "colour_indicator"
     t.string   "colour"
+    t.integer  "user_id"
   end
 
   add_index "cards", ["cardset_id"], :name => "index_cards_on_cardset_id"
+  add_index "cards", ["user_id"], :name => "index_cards_on_user_id"
 
   create_table "cardsets", :force => true do |t|
     t.string   "name"
@@ -90,6 +92,7 @@ ActiveRecord::Schema.define(:version => 20130228231100) do
     t.string   "adminability"
     t.integer  "last_edit_by"
     t.string   "border_colour"
+    t.string   "admins"
   end
 
   create_table "deck_cards", :force => true do |t|

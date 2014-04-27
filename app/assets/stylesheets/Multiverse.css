@@ -135,7 +135,16 @@ textarea#details_page_body { width: 90%; height: 30em; }
 div.config_section { margin: 4px; }
 div.config_subsection { margin-left: 24px; }
 input#cardset_description { width: 30em; }
-form.search_form input { width: 20em !important; }
+form.search_form input { width: 20em; }
+form.search_form input#cardset_description { width: 20em; }
+form.search_form input[type="checkbox"] { 
+  width: auto; 
+  margin: 7px 3px 0 3px;
+}
+form.search_form input.restricted { 
+  width: 18em; 
+  float: right;
+}
 
 div.user_selectors td { text-align:center; vertical-align: top; }
 div.user_selectors select { width: 150px; height: 200px; }
