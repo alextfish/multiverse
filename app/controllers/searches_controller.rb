@@ -149,11 +149,19 @@ class SearchesController < ApplicationController
         field, value, exact = obj
         searchable_value = make_even_safer(value.downcase)
         !string.empty? && string += " AND "
-        if exact
-          [string + "lower(#{field}) = ?", inputs << searchable_value]
+        if numeric_field(field)
+          field_lowered = field
         else
-          [string + "lower(#{field}) LIKE ?", inputs << "%#{searchable_value}%"] 
+          field_lowered = "lower(#{field})"
         end
+        if exact
+          comparison = " = ?"
+          values = inputs << searchable_value
+        else
+          comparison = " LIKE ?"
+          values = inputs << "%#{searchable_value}%"
+        end
+        [string + field_lowered + comparison, values]
       end.flatten
           Rails.logger.info "Searching for #{queries.inspect}: condition is #{condition.inspect}"
     
@@ -189,6 +197,10 @@ class SearchesController < ApplicationController
     
     def make_even_safer(val)
       return val.gsub(".","_")   # SQL single-char wildcard
+    end
+    
+    def numeric_field(field)
+      return ["user_id", "cardset_id"].include? field
     end
     
     def db_concat(*args)

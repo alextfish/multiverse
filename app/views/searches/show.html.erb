@@ -1,6 +1,6 @@
 <h1><%= @title = "Search results" %></h1>
 <div>You searched for:
-<% if @quicksearch_query %><%= quicksearch_query %>
+<% if @quicksearch_query %><%= @quicksearch_query %>
 <% else %>
   <%= @object_type.pluralize %> with
 <% query_to_display = @query_conditions

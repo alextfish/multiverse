@@ -167,8 +167,7 @@ class CardsController < ApplicationController
 
   # POST /cards
   def create
-    @card = Card.new(params[:card])
-    # TODO for multipart
+    @card = Card.new(params[:card], :user => current_user)
     process_card
     set_last_edit @card
 
@@ -264,14 +263,20 @@ class CardsController < ApplicationController
       when Card.FLIP1
         @card.link.multipart = Card.FLIP2
         @card.link.parent = @card
+        @card.link.cardset = @card.cardset
+        @card.link.user = @card.user
         @card.link.save! :validate => false 
       when Card.SPLIT1
         @card.link.multipart = Card.SPLIT2
         @card.link.parent = @card
+        @card.link.cardset = @card.cardset
+        @card.link.user = @card.user
         @card.link.save! :validate => false 
       when Card.DFCFRONT
         @card.link.multipart = Card.DFCBACK
         @card.link.parent = @card
+        @card.link.cardset = @card.cardset
+        @card.link.user = @card.user
         @card.link.save! :validate => false 
     end
   end

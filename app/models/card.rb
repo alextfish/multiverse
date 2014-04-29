@@ -611,7 +611,7 @@ class Card < ActiveRecord::Base
   end
 
   def new_linked_card
-    Card.new(:cardset => cardset, :frame => frame, :rarity => rarity, :link=>self)
+    Card.new(:cardset => cardset, :user => user, :frame => frame, :rarity => rarity, :link=>self)
   end
 
   @@printed_card_regexp = ""
