@@ -157,11 +157,13 @@ module SessionsHelper
   #### Caching
   
   def expire_all_cardset_caches
-    expire_cardset_visualspoiler_cache
-    expire_cardset_cardlist_cache
-    expire_cardset_frontpage_cache
-    expire_skeleton_cache
-    expire_cardset_recentchanges_line_cache
+    if @cardset
+      expire_cardset_visualspoiler_cache
+      expire_cardset_cardlist_cache
+      expire_cardset_frontpage_cache
+      expire_skeleton_cache
+      expire_cardset_recentchanges_line_cache
+    end
   end
   def expire_cardset_visualspoiler_cache
     @cardset.clear_cache
