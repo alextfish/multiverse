@@ -151,13 +151,14 @@ class SearchesController < ApplicationController
         !string.empty? && string += " AND "
         if numeric_field(field)
           field_lowered = field
-        else
+          comparison = " = ?"
+          values = inputs << searchable_value
+        elsif exact
           field_lowered = "lower(#{field})"
-        end
-        if exact
           comparison = " = ?"
           values = inputs << searchable_value
         else
+          field_lowered = "lower(#{field})"
           comparison = " LIKE ?"
           values = inputs << "%#{searchable_value}%"
         end
