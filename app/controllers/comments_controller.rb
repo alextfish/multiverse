@@ -64,7 +64,7 @@ class CommentsController < ApplicationController
   end
 
   def parent_view(comment)
-    if comment.cardset
+    if !comment.card.blank?
       cardset_comments_path(comment.cardset, :anchor => comment.anchor_name)
     else
       card_path(comment.card, :anchor => comment.anchor_name)

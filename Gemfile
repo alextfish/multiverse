@@ -7,8 +7,8 @@ gem 'prototype-rails' # depends on rails 3.2
 
 gem 'json', '~>1.7.7' # avoid security vulnerability in json-1.7.6
 
-group :production do
   gem 'pg'
+group :production do
   gem 'thin'
 #  gem 'mysql'
 #  gem "mysql2", "~> 0.3.11"

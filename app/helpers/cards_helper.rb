@@ -2,8 +2,10 @@ module CardsHelper
 
   FORMAT_SUBSTITUTIONS = {
     /\bUEOT\b/i => "until end of turn",
+    /\bEOT\b/i => "end of turn",
     /\bETBs\b/ => "enters the battlefield",
     /\bETB\b/ => "enter the battlefield",
+    /\bOTB\b/ => "onto the battlefield",
     /\bCIPs\b/ => "comes into play",
     /\bCIP\b/ => "come into play",
     /\bCMC\b/ => "converted mana cost",

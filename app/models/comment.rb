@@ -36,8 +36,8 @@ class Comment < ActiveRecord::Base
     end
     if user_id.nil? && user_name.blank?
       errors.add(:user_name, " cannot be empty.")
-    elsif user_id.nil? && !User.find_by_name(user_name).blank?
-      errors.add(:user_name, " #{user_name} is the name of an existing Multiverse user. Please choose a different name.")
+    elsif user_id.nil? && !User.find_by_name(user_name.strip).blank?
+      errors.add(:user_name, " #{user_name.strip} is the name of an existing Multiverse user. Please choose a different name.")
     end
   end
   
