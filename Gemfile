@@ -42,7 +42,7 @@ gem 'tzinfo-data'
 #  end
 #end
 
-group :development, :test, :production do
+group :development, :test do
   # gem 'sqlite3'
   gem 'sqlite3-ruby', :require => 'sqlite3'
   # gem 'sqlite3-ruby', '1.2.5', :require => 'sqlite3'
