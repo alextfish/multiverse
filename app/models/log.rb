@@ -24,7 +24,7 @@ class Log < ActiveRecord::Base
     HIGHEST_LOG_KIND
   end
   validates_inclusion_of :kind, :in => (1..HIGHEST_LOG_KIND)
-  default_scope :order => 'logs.datestamp DESC'
+  default_scope { order('logs.datestamp DESC') }
   
   def Log.kind(sym)
     case sym
@@ -131,12 +131,22 @@ class Log < ActiveRecord::Base
   
   def comment?
     case self.kind
-      when Log.kind(:comment_card), Log.kind(:comment_details_page), Log.kind(:comment_cardset), Log.kind(:comment_edit)
+      when Log.kind(:comment_card), Log.kind(:comment_details_page), Log.kind(:comment_cardset), Log.kind(:comment_edit), Log.kind(:card_create_and_comment)
         true
       when Log.kind(:comment_delete)
         false # because there's no comment to link to
       else
         false
+    end
+  end
+  def comment_id
+    case self.kind
+      when Log.kind(:card_create_and_comment)
+        # We need to dig out the comment indirectly. Its ID is stored in this log's text field.
+        self.text
+      else
+        # The comment is the object linked to by this log
+        self.object_id
     end
   end
   

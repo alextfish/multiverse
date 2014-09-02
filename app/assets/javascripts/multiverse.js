@@ -9,7 +9,7 @@ C_idealFlipTextBoxHeight = 40+2+2;
 C_idealSplitTextBoxHeight = 65+2+2;
 C_idealPlaneTextBoxHeight = 72;
 C_idealSchemeTextBoxHeight = 108;
-C_idealTextBoxHeight = 99;
+C_idealTextBoxHeight = 109; // was 99;
 
 // ------------ Skeletons
 // - Skeleton View
@@ -421,7 +421,7 @@ function sizeTokenName(nameDiv, typeDiv) {
   var nameWidth = nameDiv.getWidth();
   var nameSizeOK = (nameWidth + C_tokenNamePadding < titlePinline.getWidth()) && (titleBarDiv.clientHeight <= idealTitleHeight);
   if (nameSizeOK) {
-    titlePinline.style.width = nameWidth + C_tokenNamePadding + "px";
+    // titlePinline.style.width = nameWidth + C_tokenNamePadding + "px";
   } else {
     // Only go down to -2
     for(var i=0; !nameSizeOK && i>-2; i-=0.25) {
@@ -461,7 +461,7 @@ function shrinkType(typeDiv) { //, rarityDiv) {
 
 function shrinkTextBox(textDiv, frameType) {
   var wiggleRoom = (frameType=="planeswalker" ? 5 : 0);
-  var desiredHeight = (frameType == "normal" ?C_idealTextBoxHeight : frameType=="flip" ? C_idealFlipTextBoxHeight : frameType=="split" ? C_idealSplitTextBoxHeight : frameType=="plane" ?  C_idealPlaneTextBoxHeight : frameType=="scheme" ?  C_idealSchemeTextBoxHeight :  C_idealTextBoxHeight );
+  var desiredHeight = (frameType == "normal" ? C_idealTextBoxHeight : frameType=="flip" ? C_idealFlipTextBoxHeight : frameType=="split" ? C_idealSplitTextBoxHeight : frameType=="plane" ?  C_idealPlaneTextBoxHeight : frameType=="scheme" ?  C_idealSchemeTextBoxHeight :  C_idealTextBoxHeight );
   var currentFontSize = textDiv.getStyle("fontSize");
   var currentFontSizeNumber = parseInt(currentFontSize);
   var currentFontSizeUnits = currentFontSize.slice(-2); // assumes "px" or "pt"

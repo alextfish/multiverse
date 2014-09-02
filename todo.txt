@@ -1,3 +1,11 @@
+RAILS TODO BEFORE GOLIVE:
+
+* Make cardset recent_action updates also update cardset.updated_at 
+* Apply that to all live cardsets
+
+----
+
+
 Bugs to fix before push:
 * Tabbing past "watermark none" sends a request for /cards/1234/undefined. 
 

@@ -10,7 +10,7 @@
       cards = [@card, @card.link]
     end %>
  <% cards.each_with_index do |card, card_index| %>
-  <div class="innercardborder" <%if card.show_whole_card_image? %>style="background-image:url(<%= card.art_url %>);<% end %>">
+  <div class="innercardborder <% if card_index>0 %>innercard2<% end %>" <%if card.show_whole_card_image? %>style="background-image:url(<%= card.art_url %>);"<% end %>>
    <div class="card <%= card.display_class %> part<%= card_index+1 %>" <%if card.is_scheme? %>style="background-image:url(<%= card.art_url %>);<% end %>">
     <span class="left_of_namebox"></span>
     <div class="pinline pinline_box namebox">

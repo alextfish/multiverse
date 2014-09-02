@@ -51,10 +51,8 @@ class Cardset < ActiveRecord::Base
   def all_comments
     # Includes comments directly on the cardset and those on
     # cards in the cardset
-    card_comments = Comment.find :all, :include => :card,
-       :conditions => ["cards.cardset_id = ?", self.id]
-    cardset_comments = Comment.find :all,
-       :conditions => ["cardset_id = ?", self.id]
+    card_comments = Comment.includes(:card).where("cards.cardset_id = ?", self.id).references(:card)
+    cardset_comments = Comment.where("cardset_id = ?", self.id)
     (cardset_comments + card_comments)
   end
   
@@ -82,11 +80,12 @@ class Cardset < ActiveRecord::Base
       # Create the NewsList log
       news_list.add_log(new_log)
 	  
-	  # Update the GlobalState
-	  globalState = GlobalState.instance
-	  globalState.lastedit = new_log.datestamp
-	  globalState.save!
+      # Update the GlobalState
+      globalState = GlobalState.instance
+      globalState.lastedit = new_log.datestamp
+      globalState.save!
     end
+    return new_log
   end
   
   def recent_action
@@ -111,7 +110,7 @@ class Cardset < ActiveRecord::Base
   def memcache_iterator
     # fetch the cardset's memcache key
     # If there isn't one yet, assign it to 0
-    Rails.cache.fetch("cardset-#{self.id}-memcache-iterator") { 0 }
+    Rails.cache.fetch("cardset-#{self.id}-memcache-iterator") { 0 }.to_i
   end
   
   def datestamps_close(d1,d2)
@@ -126,7 +125,8 @@ class Cardset < ActiveRecord::Base
     end
   end
   def listable_cards # For cardlists that should include nonactive cards
-    Card.find_all_by_cardset_id(self.id, :include => :comments).select {|c| !c.secondary?}
+    Card.includes(:comments).where("cardset_id = ?", self.id).select {|c| !c.secondary?}
+    # find_all_by_cardset_id(self.id, :include => :comments).select {|c| !c.secondary?}
   end 
   
   ########################## Permissions #########################  
@@ -460,27 +460,6 @@ class Cardset < ActiveRecord::Base
     end
   end
   
-  def Cardset.fix_all_skeletons!
-    Cardset.all.each do |cs|
-      if cs.skeleton
-        lines_out = cs.skeleton.body.lines.map do |line|
-          if line =~ Cardset.skeleton_line_regexp_MD
-            line.sub! Cardset.skeleton_line_regexp_MD, '(((-\1\2\3'
-            code = line[4..7]
-            cards = cs.cards.find_all_by_code(code)
-            if cards.length == 1
-              remove_name = Regexp.new("\\|[ ]*\\(\\(\\(#{cards[0].name}\\)\\)\\)")
-              p "Fixing card with code #{code} by replacing #{remove_name.to_s}"
-              line.sub! remove_name, ""
-            end
-          end
-          line
-        end
-        cs.skeleton.body = lines_out.join
-        cs.skeleton.save!
-      end
-    end
-  end
 
   ########################## Boosters ##########################
   def cards_per_line

@@ -182,9 +182,12 @@ class CardsController < ApplicationController
       end
 	    if params[:initial_comment].present?
         # Log the creation before the comment
-        @cardset.log :kind=> :card_create_and_comment, :user=>current_user, :object_id=>@card.id
+        log = @cardset.log :kind=> :card_create_and_comment, :user=>current_user, :object_id=>@card.id
         comment = @card.comments.build(:user => current_user, :body => params[:initial_comment])
         comment.save!
+        # Store a crosslink from the create_and_comment log to the comment ID
+        log.text = comment.id
+        log.save!
       else
         # Log the creation
         @cardset.log :kind=> :card_create, :user=>current_user, :object_id=>@card.id

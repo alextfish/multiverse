@@ -34,7 +34,7 @@
         <li class="recent_item">
           <%= render :partial => "shared/log_entry", :locals => { :link_to_recent => false, :hard_format_date => false } %>
           <% if @log.comment? && !kinds_to_not_show.include?(@log.kind) %>
-            <% @comment = Comment.find_by_id(@log.object_id) %>
+            <% @comment = Comment.find_by_id(@log.comment_id) %>
             <% if @comment && @comment.get_cardset == @cardset %>
               <%= render :partial => "shared/comment", :locals => { :show_buttons => true, :show_date => false } %>
             <% end %>
