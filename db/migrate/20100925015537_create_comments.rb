@@ -10,7 +10,6 @@ class CreateComments < ActiveRecord::Migration
       t.timestamps
 
     end
-    add_index :comments, :card_id
   end
 
   def self.down
