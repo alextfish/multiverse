@@ -17,7 +17,8 @@
 class Decklist < ActiveRecord::Base
   belongs_to :user
   belongs_to :cardset
-  has_many :cards, :through => :deck_cards, :uniq => true
+  # http://stackoverflow.com/questions/16569994/
+  has_many :cards, -> { uniq }, :through => :deck_cards
   attr_protected :cardset_id, :user_id
   
   ACTIVE = 1
