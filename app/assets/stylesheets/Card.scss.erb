@@ -215,7 +215,7 @@ div.card_loading {
   @include round_corners(0);
 }
 .foil {
-  position: absolute; top: 0px; background-image: url(<%= asset_path "foil_highlight.png" %>);
+  position: absolute; top: 0px; background-image: image-url("foil_highlight.png");
   top: 0; bottom: 0; left: 0; right: 0;
   /* width: $CardWidth;  height: 285px; */
 }
@@ -307,7 +307,7 @@ div.card_loading {
 .cardart {  position: relative;
             min-height: 123px; text-align: center; 
             overflow: hidden; /* make rounded borders clipping (tokens, planeswalkers) */ }
-.cardart.image { background:url(<%= asset_path 'loading.gif' %>) no-repeat center;}
+.cardart.image { background:image_url("loading.gif") no-repeat center;}
 .cardart img { position: absolute; left: 0px;
             width: 180px;
             z-index: 0;}
@@ -528,10 +528,10 @@ color: white; background: $PurpleBorder;
   /* padding-bottom: 5px; */
 }
 .Planeswalker .cardtext br { margin-bottom: 5px; }
-.loyalty.positive { background-image: url(<%= asset_path 'loyaltyup.png' %>); }
-.loyalty.neutral  { background-image: url(<%= asset_path 'loyaltynaught.png' %>);
+.loyalty.positive { background-image: image-url("loyaltyup.png"); }
+.loyalty.neutral  { background-image: image-url("loyaltynaught.png");
   padding-top: 3px;}
-.loyalty.negative { background-image: url(<%= asset_path 'loyaltydown.png' %>); }
+.loyalty.negative { background-image: image-url("loyaltydown.png"); }
 
 .Planeswalker .pinline_ptbox.pinline {
   border: none;
@@ -545,7 +545,7 @@ color: white; background: $PurpleBorder;
 
 .Planeswalker .pinline_ptbox .ptbox {
   background: none !important;
-  background-image: url(<%= asset_path 'loyalty.png' %>) !important;
+  background-image: image-url("loyalty.png") !important;
   background-repeat: no-repeat !important;
 border: none;
   color: white !important;
@@ -732,10 +732,10 @@ $DFCSunMoonSize: 20px;
   height: $DFCSunMoonSize;
 }
 .dfc .part1 .left_of_namebox {
-  background-image: url(<%= asset_path 'dfc_front.png' %>);
+  background-image: image-url("dfc_front.png");
 }
 .dfc .part2 .left_of_namebox {
-  background-image: url(<%= asset_path 'dfc_back.png' %>);
+  background-image: image-url("dfc_back.png");
 }
 .dfc.form .left_of_namebox {
   position: relative;
@@ -996,7 +996,7 @@ $PlaneArtHeight: $PlaneInnerHeight - (3 + $PinlineBoxHeight + 3) - ($CardTextHei
     width: 85%;
   }
   .flavourtext:before {
-    content: url(<%= asset_path "chaos_tiny.png" %>);
+    content: image-url("chaos_tiny.png");
     display: inline-block;
     vertical-align: top;
     float: left;
@@ -1429,8 +1429,9 @@ input.powerfield, input.toughnessfield { width: 20px; }
 .image_url_field, .edit_comment_field  { width: 400px; }
 form .raritycell { border: 1px solid black; }
 .Planeswalker #power_field, .Planeswalker #pt_slash { display: none; }
-.Planeswalker .notptbox { border: none;
-    background-image: url(<%= asset_path 'loyalty_big.png' %>);
+.Planeswalker .notptbox { 
+    background-image: image-url("loyalty_big.png");
+    border: none;
     width: 80px; height: 41px; /* img is 51px high, minus the 10px top padding */
     padding: 10px 0px 0px 0px; }
 .Planeswalker.form .pinline_ptbox.pinline { top: -36px; }
