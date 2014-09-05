@@ -63,7 +63,7 @@ Multiverse::Application.routes.draw do
   resources :searches, :only => [:advanced, :do_search, :do_quicksearch, :show]
 
   get '/advanced_search', :to => 'searches#advanced'
-  post '/quicksearch',    :to => 'searches#do_quicksearch'
+  match '/quicksearch',    :to => 'searches#do_quicksearch', via: [:get, :post]
   match '/search',        :to => 'searches#do_search', via: [:get, :post]
 
   # The priority is based upon order of creation:

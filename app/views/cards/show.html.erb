@@ -32,7 +32,7 @@
      <% end %>
      
      <div id="cardimage" class="onetab<%= tab_display["cardimage"] ? show_this_tab : "" %>"><a name="cardimage"></a>
-       <img src="<%= @card.image_url %>" onload="resizeCardWrapper();">
+       <%= image_tag(@card.image_url, :onload =>"resizeCardWrapper();") %>
      </div>
      <div id="plaincard" class="onetab<%= tab_display["plaincard"] ? show_this_tab : "" %>"><a name="plaincard"></a>
        <%= render :partial => "shared/plaincard" %>

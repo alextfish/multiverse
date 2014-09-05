@@ -71,6 +71,8 @@ group :development do
   # gem 'utf8-cleaner' - just don't type pound signs in source code...
 end
 
+gem 'cloudinary'
+
 # Rails 4 migration assistance
 gem 'protected_attributes'
 gem 'rails-observers'

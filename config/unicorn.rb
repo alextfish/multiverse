@@ -1,5 +1,5 @@
 worker_processes Integer(ENV["WEB_CONCURRENCY"] || 3)
-timeout 25
+timeout 60 # Heroku will error after 30, but we can keep processing, e.g. to create-and-cache a visual spoiler
 preload_app true
 
 before_fork do |server, worker|

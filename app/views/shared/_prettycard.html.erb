@@ -36,7 +36,7 @@
         </div>
        <% else %>
         <div class="cardart image">
-         <img src="<%= card.art_url %>">
+         <%= image_tag(card.art_url) %>
         </div>
        <% end %>
       <% else %>
