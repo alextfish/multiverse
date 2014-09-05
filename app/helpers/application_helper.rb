@@ -81,7 +81,7 @@ module ApplicationHelper
     embed_card_renders(markdown_text.to_html).html_safe
   end
 
-  def mana_symbol_url ( symbol )
+  def self.mana_symbol_url ( symbol )
     my_symbol = "" << symbol
     my_symbol.gsub!(/[\{\}\(\)\/]/, "")
     # Reverse the wrong-order pairs
@@ -97,7 +97,12 @@ module ApplicationHelper
     "/assets/mana/mana_#{my_symbol}.png"
     # "http://gatherer.wizards.com/Handlers/Image.ashx?size=small&name=#{my_symbol}&type=symbol"
   end
-
+  MANA_SYMBOL_TARGETS = Hash.new
+  Card.mana_symbols_extensive.each { |sym|
+    MANA_SYMBOL_TARGETS[sym] = ActionController::Base.helpers.image_tag(self.mana_symbol_url(sym), :alt=>sym, :title=>sym)
+  }
+  
+  
   def format_mana_symbols(text, force = false)
     if text.nil?
       return text
@@ -107,7 +112,7 @@ module ApplicationHelper
       my_text.upcase!
     end
     Card.mana_symbols_extensive.each do |sym|
-      target = "<img src='#{mana_symbol_url(sym)}' alt='#{sym}' title='#{sym}'>"
+      target = MANA_SYMBOL_TARGETS[sym]
       fishify(target)
       target.downcase!
       sym0 = Regexp.escape(sym)
@@ -123,7 +128,7 @@ module ApplicationHelper
     end
     if force
       Card.mana_symbols_extensive.each do |sym|
-        target = "<img src='#{mana_symbol_url(sym)}' alt='#{sym}' title='#{sym}'>".downcase
+        target = MANA_SYMBOL_TARGETS[sym]
         fishify(target)
         sym_bare = sym.delete("{}").upcase
         my_text.gsub!( sym_bare, target )
