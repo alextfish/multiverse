@@ -13,7 +13,7 @@ gem 'prototype-rails', '>=4.0.0'
 gem 'json', '~>1.7.7' # avoid security vulnerability in json-1.7.6
 
 group :production, :staging do
-  gem 'pg'
+  gem 'pg'   # Postgres database
 #  gem 'unicorn'
 #  gem 'mysql'
 #  gem "mysql2", "~> 0.3.11"
@@ -44,7 +44,8 @@ gem 'tzinfo-data'
 
 group :development, :test do
   # gem 'sqlite3'
-  gem 'sqlite3-ruby', :require => 'sqlite3'
+####  gem 'sqlite3-ruby', :require => 'sqlite3'
+###commenting out for heroku bug
   # gem 'sqlite3-ruby', '1.2.5', :require => 'sqlite3'
 end
 
