@@ -12,7 +12,7 @@ gem 'prototype-rails', '>=4.0.0'
 
 gem 'json', '~>1.7.7' # avoid security vulnerability in json-1.7.6
 
-group :production do
+group :production, :staging do
   gem 'pg'
 #  gem 'unicorn'
 #  gem 'mysql'
