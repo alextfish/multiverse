@@ -10,7 +10,7 @@ module Multiverse
   class Application < Rails::Application
     # Multiverse-specific stuff
     def root_url
-      "http://multiverse.heroku.com"
+      "http://www.magicmultiverse.net"
     end
   
   

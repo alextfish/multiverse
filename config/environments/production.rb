@@ -5,10 +5,8 @@ Multiverse::Application.configure do
   # Code is not reloaded between requests
   config.cache_classes = true
 
-  # Disable Rails's static asset server
-  # In production, Apache or Heroku will already do this
-  #config.serve_static_assets = false
-  #actually the gem 'rails_12factor' overrides this to true anyway :/
+  # Enable Rails's static asset server
+  # Some of my images aren't able to go through Cloudinary
   config.serve_static_assets = true
 
   # Full error reports are disabled and caching is turned on
