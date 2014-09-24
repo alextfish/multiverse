@@ -178,7 +178,6 @@ module ApplicationHelper
   end
 
   def format_links(text_in, cardset)
-    # Returns [text-out, out-fcn]
     # Translate [[[-links and (((-links into Maruku links
 
     cardset_mockup_regexp   = /\(\(([^)]*)\)\)/
@@ -201,6 +200,7 @@ module ApplicationHelper
           cardset_cardnames_and_codes << card.name
           cardset_cards_from_name_or_code[card.name] = card
           if card.split? && card.primary? && !card.link.name.blank?
+            # Allow links to "Fire // Ice" as well as "Ice"
             cardset_cardnames_and_codes << card.printable_name
             cardset_cards_from_name_or_code[card.printable_name] = card
           end
@@ -253,7 +253,7 @@ module ApplicationHelper
       anchor = "#" + anchor;
     end  
     # Determine the shape of the desired JS AJAX tooltip
-    "<a class=\"cardmockup #{card.tooltip_shape}\" name=\"#{card.id}\" href=\"#{url_for(card)}#{anchor}\">#{content}</a>".html_safe
+    "<a class=\"cardmockup #{card.tooltip_shape}\" name=\"#{card.id}\" href=\"#{url_for(card)}#{anchor}\">#{sanitize(content)}</a>".html_safe
   end
   def card_id_mockup(this_id)
     if Card.find_by_id(this_id)

@@ -16,8 +16,8 @@
 #
 
 class Comment < ActiveRecord::Base
-  belongs_to :card
-  belongs_to :cardset
+  belongs_to :card, touch: true
+  belongs_to :cardset, touch: true
   belongs_to :user
 
   default_scope { order("comments.created_at") }
@@ -64,7 +64,7 @@ class Comment < ActiveRecord::Base
       return full_link
     end
     # OK, it's bad: let's try to fix it
-    possible_targets = Card.find_all_by_name inside_link
+    possible_targets = Card.where("name = ?", inside_link)
     if !possible_targets.empty?
       # Either there's one hit, [0], or
       # there's multiple, in which case we want the chronologically earliest -
@@ -101,7 +101,7 @@ class Comment < ActiveRecord::Base
       return "(((#{inside_link})))"
     end
     # Check for a Multiverse card anywhere
-    possible_targets = Card.find_all_by_name inside_link
+    possible_targets = Card.where("name = ?", inside_link)
     if !possible_targets.empty?
       # Either there's one hit, [0], or
       # there's multiple, in which case we want the chronologically earliest -

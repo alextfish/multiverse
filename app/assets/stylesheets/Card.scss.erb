@@ -160,7 +160,7 @@ $LargePortraitCardHeight: 2 * $CardWidth;
 .editborder_outer { display: inline-block; margin: 10px 2px 10px 0px; }
 
 .innercardborder { width: $CardWidth; min-height: $CardHeight; }
-.flip .innercardborder { min-height: 0px; height: autol }
+.flip .innercardborder { min-height: 0px; height: auto; }
 .split .innercardborder { width: auto; min-height: $CardWidth; height: $CardWidth; }
 
 
@@ -244,7 +244,8 @@ div.card_loading {
   width: $CardWidth;
   text-align: center;
 }
-.pinline { position: relative; z-index: 1; }
+/* Avoid setting position: relative on pinlines - it prevents the card name bar floating above the foil overlay */
+.pinline { z-index: 1; }
 .pinline_box { padding: 2px;}
 .pinline_sides { padding-left: 2px; padding-right: 2px; }
 .pinline_sidesbottom { padding-left: 2px; padding-right: 2px; padding-bottom: 2px; }
@@ -343,6 +344,7 @@ div.card_loading {
 .form .cardrarity { position: relative; right: auto; left: 20px; }
 .watermark { background-repeat: no-repeat !important; 
             background-position: center !important; 
+            background-size: contain;
             z-index: 1; 
             position: absolute; 
             left: -2px;
@@ -350,7 +352,7 @@ div.card_loading {
             height: 100%;
             width: 100%;}
 $CardTextHeight: 105px; /* up for M15 from 95px; */
-.cardtext { /*width: *; */
+.cardtext { position: relative; /* to make watermarks centre correctly */
             min-height: $CardTextHeight;
             padding: 2px; }
 .rulestext_wrapper { z-index: 2; position: relative; }
@@ -367,23 +369,52 @@ $CardTextHeight: 105px; /* up for M15 from 95px; */
   font-variant: small-caps;
 }
 .form .artist {
-  top: 38px;
+  /* top: 38px; */
   position: relative;
 }
-.blackborder .artist {
+.flip .card .artist {
+  width: 100%;
+  display: block;
+  padding-right: 3px;
+  padding-left: 10px;
+  position: relative;
+  left: -3px;
+  top: +10px;
+}
+
+.blackborder .artist, .blackborder .hologram_container {
 color: white; background: black;
 }
-.whiteborder .artist {
+.whiteborder .artist, .whiteborder .hologram_container {
 color: black; background: white;
 }
-.silverborder .artist {
+.silverborder .artist, .silverborder .hologram_container {
 color: black; background: $SilverBorder;
 }
-.goldborder .artist {
+.goldborder .artist, .goldborder .hologram_container {
 color: black; background: $GoldBorder;
 }
-.purpleborder .artist {
+.purpleborder .artist, .purpleborder .hologram_container {
 color: white; background: $PurpleBorder;
+}
+.hologram_container {
+  position: absolute;
+  top: -8px;
+  left: $CardWidth / 2 - 17px;
+  margin: auto;
+  background-color: black;
+  border-top: 1px solid black;
+  width: 34px;
+  height: 18px;
+  @include elliptical_corners_asymmetric(17px, 9px, 0, 0);
+  z-index: +3;
+}
+.hologram {
+  background-color: #ddd;
+  width: 28px;
+  height: 14px;
+  margin: 2px 3px;
+  @include elliptical_corners(18px, 8px);
 }
 .ptbox_container { 
   float: right; 
@@ -558,7 +589,7 @@ color: white; background: $PurpleBorder;
   background: none !important;
   background-image: image-url("loyalty.png") !important;
   background-repeat: no-repeat !important;
-border: none;
+  border: none;
   color: white !important;
   height: 40px;
   width: 40px;
@@ -668,24 +699,24 @@ border: none;
 .split input { width: 100px; }
 .split input[type="checkbox"] { width: auto; }
 
-.flip .card { min-height: 0px; }
+.flip .card, .form .flip .card { min-height: 0px; height: auto !important; }
 .flip .part1 .cardart_container { @include hide_but_allow_children; }
 .flip .part1 .artist_area { display: none; }
 .flip .part2 .cardrarity { display: none; }
 .flip .cardtext { min-height: 38px; }
-.flip .cardart { min-height: 105px;  }
+.flip .cardart { min-height: 122px; /* 105px; */ }
 
 .flip .part1 .typebox { position: absolute; z-index: +2; top: +70px; width: 190px; }
 .flip .part1 .ptbox_container { z-index: +2; left: +6px;}
 .flip .part1 .pinline_ptbox { top: -3px; }
-.flip .part2 .cardart_container { position: relative; top: -32px;}
+.flip .part2 .cardart_container { position: relative; top: -12px; /* -32px; */ }
 .flip .part1 .cardrarity { z-index: +2; top: 211px; }
 
-.flip .part2 .namebox { /* position: absolute; */ z-index: +2; top: 162px; }
+.flip .part2 .namebox { position: relative; z-index: +2; top: 179px; /* 162px; */ }
 .flip .part2 .typebox { top:-33px; position: relative; }
 .flip .part2 .pinline_ptbox { z-index: 2; right: 147px; top: -90px; }
 .flip .part2 .cardtext_container { top: -32px; position: relative; }
-.flip .part2 .bottombox { z-index: +1; width: 188px; position: absolute; top: 190px; bottom: 0px; margin-bottom: 0px; }
+.flip .part2 .bottombox { z-index: +1; width: 188px; position: absolute; /* top: 190px */; bottom: 0px; margin-bottom: 0px; }
 
 .flip .part2 .cardtext, .flip .part2 .namebox, .flip .part2 .typebox, .flip .part2 .pinline_ptbox,
 .flip.form .part2 .frame_selector_wrapper {

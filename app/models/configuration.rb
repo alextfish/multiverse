@@ -28,7 +28,7 @@ class Configuration < ActiveRecord::Base
   attr_protected :id, :cardset_id
   attr_accessor :admins
 
-  belongs_to :cardset
+  belongs_to :cardset, touch: true
 
   people_options = {
     :anyone => "Anyone",

@@ -17,7 +17,7 @@ require 'csv'
 
 class Cardset < ActiveRecord::Base
   attr_accessible :name, :description
-  belongs_to :user
+  belongs_to :user, touch: true
   has_many :cards, :dependent => :destroy
   has_many :admins, :class_name => "User"
   has_many :details_pages, :dependent => :destroy
@@ -27,6 +27,8 @@ class Cardset < ActiveRecord::Base
   has_many :logs
   has_one :news_list, :dependent => :destroy
   has_one :last_edit_log, :class_name => "Log", :dependent => :destroy
+  
+  default_scope { order("updated_at DESC") }
 
   validates_length_of :name, :within => 2..40
   validate do |cardset|
@@ -126,7 +128,6 @@ class Cardset < ActiveRecord::Base
   end
   def listable_cards # For cardlists that should include nonactive cards
     Card.includes(:comments).where("cardset_id = ?", self.id).select {|c| !c.secondary?}
-    # find_all_by_cardset_id(self.id, :include => :comments).select {|c| !c.secondary?}
   end 
   
   ########################## Permissions #########################  
@@ -791,4 +792,10 @@ class Cardset < ActiveRecord::Base
     log_text = "#{new_cards} created, #{overwritten_cards} updated"
     return true, message, log_text, cards_and_comments.map { |card, comment| card }
   end
+  
+  def update_timestamp_from_logs
+    self.updated_at = self.recent_action.updated_at
+    self.save!
+  end
+  
 end

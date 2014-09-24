@@ -57,7 +57,7 @@ Multiverse::Application.routes.draw do
   #get 'sessions/new'
   get '/signup',  :to => 'users#new'
   get '/signin',  :to => 'sessions#new'
-  get '/signout', :to => 'sessions#destroy'
+  match '/signout', :to => 'sessions#destroy', via: [:get, :delete]
   get '/profile', :to => 'users#show'
 
   resources :searches, :only => [:advanced, :do_search, :do_quicksearch, :show]

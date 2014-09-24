@@ -13,9 +13,21 @@ class CardsetsController < ApplicationController
   before_filter do
     @printable = params.has_key?(:printable)
   end
-  before_filter :nocache_param
+  before_filter :except => [:index] { nocache_param }
+  before_filter :only => [:index] { nocache_param_index }
   after_filter :only => [:create, :update, :destroy, :import_data, :generate_skeleton] do
     expire_cardset_recentchanges_line_cache
+  end
+  
+  
+  def nocache_param_index
+    if params.has_key?(:nocache)
+      Cardset.all.each do |cs|
+        @cardset = cs
+        expire_cardset_recentchanges_line_cache
+      end
+      @cardset = nil
+    end
   end
   
   # All static views
@@ -29,7 +41,7 @@ class CardsetsController < ApplicationController
   def index
     @cardsets = Cardset.all
     globalState = GlobalState.instance
-    if stale?(:last_modified => globalState.lastedit, :etag => "recent_changes")
+    if params.has_key?(:nocache) || stale?(:last_modified => globalState.lastedit, :etag => "recent_changes")
       respond_to do |format|
         format.html # index.html.erb
         format.xml  { render :xml => @cardsets }

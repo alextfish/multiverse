@@ -120,6 +120,7 @@ var colour_affiliation_regexps = {
     "Black": /(\([Bb]\)|\{[Bb]\}|[Ss]wamp)/, 
     "Red"  : /(\([Rr]\)|\{[Rr]\}|[Mm]ountain)/, 
     "Green": /(\([Gg]\)|\{[Gg]\}|[Ff]orest)/, 
+    "Multicolour": /any colo[u]?r/
 }
 
 function update_frame(card_id) {
@@ -167,7 +168,7 @@ function update_frame(card_id) {
                   // Detect land colour affiliation
                   var cardtext = this_card.select(".rulestextfield")[0].value;
                   var affiliated_colours = [];
-                  ["White", "Blue", "Black", "Red", "Green"].each(function(this_colour) {
+                  ["White", "Blue", "Black", "Red", "Green", "Multicolour"].each(function(this_colour) {
                     if (cardtext.search(colour_affiliation_regexps[this_colour])>-1 || cardsubtype.search(colour_affiliation_regexps[this_colour])>-1 ) {
                       affiliated_colours.push(this_colour);
                     }

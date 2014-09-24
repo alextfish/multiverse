@@ -74,27 +74,9 @@ module CardsHelper
        (card.subtype.blank?   ? "" : (html ? " &ndash; " : " - ") + "#{h(card.subtype)}")
   end
   def standard_watermark_filename(watermark)
-    dict = {
-      "{White Mana}" => "w.png",
-      "{Blue Mana}"  => "u.png",
-      "{Black Mana}" => "b.png",
-      "{Red Mana}"   => "r.png",
-      "{Green Mana}" => "g.png",
-      "{Boros}"    => "boros.png",
-      "{Selesnya}" => "selesnya.png",
-      "{Golgari}"  => "golgari.png",
-      "{Dimir}"    => "dimir.png",
-      "{Izzet}"    => "izzet.png",
-      "{Gruul}"    => "gruul.png",
-      "{Orzhov}"   => "orzhov.png",
-      "{Azorius}"  => "azorius.png",
-      "{Simic}"    => "simic.png",
-      "{Rakdos}"   => "rakdos.png",
-      "{Mirran}"    => "mirran.png",
-      "{Phyrexian}" => "phyrexian.png",
-    }
-    if dict[watermark]
-      "/assets/watermarks/" + dict[watermark]
+    watermark_clean = watermark.gsub(/[{}]/, '')
+    if Card.known_watermarks.include? watermark_clean
+      image_path("/assets/watermarks/#{watermark_clean.downcase.gsub(/ /,'_')}.png")
     else
       ""
     end

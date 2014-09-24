@@ -104,6 +104,10 @@ class CommentsController < ApplicationController
       redirect_to parent_view(@comment)
     end
   end
+  
+  def edit
+    Rails.logger.info "Edititng comment #{@comment.id}: body is #{@comment.body} (#{@comment.body.length} chars)"
+  end
 
   # PUT /comments/1
   def update

@@ -263,10 +263,10 @@ strong.highlight {
   background-color: #EDD;
 }
 .rowodd td.access_Editable {
-  background-color: #E9F5FF;
+  background-color: #E2EFFA /* #DFECF8; /* #E9F5FF; */
 }
 .rowodd td.access_Viewable {
-  background-color: #EFE;
+  background-color: #E5FFE5;
 }
 .rowodd td.access_Private {
   background-color: #FEE;

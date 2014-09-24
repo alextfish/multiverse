@@ -18,8 +18,9 @@
       <div class="cardname">
        <% if link && card_index==0 %>
         <%= link_to_card(card, card.individual_name) %>
+        <% # using individual_name as that'll give a code or Card1234 if the name is empty, to be something to bear the link %>
        <% else %>
-        <span title="<%= card.code %>"><%= card.name %></span>
+        <span title="<%= card.code %>"><%= sanitize(card.name) %></span>
        <% end %>
       </div>
       <% if card.show_mana_cost? %>
@@ -96,6 +97,11 @@
      </div>
     <div class="bottombox">
      <span class="artist"><% if !card.artist.blank? %>Illus. <%= card.artist %><% end %></span>
+     <% if ["rare", "mythic"].include? card.rarity %>
+     <div class="hologram_container">
+       <div class="hologram"></div>
+     </div>
+     <% end %>
      <% if !card.power.blank? || !card.toughness.blank? %>
      <div class="ptbox_container">
       <div class="pinline pinline_box pinline_ptbox">

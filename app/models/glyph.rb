@@ -13,7 +13,7 @@
 #
 
 class Glyph < ActiveRecord::Base
-  belongs_to :cardset 
+  belongs_to :cardset, touch: true
   attr_protected :cardset_id
   validates :url, :presence => true
   

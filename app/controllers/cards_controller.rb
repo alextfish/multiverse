@@ -113,10 +113,16 @@ class CardsController < ApplicationController
       @card.frame = "Auto"
       @card.rarity = Card.default_rarity
     end
+    (Card.string_fields-["code"]).each do |field|
+      if params[field]
+        @card[field] = params[field]
+      end
+    end
     @card.link = @card.new_linked_card
     if params[:relation] && params[:initial_comment].blank?
       params[:initial_comment] = "See (((C#{params[:relation]})))."
     end
+    Rails.logger.info "Card attributes: #{@card.attributes.inspect}"
   end
   
   def move

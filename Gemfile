@@ -18,7 +18,7 @@ group :production do
 #  gem 'mysql'
 #  gem "mysql2", "~> 0.3.11"
 end
-gem 'rails_12factor'
+#gem 'rails_12factor'
 
 platforms :ruby do # linux
   gem 'unicorn'
