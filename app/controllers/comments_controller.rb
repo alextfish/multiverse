@@ -94,6 +94,7 @@ class CommentsController < ApplicationController
 
       ok = @comment.save
       if ok
+        @comment.parent.touch
         log_kind = ( @comment.card ? :comment_card : :comment_cardset )
         @cardset.log :kind=>log_kind, :user=>current_user, :object_id=>@comment.id
         
@@ -112,6 +113,7 @@ class CommentsController < ApplicationController
 
   # PUT /comments/1
   def update
+    # Do NOT touch the parent here - comment updates don't appear in RC
     @comment = Comment.find(params[:id])
     old_addr = @comment.addressed?
     old_hili = @comment.highlighted?
@@ -144,6 +146,7 @@ class CommentsController < ApplicationController
   # DELETE /comments/1
   def destroy
     @comment = Comment.find(params[:id])
+    @comment.parent.touch
     @comment.destroy
     @cardset.log :kind=>:comment_delete, :user=>current_user, :object_id=>@comment.parent.id
 

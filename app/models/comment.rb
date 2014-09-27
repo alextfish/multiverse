@@ -16,8 +16,8 @@
 #
 
 class Comment < ActiveRecord::Base
-  belongs_to :card, touch: true
-  belongs_to :cardset, touch: true
+  belongs_to :card   #, touch: true
+  belongs_to :cardset#, touch: true
   belongs_to :user
 
   default_scope { order("comments.created_at") }
