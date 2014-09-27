@@ -90,7 +90,7 @@ class CardsController < ApplicationController
   # GET /cards/1.xml
   def show
     @card2 = @card.link
-    @comment = Comment.new(:card => @card)
+    @comment = Comment.new(:card => @card, :cardset => @card.cardset)
 
     respond_to do |format|
       format.html # show.html.erb

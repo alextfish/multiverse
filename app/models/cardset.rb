@@ -58,6 +58,11 @@ class Cardset < ActiveRecord::Base
     (cardset_comments + card_comments)
   end
   
+  def cardset_level_comments
+    # Includes only individual comments
+    cardset_comments = Comment.where("cardset_id = ? AND card_id IS NULL", self.id)
+  end
+  
   def log(in_hash)
     # Create the Log
     new_log = self.logs.create :kind=>Log.kind(in_hash[:kind]), 

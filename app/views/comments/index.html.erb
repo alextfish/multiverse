@@ -8,7 +8,7 @@
 
 <br>
 <div class="commentlist">
-   <% @cardset.comments.reject(&:new_record?).sort_by(&:created_at).each do |comment| %>
+   <% @cardset.cardset_level_comments.reject(&:new_record?).sort_by(&:created_at).each do |comment| %>
      <% @comment = comment %>
      <%= render :partial => "shared/comment", :locals => { :show_buttons => true, :show_date => true } %>
    <% end %>
