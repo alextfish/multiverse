@@ -76,7 +76,7 @@ end
 gem 'cloudinary'
 
 # Rails 4 migration assistance
-# gem 'protected_attributes'
+gem 'protected_attributes'
 gem 'rails-observers'
 gem 'actionpack-page_caching'
 gem 'actionpack-action_caching'
