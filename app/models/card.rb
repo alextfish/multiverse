@@ -33,13 +33,14 @@
 
 class Card < ActiveRecord::Base
   belongs_to :cardset, touch: true
-  # attr_protected :cardset_id
+  attr_protected :cardset_id
 
   has_many :comments, :dependent => :destroy
   has_many :old_cards, :dependent => :destroy
   has_many :decklists, :through => :deck_cards
   
   attr_accessor :foil, :blank, :frame_display, :structure_display  # not saved
+  
   belongs_to :link, :class_name => "Card", :inverse_of => :parent
   belongs_to :parent, :class_name => "Card", :inverse_of => :link
   accepts_nested_attributes_for :link, :reject_if => proc { |attributes| attributes["rulestext"].blank? && attributes["name"].blank? }

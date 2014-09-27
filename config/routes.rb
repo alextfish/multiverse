@@ -24,7 +24,7 @@ Multiverse::Application.routes.draw do
   resources :cards do
     member do
       get 'move'
-      put 'process_move'
+      patch 'process_move'
       get 'mockup'
     end
   end

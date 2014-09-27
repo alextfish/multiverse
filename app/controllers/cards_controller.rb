@@ -209,7 +209,8 @@ class CardsController < ApplicationController
   def update
     @card2 = @card.link
     # Don't allow cardset moves via update action
-    params.delete_if {|key, value| key == :cardset } 
+    params[:card].delete_if {|key, value| key == "cardset_id" } 
+    params[:card][:link].present? && params[:card][:link].delete_if {|key, value| key == "cardset_id" } 
     
     old_multipart = @card.multipart?
     if @card.update_attributes(params[:card])
@@ -246,7 +247,8 @@ class CardsController < ApplicationController
     @cardset2 = Cardset.find(params[:card][:cardset_id])
     require_permission_to(:admin, @cardset1) or return
     require_permission_to_edit(@cardset2) or return
-    if @card.update_attributes(params[:card])
+    @card.cardset = @cardset2
+    if @card.save # update_attributes(params[:card], :as => :mover)
       process_card
       set_last_edit @card
       @cardset1.log :kind=>:card_move_out, :user=>current_user, :object_id=>@card.id, :text=>@cardset2.name

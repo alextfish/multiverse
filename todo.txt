@@ -11,16 +11,16 @@ RAILS TODO BEFORE DEPLOY:
 DEPLOY PROCESS:
 * Push to new heroku server
 * Test assorted things on toy data on new live server
-*| Put old site into maintenance mode
-*- Download old database
-*- Push database to new site
-*- Edit Heroku billing to allow new db to grow
+/| Put old site into maintenance mode
+-- Download old database
+-- Push database to new site
+-- Edit Heroku billing to allow new db to grow
 *| heroku run rails runner Rails.cache.clear
 *| heroku run rails runner Cardset.all.each do :update_timestamp_from_logs end
 *- Test new live server with new database
 *| Push auto-redirect-to-corresponding-page to old site
 *| Bring old site out of maintenance mode
-* Delete database on old site
+- Delete database on old site
 - Edit Heroku billing to remove old db 
 
 ----

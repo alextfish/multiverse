@@ -363,7 +363,7 @@ $CardTextHeight: 105px; /* up for M15 from 95px; */
             padding: 2px; }
 .rulestext_wrapper { z-index: 2; position: relative; }
 .rulestext, .flavourtext {}
-.cardtext br { margin-bottom: 0.25em; }
+.cardtext br { margin-bottom: 0.25em; line-height: 1.25em;}
 .cardtext .flavourtext br { margin-bottom: 0px; line-height: 1em; }
 .cardtext div, .cardtext p { margin: 0px; }
 
@@ -437,120 +437,20 @@ color: white; background: $PurpleBorder;
     position: absolute; top: -7px; right: 0px;
     min-width: 80%;
     text-align: center;
-  }
-  .pinline { position: relative; z-index: 1; }
-  .pinline_box { padding: 2px;}
-  .pinline_sides { padding-left: 2px; padding-right: 2px; }
-  .pinline_sidesbottom { padding-left: 2px; padding-right: 2px; padding-bottom: 2px; }
-  .split {
-    .pinline_box { padding: 1px;}
-    .pinline_sides { padding-left: 1px; padding-right: 1px; }
-    .pinline_sidesbottom { padding-left: 1px; padding-right: 1px; padding-bottom: 1px; }
-  }
-  .pinline_box {
-      border-left: 1px solid black;
-      border-right: 1px solid black;
-      border-bottom: 1px solid black;
-      @include elliptical_corners(6px, 12px); }
-  .pinline_box > div { border: 1px solid black;
-      @include elliptical_corners(4px, 8px);
-      padding-left: 3px;
-      padding-right: 3px; }
-  /* Left side outer */
-  .pinline_sides, .pinline_sidesbottom {
-    border-left: 1px solid black; }
-  /* Left side inner */
-  .pinline_sides > div, .pinline_sidesbottom  > div {
-    border-left: none; }
-  /* Right side inner */
-  .pinline_sides > div, .pinline_sidesbottom  > div {
-    border-right: 1px solid black; }
-  /* Right side outer */
-  .pinline_sides, .pinline_sidesbottom {
-    border-right: none; }
-  /* Bottom inner */
-  .pinline_sidesbottom > div {
-    border-bottom: none; }
-  /* Bottom outer */
-  .pinline_sidesbottom {
-    border-bottom: 1px solid black; }
-  /* .pinline_sides, .pinline_sides > div {
-     border-left: 1px solid black; border-right: 1px solid black; }
-  .pinline_sidesbottom, .pinline_sidesbottom > div {
-     border-left: 1px solid black; border-right: 1px solid black; border-bottom: 1px solid black; } */
-
-  .cardtitlebar, .cardtypebar { font: bold 9pt serif; padding-top: 1px; /* padding-bottom: 1px; */ }
-  .cardname { float: left;
-     position: relative; z-index: +5;  /* so that foils' names are still clickable */
-  }
-  .cardmanacost { float: right; padding-right: 3px; }
-  .cardart_container, .cardtext_container { background: inherit; padding-left: 4px; padding-right: 4px; }
-  .cardart {  position: relative;
-              min-height: 123px; text-align: center; 
-              overflow: hidden; /* make rounded borders clipping (tokens, planeswalkers) */ }
-  .cardart.image { background:url(<%= asset_path "loading.gif" %>) no-repeat center;}
-  .cardart img { position: absolute; left: 0px;
-              width: 180px;
-              z-index: 0;}
-  .cardtypebar { padding-right: 0px !important;
-                position: relative; }
-  .cardtype { }
-  .cardrarity { position: absolute; 
-              right: 0px;
-              top: -1px;
-              padding-left: 3px;
-              padding-right: 3px;
-              margin-right: 2px;
-              border: 1px solid black; }
-  .cardrarity.none { border: none; }
-              
-  @-moz-document url-prefix() { /* Firefox wants it just fractionally lower... */
-    .cardrarity { top: -0.5px; }
-  }
-  .form .cardrarity_container { position: relative; }
-  .form .cardrarity { position: relative; right: auto; left: 20px; }
-  .watermark { background-repeat: no-repeat !important; 
-              background-position: center !important; 
-              z-index: 1; 
-              position: absolute; 
-              left: -2px;
-              top: -2px;
-              height: 100%;
-              width: 100%;}
-  $CardTextHeight: 95px;
-  .cardtext { /*width: *; */
-              min-height: $CardTextHeight;
-              padding: 2px; }
-  .rulestext_wrapper { z-index: 2; position: relative; }
-  .rulestext, .flavourtext {}
-  .cardtext br { margin-bottom: 0.25em; line-height: 1.5em; }
-  .cardtext .flavourtext br { margin-bottom: 0px; line-height: 1em; }
-  .cardtext div, .cardtext p { margin: 0px; }
-  
-  .bottombox { /* background: inherit; */
-              margin-bottom: 4px; padding-right: 6px;
-              position: relative;
-              font: 8pt serif; }
-  .ptbox_container { float: right; position: relative; height: 10px; min-width: 25%; }
-  .Planeswalker .ptbox_container { height: auto; }
-  .pinline_ptbox { float: right;
-      position: absolute; top: -7px; right: 0px;
-      min-width: 80%;
-      text-align: center;
-      padding-right: 0px; }
-  .ptbox { min-width: 90%;
-          font: 11pt serif;
-          padding: 0px !important; }
-  .pinline_ptbox {
-    border-right-color: #ccc;
-    border-top-color: #ccc;
-   }
- .pinline_ptbox div {
-    border-left-color: #ccc;
-    border-bottom-color: #eee;
-    border-top: 2px solid #444;
-    border-right: 2px solid #4c4c4c;
-   }
+    /* padding-right: 0px; */ }
+.ptbox { min-width: 90%;
+        font: 11pt serif;
+        padding: 0px !important; }
+.pinline_ptbox {
+  border-right-color: #ccc;
+  border-top-color: #ccc;
+ }
+.pinline_ptbox div {
+  border-left-color: #ccc;
+  border-bottom-color: #eee;
+  border-top: 2px solid #444;
+  border-right: 2px solid #4c4c4c;
+ }
 
 /* .manacost { align: right; } */
 .cardtext { font-size: 9pt /*serif*/; }
@@ -678,7 +578,7 @@ color: white; background: $PurpleBorder;
   top: 0px;
   /* padding-bottom: 5px; */
 }
-.Planeswalker .cardtext br { margin-bottom: 5px; /*line-height: 1.25em;*/ }
+.Planeswalker .cardtext br { margin-bottom: 5px; line-height: 1.25em;}
 .loyalty.positive { background-image: image-url("loyaltyup.png"); }
 .loyalty.neutral  { background-image: image-url("loyaltynaught.png");
   padding-top: 3px;}
