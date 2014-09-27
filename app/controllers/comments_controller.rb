@@ -53,13 +53,14 @@ class CommentsController < ApplicationController
     # Define @cardset if available
     if params[:cardset_id]
       @cardset = Cardset.find_by_id(params[:cardset_id])
-    elsif params[:comment] && params[:comment][:cardset_id]
+    elsif params[:comment] && params[:comment][:cardset_id] && !params[:comment][:cardset_id].blank?
       @cardset = Cardset.find_by_id(params[:comment][:cardset_id])
     elsif @card
       @cardset = @card.cardset
-      Rails.logger.info "Setting @cardset to #{@cardset.name}"
     elsif @comment && @comment.cardset
       @cardset = @comment.cardset
+    else
+      Rails.logger.warn "Couldn't identify a cardset"
     end
   end
 
