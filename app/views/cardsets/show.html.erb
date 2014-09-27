@@ -77,7 +77,7 @@
       |
     <% end %>
     <%= link_to "Delete entire cardset", @cardset,
-      :confirm => "Really delete this whole cardset and all cards in it?",
+      :data => { :confirm => "Really delete this whole cardset and all cards in it?" },
       :method => :delete %>
   </p>
 <% end %>

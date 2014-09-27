@@ -11,7 +11,7 @@
 <%= render "form" %>
 
 <% if permission_to?(:delete, @card.cardset) %>
-  <%= link_to "Delete card", @card, :confirm => "Really DELETE #{@card.printable_name}?", :method => :delete %> |
+  <%= link_to "Delete card", @card, :data => { :confirm => "Really DELETE #{@card.printable_name}?" }, :method => :delete, :class => "no_tooltip" %> |
 <% end %>
 <%= link_to "Back to card", @card %> |
 <% show_move_link = permission_to?(:admin, @card.cardset) %>

@@ -133,7 +133,7 @@
         <td><%= link_to "Edit", edit_card_path(card) %></td>
       <% end %>
       <% if can_delete %>
-        <td><%= link_to "Delete", card, {:confirm => "Really DELETE #{card.printable_name}?", :method => :delete, :remote => true, :class => "no_tooltip" } %></td>
+        <td><%= link_to "Delete", card, {:data => { :confirm => "Really DELETE #{card.printable_name}?" }, :method => :delete, :remote => true, :class => "no_tooltip" } %></td>
       <% end %>
     </tr>
   <% end %>

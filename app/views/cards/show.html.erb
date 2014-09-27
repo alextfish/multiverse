@@ -71,7 +71,7 @@
            |
          <% end %>
          <% if show_delete_link %>
-           <%= link_to "Delete", @card, :confirm => "Really DELETE #{@card.printable_name}?", :method => :delete, :class => "card_delete_link no_tooltip" %>
+           <%= link_to "Delete", @card, :data => { :confirm => "Really DELETE #{@card.printable_name}?" }, :method => :delete, :class => "card_delete_link no_tooltip" %>
          <% end %>
        </div>
      <% end %>

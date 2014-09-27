@@ -34,7 +34,7 @@
       <div>
         <%= link_to "Edit", edit_cardset_mechanic_path(@cardset, @mechanic) %>
         <%= link_to "Destroy", cardset_mechanic_path(@cardset.id, @mechanic),
-                :confirm => "Are you sure you want to permanently delete the #{@mechanic.name} mechanic? Any mentions of this on cards will not be expanded!",
+                :data => { :confirm => "Are you sure you want to permanently delete the #{@mechanic.name} mechanic? Any mentions of this on cards will not be expanded!" },
                 :method => :delete %>
       </div>
     <% end %>

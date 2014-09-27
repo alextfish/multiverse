@@ -14,7 +14,7 @@
     <%= link_to image_tag("delete.png", :alt => "Delete this comment",
                           :title => "Delete this comment"),
                 @comment,
-                :confirm => "Really delete this comment?",
+                :data => { :confirm => "Really delete this comment?" },
                 :method => :delete %>
   <% end %>
   <% if permission_to?(:edit, @cardset)   # Editors can set comment status %>
