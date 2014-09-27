@@ -509,7 +509,6 @@ div.card_loading {
 /* line 366, C:/Users/Alex/Dropbox/Creations/rails_projects/multiverse/app/assets/stylesheets/Card.scss.erb */
 .cardtext br {
   margin-bottom: 0.25em;
-  line-height: 1.25em;
 }
 
 /* line 367, C:/Users/Alex/Dropbox/Creations/rails_projects/multiverse/app/assets/stylesheets/Card.scss.erb */
@@ -944,7 +943,6 @@ div.card_loading {
 /* line 581, C:/Users/Alex/Dropbox/Creations/rails_projects/multiverse/app/assets/stylesheets/Card.scss.erb */
 .Planeswalker .cardtext br {
   margin-bottom: 5px;
-  line-height: 1.25em;
 }
 
 /* line 582, C:/Users/Alex/Dropbox/Creations/rails_projects/multiverse/app/assets/stylesheets/Card.scss.erb */
