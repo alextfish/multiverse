@@ -5,10 +5,8 @@
 <%= render "setviews" %>
 
 <% @allmycards = @cardset.cards %>
-<% card_comments = Comment.find(:all, :include => :card,
-     :conditions => ["cards.cardset_id = ?", @cardset.id])  %>
-<% cardset_comments = Comment.find(:all,
-     :conditions => ["cardset_id = ?", @cardset.id])  %>
+<% card_comments = Comment.includes(:card).where(["cards.cardset_id = ?", @cardset.id]).references(:card)  %>
+<% cardset_comments = Comment.where(["card_id IS NULL AND cardset_id = ?", @cardset.id])  %>
 <% sorted_comments = (card_comments + cardset_comments).sort { |c1,c2| c2.recency <=> c1.recency } %>
 <% unaddressed_comments = sorted_comments.select { |c| c.unaddressed? } %>
 

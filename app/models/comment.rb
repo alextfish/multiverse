@@ -16,11 +16,11 @@
 #
 
 class Comment < ActiveRecord::Base
-  belongs_to :card
-  belongs_to :cardset
+  belongs_to :card, touch: true
+  belongs_to :cardset, touch: true
   belongs_to :user
 
-  default_scope order("comments.created_at")
+  default_scope { order("comments.created_at") }
 
   # Validate there's either a user name or a user ID
   attr_accessor :by_signed_in_user
@@ -45,7 +45,7 @@ class Comment < ActiveRecord::Base
   def check_links
     # "+?" = not greedy
     Rails.logger.info "Checking body for bad links"
-    body.gsub!(/\(\(\((.+?)\)\)\)/) {|link_contents| fix_internal_link(link_contents, $1)}
+    body.gsub!(/\(\((.+?)\)\)/) {|link_contents| fix_internal_link(link_contents, $1)}
     ############# COMMENTED OUT: the is_printed_card_name regexp
     ############# causes errors on production server!
     # body.gsub!(/\[\[\[(.+?)\]\]\]/) {|link_contents| fix_external_link(link_contents, $1)}
@@ -64,12 +64,12 @@ class Comment < ActiveRecord::Base
       return full_link
     end
     # OK, it's bad: let's try to fix it
-    possible_targets = Card.find_all_by_name inside_link
+    possible_targets = Card.where("name = ?", inside_link)
     if !possible_targets.empty?
       # Either there's one hit, [0], or
       # there's multiple, in which case we want the chronologically earliest -
       # which is also [0].
-      return "(((C#{possible_targets[0].id})))"
+      return "((C#{possible_targets[0].id}))"
     end
     # One more chance: it might not be an internal link at all, but a mistake for an external link.
     ############# COMMENTED OUT: the is_printed_card_name regexp
@@ -101,7 +101,7 @@ class Comment < ActiveRecord::Base
       return "(((#{inside_link})))"
     end
     # Check for a Multiverse card anywhere
-    possible_targets = Card.find_all_by_name inside_link
+    possible_targets = Card.where("name = ?", inside_link)
     if !possible_targets.empty?
       # Either there's one hit, [0], or
       # there's multiple, in which case we want the chronologically earliest -

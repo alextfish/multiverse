@@ -1,7 +1,7 @@
 <%= link_to_unless_current user.name, user %>:
 
 Joined <%= format_datetime(user.created_at) %>.
-<% @cardsets = Cardset.find_all_by_user_id(user.id).sort_by &:name %>
+<% @cardsets = Cardset.where("user_id = ?", user.id).sort_by &:name %>
 <%= pluralize(  (@cardsets ? @cardsets.length : 0), "cardset") %><% if @cardsets.any? %>:
   <%= raw(cardset_links(@cardsets).join(", ")) %>
 <% end %>

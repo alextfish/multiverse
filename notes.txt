@@ -1,0 +1,6 @@
+Rails tips:
+
+
+rake assets:clean
+rake assets:precompile
+rake cloudinary:sync_static

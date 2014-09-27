@@ -1,0 +1,19 @@
+---
+development:
+  cloud_name: hmwxtphuf
+  api_key: '473521291753638'
+  api_secret: NfsO38LB4vWAbLUPkiXVDtqkI7w
+  enhance_image_tag: true
+  static_image_support: true
+production:
+  cloud_name: hmwxtphuf
+  api_key: '473521291753638'
+  api_secret: NfsO38LB4vWAbLUPkiXVDtqkI7w
+  enhance_image_tag: true
+  static_image_support: true
+test:
+  cloud_name: hmwxtphuf
+  api_key: '473521291753638'
+  api_secret: NfsO38LB4vWAbLUPkiXVDtqkI7w
+  enhance_image_tag: true
+  static_image_support: false

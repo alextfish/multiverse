@@ -168,27 +168,19 @@ class SearchesController < ApplicationController
     
       case objects
         when :cardsets
-          out = Cardset.find(:all, 
-                             :conditions => condition, 
-                             :include => :configuration).select do |cardset|
+          out = Cardset.includes(:configuration).where( condition).select do |cardset|
                   permission_to? :view, cardset
                 end
         when :cards
-          out = Card.find(:all, 
-                          :conditions => condition, 
-                          :include => { :cardset => :configuration }).select do |card|
+          out = Card.includes( :cardset => :configuration ).where( condition ).select do |card|
                     permission_to? :view, card.cardset
                   end
         when :details_pages
-          out = DetailsPage.find(:all, 
-                          :conditions => condition, 
-                          :include => { :cardset => :configuration }).select do |dp|
+          out = DetailsPage.includes([ :card, { :cardset => :configuration }]).where( condition ).select do |dp|
                     permission_to? :view, dp.cardset
                   end
         when :comments
-          out = Comment.find(:all, 
-                          :conditions => condition, 
-                          :include => [ :card, { :cardset => :configuration }]).select do |comment|
+          out = Comment.includes([ :card, { :cardset => :configuration }]).where( condition ).select do |comment|
                     permission_to? :view, comment.get_cardset
                   end
         else

@@ -123,7 +123,7 @@
   <% end %>
 
 
-  <% recentcards = Card.order("updated_at DESC").find_all_by_cardset_id(@cardset.id, :limit => 5).reject {|c| c.secondary? } %>
+  <% recentcards = Card.order("updated_at DESC").where(:cardset_id => @cardset.id).limit(5).reject {|c| c.secondary? } %>
 
   <p>
     <% if !recentcards.empty? %>

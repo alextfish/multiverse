@@ -1,3 +1,14 @@
+//= depend_on_asset "loading.gif"
+//= depend_on_asset "foil_highlight.png"
+//= depend_on_asset "loyaltyup.png"
+//= depend_on_asset "loyaltynaught.png"
+//= depend_on_asset "loyaltydown.png"
+//= depend_on_asset "loyalty.png"
+//= depend_on_asset "loyalty_big.png"
+//= depend_on_asset "dfc_front.png"
+//= depend_on_asset "dfc_back.png"
+//= depend_on_asset "chaos_tiny.png"
+
 @mixin rotate_180 {
   /* Safari */
   -webkit-transform: rotate(-180deg);
@@ -89,10 +100,10 @@
   -webkit-border-radius: $tophorz $tophorz $bottomhorz $bottomhorz;
   -khtml-border-radius:  $tophorz $tophorz $bottomhorz $bottomhorz;
   border-radius:         $tophorz $tophorz $bottomhorz $bottomhorz;
-  -moz-border-radius:    #{$tophorz} #{$tophorz} #{$topvert} #{$topvert} / #{$bottomhorz} #{$bottomhorz} #{$bottomvert} #{$bottomvert};
-  -webkit-border-radius: #{$tophorz} #{$tophorz} #{$topvert} #{$topvert} #{$bottomhorz} #{$bottomhorz} #{$bottomvert} #{$bottomvert};
-  -khtml-border-radius:  #{$tophorz} #{$tophorz} #{$topvert} #{$topvert} / #{$bottomhorz} #{$bottomhorz} #{$bottomvert} #{$bottomvert};
-  border-radius:         #{$tophorz} #{$tophorz} #{$topvert} #{$topvert} / #{$bottomhorz} #{$bottomhorz} #{$bottomvert} #{$bottomvert};
+  -moz-border-radius:    #{$tophorz} #{$tophorz} #{$bottomhorz} #{$bottomhorz} / #{$topvert} #{$topvert} #{$bottomvert} #{$bottomvert};
+  -webkit-border-radius: #{$tophorz} #{$tophorz} #{$bottomhorz} #{$bottomhorz} / #{$topvert} #{$topvert} #{$bottomvert} #{$bottomvert};
+  -khtml-border-radius:  #{$tophorz} #{$tophorz} #{$bottomhorz} #{$bottomhorz} / #{$topvert} #{$topvert} #{$bottomvert} #{$bottomvert};
+  border-radius:         #{$tophorz} #{$tophorz} #{$bottomhorz} #{$bottomhorz} / #{$topvert} #{$topvert} #{$bottomvert} #{$bottomvert};
 }
 @mixin background_size($width, $height) {
   -webkit-background-size: $width $height; 
@@ -102,54 +113,55 @@
 }
 
 /***** Card display *****/
-  $BorderWidth: 10px;
-  .blackborder, .silverborder, .whiteborder, .purpleborder, .goldborder, .dfc .innercardborder {
-    @include round_corners($BorderWidth);
-    border-width: $BorderWidth;
-    border-style: solid; 
-    border-width: 1px;
-    padding: $BorderWidth - 1;
-  }
-  .blackborder, .blackborder.dfc .innercardborder { border-color: black; background-color: black; }
-  $SilverBorder: #a3a3a3;
-  .silverborder, .silverborder.dfc .innercardborder { border-color: $SilverBorder; background-color: $SilverBorder; }
-  $GoldBorder: #ca0;
-  .goldborder, .goldborder.dfc .innercardborder { border-color: $GoldBorder; background-color: $GoldBorder; }
-  $PurpleBorder: #a6f;
-  .purpleborder, .purpleborder.dfc .innercardborder { border-color: $PurpleBorder; background-color: $PurpleBorder; }
-  .whiteborder, .whiteborder.dfc .innercardborder {
-    border-color: black;
-    background-color: white;
-  }
-  .dfc.cardborder { 
-    // No border on the cardborder elements - it goes on the innercardborder instead
-    border: none;
-    padding: 0px;
-    background-color: transparent;
-  }
+$BorderWidth: 9px;  /* down for M15 frames from 10px */
+.blackborder, .silverborder, .whiteborder, .purpleborder, .goldborder, .dfc .innercardborder {
+  @include round_corners($BorderWidth);
+  border-width: $BorderWidth;
+  border-style: solid; 
+  border-width: 1px;
+  padding: $BorderWidth - 1;
+}
+.blackborder, .blackborder.dfc .innercardborder { border-color: black; background-color: black; }
+$SilverBorder: #a3a3a3;
+.silverborder, .silverborder.dfc .innercardborder { border-color: $SilverBorder; background-color: $SilverBorder; }
+$GoldBorder: #ca0;
+.goldborder, .goldborder.dfc .innercardborder { border-color: $GoldBorder; background-color: $GoldBorder; }
+$PurpleBorder: #a6f;
+.purpleborder, .purpleborder.dfc .innercardborder { border-color: $PurpleBorder; background-color: $PurpleBorder; }
+.whiteborder, .whiteborder.dfc .innercardborder {
+  border-color: black;
+  background-color: white;
+}
+.dfc.cardborder { 
+  // No border on the cardborder elements - it goes on the innercardborder instead
+  border: none;
+  padding: 0px;
+  background-color: transparent;
+}
 
-  $CardWidth: 200px;
-  $CardHeight: 300px;
-  $CardPaddingTop: 4px;
-  $CardPaddingBottom: 3px;
-  $CardPaddingLeft: 3px;
-  $CardPaddingRight: 3px;
-  $CardFormWidth: 350px;
-  $DFCCardWidth: 2 * $CardWidth + 4 * $BorderWidth + 5;
-  $SmallLandscapeCardWidth: $CardHeight;
-  $SmallLandscapeCardHeight: $CardWidth;
-  $LargeLandscapeCardWidth: 2 * $CardWidth;
-  $LargeLandscapeCardHeight: $CardHeight;
-  $LargePortraitCardWidth: $CardHeight;
-  $LargePortraitCardHeight: 2 * $CardWidth;
-  
-  .whiteborder .card, .whiteborder .editborder_inner { border: 1px solid #888; }
-  .editborder_inner { background: white; padding-right: 5px; }
-  .editborder_outer { display: inline-block; margin: 10px 2px 10px 0px; }
-  
-  .innercardborder { width: $CardWidth; min-height: $CardHeight; }
-  .flip .innercardborder { min-height: 0px; }
-  .split .innercardborder { width: auto; min-height: $CardWidth; }
+$CardWidth: 200px;
+$CardHeight: 300px;
+$CardPaddingTop: 4px;
+$CardPaddingBottom: 3px;
+$CardPaddingLeft: 2px;
+$CardPaddingRight: 2px;
+$M15PaddingBottom: 23px;
+$CardFormWidth: 350px;
+$DFCCardWidth: 2 * $CardWidth + 4 * $BorderWidth + 5;
+$SmallLandscapeCardWidth: $CardHeight;
+$SmallLandscapeCardHeight: $CardWidth;
+$LargeLandscapeCardWidth: 2 * $CardWidth;
+$LargeLandscapeCardHeight: $CardHeight;
+$LargePortraitCardWidth: $CardHeight;
+$LargePortraitCardHeight: 2 * $CardWidth;
+
+.whiteborder .card, .whiteborder .editborder_inner { border: 1px solid #888; }
+.editborder_inner { background: white; padding-right: 5px; }
+.editborder_outer { display: inline-block; margin: 10px 2px 10px 0px; }
+
+.innercardborder { width: $CardWidth; min-height: $CardHeight; }
+.flip .innercardborder { min-height: 0px; height: auto; }
+.split .innercardborder { width: auto; min-height: $CardWidth; height: $CardWidth; }
 
 
 img.tooltip_image.portrait {
@@ -193,33 +205,237 @@ div.card_loading {
   padding: 5px;
 }
   
-  .distinct_mockup_container.split { width: $SmallLandscapeCardWidth + 2 * $BorderWidth; }
-  .distinct_mockup_container.dfc { width: $DFCCardWidth; }
-  .distinct_mockup_container.portrait { width: $CardWidth + 2 * $BorderWidth; }
-  .card { /* background: #0ff; */
-          padding-top: $CardPaddingTop; padding-bottom: $CardPaddingBottom;
-          padding-left: $CardPaddingLeft; padding-right: $CardPaddingRight;
-          position: relative;
-          min-height: $CardHeight - $CardPaddingTop - $CardPaddingBottom;
-          width: $CardWidth - $CardPaddingLeft - $CardPaddingRight;
-        }
-  .foil {
-    position: absolute; top: 0px; background-image: url(<%= asset_path 'foil_highlight.png' %>);
-    top: 0; bottom: 0; left: 0; right: 0;
-    /* width: $CardWidth;  height: 285px; */
-  }
-  .cardborder {
-    position: relative;
-    width: $CardWidth;
-  }
-  .banner {
-    position: absolute;
-    top: 40px;
-    padding: 8px 0px;
-    font-size: 20pt;
-    background-color: #888;
-    z-index: 4;
-    width: $CardWidth;
+.distinct_mockup_container.split { width: $SmallLandscapeCardWidth + 2 * $BorderWidth; }
+.distinct_mockup_container.dfc { width: $DFCCardWidth; }
+.distinct_mockup_container.portrait { width: $CardWidth + 2 * $BorderWidth; }
+.card { /* background: #0ff; */
+  padding-top: $CardPaddingTop; padding-bottom: $CardPaddingBottom;
+  padding-left: $CardPaddingLeft; padding-right: $CardPaddingRight;
+  position: relative;
+  min-height: $CardHeight - $CardPaddingTop - $CardPaddingBottom - $M15PaddingBottom;
+  height: $CardHeight - $CardPaddingTop - $CardPaddingBottom - $M15PaddingBottom;
+  width: $CardWidth - $CardPaddingLeft - $CardPaddingRight;
+  @include elliptical_corners_asymmetric(4px, 4px, 20px, 20px);
+}
+/* Cards without M15 rounding: tokens, schemes, flip cards */
+/*.card.token, */
+.scheme .card, .flip .card {
+  min-height: $CardHeight - $CardPaddingTop - $CardPaddingBottom;
+  height: $CardHeight - $CardPaddingTop - $CardPaddingBottom;
+  @include round_corners(1px);
+  @include round_corners(0);
+}
+.foil {
+  position: absolute; top: 0px; background-image: image-url("foil_highlight.png");
+  top: 0; bottom: 0; left: 0; right: 0;
+  /* width: $CardWidth;  height: 285px; */
+}
+.cardborder {
+  position: relative;
+  width: $CardWidth;
+}
+.banner {
+  position: absolute;
+  top: 40px;
+  padding: 8px 0px;
+  font-size: 20pt;
+  background-color: #888;
+  z-index: 4;
+  width: $CardWidth;
+  text-align: center;
+}
+/* Avoid setting position: relative on pinlines - it prevents the card name bar floating above the foil overlay */
+.pinline { z-index: 1; }
+.pinline_box { padding: 2px;}
+.pinline_sides { padding-left: 2px; padding-right: 2px; }
+.pinline_sidesbottom { padding-left: 2px; padding-right: 2px; padding-bottom: 2px; }
+.split {
+  .pinline_box { padding: 1px;}
+  .pinline_sides { padding-left: 1px; padding-right: 1px; }
+  .pinline_sidesbottom { padding-left: 1px; padding-right: 1px; padding-bottom: 1px; }
+}
+.pinline_box {
+    border-left: 1px solid black;
+    border-right: 1px solid black;
+    border-bottom: 1px solid black;
+    @include elliptical_corners(6px, 12px); }
+.pinline_box > div { border: 1px solid black;
+    @include elliptical_corners(4px, 8px);
+    padding-left: 3px;
+    padding-right: 3px; }
+/* Left side outer */
+.pinline_sides, .pinline_sidesbottom {
+  border-left: 1px solid black; }
+/* Left side inner */
+.pinline_sides > div, .pinline_sidesbottom  > div {
+  border-left: none; }
+/* Right side inner */
+.pinline_sides > div, .pinline_sidesbottom  > div {
+  border-right: 1px solid black; }
+/* Right side outer */
+.pinline_sides, .pinline_sidesbottom {
+  border-right: none; }
+/* Bottom inner */
+.pinline_sidesbottom > div {
+  border-bottom: none; }
+/* Bottom outer */
+.pinline_sidesbottom {
+  border-bottom: 1px solid black; }
+/* .pinline_sides, .pinline_sides > div {
+   border-left: 1px solid black; border-right: 1px solid black; }
+.pinline_sidesbottom, .pinline_sidesbottom > div {
+   border-left: 1px solid black; border-right: 1px solid black; border-bottom: 1px solid black; } */
+
+.cardtitlebar, .cardtypebar { 
+  font: bold 9pt serif; padding-top: 1px; /* padding-bottom: 1px; */ 
+  position: relative;
+}
+.cardtitlebar:after, .cardtypebar:after {
+  content: " ";
+  width: 96%;
+  border-top: 1px solid #eee;
+  height: 2px;
+  position: absolute;
+  top: 0px;
+  left: 3px;
+}
+.form .cardtitlebar {
+  min-width: 300px;
+}
+.form.split .cardtitlebar {
+  min-width: inherit;
+}
+.dfc .part2 .cardtitlebar:after, .dfc .part2 .cardtypebar:after, .token .cardtitlebar:after, .token .cardtypebar:after {
+  border-top-color: rgba(255, 255, 255, 0.4);
+}
+.plane .cardtypebar:after {
+  border-top: none;
+}
+
+
+.cardname { float: left;
+   position: relative; z-index: +5;  /* so that foils' names are still clickable */
+}
+.cardmanacost { float: right; padding-right: 3px; }
+.cardart_container, .cardtext_container { 
+  background: inherit; 
+  margin-left: 4px; margin-right: 4px; 
+  padding-left: 0; padding-right: 0;
+}
+.cardart {  position: relative;
+            min-height: 123px; text-align: center; 
+            overflow: hidden; /* make rounded borders clipping (tokens, planeswalkers) */ }
+.cardart.image { background:image_url("loading.gif") no-repeat center;}
+.cardart img { position: absolute; left: 0px;
+            width: 180px;
+            z-index: 0;}
+.cardtypebar { padding-right: 0px !important;
+              position: relative; }
+.cardtype { }
+/* .form .cardtype { white-space: nowrap; } */ /* needs to let legendary split cards' type bars fit */
+.cardrarity { position: absolute; 
+            right: 0px;
+            top: -1px;
+            padding-left: 3px;
+            padding-right: 3px;
+            margin-right: 2px;
+            border: 1px solid black; 
+            z-index: +1; }
+.cardrarity.none { border: none; }
+            
+@-moz-document url-prefix() { /* Firefox wants it just fractionally lower... */
+  .cardrarity { top: -0.5px; }
+}
+.form .cardrarity_container { position: relative; }
+.form .cardrarity { position: relative; right: auto; left: 20px; }
+.watermark { background-repeat: no-repeat !important; 
+            background-position: center !important; 
+            background-size: contain;
+            z-index: 1; 
+            position: absolute; 
+            left: -2px;
+            top: -2px;
+            height: 100%;
+            width: 100%;}
+$CardTextHeight: 105px; /* up for M15 from 95px; */
+.cardtext { position: relative; /* to make watermarks centre correctly */
+            min-height: $CardTextHeight;
+            padding: 2px; }
+.rulestext_wrapper { z-index: 2; position: relative; }
+.rulestext, .flavourtext {}
+.cardtext br { margin-bottom: 0.25em; }
+.cardtext .flavourtext br { margin-bottom: 0px; line-height: 1em; }
+.cardtext div, .cardtext p { margin: 0px; }
+
+.bottombox { /* background: inherit; */
+            margin-bottom: 4px; padding-right: 6px;
+            position: relative;
+            font: 8pt serif; }
+.artist {
+  font-variant: small-caps;
+}
+.form .artist {
+  /* top: 38px; */
+  position: relative;
+}
+.flip .card .artist {
+  width: 100%;
+  display: block;
+  padding-right: 3px;
+  padding-left: 10px;
+  position: relative;
+  left: -3px;
+  top: +10px;
+}
+.flip .card.part1 .artist {
+  display: none;
+}
+
+.blackborder .artist, .blackborder .hologram_container {
+color: white; background: black;
+}
+.whiteborder .artist, .whiteborder .hologram_container {
+color: black; background: white;
+}
+.silverborder .artist, .silverborder .hologram_container {
+color: black; background: $SilverBorder;
+}
+.goldborder .artist, .goldborder .hologram_container {
+color: black; background: $GoldBorder;
+}
+.purpleborder .artist, .purpleborder .hologram_container {
+color: white; background: $PurpleBorder;
+}
+.hologram_container {
+  position: absolute;
+  top: -8px;
+  left: $CardWidth / 2 - 17px;
+  margin: auto;
+  background-color: black;
+  border-top: 1px solid black;
+  width: 34px;
+  height: 18px;
+  @include elliptical_corners_asymmetric(17px, 9px, 0, 0);
+  z-index: +3;
+}
+.hologram {
+  background-color: #ddd;
+  width: 28px;
+  height: 14px;
+  margin: 2px 3px;
+  @include elliptical_corners(18px, 8px);
+}
+.ptbox_container { 
+  float: right; 
+  position: relative; 
+  top: -5px;
+  right: -5px;
+  height: 10px; min-width: 25%; 
+}
+.Planeswalker .ptbox_container { height: auto; }
+.pinline_ptbox { float: right;
+    position: absolute; top: -7px; right: 0px;
+    min-width: 80%;
     text-align: center;
   }
   .pinline { position: relative; z-index: 1; }
@@ -272,7 +488,7 @@ div.card_loading {
   .cardart {  position: relative;
               min-height: 123px; text-align: center; 
               overflow: hidden; /* make rounded borders clipping (tokens, planeswalkers) */ }
-  .cardart.image { background:url(<%= asset_path 'loading.gif' %>) no-repeat center;}
+  .cardart.image { background:url(<%= asset_path "loading.gif" %>) no-repeat center;}
   .cardart img { position: absolute; left: 0px;
               width: 180px;
               z-index: 0;}
@@ -331,18 +547,20 @@ div.card_loading {
    }
  .pinline_ptbox div {
     border-left-color: #ccc;
-    border-bottom-color: #ccc;
+    border-bottom-color: #eee;
+    border-top: 2px solid #444;
+    border-right: 2px solid #4c4c4c;
    }
 
-  /* .manacost { align: right; } */
-  .cardtext { font-size: 9pt /*serif*/; }
-  .minitext, .nameminitext  { font-size: 9pt; }
-  .microtext { font-size: 8pt; }
-  .nanotext  { font-size: 7.5pt; }
-  .cardtext.enlarged { font-size: 10pt; }
-  .condensedtypeline { font-size: 8pt; letter-spacing: -2px; }
-  .flavourtext { font-style: italic; margin-top: .25em !important; }
-  .flavourtext i, .flavourtext em { font-style: normal; }
+/* .manacost { align: right; } */
+.cardtext { font-size: 9pt /*serif*/; }
+.minitext, .nameminitext  { font-size: 9pt; }
+.microtext { font-size: 8pt; }
+.nanotext  { font-size: 7.5pt; }
+.cardtext.enlarged { font-size: 10pt; }
+.condensedtypeline { font-size: 8pt; letter-spacing: -2px; }
+.flavourtext { font-style: italic; margin-top: .25em !important; }
+.flavourtext i, .flavourtext em { font-style: normal; }
 
 /* Mana symbol sizes */
 .cardmanacost img { width: 14px; height: 14px; /*vertical-align: middle;*/}
@@ -385,7 +603,7 @@ div.card_loading {
 
 .card.Planeswalker {
   padding-top: 0px;
-  min-height: $CardHeight - $CardPaddingBottom;
+  min-height: $CardHeight - $CardPaddingBottom - $M15PaddingBottom;
 }
 
 .Planeswalker .namebox { padding-top: 0px; }
@@ -404,7 +622,7 @@ div.card_loading {
   @include elliptical_corners(7px, 40px);
   border-right: 1px solid black;
   border-left: 1px solid white;
-  min-height: 141px; /* 131px; */
+  /* removed for M15: min-height: 141px; /* 131px; */
 }
 .Planeswalker .cardart.image {
   @include background_size(200px, 150px);
@@ -412,13 +630,16 @@ div.card_loading {
 
 
 .Planeswalker .cardtext {
-  @include elliptical_corners_asymmetric(4px, 18px, 8px, 12px); /* 4 18 8 32 */
+  @include elliptical_corners_asymmetric(4px, 18px, 38px, 12px); /* 4 18 8 32 */
   border-left: 1px solid black;
   border-bottom: 1px solid black;
   padding-left: 8px;
 }
+.Planeswalker .cardtext_container {
+  background: none;
+}
 .Planeswalker .cardtext_container .pinline_sidesbottom {
-  @include elliptical_corners_asymmetric(0px, 18px, 0px, 16px); /* 0 18 0 32 */
+  @include elliptical_corners_asymmetric(0px, 18px, 30px, 16px); /* 0 18 0 32 */
   padding-left: 16px;
 }
 
@@ -457,11 +678,11 @@ div.card_loading {
   top: 0px;
   /* padding-bottom: 5px; */
 }
-.Planeswalker .cardtext br { margin-bottom: 5px; line-height: 1.25em; }
-.loyalty.positive { background-image: url(<%= asset_path 'loyaltyup.png' %>); }
-.loyalty.neutral  { background-image: url(<%= asset_path 'loyaltynaught.png' %>);
+.Planeswalker .cardtext br { margin-bottom: 5px; /*line-height: 1.25em;*/ }
+.loyalty.positive { background-image: image-url("loyaltyup.png"); }
+.loyalty.neutral  { background-image: image-url("loyaltynaught.png");
   padding-top: 3px;}
-.loyalty.negative { background-image: url(<%= asset_path 'loyaltydown.png' %>); }
+.loyalty.negative { background-image: image-url("loyaltydown.png"); }
 
 .Planeswalker .pinline_ptbox.pinline {
   border: none;
@@ -475,9 +696,9 @@ div.card_loading {
 
 .Planeswalker .pinline_ptbox .ptbox {
   background: none !important;
-  background-image: url(<%= asset_path 'loyalty.png' %>) !important;
+  background-image: image-url("loyalty.png") !important;
   background-repeat: no-repeat !important;
-border: none;
+  border: none;
   color: white !important;
   height: 40px;
   width: 40px;
@@ -491,32 +712,19 @@ border: none;
   margin: 0 auto;
   text-align: left; }
 .Planeswalker .artist {
-  font-size: 7pt;
-  position: absolute; width: 80%; left: 15%; top: -2px;
-  padding-left: 20px;
-  @include elliptical_corners_asymmetric(30px, 0px, 12px, 0px);
-}
-.blackborder .Planeswalker .artist {
-  color: white; background: black;
-}
-.whiteborder .Planeswalker .artist {
-  color: black; background: white;
-}
-.silverborder .Planeswalker .artist {
-  color: black; background: $SilverBorder;
-}
-.goldborder .Planeswalker .artist {
-  color: black; background: $GoldBorder;
-}
-.purpleborder .Planeswalker .artist {
-  color: white; background: $PurpleBorder;
+  /* removed for M15: font-size: 7pt;
+  position: absolute; width: 80%; left: 15%; top: -5px;
+  padding-left: 20px; */
+  position: relative;
+  top: 8px;
+  @include elliptical_corners_asymmetric(30px, 10px, 12px, 0px);
 }
 
 .Planeswalker .powerfield#card_power { width: 0px; }
 
 /***** Tokens *****/
 
-.token .cardtext { min-height: 0px; }
+.token .cardtext { min-height: 60px; }
 .token .cardtext_container.notext { padding: 0px; display: none; }
 /* .token.card { height: 262px;} */
 .token.card.form { height: inherit; }
@@ -527,7 +735,8 @@ border: none;
 .token .cardname {
   float: none; display: inline;
   padding-right: 2px; /* to balance the text-shadow */
-  text-transform: uppercase;
+  /* changed for M15: text-transform: uppercase; */
+  font-variant: small-caps;
 }
 .token .cardtitlebar {
   background-color: #000 !important;
@@ -554,7 +763,7 @@ border: none;
   height: 100%;
   min-height: 175px;
   @include background_size(178px, 225px);
- }
+}
 .token .cardart_container .pinline_sides {
   @include elliptical_corners(45px, 32px);
   border-left: 1px solid black;
@@ -563,22 +772,25 @@ border: none;
   padding-left: 2px;
   padding-right: 3px;
   height: 100%;
- }
+}
 .token .cardart_container {
   @include elliptical_corners(44px, 32px);
- }
+}
+.token .ptbox_container {
+  /* top: 2px; */
+}
 
 /***** Split / Flip / Double-Faced Cards *****/
 
 .split.cardborder { min-height: $SmallLandscapeCardHeight; width: $SmallLandscapeCardWidth;}
 .dfc.form .card { width: $CardFormWidth; }
 .split.form#cardborder { width: 500px; }
-.split .card { min-height: 196px; padding-top: 2px; padding-bottom: 2px;}
+.split .card { min-height: 180px; height: 180px; padding-top: 2px; padding-bottom: 2px;}
 
 .split .part1, .split .part2 { display: inline-block; width: 139px;}
 .split .innercardborder, .dfc .innercardborder { display: inline-block; }
 .dfc .part1,   .dfc .part2 { display: inline-block; }
-.split .part2, .dfc .part2 { float: right;}
+.split .innercard2, .dfc .innercard2 { float: right;}
 .split.form .part1, .split.form .part2 { width: 240px;}
 /* .dfc.form .part1, .dfc.form .part2 { width: auto;} */
 
@@ -598,24 +810,25 @@ border: none;
 .split input { width: 100px; }
 .split input[type="checkbox"] { width: auto; }
 
-.flip .card { min-height: 0px; }
+.flip .card, .form .flip .card { min-height: 0px; height: auto !important; }
 .flip .part1 .cardart_container { @include hide_but_allow_children; }
 .flip .part1 .artist_area { display: none; }
 .flip .part2 .cardrarity { display: none; }
 .flip .cardtext { min-height: 38px; }
-.flip .cardart { min-height: 105px;  }
+.flip .cardart { min-height: 122px; /* 105px; */ }
 
 .flip .part1 .typebox { position: absolute; z-index: +2; top: +70px; width: 190px; }
-.flip .part1 .ptbox_container { z-index: +2; left: +6px;}
+.flip .part1 .ptbox_container { z-index: +2; left: +6px; top: 0;}
 .flip .part1 .pinline_ptbox { top: -3px; }
-.flip .part2 .cardart_container { position: relative; top: -32px;}
+.flip .part2 .cardart_container { position: relative; top: -12px; /* -32px; */ }
 .flip .part1 .cardrarity { z-index: +2; top: 211px; }
 
-.flip .part2 .namebox { /* position: absolute; */ z-index: +2; top: 162px; }
+.flip .part2 .namebox { position: relative; z-index: +2; top: 179px; /* 162px; */ }
 .flip .part2 .typebox { top:-33px; position: relative; }
+.flip .part2 .ptbox_container { right: -2px;}
 .flip .part2 .pinline_ptbox { z-index: 2; right: 147px; top: -90px; }
 .flip .part2 .cardtext_container { top: -32px; position: relative; }
-.flip .part2 .bottombox { z-index: +1; width: 188px; position: absolute; top: 190px; bottom: 0px; margin-bottom: 0px; }
+.flip .part2 .bottombox { z-index: +1; width: 188px; position: absolute; /* top: 190px */; bottom: 0px; margin-bottom: 0px; }
 
 .flip .part2 .cardtext, .flip .part2 .namebox, .flip .part2 .typebox, .flip .part2 .pinline_ptbox,
 .flip.form .part2 .frame_selector_wrapper {
@@ -632,14 +845,14 @@ border: none;
   margin-right: -100px;
 }
 
-.flip.form .part1 .cardtext_container { position: relative; top: -42px; }
+.flip.form .part1 .cardtext_container { position: relative; top: -64px; }
 .flip.form .part1 .typebox { position: relative; width: auto; top: 93px; /* top: 148px; */ }
 .flip.form .part1 .ptbox_container { top: -38px; }
 .flip.form .part1 .frame_selector_wrapper { @include show_children_of_hidden; top: +100px;}
 .flip.form .part1 .bottombox { height: 0px; /*20px;*/ }
 .flip.form .cardart { text-align: left; }
 .flip.form .type_field { width: 65px; }
-.flip.form .part2 .cardart_container { height: 50px; top: -65px;}
+.flip.form .part2 .cardart_container { height: 50px; top: -85px;}
 .flip.form .part2 .bottombox { position: relative; margin-top: 23px; top: 0px; }
 .flip.form .part2 .pinline_ptbox { right: 110px; top: -234px; }
 .flip.form .part2 .typebox { top: -32px; }
@@ -673,10 +886,10 @@ $DFCSunMoonSize: 20px;
   height: $DFCSunMoonSize;
 }
 .dfc .part1 .left_of_namebox {
-  background-image: url(<%= asset_path 'dfc_front.png' %>);
+  background-image: image-url("dfc_front.png");
 }
 .dfc .part2 .left_of_namebox {
-  background-image: url(<%= asset_path 'dfc_back.png' %>);
+  background-image: image-url("dfc_back.png");
 }
 .dfc.form .left_of_namebox {
   position: relative;
@@ -798,6 +1011,7 @@ $SchemeArtHeight: $SchemeInnerHeight - (3 + $PinlineBoxHeight + 3)*2 - ($CardTex
   }
   div.cardtext { /* "div" required because of the "> div" rule above */
     padding: 8px;
+    min-height: auto;
   }
   
   /* Forms */
@@ -881,7 +1095,7 @@ $PlaneArtHeight: $PlaneInnerHeight - (3 + $PinlineBoxHeight + 3) - ($CardTextHei
     z-index: +2;
   }
   .typebox, .typebar {
-    @include elliptical_corners_asymmetric(160px, 4px, 12px, 12px);
+    @include elliptical_corners_asymmetric(160px, 8px, 0px, 12px);
   }
   .typebar {
     border: 1px solid rgba(128, 128, 128, 0.5);
@@ -919,6 +1133,7 @@ $PlaneArtHeight: $PlaneInnerHeight - (3 + $PinlineBoxHeight + 3) - ($CardTextHei
   .form textarea.rulestextfield {
     border: none;
     padding: 10px 0px 0px 10px;
+    min-width: 300px;
   }
   /* Flavour text */
   .flavourtext, .form textarea.flavourtextfield {
@@ -936,7 +1151,7 @@ $PlaneArtHeight: $PlaneInnerHeight - (3 + $PinlineBoxHeight + 3) - ($CardTextHei
     width: 85%;
   }
   .flavourtext:before {
-    content: url(<%= asset_path 'chaos_tiny.png' %>);
+    content: image-url("chaos_tiny.png");
     display: inline-block;
     vertical-align: top;
     float: left;
@@ -956,8 +1171,8 @@ $PlaneArtHeight: $PlaneInnerHeight - (3 + $PinlineBoxHeight + 3) - ($CardTextHei
     width: 240px;
     text-align: center;
     border-top: 2px ridge $PlaneRidgeColour;
-    @include elliptical_corners_asymmetric(60px, 0px, 10px, 0px);
-    height: 18px;
+    @include elliptical_corners_asymmetric(120px, 20px, 10px, 0px);
+    height: 14px;
   }
   
   /* Forms */
@@ -1011,8 +1226,8 @@ img.colour_indicator {
 /***** Colours *****/
 $Colourless_Card: #ccc6cc;
 $Colourless_Text: #f2ecf2;
-$White_Card: #efe8d4; /* #FBF9EA; */
-$White_Pinline: #F2EFEA;
+$White_Card: #eae1c8; /* #efe8d4; and before that, #FBF9EA; */
+$White_Pinline: #fffef7; /* #F2EFEA; */
 $White_Bar: #fffff9;
 $White_Text: #fff;
 $Blue_Card: #63ACDA;
@@ -1078,16 +1293,19 @@ $Land_Colourless_DFC_Text: #D8CFC8;
   .pinline_ptbox  { background: $Colourless_DFC_Bar !important; }
 }
 
-.Artifact .pinline { background-color: #eee; }
+$ArtifactBorder: #9CAAB3; /* pre-M15: #ABC1CE; */
+
+.Artifact .pinline { background-color: #dbdfe0; }
 .Artifact .pinline_ptbox { background-color: #9CB7BE; }
 .Artifact .ptbox { background-color: #A8BFC7; }
 .Artifact .cardtitlebar, .Artifact .cardtypebar, .Land.Coloured_Artifact .cardtitlebar, .Land.Coloured_Artifact .cardtypebar  {
-   background: #B0C4C8;
-   @include gradient_vert_highlight(#B0C4C8, #D2D7DB);
+   background: #c6cfd6; /* pre-M15: #B0C4C8; */
+   @include gradient_horz_highlight(#c6cfd6, #d6e0e6);
+   /* pre-M15: @include gradient_vert_highlight(#B0C4C8, #D2D7DB); */
    }
 .Artifact .cardtext, .Artifact .pinline_ptbox { background-color: $Artifact_Text; }
-.Artifact, .Artifact .cardart { background-color: #ABC1CE; }
-.Coloured_Artifact { background: #ABC1CE !important; filter: none !important; }
+.Artifact, .Artifact .cardart { background-color: $ArtifactBorder; }
+.Coloured_Artifact { background: $ArtifactBorder !important; filter: none !important; }
 .dfc .part2.Artifact {
   .cardtitlebar, .cardtypebar { 
     background-color: $Artifact_DFC_Bar; 
@@ -1348,6 +1566,16 @@ text-transform:uppercase;
 
 /***** Card editing *****/
 .form.cardborder, .form .innercardborder, .form .card  { width: auto; }
+.form .innercardborder {
+  padding-bottom: 30px; 
+  height: auto;
+}
+.form.flip .innercardborder {
+  padding-bottom: 0;
+}
+.form .card { 
+  height: 430px;
+}
 
 input.type_field { width: 100px; }
 .form #card_cost, .form #card_link_attributes_cost { width: 60px; }
@@ -1360,8 +1588,9 @@ input.powerfield, input.toughnessfield { width: 20px; }
 .image_url_field, .edit_comment_field  { width: 400px; }
 form .raritycell { border: 1px solid black; }
 .Planeswalker #power_field, .Planeswalker #pt_slash { display: none; }
-.Planeswalker .notptbox { border: none;
-    background-image: url(<%= asset_path 'loyalty_big.png' %>);
+.Planeswalker .notptbox { 
+    background-image: image-url("loyalty_big.png");
+    border: none;
     width: 80px; height: 41px; /* img is 51px high, minus the 10px top padding */
     padding: 10px 0px 0px 0px; }
 .Planeswalker.form .pinline_ptbox.pinline { top: -36px; }

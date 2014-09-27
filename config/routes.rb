@@ -5,18 +5,16 @@ Multiverse::Application.routes.draw do
   root :to => 'pages#home'
   # also defines root_path => '/' and root_url  => 'http://localhost:3000/'
 
-  match '/contact', :to => 'pages#contact'
+  get '/contact', :to => 'pages#contact'
   # also defines contact_path => '/contact' and contact_url => 'http://localhost:3000/contact'
-  match '/about',   :to => 'pages#about'
-  match '/help',    :to => 'pages#help'
-  match '/news',    :to => 'pages#news'
-  match '/spam',    :to => 'pages#spam'
-  match '/random',    :to => 'pages#random'
-  match '/card_back', :to => 'pages#card_back'
+  get '/about',   :to => 'pages#about'
+  get '/help',    :to => 'pages#help'
+  get '/news',    :to => 'pages#news'
+  get '/spam',    :to => 'pages#spam'
+  get '/random',    :to => 'pages#random'
+  get '/card_back', :to => 'pages#card_back'
 
   get 'pages/home'
-
-  get 'sessions/new'
 
   resources :old_cards, :only => [:create, :destroy]
 
@@ -56,16 +54,17 @@ Multiverse::Application.routes.draw do
 
   resources :sessions, :only => [:new, :create, :destroy]
 
-  match '/signup',  :to => 'users#new'
-  match '/signin',  :to => 'sessions#new'
-  match '/signout', :to => 'sessions#destroy'
-  match '/profile', :to => 'users#show'
+  #get 'sessions/new'
+  get '/signup',  :to => 'users#new'
+  get '/signin',  :to => 'sessions#new'
+  match '/signout', :to => 'sessions#destroy', via: [:get, :delete]
+  get '/profile', :to => 'users#show'
 
   resources :searches, :only => [:advanced, :do_search, :do_quicksearch, :show]
 
-  match '/advanced_search', :to => 'searches#advanced'
-  match '/search',          :to => 'searches#do_search'
-  match '/quicksearch',     :to => 'searches#do_quicksearch'
+  get '/advanced_search', :to => 'searches#advanced'
+  match '/quicksearch',    :to => 'searches#do_quicksearch', via: [:get, :post]
+  match '/search',        :to => 'searches#do_search', via: [:get, :post]
 
   # The priority is based upon order of creation:
   # first created -> highest priority.
@@ -81,42 +80,6 @@ Multiverse::Application.routes.draw do
   # Sample resource route (maps HTTP verbs to controller actions automatically):
   #   resources :products
 
-  # Sample resource route with options:
-  #   resources :products do
-  #     member do
-  #       get 'short'
-  #       post 'toggle'
-  #     end
-  #
-  #     collection do
-  #       get 'sold'
-  #     end
-  #   end
-
-  # Sample resource route with sub-resources:
-  #   resources :products do
-  #     resources :comments, :sales
-  #     resource :seller
-  #   end
-
-  # Sample resource route with more complex sub-resources
-  #   resources :products do
-  #     resources :comments
-  #     resources :sales do
-  #       get 'recent', :on => :collection
-  #     end
-  #   end
-
-  # Sample resource route within a namespace:
-  #   namespace :admin do
-  #     # Directs /admin/products/* to Admin::ProductsController
-  #     # (app/controllers/admin/products_controller.rb)
-  #     resources :products
-  #   end
-
   # See how all your routes lay out with 'rake routes'
 
-  # This is a legacy wild controller route that's not recommended for RESTful applications.
-  # Note: This route will make all actions in every controller accessible via GET requests.
-  # match ':controller(/:action(/:id(.:format)))'
 end

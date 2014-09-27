@@ -72,13 +72,11 @@
        <%= label_tag "card_watermark", "Watermark", {:class => "watermark_label"} %>
        <% 
         standard_watermark_options = [["None", ""], ["Custom", "CUSTOM"]] + 
-          %w{White Blue Black Red Green}.map {|col| ["#{col} Mana", "{#{col} Mana}"]} +
-          %w{Boros Selesnya Golgari Dimir Gruul Izzet Orzhov Azorius Simic Rakdos}.map {|guild| [guild, "{#{guild}}"]}
+          Card.known_watermarks.map {|faction| [faction, "{#{faction}}"]}
         standard_watermark_options_values = standard_watermark_options.map {|o| o[1]}
         %>
        <script type="text/javascript">
-         standard_watermark_urls = { <% standard_watermark_options.each do |this_watermark| %><% if (this_filename = standard_watermark_filename(this_watermark[1])).present? %>
-           "<%= this_watermark[1] %>": "<%= this_filename %>", <% end %><% end %>
+         standard_watermark_urls = { <% standard_watermark_options.each do |this_watermark| %><% if (this_filename = standard_watermark_filename(this_watermark[1])).present? %>"<%= this_watermark[1] %>": "<%= this_filename %>", <% end %><% end %>
          }
        </script>
          <% if card.watermark.blank? || standard_watermark_options_values.include?(card.watermark) %>
@@ -162,7 +160,7 @@
     </div>
    </div>
    <div class="bottombox">
-    <span class="artist_area"><%= f.label :artist, "Artist:" %> <%= f.text_field :artist, 
+    <span class="artist"><%= f.label :artist, "Artist:" %> <%= f.text_field :artist, 
 		   :inputmode => "titleCase" %></span>
     <div class="ptbox_container">
      <div class="pinline pinline_box pinline_ptbox">

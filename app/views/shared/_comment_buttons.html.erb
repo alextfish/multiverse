@@ -2,9 +2,9 @@
 <% if show_date %>
 <div class="commentdetails">
   <% if show_date == "absolute" %>
-    on <%= format_datetime_absolute @comment.created_at %>
+    on <%= link_to format_datetime_absolute(@comment.created_at), comment_path(@comment, :anchor => @comment.anchor_name), :title=>"permalink" %>
   <% else %>
-    <%= format_datetime @comment.created_at %>
+    <%= link_to format_datetime(@comment.created_at), comment_path(@comment, :anchor => @comment.anchor_name), :title=>"permalink" %>
   <% end %>
   by
   <%= link_to_comment_user @comment %>:

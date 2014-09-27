@@ -81,7 +81,7 @@ module ApplicationHelper
     embed_card_renders(markdown_text.to_html).html_safe
   end
 
-  def mana_symbol_url ( symbol )
+  def self.mana_symbol_url ( symbol )
     my_symbol = "" << symbol
     my_symbol.gsub!(/[\{\}\(\)\/]/, "")
     # Reverse the wrong-order pairs
@@ -97,7 +97,12 @@ module ApplicationHelper
     "/assets/mana/mana_#{my_symbol}.png"
     # "http://gatherer.wizards.com/Handlers/Image.ashx?size=small&name=#{my_symbol}&type=symbol"
   end
-
+  MANA_SYMBOL_TARGETS = Hash.new
+  Card.mana_symbols_extensive.each { |sym|
+    MANA_SYMBOL_TARGETS[sym] = ActionController::Base.helpers.image_tag(self.mana_symbol_url(sym), :alt=>sym, :title=>sym)
+  }
+  
+  
   def format_mana_symbols(text, force = false)
     if text.nil?
       return text
@@ -107,7 +112,7 @@ module ApplicationHelper
       my_text.upcase!
     end
     Card.mana_symbols_extensive.each do |sym|
-      target = "<img src='#{mana_symbol_url(sym)}' alt='#{sym}' title='#{sym}'>"
+      target = MANA_SYMBOL_TARGETS[sym]
       fishify(target)
       target.downcase!
       sym0 = Regexp.escape(sym)
@@ -123,7 +128,7 @@ module ApplicationHelper
     end
     if force
       Card.mana_symbols_extensive.each do |sym|
-        target = "<img src='#{mana_symbol_url(sym)}' alt='#{sym}' title='#{sym}'>".downcase
+        target = MANA_SYMBOL_TARGETS[sym]
         fishify(target)
         sym_bare = sym.delete("{}").upcase
         my_text.gsub!( sym_bare, target )
@@ -173,7 +178,6 @@ module ApplicationHelper
   end
 
   def format_links(text_in, cardset)
-    # Returns [text-out, out-fcn]
     # Translate [[[-links and (((-links into Maruku links
 
     cardset_mockup_regexp   = /\(\(([^)]*)\)\)/
@@ -196,6 +200,7 @@ module ApplicationHelper
           cardset_cardnames_and_codes << card.name
           cardset_cards_from_name_or_code[card.name] = card
           if card.split? && card.primary? && !card.link.name.blank?
+            # Allow links to "Fire // Ice" as well as "Ice"
             cardset_cardnames_and_codes << card.printable_name
             cardset_cards_from_name_or_code[card.printable_name] = card
           end
@@ -248,7 +253,7 @@ module ApplicationHelper
       anchor = "#" + anchor;
     end  
     # Determine the shape of the desired JS AJAX tooltip
-    "<a class=\"cardmockup #{card.tooltip_shape}\" name=\"#{card.id}\" href=\"#{url_for(card)}#{anchor}\">#{content}</a>".html_safe
+    "<a class=\"cardmockup #{card.tooltip_shape}\" name=\"#{card.id}\" href=\"#{url_for(card)}#{anchor}\">#{sanitize(content)}</a>".html_safe
   end
   def card_id_mockup(this_id)
     if Card.find_by_id(this_id)

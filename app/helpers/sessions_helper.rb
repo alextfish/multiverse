@@ -173,7 +173,7 @@ module SessionsHelper
   end
   def expire_cardset_recentchanges_line_cache
     expire_fragment :controller => 'cardsets', :action => "index", :cardset => "#{@cardset.id}"
-      expire_fragment :controller => 'cardsets', :action => "index"
+    expire_fragment :controller => 'cardsets', :action => "index"
   end
   # Two ways to expire the cardset-front-page cache: one expires the infobox as well, the other doesn't
   def expire_cardset_frontpage_cache

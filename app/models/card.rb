@@ -32,12 +32,12 @@
 #
 
 class Card < ActiveRecord::Base
-  belongs_to :cardset
+  belongs_to :cardset, touch: true
   # attr_protected :cardset_id
 
   has_many :comments, :dependent => :destroy
   has_many :old_cards, :dependent => :destroy
-  has_many :decklists, :through => :deck_cards, :uniq => true
+  has_many :decklists, :through => :deck_cards
   
   attr_accessor :foil, :blank, :frame_display, :structure_display  # not saved
   belongs_to :link, :class_name => "Card", :inverse_of => :parent
@@ -54,7 +54,10 @@ class Card < ActiveRecord::Base
   # end
 
   DEFAULT_RARITY = "none"
-  STRING_FIELDS = ["name","cost","supertype","cardtype","subtype","rarity","rulestext","flavourtext","code","frame","art_url","artist","image_url","watermark"]
+  STRING_FIELDS = ["name","cost","supertype","cardtype","subtype","rarity","rulestext","flavourtext","code","frame","art_url","artist","image_url","watermark","power","toughness"]
+  def self.string_fields
+      STRING_FIELDS
+  end
   LONG_TEXT_FIELDS = ["rulestext", "flavourtext"]
   (STRING_FIELDS-LONG_TEXT_FIELDS).each do |field|
     validates field.to_sym, :length     => { :maximum => 255 }
@@ -143,14 +146,15 @@ class Card < ActiveRecord::Base
   end
 
   def get_history
-    possible_logs = Log.find(:all, :conditions => {:object_id => id})
+    possible_logs = Log.where(object_id: id)
     my_logs = possible_logs.select{|l| l.return_object == self}
     logs_to_not_show = Log.kinds_to_not_show(:card_history)
     my_logs.reject!{|l| logs_to_not_show.include? l.kind}
     out = (comments + my_logs).sort_by &:recency
   end
   def get_creation_log
-    possible_logs = Log.find(:all, :conditions => ["object_id = ? AND kind IN (?)", id, [Log.kind(:card_create), Log.kind(:card_create_and_comment)]])
+    possible_logs = Log.where("object_id = ? AND kind IN (?)", id, [Log.kind(:card_create), Log.kind(:card_create_and_comment)])
+    # Log.find(:all, :conditions => ["object_id = ? AND kind IN (?)", id, [Log.kind(:card_create), Log.kind(:card_create_and_comment)]])
     my_log = possible_logs.find{|l| l.return_object == self}
   end
 
@@ -190,7 +194,7 @@ class Card < ActiveRecord::Base
     %w{none common uncommon rare mythic basic token}
   end
   def self.supertypes
-    %w{Legendary Basic World Snow Ongoing}
+    %w{Legendary Basic World Snow Ongoing Token}
   end
   def self.category_order
     %w{Colourless White Blue Black Red Green Multicolour Hybrid Split Artifact Land Scheme Plane Vanguard unspecified}
@@ -835,5 +839,9 @@ class Card < ActiveRecord::Base
       self.user = self.get_user
       self.save_without_timestamping!
     end
+  end
+  
+  def self.known_watermarks
+    known_watermarks = ["White Mana", "Blue Mana", "Black Mana", "Red Mana", "Green Mana"] + %w{Boros Selesnya Golgari Dimir Izzet Gruul Orzhov Azorius Simic Rakdos Mirran Phyrexian Abzan Jeskai Sultai Mardu Temur Conspiracy}
   end
 end

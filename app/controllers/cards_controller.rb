@@ -109,14 +109,21 @@ class CardsController < ApplicationController
       Rails.logger.info "Detected valid code #{params[:code]}: using rarity #{@card.rarity}, type #{@card.cardtype} and frame #{@card.frame}"
     elsif params[:colour] && Card.frames.include?(params[:colour])
       @card.frame = params[:colour]
+      @card.frame_display = params[:colour]
     else
       @card.frame = "Auto"
       @card.rarity = Card.default_rarity
+    end
+    (Card.string_fields-["code"]).each do |field|
+      if params[field]
+        @card[field] = params[field]
+      end
     end
     @card.link = @card.new_linked_card
     if params[:relation] && params[:initial_comment].blank?
       params[:initial_comment] = "See (((C#{params[:relation]})))."
     end
+    Rails.logger.info "Card attributes: #{@card.attributes.inspect}"
   end
   
   def move
@@ -182,9 +189,12 @@ class CardsController < ApplicationController
       end
 	    if params[:initial_comment].present?
         # Log the creation before the comment
-        @cardset.log :kind=> :card_create_and_comment, :user=>current_user, :object_id=>@card.id
+        log = @cardset.log :kind=> :card_create_and_comment, :user=>current_user, :object_id=>@card.id
         comment = @card.comments.build(:user => current_user, :body => params[:initial_comment])
         comment.save!
+        # Store a crosslink from the create_and_comment log to the comment ID
+        log.text = comment.id
+        log.save!
       else
         # Log the creation
         @cardset.log :kind=> :card_create, :user=>current_user, :object_id=>@card.id

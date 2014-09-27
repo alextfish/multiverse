@@ -14,7 +14,7 @@
 #
 
 class DetailsPage < ActiveRecord::Base
-  belongs_to :cardset
+  belongs_to :cardset, touch: true
   # attr_protected :cardset_id
   
   validates_presence_of :title

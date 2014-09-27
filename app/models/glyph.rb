@@ -13,10 +13,10 @@
 #
 
 class Glyph < ActiveRecord::Base
-  belongs_to :cardset 
+  belongs_to :cardset, touch: true
   attr_protected :cardset_id
   validates :url, :presence => true
   
-  validates_format_of :string, :with => /^(\[.*\]|\(.*\)|\{.*\}|<.*>)$/,
+  validates_format_of :string, :with => /\A(\[.*\]|\(.*\)|\{.*\}|<.*>)\z/,
     :message => "Glyph string must be enclosed in [], (), {} or <>."
 end

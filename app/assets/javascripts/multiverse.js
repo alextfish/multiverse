@@ -9,7 +9,7 @@ C_idealFlipTextBoxHeight = 40+2+2;
 C_idealSplitTextBoxHeight = 65+2+2;
 C_idealPlaneTextBoxHeight = 72;
 C_idealSchemeTextBoxHeight = 108;
-C_idealTextBoxHeight = 99;
+C_idealTextBoxHeight = 109; // was 99;
 
 // ------------ Skeletons
 // - Skeleton View
@@ -120,6 +120,7 @@ var colour_affiliation_regexps = {
     "Black": /(\([Bb]\)|\{[Bb]\}|[Ss]wamp)/, 
     "Red"  : /(\([Rr]\)|\{[Rr]\}|[Mm]ountain)/, 
     "Green": /(\([Gg]\)|\{[Gg]\}|[Ff]orest)/, 
+    "Multicolour": /any colo[u]?r/
 }
 
 function update_frame(card_id) {
@@ -167,7 +168,7 @@ function update_frame(card_id) {
                   // Detect land colour affiliation
                   var cardtext = this_card.select(".rulestextfield")[0].value;
                   var affiliated_colours = [];
-                  ["White", "Blue", "Black", "Red", "Green"].each(function(this_colour) {
+                  ["White", "Blue", "Black", "Red", "Green", "Multicolour"].each(function(this_colour) {
                     if (cardtext.search(colour_affiliation_regexps[this_colour])>-1 || cardsubtype.search(colour_affiliation_regexps[this_colour])>-1 ) {
                       affiliated_colours.push(this_colour);
                     }
@@ -421,7 +422,7 @@ function sizeTokenName(nameDiv, typeDiv) {
   var nameWidth = nameDiv.getWidth();
   var nameSizeOK = (nameWidth + C_tokenNamePadding < titlePinline.getWidth()) && (titleBarDiv.clientHeight <= idealTitleHeight);
   if (nameSizeOK) {
-    titlePinline.style.width = nameWidth + C_tokenNamePadding + "px";
+    // titlePinline.style.width = nameWidth + C_tokenNamePadding + "px";
   } else {
     // Only go down to -2
     for(var i=0; !nameSizeOK && i>-2; i-=0.25) {
@@ -461,7 +462,7 @@ function shrinkType(typeDiv) { //, rarityDiv) {
 
 function shrinkTextBox(textDiv, frameType) {
   var wiggleRoom = (frameType=="planeswalker" ? 5 : 0);
-  var desiredHeight = (frameType == "normal" ?C_idealTextBoxHeight : frameType=="flip" ? C_idealFlipTextBoxHeight : frameType=="split" ? C_idealSplitTextBoxHeight : frameType=="plane" ?  C_idealPlaneTextBoxHeight : frameType=="scheme" ?  C_idealSchemeTextBoxHeight :  C_idealTextBoxHeight );
+  var desiredHeight = (frameType == "normal" ? C_idealTextBoxHeight : frameType=="flip" ? C_idealFlipTextBoxHeight : frameType=="split" ? C_idealSplitTextBoxHeight : frameType=="plane" ?  C_idealPlaneTextBoxHeight : frameType=="scheme" ?  C_idealSchemeTextBoxHeight :  C_idealTextBoxHeight );
   var currentFontSize = textDiv.getStyle("fontSize");
   var currentFontSizeNumber = parseInt(currentFontSize);
   var currentFontSizeUnits = currentFontSize.slice(-2); // assumes "px" or "pt"
@@ -633,11 +634,12 @@ function chooseTooltipParams(element) {
 // Add tooltips for Multiverse mockups
 document.observe('dom:loaded', function() {
   card_tooltips = {} // global hash
-  var site_url = /(^.*:\/\/[^\/]+)/.exec(window.location.href)[1];
-  var card_link_regex = new RegExp ( "^(" + site_url + ")?/cards\/([0-9]+)($|[#?])");
+  var request_host = window.location.host; // /(^.*:\/\/[^\/]+)/.exec(window.location.href)[1];
+  var site_hosts = "(?:http[s]?://)?(?:(?:magic)?multiverse.heroku(?:app)?.com|(?:www.)?magicmultiverse.(?:(?:com)|(?:net))|" + request_host + ")";
+  var card_link_regex = new RegExp ( "^" + site_hosts + "?/cards\/([0-9]+)($|[#?])");
   $$("a[href]").each( function(link_element){
     if ((matches = card_link_regex.exec(link_element.href)) && !link_element.hasClassName("no_tooltip")) {
-      card_id = matches[2];
+      card_id = matches[1];
       tooltip_div = makeTooltipDiv(link_element, card_id);
       link_element.tip = new Tip( link_element, tooltip_div, chooseTooltipParams(link_element) );
       // Store some useful data

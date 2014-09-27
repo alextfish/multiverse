@@ -118,9 +118,7 @@
         <span style="display:none;"><%= card.updated_at.to_i %></span>
         <%= format_datetime(card.updated_at) %> <%= by_last_edit_user_if_available card %>
       </td>
-      <% card_comments_sorted = Comment.find(:all,
-           :conditions => ["card_id = ?", card.id],
-           :order => "comments.updated_at DESC") %>
+      <% card_comments_sorted = Comment.where(["card_id = ?", card.id]).order("comments.updated_at DESC") %>
       <td class="comments" <%= comment_display %>><%= card_comments_sorted.count %></td>
       <td class="comments" <%= comment_display %>>
         <% if !card_comments_sorted.empty? %>
