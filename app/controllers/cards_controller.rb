@@ -109,6 +109,7 @@ class CardsController < ApplicationController
       Rails.logger.info "Detected valid code #{params[:code]}: using rarity #{@card.rarity}, type #{@card.cardtype} and frame #{@card.frame}"
     elsif params[:colour] && Card.frames.include?(params[:colour])
       @card.frame = params[:colour]
+      @card.frame_display = params[:colour]
     else
       @card.frame = "Auto"
       @card.rarity = Card.default_rarity

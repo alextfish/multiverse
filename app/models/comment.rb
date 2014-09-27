@@ -45,7 +45,7 @@ class Comment < ActiveRecord::Base
   def check_links
     # "+?" = not greedy
     Rails.logger.info "Checking body for bad links"
-    body.gsub!(/\(\(\((.+?)\)\)\)/) {|link_contents| fix_internal_link(link_contents, $1)}
+    body.gsub!(/\(\((.+?)\)\)/) {|link_contents| fix_internal_link(link_contents, $1)}
     ############# COMMENTED OUT: the is_printed_card_name regexp
     ############# causes errors on production server!
     # body.gsub!(/\[\[\[(.+?)\]\]\]/) {|link_contents| fix_external_link(link_contents, $1)}
@@ -69,7 +69,7 @@ class Comment < ActiveRecord::Base
       # Either there's one hit, [0], or
       # there's multiple, in which case we want the chronologically earliest -
       # which is also [0].
-      return "(((C#{possible_targets[0].id})))"
+      return "((C#{possible_targets[0].id}))"
     end
     # One more chance: it might not be an internal link at all, but a mistake for an external link.
     ############# COMMENTED OUT: the is_printed_card_name regexp

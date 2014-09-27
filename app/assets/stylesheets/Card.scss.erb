@@ -299,6 +299,12 @@ div.card_loading {
   top: 0px;
   left: 3px;
 }
+.form .cardtitlebar {
+  min-width: 300px;
+}
+.form.split .cardtitlebar {
+  min-width: inherit;
+}
 .dfc .part2 .cardtitlebar:after, .dfc .part2 .cardtypebar:after, .token .cardtitlebar:after, .token .cardtypebar:after {
   border-top-color: rgba(255, 255, 255, 0.4);
 }
@@ -326,7 +332,7 @@ div.card_loading {
 .cardtypebar { padding-right: 0px !important;
               position: relative; }
 .cardtype { }
-.form .cardtype { white-space: nowrap; }
+/* .form .cardtype { white-space: nowrap; } */ /* needs to let legendary split cards' type bars fit */
 .cardrarity { position: absolute; 
             right: 0px;
             top: -1px;
@@ -380,6 +386,9 @@ $CardTextHeight: 105px; /* up for M15 from 95px; */
   position: relative;
   left: -3px;
   top: +10px;
+}
+.flip .card.part1 .artist {
+  display: none;
 }
 
 .blackborder .artist, .blackborder .hologram_container {
@@ -606,6 +615,8 @@ color: white; background: $PurpleBorder;
   /* removed for M15: font-size: 7pt;
   position: absolute; width: 80%; left: 15%; top: -5px;
   padding-left: 20px; */
+  position: relative;
+  top: 8px;
   @include elliptical_corners_asymmetric(30px, 10px, 12px, 0px);
 }
 
@@ -707,13 +718,14 @@ color: white; background: $PurpleBorder;
 .flip .cardart { min-height: 122px; /* 105px; */ }
 
 .flip .part1 .typebox { position: absolute; z-index: +2; top: +70px; width: 190px; }
-.flip .part1 .ptbox_container { z-index: +2; left: +6px;}
+.flip .part1 .ptbox_container { z-index: +2; left: +6px; top: 0;}
 .flip .part1 .pinline_ptbox { top: -3px; }
 .flip .part2 .cardart_container { position: relative; top: -12px; /* -32px; */ }
 .flip .part1 .cardrarity { z-index: +2; top: 211px; }
 
 .flip .part2 .namebox { position: relative; z-index: +2; top: 179px; /* 162px; */ }
 .flip .part2 .typebox { top:-33px; position: relative; }
+.flip .part2 .ptbox_container { right: -2px;}
 .flip .part2 .pinline_ptbox { z-index: 2; right: 147px; top: -90px; }
 .flip .part2 .cardtext_container { top: -32px; position: relative; }
 .flip .part2 .bottombox { z-index: +1; width: 188px; position: absolute; /* top: 190px */; bottom: 0px; margin-bottom: 0px; }
@@ -733,14 +745,14 @@ color: white; background: $PurpleBorder;
   margin-right: -100px;
 }
 
-.flip.form .part1 .cardtext_container { position: relative; top: -42px; }
+.flip.form .part1 .cardtext_container { position: relative; top: -64px; }
 .flip.form .part1 .typebox { position: relative; width: auto; top: 93px; /* top: 148px; */ }
 .flip.form .part1 .ptbox_container { top: -38px; }
 .flip.form .part1 .frame_selector_wrapper { @include show_children_of_hidden; top: +100px;}
 .flip.form .part1 .bottombox { height: 0px; /*20px;*/ }
 .flip.form .cardart { text-align: left; }
 .flip.form .type_field { width: 65px; }
-.flip.form .part2 .cardart_container { height: 50px; top: -65px;}
+.flip.form .part2 .cardart_container { height: 50px; top: -85px;}
 .flip.form .part2 .bottombox { position: relative; margin-top: 23px; top: 0px; }
 .flip.form .part2 .pinline_ptbox { right: 110px; top: -234px; }
 .flip.form .part2 .typebox { top: -32px; }
@@ -1021,6 +1033,7 @@ $PlaneArtHeight: $PlaneInnerHeight - (3 + $PinlineBoxHeight + 3) - ($CardTextHei
   .form textarea.rulestextfield {
     border: none;
     padding: 10px 0px 0px 10px;
+    min-width: 300px;
   }
   /* Flavour text */
   .flavourtext, .form textarea.flavourtextfield {
@@ -1454,7 +1467,11 @@ text-transform:uppercase;
 /***** Card editing *****/
 .form.cardborder, .form .innercardborder, .form .card  { width: auto; }
 .form .innercardborder {
-  padding-bottom: 30px;
+  padding-bottom: 30px; 
+  height: auto;
+}
+.form.flip .innercardborder {
+  padding-bottom: 0;
 }
 .form .card { 
   height: 430px;

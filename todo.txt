@@ -1,25 +1,27 @@
 RAILS TODO BEFORE DEPLOY:
 
-* Confirm cardset recent_action updates also update cardset.updated_at 
+/ Fix bug in [[card image]]
+/ Confirm cardset recent_action updates also update cardset.updated_at 
 / Update magicmultiverse.net redirect
-* Make new header image
-* Write auto-redirect-to-corresponding-page (including working on cardsets that aren't in this database)
-* Qualify auto-redirect-to-corresponding-page on old staging server
+/ Make new header image
+/ Write auto-redirect-to-corresponding-page (including working on cardsets that aren't in this database)
+/ Qualify auto-redirect-to-corresponding-page on [old staging server]
+/ Detect hard links to new and old site and make both give popups
 
 DEPLOY PROCESS:
 * Push to new heroku server
 * Test assorted things on toy data on new live server
 *| Put old site into maintenance mode
-*| Download old database
-*| Push database to new site
-*| Edit Heroku billing to allow new db to grow
+*- Download old database
+*- Push database to new site
+*- Edit Heroku billing to allow new db to grow
 *| heroku run rails runner Rails.cache.clear
 *| heroku run rails runner Cardset.all.each do :update_timestamp_from_logs end
-*| Test new live server with new database
+*- Test new live server with new database
 *| Push auto-redirect-to-corresponding-page to old site
 *| Bring old site out of maintenance mode
 * Delete database on old site
-* Edit Heroku billing to remove old db 
+- Edit Heroku billing to remove old db 
 
 ----
 

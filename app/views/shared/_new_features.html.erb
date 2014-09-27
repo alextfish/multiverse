@@ -1,6 +1,6 @@
 <%
-  update_date = Time.gm(2014,04,30,00,43,29);
-  update_title = "New feature: Search by cardset and user";
+  update_date = Time.gm(2014,09,27,21,13,57);
+  update_title = "New site name, new frames, new architecture";
 
 news_latest_update = {
   :date => update_date,
@@ -10,15 +10,28 @@ news_latest_update = {
 
 ----
 ### #{update_title}
+#### Sat Sep 27 21:13:57 2014
+
+We have a shiny new domain name! Welcome to MagicMultiverse.net! 
+
+Today's update took a lot of work on my part, but most of the changes will hopefully not be user visible. I've had to move to a new version of Ruby, Rails, a new Heroku stack and routing layer, but I hope none of that will make any difference to you all (except that it meant we have to move away from the old multiverse.heroku.com domain to our new home here at magicmultiverse.net: <b>please update your bookmarks</b> as Heroku will be removing the old site shortly). I'm using a different web server too, which I hope should deliver better parallelism and thus fewer Application Errors.
+
+The most visible change to you guys is of course the move to M15-style card frames. I believe I've tested them in all the corner cases the site supports (token DFC planeswalkers? Sure!), but as always, you can 
+<a href="http://magicmultiverse.net/cards/new?cardset_id=145&colour=Red&type=Bug">report a bug</a> or <a href="http://magicmultiverse.net/cards/new?cardset_id=145&colour=Blue&type=Enhancement">suggest an enhancement</a> in the usual way!
+
+A bunch of other minor changes have gone in too. We now have watermarks for the Tarkir clans, and I've updated the Ravnica guild watermarks to more closely match the guilds as they looked when revisited. And comments have permalinks.
+
+----
+### New feature: Search by cardset and user
 #### Wed Apr 30 00:43:29 2014
 
-A major new feature was rolled out today, one that people have been asking for for some time now. On the [advanced search page](http://multiverse.heroku.com/advanced_search), you can now restrict your searches by cardset, and/or by creator. For example, you can search for all cards in Multiverse Design Challenge that you created, or [all cards in Cards With No Home that I created that contain the word "Peculiar" in their title](http://multiverse.heroku.com/search?card%5Bname%5D=Peculiar&card%5Buser_id%5D=1&card%5Bcardset_id%5D=74&search_type=card). 
+A major new feature was rolled out today, one that people have been asking for for some time now. On the [advanced search page](http://magicmultiverse.net/advanced_search), you can now restrict your searches by cardset, and/or by creator. For example, you can search for all cards in Multiverse Design Challenge that you created, or [all cards in Cards With No Home that I created that contain the word "Peculiar" in their title](http://magicmultiverse.net/search?card%5Bname%5D=Peculiar&card%5Buser_id%5D=1&card%5Bcardset_id%5D=74&search_type=card). 
 
 At the moment the list of cards returned is just the standard search results view. But I have plans to allow you to view any selection of cards, such as search results, in the sortable cardlist or visual spoiler formats.
 
-It's pretty hard to find time to work on Multiverse at the moment, while my evenings are still disrupted by [Zoe](http://multiverse.heroku.com/cards/29170), but I hope to be able to get fixes in before too long for a few of the recently reported bugs. 
+It's pretty hard to find time to work on Multiverse at the moment, while my evenings are still disrupted by [Zoe](http://magicmultiverse.net/cards/29170), but I hope to be able to get fixes in before too long for a few of the recently reported bugs. 
 
-As always, if you have any bugs to report or features to suggest, the [Multiverse Feedback Repository](http://multiverse.heroku.com/cardsets/145) is the place for it.
+As always, if you have any bugs to report or features to suggest, the [Multiverse Feedback Repository](http://magicmultiverse.net/cardsets/145) is the place for it.
 
 ----
 ### Survey results
@@ -26,7 +39,7 @@ As always, if you have any bugs to report or features to suggest, the [Multivers
 
 Thanks to all who filled in the survey! The results were interesting and useful. In summary:
 
-* People don't like the new names I suggested. Most people prefer sticking with the name "Multiverse", although many people would be fine with "Planar Forge". There's a bit more discussion of further possible names on [this card](http://multiverse.heroku.com/cards/14156) if you're interested.
+* People don't like the new names I suggested. Most people prefer sticking with the name "Multiverse", although many people would be fine with "Planar Forge". There's a bit more discussion of further possible names on [this card](http://magicmultiverse.net/cards/14156) if you're interested.
 * The potential features all seem very popular :) Particularly highly rated were ways to play with your designed cards, either via export to MSE / MWS / Cockatrice / etc, or directly in Multiverse; and a personal watchlist to make it easier to follow the things you're interested in. In-Multiverse deckbuilding and playing would be fantastic, but it's a massive feature; I'll definitely bear in mind its popularity, but it won't be happening in the next couple of months. Personal watchlists and subscriptions, though, ought to be quite easily doable, so that'll be my highest priority. Multiple cardset admins and a better skeleton/cardlist were the next most highly rated options, and I'll be bearing those in mind as well.
 * You guys also had a number of other good suggestions, such as hosting a forum on set design, a way to see the cards you created (in communal sets like Multiverse Design Challenge), profile pages, integration with Facebook and more. Many thanks.
 
@@ -55,13 +68,13 @@ Coming up in the next update: personal watchlists. That probably won't be until 
 ### November Update: Preview Button
 #### Tue Nov 8 02:04:31 2011
 
-My apologies for the reduced rate of updates! This is mainly just a bug-fix update. The one notable feature is the [Preview button](http://multiverse.heroku.com/cards/8533), which will let you get a proper view of precisely how your edits to a card will look. Useful for seeing whether your attempts to reduce the wordiness of a card have succeeded or not.
+My apologies for the reduced rate of updates! This is mainly just a bug-fix update. The one notable feature is the [Preview button](http://magicmultiverse.net/cards/8533), which will let you get a proper view of precisely how your edits to a card will look. Useful for seeing whether your attempts to reduce the wordiness of a card have succeeded or not.
 
-I've also added a ![(?)](http://multiverse.heroku.com/assets/mana/mana_question.png) mana symbol, entered as `{?}`, for cases such as [the recent design challenge](http://multiverse.heroku.com/cards/11011) which want a mana symbol that definitely doesn't appear on a printed card.
+I've also added a ![(?)](http://magicmultiverse.net/assets/mana/mana_question.png) mana symbol, entered as `{?}`, for cases such as [the recent design challenge](http://magicmultiverse.net/cards/11011) which want a mana symbol that definitely doesn't appear on a printed card.
 
 Other than that, it's just bug fixes, mainly making a few categories of cards look better in IE.
 
-I do still plan to include support for [colour indicators](http://multiverse.heroku.com/cards/10393), [double-faced cards](http://multiverse.heroku.com/cards/10068), [custom symbols](http://multiverse.heroku.com/cards/8529), [individual watchlists](http://multiverse.heroku.com/cards/8570), and a revamped skeleton / cardlist view of a cardset, but I'm not getting so much time to update Multiverse these days. So those features may happen in 2011, or they may not.
+I do still plan to include support for [colour indicators](http://magicmultiverse.net/cards/10393), [double-faced cards](http://magicmultiverse.net/cards/10068), [custom symbols](http://magicmultiverse.net/cards/8529), [individual watchlists](http://magicmultiverse.net/cards/8570), and a revamped skeleton / cardlist view of a cardset, but I'm not getting so much time to update Multiverse these days. So those features may happen in 2011, or they may not.
 
 ----
 ### August Update: Watermarks, Expand Text, Token Art
@@ -80,7 +93,7 @@ The visual spoiler and booster displays should now be rather nicer and more cons
 Hi all! We have an exciting update for you: split and flip cards are now supported! When creating or editing a card, in the "Frame" dropdown you can select split or flip. The editing form should be pretty intuitive: note for flip cards there's a "Rotate" button at the bottom-left if you prefer not to type upside down :P This took a lot of work, but I believe split and flip cards are now supported across all of Multiverse, including cardlists, search results, hover tooltips, and mentioning via double- or triple-parenthesis links in comments. You can refer to a split card by either or both of its names: ((Fire)), ((Ice)) or ((Fire // Ice)) will all work. If you mention or link to a flip card's flipped side, the render will be appropriately rotated :)  
 (As always, these cards won't display very well in Internet Explorer 8 or earlier. Please visit Multiverse in Chrome, Firefox, Safari, Opera, or IE 9+, as it looks so much better than in older IE versions!)
 
-If you find any problems, please do let me know. In fact, there's now a great new way to let me know of any Multiverse bugs you find, and also suggest any feature that you feel is missing: the [Multiverse Feedback Repository](http://multiverse.heroku.com/cardsets/145). You can browse the [existing suggestions](http://multiverse.heroku.com/cardsets/145/visualspoiler), and if your issue isn't there, [add it!](http://multiverse.heroku.com/cards/new?cardset_id=145)
+If you find any problems, please do let me know. In fact, there's now a great new way to let me know of any Multiverse bugs you find, and also suggest any feature that you feel is missing: the [Multiverse Feedback Repository](http://magicmultiverse.net/cardsets/145). You can browse the [existing suggestions](http://magicmultiverse.net/cardsets/145/visualspoiler), and if your issue isn't there, [add it!](http://magicmultiverse.net/cards/new?cardset_id=145)
 
 I've done a few other things in this update too. You can move cards from one cardset to another, assuming you have appropriate permissions on both. When you're editing a land card, Multiverse will have a good guess as to what colour affiliation that land has. I've fixed a few niggles with the tooltip images. And if you enter a URL directly rather than using the Markdown \[description\]\(url\) link syntax, the URL will be autolinked anyway.
 
@@ -91,7 +104,7 @@ Phew!
 ### June Update: Phyrexian Mana, Tooltips for Planes and Schemes, and Mechanic Card Lists
 #### Sun Jun 19 18:56:40 2011
 
-Hm, it's been a long time since I've updated Multiverse. This is actually quite a small update. Firstly, Phyrexian mana symbols are available. You can insert ![WP](http://multiverse.heroku.com/assets/mana/mana_pw.png), ![UP](http://multiverse.heroku.com/assets/mana/mana_pu.png) and friends into your cards' text, costs, and comments by typing \{WP\} or \(WP\), \{UP\} or \(UP\), and so on. Secondly, links and tooltips for _Archenemy_ schemes, _Planechase_ planes, and _Vanguard_ cards will now work, as in [the comment here](http://multiverse.heroku.com/cards/8219). And finally, cardsets with mechanics pages will now list and link to all the cards using the mechanic, [like this](http://multiverse.heroku.com/cardsets/32/mechanics).
+Hm, it's been a long time since I've updated Multiverse. This is actually quite a small update. Firstly, Phyrexian mana symbols are available. You can insert ![WP](http://magicmultiverse.net/assets/mana/mana_pw.png), ![UP](http://magicmultiverse.net/assets/mana/mana_pu.png) and friends into your cards' text, costs, and comments by typing \{WP\} or \(WP\), \{UP\} or \(UP\), and so on. Secondly, links and tooltips for _Archenemy_ schemes, _Planechase_ planes, and _Vanguard_ cards will now work, as in [the comment here](http://magicmultiverse.net/cards/8219). And finally, cardsets with mechanics pages will now list and link to all the cards using the mechanic, [like this](http://magicmultiverse.net/cardsets/32/mechanics).
 
 ----
 
@@ -107,7 +120,7 @@ On that same principle, I've fixed a couple of bugs that were reported on the [B
 ### New Features: More Mouseover Tooltips, Card History and Skeleton shown on Edit page
 #### Thu Mar 10 01:13:25 2011
 
-Two updates this week. The preview tooltips introduced last week are now no longer restricted to triple-bracket links in comments or details pages, but apply to any and all links to a card on Multiverse. This means that details pages like [the story of Liberia](http://multiverse.heroku.com/cardsets/78/comments#comment_4056) are now much more readable. You'll also get preview tooltips on a cardset's Recent Activity page for all the card links, and on links to a card in a different cardset such as [this one](http://multiverse.heroku.com/cards/5533#comment_4766).
+Two updates this week. The preview tooltips introduced last week are now no longer restricted to triple-bracket links in comments or details pages, but apply to any and all links to a card on Multiverse. This means that details pages like [the story of Liberia](http://magicmultiverse.net/cardsets/78/comments#comment_4056) are now much more readable. You'll also get preview tooltips on a cardset's Recent Activity page for all the card links, and on links to a card in a different cardset such as [this one](http://magicmultiverse.net/cards/5533#comment_4766).
 
 I also implemented a couple of enhancements to the card editing page. You can now review the comments and history of a card from within the edit page - just click the "History" tab. And if your cardset has a skeleton, then an excerpt from the skeleton will be shown on the card edit page if the card code matches one in the skeleton.
 
@@ -117,13 +130,13 @@ I also implemented a couple of enhancements to the card editing page. You can no
 #### Wed Mar 2 01:41:50 2011
 A nifty new enhancement went live today. Whenever you're looking at a comment or details page that includes links created with [[[triple brackets]]] or (((triple parens))), if you move your mouse cursor over the link, the target will pop up in a preview window. This works with links to printed Wizards cards in [[[triple square brackets]]], and links to other cards in the cardset in triple parens - in any of the three forms (((Card name))), (((CW01))) (card code), or (((-CW01))) (expand card code to show card name as well).
 
-This means that discussions like [this one](http://multiverse.heroku.com/cards/2042) will be rather easier to follow. It means that [set skeletons](http://multiverse.heroku.com/cardsets/14/details_pages/29) will preview each card that exists (i.e. its code is not parenthesised) as you mouseover those codes. And it also means when you're posting a comment, if you name an existing card or a card in the same cardset, it's a really good idea to use the triple-bracket or triple-paren links, because it makes it much easier for people to follow what you're saying!
+This means that discussions like [this one](http://magicmultiverse.net/cards/2042) will be rather easier to follow. It means that [set skeletons](http://magicmultiverse.net/cardsets/14/details_pages/29) will preview each card that exists (i.e. its code is not parenthesised) as you mouseover those codes. And it also means when you're posting a comment, if you name an existing card or a card in the same cardset, it's a really good idea to use the triple-bracket or triple-paren links, because it makes it much easier for people to follow what you're saying!
 
 ----
 
 ### New Feature: Front Page
 #### Wed Feb 23 21:36:41 2011
-A new feature today, for those of you who've been wanting to customise your cardset's first impressions. You can now create a details page called "Front Page", which won't display in the normal list of details pages; instead, it'll display at the top of your cardset's main page, just after the cardset description and before any highlighted comments. You can use this to show off some of your most interesting cards, by typing ((Cardname)) into the text of the details page. See [Clockwork Wings](http://multiverse.heroku.com/cardsets/32) for an example.
+A new feature today, for those of you who've been wanting to customise your cardset's first impressions. You can now create a details page called "Front Page", which won't display in the normal list of details pages; instead, it'll display at the top of your cardset's main page, just after the cardset description and before any highlighted comments. You can use this to show off some of your most interesting cards, by typing ((Cardname)) into the text of the details page. See [Clockwork Wings](http://magicmultiverse.net/cardsets/32) for an example.
 
 A few other minor tweaks have gone in too. Cardsets can have gold borders; recent changes lists display the time when they were generated (in your browser's time zone); skeletons have got a bit nicer; and there's a new type of link supported, which lets you link to a card in a way that'll display whatever the card's name is. You can add these links by using three parentheses and a dash, followed by the card's code: (((-CW01))).
 
@@ -149,7 +162,7 @@ The card edit page also now tells people how to insert Planeswalker loyalty symb
 #### Tue Feb 8 01:01:37
 The update this week is simple: your card text will now fit on your card.
 
-No longer will your excessively-long cardnames push the mana cost out of the title bar, or the too-long type line disappear behind the rarity, or your overly-wordy text box stretch the card too much vertically. Now all these elements will be smoothly resized in your browser by a little Javascript. Even the ridiculously over-worded [Sienira's Facets](http://multiverse.heroku.com/cardsets/1) cards all fit, even if some of their [text boxes](http://multiverse.heroku.com/cards/222) or [type lines](http://multiverse.heroku.com/cards/1732) are still too dense for Wizards to actually print.
+No longer will your excessively-long cardnames push the mana cost out of the title bar, or the too-long type line disappear behind the rarity, or your overly-wordy text box stretch the card too much vertically. Now all these elements will be smoothly resized in your browser by a little Javascript. Even the ridiculously over-worded [Sienira's Facets](http://magicmultiverse.net/cardsets/1) cards all fit, even if some of their [text boxes](http://magicmultiverse.net/cards/222) or [type lines](http://magicmultiverse.net/cards/1732) are still too dense for Wizards to actually print.
 
 It won't carry it to excess. If you write an essay for each of your Planeswalker's abilities, it'll still stretch the card rather than reduce the font to smaller than 6 point text. But this should result in some rather nicer-looking cards, particularly in boosters and visual spoilers.
 
@@ -171,19 +184,19 @@ Finally, on a cardset's recent activity view, you can now mark comments as highl
 #### Sun Jan 23 09:26:00
 Two new features for you this weekend! Firstly, I've added this New Features page, so that I've got a way to tell you when Multiverse supports some funky new capability. I've added the details and times for the past few updates, so take a look below: there may be something you missed.
 
-Secondly, Multiverse now supports and generates Set Skeletons! These are a special type of details page that helps you plan the structure of your cardset. They may not be useful if you're just throwing a few cards together, but if you're designing a full cardset - especially one designed for Limited play - then a skeleton can be invaluable to help you plan and keep track of what representation you have in different colours and rarities of your mechanics, card types, or anything else. You can read more about skeletons in [Mark Rosewater's article "Design Skeletons"](http://www.wizards.com/magic/magazine/Article.aspx?x=mtg/daily/mm/78), and see some examples of in-progress set skeletons in [Arcunda](http://multiverse.heroku.com/cardsets/14/skeleton) and [Rallikar](http://multiverse.heroku.com/cardsets/49/skeleton).
+Secondly, Multiverse now supports and generates Set Skeletons! These are a special type of details page that helps you plan the structure of your cardset. They may not be useful if you're just throwing a few cards together, but if you're designing a full cardset - especially one designed for Limited play - then a skeleton can be invaluable to help you plan and keep track of what representation you have in different colours and rarities of your mechanics, card types, or anything else. You can read more about skeletons in [Mark Rosewater's article "Design Skeletons"](http://www.wizards.com/magic/magazine/Article.aspx?x=mtg/daily/mm/78), and see some examples of in-progress set skeletons in [Arcunda](http://magicmultiverse.net/cardsets/14/skeleton) and [Rallikar](http://magicmultiverse.net/cardsets/49/skeleton).
 
 ----
 ### New Features: (((Card Code)))
 #### Sat Jan 15 00:16:46
 
-You can now include (((triple parenthesis links))) to card codes like CW01 that _don't exist yet_. Clicking on these links will take you to the card creation page, with the appropriate fields already filled in. This is useful for set skeletons such as those on [Arcunda](http://multiverse.heroku.com/cardsets/14/details_pages/29). I'm expecting to provide a way to generate these skeletons for any cardset within the week.
+You can now include (((triple parenthesis links))) to card codes like CW01 that _don't exist yet_. Clicking on these links will take you to the card creation page, with the appropriate fields already filled in. This is useful for set skeletons such as those on [Arcunda](http://magicmultiverse.net/cardsets/14/details_pages/29). I'm expecting to provide a way to generate these skeletons for any cardset within the week.
 
 ----
 ### New Features: Basic and Token Rarities, Supertypes Clearer
 #### Mon Jan 10 02:00:51 2011
 
-There are now two more options for card rarities: Basic and Token. These will each appear in the appropriate slot in the virtual boosters. If a cardset has any tokens, this means the booster will now be 16 cards. (If a cardset doesn't contain any basic cards, it'll just use a random basic land as it always did. If a cardset doesn't contain any tokens, the boosters will remain 15 cards rather than 16.) The token frame is quite flashy - check out [an example](http://multiverse.heroku.com/cards/2657) :)
+There are now two more options for card rarities: Basic and Token. These will each appear in the appropriate slot in the virtual boosters. If a cardset has any tokens, this means the booster will now be 16 cards. (If a cardset doesn't contain any basic cards, it'll just use a random basic land as it always did. If a cardset doesn't contain any tokens, the boosters will remain 15 cards rather than 16.) The token frame is quite flashy - check out [an example](http://magicmultiverse.net/cards/2657) :)
 
 I've also done some work on the card editing form, specifically the type line. The three text boxes were always meant to be supertype, type and subtype, but many people were using the leftmost one (supertype) for card types such as Creature or Artifact, and frankly I can't blame them. I've tried to make the interface a lot clearer: the type and subtype boxes are as they were, but the supertype box is now a supertype dropdown, with options for each of the current supertypes: Legendary, Basic, World and Snow. But if you want to combine multiple of those, or make up your own supertypes, there's another option in the dropdown, Custom, which will restore the free text entry supertype field. I'm hoping this will make it a lot easier for people to use Multiverse easily and correctly. I've gone through all the cards which had a card type (like Creature or Artifact) in the supertype box and fixed them up.
 
@@ -201,7 +214,7 @@ The new kinds of activity - deleting cards and comments, updating mechanics, and
 
 I've finally introduced a feature I've always meant to add. The triple-bracket syntaxes for links to \\[\\[\\[printed cards]]] and (((cards in the same cardset))) were always designed to allow me to introduce **double**-bracket links. These will appear not as just a hyperlink, but embed the full image of the card into the comment or details page where you use them.
 
-This lets you do some very cool things. On details pages you can include the mockups of several cards, to allow you to show examples, like [this](http://multiverse.heroku.com/cardsets/1/details_pages/1), and of course any embedded mockups like this will always show the latest state of the card. (This will also be useful when I let you embed a details page into the front page of your set, so that certain showcase cards are always shown off.) You can do these in comments too, such as [this one](http://multiverse.heroku.com/cards/1463#comment_1467), so that in certain cases where the substance of your comment would be enhanced by showing the text of a card, you can do that.
+This lets you do some very cool things. On details pages you can include the mockups of several cards, to allow you to show examples, like [this](http://magicmultiverse.net/cardsets/1/details_pages/1), and of course any embedded mockups like this will always show the latest state of the card. (This will also be useful when I let you embed a details page into the front page of your set, so that certain showcase cards are always shown off.) You can do these in comments too, such as [this one](http://magicmultiverse.net/cards/1463#comment_1467), so that in certain cases where the substance of your comment would be enhanced by showing the text of a card, you can do that.
 
 Those of you who visit [draw3cards.com](http://draw3cards.com) will note that the Markdown for embedding card links and card images is identical on Multiverse to how it is there, and that's of course deliberate.
 

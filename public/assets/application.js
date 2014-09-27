@@ -11665,11 +11665,12 @@ function chooseTooltipParams(element) {
 // Add tooltips for Multiverse mockups
 document.observe('dom:loaded', function() {
   card_tooltips = {} // global hash
-  var site_url = /(^.*:\/\/[^\/]+)/.exec(window.location.href)[1];
-  var card_link_regex = new RegExp ( "^(" + site_url + ")?/cards\/([0-9]+)($|[#?])");
+  var request_host = window.location.host; // /(^.*:\/\/[^\/]+)/.exec(window.location.href)[1];
+  var site_hosts = "(?:http[s]?://)?(?:(?:magic)?multiverse.heroku(?:app)?.com|(?:www.)?magicmultiverse.(?:(?:com)|(?:net))|" + request_host + ")";
+  var card_link_regex = new RegExp ( "^" + site_hosts + "?/cards\/([0-9]+)($|[#?])");
   $$("a[href]").each( function(link_element){
     if ((matches = card_link_regex.exec(link_element.href)) && !link_element.hasClassName("no_tooltip")) {
-      card_id = matches[2];
+      card_id = matches[1];
       tooltip_div = makeTooltipDiv(link_element, card_id);
       link_element.tip = new Tip( link_element, tooltip_div, chooseTooltipParams(link_element) );
       // Store some useful data
