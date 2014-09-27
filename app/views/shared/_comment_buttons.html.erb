@@ -1,10 +1,13 @@
 <% "Takes one parameter, show_date" %>
 <% if show_date %>
 <div class="commentdetails">
+  <% link_destination = card_path(@comment.card) || cardset_comments_path(@comment.cardset)
+     link_params = {:title => "permalink", :class => "no_tooltip"}
+  %>
   <% if show_date == "absolute" %>
-    on <%= link_to format_datetime_absolute(@comment.created_at), comment_path(@comment, :anchor => @comment.anchor_name), :title=>"permalink" %>
+    on <%= link_to format_datetime_absolute(@comment.created_at), link_destination + "#" + @comment.anchor_name, link_params %>
   <% else %>
-    <%= link_to format_datetime(@comment.created_at), comment_path(@comment, :anchor => @comment.anchor_name), :title=>"permalink" %>
+    <%= link_to format_datetime(@comment.created_at), link_destination + "#" + @comment.anchor_name, link_params %>
   <% end %>
   by
   <%= link_to_comment_user @comment %>:

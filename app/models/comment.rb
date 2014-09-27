@@ -139,8 +139,14 @@ class Comment < ActiveRecord::Base
   def get_cardset
     cardset || card.cardset
   end
+  def set_cardset
+    if cardset.blank?
+      self.cardset = self.card.cardset
+      save!
+    end
+  end
   def parent
-    cardset || card
+    card || cardset
   end
   def display_user
     user ? user.name : user_name
