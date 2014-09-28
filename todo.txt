@@ -3,7 +3,6 @@ To fix urgently:
 Highlighting /unaddressing not working
 Ajax operations not working at all? (cardlist deletion also)
 
-
 RAILS TODO BEFORE DEPLOY:
 
 / Fix bug in [[card image]]

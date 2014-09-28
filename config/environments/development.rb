@@ -42,7 +42,7 @@ Multiverse::Application.configure do
     config.active_support.deprecation = :log
 
     # Expands the lines which load the assets
-    config.assets.debug = true
+    config.assets.debug = false  # doubles up execution if application.js is compiled :/
     
     # Dodge precompiled assets
     #config.assets.prefix = "/dev-assets"

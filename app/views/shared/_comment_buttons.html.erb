@@ -1,7 +1,7 @@
 <% "Takes one parameter, show_date" %>
 <% if show_date %>
 <div class="commentdetails">
-  <% link_destination = card_path(@comment.card) || cardset_comments_path(@comment.cardset)
+  <% link_destination = (@comment.card.present? ? card_path(@comment.card) : cardset_comments_path(@comment.cardset))
      link_params = {:title => "permalink", :class => "no_tooltip"}
   %>
   <% if show_date == "absolute" %>
