@@ -251,6 +251,10 @@ class CardsController < ApplicationController
     if @card.save # update_attributes(params[:card], :as => :mover)
       process_card
       set_last_edit @card
+      @card.comments.each do |comm| 
+        comm.cardset = @cardset2
+        comm.save
+      end
       @cardset1.log :kind=>:card_move_out, :user=>current_user, :object_id=>@card.id, :text=>@cardset2.name
       @cardset2.log :kind=>:card_move_in, :user=>current_user, :object_id=>@card.id, :text=>@cardset1.name
       

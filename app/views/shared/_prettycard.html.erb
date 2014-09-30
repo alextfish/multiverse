@@ -103,12 +103,13 @@
      </div>
      <% end %>
      <% if !card.power.blank? || !card.toughness.blank? %>
-     <div class="ptbox_container">
-      <div class="pinline pinline_box pinline_ptbox">
-       <div class="ptbox"><%= card.power %><% if !card.power.blank? && !card.toughness.blank? %>/<% end %><%= card.toughness %>
+       <% "if !card.is_planeswalker? || !card.parent || !card.parent.is_planeswalker?" %>
+       <div class="ptbox_container">
+        <div class="pinline pinline_box pinline_ptbox">
+         <div class="ptbox"><%= card.power %><% if !card.power.blank? && !card.toughness.blank? %>/<% end %><%= card.toughness %>
+         </div>
+        </div>
        </div>
-      </div>
-     </div>
      <% end %>
     </div>
     <% if card.foil %>

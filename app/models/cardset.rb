@@ -53,9 +53,10 @@ class Cardset < ActiveRecord::Base
   def all_comments
     # Includes comments directly on the cardset and those on
     # cards in the cardset
-    card_comments = Comment.includes(:card).where("cards.cardset_id = ?", self.id).references(:card)
-    cardset_comments = Comment.where("cardset_id = ?", self.id)
-    (cardset_comments + card_comments)
+    #card_comments = Comment.includes(:card).where("cards.cardset_id = ?", self.id).references(:card)
+    #cardset_comments = Comment.where("cardset_id = ?", self.id)
+    #(cardset_comments + card_comments)
+    self.comments
   end
   
   def cardset_level_comments

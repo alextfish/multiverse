@@ -33,7 +33,7 @@
       <% if stats[:by_rarity].length <= 4 %>
         <%= display_rarity_stats %>
       <% else %>
-        <%= display_rarity_stats.sub(/(uncommons(,)?)/, '\\1<br>').html_safe %>
+        <%= display_rarity_stats.sub(/(uncommons(,)?)/, "\\1<br>").html_safe %>
       <% end %>
     </p>
     <p>
@@ -83,9 +83,9 @@
 <% end %>
 
 <p>
-  <% existing_comments = !@cardset.comments.empty? %>
+  <% existing_comments = !@cardset.cardset_level_comments.empty? %>
   <% if existing_comments %>
-    <%= link_to "Cardset comments (#{@cardset.comments.count})", cardset_comments_path( @cardset) %> 
+    <%= link_to "Cardset comments (#{@cardset.cardset_level_comments.count})", cardset_comments_path( @cardset) %> 
   <% end %>
   <% if existing_comments && can_comment %>
     |
