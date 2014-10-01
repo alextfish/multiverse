@@ -595,7 +595,6 @@ color: white; background: $PurpleBorder;
   background: none !important;
   filter: none !important;
 }
-/*.dfc .part2.Planeswalker .ptbox_container { display: none; }*/
 
 .Planeswalker .pinline_ptbox .ptbox {
   background: none !important;
@@ -607,7 +606,17 @@ color: white; background: $PurpleBorder;
   width: 40px;
   position: absolute;
   padding-top: 4px !important;
- }
+}
+div.dfc div.part2.Planeswalker div.ptbox_container div.pinline_ptbox { 
+  /* need to override another !important, so make the above as specific as possible... */
+  background: none !important;
+
+  div.ptbox {  
+    background-color: transparent !important;
+    background-image: image-url("loyalty.png") !important;
+    background-repeat: no-repeat !important;
+  }
+}
 
 
 .Planeswalker .bottombox {
@@ -1194,7 +1203,7 @@ $Land_Colourless_DFC_Text: #D8CFC8;
 .dfc .part2.Colourless {
   .cardtitlebar, .cardtypebar { background-color: $Colourless_DFC_Bar; }
   .cardtext { background: $Colourless_DFC_Text !important; }
-  .pinline_ptbox  { background: $Colourless_DFC_Bar !important; }
+  .pinline_ptbox  { background-color:$Colourless_DFC_Bar !important; }
 }
 
 $ArtifactBorder: #9CAAB3; /* pre-M15: #ABC1CE; */
@@ -1216,7 +1225,7 @@ $ArtifactBorder: #9CAAB3; /* pre-M15: #ABC1CE; */
     @include gradient_vert_highlight($Artifact_DFC_Bar, #90a4b0);
   }
   .cardtext { background: $Artifact_DFC_Text !important; }
-  .pinline_ptbox, .ptbox  { background: $Artifact_DFC_Bar !important; }
+  .pinline_ptbox, .ptbox  { background-color: $Artifact_DFC_Bar !important; }
 }
 
 .White.card, .White .cardart  { background-color: $White_Card;
@@ -1228,7 +1237,7 @@ $ArtifactBorder: #9CAAB3; /* pre-M15: #ABC1CE; */
 .dfc .part2.White, .dfc .part2.Land.white {
   .cardtitlebar, .cardtypebar { background-color: $White_DFC_Bar; }
   .cardtext { background: $White_DFC_Text !important; }
-  .pinline_ptbox  { background: $White_DFC_Bar !important; }
+  .pinline_ptbox  { background-color:$White_DFC_Bar !important; }
 }
 
 .Blue.card, .Blue .cardart  { background-color: $Blue_Card; /* #5bf; */ }
@@ -1241,7 +1250,7 @@ $ArtifactBorder: #9CAAB3; /* pre-M15: #ABC1CE; */
     @include gradient_horz_highlight(#2a84b6, #4d95c1);
   }
   .cardtext { background: $Blue_DFC_Text !important; }
-  .pinline_ptbox  { background: $Blue_DFC_Bar !important; }
+  .pinline_ptbox  { background-color:$Blue_DFC_Bar !important; }
 }
 
 .Black.card, .Black .cardart  { background-color: $Black_Card; }
@@ -1251,7 +1260,7 @@ $ArtifactBorder: #9CAAB3; /* pre-M15: #ABC1CE; */
 .dfc .part2.Black, .dfc .part2.Land.black { 
   .cardtitlebar, .cardtypebar { background-color: $Black_DFC_Bar; }
   .cardtext { background: $Black_DFC_Text !important; }
-  .pinline_ptbox  { background: $Black_DFC_Bar !important; }
+  .pinline_ptbox  { background-color:$Black_DFC_Bar !important; }
 }
 
 .Red.card, .Red .cardart  { background-color: $Red_Card; /* #f76; */ }
@@ -1261,7 +1270,7 @@ $ArtifactBorder: #9CAAB3; /* pre-M15: #ABC1CE; */
 .dfc .part2.Red, .dfc .part2.Land.red {
   .cardtitlebar, .cardtypebar { background-color: $Red_DFC_Bar; }
   .cardtext { background: $Red_DFC_Text !important; }
-  .pinline_ptbox  { background: $Red_DFC_Bar !important; }
+  .pinline_ptbox  { background-color:$Red_DFC_Bar !important; }
 }
 
 .Green.card, .Green .cardart { background-color: $Green_Card; /* #6b7 */}
@@ -1271,7 +1280,7 @@ $ArtifactBorder: #9CAAB3; /* pre-M15: #ABC1CE; */
 .dfc .part2.Green, .dfc .part2.Land.green {
   .cardtitlebar, .cardtypebar { background-color: $Green_DFC_Bar; }
   .cardtext { background: $Green_DFC_Text !important; }
-  .pinline_ptbox  { background: $Green_DFC_Bar !important; }
+  .pinline_ptbox  { background-color:$Green_DFC_Bar !important; }
 }
 
 .Multicolour, .Multicolour .cardart { background-color: $Multicolour_Background; /*#DAC87C;*/ }
@@ -1291,8 +1300,8 @@ $ArtifactBorder: #9CAAB3; /* pre-M15: #ABC1CE; */
     background-color: #957526;
     @include gradient_horz_highlight(#957526, #bBa66F); 
   }
-  .pinline_ptbox, .ptbox { background: #957526 !important; }
   .cardtext { background: $Hybrid_DFC_Text; }
+  .pinline_ptbox, .ptbox { background-color: #957526 !important; }
 }
 .dfc .part2.Hybrid {
   .cardtext { background: $Hybrid_DFC_Text !important; filter: none; }
@@ -1300,7 +1309,7 @@ $ArtifactBorder: #9CAAB3; /* pre-M15: #ABC1CE; */
 .dfc {
   .part2.Hybrid, .part2.Land.colourless, .part2.Land.whiteblue, .part2.Land.whiteblack, .part2.Land.whitered, .part2.Land.whitegreen, .part2.Land.blueblack, .part2.Land.bluered, .part2.Land.bluegreen, .part2.Land.blackred, .part2.Land.blackgreen, .part2.Land.redgreen {
     .cardtitlebar, .cardtypebar { background-color: $Hybrid_DFC_Bar; }
-    .pinline_ptbox, .ptbox { background: $Hybrid_DFC_Bar !important; }
+    .pinline_ptbox, .ptbox { background-color: $Hybrid_DFC_Bar !important; }
   }
 } 
 
@@ -1497,7 +1506,9 @@ form .raritycell { border: 1px solid black; }
     border: none;
     width: 80px; height: 41px; /* img is 51px high, minus the 10px top padding */
     padding: 10px 0px 0px 0px; }
-.Planeswalker.form .pinline_ptbox.pinline { top: -36px; }
+.Planeswalker.form .pinline_ptbox.pinline { top: -36px; 
+  background-color: rgba(0,0,0,0) !important;
+}
 .flip .flavourtextfield { display: none; }
 .form .watermark { position: relative; }
 .form .watermark textarea { background: transparent; }

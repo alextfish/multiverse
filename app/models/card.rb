@@ -428,10 +428,12 @@ class Card < ActiveRecord::Base
       ""
     else
       frame_to_check = (frame!="Auto" ? frame : calculated_frame)
+      frame_to_check.gsub! /(Planeswalker|Coloured_Artifact|token)/i, ""
+      frame_to_check.strip!
       case frame_to_check
         when /^(White|Blue|Black|Red|Green)$/
           indic_string = colour_letter_for_colour_name(frame_to_check)
-        when /^(Hybrid|Land)/
+        when /(Hybrid|Land)/
           colour_regexp = /(white|blue|black|red|green)/i
           matches = frame_to_check.scan(colour_regexp).flatten
           letters = matches.map {|c| colour_letter_for_colour_name(c)}

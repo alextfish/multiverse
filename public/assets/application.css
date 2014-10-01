@@ -978,8 +978,7 @@ div.card_loading {
   filter: none !important;
 }
 
-/*.dfc .part2.Planeswalker .ptbox_container { display: none; }*/
-/* line 600, C:/Users/Alex/Dropbox/Creations/rails_projects/multiverse/app/assets/stylesheets/Card.scss.erb */
+/* line 599, C:/Users/Alex/Dropbox/Creations/rails_projects/multiverse/app/assets/stylesheets/Card.scss.erb */
 .Planeswalker .pinline_ptbox .ptbox {
   background: none !important;
   background-image: url(/assets/loyalty.png) !important;
@@ -992,14 +991,26 @@ div.card_loading {
   padding-top: 4px !important;
 }
 
-/* line 613, C:/Users/Alex/Dropbox/Creations/rails_projects/multiverse/app/assets/stylesheets/Card.scss.erb */
+/* line 610, C:/Users/Alex/Dropbox/Creations/rails_projects/multiverse/app/assets/stylesheets/Card.scss.erb */
+div.dfc div.part2.Planeswalker div.ptbox_container div.pinline_ptbox {
+  /* need to override another !important, so make the above as specific as possible... */
+  background: none !important;
+}
+/* line 614, C:/Users/Alex/Dropbox/Creations/rails_projects/multiverse/app/assets/stylesheets/Card.scss.erb */
+div.dfc div.part2.Planeswalker div.ptbox_container div.pinline_ptbox div.ptbox {
+  background-color: transparent !important;
+  background-image: url(/assets/loyalty.png) !important;
+  background-repeat: no-repeat !important;
+}
+
+/* line 622, C:/Users/Alex/Dropbox/Creations/rails_projects/multiverse/app/assets/stylesheets/Card.scss.erb */
 .Planeswalker .bottombox {
   position: relative;
   margin: 0 auto;
   text-align: left;
 }
 
-/* line 618, C:/Users/Alex/Dropbox/Creations/rails_projects/multiverse/app/assets/stylesheets/Card.scss.erb */
+/* line 627, C:/Users/Alex/Dropbox/Creations/rails_projects/multiverse/app/assets/stylesheets/Card.scss.erb */
 .Planeswalker .artist {
   /* removed for M15: font-size: 7pt;
   position: absolute; width: 80%; left: 15%; top: -5px;
@@ -1016,36 +1027,36 @@ div.card_loading {
   border-radius: 30px 30px 12px 12px / 10px 10px 0px 0px;
 }
 
-/* line 627, C:/Users/Alex/Dropbox/Creations/rails_projects/multiverse/app/assets/stylesheets/Card.scss.erb */
+/* line 636, C:/Users/Alex/Dropbox/Creations/rails_projects/multiverse/app/assets/stylesheets/Card.scss.erb */
 .Planeswalker .powerfield#card_power {
   width: 0px;
 }
 
 /***** Tokens *****/
-/* line 631, C:/Users/Alex/Dropbox/Creations/rails_projects/multiverse/app/assets/stylesheets/Card.scss.erb */
+/* line 640, C:/Users/Alex/Dropbox/Creations/rails_projects/multiverse/app/assets/stylesheets/Card.scss.erb */
 .token .cardtext {
   min-height: 60px;
 }
 
-/* line 632, C:/Users/Alex/Dropbox/Creations/rails_projects/multiverse/app/assets/stylesheets/Card.scss.erb */
+/* line 641, C:/Users/Alex/Dropbox/Creations/rails_projects/multiverse/app/assets/stylesheets/Card.scss.erb */
 .token .cardtext_container.notext {
   padding: 0px;
   display: none;
 }
 
 /* .token.card { height: 262px;} */
-/* line 634, C:/Users/Alex/Dropbox/Creations/rails_projects/multiverse/app/assets/stylesheets/Card.scss.erb */
+/* line 643, C:/Users/Alex/Dropbox/Creations/rails_projects/multiverse/app/assets/stylesheets/Card.scss.erb */
 .token.card.form {
   height: inherit;
 }
 
-/* line 635, C:/Users/Alex/Dropbox/Creations/rails_projects/multiverse/app/assets/stylesheets/Card.scss.erb */
+/* line 644, C:/Users/Alex/Dropbox/Creations/rails_projects/multiverse/app/assets/stylesheets/Card.scss.erb */
 .token .cardname, .token .cardname a {
   color: #ba8;
   text-shadow: #ff9 1px -1px;
 }
 
-/* line 639, C:/Users/Alex/Dropbox/Creations/rails_projects/multiverse/app/assets/stylesheets/Card.scss.erb */
+/* line 648, C:/Users/Alex/Dropbox/Creations/rails_projects/multiverse/app/assets/stylesheets/Card.scss.erb */
 .token .cardname {
   float: none;
   display: inline;
@@ -1055,24 +1066,24 @@ div.card_loading {
   font-variant: small-caps;
 }
 
-/* line 645, C:/Users/Alex/Dropbox/Creations/rails_projects/multiverse/app/assets/stylesheets/Card.scss.erb */
+/* line 654, C:/Users/Alex/Dropbox/Creations/rails_projects/multiverse/app/assets/stylesheets/Card.scss.erb */
 .token .cardtitlebar {
   background-color: #000 !important;
   background: #000 !important;
   text-align: center;
 }
 
-/* line 650, C:/Users/Alex/Dropbox/Creations/rails_projects/multiverse/app/assets/stylesheets/Card.scss.erb */
+/* line 659, C:/Users/Alex/Dropbox/Creations/rails_projects/multiverse/app/assets/stylesheets/Card.scss.erb */
 .token .cardtitlebar label {
   color: #fff;
 }
 
-/* line 651, C:/Users/Alex/Dropbox/Creations/rails_projects/multiverse/app/assets/stylesheets/Card.scss.erb */
+/* line 660, C:/Users/Alex/Dropbox/Creations/rails_projects/multiverse/app/assets/stylesheets/Card.scss.erb */
 .token .cardmanacost {
   display: none;
 }
 
-/* line 652, C:/Users/Alex/Dropbox/Creations/rails_projects/multiverse/app/assets/stylesheets/Card.scss.erb */
+/* line 661, C:/Users/Alex/Dropbox/Creations/rails_projects/multiverse/app/assets/stylesheets/Card.scss.erb */
 .token .pinline.namebox {
   background: #ba8;
   border-top: 1px solid #ff9;
@@ -1081,17 +1092,17 @@ div.card_loading {
   margin: auto;
 }
 
-/* line 658, C:/Users/Alex/Dropbox/Creations/rails_projects/multiverse/app/assets/stylesheets/Card.scss.erb */
+/* line 667, C:/Users/Alex/Dropbox/Creations/rails_projects/multiverse/app/assets/stylesheets/Card.scss.erb */
 .token.form .pinline.namebox {
   width: inherit;
 }
 
-/* line 660, C:/Users/Alex/Dropbox/Creations/rails_projects/multiverse/app/assets/stylesheets/Card.scss.erb */
+/* line 669, C:/Users/Alex/Dropbox/Creations/rails_projects/multiverse/app/assets/stylesheets/Card.scss.erb */
 .token .cardtitlebar {
   border-bottom: 1px solid #ff9;
 }
 
-/* line 663, C:/Users/Alex/Dropbox/Creations/rails_projects/multiverse/app/assets/stylesheets/Card.scss.erb */
+/* line 672, C:/Users/Alex/Dropbox/Creations/rails_projects/multiverse/app/assets/stylesheets/Card.scss.erb */
 .token .cardart {
   -moz-border-radius: 50px;
   -webkit-border-radius: 50px;
@@ -1111,7 +1122,7 @@ div.card_loading {
   background-size: 178px 225px;
 }
 
-/* line 671, C:/Users/Alex/Dropbox/Creations/rails_projects/multiverse/app/assets/stylesheets/Card.scss.erb */
+/* line 680, C:/Users/Alex/Dropbox/Creations/rails_projects/multiverse/app/assets/stylesheets/Card.scss.erb */
 .token .cardart_container .pinline_sides {
   -moz-border-radius: 45px;
   -webkit-border-radius: 45px;
@@ -1129,7 +1140,7 @@ div.card_loading {
   height: 100%;
 }
 
-/* line 680, C:/Users/Alex/Dropbox/Creations/rails_projects/multiverse/app/assets/stylesheets/Card.scss.erb */
+/* line 689, C:/Users/Alex/Dropbox/Creations/rails_projects/multiverse/app/assets/stylesheets/Card.scss.erb */
 .token .cardart_container {
   -moz-border-radius: 44px;
   -webkit-border-radius: 44px;
@@ -1141,29 +1152,29 @@ div.card_loading {
   border-radius: 44px / 32px;
 }
 
-/* line 683, C:/Users/Alex/Dropbox/Creations/rails_projects/multiverse/app/assets/stylesheets/Card.scss.erb */
+/* line 692, C:/Users/Alex/Dropbox/Creations/rails_projects/multiverse/app/assets/stylesheets/Card.scss.erb */
 .token .ptbox_container {
   /* top: 2px; */
 }
 
 /***** Split / Flip / Double-Faced Cards *****/
-/* line 689, C:/Users/Alex/Dropbox/Creations/rails_projects/multiverse/app/assets/stylesheets/Card.scss.erb */
+/* line 698, C:/Users/Alex/Dropbox/Creations/rails_projects/multiverse/app/assets/stylesheets/Card.scss.erb */
 .split.cardborder {
   min-height: 200px;
   width: 300px;
 }
 
-/* line 690, C:/Users/Alex/Dropbox/Creations/rails_projects/multiverse/app/assets/stylesheets/Card.scss.erb */
+/* line 699, C:/Users/Alex/Dropbox/Creations/rails_projects/multiverse/app/assets/stylesheets/Card.scss.erb */
 .dfc.form .card {
   width: 350px;
 }
 
-/* line 691, C:/Users/Alex/Dropbox/Creations/rails_projects/multiverse/app/assets/stylesheets/Card.scss.erb */
+/* line 700, C:/Users/Alex/Dropbox/Creations/rails_projects/multiverse/app/assets/stylesheets/Card.scss.erb */
 .split.form#cardborder {
   width: 500px;
 }
 
-/* line 692, C:/Users/Alex/Dropbox/Creations/rails_projects/multiverse/app/assets/stylesheets/Card.scss.erb */
+/* line 701, C:/Users/Alex/Dropbox/Creations/rails_projects/multiverse/app/assets/stylesheets/Card.scss.erb */
 .split .card {
   min-height: 180px;
   height: 180px;
@@ -1171,137 +1182,137 @@ div.card_loading {
   padding-bottom: 2px;
 }
 
-/* line 694, C:/Users/Alex/Dropbox/Creations/rails_projects/multiverse/app/assets/stylesheets/Card.scss.erb */
+/* line 703, C:/Users/Alex/Dropbox/Creations/rails_projects/multiverse/app/assets/stylesheets/Card.scss.erb */
 .split .part1, .split .part2 {
   display: inline-block;
   width: 139px;
 }
 
-/* line 695, C:/Users/Alex/Dropbox/Creations/rails_projects/multiverse/app/assets/stylesheets/Card.scss.erb */
+/* line 704, C:/Users/Alex/Dropbox/Creations/rails_projects/multiverse/app/assets/stylesheets/Card.scss.erb */
 .split .innercardborder, .dfc .innercardborder {
   display: inline-block;
 }
 
-/* line 696, C:/Users/Alex/Dropbox/Creations/rails_projects/multiverse/app/assets/stylesheets/Card.scss.erb */
+/* line 705, C:/Users/Alex/Dropbox/Creations/rails_projects/multiverse/app/assets/stylesheets/Card.scss.erb */
 .dfc .part1, .dfc .part2 {
   display: inline-block;
 }
 
-/* line 697, C:/Users/Alex/Dropbox/Creations/rails_projects/multiverse/app/assets/stylesheets/Card.scss.erb */
+/* line 706, C:/Users/Alex/Dropbox/Creations/rails_projects/multiverse/app/assets/stylesheets/Card.scss.erb */
 .split .innercard2, .dfc .innercard2 {
   float: right;
 }
 
-/* line 698, C:/Users/Alex/Dropbox/Creations/rails_projects/multiverse/app/assets/stylesheets/Card.scss.erb */
+/* line 707, C:/Users/Alex/Dropbox/Creations/rails_projects/multiverse/app/assets/stylesheets/Card.scss.erb */
 .split.form .part1, .split.form .part2 {
   width: 240px;
 }
 
 /* .dfc.form .part1, .dfc.form .part2 { width: auto;} */
-/* line 701, C:/Users/Alex/Dropbox/Creations/rails_projects/multiverse/app/assets/stylesheets/Card.scss.erb */
+/* line 710, C:/Users/Alex/Dropbox/Creations/rails_projects/multiverse/app/assets/stylesheets/Card.scss.erb */
 .dfc .innercardborder, .split .innercardborder {
   vertical-align: top;
 }
 
-/* line 702, C:/Users/Alex/Dropbox/Creations/rails_projects/multiverse/app/assets/stylesheets/Card.scss.erb */
+/* line 711, C:/Users/Alex/Dropbox/Creations/rails_projects/multiverse/app/assets/stylesheets/Card.scss.erb */
 .dfc.cardborder.form {
   width: 368px;
 }
 
-/* line 703, C:/Users/Alex/Dropbox/Creations/rails_projects/multiverse/app/assets/stylesheets/Card.scss.erb */
+/* line 712, C:/Users/Alex/Dropbox/Creations/rails_projects/multiverse/app/assets/stylesheets/Card.scss.erb */
 .dfc.cardborder {
   width: 441px;
   background-color: #999;
 }
 
-/* line 705, C:/Users/Alex/Dropbox/Creations/rails_projects/multiverse/app/assets/stylesheets/Card.scss.erb */
+/* line 714, C:/Users/Alex/Dropbox/Creations/rails_projects/multiverse/app/assets/stylesheets/Card.scss.erb */
 .split .cardart {
   min-height: 76px;
 }
 
-/* line 706, C:/Users/Alex/Dropbox/Creations/rails_projects/multiverse/app/assets/stylesheets/Card.scss.erb */
+/* line 715, C:/Users/Alex/Dropbox/Creations/rails_projects/multiverse/app/assets/stylesheets/Card.scss.erb */
 .split .cardart img {
   width: 126px;
   height: 76px;
 }
 
-/* line 707, C:/Users/Alex/Dropbox/Creations/rails_projects/multiverse/app/assets/stylesheets/Card.scss.erb */
+/* line 716, C:/Users/Alex/Dropbox/Creations/rails_projects/multiverse/app/assets/stylesheets/Card.scss.erb */
 .split .cardtext {
   min-height: 65px;
   font-size: 8pt;
 }
 
-/* line 708, C:/Users/Alex/Dropbox/Creations/rails_projects/multiverse/app/assets/stylesheets/Card.scss.erb */
+/* line 717, C:/Users/Alex/Dropbox/Creations/rails_projects/multiverse/app/assets/stylesheets/Card.scss.erb */
 .split .watermark {
   background-size: 50px;
 }
 
-/* line 709, C:/Users/Alex/Dropbox/Creations/rails_projects/multiverse/app/assets/stylesheets/Card.scss.erb */
+/* line 718, C:/Users/Alex/Dropbox/Creations/rails_projects/multiverse/app/assets/stylesheets/Card.scss.erb */
 .split .cardtypebar {
   font-size: 7.5pt;
 }
 
-/* line 710, C:/Users/Alex/Dropbox/Creations/rails_projects/multiverse/app/assets/stylesheets/Card.scss.erb */
+/* line 719, C:/Users/Alex/Dropbox/Creations/rails_projects/multiverse/app/assets/stylesheets/Card.scss.erb */
 .split .bottombox {
   margin-bottom: -2px;
   font-size: 7pt;
 }
 
-/* line 711, C:/Users/Alex/Dropbox/Creations/rails_projects/multiverse/app/assets/stylesheets/Card.scss.erb */
+/* line 720, C:/Users/Alex/Dropbox/Creations/rails_projects/multiverse/app/assets/stylesheets/Card.scss.erb */
 .split .pinlinebox {
   padding: 1px;
 }
 
-/* line 713, C:/Users/Alex/Dropbox/Creations/rails_projects/multiverse/app/assets/stylesheets/Card.scss.erb */
+/* line 722, C:/Users/Alex/Dropbox/Creations/rails_projects/multiverse/app/assets/stylesheets/Card.scss.erb */
 .split.form .cardrarity {
   /* top: 27px; */
   left: 0px;
 }
 
-/* line 714, C:/Users/Alex/Dropbox/Creations/rails_projects/multiverse/app/assets/stylesheets/Card.scss.erb */
+/* line 723, C:/Users/Alex/Dropbox/Creations/rails_projects/multiverse/app/assets/stylesheets/Card.scss.erb */
 .split input {
   width: 100px;
 }
 
-/* line 715, C:/Users/Alex/Dropbox/Creations/rails_projects/multiverse/app/assets/stylesheets/Card.scss.erb */
+/* line 724, C:/Users/Alex/Dropbox/Creations/rails_projects/multiverse/app/assets/stylesheets/Card.scss.erb */
 .split input[type="checkbox"] {
   width: auto;
 }
 
-/* line 717, C:/Users/Alex/Dropbox/Creations/rails_projects/multiverse/app/assets/stylesheets/Card.scss.erb */
+/* line 726, C:/Users/Alex/Dropbox/Creations/rails_projects/multiverse/app/assets/stylesheets/Card.scss.erb */
 .flip .card, .form .flip .card {
   min-height: 0px;
   height: auto !important;
 }
 
-/* line 718, C:/Users/Alex/Dropbox/Creations/rails_projects/multiverse/app/assets/stylesheets/Card.scss.erb */
+/* line 727, C:/Users/Alex/Dropbox/Creations/rails_projects/multiverse/app/assets/stylesheets/Card.scss.erb */
 .flip .part1 .cardart_container {
   position: absolute;
   left: -5000px;
 }
 
-/* line 719, C:/Users/Alex/Dropbox/Creations/rails_projects/multiverse/app/assets/stylesheets/Card.scss.erb */
+/* line 728, C:/Users/Alex/Dropbox/Creations/rails_projects/multiverse/app/assets/stylesheets/Card.scss.erb */
 .flip .part1 .artist_area {
   display: none;
 }
 
-/* line 720, C:/Users/Alex/Dropbox/Creations/rails_projects/multiverse/app/assets/stylesheets/Card.scss.erb */
+/* line 729, C:/Users/Alex/Dropbox/Creations/rails_projects/multiverse/app/assets/stylesheets/Card.scss.erb */
 .flip .part2 .cardrarity {
   display: none;
 }
 
-/* line 721, C:/Users/Alex/Dropbox/Creations/rails_projects/multiverse/app/assets/stylesheets/Card.scss.erb */
+/* line 730, C:/Users/Alex/Dropbox/Creations/rails_projects/multiverse/app/assets/stylesheets/Card.scss.erb */
 .flip .cardtext {
   min-height: 38px;
 }
 
-/* line 722, C:/Users/Alex/Dropbox/Creations/rails_projects/multiverse/app/assets/stylesheets/Card.scss.erb */
+/* line 731, C:/Users/Alex/Dropbox/Creations/rails_projects/multiverse/app/assets/stylesheets/Card.scss.erb */
 .flip .cardart {
   min-height: 122px;
   /* 105px; */
 }
 
-/* line 724, C:/Users/Alex/Dropbox/Creations/rails_projects/multiverse/app/assets/stylesheets/Card.scss.erb */
+/* line 733, C:/Users/Alex/Dropbox/Creations/rails_projects/multiverse/app/assets/stylesheets/Card.scss.erb */
 .flip .part1 .typebox {
   position: absolute;
   z-index: +2;
@@ -1309,32 +1320,32 @@ div.card_loading {
   width: 190px;
 }
 
-/* line 725, C:/Users/Alex/Dropbox/Creations/rails_projects/multiverse/app/assets/stylesheets/Card.scss.erb */
+/* line 734, C:/Users/Alex/Dropbox/Creations/rails_projects/multiverse/app/assets/stylesheets/Card.scss.erb */
 .flip .part1 .ptbox_container {
   z-index: +2;
   left: +6px;
   top: 0;
 }
 
-/* line 726, C:/Users/Alex/Dropbox/Creations/rails_projects/multiverse/app/assets/stylesheets/Card.scss.erb */
+/* line 735, C:/Users/Alex/Dropbox/Creations/rails_projects/multiverse/app/assets/stylesheets/Card.scss.erb */
 .flip .part1 .pinline_ptbox {
   top: -3px;
 }
 
-/* line 727, C:/Users/Alex/Dropbox/Creations/rails_projects/multiverse/app/assets/stylesheets/Card.scss.erb */
+/* line 736, C:/Users/Alex/Dropbox/Creations/rails_projects/multiverse/app/assets/stylesheets/Card.scss.erb */
 .flip .part2 .cardart_container {
   position: relative;
   top: -12px;
   /* -32px; */
 }
 
-/* line 728, C:/Users/Alex/Dropbox/Creations/rails_projects/multiverse/app/assets/stylesheets/Card.scss.erb */
+/* line 737, C:/Users/Alex/Dropbox/Creations/rails_projects/multiverse/app/assets/stylesheets/Card.scss.erb */
 .flip .part1 .cardrarity {
   z-index: +2;
   top: 211px;
 }
 
-/* line 730, C:/Users/Alex/Dropbox/Creations/rails_projects/multiverse/app/assets/stylesheets/Card.scss.erb */
+/* line 739, C:/Users/Alex/Dropbox/Creations/rails_projects/multiverse/app/assets/stylesheets/Card.scss.erb */
 .flip .part2 .namebox {
   position: relative;
   z-index: +2;
@@ -1342,31 +1353,31 @@ div.card_loading {
   /* 162px; */
 }
 
-/* line 731, C:/Users/Alex/Dropbox/Creations/rails_projects/multiverse/app/assets/stylesheets/Card.scss.erb */
+/* line 740, C:/Users/Alex/Dropbox/Creations/rails_projects/multiverse/app/assets/stylesheets/Card.scss.erb */
 .flip .part2 .typebox {
   top: -33px;
   position: relative;
 }
 
-/* line 732, C:/Users/Alex/Dropbox/Creations/rails_projects/multiverse/app/assets/stylesheets/Card.scss.erb */
+/* line 741, C:/Users/Alex/Dropbox/Creations/rails_projects/multiverse/app/assets/stylesheets/Card.scss.erb */
 .flip .part2 .ptbox_container {
   right: -2px;
 }
 
-/* line 733, C:/Users/Alex/Dropbox/Creations/rails_projects/multiverse/app/assets/stylesheets/Card.scss.erb */
+/* line 742, C:/Users/Alex/Dropbox/Creations/rails_projects/multiverse/app/assets/stylesheets/Card.scss.erb */
 .flip .part2 .pinline_ptbox {
   z-index: 2;
   right: 147px;
   top: -90px;
 }
 
-/* line 734, C:/Users/Alex/Dropbox/Creations/rails_projects/multiverse/app/assets/stylesheets/Card.scss.erb */
+/* line 743, C:/Users/Alex/Dropbox/Creations/rails_projects/multiverse/app/assets/stylesheets/Card.scss.erb */
 .flip .part2 .cardtext_container {
   top: -32px;
   position: relative;
 }
 
-/* line 735, C:/Users/Alex/Dropbox/Creations/rails_projects/multiverse/app/assets/stylesheets/Card.scss.erb */
+/* line 744, C:/Users/Alex/Dropbox/Creations/rails_projects/multiverse/app/assets/stylesheets/Card.scss.erb */
 .flip .part2 .bottombox {
   z-index: +1;
   width: 188px;
@@ -1376,7 +1387,7 @@ div.card_loading {
   margin-bottom: 0px;
 }
 
-/* line 738, C:/Users/Alex/Dropbox/Creations/rails_projects/multiverse/app/assets/stylesheets/Card.scss.erb */
+/* line 747, C:/Users/Alex/Dropbox/Creations/rails_projects/multiverse/app/assets/stylesheets/Card.scss.erb */
 .flip .part2 .cardtext, .flip .part2 .namebox, .flip .part2 .typebox, .flip .part2 .pinline_ptbox,
 .flip.form .part2 .frame_selector_wrapper {
   /* Safari */
@@ -1387,7 +1398,7 @@ div.card_loading {
   filter: progid:DXImageTransform.Microsoft.BasicImage(rotation=2);
 }
 
-/* line 741, C:/Users/Alex/Dropbox/Creations/rails_projects/multiverse/app/assets/stylesheets/Card.scss.erb */
+/* line 750, C:/Users/Alex/Dropbox/Creations/rails_projects/multiverse/app/assets/stylesheets/Card.scss.erb */
 .rotated {
   /* Safari */
   -webkit-transform: rotate(-180deg);
@@ -1397,7 +1408,7 @@ div.card_loading {
   filter: progid:DXImageTransform.Microsoft.BasicImage(rotation=2);
 }
 
-/* line 744, C:/Users/Alex/Dropbox/Creations/rails_projects/multiverse/app/assets/stylesheets/Card.scss.erb */
+/* line 753, C:/Users/Alex/Dropbox/Creations/rails_projects/multiverse/app/assets/stylesheets/Card.scss.erb */
 .split.rotated {
   /* Safari */
   -webkit-transform: rotate(-90deg);
@@ -1411,13 +1422,13 @@ div.card_loading {
   margin-right: -100px;
 }
 
-/* line 752, C:/Users/Alex/Dropbox/Creations/rails_projects/multiverse/app/assets/stylesheets/Card.scss.erb */
+/* line 761, C:/Users/Alex/Dropbox/Creations/rails_projects/multiverse/app/assets/stylesheets/Card.scss.erb */
 .flip.form .part1 .cardtext_container {
   position: relative;
   top: -64px;
 }
 
-/* line 753, C:/Users/Alex/Dropbox/Creations/rails_projects/multiverse/app/assets/stylesheets/Card.scss.erb */
+/* line 762, C:/Users/Alex/Dropbox/Creations/rails_projects/multiverse/app/assets/stylesheets/Card.scss.erb */
 .flip.form .part1 .typebox {
   position: relative;
   width: auto;
@@ -1425,65 +1436,65 @@ div.card_loading {
   /* top: 148px; */
 }
 
-/* line 754, C:/Users/Alex/Dropbox/Creations/rails_projects/multiverse/app/assets/stylesheets/Card.scss.erb */
+/* line 763, C:/Users/Alex/Dropbox/Creations/rails_projects/multiverse/app/assets/stylesheets/Card.scss.erb */
 .flip.form .part1 .ptbox_container {
   top: -38px;
 }
 
-/* line 755, C:/Users/Alex/Dropbox/Creations/rails_projects/multiverse/app/assets/stylesheets/Card.scss.erb */
+/* line 764, C:/Users/Alex/Dropbox/Creations/rails_projects/multiverse/app/assets/stylesheets/Card.scss.erb */
 .flip.form .part1 .frame_selector_wrapper {
   position: relative;
   left: +5000px;
   top: +100px;
 }
 
-/* line 756, C:/Users/Alex/Dropbox/Creations/rails_projects/multiverse/app/assets/stylesheets/Card.scss.erb */
+/* line 765, C:/Users/Alex/Dropbox/Creations/rails_projects/multiverse/app/assets/stylesheets/Card.scss.erb */
 .flip.form .part1 .bottombox {
   height: 0px;
   /*20px;*/
 }
 
-/* line 757, C:/Users/Alex/Dropbox/Creations/rails_projects/multiverse/app/assets/stylesheets/Card.scss.erb */
+/* line 766, C:/Users/Alex/Dropbox/Creations/rails_projects/multiverse/app/assets/stylesheets/Card.scss.erb */
 .flip.form .cardart {
   text-align: left;
 }
 
-/* line 758, C:/Users/Alex/Dropbox/Creations/rails_projects/multiverse/app/assets/stylesheets/Card.scss.erb */
+/* line 767, C:/Users/Alex/Dropbox/Creations/rails_projects/multiverse/app/assets/stylesheets/Card.scss.erb */
 .flip.form .type_field {
   width: 65px;
 }
 
-/* line 759, C:/Users/Alex/Dropbox/Creations/rails_projects/multiverse/app/assets/stylesheets/Card.scss.erb */
+/* line 768, C:/Users/Alex/Dropbox/Creations/rails_projects/multiverse/app/assets/stylesheets/Card.scss.erb */
 .flip.form .part2 .cardart_container {
   height: 50px;
   top: -85px;
 }
 
-/* line 760, C:/Users/Alex/Dropbox/Creations/rails_projects/multiverse/app/assets/stylesheets/Card.scss.erb */
+/* line 769, C:/Users/Alex/Dropbox/Creations/rails_projects/multiverse/app/assets/stylesheets/Card.scss.erb */
 .flip.form .part2 .bottombox {
   position: relative;
   margin-top: 23px;
   top: 0px;
 }
 
-/* line 761, C:/Users/Alex/Dropbox/Creations/rails_projects/multiverse/app/assets/stylesheets/Card.scss.erb */
+/* line 770, C:/Users/Alex/Dropbox/Creations/rails_projects/multiverse/app/assets/stylesheets/Card.scss.erb */
 .flip.form .part2 .pinline_ptbox {
   right: 110px;
   top: -234px;
 }
 
-/* line 762, C:/Users/Alex/Dropbox/Creations/rails_projects/multiverse/app/assets/stylesheets/Card.scss.erb */
+/* line 771, C:/Users/Alex/Dropbox/Creations/rails_projects/multiverse/app/assets/stylesheets/Card.scss.erb */
 .flip.form .part2 .typebox {
   top: -32px;
 }
 
 /* .flip.form .part2 .cardtext_container { top: -52px; } */
-/* line 764, C:/Users/Alex/Dropbox/Creations/rails_projects/multiverse/app/assets/stylesheets/Card.scss.erb */
+/* line 773, C:/Users/Alex/Dropbox/Creations/rails_projects/multiverse/app/assets/stylesheets/Card.scss.erb */
 .flip.form .part2 .namebox {
   top: 240px;
 }
 
-/* line 765, C:/Users/Alex/Dropbox/Creations/rails_projects/multiverse/app/assets/stylesheets/Card.scss.erb */
+/* line 774, C:/Users/Alex/Dropbox/Creations/rails_projects/multiverse/app/assets/stylesheets/Card.scss.erb */
 .flip.form .part1 .cardrarity {
   /* right: -170px; */
   top: 362px;
@@ -1492,33 +1503,33 @@ div.card_loading {
 
 @-moz-document url-prefix() {
   /* Firefox override */
-  /* line 768, C:/Users/Alex/Dropbox/Creations/rails_projects/multiverse/app/assets/stylesheets/Card.scss.erb */
+  /* line 777, C:/Users/Alex/Dropbox/Creations/rails_projects/multiverse/app/assets/stylesheets/Card.scss.erb */
   .flip.form .part1 .cardtext_container {
     top: -32px;
   }
 
-  /* line 769, C:/Users/Alex/Dropbox/Creations/rails_projects/multiverse/app/assets/stylesheets/Card.scss.erb */
+  /* line 778, C:/Users/Alex/Dropbox/Creations/rails_projects/multiverse/app/assets/stylesheets/Card.scss.erb */
   .flip.form .part1 .ptbox_container {
     top: -26px;
   }
 
-  /* line 770, C:/Users/Alex/Dropbox/Creations/rails_projects/multiverse/app/assets/stylesheets/Card.scss.erb */
+  /* line 779, C:/Users/Alex/Dropbox/Creations/rails_projects/multiverse/app/assets/stylesheets/Card.scss.erb */
   .flip.form .part2 .namebox {
     top: 200px;
   }
 
-  /* line 771, C:/Users/Alex/Dropbox/Creations/rails_projects/multiverse/app/assets/stylesheets/Card.scss.erb */
+  /* line 780, C:/Users/Alex/Dropbox/Creations/rails_projects/multiverse/app/assets/stylesheets/Card.scss.erb */
   .flip.form .part2 .pinline_ptbox {
     top: -197px;
   }
 
-  /* line 772, C:/Users/Alex/Dropbox/Creations/rails_projects/multiverse/app/assets/stylesheets/Card.scss.erb */
+  /* line 781, C:/Users/Alex/Dropbox/Creations/rails_projects/multiverse/app/assets/stylesheets/Card.scss.erb */
   .flip.form .part1 .cardrarity {
     top: 320px;
   }
 }
 
-/* line 776, C:/Users/Alex/Dropbox/Creations/rails_projects/multiverse/app/assets/stylesheets/Card.scss.erb */
+/* line 785, C:/Users/Alex/Dropbox/Creations/rails_projects/multiverse/app/assets/stylesheets/Card.scss.erb */
 .dfc .pinline_box.namebox {
   display: inline-block;
   margin-left: 0px;
@@ -1527,37 +1538,37 @@ div.card_loading {
   margin-top: 0px;
 }
 
-/* line 785, C:/Users/Alex/Dropbox/Creations/rails_projects/multiverse/app/assets/stylesheets/Card.scss.erb */
+/* line 794, C:/Users/Alex/Dropbox/Creations/rails_projects/multiverse/app/assets/stylesheets/Card.scss.erb */
 .dfc.form .pinline_box.namebox {
   width: auto;
   float: none;
 }
 
-/* line 787, C:/Users/Alex/Dropbox/Creations/rails_projects/multiverse/app/assets/stylesheets/Card.scss.erb */
+/* line 796, C:/Users/Alex/Dropbox/Creations/rails_projects/multiverse/app/assets/stylesheets/Card.scss.erb */
 .dfc .left_of_namebox {
   display: inline-block;
   width: 20px;
   height: 20px;
 }
 
-/* line 792, C:/Users/Alex/Dropbox/Creations/rails_projects/multiverse/app/assets/stylesheets/Card.scss.erb */
+/* line 801, C:/Users/Alex/Dropbox/Creations/rails_projects/multiverse/app/assets/stylesheets/Card.scss.erb */
 .dfc .part1 .left_of_namebox {
   background-image: url(/assets/dfc_front.png);
 }
 
-/* line 795, C:/Users/Alex/Dropbox/Creations/rails_projects/multiverse/app/assets/stylesheets/Card.scss.erb */
+/* line 804, C:/Users/Alex/Dropbox/Creations/rails_projects/multiverse/app/assets/stylesheets/Card.scss.erb */
 .dfc .part2 .left_of_namebox {
   background-image: url(/assets/dfc_back.png);
 }
 
-/* line 798, C:/Users/Alex/Dropbox/Creations/rails_projects/multiverse/app/assets/stylesheets/Card.scss.erb */
+/* line 807, C:/Users/Alex/Dropbox/Creations/rails_projects/multiverse/app/assets/stylesheets/Card.scss.erb */
 .dfc.form .left_of_namebox {
   position: relative;
   top: 20px;
 }
 
 /***** Large Cards *****/
-/* line 807, C:/Users/Alex/Dropbox/Creations/rails_projects/multiverse/app/assets/stylesheets/Card.scss.erb */
+/* line 816, C:/Users/Alex/Dropbox/Creations/rails_projects/multiverse/app/assets/stylesheets/Card.scss.erb */
 .scheme .pinline, .scheme .pinline > div, .scheme .pinline_box, .scheme .pinline_box > div, .plane .pinline, .plane .pinline > div, .plane .pinline_box, .plane .pinline_box > div, .vanguard .pinline, .vanguard .pinline > div, .vanguard .pinline_box, .vanguard .pinline_box > div {
   border: none;
   padding: 0px;
@@ -1566,53 +1577,53 @@ div.card_loading {
   -khtml-border-radius: 0px;
   border-radius: 0px;
 }
-/* line 812, C:/Users/Alex/Dropbox/Creations/rails_projects/multiverse/app/assets/stylesheets/Card.scss.erb */
+/* line 821, C:/Users/Alex/Dropbox/Creations/rails_projects/multiverse/app/assets/stylesheets/Card.scss.erb */
 .scheme .cardmanacost, .plane .cardmanacost, .vanguard .cardmanacost {
   display: none;
 }
-/* line 816, C:/Users/Alex/Dropbox/Creations/rails_projects/multiverse/app/assets/stylesheets/Card.scss.erb */
+/* line 825, C:/Users/Alex/Dropbox/Creations/rails_projects/multiverse/app/assets/stylesheets/Card.scss.erb */
 .scheme .form .cardart, .plane .form .cardart, .vanguard .form .cardart {
   height: auto;
 }
-/* line 820, C:/Users/Alex/Dropbox/Creations/rails_projects/multiverse/app/assets/stylesheets/Card.scss.erb */
+/* line 829, C:/Users/Alex/Dropbox/Creations/rails_projects/multiverse/app/assets/stylesheets/Card.scss.erb */
 .scheme .frame_selector_wrapper, .plane .frame_selector_wrapper, .vanguard .frame_selector_wrapper {
   display: none;
 }
 
-/* line 833, C:/Users/Alex/Dropbox/Creations/rails_projects/multiverse/app/assets/stylesheets/Card.scss.erb */
+/* line 842, C:/Users/Alex/Dropbox/Creations/rails_projects/multiverse/app/assets/stylesheets/Card.scss.erb */
 .vanguard.cardborder {
   min-height: 400px;
   width: 300px;
 }
-/* line 837, C:/Users/Alex/Dropbox/Creations/rails_projects/multiverse/app/assets/stylesheets/Card.scss.erb */
+/* line 846, C:/Users/Alex/Dropbox/Creations/rails_projects/multiverse/app/assets/stylesheets/Card.scss.erb */
 .vanguard.distinct_mockup_container {
   min-height: 400px;
   width: 320px;
 }
-/* line 839, C:/Users/Alex/Dropbox/Creations/rails_projects/multiverse/app/assets/stylesheets/Card.scss.erb */
+/* line 848, C:/Users/Alex/Dropbox/Creations/rails_projects/multiverse/app/assets/stylesheets/Card.scss.erb */
 .vanguard .cardname {
   float: none;
   text-align: center;
 }
 
-/* line 844, C:/Users/Alex/Dropbox/Creations/rails_projects/multiverse/app/assets/stylesheets/Card.scss.erb */
+/* line 853, C:/Users/Alex/Dropbox/Creations/rails_projects/multiverse/app/assets/stylesheets/Card.scss.erb */
 .scheme {
   /* Fading around artbox and textbox: two layers
     - one of mostly-solid darkish grey, 
     the other of faintly-solid medium grey */
   /* Forms */
 }
-/* line 845, C:/Users/Alex/Dropbox/Creations/rails_projects/multiverse/app/assets/stylesheets/Card.scss.erb */
+/* line 854, C:/Users/Alex/Dropbox/Creations/rails_projects/multiverse/app/assets/stylesheets/Card.scss.erb */
 .scheme.cardborder {
   min-height: 400px;
   width: 300px;
 }
-/* line 849, C:/Users/Alex/Dropbox/Creations/rails_projects/multiverse/app/assets/stylesheets/Card.scss.erb */
+/* line 858, C:/Users/Alex/Dropbox/Creations/rails_projects/multiverse/app/assets/stylesheets/Card.scss.erb */
 .scheme.distinct_mockup_container {
   min-height: 400px;
   width: 320px;
 }
-/* line 851, C:/Users/Alex/Dropbox/Creations/rails_projects/multiverse/app/assets/stylesheets/Card.scss.erb */
+/* line 860, C:/Users/Alex/Dropbox/Creations/rails_projects/multiverse/app/assets/stylesheets/Card.scss.erb */
 .scheme .innercardborder {
   border: 4px ridge #cc9944;
   width: auto;
@@ -1623,7 +1634,7 @@ div.card_loading {
   background-color: #224466;
   background-size: 300px, 400px;
 }
-/* line 861, C:/Users/Alex/Dropbox/Creations/rails_projects/multiverse/app/assets/stylesheets/Card.scss.erb */
+/* line 870, C:/Users/Alex/Dropbox/Creations/rails_projects/multiverse/app/assets/stylesheets/Card.scss.erb */
 .scheme .card {
   border: 1px ridge #cc9944;
   border-top: none;
@@ -1632,12 +1643,12 @@ div.card_loading {
   width: 246px;
   padding: 0px;
 }
-/* line 869, C:/Users/Alex/Dropbox/Creations/rails_projects/multiverse/app/assets/stylesheets/Card.scss.erb */
+/* line 878, C:/Users/Alex/Dropbox/Creations/rails_projects/multiverse/app/assets/stylesheets/Card.scss.erb */
 .scheme .pinline_box {
   border-top: 3px ridge #cc9944;
   border-bottom: 3px ridge #cc9944;
 }
-/* line 873, C:/Users/Alex/Dropbox/Creations/rails_projects/multiverse/app/assets/stylesheets/Card.scss.erb */
+/* line 882, C:/Users/Alex/Dropbox/Creations/rails_projects/multiverse/app/assets/stylesheets/Card.scss.erb */
 .scheme .cardtitlebar {
   -moz-border-radius: 0px;
   -webkit-border-radius: 0px;
@@ -1646,81 +1657,81 @@ div.card_loading {
   border-bottom: 3px ridge #cc9944;
   background-color: rgba(255, 255, 255, 0.9);
 }
-/* line 878, C:/Users/Alex/Dropbox/Creations/rails_projects/multiverse/app/assets/stylesheets/Card.scss.erb */
+/* line 887, C:/Users/Alex/Dropbox/Creations/rails_projects/multiverse/app/assets/stylesheets/Card.scss.erb */
 .scheme .cardname {
   float: none;
   text-align: center;
 }
-/* line 882, C:/Users/Alex/Dropbox/Creations/rails_projects/multiverse/app/assets/stylesheets/Card.scss.erb */
+/* line 891, C:/Users/Alex/Dropbox/Creations/rails_projects/multiverse/app/assets/stylesheets/Card.scss.erb */
 .scheme .cardtext_container, .scheme .cardtypebar {
   background-image: none;
   background-color: rgba(255, 255, 255, 0.8);
 }
-/* line 886, C:/Users/Alex/Dropbox/Creations/rails_projects/multiverse/app/assets/stylesheets/Card.scss.erb */
+/* line 895, C:/Users/Alex/Dropbox/Creations/rails_projects/multiverse/app/assets/stylesheets/Card.scss.erb */
 .scheme .cardart {
   height: 203px;
 }
-/* line 892, C:/Users/Alex/Dropbox/Creations/rails_projects/multiverse/app/assets/stylesheets/Card.scss.erb */
+/* line 901, C:/Users/Alex/Dropbox/Creations/rails_projects/multiverse/app/assets/stylesheets/Card.scss.erb */
 .scheme .cardart_container, .scheme .cardtext_container {
   padding: 0px;
   border-left: 2px solid rgba(64, 64, 64, 0.8);
   border-right: 2px solid rgba(64, 64, 64, 0.8);
 }
-/* line 897, C:/Users/Alex/Dropbox/Creations/rails_projects/multiverse/app/assets/stylesheets/Card.scss.erb */
+/* line 906, C:/Users/Alex/Dropbox/Creations/rails_projects/multiverse/app/assets/stylesheets/Card.scss.erb */
 .scheme .cardtext_container {
   border-bottom: 2px solid rgba(64, 64, 64, 0.8);
 }
-/* line 900, C:/Users/Alex/Dropbox/Creations/rails_projects/multiverse/app/assets/stylesheets/Card.scss.erb */
+/* line 909, C:/Users/Alex/Dropbox/Creations/rails_projects/multiverse/app/assets/stylesheets/Card.scss.erb */
 .scheme .pinline_sides, .scheme .pinline_sidesbottom {
   border-left: 2px solid rgba(128, 128, 128, 0.4);
   border-right: 2px solid rgba(128, 128, 128, 0.4);
 }
-/* line 904, C:/Users/Alex/Dropbox/Creations/rails_projects/multiverse/app/assets/stylesheets/Card.scss.erb */
+/* line 913, C:/Users/Alex/Dropbox/Creations/rails_projects/multiverse/app/assets/stylesheets/Card.scss.erb */
 .scheme .pinline_sidesbottom {
   border-bottom: 2px solid rgba(128, 128, 128, 0.4);
 }
-/* line 907, C:/Users/Alex/Dropbox/Creations/rails_projects/multiverse/app/assets/stylesheets/Card.scss.erb */
+/* line 916, C:/Users/Alex/Dropbox/Creations/rails_projects/multiverse/app/assets/stylesheets/Card.scss.erb */
 .scheme .cardtype {
   padding-left: 5px;
 }
-/* line 910, C:/Users/Alex/Dropbox/Creations/rails_projects/multiverse/app/assets/stylesheets/Card.scss.erb */
+/* line 919, C:/Users/Alex/Dropbox/Creations/rails_projects/multiverse/app/assets/stylesheets/Card.scss.erb */
 .scheme .bottombox {
   position: absolute;
   text-align: center;
   width: 100%;
   color: white;
 }
-/* line 916, C:/Users/Alex/Dropbox/Creations/rails_projects/multiverse/app/assets/stylesheets/Card.scss.erb */
+/* line 925, C:/Users/Alex/Dropbox/Creations/rails_projects/multiverse/app/assets/stylesheets/Card.scss.erb */
 .scheme div.cardtext {
   /* "div" required because of the "> div" rule above */
   padding: 8px;
   min-height: auto;
 }
-/* line 922, C:/Users/Alex/Dropbox/Creations/rails_projects/multiverse/app/assets/stylesheets/Card.scss.erb */
+/* line 931, C:/Users/Alex/Dropbox/Creations/rails_projects/multiverse/app/assets/stylesheets/Card.scss.erb */
 .scheme .form {
   margin-bottom: 40px;
 }
-/* line 924, C:/Users/Alex/Dropbox/Creations/rails_projects/multiverse/app/assets/stylesheets/Card.scss.erb */
+/* line 933, C:/Users/Alex/Dropbox/Creations/rails_projects/multiverse/app/assets/stylesheets/Card.scss.erb */
 .scheme .form .ptbox_container, .scheme .form .card_cost_container, .scheme .form .subtype_container, .scheme .form .colour_indicator_container {
   display: none;
 }
 
-/* line 935, C:/Users/Alex/Dropbox/Creations/rails_projects/multiverse/app/assets/stylesheets/Card.scss.erb */
+/* line 944, C:/Users/Alex/Dropbox/Creations/rails_projects/multiverse/app/assets/stylesheets/Card.scss.erb */
 .plane {
   /* Rules text */
   /* Flavour text */
   /* Forms */
 }
-/* line 936, C:/Users/Alex/Dropbox/Creations/rails_projects/multiverse/app/assets/stylesheets/Card.scss.erb */
+/* line 945, C:/Users/Alex/Dropbox/Creations/rails_projects/multiverse/app/assets/stylesheets/Card.scss.erb */
 .plane.cardborder {
   /* min-height: $LargeLandscapeCardHeight; */
   width: 400px;
 }
-/* line 940, C:/Users/Alex/Dropbox/Creations/rails_projects/multiverse/app/assets/stylesheets/Card.scss.erb */
+/* line 949, C:/Users/Alex/Dropbox/Creations/rails_projects/multiverse/app/assets/stylesheets/Card.scss.erb */
 .plane.distinct_mockup_container {
   width: 420px;
 }
-/* line 941, C:/Users/Alex/Dropbox/Creations/rails_projects/multiverse/app/assets/stylesheets/Card.scss.erb */
+/* line 950, C:/Users/Alex/Dropbox/Creations/rails_projects/multiverse/app/assets/stylesheets/Card.scss.erb */
 .plane .innercardborder {
   border: 2px ridge #cc9944;
   width: auto;
@@ -1738,7 +1749,7 @@ div.card_loading {
   -khtml-border-radius: 22px 22px 26px 26px / 14px 14px 86px 86px;
   border-radius: 22px 22px 26px 26px / 14px 14px 86px 86px;
 }
-/* line 951, C:/Users/Alex/Dropbox/Creations/rails_projects/multiverse/app/assets/stylesheets/Card.scss.erb */
+/* line 960, C:/Users/Alex/Dropbox/Creations/rails_projects/multiverse/app/assets/stylesheets/Card.scss.erb */
 .plane .card {
   border: 2px ridge #cc9944;
   border-top: none;
@@ -1755,11 +1766,11 @@ div.card_loading {
   -khtml-border-radius: 50px 50px 80px 80px / 40px 40px 186px 186px;
   border-radius: 50px 50px 80px 80px / 40px 40px 186px 186px;
 }
-/* line 960, C:/Users/Alex/Dropbox/Creations/rails_projects/multiverse/app/assets/stylesheets/Card.scss.erb */
+/* line 969, C:/Users/Alex/Dropbox/Creations/rails_projects/multiverse/app/assets/stylesheets/Card.scss.erb */
 .plane .pinline_box {
   padding: 0px;
 }
-/* line 963, C:/Users/Alex/Dropbox/Creations/rails_projects/multiverse/app/assets/stylesheets/Card.scss.erb */
+/* line 972, C:/Users/Alex/Dropbox/Creations/rails_projects/multiverse/app/assets/stylesheets/Card.scss.erb */
 .plane .namebox {
   position: absolute;
   border: 2px ridge #cc9944;
@@ -1771,7 +1782,7 @@ div.card_loading {
   /* for IE7-8 */
   background-color: rgba(255, 255, 255, 0.7);
 }
-/* line 973, C:/Users/Alex/Dropbox/Creations/rails_projects/multiverse/app/assets/stylesheets/Card.scss.erb */
+/* line 982, C:/Users/Alex/Dropbox/Creations/rails_projects/multiverse/app/assets/stylesheets/Card.scss.erb */
 .plane .namebox, .plane div.cardtitlebar {
   -moz-border-radius: 4px 4px 12px 12px;
   -webkit-border-radius: 4px 4px 12px 12px;
@@ -1782,28 +1793,28 @@ div.card_loading {
   -khtml-border-radius: 4px 4px 12px 12px / 160px 160px 12px 12px;
   border-radius: 4px 4px 12px 12px / 160px 160px 12px 12px;
 }
-/* line 976, C:/Users/Alex/Dropbox/Creations/rails_projects/multiverse/app/assets/stylesheets/Card.scss.erb */
+/* line 985, C:/Users/Alex/Dropbox/Creations/rails_projects/multiverse/app/assets/stylesheets/Card.scss.erb */
 .plane .namebox div.cardtitlebar {
   /* ".namebox div"  necessary to override */
   border: 2px solid rgba(128, 128, 128, 0.5);
   height: 23px;
 }
-/* line 980, C:/Users/Alex/Dropbox/Creations/rails_projects/multiverse/app/assets/stylesheets/Card.scss.erb */
+/* line 989, C:/Users/Alex/Dropbox/Creations/rails_projects/multiverse/app/assets/stylesheets/Card.scss.erb */
 .plane .cardname {
   float: none;
   text-align: center;
   font-size: 11pt;
   padding-top: 2px;
 }
-/* line 986, C:/Users/Alex/Dropbox/Creations/rails_projects/multiverse/app/assets/stylesheets/Card.scss.erb */
+/* line 995, C:/Users/Alex/Dropbox/Creations/rails_projects/multiverse/app/assets/stylesheets/Card.scss.erb */
 .plane .cardart_container, .plane .cardtext_container {
   background: none;
 }
-/* line 989, C:/Users/Alex/Dropbox/Creations/rails_projects/multiverse/app/assets/stylesheets/Card.scss.erb */
+/* line 998, C:/Users/Alex/Dropbox/Creations/rails_projects/multiverse/app/assets/stylesheets/Card.scss.erb */
 .plane .cardart {
   height: 149px;
 }
-/* line 992, C:/Users/Alex/Dropbox/Creations/rails_projects/multiverse/app/assets/stylesheets/Card.scss.erb */
+/* line 1001, C:/Users/Alex/Dropbox/Creations/rails_projects/multiverse/app/assets/stylesheets/Card.scss.erb */
 .plane .typebox {
   position: absolute;
   border: 2px ridge #cc9944;
@@ -1814,7 +1825,7 @@ div.card_loading {
   background-color: rgba(255, 255, 255, 0.7);
   z-index: +2;
 }
-/* line 1001, C:/Users/Alex/Dropbox/Creations/rails_projects/multiverse/app/assets/stylesheets/Card.scss.erb */
+/* line 1010, C:/Users/Alex/Dropbox/Creations/rails_projects/multiverse/app/assets/stylesheets/Card.scss.erb */
 .plane .typebox, .plane .typebar {
   -moz-border-radius: 160px 160px 0px 0px;
   -webkit-border-radius: 160px 160px 0px 0px;
@@ -1825,15 +1836,15 @@ div.card_loading {
   -khtml-border-radius: 160px 160px 0px 0px / 8px 8px 12px 12px;
   border-radius: 160px 160px 0px 0px / 8px 8px 12px 12px;
 }
-/* line 1004, C:/Users/Alex/Dropbox/Creations/rails_projects/multiverse/app/assets/stylesheets/Card.scss.erb */
+/* line 1013, C:/Users/Alex/Dropbox/Creations/rails_projects/multiverse/app/assets/stylesheets/Card.scss.erb */
 .plane .typebar {
   border: 1px solid rgba(128, 128, 128, 0.5);
 }
-/* line 1007, C:/Users/Alex/Dropbox/Creations/rails_projects/multiverse/app/assets/stylesheets/Card.scss.erb */
+/* line 1016, C:/Users/Alex/Dropbox/Creations/rails_projects/multiverse/app/assets/stylesheets/Card.scss.erb */
 .plane .cardtype {
   text-align: center;
 }
-/* line 1010, C:/Users/Alex/Dropbox/Creations/rails_projects/multiverse/app/assets/stylesheets/Card.scss.erb */
+/* line 1019, C:/Users/Alex/Dropbox/Creations/rails_projects/multiverse/app/assets/stylesheets/Card.scss.erb */
 .plane .cardtext_container {
   margin-left: 30px;
   margin-right: 30px;
@@ -1844,7 +1855,7 @@ div.card_loading {
   /* height: 105px; */
   background-color: rgba(128, 128, 128, 0.4);
 }
-/* line 1020, C:/Users/Alex/Dropbox/Creations/rails_projects/multiverse/app/assets/stylesheets/Card.scss.erb */
+/* line 1029, C:/Users/Alex/Dropbox/Creations/rails_projects/multiverse/app/assets/stylesheets/Card.scss.erb */
 .plane .cardtext_container {
   -moz-border-radius: 50px 50px 18px 18px;
   -webkit-border-radius: 50px 50px 18px 18px;
@@ -1855,7 +1866,7 @@ div.card_loading {
   -khtml-border-radius: 50px 50px 18px 18px / 6px 6px 6px 6px;
   border-radius: 50px 50px 18px 18px / 6px 6px 6px 6px;
 }
-/* line 1023, C:/Users/Alex/Dropbox/Creations/rails_projects/multiverse/app/assets/stylesheets/Card.scss.erb */
+/* line 1032, C:/Users/Alex/Dropbox/Creations/rails_projects/multiverse/app/assets/stylesheets/Card.scss.erb */
 .plane .rulestext, .plane .form textarea.rulestextfield {
   -moz-border-radius: 50px 50px 18px 18px;
   -webkit-border-radius: 50px 50px 18px 18px;
@@ -1866,31 +1877,31 @@ div.card_loading {
   -khtml-border-radius: 50px 50px 18px 18px / 0px 0px 0px 0px;
   border-radius: 50px 50px 18px 18px / 0px 0px 0px 0px;
 }
-/* line 1026, C:/Users/Alex/Dropbox/Creations/rails_projects/multiverse/app/assets/stylesheets/Card.scss.erb */
+/* line 1035, C:/Users/Alex/Dropbox/Creations/rails_projects/multiverse/app/assets/stylesheets/Card.scss.erb */
 .plane .cardtext {
   min-height: 65px;
 }
-/* line 1030, C:/Users/Alex/Dropbox/Creations/rails_projects/multiverse/app/assets/stylesheets/Card.scss.erb */
+/* line 1039, C:/Users/Alex/Dropbox/Creations/rails_projects/multiverse/app/assets/stylesheets/Card.scss.erb */
 .plane .rulestext, .plane .form textarea.rulestextfield {
   background-color: #c8c8c8;
   /* for IE7-8 */
   background-color: rgba(255, 255, 255, 0.6);
 }
-/* line 1034, C:/Users/Alex/Dropbox/Creations/rails_projects/multiverse/app/assets/stylesheets/Card.scss.erb */
+/* line 1043, C:/Users/Alex/Dropbox/Creations/rails_projects/multiverse/app/assets/stylesheets/Card.scss.erb */
 .plane .rulestext {
   padding: 10px 10px 5px 10px;
 }
-/* line 1037, C:/Users/Alex/Dropbox/Creations/rails_projects/multiverse/app/assets/stylesheets/Card.scss.erb */
+/* line 1046, C:/Users/Alex/Dropbox/Creations/rails_projects/multiverse/app/assets/stylesheets/Card.scss.erb */
 .plane .form textarea.rulestextfield {
   border: none;
   padding: 10px 0px 0px 10px;
   min-width: 300px;
 }
-/* line 1043, C:/Users/Alex/Dropbox/Creations/rails_projects/multiverse/app/assets/stylesheets/Card.scss.erb */
+/* line 1052, C:/Users/Alex/Dropbox/Creations/rails_projects/multiverse/app/assets/stylesheets/Card.scss.erb */
 .plane .flavourtext, .plane .form textarea.flavourtextfield {
   font-style: normal;
 }
-/* line 1046, C:/Users/Alex/Dropbox/Creations/rails_projects/multiverse/app/assets/stylesheets/Card.scss.erb */
+/* line 1055, C:/Users/Alex/Dropbox/Creations/rails_projects/multiverse/app/assets/stylesheets/Card.scss.erb */
 .plane .flavourtext {
   padding: 10px 10px 20px 10px;
   background-color: #8c8c8c;
@@ -1898,13 +1909,13 @@ div.card_loading {
   background-color: rgba(170, 170, 170, 0.5);
   margin-top: 0px !important;
 }
-/* line 1052, C:/Users/Alex/Dropbox/Creations/rails_projects/multiverse/app/assets/stylesheets/Card.scss.erb */
+/* line 1061, C:/Users/Alex/Dropbox/Creations/rails_projects/multiverse/app/assets/stylesheets/Card.scss.erb */
 .plane .form textarea.flavourtextfield {
   border: none;
   padding-left: 50px;
   width: 85%;
 }
-/* line 1057, C:/Users/Alex/Dropbox/Creations/rails_projects/multiverse/app/assets/stylesheets/Card.scss.erb */
+/* line 1066, C:/Users/Alex/Dropbox/Creations/rails_projects/multiverse/app/assets/stylesheets/Card.scss.erb */
 .plane .flavourtext:before {
   content: url(/assets/chaos_tiny.png);
   display: inline-block;
@@ -1912,11 +1923,11 @@ div.card_loading {
   float: left;
   margin-right: 3px;
 }
-/* line 1064, C:/Users/Alex/Dropbox/Creations/rails_projects/multiverse/app/assets/stylesheets/Card.scss.erb */
+/* line 1073, C:/Users/Alex/Dropbox/Creations/rails_projects/multiverse/app/assets/stylesheets/Card.scss.erb */
 .plane .form .flavourtext:before {
   position: absolute;
 }
-/* line 1067, C:/Users/Alex/Dropbox/Creations/rails_projects/multiverse/app/assets/stylesheets/Card.scss.erb */
+/* line 1076, C:/Users/Alex/Dropbox/Creations/rails_projects/multiverse/app/assets/stylesheets/Card.scss.erb */
 .plane .bottombox {
   position: relative;
   float: left;
@@ -1938,49 +1949,49 @@ div.card_loading {
   border-radius: 120px 120px 10px 10px / 20px 20px 0px 0px;
   height: 14px;
 }
-/* line 1084, C:/Users/Alex/Dropbox/Creations/rails_projects/multiverse/app/assets/stylesheets/Card.scss.erb */
+/* line 1093, C:/Users/Alex/Dropbox/Creations/rails_projects/multiverse/app/assets/stylesheets/Card.scss.erb */
 .plane .form .namebox, .plane .form .typebox {
   position: relative;
   left: auto;
   width: auto;
 }
-/* line 1089, C:/Users/Alex/Dropbox/Creations/rails_projects/multiverse/app/assets/stylesheets/Card.scss.erb */
+/* line 1098, C:/Users/Alex/Dropbox/Creations/rails_projects/multiverse/app/assets/stylesheets/Card.scss.erb */
 .plane .form .ptbox_container, .plane .form .card_cost_container, .plane .form .colour_indicator_container {
   display: none;
 }
-/* line 1092, C:/Users/Alex/Dropbox/Creations/rails_projects/multiverse/app/assets/stylesheets/Card.scss.erb */
+/* line 1101, C:/Users/Alex/Dropbox/Creations/rails_projects/multiverse/app/assets/stylesheets/Card.scss.erb */
 .plane .form .cardtitlebar .field {
   padding-left: 50px;
   top: -4px;
   position: relative;
 }
-/* line 1096, C:/Users/Alex/Dropbox/Creations/rails_projects/multiverse/app/assets/stylesheets/Card.scss.erb */
+/* line 1105, C:/Users/Alex/Dropbox/Creations/rails_projects/multiverse/app/assets/stylesheets/Card.scss.erb */
 .plane .form .cardtitlebar .field br {
   display: none;
 }
-/* line 1100, C:/Users/Alex/Dropbox/Creations/rails_projects/multiverse/app/assets/stylesheets/Card.scss.erb */
+/* line 1109, C:/Users/Alex/Dropbox/Creations/rails_projects/multiverse/app/assets/stylesheets/Card.scss.erb */
 .plane .form .cardtype {
   text-align: left;
 }
-/* line 1103, C:/Users/Alex/Dropbox/Creations/rails_projects/multiverse/app/assets/stylesheets/Card.scss.erb */
+/* line 1112, C:/Users/Alex/Dropbox/Creations/rails_projects/multiverse/app/assets/stylesheets/Card.scss.erb */
 .plane .form .cardrarity_container {
   position: absolute;
   right: 0px;
   top: 0px;
 }
-/* line 1108, C:/Users/Alex/Dropbox/Creations/rails_projects/multiverse/app/assets/stylesheets/Card.scss.erb */
+/* line 1117, C:/Users/Alex/Dropbox/Creations/rails_projects/multiverse/app/assets/stylesheets/Card.scss.erb */
 .plane .form .bottombox {
   top: -30px;
   height: 30px;
 }
 
 /***** Colour Indicators *****/
-/* line 1121, C:/Users/Alex/Dropbox/Creations/rails_projects/multiverse/app/assets/stylesheets/Card.scss.erb */
+/* line 1130, C:/Users/Alex/Dropbox/Creations/rails_projects/multiverse/app/assets/stylesheets/Card.scss.erb */
 img.colour_indicator {
   vertical-align: text-bottom;
 }
 
-/* line 1124, C:/Users/Alex/Dropbox/Creations/rails_projects/multiverse/app/assets/stylesheets/Card.scss.erb */
+/* line 1133, C:/Users/Alex/Dropbox/Creations/rails_projects/multiverse/app/assets/stylesheets/Card.scss.erb */
 .split .colour_indicator {
   width: 10px;
   height: 10px;
@@ -1991,61 +2002,61 @@ img.colour_indicator {
 /* #efe8d4; and before that, #FBF9EA; */
 /* #F2EFEA; */
 /* #195D7E; */
-/* line 1188, C:/Users/Alex/Dropbox/Creations/rails_projects/multiverse/app/assets/stylesheets/Card.scss.erb */
+/* line 1197, C:/Users/Alex/Dropbox/Creations/rails_projects/multiverse/app/assets/stylesheets/Card.scss.erb */
 .dfc .part2 .cardtitlebar, .dfc .part2 .cardtypebar, .dfc .part2 .pinline_ptbox {
   color: #fff;
 }
 
-/* line 1190, C:/Users/Alex/Dropbox/Creations/rails_projects/multiverse/app/assets/stylesheets/Card.scss.erb */
+/* line 1199, C:/Users/Alex/Dropbox/Creations/rails_projects/multiverse/app/assets/stylesheets/Card.scss.erb */
 .Colourless.card, .Colourless .cardart {
   background-color: #ccc6cc;
 }
 
-/* line 1191, C:/Users/Alex/Dropbox/Creations/rails_projects/multiverse/app/assets/stylesheets/Card.scss.erb */
+/* line 1200, C:/Users/Alex/Dropbox/Creations/rails_projects/multiverse/app/assets/stylesheets/Card.scss.erb */
 .Colourless .pinline {
   background-color: #ddd;
 }
 
-/* line 1192, C:/Users/Alex/Dropbox/Creations/rails_projects/multiverse/app/assets/stylesheets/Card.scss.erb */
+/* line 1201, C:/Users/Alex/Dropbox/Creations/rails_projects/multiverse/app/assets/stylesheets/Card.scss.erb */
 .Colourless .cardtitlebar, .Colourless .cardtypebar {
   background-color: #eee9ee;
 }
 
-/* line 1193, C:/Users/Alex/Dropbox/Creations/rails_projects/multiverse/app/assets/stylesheets/Card.scss.erb */
+/* line 1202, C:/Users/Alex/Dropbox/Creations/rails_projects/multiverse/app/assets/stylesheets/Card.scss.erb */
 .Colourless .cardtext, .Colourless .pinline_ptbox {
   background: #f2ecf2 !important;
 }
 
-/* line 1195, C:/Users/Alex/Dropbox/Creations/rails_projects/multiverse/app/assets/stylesheets/Card.scss.erb */
+/* line 1204, C:/Users/Alex/Dropbox/Creations/rails_projects/multiverse/app/assets/stylesheets/Card.scss.erb */
 .dfc .part2.Colourless .cardtitlebar, .dfc .part2.Colourless .cardtypebar {
   background-color: #886b6b;
 }
-/* line 1196, C:/Users/Alex/Dropbox/Creations/rails_projects/multiverse/app/assets/stylesheets/Card.scss.erb */
+/* line 1205, C:/Users/Alex/Dropbox/Creations/rails_projects/multiverse/app/assets/stylesheets/Card.scss.erb */
 .dfc .part2.Colourless .cardtext {
   background: #bea0a7 !important;
 }
-/* line 1197, C:/Users/Alex/Dropbox/Creations/rails_projects/multiverse/app/assets/stylesheets/Card.scss.erb */
+/* line 1206, C:/Users/Alex/Dropbox/Creations/rails_projects/multiverse/app/assets/stylesheets/Card.scss.erb */
 .dfc .part2.Colourless .pinline_ptbox {
-  background: #886b6b !important;
+  background-color: #886b6b !important;
 }
 
 /* pre-M15: #ABC1CE; */
-/* line 1202, C:/Users/Alex/Dropbox/Creations/rails_projects/multiverse/app/assets/stylesheets/Card.scss.erb */
+/* line 1211, C:/Users/Alex/Dropbox/Creations/rails_projects/multiverse/app/assets/stylesheets/Card.scss.erb */
 .Artifact .pinline {
   background-color: #dbdfe0;
 }
 
-/* line 1203, C:/Users/Alex/Dropbox/Creations/rails_projects/multiverse/app/assets/stylesheets/Card.scss.erb */
+/* line 1212, C:/Users/Alex/Dropbox/Creations/rails_projects/multiverse/app/assets/stylesheets/Card.scss.erb */
 .Artifact .pinline_ptbox {
   background-color: #9CB7BE;
 }
 
-/* line 1204, C:/Users/Alex/Dropbox/Creations/rails_projects/multiverse/app/assets/stylesheets/Card.scss.erb */
+/* line 1213, C:/Users/Alex/Dropbox/Creations/rails_projects/multiverse/app/assets/stylesheets/Card.scss.erb */
 .Artifact .ptbox {
   background-color: #A8BFC7;
 }
 
-/* line 1205, C:/Users/Alex/Dropbox/Creations/rails_projects/multiverse/app/assets/stylesheets/Card.scss.erb */
+/* line 1214, C:/Users/Alex/Dropbox/Creations/rails_projects/multiverse/app/assets/stylesheets/Card.scss.erb */
 .Artifact .cardtitlebar, .Artifact .cardtypebar, .Land.Coloured_Artifact .cardtitlebar, .Land.Coloured_Artifact .cardtypebar {
   background: #c6cfd6;
   /* pre-M15: #B0C4C8; */
@@ -2053,1195 +2064,1195 @@ img.colour_indicator {
   /* pre-M15: @include gradient_vert_highlight(#B0C4C8, #D2D7DB); */
 }
 @media screen {
-  /* line 1205, C:/Users/Alex/Dropbox/Creations/rails_projects/multiverse/app/assets/stylesheets/Card.scss.erb */
+  /* line 1214, C:/Users/Alex/Dropbox/Creations/rails_projects/multiverse/app/assets/stylesheets/Card.scss.erb */
   .Artifact .cardtitlebar, .Artifact .cardtypebar, .Land.Coloured_Artifact .cardtitlebar, .Land.Coloured_Artifact .cardtypebar {
     background: -webkit-gradient(linear, left top, right top, from(#c6cfd6), color-stop(0.5, #d6e0e6), to(#c6cfd6));
   }
 }
 
-/* line 1210, C:/Users/Alex/Dropbox/Creations/rails_projects/multiverse/app/assets/stylesheets/Card.scss.erb */
+/* line 1219, C:/Users/Alex/Dropbox/Creations/rails_projects/multiverse/app/assets/stylesheets/Card.scss.erb */
 .Artifact .cardtext, .Artifact .pinline_ptbox {
   background-color: #d5dde0;
 }
 
-/* line 1211, C:/Users/Alex/Dropbox/Creations/rails_projects/multiverse/app/assets/stylesheets/Card.scss.erb */
+/* line 1220, C:/Users/Alex/Dropbox/Creations/rails_projects/multiverse/app/assets/stylesheets/Card.scss.erb */
 .Artifact, .Artifact .cardart {
   background-color: #9caab3;
 }
 
-/* line 1212, C:/Users/Alex/Dropbox/Creations/rails_projects/multiverse/app/assets/stylesheets/Card.scss.erb */
+/* line 1221, C:/Users/Alex/Dropbox/Creations/rails_projects/multiverse/app/assets/stylesheets/Card.scss.erb */
 .Coloured_Artifact {
   background: #9caab3 !important;
   filter: none !important;
 }
 
-/* line 1214, C:/Users/Alex/Dropbox/Creations/rails_projects/multiverse/app/assets/stylesheets/Card.scss.erb */
+/* line 1223, C:/Users/Alex/Dropbox/Creations/rails_projects/multiverse/app/assets/stylesheets/Card.scss.erb */
 .dfc .part2.Artifact .cardtitlebar, .dfc .part2.Artifact .cardtypebar {
   background-color: #709498;
   background: -moz-linear-gradient(top, #709498, #90a4b0, #709498);
 }
 @media screen {
-  /* line 1214, C:/Users/Alex/Dropbox/Creations/rails_projects/multiverse/app/assets/stylesheets/Card.scss.erb */
+  /* line 1223, C:/Users/Alex/Dropbox/Creations/rails_projects/multiverse/app/assets/stylesheets/Card.scss.erb */
   .dfc .part2.Artifact .cardtitlebar, .dfc .part2.Artifact .cardtypebar {
     background: -webkit-gradient(linear, left top, left bottom, from(#709498), color-stop(0.5, #90a4b0), to(#709498));
   }
 }
-/* line 1218, C:/Users/Alex/Dropbox/Creations/rails_projects/multiverse/app/assets/stylesheets/Card.scss.erb */
+/* line 1227, C:/Users/Alex/Dropbox/Creations/rails_projects/multiverse/app/assets/stylesheets/Card.scss.erb */
 .dfc .part2.Artifact .cardtext {
   background: #c2ccd0 !important;
 }
-/* line 1219, C:/Users/Alex/Dropbox/Creations/rails_projects/multiverse/app/assets/stylesheets/Card.scss.erb */
+/* line 1228, C:/Users/Alex/Dropbox/Creations/rails_projects/multiverse/app/assets/stylesheets/Card.scss.erb */
 .dfc .part2.Artifact .pinline_ptbox, .dfc .part2.Artifact .ptbox {
-  background: #709498 !important;
+  background-color: #709498 !important;
 }
 
-/* line 1222, C:/Users/Alex/Dropbox/Creations/rails_projects/multiverse/app/assets/stylesheets/Card.scss.erb */
+/* line 1231, C:/Users/Alex/Dropbox/Creations/rails_projects/multiverse/app/assets/stylesheets/Card.scss.erb */
 .White.card, .White .cardart {
   background-color: #eae1c8;
   /* @include gradient_vert_important(#fcf9f0, #e3d9bb); */
 }
 
-/* line 1225, C:/Users/Alex/Dropbox/Creations/rails_projects/multiverse/app/assets/stylesheets/Card.scss.erb */
+/* line 1234, C:/Users/Alex/Dropbox/Creations/rails_projects/multiverse/app/assets/stylesheets/Card.scss.erb */
 .White .pinline, .Land.white .pinline {
   background-color: #fffef7;
 }
 
-/* line 1226, C:/Users/Alex/Dropbox/Creations/rails_projects/multiverse/app/assets/stylesheets/Card.scss.erb */
+/* line 1235, C:/Users/Alex/Dropbox/Creations/rails_projects/multiverse/app/assets/stylesheets/Card.scss.erb */
 .White .cardtitlebar, .White .cardtypebar {
   background-color: #fffff9;
 }
 
-/* line 1227, C:/Users/Alex/Dropbox/Creations/rails_projects/multiverse/app/assets/stylesheets/Card.scss.erb */
+/* line 1236, C:/Users/Alex/Dropbox/Creations/rails_projects/multiverse/app/assets/stylesheets/Card.scss.erb */
 .White .cardtext, .White .pinline_ptbox {
   background: white !important;
 }
 
-/* line 1229, C:/Users/Alex/Dropbox/Creations/rails_projects/multiverse/app/assets/stylesheets/Card.scss.erb */
+/* line 1238, C:/Users/Alex/Dropbox/Creations/rails_projects/multiverse/app/assets/stylesheets/Card.scss.erb */
 .dfc .part2.White .cardtitlebar, .dfc .part2.White .cardtypebar, .dfc .part2.Land.white .cardtitlebar, .dfc .part2.Land.white .cardtypebar {
   background-color: #887b6b;
 }
-/* line 1230, C:/Users/Alex/Dropbox/Creations/rails_projects/multiverse/app/assets/stylesheets/Card.scss.erb */
+/* line 1239, C:/Users/Alex/Dropbox/Creations/rails_projects/multiverse/app/assets/stylesheets/Card.scss.erb */
 .dfc .part2.White .cardtext, .dfc .part2.Land.white .cardtext {
   background: #beb7a7 !important;
 }
-/* line 1231, C:/Users/Alex/Dropbox/Creations/rails_projects/multiverse/app/assets/stylesheets/Card.scss.erb */
+/* line 1240, C:/Users/Alex/Dropbox/Creations/rails_projects/multiverse/app/assets/stylesheets/Card.scss.erb */
 .dfc .part2.White .pinline_ptbox, .dfc .part2.Land.white .pinline_ptbox {
-  background: #887b6b !important;
+  background-color: #887b6b !important;
 }
 
-/* line 1234, C:/Users/Alex/Dropbox/Creations/rails_projects/multiverse/app/assets/stylesheets/Card.scss.erb */
+/* line 1243, C:/Users/Alex/Dropbox/Creations/rails_projects/multiverse/app/assets/stylesheets/Card.scss.erb */
 .Blue.card, .Blue .cardart {
   background-color: #63acda;
   /* #5bf; */
 }
 
-/* line 1235, C:/Users/Alex/Dropbox/Creations/rails_projects/multiverse/app/assets/stylesheets/Card.scss.erb */
+/* line 1244, C:/Users/Alex/Dropbox/Creations/rails_projects/multiverse/app/assets/stylesheets/Card.scss.erb */
 .Blue .pinline, .Land.blue .pinline {
   background-color: #197d9e;
 }
 
-/* line 1236, C:/Users/Alex/Dropbox/Creations/rails_projects/multiverse/app/assets/stylesheets/Card.scss.erb */
+/* line 1245, C:/Users/Alex/Dropbox/Creations/rails_projects/multiverse/app/assets/stylesheets/Card.scss.erb */
 .Blue .cardtitlebar, .Blue .cardtypebar {
   background-color: #c5dadf;
   background: -moz-linear-gradient(left, #b7ceda, #c8dce4, #b7ceda);
 }
 @media screen {
-  /* line 1236, C:/Users/Alex/Dropbox/Creations/rails_projects/multiverse/app/assets/stylesheets/Card.scss.erb */
+  /* line 1245, C:/Users/Alex/Dropbox/Creations/rails_projects/multiverse/app/assets/stylesheets/Card.scss.erb */
   .Blue .cardtitlebar, .Blue .cardtypebar {
     background: -webkit-gradient(linear, left top, right top, from(#b7ceda), color-stop(0.5, #c8dce4), to(#b7ceda));
   }
 }
 
-/* line 1238, C:/Users/Alex/Dropbox/Creations/rails_projects/multiverse/app/assets/stylesheets/Card.scss.erb */
+/* line 1247, C:/Users/Alex/Dropbox/Creations/rails_projects/multiverse/app/assets/stylesheets/Card.scss.erb */
 .Blue .cardtext, .Blue .pinline_ptbox {
   background: #e1eced !important;
 }
 
-/* line 1240, C:/Users/Alex/Dropbox/Creations/rails_projects/multiverse/app/assets/stylesheets/Card.scss.erb */
+/* line 1249, C:/Users/Alex/Dropbox/Creations/rails_projects/multiverse/app/assets/stylesheets/Card.scss.erb */
 .dfc .part2.Blue .cardtitlebar, .dfc .part2.Blue .cardtypebar, .dfc .part2.Land.blue .cardtitlebar, .dfc .part2.Land.blue .cardtypebar {
   background-color: #3188b4;
   background: -moz-linear-gradient(left, #2a84b6, #4d95c1, #2a84b6);
 }
 @media screen {
-  /* line 1240, C:/Users/Alex/Dropbox/Creations/rails_projects/multiverse/app/assets/stylesheets/Card.scss.erb */
+  /* line 1249, C:/Users/Alex/Dropbox/Creations/rails_projects/multiverse/app/assets/stylesheets/Card.scss.erb */
   .dfc .part2.Blue .cardtitlebar, .dfc .part2.Blue .cardtypebar, .dfc .part2.Land.blue .cardtitlebar, .dfc .part2.Land.blue .cardtypebar {
     background: -webkit-gradient(linear, left top, right top, from(#2a84b6), color-stop(0.5, #4d95c1), to(#2a84b6));
   }
 }
-/* line 1243, C:/Users/Alex/Dropbox/Creations/rails_projects/multiverse/app/assets/stylesheets/Card.scss.erb */
+/* line 1252, C:/Users/Alex/Dropbox/Creations/rails_projects/multiverse/app/assets/stylesheets/Card.scss.erb */
 .dfc .part2.Blue .cardtext, .dfc .part2.Land.blue .cardtext {
   background: #b8cad3 !important;
 }
-/* line 1244, C:/Users/Alex/Dropbox/Creations/rails_projects/multiverse/app/assets/stylesheets/Card.scss.erb */
+/* line 1253, C:/Users/Alex/Dropbox/Creations/rails_projects/multiverse/app/assets/stylesheets/Card.scss.erb */
 .dfc .part2.Blue .pinline_ptbox, .dfc .part2.Land.blue .pinline_ptbox {
-  background: #3188b4 !important;
+  background-color: #3188b4 !important;
 }
 
-/* line 1247, C:/Users/Alex/Dropbox/Creations/rails_projects/multiverse/app/assets/stylesheets/Card.scss.erb */
+/* line 1256, C:/Users/Alex/Dropbox/Creations/rails_projects/multiverse/app/assets/stylesheets/Card.scss.erb */
 .Black.card, .Black .cardart {
   background-color: #444444;
 }
 
-/* line 1248, C:/Users/Alex/Dropbox/Creations/rails_projects/multiverse/app/assets/stylesheets/Card.scss.erb */
+/* line 1257, C:/Users/Alex/Dropbox/Creations/rails_projects/multiverse/app/assets/stylesheets/Card.scss.erb */
 .Black .pinline, .Land.black .pinline {
   background-color: #333333;
 }
 
-/* line 1249, C:/Users/Alex/Dropbox/Creations/rails_projects/multiverse/app/assets/stylesheets/Card.scss.erb */
+/* line 1258, C:/Users/Alex/Dropbox/Creations/rails_projects/multiverse/app/assets/stylesheets/Card.scss.erb */
 .Black .cardtitlebar, .Black .cardtypebar {
   background-color: #bbb7b7;
 }
 
-/* line 1250, C:/Users/Alex/Dropbox/Creations/rails_projects/multiverse/app/assets/stylesheets/Card.scss.erb */
+/* line 1259, C:/Users/Alex/Dropbox/Creations/rails_projects/multiverse/app/assets/stylesheets/Card.scss.erb */
 .Black .cardtext, .Black .pinline_ptbox {
   background: #ddd9d3 !important;
 }
 
-/* line 1252, C:/Users/Alex/Dropbox/Creations/rails_projects/multiverse/app/assets/stylesheets/Card.scss.erb */
+/* line 1261, C:/Users/Alex/Dropbox/Creations/rails_projects/multiverse/app/assets/stylesheets/Card.scss.erb */
 .dfc .part2.Black .cardtitlebar, .dfc .part2.Black .cardtypebar, .dfc .part2.Land.black .cardtitlebar, .dfc .part2.Land.black .cardtypebar {
   background-color: #625f5e;
 }
-/* line 1253, C:/Users/Alex/Dropbox/Creations/rails_projects/multiverse/app/assets/stylesheets/Card.scss.erb */
+/* line 1262, C:/Users/Alex/Dropbox/Creations/rails_projects/multiverse/app/assets/stylesheets/Card.scss.erb */
 .dfc .part2.Black .cardtext, .dfc .part2.Land.black .cardtext {
   background: #b9b7b8 !important;
 }
-/* line 1254, C:/Users/Alex/Dropbox/Creations/rails_projects/multiverse/app/assets/stylesheets/Card.scss.erb */
+/* line 1263, C:/Users/Alex/Dropbox/Creations/rails_projects/multiverse/app/assets/stylesheets/Card.scss.erb */
 .dfc .part2.Black .pinline_ptbox, .dfc .part2.Land.black .pinline_ptbox {
-  background: #625f5e !important;
+  background-color: #625f5e !important;
 }
 
-/* line 1257, C:/Users/Alex/Dropbox/Creations/rails_projects/multiverse/app/assets/stylesheets/Card.scss.erb */
+/* line 1266, C:/Users/Alex/Dropbox/Creations/rails_projects/multiverse/app/assets/stylesheets/Card.scss.erb */
 .Red.card, .Red .cardart {
   background-color: #e0664f;
   /* #f76; */
 }
 
-/* line 1258, C:/Users/Alex/Dropbox/Creations/rails_projects/multiverse/app/assets/stylesheets/Card.scss.erb */
+/* line 1267, C:/Users/Alex/Dropbox/Creations/rails_projects/multiverse/app/assets/stylesheets/Card.scss.erb */
 .Red .pinline, .Land.red .pinline {
   background-color: #c23d34;
 }
 
-/* line 1259, C:/Users/Alex/Dropbox/Creations/rails_projects/multiverse/app/assets/stylesheets/Card.scss.erb */
+/* line 1268, C:/Users/Alex/Dropbox/Creations/rails_projects/multiverse/app/assets/stylesheets/Card.scss.erb */
 .Red .cardtitlebar, .Red .cardtypebar {
   background-color: #f9d5c0;
 }
 
-/* line 1260, C:/Users/Alex/Dropbox/Creations/rails_projects/multiverse/app/assets/stylesheets/Card.scss.erb */
+/* line 1269, C:/Users/Alex/Dropbox/Creations/rails_projects/multiverse/app/assets/stylesheets/Card.scss.erb */
 .Red .cardtext, .Red .pinline_ptbox {
   background: #f7e6de !important;
 }
 
-/* line 1262, C:/Users/Alex/Dropbox/Creations/rails_projects/multiverse/app/assets/stylesheets/Card.scss.erb */
+/* line 1271, C:/Users/Alex/Dropbox/Creations/rails_projects/multiverse/app/assets/stylesheets/Card.scss.erb */
 .dfc .part2.Red .cardtitlebar, .dfc .part2.Red .cardtypebar, .dfc .part2.Land.red .cardtitlebar, .dfc .part2.Land.red .cardtypebar {
   background-color: #c56244;
 }
-/* line 1263, C:/Users/Alex/Dropbox/Creations/rails_projects/multiverse/app/assets/stylesheets/Card.scss.erb */
+/* line 1272, C:/Users/Alex/Dropbox/Creations/rails_projects/multiverse/app/assets/stylesheets/Card.scss.erb */
 .dfc .part2.Red .cardtext, .dfc .part2.Land.red .cardtext {
   background: #d6bbb4 !important;
 }
-/* line 1264, C:/Users/Alex/Dropbox/Creations/rails_projects/multiverse/app/assets/stylesheets/Card.scss.erb */
+/* line 1273, C:/Users/Alex/Dropbox/Creations/rails_projects/multiverse/app/assets/stylesheets/Card.scss.erb */
 .dfc .part2.Red .pinline_ptbox, .dfc .part2.Land.red .pinline_ptbox {
-  background: #c56244 !important;
+  background-color: #c56244 !important;
 }
 
-/* line 1267, C:/Users/Alex/Dropbox/Creations/rails_projects/multiverse/app/assets/stylesheets/Card.scss.erb */
+/* line 1276, C:/Users/Alex/Dropbox/Creations/rails_projects/multiverse/app/assets/stylesheets/Card.scss.erb */
 .Green.card, .Green .cardart {
   background-color: #7ea17e;
   /* #6b7 */
 }
 
-/* line 1268, C:/Users/Alex/Dropbox/Creations/rails_projects/multiverse/app/assets/stylesheets/Card.scss.erb */
+/* line 1277, C:/Users/Alex/Dropbox/Creations/rails_projects/multiverse/app/assets/stylesheets/Card.scss.erb */
 .Green .pinline, .Land.green .pinline {
   background-color: #448833;
 }
 
-/* line 1269, C:/Users/Alex/Dropbox/Creations/rails_projects/multiverse/app/assets/stylesheets/Card.scss.erb */
+/* line 1278, C:/Users/Alex/Dropbox/Creations/rails_projects/multiverse/app/assets/stylesheets/Card.scss.erb */
 .Green .cardtitlebar, .Green .cardtypebar {
   background-color: #ccddcc;
 }
 
-/* line 1270, C:/Users/Alex/Dropbox/Creations/rails_projects/multiverse/app/assets/stylesheets/Card.scss.erb */
+/* line 1279, C:/Users/Alex/Dropbox/Creations/rails_projects/multiverse/app/assets/stylesheets/Card.scss.erb */
 .Green .cardtext, .Green .pinline_ptbox {
   background: #deeade !important;
   /* #efe; */
 }
 
-/* line 1272, C:/Users/Alex/Dropbox/Creations/rails_projects/multiverse/app/assets/stylesheets/Card.scss.erb */
+/* line 1281, C:/Users/Alex/Dropbox/Creations/rails_projects/multiverse/app/assets/stylesheets/Card.scss.erb */
 .dfc .part2.Green .cardtitlebar, .dfc .part2.Green .cardtypebar, .dfc .part2.Land.green .cardtitlebar, .dfc .part2.Land.green .cardtypebar {
   background-color: #406649;
 }
-/* line 1273, C:/Users/Alex/Dropbox/Creations/rails_projects/multiverse/app/assets/stylesheets/Card.scss.erb */
+/* line 1282, C:/Users/Alex/Dropbox/Creations/rails_projects/multiverse/app/assets/stylesheets/Card.scss.erb */
 .dfc .part2.Green .cardtext, .dfc .part2.Land.green .cardtext {
   background: #afb8b2 !important;
 }
-/* line 1274, C:/Users/Alex/Dropbox/Creations/rails_projects/multiverse/app/assets/stylesheets/Card.scss.erb */
+/* line 1283, C:/Users/Alex/Dropbox/Creations/rails_projects/multiverse/app/assets/stylesheets/Card.scss.erb */
 .dfc .part2.Green .pinline_ptbox, .dfc .part2.Land.green .pinline_ptbox {
-  background: #406649 !important;
+  background-color: #406649 !important;
 }
 
-/* line 1277, C:/Users/Alex/Dropbox/Creations/rails_projects/multiverse/app/assets/stylesheets/Card.scss.erb */
+/* line 1286, C:/Users/Alex/Dropbox/Creations/rails_projects/multiverse/app/assets/stylesheets/Card.scss.erb */
 .Multicolour, .Multicolour .cardart {
   background-color: #cab86c;
   /*#DAC87C;*/
 }
 
-/* line 1279, C:/Users/Alex/Dropbox/Creations/rails_projects/multiverse/app/assets/stylesheets/Card.scss.erb */
+/* line 1288, C:/Users/Alex/Dropbox/Creations/rails_projects/multiverse/app/assets/stylesheets/Card.scss.erb */
 .Multicolour .pinline, .Land.multicolour .pinline {
   background-color: #eAd88C;
   /* #C6AF71;*/
 }
-/* line 1280, C:/Users/Alex/Dropbox/Creations/rails_projects/multiverse/app/assets/stylesheets/Card.scss.erb */
+/* line 1289, C:/Users/Alex/Dropbox/Creations/rails_projects/multiverse/app/assets/stylesheets/Card.scss.erb */
 .Multicolour .cardtitlebar, .Multicolour .cardtypebar, .Land.multicolour .cardtitlebar, .Land.multicolour .cardtypebar {
   background-color: #DAC87C;
   background: -moz-linear-gradient(left, #b9a566, #dbc68f, #b9a566);
 }
 @media screen {
-  /* line 1280, C:/Users/Alex/Dropbox/Creations/rails_projects/multiverse/app/assets/stylesheets/Card.scss.erb */
+  /* line 1289, C:/Users/Alex/Dropbox/Creations/rails_projects/multiverse/app/assets/stylesheets/Card.scss.erb */
   .Multicolour .cardtitlebar, .Multicolour .cardtypebar, .Land.multicolour .cardtitlebar, .Land.multicolour .cardtypebar {
     background: -webkit-gradient(linear, left top, right top, from(#b9a566), color-stop(0.5, #dbc68f), to(#b9a566));
   }
 }
-/* line 1284, C:/Users/Alex/Dropbox/Creations/rails_projects/multiverse/app/assets/stylesheets/Card.scss.erb */
+/* line 1293, C:/Users/Alex/Dropbox/Creations/rails_projects/multiverse/app/assets/stylesheets/Card.scss.erb */
 .Multicolour .cardtext, .Land.multicolour .cardtext {
   background-color: #ffffdd;
 }
 
-/* line 1286, C:/Users/Alex/Dropbox/Creations/rails_projects/multiverse/app/assets/stylesheets/Card.scss.erb */
+/* line 1295, C:/Users/Alex/Dropbox/Creations/rails_projects/multiverse/app/assets/stylesheets/Card.scss.erb */
 .Multicolour .pinline_ptbox {
   background: #C6AF71 !important;
 }
 
-/* line 1287, C:/Users/Alex/Dropbox/Creations/rails_projects/multiverse/app/assets/stylesheets/Card.scss.erb */
+/* line 1296, C:/Users/Alex/Dropbox/Creations/rails_projects/multiverse/app/assets/stylesheets/Card.scss.erb */
 .Multicolour .ptbox {
   background: #C6AF71 !important;
 }
 
-/* line 1290, C:/Users/Alex/Dropbox/Creations/rails_projects/multiverse/app/assets/stylesheets/Card.scss.erb */
+/* line 1299, C:/Users/Alex/Dropbox/Creations/rails_projects/multiverse/app/assets/stylesheets/Card.scss.erb */
 .dfc .part2.Multicolour .cardtitlebar, .dfc .part2.Multicolour .cardtypebar, .dfc .part2.Land.multicolour .cardtitlebar, .dfc .part2.Land.multicolour .cardtypebar {
   background-color: #957526;
   background: -moz-linear-gradient(left, #957526, #bba66f, #957526);
 }
 @media screen {
-  /* line 1290, C:/Users/Alex/Dropbox/Creations/rails_projects/multiverse/app/assets/stylesheets/Card.scss.erb */
+  /* line 1299, C:/Users/Alex/Dropbox/Creations/rails_projects/multiverse/app/assets/stylesheets/Card.scss.erb */
   .dfc .part2.Multicolour .cardtitlebar, .dfc .part2.Multicolour .cardtypebar, .dfc .part2.Land.multicolour .cardtitlebar, .dfc .part2.Land.multicolour .cardtypebar {
     background: -webkit-gradient(linear, left top, right top, from(#957526), color-stop(0.5, #bba66f), to(#957526));
   }
 }
-/* line 1294, C:/Users/Alex/Dropbox/Creations/rails_projects/multiverse/app/assets/stylesheets/Card.scss.erb */
-.dfc .part2.Multicolour .pinline_ptbox, .dfc .part2.Multicolour .ptbox, .dfc .part2.Land.multicolour .pinline_ptbox, .dfc .part2.Land.multicolour .ptbox {
-  background: #957526 !important;
-}
-/* line 1295, C:/Users/Alex/Dropbox/Creations/rails_projects/multiverse/app/assets/stylesheets/Card.scss.erb */
+/* line 1303, C:/Users/Alex/Dropbox/Creations/rails_projects/multiverse/app/assets/stylesheets/Card.scss.erb */
 .dfc .part2.Multicolour .cardtext, .dfc .part2.Land.multicolour .cardtext {
   background: #bebcba;
 }
+/* line 1304, C:/Users/Alex/Dropbox/Creations/rails_projects/multiverse/app/assets/stylesheets/Card.scss.erb */
+.dfc .part2.Multicolour .pinline_ptbox, .dfc .part2.Multicolour .ptbox, .dfc .part2.Land.multicolour .pinline_ptbox, .dfc .part2.Land.multicolour .ptbox {
+  background-color: #957526 !important;
+}
 
-/* line 1298, C:/Users/Alex/Dropbox/Creations/rails_projects/multiverse/app/assets/stylesheets/Card.scss.erb */
+/* line 1307, C:/Users/Alex/Dropbox/Creations/rails_projects/multiverse/app/assets/stylesheets/Card.scss.erb */
 .dfc .part2.Hybrid .cardtext {
   background: #bebcba !important;
   filter: none;
 }
 
-/* line 1302, C:/Users/Alex/Dropbox/Creations/rails_projects/multiverse/app/assets/stylesheets/Card.scss.erb */
+/* line 1311, C:/Users/Alex/Dropbox/Creations/rails_projects/multiverse/app/assets/stylesheets/Card.scss.erb */
 .dfc .part2.Hybrid .cardtitlebar, .dfc .part2.Hybrid .cardtypebar, .dfc .part2.Land.colourless .cardtitlebar, .dfc .part2.Land.colourless .cardtypebar, .dfc .part2.Land.whiteblue .cardtitlebar, .dfc .part2.Land.whiteblue .cardtypebar, .dfc .part2.Land.whiteblack .cardtitlebar, .dfc .part2.Land.whiteblack .cardtypebar, .dfc .part2.Land.whitered .cardtitlebar, .dfc .part2.Land.whitered .cardtypebar, .dfc .part2.Land.whitegreen .cardtitlebar, .dfc .part2.Land.whitegreen .cardtypebar, .dfc .part2.Land.blueblack .cardtitlebar, .dfc .part2.Land.blueblack .cardtypebar, .dfc .part2.Land.bluered .cardtitlebar, .dfc .part2.Land.bluered .cardtypebar, .dfc .part2.Land.bluegreen .cardtitlebar, .dfc .part2.Land.bluegreen .cardtypebar, .dfc .part2.Land.blackred .cardtitlebar, .dfc .part2.Land.blackred .cardtypebar, .dfc .part2.Land.blackgreen .cardtitlebar, .dfc .part2.Land.blackgreen .cardtypebar, .dfc .part2.Land.redgreen .cardtitlebar, .dfc .part2.Land.redgreen .cardtypebar {
   background-color: #786860;
 }
-/* line 1303, C:/Users/Alex/Dropbox/Creations/rails_projects/multiverse/app/assets/stylesheets/Card.scss.erb */
+/* line 1312, C:/Users/Alex/Dropbox/Creations/rails_projects/multiverse/app/assets/stylesheets/Card.scss.erb */
 .dfc .part2.Hybrid .pinline_ptbox, .dfc .part2.Hybrid .ptbox, .dfc .part2.Land.colourless .pinline_ptbox, .dfc .part2.Land.colourless .ptbox, .dfc .part2.Land.whiteblue .pinline_ptbox, .dfc .part2.Land.whiteblue .ptbox, .dfc .part2.Land.whiteblack .pinline_ptbox, .dfc .part2.Land.whiteblack .ptbox, .dfc .part2.Land.whitered .pinline_ptbox, .dfc .part2.Land.whitered .ptbox, .dfc .part2.Land.whitegreen .pinline_ptbox, .dfc .part2.Land.whitegreen .ptbox, .dfc .part2.Land.blueblack .pinline_ptbox, .dfc .part2.Land.blueblack .ptbox, .dfc .part2.Land.bluered .pinline_ptbox, .dfc .part2.Land.bluered .ptbox, .dfc .part2.Land.bluegreen .pinline_ptbox, .dfc .part2.Land.bluegreen .ptbox, .dfc .part2.Land.blackred .pinline_ptbox, .dfc .part2.Land.blackred .ptbox, .dfc .part2.Land.blackgreen .pinline_ptbox, .dfc .part2.Land.blackgreen .ptbox, .dfc .part2.Land.redgreen .pinline_ptbox, .dfc .part2.Land.redgreen .ptbox {
-  background: #786860 !important;
+  background-color: #786860 !important;
 }
 
-/* line 1307, C:/Users/Alex/Dropbox/Creations/rails_projects/multiverse/app/assets/stylesheets/Card.scss.erb */
+/* line 1316, C:/Users/Alex/Dropbox/Creations/rails_projects/multiverse/app/assets/stylesheets/Card.scss.erb */
 .Land, .Land.Coloured_Artifact {
   /*#A4968E*/
   filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#deccc1', endColorstr='#6a514a', GradientType=0) !important;
   background: -moz-linear-gradient(top, #deccc1, #6a514a) !important;
 }
 @media screen {
-  /* line 1307, C:/Users/Alex/Dropbox/Creations/rails_projects/multiverse/app/assets/stylesheets/Card.scss.erb */
+  /* line 1316, C:/Users/Alex/Dropbox/Creations/rails_projects/multiverse/app/assets/stylesheets/Card.scss.erb */
   .Land, .Land.Coloured_Artifact {
     background: -webkit-gradient(linear, left top, left bottom, from(#deccc1), to(#6a514a)) !important;
   }
 }
 
-/* line 1310, C:/Users/Alex/Dropbox/Creations/rails_projects/multiverse/app/assets/stylesheets/Card.scss.erb */
+/* line 1319, C:/Users/Alex/Dropbox/Creations/rails_projects/multiverse/app/assets/stylesheets/Card.scss.erb */
 .Land .cardart {
   background-color: #b9aea2;
 }
 
-/* line 1311, C:/Users/Alex/Dropbox/Creations/rails_projects/multiverse/app/assets/stylesheets/Card.scss.erb */
+/* line 1320, C:/Users/Alex/Dropbox/Creations/rails_projects/multiverse/app/assets/stylesheets/Card.scss.erb */
 .Land .pinline {
   background-color: #d7cdbf;
 }
 
-/* line 1312, C:/Users/Alex/Dropbox/Creations/rails_projects/multiverse/app/assets/stylesheets/Card.scss.erb */
+/* line 1321, C:/Users/Alex/Dropbox/Creations/rails_projects/multiverse/app/assets/stylesheets/Card.scss.erb */
 .Land .cardtitlebar, .Land .cardtypebar {
   background-color: #d8cfc8;
 }
 
-/* line 1315, C:/Users/Alex/Dropbox/Creations/rails_projects/multiverse/app/assets/stylesheets/Card.scss.erb */
+/* line 1324, C:/Users/Alex/Dropbox/Creations/rails_projects/multiverse/app/assets/stylesheets/Card.scss.erb */
 .Land .cardtext, .Land .pinline_ptbox {
   background-color: #d8cfc8;
   /* #eee6df; */
 }
 
-/* line 1316, C:/Users/Alex/Dropbox/Creations/rails_projects/multiverse/app/assets/stylesheets/Card.scss.erb */
+/* line 1325, C:/Users/Alex/Dropbox/Creations/rails_projects/multiverse/app/assets/stylesheets/Card.scss.erb */
 .Land .bottombox, .Land .cardtext_container, .Land .cardart_container {
   background: transparent;
 }
 
-/* line 1319, C:/Users/Alex/Dropbox/Creations/rails_projects/multiverse/app/assets/stylesheets/Card.scss.erb */
+/* line 1328, C:/Users/Alex/Dropbox/Creations/rails_projects/multiverse/app/assets/stylesheets/Card.scss.erb */
 .Land.white .cardtitlebar, .Land.white .cardtypebar {
   background-color: #fffff6;
 }
-/* line 1320, C:/Users/Alex/Dropbox/Creations/rails_projects/multiverse/app/assets/stylesheets/Card.scss.erb */
+/* line 1329, C:/Users/Alex/Dropbox/Creations/rails_projects/multiverse/app/assets/stylesheets/Card.scss.erb */
 .Land.white .cardtext, .Land.white .pinline_ptbox {
   background-color: #ffffcc;
 }
 
-/* line 1324, C:/Users/Alex/Dropbox/Creations/rails_projects/multiverse/app/assets/stylesheets/Card.scss.erb */
+/* line 1333, C:/Users/Alex/Dropbox/Creations/rails_projects/multiverse/app/assets/stylesheets/Card.scss.erb */
 .Land.blue .cardtitlebar, .Land.blue .cardtypebar {
   background-color: #afcfff;
 }
-/* line 1325, C:/Users/Alex/Dropbox/Creations/rails_projects/multiverse/app/assets/stylesheets/Card.scss.erb */
+/* line 1334, C:/Users/Alex/Dropbox/Creations/rails_projects/multiverse/app/assets/stylesheets/Card.scss.erb */
 .Land.blue .cardtext, .Land.blue .pinline_ptbox {
   background-color: #99c5ff;
 }
 
-/* line 1329, C:/Users/Alex/Dropbox/Creations/rails_projects/multiverse/app/assets/stylesheets/Card.scss.erb */
+/* line 1338, C:/Users/Alex/Dropbox/Creations/rails_projects/multiverse/app/assets/stylesheets/Card.scss.erb */
 .Land.black .cardtitlebar, .Land.black .cardtypebar {
   background-color: #cfc9c3;
 }
-/* line 1330, C:/Users/Alex/Dropbox/Creations/rails_projects/multiverse/app/assets/stylesheets/Card.scss.erb */
+/* line 1339, C:/Users/Alex/Dropbox/Creations/rails_projects/multiverse/app/assets/stylesheets/Card.scss.erb */
 .Land.black .cardtext, .Land.black .pinline_ptbox {
   background-color: #bbbbbb;
 }
 
-/* line 1334, C:/Users/Alex/Dropbox/Creations/rails_projects/multiverse/app/assets/stylesheets/Card.scss.erb */
+/* line 1343, C:/Users/Alex/Dropbox/Creations/rails_projects/multiverse/app/assets/stylesheets/Card.scss.erb */
 .Land.red .cardtitlebar, .Land.red .cardtypebar {
   background-color: #ffd0c0;
 }
-/* line 1335, C:/Users/Alex/Dropbox/Creations/rails_projects/multiverse/app/assets/stylesheets/Card.scss.erb */
+/* line 1344, C:/Users/Alex/Dropbox/Creations/rails_projects/multiverse/app/assets/stylesheets/Card.scss.erb */
 .Land.red .cardtext, .Land.red .pinline_ptbox {
   background-color: #ff9988;
 }
 
-/* line 1339, C:/Users/Alex/Dropbox/Creations/rails_projects/multiverse/app/assets/stylesheets/Card.scss.erb */
+/* line 1348, C:/Users/Alex/Dropbox/Creations/rails_projects/multiverse/app/assets/stylesheets/Card.scss.erb */
 .Land.green .cardtitlebar, .Land.green .cardtypebar {
   background-color: #ddffdd;
 }
-/* line 1340, C:/Users/Alex/Dropbox/Creations/rails_projects/multiverse/app/assets/stylesheets/Card.scss.erb */
+/* line 1349, C:/Users/Alex/Dropbox/Creations/rails_projects/multiverse/app/assets/stylesheets/Card.scss.erb */
 .Land.green .cardtext, .Land.green .pinline_ptbox {
   background-color: #ccffcc;
 }
 
 /* .Land.whiteblue .cardtitlebar, .Land.whiteblue .cardtypebar { @include gradient_horz($Land_White_Bar, $Land_Blue_Bar); } */
-/* line 1344, C:/Users/Alex/Dropbox/Creations/rails_projects/multiverse/app/assets/stylesheets/Card.scss.erb */
+/* line 1353, C:/Users/Alex/Dropbox/Creations/rails_projects/multiverse/app/assets/stylesheets/Card.scss.erb */
 .Land.whiteblue .pinline {
   filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#fffef7', endColorstr='#197d9e', GradientType=1);
   background: -moz-linear-gradient(left, #fffef7, #fffef7, #197d9e, #197d9e);
 }
 @media screen {
-  /* line 1344, C:/Users/Alex/Dropbox/Creations/rails_projects/multiverse/app/assets/stylesheets/Card.scss.erb */
+  /* line 1353, C:/Users/Alex/Dropbox/Creations/rails_projects/multiverse/app/assets/stylesheets/Card.scss.erb */
   .Land.whiteblue .pinline {
     background: -webkit-gradient(linear, left top, right top, from(#fffef7), color-stop(0.4, #fffef7), color-stop(0.6, #197d9e), to(#197d9e));
   }
 }
 
-/* line 1345, C:/Users/Alex/Dropbox/Creations/rails_projects/multiverse/app/assets/stylesheets/Card.scss.erb */
+/* line 1354, C:/Users/Alex/Dropbox/Creations/rails_projects/multiverse/app/assets/stylesheets/Card.scss.erb */
 .Land.whiteblue .cardtext {
   filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#ffffcc', endColorstr='#99c5ff', GradientType=1);
   background: -moz-linear-gradient(left, #ffffcc, #ffffcc, #99c5ff, #99c5ff);
 }
 @media screen {
-  /* line 1345, C:/Users/Alex/Dropbox/Creations/rails_projects/multiverse/app/assets/stylesheets/Card.scss.erb */
+  /* line 1354, C:/Users/Alex/Dropbox/Creations/rails_projects/multiverse/app/assets/stylesheets/Card.scss.erb */
   .Land.whiteblue .cardtext {
     background: -webkit-gradient(linear, left top, right top, from(#ffffcc), color-stop(0.4, #ffffcc), color-stop(0.6, #99c5ff), to(#99c5ff));
   }
 }
 
-/* line 1347, C:/Users/Alex/Dropbox/Creations/rails_projects/multiverse/app/assets/stylesheets/Card.scss.erb */
+/* line 1356, C:/Users/Alex/Dropbox/Creations/rails_projects/multiverse/app/assets/stylesheets/Card.scss.erb */
 .whiteblue .pinline {
   filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#fffef7', endColorstr='#197d9e', GradientType=1);
   background: -moz-linear-gradient(left, #fffef7, #fffef7, #197d9e, #197d9e);
 }
 @media screen {
-  /* line 1347, C:/Users/Alex/Dropbox/Creations/rails_projects/multiverse/app/assets/stylesheets/Card.scss.erb */
+  /* line 1356, C:/Users/Alex/Dropbox/Creations/rails_projects/multiverse/app/assets/stylesheets/Card.scss.erb */
   .whiteblue .pinline {
     background: -webkit-gradient(linear, left top, right top, from(#fffef7), color-stop(0.4, #fffef7), color-stop(0.6, #197d9e), to(#197d9e));
   }
 }
 
-/* line 1348, C:/Users/Alex/Dropbox/Creations/rails_projects/multiverse/app/assets/stylesheets/Card.scss.erb */
+/* line 1357, C:/Users/Alex/Dropbox/Creations/rails_projects/multiverse/app/assets/stylesheets/Card.scss.erb */
 .whiteblack .pinline {
   filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#fffef7', endColorstr='#333333', GradientType=1);
   background: -moz-linear-gradient(left, #fffef7, #fffef7, #333333, #333333);
 }
 @media screen {
-  /* line 1348, C:/Users/Alex/Dropbox/Creations/rails_projects/multiverse/app/assets/stylesheets/Card.scss.erb */
+  /* line 1357, C:/Users/Alex/Dropbox/Creations/rails_projects/multiverse/app/assets/stylesheets/Card.scss.erb */
   .whiteblack .pinline {
     background: -webkit-gradient(linear, left top, right top, from(#fffef7), color-stop(0.4, #fffef7), color-stop(0.6, #333333), to(#333333));
   }
 }
 
-/* line 1349, C:/Users/Alex/Dropbox/Creations/rails_projects/multiverse/app/assets/stylesheets/Card.scss.erb */
+/* line 1358, C:/Users/Alex/Dropbox/Creations/rails_projects/multiverse/app/assets/stylesheets/Card.scss.erb */
 .blueblack .pinline {
   filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#197d9e', endColorstr='#333333', GradientType=1);
   background: -moz-linear-gradient(left, #197d9e, #197d9e, #333333, #333333);
 }
 @media screen {
-  /* line 1349, C:/Users/Alex/Dropbox/Creations/rails_projects/multiverse/app/assets/stylesheets/Card.scss.erb */
+  /* line 1358, C:/Users/Alex/Dropbox/Creations/rails_projects/multiverse/app/assets/stylesheets/Card.scss.erb */
   .blueblack .pinline {
     background: -webkit-gradient(linear, left top, right top, from(#197d9e), color-stop(0.4, #197d9e), color-stop(0.6, #333333), to(#333333));
   }
 }
 
-/* line 1350, C:/Users/Alex/Dropbox/Creations/rails_projects/multiverse/app/assets/stylesheets/Card.scss.erb */
+/* line 1359, C:/Users/Alex/Dropbox/Creations/rails_projects/multiverse/app/assets/stylesheets/Card.scss.erb */
 .bluered .pinline {
   filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#197d9e', endColorstr='#c23d34', GradientType=1);
   background: -moz-linear-gradient(left, #197d9e, #197d9e, #c23d34, #c23d34);
 }
 @media screen {
-  /* line 1350, C:/Users/Alex/Dropbox/Creations/rails_projects/multiverse/app/assets/stylesheets/Card.scss.erb */
+  /* line 1359, C:/Users/Alex/Dropbox/Creations/rails_projects/multiverse/app/assets/stylesheets/Card.scss.erb */
   .bluered .pinline {
     background: -webkit-gradient(linear, left top, right top, from(#197d9e), color-stop(0.4, #197d9e), color-stop(0.6, #c23d34), to(#c23d34));
   }
 }
 
-/* line 1351, C:/Users/Alex/Dropbox/Creations/rails_projects/multiverse/app/assets/stylesheets/Card.scss.erb */
+/* line 1360, C:/Users/Alex/Dropbox/Creations/rails_projects/multiverse/app/assets/stylesheets/Card.scss.erb */
 .blackred .pinline {
   filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#333333', endColorstr='#c23d34', GradientType=1);
   background: -moz-linear-gradient(left, #333333, #333333, #c23d34, #c23d34);
 }
 @media screen {
-  /* line 1351, C:/Users/Alex/Dropbox/Creations/rails_projects/multiverse/app/assets/stylesheets/Card.scss.erb */
+  /* line 1360, C:/Users/Alex/Dropbox/Creations/rails_projects/multiverse/app/assets/stylesheets/Card.scss.erb */
   .blackred .pinline {
     background: -webkit-gradient(linear, left top, right top, from(#333333), color-stop(0.4, #333333), color-stop(0.6, #c23d34), to(#c23d34));
   }
 }
 
-/* line 1352, C:/Users/Alex/Dropbox/Creations/rails_projects/multiverse/app/assets/stylesheets/Card.scss.erb */
+/* line 1361, C:/Users/Alex/Dropbox/Creations/rails_projects/multiverse/app/assets/stylesheets/Card.scss.erb */
 .redgreen .pinline {
   filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#c23d34', endColorstr='#448833', GradientType=1);
   background: -moz-linear-gradient(left, #c23d34, #c23d34, #448833, #448833);
 }
 @media screen {
-  /* line 1352, C:/Users/Alex/Dropbox/Creations/rails_projects/multiverse/app/assets/stylesheets/Card.scss.erb */
+  /* line 1361, C:/Users/Alex/Dropbox/Creations/rails_projects/multiverse/app/assets/stylesheets/Card.scss.erb */
   .redgreen .pinline {
     background: -webkit-gradient(linear, left top, right top, from(#c23d34), color-stop(0.4, #c23d34), color-stop(0.6, #448833), to(#448833));
   }
 }
 
-/* line 1353, C:/Users/Alex/Dropbox/Creations/rails_projects/multiverse/app/assets/stylesheets/Card.scss.erb */
+/* line 1362, C:/Users/Alex/Dropbox/Creations/rails_projects/multiverse/app/assets/stylesheets/Card.scss.erb */
 .redwhite .pinline, .whitered .pinline {
   filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#c23d34', endColorstr='#fffef7', GradientType=1);
   background: -moz-linear-gradient(left, #c23d34, #c23d34, #fffef7, #fffef7);
 }
 @media screen {
-  /* line 1353, C:/Users/Alex/Dropbox/Creations/rails_projects/multiverse/app/assets/stylesheets/Card.scss.erb */
+  /* line 1362, C:/Users/Alex/Dropbox/Creations/rails_projects/multiverse/app/assets/stylesheets/Card.scss.erb */
   .redwhite .pinline, .whitered .pinline {
     background: -webkit-gradient(linear, left top, right top, from(#c23d34), color-stop(0.4, #c23d34), color-stop(0.6, #fffef7), to(#fffef7));
   }
 }
 
-/* line 1354, C:/Users/Alex/Dropbox/Creations/rails_projects/multiverse/app/assets/stylesheets/Card.scss.erb */
+/* line 1363, C:/Users/Alex/Dropbox/Creations/rails_projects/multiverse/app/assets/stylesheets/Card.scss.erb */
 .blackgreen .pinline {
   filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#333333', endColorstr='#448833', GradientType=1);
   background: -moz-linear-gradient(left, #333333, #333333, #448833, #448833);
 }
 @media screen {
-  /* line 1354, C:/Users/Alex/Dropbox/Creations/rails_projects/multiverse/app/assets/stylesheets/Card.scss.erb */
+  /* line 1363, C:/Users/Alex/Dropbox/Creations/rails_projects/multiverse/app/assets/stylesheets/Card.scss.erb */
   .blackgreen .pinline {
     background: -webkit-gradient(linear, left top, right top, from(#333333), color-stop(0.4, #333333), color-stop(0.6, #448833), to(#448833));
   }
 }
 
-/* line 1355, C:/Users/Alex/Dropbox/Creations/rails_projects/multiverse/app/assets/stylesheets/Card.scss.erb */
+/* line 1364, C:/Users/Alex/Dropbox/Creations/rails_projects/multiverse/app/assets/stylesheets/Card.scss.erb */
 .greenwhite .pinline, .whitegreen .pinline {
   filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#448833', endColorstr='#fffef7', GradientType=1);
   background: -moz-linear-gradient(left, #448833, #448833, #fffef7, #fffef7);
 }
 @media screen {
-  /* line 1355, C:/Users/Alex/Dropbox/Creations/rails_projects/multiverse/app/assets/stylesheets/Card.scss.erb */
+  /* line 1364, C:/Users/Alex/Dropbox/Creations/rails_projects/multiverse/app/assets/stylesheets/Card.scss.erb */
   .greenwhite .pinline, .whitegreen .pinline {
     background: -webkit-gradient(linear, left top, right top, from(#448833), color-stop(0.4, #448833), color-stop(0.6, #fffef7), to(#fffef7));
   }
 }
 
-/* line 1356, C:/Users/Alex/Dropbox/Creations/rails_projects/multiverse/app/assets/stylesheets/Card.scss.erb */
+/* line 1365, C:/Users/Alex/Dropbox/Creations/rails_projects/multiverse/app/assets/stylesheets/Card.scss.erb */
 .greenblue .pinline, .bluegreen .pinline {
   filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#448833', endColorstr='#197d9e', GradientType=1);
   background: -moz-linear-gradient(left, #448833, #448833, #197d9e, #197d9e);
 }
 @media screen {
-  /* line 1356, C:/Users/Alex/Dropbox/Creations/rails_projects/multiverse/app/assets/stylesheets/Card.scss.erb */
+  /* line 1365, C:/Users/Alex/Dropbox/Creations/rails_projects/multiverse/app/assets/stylesheets/Card.scss.erb */
   .greenblue .pinline, .bluegreen .pinline {
     background: -webkit-gradient(linear, left top, right top, from(#448833), color-stop(0.4, #448833), color-stop(0.6, #197d9e), to(#197d9e));
   }
 }
 
-/* line 1358, C:/Users/Alex/Dropbox/Creations/rails_projects/multiverse/app/assets/stylesheets/Card.scss.erb */
+/* line 1367, C:/Users/Alex/Dropbox/Creations/rails_projects/multiverse/app/assets/stylesheets/Card.scss.erb */
 .Land.whiteblue .cardtext {
   filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#ffffcc', endColorstr='#99c5ff', GradientType=1);
   background: -moz-linear-gradient(left, #ffffcc, #ffffcc, #99c5ff, #99c5ff);
 }
 @media screen {
-  /* line 1358, C:/Users/Alex/Dropbox/Creations/rails_projects/multiverse/app/assets/stylesheets/Card.scss.erb */
+  /* line 1367, C:/Users/Alex/Dropbox/Creations/rails_projects/multiverse/app/assets/stylesheets/Card.scss.erb */
   .Land.whiteblue .cardtext {
     background: -webkit-gradient(linear, left top, right top, from(#ffffcc), color-stop(0.4, #ffffcc), color-stop(0.6, #99c5ff), to(#99c5ff));
   }
 }
 
-/* line 1359, C:/Users/Alex/Dropbox/Creations/rails_projects/multiverse/app/assets/stylesheets/Card.scss.erb */
+/* line 1368, C:/Users/Alex/Dropbox/Creations/rails_projects/multiverse/app/assets/stylesheets/Card.scss.erb */
 .Land.whiteblack .cardtext {
   filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#ffffcc', endColorstr='#bbbbbb', GradientType=1);
   background: -moz-linear-gradient(left, #ffffcc, #ffffcc, #bbbbbb, #bbbbbb);
 }
 @media screen {
-  /* line 1359, C:/Users/Alex/Dropbox/Creations/rails_projects/multiverse/app/assets/stylesheets/Card.scss.erb */
+  /* line 1368, C:/Users/Alex/Dropbox/Creations/rails_projects/multiverse/app/assets/stylesheets/Card.scss.erb */
   .Land.whiteblack .cardtext {
     background: -webkit-gradient(linear, left top, right top, from(#ffffcc), color-stop(0.4, #ffffcc), color-stop(0.6, #bbbbbb), to(#bbbbbb));
   }
 }
 
-/* line 1360, C:/Users/Alex/Dropbox/Creations/rails_projects/multiverse/app/assets/stylesheets/Card.scss.erb */
+/* line 1369, C:/Users/Alex/Dropbox/Creations/rails_projects/multiverse/app/assets/stylesheets/Card.scss.erb */
 .Land.blueblack .cardtext {
   filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#99c5ff', endColorstr='#bbbbbb', GradientType=1);
   background: -moz-linear-gradient(left, #99c5ff, #99c5ff, #bbbbbb, #bbbbbb);
 }
 @media screen {
-  /* line 1360, C:/Users/Alex/Dropbox/Creations/rails_projects/multiverse/app/assets/stylesheets/Card.scss.erb */
+  /* line 1369, C:/Users/Alex/Dropbox/Creations/rails_projects/multiverse/app/assets/stylesheets/Card.scss.erb */
   .Land.blueblack .cardtext {
     background: -webkit-gradient(linear, left top, right top, from(#99c5ff), color-stop(0.4, #99c5ff), color-stop(0.6, #bbbbbb), to(#bbbbbb));
   }
 }
 
-/* line 1361, C:/Users/Alex/Dropbox/Creations/rails_projects/multiverse/app/assets/stylesheets/Card.scss.erb */
+/* line 1370, C:/Users/Alex/Dropbox/Creations/rails_projects/multiverse/app/assets/stylesheets/Card.scss.erb */
 .Land.bluered .cardtext {
   filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#99c5ff', endColorstr='#ff9988', GradientType=1);
   background: -moz-linear-gradient(left, #99c5ff, #99c5ff, #ff9988, #ff9988);
 }
 @media screen {
-  /* line 1361, C:/Users/Alex/Dropbox/Creations/rails_projects/multiverse/app/assets/stylesheets/Card.scss.erb */
+  /* line 1370, C:/Users/Alex/Dropbox/Creations/rails_projects/multiverse/app/assets/stylesheets/Card.scss.erb */
   .Land.bluered .cardtext {
     background: -webkit-gradient(linear, left top, right top, from(#99c5ff), color-stop(0.4, #99c5ff), color-stop(0.6, #ff9988), to(#ff9988));
   }
 }
 
-/* line 1362, C:/Users/Alex/Dropbox/Creations/rails_projects/multiverse/app/assets/stylesheets/Card.scss.erb */
+/* line 1371, C:/Users/Alex/Dropbox/Creations/rails_projects/multiverse/app/assets/stylesheets/Card.scss.erb */
 .Land.blackred .cardtext {
   filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#bbbbbb', endColorstr='#ff9988', GradientType=1);
   background: -moz-linear-gradient(left, #bbbbbb, #bbbbbb, #ff9988, #ff9988);
 }
 @media screen {
-  /* line 1362, C:/Users/Alex/Dropbox/Creations/rails_projects/multiverse/app/assets/stylesheets/Card.scss.erb */
+  /* line 1371, C:/Users/Alex/Dropbox/Creations/rails_projects/multiverse/app/assets/stylesheets/Card.scss.erb */
   .Land.blackred .cardtext {
     background: -webkit-gradient(linear, left top, right top, from(#bbbbbb), color-stop(0.4, #bbbbbb), color-stop(0.6, #ff9988), to(#ff9988));
   }
 }
 
-/* line 1363, C:/Users/Alex/Dropbox/Creations/rails_projects/multiverse/app/assets/stylesheets/Card.scss.erb */
+/* line 1372, C:/Users/Alex/Dropbox/Creations/rails_projects/multiverse/app/assets/stylesheets/Card.scss.erb */
 .Land.blackgreen .cardtext {
   filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#bbbbbb', endColorstr='#ccffcc', GradientType=1);
   background: -moz-linear-gradient(left, #bbbbbb, #bbbbbb, #ccffcc, #ccffcc);
 }
 @media screen {
-  /* line 1363, C:/Users/Alex/Dropbox/Creations/rails_projects/multiverse/app/assets/stylesheets/Card.scss.erb */
+  /* line 1372, C:/Users/Alex/Dropbox/Creations/rails_projects/multiverse/app/assets/stylesheets/Card.scss.erb */
   .Land.blackgreen .cardtext {
     background: -webkit-gradient(linear, left top, right top, from(#bbbbbb), color-stop(0.4, #bbbbbb), color-stop(0.6, #ccffcc), to(#ccffcc));
   }
 }
 
-/* line 1364, C:/Users/Alex/Dropbox/Creations/rails_projects/multiverse/app/assets/stylesheets/Card.scss.erb */
+/* line 1373, C:/Users/Alex/Dropbox/Creations/rails_projects/multiverse/app/assets/stylesheets/Card.scss.erb */
 .Land.redgreen .cardtext {
   filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#ff9988', endColorstr='#ccffcc', GradientType=1);
   background: -moz-linear-gradient(left, #ff9988, #ff9988, #ccffcc, #ccffcc);
 }
 @media screen {
-  /* line 1364, C:/Users/Alex/Dropbox/Creations/rails_projects/multiverse/app/assets/stylesheets/Card.scss.erb */
+  /* line 1373, C:/Users/Alex/Dropbox/Creations/rails_projects/multiverse/app/assets/stylesheets/Card.scss.erb */
   .Land.redgreen .cardtext {
     background: -webkit-gradient(linear, left top, right top, from(#ff9988), color-stop(0.4, #ff9988), color-stop(0.6, #ccffcc), to(#ccffcc));
   }
 }
 
-/* line 1365, C:/Users/Alex/Dropbox/Creations/rails_projects/multiverse/app/assets/stylesheets/Card.scss.erb */
+/* line 1374, C:/Users/Alex/Dropbox/Creations/rails_projects/multiverse/app/assets/stylesheets/Card.scss.erb */
 .Land.redwhite .cardtext, .Land.whitered .cardtext {
   filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#ff9988', endColorstr='#ffffcc', GradientType=1);
   background: -moz-linear-gradient(left, #ff9988, #ff9988, #ffffcc, #ffffcc);
 }
 @media screen {
-  /* line 1365, C:/Users/Alex/Dropbox/Creations/rails_projects/multiverse/app/assets/stylesheets/Card.scss.erb */
+  /* line 1374, C:/Users/Alex/Dropbox/Creations/rails_projects/multiverse/app/assets/stylesheets/Card.scss.erb */
   .Land.redwhite .cardtext, .Land.whitered .cardtext {
     background: -webkit-gradient(linear, left top, right top, from(#ff9988), color-stop(0.4, #ff9988), color-stop(0.6, #ffffcc), to(#ffffcc));
   }
 }
 
-/* line 1366, C:/Users/Alex/Dropbox/Creations/rails_projects/multiverse/app/assets/stylesheets/Card.scss.erb */
+/* line 1375, C:/Users/Alex/Dropbox/Creations/rails_projects/multiverse/app/assets/stylesheets/Card.scss.erb */
 .Land.greenwhite .cardtext, .Land.whitegreen .cardtext {
   filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#ccffcc', endColorstr='#ffffcc', GradientType=1);
   background: -moz-linear-gradient(left, #ccffcc, #ccffcc, #ffffcc, #ffffcc);
 }
 @media screen {
-  /* line 1366, C:/Users/Alex/Dropbox/Creations/rails_projects/multiverse/app/assets/stylesheets/Card.scss.erb */
+  /* line 1375, C:/Users/Alex/Dropbox/Creations/rails_projects/multiverse/app/assets/stylesheets/Card.scss.erb */
   .Land.greenwhite .cardtext, .Land.whitegreen .cardtext {
     background: -webkit-gradient(linear, left top, right top, from(#ccffcc), color-stop(0.4, #ccffcc), color-stop(0.6, #ffffcc), to(#ffffcc));
   }
 }
 
-/* line 1367, C:/Users/Alex/Dropbox/Creations/rails_projects/multiverse/app/assets/stylesheets/Card.scss.erb */
+/* line 1376, C:/Users/Alex/Dropbox/Creations/rails_projects/multiverse/app/assets/stylesheets/Card.scss.erb */
 .Land.greenblue .cardtext, .Land.bluegreen .cardtext {
   filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#ccffcc', endColorstr='#99c5ff', GradientType=1);
   background: -moz-linear-gradient(left, #ccffcc, #ccffcc, #99c5ff, #99c5ff);
 }
 @media screen {
-  /* line 1367, C:/Users/Alex/Dropbox/Creations/rails_projects/multiverse/app/assets/stylesheets/Card.scss.erb */
+  /* line 1376, C:/Users/Alex/Dropbox/Creations/rails_projects/multiverse/app/assets/stylesheets/Card.scss.erb */
   .Land.greenblue .cardtext, .Land.bluegreen .cardtext {
     background: -webkit-gradient(linear, left top, right top, from(#ccffcc), color-stop(0.4, #ccffcc), color-stop(0.6, #99c5ff), to(#99c5ff));
   }
 }
 
-/* line 1369, C:/Users/Alex/Dropbox/Creations/rails_projects/multiverse/app/assets/stylesheets/Card.scss.erb */
+/* line 1378, C:/Users/Alex/Dropbox/Creations/rails_projects/multiverse/app/assets/stylesheets/Card.scss.erb */
 .Hybrid.whiteblue {
   filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#eae1c8', endColorstr='#63acda', GradientType=1);
   background: -moz-linear-gradient(left, #eae1c8, #eae1c8, #63acda, #63acda);
 }
 @media screen {
-  /* line 1369, C:/Users/Alex/Dropbox/Creations/rails_projects/multiverse/app/assets/stylesheets/Card.scss.erb */
+  /* line 1378, C:/Users/Alex/Dropbox/Creations/rails_projects/multiverse/app/assets/stylesheets/Card.scss.erb */
   .Hybrid.whiteblue {
     background: -webkit-gradient(linear, left top, right top, from(#eae1c8), color-stop(0.4, #eae1c8), color-stop(0.6, #63acda), to(#63acda));
   }
 }
 
-/* line 1370, C:/Users/Alex/Dropbox/Creations/rails_projects/multiverse/app/assets/stylesheets/Card.scss.erb */
+/* line 1379, C:/Users/Alex/Dropbox/Creations/rails_projects/multiverse/app/assets/stylesheets/Card.scss.erb */
 .Hybrid.whiteblack {
   filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#eae1c8', endColorstr='#444444', GradientType=1);
   background: -moz-linear-gradient(left, #eae1c8, #eae1c8, #444444, #444444);
 }
 @media screen {
-  /* line 1370, C:/Users/Alex/Dropbox/Creations/rails_projects/multiverse/app/assets/stylesheets/Card.scss.erb */
+  /* line 1379, C:/Users/Alex/Dropbox/Creations/rails_projects/multiverse/app/assets/stylesheets/Card.scss.erb */
   .Hybrid.whiteblack {
     background: -webkit-gradient(linear, left top, right top, from(#eae1c8), color-stop(0.4, #eae1c8), color-stop(0.6, #444444), to(#444444));
   }
 }
 
-/* line 1371, C:/Users/Alex/Dropbox/Creations/rails_projects/multiverse/app/assets/stylesheets/Card.scss.erb */
+/* line 1380, C:/Users/Alex/Dropbox/Creations/rails_projects/multiverse/app/assets/stylesheets/Card.scss.erb */
 .Hybrid.blueblack {
   filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#63acda', endColorstr='#444444', GradientType=1);
   background: -moz-linear-gradient(left, #63acda, #63acda, #444444, #444444);
 }
 @media screen {
-  /* line 1371, C:/Users/Alex/Dropbox/Creations/rails_projects/multiverse/app/assets/stylesheets/Card.scss.erb */
+  /* line 1380, C:/Users/Alex/Dropbox/Creations/rails_projects/multiverse/app/assets/stylesheets/Card.scss.erb */
   .Hybrid.blueblack {
     background: -webkit-gradient(linear, left top, right top, from(#63acda), color-stop(0.4, #63acda), color-stop(0.6, #444444), to(#444444));
   }
 }
 
-/* line 1372, C:/Users/Alex/Dropbox/Creations/rails_projects/multiverse/app/assets/stylesheets/Card.scss.erb */
+/* line 1381, C:/Users/Alex/Dropbox/Creations/rails_projects/multiverse/app/assets/stylesheets/Card.scss.erb */
 .Hybrid.bluered {
   filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#63acda', endColorstr='#e0664f', GradientType=1);
   background: -moz-linear-gradient(left, #63acda, #63acda, #e0664f, #e0664f);
 }
 @media screen {
-  /* line 1372, C:/Users/Alex/Dropbox/Creations/rails_projects/multiverse/app/assets/stylesheets/Card.scss.erb */
+  /* line 1381, C:/Users/Alex/Dropbox/Creations/rails_projects/multiverse/app/assets/stylesheets/Card.scss.erb */
   .Hybrid.bluered {
     background: -webkit-gradient(linear, left top, right top, from(#63acda), color-stop(0.4, #63acda), color-stop(0.6, #e0664f), to(#e0664f));
   }
 }
 
-/* line 1373, C:/Users/Alex/Dropbox/Creations/rails_projects/multiverse/app/assets/stylesheets/Card.scss.erb */
+/* line 1382, C:/Users/Alex/Dropbox/Creations/rails_projects/multiverse/app/assets/stylesheets/Card.scss.erb */
 .Hybrid.blackred {
   filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#444444', endColorstr='#e0664f', GradientType=1);
   background: -moz-linear-gradient(left, #444444, #444444, #e0664f, #e0664f);
 }
 @media screen {
-  /* line 1373, C:/Users/Alex/Dropbox/Creations/rails_projects/multiverse/app/assets/stylesheets/Card.scss.erb */
+  /* line 1382, C:/Users/Alex/Dropbox/Creations/rails_projects/multiverse/app/assets/stylesheets/Card.scss.erb */
   .Hybrid.blackred {
     background: -webkit-gradient(linear, left top, right top, from(#444444), color-stop(0.4, #444444), color-stop(0.6, #e0664f), to(#e0664f));
   }
 }
 
-/* line 1374, C:/Users/Alex/Dropbox/Creations/rails_projects/multiverse/app/assets/stylesheets/Card.scss.erb */
+/* line 1383, C:/Users/Alex/Dropbox/Creations/rails_projects/multiverse/app/assets/stylesheets/Card.scss.erb */
 .Hybrid.blackgreen {
   filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#444444', endColorstr='#7ea17e', GradientType=1);
   background: -moz-linear-gradient(left, #444444, #444444, #7ea17e, #7ea17e);
 }
 @media screen {
-  /* line 1374, C:/Users/Alex/Dropbox/Creations/rails_projects/multiverse/app/assets/stylesheets/Card.scss.erb */
+  /* line 1383, C:/Users/Alex/Dropbox/Creations/rails_projects/multiverse/app/assets/stylesheets/Card.scss.erb */
   .Hybrid.blackgreen {
     background: -webkit-gradient(linear, left top, right top, from(#444444), color-stop(0.4, #444444), color-stop(0.6, #7ea17e), to(#7ea17e));
   }
 }
 
-/* line 1375, C:/Users/Alex/Dropbox/Creations/rails_projects/multiverse/app/assets/stylesheets/Card.scss.erb */
+/* line 1384, C:/Users/Alex/Dropbox/Creations/rails_projects/multiverse/app/assets/stylesheets/Card.scss.erb */
 .Hybrid.redgreen {
   filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#e0664f', endColorstr='#7ea17e', GradientType=1);
   background: -moz-linear-gradient(left, #e0664f, #e0664f, #7ea17e, #7ea17e);
 }
 @media screen {
-  /* line 1375, C:/Users/Alex/Dropbox/Creations/rails_projects/multiverse/app/assets/stylesheets/Card.scss.erb */
+  /* line 1384, C:/Users/Alex/Dropbox/Creations/rails_projects/multiverse/app/assets/stylesheets/Card.scss.erb */
   .Hybrid.redgreen {
     background: -webkit-gradient(linear, left top, right top, from(#e0664f), color-stop(0.4, #e0664f), color-stop(0.6, #7ea17e), to(#7ea17e));
   }
 }
 
-/* line 1376, C:/Users/Alex/Dropbox/Creations/rails_projects/multiverse/app/assets/stylesheets/Card.scss.erb */
+/* line 1385, C:/Users/Alex/Dropbox/Creations/rails_projects/multiverse/app/assets/stylesheets/Card.scss.erb */
 .Hybrid.redwhite, .Hybrid.whitered {
   filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#e0664f', endColorstr='#eae1c8', GradientType=1);
   background: -moz-linear-gradient(left, #e0664f, #e0664f, #eae1c8, #eae1c8);
 }
 @media screen {
-  /* line 1376, C:/Users/Alex/Dropbox/Creations/rails_projects/multiverse/app/assets/stylesheets/Card.scss.erb */
+  /* line 1385, C:/Users/Alex/Dropbox/Creations/rails_projects/multiverse/app/assets/stylesheets/Card.scss.erb */
   .Hybrid.redwhite, .Hybrid.whitered {
     background: -webkit-gradient(linear, left top, right top, from(#e0664f), color-stop(0.4, #e0664f), color-stop(0.6, #eae1c8), to(#eae1c8));
   }
 }
 
-/* line 1377, C:/Users/Alex/Dropbox/Creations/rails_projects/multiverse/app/assets/stylesheets/Card.scss.erb */
+/* line 1386, C:/Users/Alex/Dropbox/Creations/rails_projects/multiverse/app/assets/stylesheets/Card.scss.erb */
 .Hybrid.greenwhite, .Hybrid.whitegreen {
   filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#7ea17e', endColorstr='#eae1c8', GradientType=1);
   background: -moz-linear-gradient(left, #7ea17e, #7ea17e, #eae1c8, #eae1c8);
 }
 @media screen {
-  /* line 1377, C:/Users/Alex/Dropbox/Creations/rails_projects/multiverse/app/assets/stylesheets/Card.scss.erb */
+  /* line 1386, C:/Users/Alex/Dropbox/Creations/rails_projects/multiverse/app/assets/stylesheets/Card.scss.erb */
   .Hybrid.greenwhite, .Hybrid.whitegreen {
     background: -webkit-gradient(linear, left top, right top, from(#7ea17e), color-stop(0.4, #7ea17e), color-stop(0.6, #eae1c8), to(#eae1c8));
   }
 }
 
-/* line 1378, C:/Users/Alex/Dropbox/Creations/rails_projects/multiverse/app/assets/stylesheets/Card.scss.erb */
+/* line 1387, C:/Users/Alex/Dropbox/Creations/rails_projects/multiverse/app/assets/stylesheets/Card.scss.erb */
 .Hybrid.greenblue, .Hybrid.bluegreen {
   filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#7ea17e', endColorstr='#63acda', GradientType=1);
   background: -moz-linear-gradient(left, #7ea17e, #7ea17e, #63acda, #63acda);
 }
 @media screen {
-  /* line 1378, C:/Users/Alex/Dropbox/Creations/rails_projects/multiverse/app/assets/stylesheets/Card.scss.erb */
+  /* line 1387, C:/Users/Alex/Dropbox/Creations/rails_projects/multiverse/app/assets/stylesheets/Card.scss.erb */
   .Hybrid.greenblue, .Hybrid.bluegreen {
     background: -webkit-gradient(linear, left top, right top, from(#7ea17e), color-stop(0.4, #7ea17e), color-stop(0.6, #63acda), to(#63acda));
   }
 }
 
-/* line 1380, C:/Users/Alex/Dropbox/Creations/rails_projects/multiverse/app/assets/stylesheets/Card.scss.erb */
+/* line 1389, C:/Users/Alex/Dropbox/Creations/rails_projects/multiverse/app/assets/stylesheets/Card.scss.erb */
 .flip .part2.Hybrid.whiteblue {
   filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#63acda', endColorstr='#eae1c8', GradientType=1);
   background: -moz-linear-gradient(left, #63acda, #63acda, #eae1c8, #eae1c8);
 }
 @media screen {
-  /* line 1380, C:/Users/Alex/Dropbox/Creations/rails_projects/multiverse/app/assets/stylesheets/Card.scss.erb */
+  /* line 1389, C:/Users/Alex/Dropbox/Creations/rails_projects/multiverse/app/assets/stylesheets/Card.scss.erb */
   .flip .part2.Hybrid.whiteblue {
     background: -webkit-gradient(linear, left top, right top, from(#63acda), color-stop(0.4, #63acda), color-stop(0.6, #eae1c8), to(#eae1c8));
   }
 }
 
-/* line 1381, C:/Users/Alex/Dropbox/Creations/rails_projects/multiverse/app/assets/stylesheets/Card.scss.erb */
+/* line 1390, C:/Users/Alex/Dropbox/Creations/rails_projects/multiverse/app/assets/stylesheets/Card.scss.erb */
 .flip .part2.Hybrid.whiteblack {
   filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#444444', endColorstr='#eae1c8', GradientType=1);
   background: -moz-linear-gradient(left, #444444, #444444, #eae1c8, #eae1c8);
 }
 @media screen {
-  /* line 1381, C:/Users/Alex/Dropbox/Creations/rails_projects/multiverse/app/assets/stylesheets/Card.scss.erb */
+  /* line 1390, C:/Users/Alex/Dropbox/Creations/rails_projects/multiverse/app/assets/stylesheets/Card.scss.erb */
   .flip .part2.Hybrid.whiteblack {
     background: -webkit-gradient(linear, left top, right top, from(#444444), color-stop(0.4, #444444), color-stop(0.6, #eae1c8), to(#eae1c8));
   }
 }
 
-/* line 1382, C:/Users/Alex/Dropbox/Creations/rails_projects/multiverse/app/assets/stylesheets/Card.scss.erb */
+/* line 1391, C:/Users/Alex/Dropbox/Creations/rails_projects/multiverse/app/assets/stylesheets/Card.scss.erb */
 .flip .part2.Hybrid.blueblack {
   filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#444444', endColorstr='#63acda', GradientType=1);
   background: -moz-linear-gradient(left, #444444, #444444, #63acda, #63acda);
 }
 @media screen {
-  /* line 1382, C:/Users/Alex/Dropbox/Creations/rails_projects/multiverse/app/assets/stylesheets/Card.scss.erb */
+  /* line 1391, C:/Users/Alex/Dropbox/Creations/rails_projects/multiverse/app/assets/stylesheets/Card.scss.erb */
   .flip .part2.Hybrid.blueblack {
     background: -webkit-gradient(linear, left top, right top, from(#444444), color-stop(0.4, #444444), color-stop(0.6, #63acda), to(#63acda));
   }
 }
 
-/* line 1383, C:/Users/Alex/Dropbox/Creations/rails_projects/multiverse/app/assets/stylesheets/Card.scss.erb */
+/* line 1392, C:/Users/Alex/Dropbox/Creations/rails_projects/multiverse/app/assets/stylesheets/Card.scss.erb */
 .flip .part2.Hybrid.bluered {
   filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#e0664f', endColorstr='#63acda', GradientType=1);
   background: -moz-linear-gradient(left, #e0664f, #e0664f, #63acda, #63acda);
 }
 @media screen {
-  /* line 1383, C:/Users/Alex/Dropbox/Creations/rails_projects/multiverse/app/assets/stylesheets/Card.scss.erb */
+  /* line 1392, C:/Users/Alex/Dropbox/Creations/rails_projects/multiverse/app/assets/stylesheets/Card.scss.erb */
   .flip .part2.Hybrid.bluered {
     background: -webkit-gradient(linear, left top, right top, from(#e0664f), color-stop(0.4, #e0664f), color-stop(0.6, #63acda), to(#63acda));
   }
 }
 
-/* line 1384, C:/Users/Alex/Dropbox/Creations/rails_projects/multiverse/app/assets/stylesheets/Card.scss.erb */
+/* line 1393, C:/Users/Alex/Dropbox/Creations/rails_projects/multiverse/app/assets/stylesheets/Card.scss.erb */
 .flip .part2.Hybrid.blackred {
   filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#e0664f', endColorstr='#444444', GradientType=1);
   background: -moz-linear-gradient(left, #e0664f, #e0664f, #444444, #444444);
 }
 @media screen {
-  /* line 1384, C:/Users/Alex/Dropbox/Creations/rails_projects/multiverse/app/assets/stylesheets/Card.scss.erb */
+  /* line 1393, C:/Users/Alex/Dropbox/Creations/rails_projects/multiverse/app/assets/stylesheets/Card.scss.erb */
   .flip .part2.Hybrid.blackred {
     background: -webkit-gradient(linear, left top, right top, from(#e0664f), color-stop(0.4, #e0664f), color-stop(0.6, #444444), to(#444444));
   }
 }
 
-/* line 1385, C:/Users/Alex/Dropbox/Creations/rails_projects/multiverse/app/assets/stylesheets/Card.scss.erb */
+/* line 1394, C:/Users/Alex/Dropbox/Creations/rails_projects/multiverse/app/assets/stylesheets/Card.scss.erb */
 .flip .part2.Hybrid.blackgreen {
   filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#7ea17e', endColorstr='#444444', GradientType=1);
   background: -moz-linear-gradient(left, #7ea17e, #7ea17e, #444444, #444444);
 }
 @media screen {
-  /* line 1385, C:/Users/Alex/Dropbox/Creations/rails_projects/multiverse/app/assets/stylesheets/Card.scss.erb */
+  /* line 1394, C:/Users/Alex/Dropbox/Creations/rails_projects/multiverse/app/assets/stylesheets/Card.scss.erb */
   .flip .part2.Hybrid.blackgreen {
     background: -webkit-gradient(linear, left top, right top, from(#7ea17e), color-stop(0.4, #7ea17e), color-stop(0.6, #444444), to(#444444));
   }
 }
 
-/* line 1386, C:/Users/Alex/Dropbox/Creations/rails_projects/multiverse/app/assets/stylesheets/Card.scss.erb */
+/* line 1395, C:/Users/Alex/Dropbox/Creations/rails_projects/multiverse/app/assets/stylesheets/Card.scss.erb */
 .flip .part2.Hybrid.redgreen {
   filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#7ea17e', endColorstr='#e0664f', GradientType=1);
   background: -moz-linear-gradient(left, #7ea17e, #7ea17e, #e0664f, #e0664f);
 }
 @media screen {
-  /* line 1386, C:/Users/Alex/Dropbox/Creations/rails_projects/multiverse/app/assets/stylesheets/Card.scss.erb */
+  /* line 1395, C:/Users/Alex/Dropbox/Creations/rails_projects/multiverse/app/assets/stylesheets/Card.scss.erb */
   .flip .part2.Hybrid.redgreen {
     background: -webkit-gradient(linear, left top, right top, from(#7ea17e), color-stop(0.4, #7ea17e), color-stop(0.6, #e0664f), to(#e0664f));
   }
 }
 
-/* line 1387, C:/Users/Alex/Dropbox/Creations/rails_projects/multiverse/app/assets/stylesheets/Card.scss.erb */
+/* line 1396, C:/Users/Alex/Dropbox/Creations/rails_projects/multiverse/app/assets/stylesheets/Card.scss.erb */
 .flip .part2.Hybrid.redwhite, .flip .part2.Hybrid.whitered {
   filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#eae1c8', endColorstr='#e0664f', GradientType=1);
   background: -moz-linear-gradient(left, #eae1c8, #eae1c8, #e0664f, #e0664f);
 }
 @media screen {
-  /* line 1387, C:/Users/Alex/Dropbox/Creations/rails_projects/multiverse/app/assets/stylesheets/Card.scss.erb */
+  /* line 1396, C:/Users/Alex/Dropbox/Creations/rails_projects/multiverse/app/assets/stylesheets/Card.scss.erb */
   .flip .part2.Hybrid.redwhite, .flip .part2.Hybrid.whitered {
     background: -webkit-gradient(linear, left top, right top, from(#eae1c8), color-stop(0.4, #eae1c8), color-stop(0.6, #e0664f), to(#e0664f));
   }
 }
 
-/* line 1388, C:/Users/Alex/Dropbox/Creations/rails_projects/multiverse/app/assets/stylesheets/Card.scss.erb */
+/* line 1397, C:/Users/Alex/Dropbox/Creations/rails_projects/multiverse/app/assets/stylesheets/Card.scss.erb */
 .flip .part2.Hybrid.greenwhite, .flip .part2.Hybrid.whitegreen {
   filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#eae1c8', endColorstr='#7ea17e', GradientType=1);
   background: -moz-linear-gradient(left, #eae1c8, #eae1c8, #7ea17e, #7ea17e);
 }
 @media screen {
-  /* line 1388, C:/Users/Alex/Dropbox/Creations/rails_projects/multiverse/app/assets/stylesheets/Card.scss.erb */
+  /* line 1397, C:/Users/Alex/Dropbox/Creations/rails_projects/multiverse/app/assets/stylesheets/Card.scss.erb */
   .flip .part2.Hybrid.greenwhite, .flip .part2.Hybrid.whitegreen {
     background: -webkit-gradient(linear, left top, right top, from(#eae1c8), color-stop(0.4, #eae1c8), color-stop(0.6, #7ea17e), to(#7ea17e));
   }
 }
 
-/* line 1389, C:/Users/Alex/Dropbox/Creations/rails_projects/multiverse/app/assets/stylesheets/Card.scss.erb */
+/* line 1398, C:/Users/Alex/Dropbox/Creations/rails_projects/multiverse/app/assets/stylesheets/Card.scss.erb */
 .flip .part2.Hybrid.greenblue, .flip .part2.Hybrid.bluegreen {
   filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#63acda', endColorstr='#7ea17e', GradientType=1);
   background: -moz-linear-gradient(left, #63acda, #63acda, #7ea17e, #7ea17e);
 }
 @media screen {
-  /* line 1389, C:/Users/Alex/Dropbox/Creations/rails_projects/multiverse/app/assets/stylesheets/Card.scss.erb */
+  /* line 1398, C:/Users/Alex/Dropbox/Creations/rails_projects/multiverse/app/assets/stylesheets/Card.scss.erb */
   .flip .part2.Hybrid.greenblue, .flip .part2.Hybrid.bluegreen {
     background: -webkit-gradient(linear, left top, right top, from(#63acda), color-stop(0.4, #63acda), color-stop(0.6, #7ea17e), to(#7ea17e));
   }
 }
 
-/* line 1392, C:/Users/Alex/Dropbox/Creations/rails_projects/multiverse/app/assets/stylesheets/Card.scss.erb */
+/* line 1401, C:/Users/Alex/Dropbox/Creations/rails_projects/multiverse/app/assets/stylesheets/Card.scss.erb */
 .dfc .part2.whiteblue .cardtext {
   filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#beb7a7', endColorstr='#b8cad3', GradientType=1);
   background: -moz-linear-gradient(left, #beb7a7, #beb7a7, #b8cad3, #b8cad3);
 }
 @media screen {
-  /* line 1392, C:/Users/Alex/Dropbox/Creations/rails_projects/multiverse/app/assets/stylesheets/Card.scss.erb */
+  /* line 1401, C:/Users/Alex/Dropbox/Creations/rails_projects/multiverse/app/assets/stylesheets/Card.scss.erb */
   .dfc .part2.whiteblue .cardtext {
     background: -webkit-gradient(linear, left top, right top, from(#beb7a7), color-stop(0.4, #beb7a7), color-stop(0.6, #b8cad3), to(#b8cad3));
   }
 }
-/* line 1393, C:/Users/Alex/Dropbox/Creations/rails_projects/multiverse/app/assets/stylesheets/Card.scss.erb */
+/* line 1402, C:/Users/Alex/Dropbox/Creations/rails_projects/multiverse/app/assets/stylesheets/Card.scss.erb */
 .dfc .part2.whiteblack .cardtext {
   filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#beb7a7', endColorstr='#b9b7b8', GradientType=1);
   background: -moz-linear-gradient(left, #beb7a7, #beb7a7, #b9b7b8, #b9b7b8);
 }
 @media screen {
-  /* line 1393, C:/Users/Alex/Dropbox/Creations/rails_projects/multiverse/app/assets/stylesheets/Card.scss.erb */
+  /* line 1402, C:/Users/Alex/Dropbox/Creations/rails_projects/multiverse/app/assets/stylesheets/Card.scss.erb */
   .dfc .part2.whiteblack .cardtext {
     background: -webkit-gradient(linear, left top, right top, from(#beb7a7), color-stop(0.4, #beb7a7), color-stop(0.6, #b9b7b8), to(#b9b7b8));
   }
 }
-/* line 1394, C:/Users/Alex/Dropbox/Creations/rails_projects/multiverse/app/assets/stylesheets/Card.scss.erb */
+/* line 1403, C:/Users/Alex/Dropbox/Creations/rails_projects/multiverse/app/assets/stylesheets/Card.scss.erb */
 .dfc .part2.blueblack .cardtext {
   filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#b8cad3', endColorstr='#b9b7b8', GradientType=1);
   background: -moz-linear-gradient(left, #b8cad3, #b8cad3, #b9b7b8, #b9b7b8);
 }
 @media screen {
-  /* line 1394, C:/Users/Alex/Dropbox/Creations/rails_projects/multiverse/app/assets/stylesheets/Card.scss.erb */
+  /* line 1403, C:/Users/Alex/Dropbox/Creations/rails_projects/multiverse/app/assets/stylesheets/Card.scss.erb */
   .dfc .part2.blueblack .cardtext {
     background: -webkit-gradient(linear, left top, right top, from(#b8cad3), color-stop(0.4, #b8cad3), color-stop(0.6, #b9b7b8), to(#b9b7b8));
   }
 }
-/* line 1395, C:/Users/Alex/Dropbox/Creations/rails_projects/multiverse/app/assets/stylesheets/Card.scss.erb */
+/* line 1404, C:/Users/Alex/Dropbox/Creations/rails_projects/multiverse/app/assets/stylesheets/Card.scss.erb */
 .dfc .part2.bluered .cardtext {
   filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#b8cad3', endColorstr='#d6bbb4', GradientType=1);
   background: -moz-linear-gradient(left, #b8cad3, #b8cad3, #d6bbb4, #d6bbb4);
 }
 @media screen {
-  /* line 1395, C:/Users/Alex/Dropbox/Creations/rails_projects/multiverse/app/assets/stylesheets/Card.scss.erb */
+  /* line 1404, C:/Users/Alex/Dropbox/Creations/rails_projects/multiverse/app/assets/stylesheets/Card.scss.erb */
   .dfc .part2.bluered .cardtext {
     background: -webkit-gradient(linear, left top, right top, from(#b8cad3), color-stop(0.4, #b8cad3), color-stop(0.6, #d6bbb4), to(#d6bbb4));
   }
 }
-/* line 1396, C:/Users/Alex/Dropbox/Creations/rails_projects/multiverse/app/assets/stylesheets/Card.scss.erb */
+/* line 1405, C:/Users/Alex/Dropbox/Creations/rails_projects/multiverse/app/assets/stylesheets/Card.scss.erb */
 .dfc .part2.blackred .cardtext {
   filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#b9b7b8', endColorstr='#d6bbb4', GradientType=1);
   background: -moz-linear-gradient(left, #b9b7b8, #b9b7b8, #d6bbb4, #d6bbb4);
 }
 @media screen {
-  /* line 1396, C:/Users/Alex/Dropbox/Creations/rails_projects/multiverse/app/assets/stylesheets/Card.scss.erb */
+  /* line 1405, C:/Users/Alex/Dropbox/Creations/rails_projects/multiverse/app/assets/stylesheets/Card.scss.erb */
   .dfc .part2.blackred .cardtext {
     background: -webkit-gradient(linear, left top, right top, from(#b9b7b8), color-stop(0.4, #b9b7b8), color-stop(0.6, #d6bbb4), to(#d6bbb4));
   }
 }
-/* line 1397, C:/Users/Alex/Dropbox/Creations/rails_projects/multiverse/app/assets/stylesheets/Card.scss.erb */
+/* line 1406, C:/Users/Alex/Dropbox/Creations/rails_projects/multiverse/app/assets/stylesheets/Card.scss.erb */
 .dfc .part2.blackgreen .cardtext {
   filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#b9b7b8', endColorstr='#afb8b2', GradientType=1);
   background: -moz-linear-gradient(left, #b9b7b8, #b9b7b8, #afb8b2, #afb8b2);
 }
 @media screen {
-  /* line 1397, C:/Users/Alex/Dropbox/Creations/rails_projects/multiverse/app/assets/stylesheets/Card.scss.erb */
+  /* line 1406, C:/Users/Alex/Dropbox/Creations/rails_projects/multiverse/app/assets/stylesheets/Card.scss.erb */
   .dfc .part2.blackgreen .cardtext {
     background: -webkit-gradient(linear, left top, right top, from(#b9b7b8), color-stop(0.4, #b9b7b8), color-stop(0.6, #afb8b2), to(#afb8b2));
   }
 }
-/* line 1398, C:/Users/Alex/Dropbox/Creations/rails_projects/multiverse/app/assets/stylesheets/Card.scss.erb */
+/* line 1407, C:/Users/Alex/Dropbox/Creations/rails_projects/multiverse/app/assets/stylesheets/Card.scss.erb */
 .dfc .part2.redgreen .cardtext {
   filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#d6bbb4', endColorstr='#afb8b2', GradientType=1);
   background: -moz-linear-gradient(left, #d6bbb4, #d6bbb4, #afb8b2, #afb8b2);
 }
 @media screen {
-  /* line 1398, C:/Users/Alex/Dropbox/Creations/rails_projects/multiverse/app/assets/stylesheets/Card.scss.erb */
+  /* line 1407, C:/Users/Alex/Dropbox/Creations/rails_projects/multiverse/app/assets/stylesheets/Card.scss.erb */
   .dfc .part2.redgreen .cardtext {
     background: -webkit-gradient(linear, left top, right top, from(#d6bbb4), color-stop(0.4, #d6bbb4), color-stop(0.6, #afb8b2), to(#afb8b2));
   }
 }
-/* line 1399, C:/Users/Alex/Dropbox/Creations/rails_projects/multiverse/app/assets/stylesheets/Card.scss.erb */
+/* line 1408, C:/Users/Alex/Dropbox/Creations/rails_projects/multiverse/app/assets/stylesheets/Card.scss.erb */
 .dfc .part2.redwhite .cardtext, .dfc .part2.whitered .cardtext {
   filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#d6bbb4', endColorstr='#beb7a7', GradientType=1);
   background: -moz-linear-gradient(left, #d6bbb4, #d6bbb4, #beb7a7, #beb7a7);
 }
 @media screen {
-  /* line 1399, C:/Users/Alex/Dropbox/Creations/rails_projects/multiverse/app/assets/stylesheets/Card.scss.erb */
+  /* line 1408, C:/Users/Alex/Dropbox/Creations/rails_projects/multiverse/app/assets/stylesheets/Card.scss.erb */
   .dfc .part2.redwhite .cardtext, .dfc .part2.whitered .cardtext {
     background: -webkit-gradient(linear, left top, right top, from(#d6bbb4), color-stop(0.4, #d6bbb4), color-stop(0.6, #beb7a7), to(#beb7a7));
   }
 }
-/* line 1400, C:/Users/Alex/Dropbox/Creations/rails_projects/multiverse/app/assets/stylesheets/Card.scss.erb */
+/* line 1409, C:/Users/Alex/Dropbox/Creations/rails_projects/multiverse/app/assets/stylesheets/Card.scss.erb */
 .dfc .part2.greenwhite .cardtext, .dfc .part2.whitegreen .cardtext {
   filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#afb8b2', endColorstr='#beb7a7', GradientType=1);
   background: -moz-linear-gradient(left, #afb8b2, #afb8b2, #beb7a7, #beb7a7);
 }
 @media screen {
-  /* line 1400, C:/Users/Alex/Dropbox/Creations/rails_projects/multiverse/app/assets/stylesheets/Card.scss.erb */
+  /* line 1409, C:/Users/Alex/Dropbox/Creations/rails_projects/multiverse/app/assets/stylesheets/Card.scss.erb */
   .dfc .part2.greenwhite .cardtext, .dfc .part2.whitegreen .cardtext {
     background: -webkit-gradient(linear, left top, right top, from(#afb8b2), color-stop(0.4, #afb8b2), color-stop(0.6, #beb7a7), to(#beb7a7));
   }
 }
-/* line 1401, C:/Users/Alex/Dropbox/Creations/rails_projects/multiverse/app/assets/stylesheets/Card.scss.erb */
+/* line 1410, C:/Users/Alex/Dropbox/Creations/rails_projects/multiverse/app/assets/stylesheets/Card.scss.erb */
 .dfc .part2.greenblue .cardtext, .dfc .part2.bluegreen .cardtext {
   filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#afb8b2', endColorstr='#b8cad3', GradientType=1);
   background: -moz-linear-gradient(left, #afb8b2, #afb8b2, #b8cad3, #b8cad3);
 }
 @media screen {
-  /* line 1401, C:/Users/Alex/Dropbox/Creations/rails_projects/multiverse/app/assets/stylesheets/Card.scss.erb */
+  /* line 1410, C:/Users/Alex/Dropbox/Creations/rails_projects/multiverse/app/assets/stylesheets/Card.scss.erb */
   .dfc .part2.greenblue .cardtext, .dfc .part2.bluegreen .cardtext {
     background: -webkit-gradient(linear, left top, right top, from(#afb8b2), color-stop(0.4, #afb8b2), color-stop(0.6, #b8cad3), to(#b8cad3));
   }
 }
 
-/* line 1405, C:/Users/Alex/Dropbox/Creations/rails_projects/multiverse/app/assets/stylesheets/Card.scss.erb */
+/* line 1414, C:/Users/Alex/Dropbox/Creations/rails_projects/multiverse/app/assets/stylesheets/Card.scss.erb */
 .whiteblue .cardtext {
   filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='white', endColorstr='#e1eced', GradientType=1);
   background: -moz-linear-gradient(left, white, white, #e1eced, #e1eced);
 }
 @media screen {
-  /* line 1405, C:/Users/Alex/Dropbox/Creations/rails_projects/multiverse/app/assets/stylesheets/Card.scss.erb */
+  /* line 1414, C:/Users/Alex/Dropbox/Creations/rails_projects/multiverse/app/assets/stylesheets/Card.scss.erb */
   .whiteblue .cardtext {
     background: -webkit-gradient(linear, left top, right top, from(white), color-stop(0.4, white), color-stop(0.6, #e1eced), to(#e1eced));
   }
 }
 
-/* line 1406, C:/Users/Alex/Dropbox/Creations/rails_projects/multiverse/app/assets/stylesheets/Card.scss.erb */
+/* line 1415, C:/Users/Alex/Dropbox/Creations/rails_projects/multiverse/app/assets/stylesheets/Card.scss.erb */
 .whiteblack .cardtext {
   filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='white', endColorstr='#ddd9d3', GradientType=1);
   background: -moz-linear-gradient(left, white, white, #ddd9d3, #ddd9d3);
 }
 @media screen {
-  /* line 1406, C:/Users/Alex/Dropbox/Creations/rails_projects/multiverse/app/assets/stylesheets/Card.scss.erb */
+  /* line 1415, C:/Users/Alex/Dropbox/Creations/rails_projects/multiverse/app/assets/stylesheets/Card.scss.erb */
   .whiteblack .cardtext {
     background: -webkit-gradient(linear, left top, right top, from(white), color-stop(0.4, white), color-stop(0.6, #ddd9d3), to(#ddd9d3));
   }
 }
 
-/* line 1407, C:/Users/Alex/Dropbox/Creations/rails_projects/multiverse/app/assets/stylesheets/Card.scss.erb */
+/* line 1416, C:/Users/Alex/Dropbox/Creations/rails_projects/multiverse/app/assets/stylesheets/Card.scss.erb */
 .blueblack .cardtext {
   filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#e1eced', endColorstr='#ddd9d3', GradientType=1);
   background: -moz-linear-gradient(left, #e1eced, #e1eced, #ddd9d3, #ddd9d3);
 }
 @media screen {
-  /* line 1407, C:/Users/Alex/Dropbox/Creations/rails_projects/multiverse/app/assets/stylesheets/Card.scss.erb */
+  /* line 1416, C:/Users/Alex/Dropbox/Creations/rails_projects/multiverse/app/assets/stylesheets/Card.scss.erb */
   .blueblack .cardtext {
     background: -webkit-gradient(linear, left top, right top, from(#e1eced), color-stop(0.4, #e1eced), color-stop(0.6, #ddd9d3), to(#ddd9d3));
   }
 }
 
-/* line 1408, C:/Users/Alex/Dropbox/Creations/rails_projects/multiverse/app/assets/stylesheets/Card.scss.erb */
+/* line 1417, C:/Users/Alex/Dropbox/Creations/rails_projects/multiverse/app/assets/stylesheets/Card.scss.erb */
 .bluered .cardtext {
   filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#e1eced', endColorstr='#f7e6de', GradientType=1);
   background: -moz-linear-gradient(left, #e1eced, #e1eced, #f7e6de, #f7e6de);
 }
 @media screen {
-  /* line 1408, C:/Users/Alex/Dropbox/Creations/rails_projects/multiverse/app/assets/stylesheets/Card.scss.erb */
+  /* line 1417, C:/Users/Alex/Dropbox/Creations/rails_projects/multiverse/app/assets/stylesheets/Card.scss.erb */
   .bluered .cardtext {
     background: -webkit-gradient(linear, left top, right top, from(#e1eced), color-stop(0.4, #e1eced), color-stop(0.6, #f7e6de), to(#f7e6de));
   }
 }
 
-/* line 1409, C:/Users/Alex/Dropbox/Creations/rails_projects/multiverse/app/assets/stylesheets/Card.scss.erb */
+/* line 1418, C:/Users/Alex/Dropbox/Creations/rails_projects/multiverse/app/assets/stylesheets/Card.scss.erb */
 .blackred .cardtext {
   filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#ddd9d3', endColorstr='#f7e6de', GradientType=1);
   background: -moz-linear-gradient(left, #ddd9d3, #ddd9d3, #f7e6de, #f7e6de);
 }
 @media screen {
-  /* line 1409, C:/Users/Alex/Dropbox/Creations/rails_projects/multiverse/app/assets/stylesheets/Card.scss.erb */
+  /* line 1418, C:/Users/Alex/Dropbox/Creations/rails_projects/multiverse/app/assets/stylesheets/Card.scss.erb */
   .blackred .cardtext {
     background: -webkit-gradient(linear, left top, right top, from(#ddd9d3), color-stop(0.4, #ddd9d3), color-stop(0.6, #f7e6de), to(#f7e6de));
   }
 }
 
-/* line 1410, C:/Users/Alex/Dropbox/Creations/rails_projects/multiverse/app/assets/stylesheets/Card.scss.erb */
+/* line 1419, C:/Users/Alex/Dropbox/Creations/rails_projects/multiverse/app/assets/stylesheets/Card.scss.erb */
 .blackgreen .cardtext {
   filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#ddd9d3', endColorstr='#deeade', GradientType=1);
   background: -moz-linear-gradient(left, #ddd9d3, #ddd9d3, #deeade, #deeade);
 }
 @media screen {
-  /* line 1410, C:/Users/Alex/Dropbox/Creations/rails_projects/multiverse/app/assets/stylesheets/Card.scss.erb */
+  /* line 1419, C:/Users/Alex/Dropbox/Creations/rails_projects/multiverse/app/assets/stylesheets/Card.scss.erb */
   .blackgreen .cardtext {
     background: -webkit-gradient(linear, left top, right top, from(#ddd9d3), color-stop(0.4, #ddd9d3), color-stop(0.6, #deeade), to(#deeade));
   }
 }
 
-/* line 1411, C:/Users/Alex/Dropbox/Creations/rails_projects/multiverse/app/assets/stylesheets/Card.scss.erb */
+/* line 1420, C:/Users/Alex/Dropbox/Creations/rails_projects/multiverse/app/assets/stylesheets/Card.scss.erb */
 .redgreen .cardtext {
   filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#f7e6de', endColorstr='#deeade', GradientType=1);
   background: -moz-linear-gradient(left, #f7e6de, #f7e6de, #deeade, #deeade);
 }
 @media screen {
-  /* line 1411, C:/Users/Alex/Dropbox/Creations/rails_projects/multiverse/app/assets/stylesheets/Card.scss.erb */
+  /* line 1420, C:/Users/Alex/Dropbox/Creations/rails_projects/multiverse/app/assets/stylesheets/Card.scss.erb */
   .redgreen .cardtext {
     background: -webkit-gradient(linear, left top, right top, from(#f7e6de), color-stop(0.4, #f7e6de), color-stop(0.6, #deeade), to(#deeade));
   }
 }
 
-/* line 1412, C:/Users/Alex/Dropbox/Creations/rails_projects/multiverse/app/assets/stylesheets/Card.scss.erb */
+/* line 1421, C:/Users/Alex/Dropbox/Creations/rails_projects/multiverse/app/assets/stylesheets/Card.scss.erb */
 .redwhite .cardtext, .whitered .cardtext {
   filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#f7e6de', endColorstr='white', GradientType=1);
   background: -moz-linear-gradient(left, #f7e6de, #f7e6de, white, white);
 }
 @media screen {
-  /* line 1412, C:/Users/Alex/Dropbox/Creations/rails_projects/multiverse/app/assets/stylesheets/Card.scss.erb */
+  /* line 1421, C:/Users/Alex/Dropbox/Creations/rails_projects/multiverse/app/assets/stylesheets/Card.scss.erb */
   .redwhite .cardtext, .whitered .cardtext {
     background: -webkit-gradient(linear, left top, right top, from(#f7e6de), color-stop(0.4, #f7e6de), color-stop(0.6, white), to(white));
   }
 }
 
-/* line 1413, C:/Users/Alex/Dropbox/Creations/rails_projects/multiverse/app/assets/stylesheets/Card.scss.erb */
+/* line 1422, C:/Users/Alex/Dropbox/Creations/rails_projects/multiverse/app/assets/stylesheets/Card.scss.erb */
 .greenwhite .cardtext, .whitegreen .cardtext {
   filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#deeade', endColorstr='white', GradientType=1);
   background: -moz-linear-gradient(left, #deeade, #deeade, white, white);
 }
 @media screen {
-  /* line 1413, C:/Users/Alex/Dropbox/Creations/rails_projects/multiverse/app/assets/stylesheets/Card.scss.erb */
+  /* line 1422, C:/Users/Alex/Dropbox/Creations/rails_projects/multiverse/app/assets/stylesheets/Card.scss.erb */
   .greenwhite .cardtext, .whitegreen .cardtext {
     background: -webkit-gradient(linear, left top, right top, from(#deeade), color-stop(0.4, #deeade), color-stop(0.6, white), to(white));
   }
 }
 
-/* line 1414, C:/Users/Alex/Dropbox/Creations/rails_projects/multiverse/app/assets/stylesheets/Card.scss.erb */
+/* line 1423, C:/Users/Alex/Dropbox/Creations/rails_projects/multiverse/app/assets/stylesheets/Card.scss.erb */
 .greenblue .cardtext, .bluegreen .cardtext {
   filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#deeade', endColorstr='#e1eced', GradientType=1);
   background: -moz-linear-gradient(left, #deeade, #deeade, #e1eced, #e1eced);
 }
 @media screen {
-  /* line 1414, C:/Users/Alex/Dropbox/Creations/rails_projects/multiverse/app/assets/stylesheets/Card.scss.erb */
+  /* line 1423, C:/Users/Alex/Dropbox/Creations/rails_projects/multiverse/app/assets/stylesheets/Card.scss.erb */
   .greenblue .cardtext, .bluegreen .cardtext {
     background: -webkit-gradient(linear, left top, right top, from(#deeade), color-stop(0.4, #deeade), color-stop(0.6, #e1eced), to(#e1eced));
   }
 }
 
-/* line 1417, C:/Users/Alex/Dropbox/Creations/rails_projects/multiverse/app/assets/stylesheets/Card.scss.erb */
+/* line 1426, C:/Users/Alex/Dropbox/Creations/rails_projects/multiverse/app/assets/stylesheets/Card.scss.erb */
 .Hybrid .cardtitlebar, .Hybrid .cardtypebar {
   background: #D2CCC0;
 }
 
-/* line 1420, C:/Users/Alex/Dropbox/Creations/rails_projects/multiverse/app/assets/stylesheets/Card.scss.erb */
+/* line 1429, C:/Users/Alex/Dropbox/Creations/rails_projects/multiverse/app/assets/stylesheets/Card.scss.erb */
 .Hybrid .ptbox {
   background: #D2CCC0 !important;
 }
 
-/* line 1423, C:/Users/Alex/Dropbox/Creations/rails_projects/multiverse/app/assets/stylesheets/Card.scss.erb */
+/* line 1432, C:/Users/Alex/Dropbox/Creations/rails_projects/multiverse/app/assets/stylesheets/Card.scss.erb */
 .Hybrid .pinline_ptbox, .Land .pinline_ptbox {
   background: #e2dCd0 !important;
 }
 
-/* line 1426, C:/Users/Alex/Dropbox/Creations/rails_projects/multiverse/app/assets/stylesheets/Card.scss.erb */
+/* line 1435, C:/Users/Alex/Dropbox/Creations/rails_projects/multiverse/app/assets/stylesheets/Card.scss.erb */
 .Hybrid .cardart {
   background-color: #eeeeee;
 }
 
 /***** Dominion *****/
-/* line 1431, C:/Users/Alex/Dropbox/Creations/rails_projects/multiverse/app/assets/stylesheets/Card.scss.erb */
+/* line 1440, C:/Users/Alex/Dropbox/Creations/rails_projects/multiverse/app/assets/stylesheets/Card.scss.erb */
 .Dominion.card {
   padding-left: 0px;
   padding-right: 0px;
 }
 
-/* line 1435, C:/Users/Alex/Dropbox/Creations/rails_projects/multiverse/app/assets/stylesheets/Card.scss.erb */
+/* line 1444, C:/Users/Alex/Dropbox/Creations/rails_projects/multiverse/app/assets/stylesheets/Card.scss.erb */
 .Dominion.Treasure {
   background-color: #ec6;
 }
 
-/* line 1438, C:/Users/Alex/Dropbox/Creations/rails_projects/multiverse/app/assets/stylesheets/Card.scss.erb */
+/* line 1447, C:/Users/Alex/Dropbox/Creations/rails_projects/multiverse/app/assets/stylesheets/Card.scss.erb */
 .Dominion .pinline_box, .Dominion .pinline_sides, .Dominion .pinline_sidesbottom, .Dominion .pinline_sides > div, .Dominion .pinline_sidesbottom > div, .Dominion .cardtitlebar {
   border: 0px;
   padding: 0px 0px 0px 0px;
 }
 
-/* line 1440, C:/Users/Alex/Dropbox/Creations/rails_projects/multiverse/app/assets/stylesheets/Card.scss.erb */
+/* line 1449, C:/Users/Alex/Dropbox/Creations/rails_projects/multiverse/app/assets/stylesheets/Card.scss.erb */
 .Dominion .cardname {
   float: none;
   display: inline;
   padding-right: 2px;
 }
 
-/* line 1444, C:/Users/Alex/Dropbox/Creations/rails_projects/multiverse/app/assets/stylesheets/Card.scss.erb */
+/* line 1453, C:/Users/Alex/Dropbox/Creations/rails_projects/multiverse/app/assets/stylesheets/Card.scss.erb */
 .Dominion .cardtitlebar {
   text-align: center;
   text-transform: uppercase;
   font-size: 18px;
 }
 
-/* line 1449, C:/Users/Alex/Dropbox/Creations/rails_projects/multiverse/app/assets/stylesheets/Card.scss.erb */
+/* line 1458, C:/Users/Alex/Dropbox/Creations/rails_projects/multiverse/app/assets/stylesheets/Card.scss.erb */
 .Dominion .cardart {
   background: white;
   padding: 0px;
 }
 
-/* line 1453, C:/Users/Alex/Dropbox/Creations/rails_projects/multiverse/app/assets/stylesheets/Card.scss.erb */
+/* line 1462, C:/Users/Alex/Dropbox/Creations/rails_projects/multiverse/app/assets/stylesheets/Card.scss.erb */
 .Dominion .cardtext {
   background: #bbb;
   text-align: center;
   padding: 0px;
 }
 
-/* line 1458, C:/Users/Alex/Dropbox/Creations/rails_projects/multiverse/app/assets/stylesheets/Card.scss.erb */
+/* line 1467, C:/Users/Alex/Dropbox/Creations/rails_projects/multiverse/app/assets/stylesheets/Card.scss.erb */
 .Dominion .cardart_container, .Dominion .cardtext_container {
   padding: 0px;
 }
 
-/* line 1461, C:/Users/Alex/Dropbox/Creations/rails_projects/multiverse/app/assets/stylesheets/Card.scss.erb */
+/* line 1470, C:/Users/Alex/Dropbox/Creations/rails_projects/multiverse/app/assets/stylesheets/Card.scss.erb */
 .Dominion .cardtypebar {
   position: absolute;
   bottom: 0px;
@@ -3251,99 +3262,99 @@ img.colour_indicator {
   text-transform: uppercase;
 }
 
-/* line 1465, C:/Users/Alex/Dropbox/Creations/rails_projects/multiverse/app/assets/stylesheets/Card.scss.erb */
+/* line 1474, C:/Users/Alex/Dropbox/Creations/rails_projects/multiverse/app/assets/stylesheets/Card.scss.erb */
 .Dominion .cardtext img {
   height: 3em;
 }
 
-/* line 1467, C:/Users/Alex/Dropbox/Creations/rails_projects/multiverse/app/assets/stylesheets/Card.scss.erb */
+/* line 1476, C:/Users/Alex/Dropbox/Creations/rails_projects/multiverse/app/assets/stylesheets/Card.scss.erb */
 .Dominion .cardmanacost {
   position: absolute;
   bottom: 0px;
   left: 4px;
 }
 
-/* line 1468, C:/Users/Alex/Dropbox/Creations/rails_projects/multiverse/app/assets/stylesheets/Card.scss.erb */
+/* line 1477, C:/Users/Alex/Dropbox/Creations/rails_projects/multiverse/app/assets/stylesheets/Card.scss.erb */
 .Dominion .cardmanacost img {
   height: 1em;
   width: 1em;
 }
 
 /***** Card editing *****/
-/* line 1472, C:/Users/Alex/Dropbox/Creations/rails_projects/multiverse/app/assets/stylesheets/Card.scss.erb */
+/* line 1481, C:/Users/Alex/Dropbox/Creations/rails_projects/multiverse/app/assets/stylesheets/Card.scss.erb */
 .form.cardborder, .form .innercardborder, .form .card {
   width: auto;
 }
 
-/* line 1473, C:/Users/Alex/Dropbox/Creations/rails_projects/multiverse/app/assets/stylesheets/Card.scss.erb */
+/* line 1482, C:/Users/Alex/Dropbox/Creations/rails_projects/multiverse/app/assets/stylesheets/Card.scss.erb */
 .form .innercardborder {
   padding-bottom: 30px;
   height: auto;
 }
 
-/* line 1477, C:/Users/Alex/Dropbox/Creations/rails_projects/multiverse/app/assets/stylesheets/Card.scss.erb */
+/* line 1486, C:/Users/Alex/Dropbox/Creations/rails_projects/multiverse/app/assets/stylesheets/Card.scss.erb */
 .form.flip .innercardborder {
   padding-bottom: 0;
 }
 
-/* line 1480, C:/Users/Alex/Dropbox/Creations/rails_projects/multiverse/app/assets/stylesheets/Card.scss.erb */
+/* line 1489, C:/Users/Alex/Dropbox/Creations/rails_projects/multiverse/app/assets/stylesheets/Card.scss.erb */
 .form .card {
   height: 430px;
 }
 
-/* line 1484, C:/Users/Alex/Dropbox/Creations/rails_projects/multiverse/app/assets/stylesheets/Card.scss.erb */
+/* line 1493, C:/Users/Alex/Dropbox/Creations/rails_projects/multiverse/app/assets/stylesheets/Card.scss.erb */
 input.type_field {
   width: 100px;
 }
 
-/* line 1485, C:/Users/Alex/Dropbox/Creations/rails_projects/multiverse/app/assets/stylesheets/Card.scss.erb */
+/* line 1494, C:/Users/Alex/Dropbox/Creations/rails_projects/multiverse/app/assets/stylesheets/Card.scss.erb */
 .form #card_cost, .form #card_link_attributes_cost {
   width: 60px;
 }
 
-/* line 1486, C:/Users/Alex/Dropbox/Creations/rails_projects/multiverse/app/assets/stylesheets/Card.scss.erb */
+/* line 1495, C:/Users/Alex/Dropbox/Creations/rails_projects/multiverse/app/assets/stylesheets/Card.scss.erb */
 input.rarity_selector {
   margin-top: 6px;
   margin-bottom: 6px;
 }
 
-/* line 1487, C:/Users/Alex/Dropbox/Creations/rails_projects/multiverse/app/assets/stylesheets/Card.scss.erb */
+/* line 1496, C:/Users/Alex/Dropbox/Creations/rails_projects/multiverse/app/assets/stylesheets/Card.scss.erb */
 input.powerfield, input.toughnessfield {
   width: 20px;
 }
 
-/* line 1488, C:/Users/Alex/Dropbox/Creations/rails_projects/multiverse/app/assets/stylesheets/Card.scss.erb */
+/* line 1497, C:/Users/Alex/Dropbox/Creations/rails_projects/multiverse/app/assets/stylesheets/Card.scss.erb */
 .flavourtextfield {
   font-style: italic;
   width: 98%;
 }
 
-/* line 1490, C:/Users/Alex/Dropbox/Creations/rails_projects/multiverse/app/assets/stylesheets/Card.scss.erb */
+/* line 1499, C:/Users/Alex/Dropbox/Creations/rails_projects/multiverse/app/assets/stylesheets/Card.scss.erb */
 .rulestextfield {
   width: 98%;
 }
 
-/* line 1491, C:/Users/Alex/Dropbox/Creations/rails_projects/multiverse/app/assets/stylesheets/Card.scss.erb */
+/* line 1500, C:/Users/Alex/Dropbox/Creations/rails_projects/multiverse/app/assets/stylesheets/Card.scss.erb */
 .art_url_field {
   width: 98%;
 }
 
-/* line 1492, C:/Users/Alex/Dropbox/Creations/rails_projects/multiverse/app/assets/stylesheets/Card.scss.erb */
+/* line 1501, C:/Users/Alex/Dropbox/Creations/rails_projects/multiverse/app/assets/stylesheets/Card.scss.erb */
 .image_url_field, .edit_comment_field {
   width: 400px;
 }
 
-/* line 1493, C:/Users/Alex/Dropbox/Creations/rails_projects/multiverse/app/assets/stylesheets/Card.scss.erb */
+/* line 1502, C:/Users/Alex/Dropbox/Creations/rails_projects/multiverse/app/assets/stylesheets/Card.scss.erb */
 form .raritycell {
   border: 1px solid black;
 }
 
-/* line 1494, C:/Users/Alex/Dropbox/Creations/rails_projects/multiverse/app/assets/stylesheets/Card.scss.erb */
+/* line 1503, C:/Users/Alex/Dropbox/Creations/rails_projects/multiverse/app/assets/stylesheets/Card.scss.erb */
 .Planeswalker #power_field, .Planeswalker #pt_slash {
   display: none;
 }
 
-/* line 1495, C:/Users/Alex/Dropbox/Creations/rails_projects/multiverse/app/assets/stylesheets/Card.scss.erb */
+/* line 1504, C:/Users/Alex/Dropbox/Creations/rails_projects/multiverse/app/assets/stylesheets/Card.scss.erb */
 .Planeswalker .notptbox {
   background-image: url(/assets/loyalty_big.png);
   border: none;
@@ -3353,138 +3364,139 @@ form .raritycell {
   padding: 10px 0px 0px 0px;
 }
 
-/* line 1500, C:/Users/Alex/Dropbox/Creations/rails_projects/multiverse/app/assets/stylesheets/Card.scss.erb */
+/* line 1509, C:/Users/Alex/Dropbox/Creations/rails_projects/multiverse/app/assets/stylesheets/Card.scss.erb */
 .Planeswalker.form .pinline_ptbox.pinline {
   top: -36px;
+  background-color: rgba(0, 0, 0, 0) !important;
 }
 
-/* line 1501, C:/Users/Alex/Dropbox/Creations/rails_projects/multiverse/app/assets/stylesheets/Card.scss.erb */
+/* line 1512, C:/Users/Alex/Dropbox/Creations/rails_projects/multiverse/app/assets/stylesheets/Card.scss.erb */
 .flip .flavourtextfield {
   display: none;
 }
 
-/* line 1502, C:/Users/Alex/Dropbox/Creations/rails_projects/multiverse/app/assets/stylesheets/Card.scss.erb */
+/* line 1513, C:/Users/Alex/Dropbox/Creations/rails_projects/multiverse/app/assets/stylesheets/Card.scss.erb */
 .form .watermark {
   position: relative;
 }
 
-/* line 1503, C:/Users/Alex/Dropbox/Creations/rails_projects/multiverse/app/assets/stylesheets/Card.scss.erb */
+/* line 1514, C:/Users/Alex/Dropbox/Creations/rails_projects/multiverse/app/assets/stylesheets/Card.scss.erb */
 .form .watermark textarea {
   background: transparent;
 }
 
-/* line 1505, C:/Users/Alex/Dropbox/Creations/rails_projects/multiverse/app/assets/stylesheets/Card.scss.erb */
+/* line 1516, C:/Users/Alex/Dropbox/Creations/rails_projects/multiverse/app/assets/stylesheets/Card.scss.erb */
 .multipart_selector_div {
   text-align: center;
   margin-bottom: 8px;
 }
 
-/* line 1506, C:/Users/Alex/Dropbox/Creations/rails_projects/multiverse/app/assets/stylesheets/Card.scss.erb */
+/* line 1517, C:/Users/Alex/Dropbox/Creations/rails_projects/multiverse/app/assets/stylesheets/Card.scss.erb */
 #multipart_selector_wrapper {
   padding: 8px;
 }
 
-/* line 1508, C:/Users/Alex/Dropbox/Creations/rails_projects/multiverse/app/assets/stylesheets/Card.scss.erb */
+/* line 1519, C:/Users/Alex/Dropbox/Creations/rails_projects/multiverse/app/assets/stylesheets/Card.scss.erb */
 div.history_box_limited {
   overflow: auto;
   height: 50%;
 }
 
-/* line 1511, C:/Users/Alex/Dropbox/Creations/rails_projects/multiverse/app/assets/stylesheets/Card.scss.erb */
+/* line 1522, C:/Users/Alex/Dropbox/Creations/rails_projects/multiverse/app/assets/stylesheets/Card.scss.erb */
 td.form_info_cell {
   color: #666;
 }
 
-/* line 1512, C:/Users/Alex/Dropbox/Creations/rails_projects/multiverse/app/assets/stylesheets/Card.scss.erb */
+/* line 1523, C:/Users/Alex/Dropbox/Creations/rails_projects/multiverse/app/assets/stylesheets/Card.scss.erb */
 .Black .cardart label {
   color: #fff;
 }
 
-/* line 1513, C:/Users/Alex/Dropbox/Creations/rails_projects/multiverse/app/assets/stylesheets/Card.scss.erb */
+/* line 1524, C:/Users/Alex/Dropbox/Creations/rails_projects/multiverse/app/assets/stylesheets/Card.scss.erb */
 .Black .artist_area label, .Hybrid.blackgreen .artist_area label, .Hybrid.blackred .artist_area label {
   color: #fff;
 }
 
-/* line 1515, C:/Users/Alex/Dropbox/Creations/rails_projects/multiverse/app/assets/stylesheets/Card.scss.erb */
+/* line 1526, C:/Users/Alex/Dropbox/Creations/rails_projects/multiverse/app/assets/stylesheets/Card.scss.erb */
 #card2wrapper {
   display: none;
 }
 
-/* line 1516, C:/Users/Alex/Dropbox/Creations/rails_projects/multiverse/app/assets/stylesheets/Card.scss.erb */
+/* line 1527, C:/Users/Alex/Dropbox/Creations/rails_projects/multiverse/app/assets/stylesheets/Card.scss.erb */
 .split #card2wrapper, .flip #card2wrapper, .dfc #card2wrapper {
   display: inline-block;
 }
 
 /***** Skeletons *****/
-/* line 1524, C:/Users/Alex/Dropbox/Creations/rails_projects/multiverse/app/assets/stylesheets/Card.scss.erb */
+/* line 1535, C:/Users/Alex/Dropbox/Creations/rails_projects/multiverse/app/assets/stylesheets/Card.scss.erb */
 .skeleton_letter_toggle.code_frame_C, .skeleton tr.code_frame_C {
   background-color: #f2ecf2;
 }
-/* line 1525, C:/Users/Alex/Dropbox/Creations/rails_projects/multiverse/app/assets/stylesheets/Card.scss.erb */
+/* line 1536, C:/Users/Alex/Dropbox/Creations/rails_projects/multiverse/app/assets/stylesheets/Card.scss.erb */
 .skeleton_letter_toggle.code_frame_W, .skeleton tr.code_frame_W {
   background-color: #ffffcc;
 }
-/* line 1526, C:/Users/Alex/Dropbox/Creations/rails_projects/multiverse/app/assets/stylesheets/Card.scss.erb */
+/* line 1537, C:/Users/Alex/Dropbox/Creations/rails_projects/multiverse/app/assets/stylesheets/Card.scss.erb */
 .skeleton_letter_toggle.code_frame_U, .skeleton tr.code_frame_U {
   background-color: #99c5ff;
 }
-/* line 1527, C:/Users/Alex/Dropbox/Creations/rails_projects/multiverse/app/assets/stylesheets/Card.scss.erb */
+/* line 1538, C:/Users/Alex/Dropbox/Creations/rails_projects/multiverse/app/assets/stylesheets/Card.scss.erb */
 .skeleton_letter_toggle.code_frame_B, .skeleton tr.code_frame_B {
   background-color: #bbbbbb;
 }
-/* line 1528, C:/Users/Alex/Dropbox/Creations/rails_projects/multiverse/app/assets/stylesheets/Card.scss.erb */
+/* line 1539, C:/Users/Alex/Dropbox/Creations/rails_projects/multiverse/app/assets/stylesheets/Card.scss.erb */
 .skeleton_letter_toggle.code_frame_R, .skeleton tr.code_frame_R {
   background-color: #ff9988;
 }
-/* line 1529, C:/Users/Alex/Dropbox/Creations/rails_projects/multiverse/app/assets/stylesheets/Card.scss.erb */
+/* line 1540, C:/Users/Alex/Dropbox/Creations/rails_projects/multiverse/app/assets/stylesheets/Card.scss.erb */
 .skeleton_letter_toggle.code_frame_G, .skeleton tr.code_frame_G {
   background-color: #ccffcc;
 }
-/* line 1530, C:/Users/Alex/Dropbox/Creations/rails_projects/multiverse/app/assets/stylesheets/Card.scss.erb */
+/* line 1541, C:/Users/Alex/Dropbox/Creations/rails_projects/multiverse/app/assets/stylesheets/Card.scss.erb */
 .skeleton_letter_toggle.code_frame_A, .skeleton tr.code_frame_A {
   background-color: #d5dde0;
 }
-/* line 1531, C:/Users/Alex/Dropbox/Creations/rails_projects/multiverse/app/assets/stylesheets/Card.scss.erb */
+/* line 1542, C:/Users/Alex/Dropbox/Creations/rails_projects/multiverse/app/assets/stylesheets/Card.scss.erb */
 .skeleton_letter_toggle.code_frame_M, .skeleton_letter_toggle.code_frame_Z, .skeleton tr.code_frame_M, .skeleton tr.code_frame_Z {
   background-color: #cab86c;
 }
-/* line 1532, C:/Users/Alex/Dropbox/Creations/rails_projects/multiverse/app/assets/stylesheets/Card.scss.erb */
+/* line 1543, C:/Users/Alex/Dropbox/Creations/rails_projects/multiverse/app/assets/stylesheets/Card.scss.erb */
 .skeleton_letter_toggle.code_frame_H, .skeleton tr.code_frame_H {
   filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#ffffcc', endColorstr='#bbbbbb', GradientType=1);
   background: -moz-linear-gradient(left, #ffffcc, #ffffcc, #bbbbbb, #bbbbbb);
 }
 @media screen {
-  /* line 1532, C:/Users/Alex/Dropbox/Creations/rails_projects/multiverse/app/assets/stylesheets/Card.scss.erb */
+  /* line 1543, C:/Users/Alex/Dropbox/Creations/rails_projects/multiverse/app/assets/stylesheets/Card.scss.erb */
   .skeleton_letter_toggle.code_frame_H, .skeleton tr.code_frame_H {
     background: -webkit-gradient(linear, left top, right top, from(#ffffcc), color-stop(0.4, #ffffcc), color-stop(0.6, #bbbbbb), to(#bbbbbb));
   }
 }
-/* line 1533, C:/Users/Alex/Dropbox/Creations/rails_projects/multiverse/app/assets/stylesheets/Card.scss.erb */
+/* line 1544, C:/Users/Alex/Dropbox/Creations/rails_projects/multiverse/app/assets/stylesheets/Card.scss.erb */
 .skeleton_letter_toggle.code_frame_S, .skeleton tr.code_frame_S {
   filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#ff9988', endColorstr='#99c5ff', GradientType=1);
   background: -moz-linear-gradient(left, #ff9988, #ff9988, #99c5ff, #99c5ff);
 }
 @media screen {
-  /* line 1533, C:/Users/Alex/Dropbox/Creations/rails_projects/multiverse/app/assets/stylesheets/Card.scss.erb */
+  /* line 1544, C:/Users/Alex/Dropbox/Creations/rails_projects/multiverse/app/assets/stylesheets/Card.scss.erb */
   .skeleton_letter_toggle.code_frame_S, .skeleton tr.code_frame_S {
     background: -webkit-gradient(linear, left top, right top, from(#ff9988), color-stop(0.5, #ff9988), color-stop(0.5, #99c5ff), to(#99c5ff));
   }
 }
-/* line 1534, C:/Users/Alex/Dropbox/Creations/rails_projects/multiverse/app/assets/stylesheets/Card.scss.erb */
+/* line 1545, C:/Users/Alex/Dropbox/Creations/rails_projects/multiverse/app/assets/stylesheets/Card.scss.erb */
 .skeleton_letter_toggle.code_frame_L, .skeleton tr.code_frame_L {
   background-color: #d8cfc8;
 }
-/* line 1536, C:/Users/Alex/Dropbox/Creations/rails_projects/multiverse/app/assets/stylesheets/Card.scss.erb */
+/* line 1547, C:/Users/Alex/Dropbox/Creations/rails_projects/multiverse/app/assets/stylesheets/Card.scss.erb */
 .skeleton_letter_toggle.code_rarity_C td.code_link, .skeleton_letter_toggle.code_rarity_C td.code_link a, .skeleton_letter_toggle.code_rarity_B td.code_link, .skeleton_letter_toggle.code_rarity_B td.code_link a, .skeleton_letter_toggle.code_rarity_T td.code_link, .skeleton_letter_toggle.code_rarity_T td.code_link a, .skeleton tr.code_rarity_C td.code_link, .skeleton tr.code_rarity_C td.code_link a, .skeleton tr.code_rarity_B td.code_link, .skeleton tr.code_rarity_B td.code_link a, .skeleton tr.code_rarity_T td.code_link, .skeleton tr.code_rarity_T td.code_link a {
   text-shadow: 1px 0 #888888;
 }
-/* line 1541, C:/Users/Alex/Dropbox/Creations/rails_projects/multiverse/app/assets/stylesheets/Card.scss.erb */
+/* line 1552, C:/Users/Alex/Dropbox/Creations/rails_projects/multiverse/app/assets/stylesheets/Card.scss.erb */
 .skeleton_letter_toggle.code_frame_E, .skeleton tr.code_frame_E {
   background-color: #224466;
   color: #fff;
   border: 3px ridge #cc9944;
 }
-/* line 1545, C:/Users/Alex/Dropbox/Creations/rails_projects/multiverse/app/assets/stylesheets/Card.scss.erb */
+/* line 1556, C:/Users/Alex/Dropbox/Creations/rails_projects/multiverse/app/assets/stylesheets/Card.scss.erb */
 .skeleton_letter_toggle.code_frame_P, .skeleton tr.code_frame_P {
   -moz-border-radius: 4px;
   -webkit-border-radius: 4px;
@@ -3494,7 +3506,7 @@ td.form_info_cell {
 }
 
 /* td.code_link { text-align: center; } */
-/* line 1555, C:/Users/Alex/Dropbox/Creations/rails_projects/multiverse/app/assets/stylesheets/Card.scss.erb */
+/* line 1566, C:/Users/Alex/Dropbox/Creations/rails_projects/multiverse/app/assets/stylesheets/Card.scss.erb */
 .skeleton_letter_toggle {
   margin: auto;
   padding-left: 6px;
@@ -3502,26 +3514,26 @@ td.form_info_cell {
   border: 1px solid black;
 }
 
-/* line 1556, C:/Users/Alex/Dropbox/Creations/rails_projects/multiverse/app/assets/stylesheets/Card.scss.erb */
+/* line 1567, C:/Users/Alex/Dropbox/Creations/rails_projects/multiverse/app/assets/stylesheets/Card.scss.erb */
 .code_shown {
   color: black;
   font-style: normal;
 }
 
-/* line 1557, C:/Users/Alex/Dropbox/Creations/rails_projects/multiverse/app/assets/stylesheets/Card.scss.erb */
+/* line 1568, C:/Users/Alex/Dropbox/Creations/rails_projects/multiverse/app/assets/stylesheets/Card.scss.erb */
 .code_not_shown {
   color: #999 !important;
   font-style: italic;
 }
 
-/* line 1558, C:/Users/Alex/Dropbox/Creations/rails_projects/multiverse/app/assets/stylesheets/Card.scss.erb */
+/* line 1569, C:/Users/Alex/Dropbox/Creations/rails_projects/multiverse/app/assets/stylesheets/Card.scss.erb */
 .skeleton_letter_toggle.code_not_shown {
   background-color: white;
   background: white;
   border: 1px solid black;
 }
 
-/* line 1560, C:/Users/Alex/Dropbox/Creations/rails_projects/multiverse/app/assets/stylesheets/Card.scss.erb */
+/* line 1571, C:/Users/Alex/Dropbox/Creations/rails_projects/multiverse/app/assets/stylesheets/Card.scss.erb */
 div.wizardsimage {
   /* @extend .blackborder;
   width: 200px;
@@ -3532,12 +3544,12 @@ div.wizardsimage {
 }
 
 @media print {
-  /* line 1571, C:/Users/Alex/Dropbox/Creations/rails_projects/multiverse/app/assets/stylesheets/Card.scss.erb */
+  /* line 1582, C:/Users/Alex/Dropbox/Creations/rails_projects/multiverse/app/assets/stylesheets/Card.scss.erb */
   .commentcount {
     display: none;
   }
 
-  /* line 1574, C:/Users/Alex/Dropbox/Creations/rails_projects/multiverse/app/assets/stylesheets/Card.scss.erb */
+  /* line 1585, C:/Users/Alex/Dropbox/Creations/rails_projects/multiverse/app/assets/stylesheets/Card.scss.erb */
   .cardname a {
     text-decoration: none;
   }
