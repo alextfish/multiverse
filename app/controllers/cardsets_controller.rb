@@ -93,7 +93,7 @@ class CardsetsController < ApplicationController
   # GET /cardsets/1/todo
   def skeleton
     @skeleton = @cardset.skeleton
-    fresh_when :last_modified => @cardset.last_edit_log.updated_at, :etag => "cardset_#{@cardset.id}_skeleton"
+    fresh_when :last_modified => @cardset.last_edit_log.updated_at, :etag => "cardset_#{@cardset.id}_skeleton_rev20141003"
   end
 
   # GET /cardsets/1/import
