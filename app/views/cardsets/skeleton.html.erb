@@ -347,7 +347,8 @@
       <% if !present_frame_letters.blank? %>
         <%= render :partial => "card_category_buttons", :locals => { :present_frame_letters => present_frame_letters, :present_rarity_letters => present_rarity_letters, :frame_links => nil} %>
       <% end %>
-      <%= format_skeleton_table(format_all_markup(@skeleton.body, @cardset)) %>
+      <% "add pipes to starts of skeleton lines that need them" %>
+      <%= format_skeleton_table(format_all_markup(@skeleton.body.gsub(/^([^|]*[|].*)$/) { "|#{$&}" }, @cardset)) %>
     </div>
   <% end %>
 <% end %>
