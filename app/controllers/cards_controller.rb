@@ -45,6 +45,10 @@ class CardsController < ApplicationController
       redirect_to :card_back
     end
   end
+  # Allow mockups to be embedded in any frame
+  after_action :only => :mockup do
+    response.headers.except! 'X-Frame-Options'
+  end
   before_filter :only => :update do
     if params[:is_preview] == "true"
       # Manually call the edit function and then render edit instead

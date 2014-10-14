@@ -2,7 +2,7 @@
 <% if show_date %>
 <div class="commentdetails">
   <% link_destination = (@comment.card.present? ? card_path(@comment.card) : cardset_comments_path(@comment.cardset))
-     link_params = {:title => "permalink", :class => "no_tooltip"}
+     link_params = {:title => "permalink", :class => "no_tooltip", :itemprop=>"dateCreated", :datetime => @comment.created_at.iso8601}
   %>
   <% if show_date == "absolute" %>
     on <%= link_to format_datetime_absolute(@comment.created_at), link_destination + "#" + @comment.anchor_name, link_params %>

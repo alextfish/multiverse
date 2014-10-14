@@ -133,7 +133,7 @@ class Cardset < ActiveRecord::Base
     end
   end
   def listable_cards # For cardlists that should include nonactive cards
-    Card.includes(:comments).where("cardset_id = ?", self.id).select {|c| !c.secondary?}
+    Card.includes(:comments, :user).where("cardset_id = ?", self.id).select {|c| !c.secondary?}
   end 
   
   ########################## Permissions #########################  

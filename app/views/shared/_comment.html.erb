@@ -8,12 +8,12 @@
 <% if show_buttons && !show_date %>
   <%= render :partial => "shared/comment_buttons", :locals => { :show_date => show_date } %>
 <% end %>
-<div class="comment <%= commentclass %>" id="<%= @comment.anchor_name %>">
+<div class="comment <%= commentclass %>" id="<%= @comment.anchor_name %>" itemscope itemtype="http://www.schema.org/Comment">
   <a name="<%= @comment.anchor_name %>"></a>
   <% if show_buttons && show_date %>
     <%= render :partial => "shared/comment_buttons", :locals => { :show_date => show_date } %>
   <% end %>
-  <div class="commentbody">
+  <div class="commentbody" itemprop="text">
     <%= format_all_markup @comment.body, @comment.get_cardset %>
   </div>
 </div>

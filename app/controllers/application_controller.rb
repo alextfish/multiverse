@@ -1,5 +1,6 @@
 class ApplicationController < ActionController::Base
   protect_from_forgery
+  protect_from_forgery with: :null_session, if: Proc.new { |c| c.request.format.json? }
   include SessionsHelper
 
   before_filter :redirect_to_domain if Rails.env.production?

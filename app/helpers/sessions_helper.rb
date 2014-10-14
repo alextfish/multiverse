@@ -127,7 +127,7 @@ module SessionsHelper
 
 
   def interrupt_for_login(noticehash)
-    store_location
+    store_location    
     Rails.logger.info "Interrupting for login - #{noticehash[:notice]}"
     redirect_to signin_path, noticehash
   end

@@ -12,7 +12,7 @@
   active_display = @cardset.configuration.cardlist_show_active ? "" : hidden
   comment_display = @cardset.configuration.cardlist_show_comments ? "" : hidden
   creator_display = @cardset.public_access == "Editable" ? "" : hidden
-  update_display = hidden
+  date_display = hidden
   
   can_edit = permission_to?(:edit, @cardset)
   can_delete = permission_to?(:delete, @cardset)
@@ -29,16 +29,17 @@
      present_rarity_letters = all_cards.map &:rarity_letter
   %>
   <%= render :partial => "card_category_buttons", :locals => { :present_frame_letters => present_frame_letters, :present_rarity_letters => present_rarity_letters, :frame_links => nil} %>
-  <br>
+  <br><br>
   <% toggleable_fields = [
       ["card_text", "card text", true],
       ["code", "code", @cardset.configuration.cardlist_show_code],
       ["active", "active", @cardset.configuration.cardlist_show_active],
-      ["updated", "last update", false],
+      ["created, .updated", "dates", false],
       ["comments", "comments", @cardset.configuration.cardlist_show_comments]
     ]%>
-  <% toggleable_fields.each do |field_class, field_text, initially_shown| %>
-    <span class="one_control" onclick="$$('.<%= field_class %>').invoke('toggle');"
+  <% toggleable_fields.each do |field_selector, field_text, initially_shown| %>
+    <% field_class = field_selector.split(",")[0] %>
+    <span class="one_control" onclick="$$('.<%= field_selector %>').invoke('toggle');"
       ><span class="<%= field_class %> shown_control" <%= initially_shown ? "" : hidden %>>Hide <%= field_text %></span
       ><span class="<%= field_class %> hidden_control" <%= initially_shown ? hidden : "" %>>Show <%= field_text %></span
     ></span>
@@ -60,7 +61,8 @@
     <th scope="col" class="code" <%= code_display %>>Code</th>
     <th scope="col" class="active" <%= active_display %>>Active?</th>
     <th scope="col" class="card_text">Card text</th>
-    <th scope="col" class="updated" <%= update_display %>>Updated</th>
+    <th scope="col" class="created" <%= date_display %>>Created</th>
+    <th scope="col" class="updated" <%= date_display %>>Updated</th>
     <th scope="col" class="comments" <%= comment_display %>>Comments</th>
     <th scope="col" class="comments" <%= comment_display %>>Recent comment</th>
     <% if unaddressed_column %>
@@ -114,7 +116,11 @@
         </td>
       <% end %>
       
-      <td class="updated" <%= update_display %>>
+      <td class="created" <%= date_display %>>
+        <span style="display:none;"><%= card.created_at.to_i %></span>
+        <%= format_datetime(card.created_at) %> <%= link_to card.user %>
+      </td>
+      <td class="updated" <%= date_display %>>
         <span style="display:none;"><%= card.updated_at.to_i %></span>
         <%= format_datetime(card.updated_at) %> <%= by_last_edit_user_if_available card %>
       </td>

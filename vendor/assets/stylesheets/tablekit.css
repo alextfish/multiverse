@@ -73,7 +73,7 @@ tr.roweven {
   cursor: pointer;
   padding-right: 20px;
   background-repeat: no-repeat;
-  background-position: right center;
+  background-position: right bottom;
 }
 .sortasc {
   background-color: #DDFFAC;

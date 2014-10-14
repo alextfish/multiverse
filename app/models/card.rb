@@ -90,6 +90,10 @@ class Card < ActiveRecord::Base
     if self.multipart.nil?
       self.multipart = Card.STANDALONE
     end
+    # Ensure user is set 
+    if self.user.nil?
+      self.user = current_user
+    end
   end
 
   def formatted_rules_text

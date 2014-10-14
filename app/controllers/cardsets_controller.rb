@@ -63,7 +63,7 @@ class CardsetsController < ApplicationController
   # GET /cardsets/1/cardlist
   # GET /cardsets/1/cardlist.xml
   def cardlist
-    if stale?(:last_modified => @cardset.last_edit_log.updated_at, :etag => "cardset_#{@cardset.id}_cardlist")
+    if params.has_key?(:nocache) || stale?(:last_modified => @cardset.last_edit_log.updated_at, :etag => "cardset_#{@cardset.id}_cardlist")
       respond_to do |format|
         format.html # cardlist.html.erb
         format.xml  { render :xml => @cardset.cards }   # ??
