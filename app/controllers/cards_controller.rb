@@ -178,7 +178,9 @@ class CardsController < ApplicationController
 
   # POST /cards
   def create
-    @card = Card.new(params[:card], :user => current_user)
+    card_params = params[:card]
+    card_params[:user] = current_user
+    @card = Card.new(card_params)
     process_card
     set_last_edit @card
 
