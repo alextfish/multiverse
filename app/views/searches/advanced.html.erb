@@ -67,7 +67,9 @@
             <tr><td>
               <%= label_tag input_id, field.humanize + ":" %>
             </td><td>
-              <%= text_field_tag input_id, field.humanize, :value => params[object_field_name.to_sym] && params[object_field_name.to_sym][field_name.to_sym] %>
+              <%= text_field_tag input_id, field.humanize, :value => 
+                params[object_field_name.to_sym] && 
+                params[object_field_name.to_sym][field_name.to_sym] %>
             </td></tr>
           <% end %>
           <% if restrictions[object_type].include? "user" %>
@@ -77,8 +79,11 @@
             </span>
           <% end %>
           <% if restrictions[object_type].include? "cardset" %>
-            <tr><td><%= label_tag "restrict_cardset_check_#{object_field_name}", "Restrict by cardset:" %>
-            <td><%= check_box_tag "restrict_cardset_check_#{object_field_name}", "yes", false, :onclick => "handleSearchRestrict(this)", :class => "restriction" %><span id="restrict_cardset_<%= object_field_name %>" style="visibility: hidden;">
+            <% restrict_s = "restrict_cardset_check_#{object_field_name}" 
+            visible = params[restrict_s.to_sym] || false
+            %>
+            <tr><td><%= label_tag restrict_s, "Restrict by cardset:" %>
+            <td><%= check_box_tag restrict_s, "yes", visible, :onclick => "handleSearchRestrict(this)", :class => "restriction" %><span id="restrict_cardset_<%= object_field_name %>" <% if !visible %>style="visibility: hidden;"<% end %>>
             <%= collection_select "#{object_field_name}", :cardset_id, valid_cardsets, :id, :name %>
             </span>
           <% end %>

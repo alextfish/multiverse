@@ -7,6 +7,7 @@
     <%= link_to_unless_current "Export", export_cardset_path(@cardset) %> |
     <%= link_to_unless_current "Booster", booster_cardset_path(@cardset) %> |
     <%= link_to_unless_current "Comments", comments_cardset_path(@cardset) %> |
+    <%= link_to_unless_current "Search", advanced_search_path(:search_cardset => @cardset.id) %> |
     <%= link_to_unless_current "Recent activity", recent_cardset_path(@cardset) %>
 </td></tr>
 <% if !@cardset.details_pages_except_front_page.empty? || !@cardset.mechanics.empty? %>

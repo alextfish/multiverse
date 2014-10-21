@@ -20,6 +20,7 @@ group :production, :staging do
 #  gem "mysql2", "~> 0.3.11"
 end
 #gem 'rails_12factor'
+gem 'rails_stdout_logging'
 
 platforms :ruby do # linux
   gem 'unicorn'

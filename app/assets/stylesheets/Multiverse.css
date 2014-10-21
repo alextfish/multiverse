@@ -42,8 +42,12 @@ a > img:hover, a > img:active, a > img:focus { background-color: #fff; }
 
 /***** Templates used in multiple places *****/
 
-div.CardRenderInline { display: inline-block; margin-bottom: 3px; vertical-align: top;
-zoom: 100%; -moz-transform: scale(1);
+div.CardRenderInline { 
+  display: inline-block; vertical-align: top;
+  zoom: 100%; -moz-transform: scale(1);
+  @media screen {
+    margin-bottom: 3px; 
+  }
 }
 img.CardImage        { display: inline-block; /* height: 318px; */ }
 

@@ -2,7 +2,18 @@ class SearchesController < ApplicationController
 
   def advanced
     @title = "Search"
+    if params[:search_cardset]
+      params[:restrict_cardset_check_card] = true
+      params[:restrict_cardset_check_comment] = true
+      @cardset = Cardset.find(params[:search_cardset])
+      @card = @cardset.cards.build
+      @comment = @cardset.comments.build
+      # The collection_select in advanced.html.erb will read
+      # @card.cardset or @comment.cardset
+    end
+    Rails.logger.info params.inspect
   end
+  
   def do_search
     @to_show = {}
     @object_type = params[:search_type]
@@ -132,7 +143,6 @@ class SearchesController < ApplicationController
   end
   
   def show
-      
   end
   
   # ----------------------
