@@ -1,0 +1,45 @@
+<h1><%= @title = @decklist.name %></h1>
+
+<p>A 
+<% if @decklist.cardset %>
+  <%= link_to @decklist.cardset.name, @decklist.cardset %>
+<% end %>
+decklist by <%= link_to @decklist.user %>
+</p>
+
+<% if @decklist.description.present? %>
+  <p><%= format_all_markup(@decklist.description) %>
+<% end %>
+
+<table class="decklist">
+  <tr>
+    <th>Count
+    <th>Card
+  </tr>
+  <% sections = @decklist.sections
+     maindeck_sections = sections - ["sideboard"] %>
+  <% maindeck_sections.each do |section| %>
+    <tr>
+      <td colspan="6"><%= section %>
+    </tr>
+    <% @decklist.deck_cards.select {|dc| dc.section == section }.each do |deck_card| %>
+    <tr>
+      <td><%= deck_card.count %>
+      <% card = deck_card.card %>
+      <td><%= link_to_card card %>
+    </tr>
+    <% end %>
+    <% @decklist.deck_wizards_cards.select {|dwc| dwc.section == section }.each do |deck_wizards_card| %>
+    <tr>
+      <td><%= deck_wizards_card.count %>
+      <td><%= wizards_card_link deck_wizards_card.name, deck_wizards_card.name %>
+    </tr>
+    <% end %>
+  <% end %>
+</table>
+
+<p>
+  <% if @decklist.user == current_user || @decklist.editable? %>
+    <%= link_to "Edit", edit_decklist_path(@decklist) %> |
+  <% end %>
+</p>

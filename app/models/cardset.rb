@@ -27,6 +27,7 @@ class Cardset < ActiveRecord::Base
   has_many :logs
   has_one :news_list, :dependent => :destroy
   has_one :last_edit_log, :class_name => "Log", :dependent => :destroy
+  has_many :decklists, :dependent => :destroy
   
   default_scope { order("updated_at DESC") }
 
