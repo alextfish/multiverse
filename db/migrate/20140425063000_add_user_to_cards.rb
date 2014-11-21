@@ -1,7 +1,9 @@
 class AddUserToCards < ActiveRecord::Migration
   def self.up
-    add_column :cards, :user_id, :integer
-    add_index :cards, :user_id
+    unless column_exists? :cards, :user_id
+      add_column :cards, :user_id, :integer
+      add_index :cards, :user_id
+    end
   end
 
   def self.down
