@@ -92,13 +92,6 @@ class Card < ActiveRecord::Base
     end
   end
 
-  def formatted_rules_text
-    format_card_text(rulestext)
-  end
-  def formatted_flavour_text
-    format_card_text(flavourtext)
-  end
-
   def primary_card
     secondary? ? parent : self
   end
@@ -335,6 +328,20 @@ class Card < ActiveRecord::Base
       cardclass << " " + @extra_styles
     end
     cardclass
+  end
+  
+  def layout
+    # For JSON purposes
+    if self.nontraditional_frame?
+      self.frame
+    elsif self.multipart?
+      # Note "double-faced" rather than "dfc" as per http://mtgjson.com/
+      split? ? "split" : flip? ? "flip" : dfc? ? "double-faced" : "UNKNOWN MULTIPART MODE"
+    elsif self.is_token?
+      "token"
+    else
+      "normal"
+    end
   end
   
   def derive_structure_and_frame

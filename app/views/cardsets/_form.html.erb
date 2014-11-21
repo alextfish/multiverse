@@ -18,6 +18,7 @@
 <%= form_for(@cardset) do |f| %>
   <% errors = @cardset.errors || @cardset.configuration.errors %>
   <% if errors.any? %>
+    <% Rails.logger.warn "Cardset errors: #{errors.inspect}" %>
     <div id="error_explanation">
       <h2><%= pluralize(errors.count, "error") %> prohibited this cardset from being saved:</h2>
 
@@ -92,7 +93,9 @@
             <table>
               <tr>
                 <td>All users:<br>
-                  <%= select_tag(:all_users, 
+                  <%=
+                  %><%
+                  select_tag(:all_users, 
                         options_from_collection_for_select(User.all, :id, :name), 
                         :multiple => true, :size => 10) %>
                 </td>
@@ -105,7 +108,8 @@
                 <td>Admin users:<br>
                   <% "@cardset.configuration.admins = [User.find(1), User.find(2)]" %>
                   <% current_admins = (@cardset.configuration.admins.blank? ? [@cardset.user] : @cardset.configuration.admins) %>
-                  <%= config_fields.select(:admins, 
+                  <%= 
+                  %><%config_fields.select(:admins, 
                         options_for_select(current_admins.map {|u| [u.name, u.id]}), 
                         {}, 
                         {:multiple => true, :size => 10}) %>

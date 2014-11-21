@@ -61,6 +61,37 @@ img.CardImage        { display: inline-block; /* height: 318px; */ }
   }
 }
 
+.decklists {
+  background-color: #fa6;
+  border: 1px solid #fa6;
+  border-color: #ffbd88 #dd955b #dd955b #ffbd88;
+}
+.decklists.user_list {
+  width: 80%;
+  margin-left: 5px;
+}
+.decklists h3 {
+  margin-top: 2px;
+}
+
+/***** Recent Changes *****/
+
+th.cardset_activity {
+  width: 20em;
+}
+@media screen and (max-device-width: 480px){
+  th.cardset_owner, td.cardset_owner,
+  th.cardset_access, td.cardset_access,
+  th.cardset_numcards, td.cardset_numcards,
+  th.cardset_description, td.cardset_description  {
+    display: none;
+  }
+  th.cardset_activity {
+    width: auto;
+  }
+}
+
+
 /***** Visual spoiler *****/
 
 div.visualspoiler { padding-top: 2px; padding-bottom: 2px; }
@@ -257,24 +288,36 @@ strong.highlight {
 
 
 /**** Cardset access colours for recent changes and setviews box ****/
-.access_Editable {
+.access_Editable td.cardset_access, table.setviews.access_Editable {
   background-color: #D5E5F5;
 }
-.access_Viewable {
+.access_Viewable td.cardset_access, table.setviews.access_Viewable {
   background-color: #DED;
 }
-.access_Private {
+.access_Private td.cardset_access, table.setviews.access_Private {
   background-color: #EDD;
 }
-.rowodd td.access_Editable {
+.access_Editable.rowodd td.cardset_access {
   background-color: #E2EFFA /* #DFECF8; /* #E9F5FF; */
 }
-.rowodd td.access_Viewable {
+.access_Viewable.rowodd td.cardset_access {
   background-color: #E5FFE5;
 }
-.rowodd td.access_Private {
+.access_Private.rowodd td.cardset_access {
   background-color: #FEE;
 }
+@media screen and (max-device-width: 480px) {
+  .access_Editable td.cardset_name {
+    background-color: #D5E5F5;
+  }
+  .access_Viewable td.cardset_name {
+    background-color: #DED;
+  }
+  .access_Private td.cardset_name {
+    background-color: #EDD;
+  }
+}
+
 
 /**** Tooltips ****/
 div.card_loading:after {

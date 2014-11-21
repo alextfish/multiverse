@@ -136,6 +136,13 @@ class Cardset < ActiveRecord::Base
   def listable_cards # For cardlists that should include nonactive cards
     Card.includes(:comments, :user).where("cardset_id = ?", self.id).select {|c| !c.secondary?}
   end 
+  def draftable_cards # Include secondary cards as their own records for JSON purposes
+    if configuration.card_show_active
+      self.cards.where(:active => true )
+    else
+      self.cards
+    end
+  end
   
   ########################## Permissions #########################  
 
@@ -477,6 +484,26 @@ class Cardset < ActiveRecord::Base
       when "image" then 3
     end
   end
+  
+  BOOSTER_STRUCTURES = {
+    "m10" => [ 
+              ["rare", "mythic rare"],
+               "uncommon", "uncommon", "uncommon",
+               "common", "common", "common", "common", "common", "common", "common", "common", "common", "common",
+               "basic", "token",
+              ],
+    "old" => [ 
+               "rare",
+               "uncommon", "uncommon", "uncommon",
+               "common", "common", "common", "common", "common", "common", "common", "common", "common", "common", "common",
+               "token",
+              ]
+  }
+  def booster_structure
+    mythics   = self.public_cards.select { |c| c.rarity == "mythic"   } 
+    collation = mythics.any? ? "m10" : "old"
+    [collation, BOOSTER_STRUCTURES[collation]]
+  end
 
   def make_booster(flat)
     cards_to_use = self.public_cards
@@ -524,7 +551,7 @@ class Cardset < ActiveRecord::Base
         # return [nil, "Not enough uncommons to create a diverse booster pack: we require #{ min_uncommons } uncommons, but the cardset only has #{ uncommons.length }."]
       # end
           
-      collation = mythics.any? ? "m10" : "old"
+      collation = booster_structure()[0]
       if rand(60) < ( collation == "m10" ? 14 : 15 )
         # got a foil
         foil_type = rand(15)

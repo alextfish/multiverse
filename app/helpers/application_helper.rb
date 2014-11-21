@@ -66,6 +66,15 @@ module ApplicationHelper
   def datestamps_close(d1, d2)
     (d1-d2).abs < 1.minute
   end
+  
+  def jf(text)
+    # Format and escape for JSON purposes. NOT safe for HTML!
+    if text.nil?
+      '""'.html_safe
+    else
+      text.inspect.gsub('\r\n', "\r\n").html_safe
+    end
+  end
 
   def format_all_markup(text, cardset)
     formatted_text = protect_smilies(
@@ -240,6 +249,10 @@ module ApplicationHelper
     end
     text_out
   end
+  
+  def split_to_json_array(string)
+    ('["' + string.split(" ").join('", "') + '"]').html_safe
+  end
 
   def link_to_card(card, content = nil, anchor = nil)
     # HTML <a> link to a Multiverse card
@@ -272,6 +285,10 @@ module ApplicationHelper
   def cardset_card_link(cardset, cardname, link_content, cardset_cardnames_and_codes, cardset_cards_from_name_or_code)
     if cardset_cardnames_and_codes.include?(cardname)
       card = cardset_cards_from_name_or_code[cardname]
+      if link_content == card.code
+        # ((MA01)) turns into ((Mindslaver))
+        link_content = card.printable_name
+      end
       link_to_card(card, link_content)
     elsif link_content =~ Card.bar_code_regexp
       # Link to a bar code. If the cardset has this code, link to that card by name

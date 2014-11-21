@@ -29,36 +29,36 @@
 <% cardsets_to_show = cardsets_this_page.find_all { |cs| permission_to? :view, cs } %>
 <table class="sortable">
  <tr>
- <th class="nosort">Set name</th>
- <th class="nosort">Owner</th>
- <th class="nosort">Public access</th>
- <th class="nosort">Cards</th>
- <th class="nosort" style="width:20em;">Recent activity</th>
- <th class="nosort">Description</th>
+ <th class="nosort cardset_name">Set name</th>
+ <th class="nosort cardset_owner">Owner</th>
+ <th class="nosort cardset_access">Public access</th>
+ <th class="nosort cardset_numcards">Cards</th>
+ <th class="nosort cardset_activity">Recent activity</th>
+ <th class="nosort cardset_description">Description</th>
  </tr>
  <% cardsets_to_show.each_with_index do |cardset, index| %>
    <% @cardset = cardset %>
    <% cache(:action => "index", :cardset => "#{@cardset.id}") do %>
-   <tr>
-     <% set_viewable = permission_to? :view, @cardset %>
-     <td><b><%= link_to @cardset.name, @cardset %></b></td>
-     <td><%= link_to @cardset.user.name, @cardset.user %></td>
      <% access = @cardset.public_access  %>
-     <td class="access_<%= access %>"><%= access %></td>
+   <tr class="access_<%= access %>">
+     <% set_viewable = permission_to? :view, @cardset %>
+     <td class="cardset_name"><b><%= link_to @cardset.name, @cardset %></b></td>
+     <td class="cardset_owner"><%= link_to @cardset.user.name, @cardset.user %></td>
+     <td  class="cardset_access"><%= access %></td>
      <% if set_viewable %>
-       <td><%= @cardset.cards.count %></td>
-       <td>
+       <td class="cardset_numcards"><%= @cardset.cards.count %></td>
+       <td class="cardset_activity">
          <% @log = @cardset.recent_action  %>
          <span style="display:none;"><%= "%08d" % index %></span><!-- for sorting -->
          <%= render :partial => "shared/log_entry", :locals => { :link_to_recent => true, :hard_format_date => false } %>
        </td>
-       <td>
+       <td class="cardset_description">
          <%= @cardset.description %>
        </td>
      <% else %>
-       <td style="border-right: none;"></td>
-       <td style="border-right: none; border-left: none;"><span style="display:none;">99999999</span><!-- for sorting --></td>
-       <td style="border-left: none;"></td>
+       <td class="cardset_numcards" style="border-right: none;"></td>
+       <td class="cardset_activity" style="border-right: none; border-left: none;"><span style="display:none;">99999999</span><!-- for sorting --></td>
+       <td class="cardset_description" style="border-left: none;"></td>
      <% end %>
    </tr>
    <% end %>

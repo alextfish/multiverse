@@ -58,4 +58,8 @@ class Decklist < ActiveRecord::Base
       attributes[:stats]
     end
   end
+  
+  def Decklist.enabled?
+    false
+  end
 end

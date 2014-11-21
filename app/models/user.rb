@@ -41,6 +41,10 @@ class User < ActiveRecord::Base
   def to_s
     name
   end
+  
+  def active_decklist
+    self.decklists.where(:active => true).first
+  end
 
   # Return true if the user's password matches the submitted password.
   def has_password?(submitted_password)

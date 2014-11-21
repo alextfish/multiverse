@@ -127,6 +127,7 @@ ActiveRecord::Schema.define(version: 20141026221002) do
     t.datetime "created_at"
     t.datetime "updated_at"
     t.text     "description"
+    t.boolean  "active"
   end
 
   add_index "decklists", ["cardset_id"], name: "index_decklists_on_cardset_id"

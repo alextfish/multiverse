@@ -1,0 +1,31 @@
+<% # produces output like:
+   #     {
+   #             "name" : "Nemesis",          
+   #             "code" : "NMS",              
+   #           "border" : "black",            
+   #             "type" : "expansion",
+   #            "block" : "Masques",          
+   #       "onlineOnly" : false,              
+   #          "booster" : [ "rare", ... ],    
+   #            "cards" : [ {}, {}, {}, ... ] 
+   # }
+   %>
+{
+  "name"       : <%= jf(@cardset.name) %>,
+  "code"       : "MV<%= @cardset.id %>",
+  "border"     : <%= jf(@cardset.configuration.border_colour) %>,
+                     
+  "sourceURL"  : <%= jf(cardset_url(@cardset)) %>,
+  "owner"      : <%= jf(@cardset.user.name) %>,
+  
+  "type"       : "expansion",
+  "onlineOnly" : true,
+  "booster"    : <%= jf(@cardset.booster_structure[1]) %>,
+  "cards"      : [
+  <% @cardset.draftable_cards.each do |card| %>
+    <% @card = card %>
+    <%= render :partial => "shared/individual_card" %>
+    ,
+  <% end %>
+                 ]
+}

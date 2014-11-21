@@ -127,7 +127,7 @@
 
   <p>
     <% if !recentcards.empty? %>
-      Recently updated cards: (<%= link_to "all recent activity", recent_cardset_path %>)    
+      Recently active cards: (<%= link_to "all recent activity", recent_cardset_path %>)    
      <% recentcards.each do |card| %>
        <% @card = card %>
        <div class="CardRenderInline">
