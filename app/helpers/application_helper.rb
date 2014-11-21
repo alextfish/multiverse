@@ -251,7 +251,11 @@ module ApplicationHelper
   end
   
   def split_to_json_array(string)
-    ('["' + string.split(" ").join('", "') + '"]').html_safe
+    if string.nil?
+      "[]"
+    else
+      ('["' + string.split(" ").join('", "') + '"]').html_safe
+    end
   end
 
   def link_to_card(card, content = nil, anchor = nil)
