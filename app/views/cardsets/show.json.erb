@@ -22,10 +22,11 @@
   "onlineOnly" : true,
   "booster"    : <%= jf(@cardset.booster_structure[1]) %>,
   "cards"      : [
-  <% @cardset.draftable_cards.each do |card| %>
+  <% cards_to_show = @cardset.draftable_cards %>
+  <% cards_to_show.each do |card| %>
     <% @card = card %>
-    <%= render :partial => "shared/individual_card" %>
-    ,
+<%= render :partial => "shared/individual_card" %>
+    <% if @card != cards_to_show.last %>, <% end %>
   <% end %>
                  ]
 }

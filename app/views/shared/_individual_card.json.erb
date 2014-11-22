@@ -31,38 +31,38 @@
    #       "imageName" : "sen triplets"
    # }
 %>
-{ 
-  "name"       : <%= jf(@card.name) %>,
-<% if @card.multipart? %>
-  "names"      : [<%= jf(@card.primary_card.name) %>, <%= jf(@card.secondary_card.name) %>],
-<% end %>
-
-  "manaCost"   : <%= jf(@card.cost) %>,
-  "colors"     : [<%= @card.colour_strings_present.map{|cs|jf(cs)}.join(", ").html_safe %>],
-<% if @card.colour_indicator %>
-  "colorIndicator" : true,
-<% end %>
-  "type"       : "<%= @card.supertype
-                 %><% if !@card.supertype.blank? %> <% end
-                 %><%= @card.cardtype
-                 %><% if !@card.subtype.blank? %> — <%= @card.subtype %><% end
-                 %>",
-  "supertypes" : <%= split_to_json_array(@card.supertype) %>,
-  "types"      : <%= split_to_json_array(@card.cardtype) %>,
-  "subtypes"   : <%= split_to_json_array(@card.subtype) %>,
-  "rarity"     : <%= jf(@card.rarity   ) %>,
-  "power"      : <%= jf(@card.power    ) %>,
-  "toughness"  : <%= jf(@card.toughness) %>,
-  <% # no "loyalty" here as Multiverse stores planeswalker loyalty in the toughness field %>
+  { 
+    "name"       : <%= jf(@card.name) %>,
+  <% if @card.multipart? %>
+    "names"      : [<%= jf(@card.primary_card.name) %>, <%= jf(@card.secondary_card.name) %>],
+  <% end %>
   
-  "text"       : <%= jf(format_card_text(@card, :rulestext, false, false)) %>,
-  "flavor"     : <%= jf(format_card_text(@card, :flavourtext, false, false)) %>,
-  
-  "artist"     : <%= jf(@card.artist   ) %>,
-  "artURL"     : <%= jf(@card.art_url  ) %>,
-  "imageURL"   : <%= jf(@card.image_url) %>,
-  "sourceURL"  : <%= jf(card_url(@card)) %>,
-  <% # no "number" here as it's not easily accessible %>
-  "cardCode"   : <%= jf(@card.code) %>,
-  "layout"     : <%= jf(@card.layout) %>
-}
+    "manaCost"   : <%= jf(@card.cost) %>,
+    "colors"     : [<%= @card.colour_strings_present.map{|cs|jf(cs)}.join(", ").html_safe %>],
+  <% if @card.colour_indicator %>
+    "colorIndicator" : true,
+  <% end %>
+    "type"       : "<%= @card.supertype
+                   %><% if !@card.supertype.blank? %> <% end
+                   %><%= @card.cardtype
+                   %><% if !@card.subtype.blank? %> — <%= @card.subtype %><% end
+                   %>",
+    "supertypes" : <%= split_to_json_array(@card.supertype) %>,
+    "types"      : <%= split_to_json_array(@card.cardtype) %>,
+    "subtypes"   : <%= split_to_json_array(@card.subtype) %>,
+    "rarity"     : <%= jf(@card.rarity   ) %>,
+    "power"      : <%= jf(@card.power    ) %>,
+    "toughness"  : <%= jf(@card.toughness) %>,
+    <% # no "loyalty" here as Multiverse stores planeswalker loyalty in the toughness field %>
+    
+    "text"       : <%= jf(format_card_text(@card, :rulestext, false, false)) %>,
+    "flavor"     : <%= jf(format_card_text(@card, :flavourtext, false, false)) %>,
+    
+    "artist"     : <%= jf(@card.artist   ) %>,
+    "artURL"     : <%= jf(@card.art_url  ) %>,
+    "imageURL"   : <%= jf(@card.image_url) %>,
+    "sourceURL"  : <%= jf(card_url(@card)) %>,
+    <% # no "number" here as it's not easily accessible %>
+    "cardCode"   : <%= jf(@card.code) %>,
+    "layout"     : <%= jf(@card.layout) %>
+  }
