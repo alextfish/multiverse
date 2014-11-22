@@ -72,7 +72,7 @@ module ApplicationHelper
     if text.nil?
       '""'.html_safe
     else
-      text.inspect.gsub('\r\n', "\r\n").html_safe
+      text.inspect.html_safe
     end
   end
 
