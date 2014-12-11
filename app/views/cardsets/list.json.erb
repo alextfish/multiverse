@@ -1,0 +1,24 @@
+<% # produces output like:
+   # [
+   #   {
+   #             "name" : "Sienira's Facets",          
+   #             "code" : "MV1",
+   #     "multiverseID" : 1,
+   #        "sourceURL" : "http://magicmultiverse.net/cardsets/1",
+   #            "owner" : "Alex"
+   #   }, ...
+   # ]
+   %>
+[
+<% @cardsets.each do |cardset| %>
+  {
+    "name"         : <%= jf(cardset.name) %>,
+    "code"         : "MV<%= cardset.id %>",
+    "multiverseID" : <%= cardset.id %>,
+    "sourceURL"    : <%= jf(cardset_url(cardset)) %>,
+    "owner"        : <%= jf(cardset.user.name) %>
+  }
+  <% if cardset != @cardsets.last %>, <% end %>
+<% end %>
+]
+

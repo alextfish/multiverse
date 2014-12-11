@@ -1,26 +1,30 @@
+<p></p>
+<div class="decklists main">
+
 <h1><%= @title = @decklist.name %></h1>
 
-<p>A 
+<p>(A 
 <% if @decklist.cardset %>
   <%= link_to @decklist.cardset.name, @decklist.cardset %>
 <% end %>
-decklist by <%= link_to @decklist.user %>
+decklist by <%= link_to @decklist.user %>)
 </p>
 
 <% if @decklist.description.present? %>
-  <p><%= format_all_markup(@decklist.description) %>
+  <p><%= format_all_markup(@decklist.description, @decklist.cardset) %>
 <% end %>
 
 <table class="decklist">
   <tr>
-    <th>Count
-    <th>Card
+    <th class="decklist_count">Count
+    <th class="decklist_card">Card
   </tr>
-  <% sections = @decklist.sections
+  <% numcols = 2
+     sections = @decklist.sections
      maindeck_sections = sections - ["sideboard"] %>
   <% maindeck_sections.each do |section| %>
     <tr>
-      <td colspan="6"><%= section %>
+      <td colspan="<%= numcols %>"><%= section %>
     </tr>
     <% @decklist.deck_cards.select {|dc| dc.section == section }.each do |deck_card| %>
     <tr>
@@ -36,6 +40,11 @@ decklist by <%= link_to @decklist.user %>
     </tr>
     <% end %>
   <% end %>
+  <% if maindeck_sections.empty? %>
+    <tr>
+      <td colspan="<%= numcols %>">No cards in this decklist yet...
+    </tr>
+  <% end %>
 </table>
 
 <p>
@@ -43,3 +52,5 @@ decklist by <%= link_to @decklist.user %>
     <%= link_to "Edit", edit_decklist_path(@decklist) %> |
   <% end %>
 </p>
+
+</div>

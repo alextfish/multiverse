@@ -21,7 +21,9 @@
   <%= text_area_tag "data", params[:data], :id => "import_data" %>
   </p>
   <p>
-  <%= submit_tag "Import", :disabled_with => "Importing..." %>
+    <div class="button_outer"><div class="button_inner">
+      <%= submit_tag "Import", :disabled_with => "Importing..." %>
+    </div></div>
   </p>
 <% end %>
 

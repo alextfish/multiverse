@@ -45,6 +45,20 @@ class User < ActiveRecord::Base
   def active_decklist
     self.decklists.where(:active => true).first
   end
+  
+  def set_active_decklist(decklist)
+    if decklist && decklist.user != self
+      return false
+    end
+    if (old_active_decklist = self.active_decklist)
+      old_active_decklist.active = false
+      old_active_decklist.save!
+    end
+    if decklist # nil is valid, to set no decklist active
+      decklist.active = true
+      decklist.save!
+    end
+  end
 
   # Return true if the user's password matches the submitted password.
   def has_password?(submitted_password)

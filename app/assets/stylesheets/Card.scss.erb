@@ -1176,6 +1176,7 @@ $Hybrid_DFC_Text: #bebcba;
 $Colourless_DFC_Bar: #886b6b;
 $Colourless_DFC_Text: #BEa0A7;
 $Artifact_DFC_Bar: #709498;
+$Artifact_DFC_Bar_Highlight: #90a4b0;
 $Artifact_DFC_Text: #c2ccd0;
 $Land_Colourless_DFC_Bar: #A89878;
 $Land_Colourless_DFC_Text: #D8CFC8;
@@ -1194,12 +1195,15 @@ $Land_Colourless_DFC_Text: #D8CFC8;
 
 $ArtifactBorder: #9CAAB3; /* pre-M15: #ABC1CE; */
 
-.Artifact .pinline { background-color: #dbdfe0; }
+$ArtifactPinline: #dbdfe0;
+$ArtifactTitlebar: #c6cfd6; /* pre-M15: #B0C4C8; */
+$ArtifactTitlebarHighlight: #d6e0e6;
+.Artifact .pinline { background-color: $ArtifactPinline; }
 .Artifact .pinline_ptbox { background-color: #9CB7BE; }
 .Artifact .ptbox { background-color: #A8BFC7; }
 .Artifact .cardtitlebar, .Artifact .cardtypebar, .Land.Coloured_Artifact .cardtitlebar, .Land.Coloured_Artifact .cardtypebar  {
-   background: #c6cfd6; /* pre-M15: #B0C4C8; */
-   @include gradient_horz_highlight(#c6cfd6, #d6e0e6);
+   background: $ArtifactTitlebar; 
+   @include gradient_horz_highlight($ArtifactTitlebar, $ArtifactTitlebarHighlight);
    /* pre-M15: @include gradient_vert_highlight(#B0C4C8, #D2D7DB); */
    }
 .Artifact .cardtext, .Artifact .pinline_ptbox { background-color: $Artifact_Text; }
@@ -1208,7 +1212,7 @@ $ArtifactBorder: #9CAAB3; /* pre-M15: #ABC1CE; */
 .dfc .part2.Artifact {
   .cardtitlebar, .cardtypebar { 
     background-color: $Artifact_DFC_Bar; 
-    @include gradient_vert_highlight($Artifact_DFC_Bar, #90a4b0);
+    @include gradient_horz_highlight($Artifact_DFC_Bar, $Artifact_DFC_Bar_Highlight);
   }
   .cardtext { background: $Artifact_DFC_Text !important; }
   .pinline_ptbox, .ptbox  { background-color: $Artifact_DFC_Bar !important; }
@@ -1570,5 +1574,56 @@ div.wizardsimage {
   }
   .cardname a {
     text-decoration: none;
+  }
+}
+
+/* Buttons - in here because they mimic cards */
+
+
+div.button_outer {
+  display: inline-block; /* fit to content, don't stretch to fill parent */
+  /* Mirroring .Artifact .pinline - @extend can't copy series of selectors */ 
+  background-color: $ArtifactPinline;
+  
+  /* Mirroring .pinline: */
+  /* Mirroring .pinline_box: */
+  padding: 2px;
+  border-left: 1px solid black;
+  border-right: 1px solid black;
+  border-bottom: 1px solid black;
+  @include elliptical_corners(6px, 12px);
+}
+div.button_outer div.button_inner {
+  /* Mirroring .pinline_box: */
+  /* Mirroring .pinline_box > div: */
+  border: 1px solid black;
+  @include elliptical_corners(4px, 8px);
+  /* Specific to the buttony use case: */
+  padding-left: 0;
+  padding-right: 0;
+  padding-top: 0;
+  padding-bottom: 0;
+}
+$Button_Focus: #D7DDE2;
+$Button_Focus_Highlight: #E7EDF0;
+$Button_Clicked: $Artifact_DFC_Bar; 
+$Button_Clicked_Highlight:$Artifact_DFC_Bar_Highlight;
+div.button_inner > input, div.button_inner > button {
+  border: none;
+  @extend .cardtitlebar;
+  /* Mirroring .pinline_box > div */
+  @include elliptical_corners(4px, 8px);
+  padding: 3px 8px 2px 8px;
+  /* Mirroring .Artifact .cardtitlebar */
+  background-color: $ArtifactTitlebar; /* pre-M15: #B0C4C8; */
+  @include gradient_horz_highlight($ArtifactTitlebar, $ArtifactTitlebarHighlight);
+  
+  &:hover, &:focus {
+    background-color: $Button_Focus;
+    @include gradient_horz_highlight($Button_Focus, $Button_Focus_Highlight);
+  }
+  &:active {
+    background-color: $Button_Clicked; 
+    @include gradient_horz_highlight($Button_Clicked, $Button_Clicked_Highlight);
   }
 }

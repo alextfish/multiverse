@@ -8,7 +8,7 @@
 <h3>Decklists</h3>
 <p><%= @user.name %> has created <%= pluralize(@user.decklists.count, "decklist") %><% if @user.decklists.empty? %>.<% else %>: <% @user.decklists.each do |deck| %><%= link_to deck, deck.name %><% end %><% end %></p>
 <% if @user == current_user %>
-  <p><%= link_to "Create new decklist", new_user_decklist_path(@user) %></p>
+  <p><%= link_to "Create new decklist", new_decklist_path %></p>
 <% end %>
 </div>
 <% end %>

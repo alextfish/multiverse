@@ -23,8 +23,6 @@ class Decklist < ActiveRecord::Base
   has_many :deck_wizards_cards  # to get at the counts and sections
   attr_protected :cardset_id, :user_id
   
-  ACTIVE = 1
-  INACTIVE = 2
   PUBLISHED = 4
   VIEWABLE = 8
   EDITABLE = 16
@@ -33,7 +31,7 @@ class Decklist < ActiveRecord::Base
   validates_inclusion_of :status, :in => (0..HIGHEST_STATUS)
   
   def active?
-    (status & ACTIVE) > 0
+    self.active
   end
   def published?
     (status & PUBLISHED) > 0

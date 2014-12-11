@@ -1,3 +1,24 @@
+/***** Mobile *****/
+
+$mq-mobile-portrait		: 480px !default;
+$mq-mobile-landscape	: 640px !default;
+
+@mixin mobile-only {
+	@media screen and (max-device-width : $mq-mobile-landscape) {
+		@content;
+	}
+  @media (-webkit-min-device-pixel-ratio: 2), 
+         (min-resolution: 192dpi) { 
+    @content;
+  }
+}
+// Everything larger than a mobile
+@mixin desktop-only {
+	@media only screen and (min-width : $mq-mobile-landscape + 1) {
+		@content;
+	}
+}
+
 /***** Site layout *****/
 
 a > img { border: 0px; vertical-align: bottom; }
@@ -6,6 +27,13 @@ a > img:hover, a > img:active, a > img:focus { background-color: #fff; }
 .flash  { margin-left: 2px; width: 50%; }
 .error  { color: #600; background-color: #f99; border: 1px solid #600; }
 .notice { color: #00a; background-color: #bbf; border: 1px solid #00a; }
+
+@include desktop-only {
+  div.content {
+    margin-left: 15px;
+    margin-right: 15px;
+  }
+}
 
 .infobox { float: right;
            border: 2px solid #aaa;
@@ -64,7 +92,12 @@ img.CardImage        { display: inline-block; /* height: 318px; */ }
 .decklists {
   background-color: #fa6;
   border: 1px solid #fa6;
-  border-color: #ffbd88 #dd955b #dd955b #ffbd88;
+  /* border-color: #ffbd88 #dd955b #dd955b #ffbd88; */
+  border-color: #facba5 #dd955b #be8456 #ffbd88;
+}
+.decklists.main {
+  border-width: 2px;
+  padding: 5px;
 }
 .decklists.user_list {
   width: 80%;
@@ -79,7 +112,7 @@ img.CardImage        { display: inline-block; /* height: 318px; */ }
 th.cardset_activity {
   width: 20em;
 }
-@media screen and (max-device-width: 480px){
+@include mobile-only {
   th.cardset_owner, td.cardset_owner,
   th.cardset_access, td.cardset_access,
   th.cardset_numcards, td.cardset_numcards,
@@ -327,6 +360,20 @@ div.tooltip_footer {
   height: 20px;
 }
 
+/**** Decklists ****/
+table.decklist th {
+  border: 1px solid #be8456;
+}
+table.decklist td {
+  border: 1px solid #be8456;
+}
+table.decklist .decklist_count {
+  width: 4em;
+}
+table.decklist .decklist_card {
+  width: 20em;
+}
+
 
 /**** Nav ****/
 /* Navigation */
@@ -334,6 +381,12 @@ div.tooltip_footer {
 header nav {
   float: right;
 }
+@include mobile-only {
+  header nav {
+    float: none;
+  }
+}
+
 footer nav {
   display: block;
   margin-top: 20px;

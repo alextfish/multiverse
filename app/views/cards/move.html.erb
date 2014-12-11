@@ -13,9 +13,11 @@
   <% valid_cardset_names = valid_cardsets.map &:name %>
   Move <%= link_to @card.printable_name, @card %> to cardset:
   <%= form_for(@card, :url => process_move_card_path(@card)) do |f| %>
-  <%= f.collection_select :cardset_id, valid_cardsets, :id, :name %>
-  <%= hidden_field_tag "special", "move" %>
-  <%= f.submit "Move card" %>
-  <%= link_to "Cancel", :back %>
+    <%= f.collection_select :cardset_id, valid_cardsets, :id, :name %>
+    <%= hidden_field_tag "special", "move" %>
+    <div class="button_outer"><div class="button_inner">
+      <%= f.submit "Move card" %>
+    <div class="button_outer"><div class="button_inner">
+    <%= link_to "Cancel", :back %>
   <% end %>
 <% end %>

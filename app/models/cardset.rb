@@ -29,7 +29,7 @@ class Cardset < ActiveRecord::Base
   has_one :last_edit_log, :class_name => "Log", :dependent => :destroy
   has_many :decklists, :dependent => :destroy
   
-  default_scope { order("updated_at DESC") }
+  default_scope { order("cardsets.updated_at DESC") }
 
   validates_length_of :name, :within => 2..40
   validate do |cardset|
@@ -487,7 +487,7 @@ class Cardset < ActiveRecord::Base
   
   BOOSTER_STRUCTURES = {
     "m10" => [ 
-              ["rare", "mythic rare"],
+              ["rare", "mythic"], # this differs from mtg-json which says 'mythic rare' not 'mythic'
                "uncommon", "uncommon", "uncommon",
                "common", "common", "common", "common", "common", "common", "common", "common", "common", "common",
                "basic", "token",

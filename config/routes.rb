@@ -32,6 +32,7 @@ Multiverse::Application.routes.draw do
   # The cards/cardsets relation should probably be a nested resource.
   # This would provide cardset_cards_path(@cardset), etc.
   # But I don't want the faff of refactoring to deal with that, so instead I'll create my own route:
+  get 'cardsets/list'
   resources :cardsets do
     resources :details_pages, :only => [:new, :create, :destroy, :edit, :update, :show]
     resources :mechanics,     :only => [:new, :create, :destroy, :edit, :update, :index]
@@ -48,9 +49,8 @@ Multiverse::Application.routes.draw do
   end
 
 
-  resources :users do
-    resources :decklists
-  end
+  resources :users 
+  resources :decklists, :only => [:new, :create, :destroy, :edit, :update, :show]
 
   resources :sessions, :only => [:new, :create, :destroy]
 

@@ -15,9 +15,11 @@
   </div>
   <div class="actions">
     <% submit_text = @comment.new_record? ? "Post comment" : "Update comment" %>
+    <div class="button_outer"><div class="button_inner">
     <% if signed_in? %>
       <%= @f.submit submit_text, :name => "comment_submit[by_signed_in_user]" %>
     <% else %>
       <%= @f.submit submit_text %>
     <% end %>
+    </div></div>
   </div>

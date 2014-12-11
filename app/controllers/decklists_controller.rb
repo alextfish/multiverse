@@ -25,9 +25,15 @@ class DecklistsController < ApplicationController
 
   # POST /decklists
   def create
-    @decklist = @cardset.decklist.build(params[:decklist])
+    params[:decklist][:status] = Decklist::INACTIVE
+    if @cardset
+      @decklist = @cardset.decklists.build(params[:decklist])
+    else
+      @decklist = current_user.decklists.build(params[:decklist])
+    end
 
     if @decklist.save
+      current_user.set_active_decklist(@decklist)
       redirect_to @decklist
     else
       render :action => "new"

@@ -97,9 +97,13 @@
     <tr>
      <td colspan="2">
       <% button_text = (@card.new_record? ? "Create" : "Submit") %>
-      <%= outer_form.submit button_text, { :onclick => "$('is_preview').value = false;" } %>
+      <div class="button_outer"><div class="button_inner">
+        <%= outer_form.submit button_text, { :onclick => "$('is_preview').value = false;" } %>
+      </div></div>
       <%= hidden_field_tag :is_preview, false %>
-      <%= outer_form.submit "Preview", { :onclick => "$('is_preview').value = true;" } %>
+      <div class="button_outer"><div class="button_inner">
+        <%= outer_form.submit "Preview", { :onclick => "$('is_preview').value = true;" } %>
+      </div></div>
      </td>
     </tr>
    </table>

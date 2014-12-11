@@ -101,9 +101,11 @@
                 </td>
                 <td>
                   <br>
-                  <button>Add -></button>
+                  
+      <div class="button_outer"><div class="button_inner"><button>Add -></button></div></div>
                   <br>
-                  <button><- Remove</button>
+                  
+      <div class="button_outer"><div class="button_inner"><button><- Remove</button></div></div>
                 </td>
                 <td>Admin users:<br>
                   <% "@cardset.configuration.admins = [User.find(1), User.find(2)]" %>
@@ -173,7 +175,9 @@
    </tr>
   </table>
   <div class="actions">
-    <%= f.submit %>
+    <div class="button_outer"><div class="button_inner">
+      <%= f.submit %>
+    </div></div>
   </div>
 <% end %>
 

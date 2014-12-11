@@ -89,7 +89,11 @@
           <% end %>
         </table>
         <%= hidden_field_tag "search_type", object_field_name %>
-        <div class="search_submit"><%= submit_tag "Search #{object_type.titleize.pluralize}", :onclick => "handleSearchRestrictions(this, '#{object_field_name}')" %></div>
+        <div class="search_submit">
+          <div class="button_outer"><div class="button_inner">
+            <%= submit_tag "Search #{object_type.titleize.pluralize}", :onclick => "handleSearchRestrictions(this, '#{object_field_name}')" %>
+          </div></div>
+        </div>
       <% end %>
     </td>
     <% end %>
