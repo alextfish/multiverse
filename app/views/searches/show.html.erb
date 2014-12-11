@@ -38,7 +38,9 @@
   <br>
     <form action="<%= quicksearch_path %>" method="get">
       <%= text_field_tag "q", @quicksearch_query %>
-      <input type="submit" value="Quick search">
+      <div class="button_outer"><div class="button_inner">
+        <input type="submit" value="Quick search">
+      </div></div>
     </form>
   </form>
   |
