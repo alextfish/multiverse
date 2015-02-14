@@ -8,7 +8,6 @@ gem 'rails', '>=4.0.0'
 gem 'webrick', '1.3.1'
 
 gem 'prototype-rails', '>=4.0.0'
-gem 'rails-deprecated_sanitizer'
 #gem 'prototype-rails' # depends on rails 3.2
 
 gem 'json', '~>1.7.7' # avoid security vulnerability in json-1.7.6
@@ -20,7 +19,7 @@ group :production, :staging do
 #  gem 'mysql'
 #  gem "mysql2", "~> 0.3.11"
 end
-#gem 'rails_12factor'
+gem 'rails_12factor'
 gem 'rails_stdout_logging'
 
 platforms :ruby do # linux
