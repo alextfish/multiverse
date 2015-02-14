@@ -1,6 +1,7 @@
 module CardsHelper
 
   FORMAT_SUBSTITUTIONS = {
+    /(^|[:.]\s+)\bUEOT\b/i => "Until end of turn",
     /\bUEOT\b/i => "until end of turn",
     /\bEOT\b/i => "end of turn",
     /\bETBs\b/ => "enters the battlefield",
@@ -13,7 +14,7 @@ module CardsHelper
   }
   MARKUP_SUBSTITUTIONS = {
     / - / => " &ndash; ",
-    / -- / => " &mdash; ",
+    / --(\s)/ => " &mdash;\1",
     /\(([^()\n]*)\)/ => '<i>&#40;\1&#41;</i>',
     "\n" => "<br>",
     /\*\*([^*]+)\*\*/ => '<b>\1</b>',

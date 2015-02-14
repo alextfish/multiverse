@@ -11,6 +11,16 @@ class SearchesController < ApplicationController
       # The collection_select in advanced.html.erb will read
       # @card.cardset or @comment.cardset
     end
+    if params[:search_user]
+      params[:restrict_user_check_cardset] = true
+      params[:restrict_user_check_card] = true
+      params[:restrict_user_check_comment] = true
+      @search_user = Cardset.find(params[:search_user])
+      @card = @cardset.cards.build
+      @comment = @cardset.comments.build
+      # The collection_select in advanced.html.erb will read
+      # @card.cardset or @comment.cardset
+    end
     Rails.logger.info params.inspect
   end
   

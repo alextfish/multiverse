@@ -15,8 +15,9 @@
     "name"         : <%= jf(cardset.name) %>,
     "code"         : "MV<%= cardset.id %>",
     "multiverseID" : <%= cardset.id %>,
-    "sourceURL"    : <%= jf(cardset_url(cardset)) %>,
-    "owner"        : <%= jf(cardset.user.name) %>
+    "sourceURL"    : <%= jf(cardset_url(cardset, :format => :json)) %>,
+    "owner"        : <%= jf(cardset.user.name) %>,
+    "lastChange"   : <%= jf(cardset.updated_at) %>
   }
   <% if cardset != @cardsets.last %>, <% end %>
 <% end %>

@@ -17,6 +17,7 @@
    valid_cardsets = Cardset.select { |cs| permission_to?(:view, cs) }
    valid_cardsets = valid_cardsets.sort_by &:name 
    valid_users = User.all.sort_by &:name
+   default_user = current_user ? current_user.id : ""
     %>
 <script language="javascript">
   // handleSearchRestrict: toggle visibility of restriction fields
@@ -73,9 +74,12 @@
             </td></tr>
           <% end %>
           <% if restrictions[object_type].include? "user" %>
-            <tr><td><%= label_tag "restrict_user_check_#{object_field_name}", "Restrict by user:" %>
-            <td><%= check_box_tag "restrict_user_check_#{object_field_name}", "yes", false, :onclick => "handleSearchRestrict(this)", :class => "restriction" %><span id="restrict_user_<%= object_field_name %>" style="visibility: hidden;">
-              <%= collection_select "#{object_field_name}", :user_id, valid_users, :id, :name, :class => "restricted", :disabled => "true", :selected => current_user.id  %>
+            <% restrict_s = "restrict_user_check_#{object_field_name}" 
+            visible = params[restrict_s.to_sym] || false
+            %>
+            <tr><td><%= label_tag restrict_s, "Restrict by user:" %>
+            <td><%= check_box_tag restrict_s, "yes", false, :onclick => "handleSearchRestrict(this)", :class => "restriction" %><span id="restrict_user_<%= object_field_name %>" <% if !visible %>style="visibility: hidden;"<% end %>>
+              <%= collection_select "#{object_field_name}", :user_id, valid_users, :id, :name, :class => "restricted", :disabled => "true", :selected => default_user  %>
             </span>
           <% end %>
           <% if restrictions[object_type].include? "cardset" %>

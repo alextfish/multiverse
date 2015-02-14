@@ -15,8 +15,9 @@
   "code"       : "MV<%= @cardset.id %>",
   "border"     : <%= jf(@cardset.configuration.border_colour) %>,
                      
-  "sourceURL"  : <%= jf(cardset_url(@cardset)) %>,
-  "owner"      : <%= jf(@cardset.user.name) %>,
+  "sourceURL"    : <%= jf(cardset_url(@cardset, :format => :json)) %>,
+  "owner"        : <%= jf(@cardset.user.name) %>,
+  "lastChange"   : <%= jf(@cardset.updated_at) %>,
   
   "type"       : "expansion",
   "onlineOnly" : true,

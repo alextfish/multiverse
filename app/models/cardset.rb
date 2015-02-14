@@ -610,6 +610,7 @@ class Cardset < ActiveRecord::Base
       chosen_commons.uniq! # because some groups may overlap
       chosen_commons -= [nil] # in case there are /no/ commons
       if chosen_commons.length < num_booster_commons
+        # The set has rather few commons. Fill in the rest with randomly chosen ones.
         commons -= chosen_commons
         while chosen_commons.length < num_booster_commons
           if commons.empty?

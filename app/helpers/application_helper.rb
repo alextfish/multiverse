@@ -72,7 +72,7 @@ module ApplicationHelper
     if text.nil?
       '""'.html_safe
     else
-      text.inspect.html_safe
+      text.to_s.inspect.html_safe
     end
   end
 

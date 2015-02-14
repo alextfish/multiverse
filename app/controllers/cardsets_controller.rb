@@ -52,7 +52,7 @@ class CardsetsController < ApplicationController
   # GET /cardsets/list.json
   def list
     @cardsets = Cardset.includes([:configuration, :user]).where("configurations.visibility in ('anyone', 'signedin')").references(:configuration)
-    if stale?(:last_modified => @cardsets.first.last_edit_log.updated_at, :etag => "cardsets_list_json")
+    if stale?(:last_modified => @cardsets.first.configuration.updated_at, :etag => "cardsets_list_json")
       respond_to do |format|
         format.json
       end
