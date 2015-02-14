@@ -196,7 +196,7 @@ class SearchesController < ApplicationController
                     permission_to? :view, card.cardset
                   end
         when :details_pages
-          out = DetailsPage.includes([ { :cardset => :configuration }]).where( condition ).select do |dp|
+          out = DetailsPage.includes([ :card, { :cardset => :configuration }]).where( condition ).select do |dp|
                     permission_to? :view, dp.cardset
                   end
         when :comments
