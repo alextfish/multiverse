@@ -8,6 +8,7 @@ gem 'rails', '>=4.0.0'
 gem 'webrick', '1.3.1'
 
 gem 'prototype-rails', '>=4.0.0'
+gem 'rails-deprecated_sanitizer'
 #gem 'prototype-rails' # depends on rails 3.2
 
 gem 'json', '~>1.7.7' # avoid security vulnerability in json-1.7.6
