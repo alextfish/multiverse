@@ -54,7 +54,7 @@ module ApplicationHelper
 	    end
 	end
   end
-  
+
   # format_datetime_absolute: Writes the input datetime to the page. It's given a
   # class that will make it formatted as an absolute datetime in the user's locale.
   def format_datetime_absolute(dt)
@@ -66,7 +66,7 @@ module ApplicationHelper
   def datestamps_close(d1, d2)
     (d1-d2).abs < 1.minute
   end
-  
+
   def jf(text)
     # Format and escape for JSON purposes. NOT safe for HTML!
     if text.nil?
@@ -110,8 +110,8 @@ module ApplicationHelper
   Card.mana_symbols_extensive.each { |sym|
     MANA_SYMBOL_TARGETS[sym] = ActionController::Base.helpers.image_tag(self.mana_symbol_url(sym), :alt=>sym, :title=>sym)
   }
-  
-  
+
+
   def format_mana_symbols(text, force = false)
     if text.nil?
       return text
@@ -249,7 +249,7 @@ module ApplicationHelper
     end
     text_out
   end
-  
+
   def split_to_json_array(string)
     if string.nil?
       "[]"
@@ -266,9 +266,9 @@ module ApplicationHelper
     end
     if anchor.blank?
       anchor = "";
-    else    
+    else
       anchor = "#" + anchor;
-    end  
+    end
     # Determine the shape of the desired JS AJAX tooltip
     "<a class=\"cardmockup #{card.tooltip_shape}\" name=\"#{card.id}\" href=\"#{url_for(card)}#{anchor}\">#{sanitize(content)}</a>".html_safe
   end
@@ -409,7 +409,7 @@ module ApplicationHelper
      end
      chosen
   end
-  
+
   #### Link helpers
 
   def link_to_comment(comment) # logic is duplicated in searches_controller
@@ -434,15 +434,15 @@ module ApplicationHelper
         new_cardset_comment_path(comment.parent)
     end
   end
-  
+
   def link_to_log_user(log)
     if (log.comment? && (comment = log.return_object).kind_of?(Comment))
       link_to_comment_user(comment)
-    else 
+    else
       friendly_link_to_user_id log.user_id
     end
   end
-  
+
   def separate_if_both_nonblank(string1, string2, sep)
     if !string1.blank? && !string2.blank?
       (sanitize(string1) + sep + sanitize(string2)).html_safe

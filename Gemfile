@@ -67,6 +67,7 @@ gem 'win32console', :platforms => :mingw
 gem 'dalli'
 gem 'memcachier'
 gem 'quiet_assets', :group => :development
+gem 'active_model_serializers', '~> 0.8.0'
 # gem "doc_raptor"
 
 group :development do
