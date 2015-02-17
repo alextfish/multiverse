@@ -1,7 +1,10 @@
 class CardsController < ApplicationController
+  # Allow serializers the use of the _url helpers
+  serialization_scope :view_context
+
   before_filter :find_cardset
   before_filter :nocache_param
-  
+
   before_filter :only => [:new, :create, :edit, :update] do
     require_permission_to_edit(@cardset)
   end
@@ -58,7 +61,7 @@ class CardsController < ApplicationController
   end
   before_filter :only => :create do
     if params[:is_preview] == "true"
-      # Render new without calling the new function 
+      # Render new without calling the new function
       @card = Card.new(params[:card])
       @card.link = Card.new(params[:card][:link]) # @card.new_linked_card
       render :action => "new"
@@ -99,7 +102,7 @@ class CardsController < ApplicationController
     respond_to do |format|
       format.html # show.html.erb
       format.xml  { render :xml => @card }
-      format.json
+      format.json { render json: @card, root: false }
     end
   end
 
@@ -107,7 +110,7 @@ class CardsController < ApplicationController
   def new
     @cardset = Cardset.find(params[:cardset_id])
     @card = Card.new(:cardset_id => params[:cardset_id])
-    
+
     if params[:code] =~ Card.code_regexp
       @card.code = params[:code]
       @card.rarity, @card.frame, @card.cardtype = Card.interpret_code params[:code]
@@ -130,7 +133,7 @@ class CardsController < ApplicationController
     end
     Rails.logger.info "Card attributes: #{@card.attributes.inspect}"
   end
-  
+
   def move
   end
 
@@ -151,10 +154,10 @@ class CardsController < ApplicationController
     else
       Rails.logger.info "Not using Auto frame as calculated_frame is '#{@card.calculated_frame}' but frame is '#{@card.frame}'..."
     end
-    
+
     @card.frame_display = frame
     @card.structure_display = structure
-    
+
     if @card.link.nil?
       @card.link ||= @card.new_linked_card
     else
@@ -206,7 +209,7 @@ class CardsController < ApplicationController
         # Log the creation
         @cardset.log :kind=> :card_create, :user=>current_user, :object_id=>@card.id
 	    end
-      redirect_to @card, :notice => "#{@card.printable_name} was successfully created." 
+      redirect_to @card, :notice => "#{@card.printable_name} was successfully created."
     else
       render :action => "new"
     end
@@ -216,9 +219,9 @@ class CardsController < ApplicationController
   def update
     @card2 = @card.link
     # Don't allow cardset moves via update action
-    params[:card].delete_if {|key, value| key == "cardset_id" } 
-    params[:card][:link].present? && params[:card][:link].delete_if {|key, value| key == "cardset_id" } 
-    
+    params[:card].delete_if {|key, value| key == "cardset_id" }
+    params[:card][:link].present? && params[:card][:link].delete_if {|key, value| key == "cardset_id" }
+
     old_multipart = @card.multipart?
     if @card.update_attributes(params[:card])
       new_multipart = @card.multipart?
@@ -231,7 +234,7 @@ class CardsController < ApplicationController
         @card2.destroy
         @card.link = nil
         @card.save!
-      elsif !old_multipart && new_multipart 
+      elsif !old_multipart && new_multipart
         # Creating a new partner should be done automatically via update_attributes
         if @card.link.nil?
           # The creation failed validation because it was empty
@@ -248,7 +251,7 @@ class CardsController < ApplicationController
       render :action => "edit"
     end
   end
-  
+
   def process_move
     @cardset1 = @card.cardset
     @cardset2 = Cardset.find(params[:card][:cardset_id])
@@ -258,18 +261,18 @@ class CardsController < ApplicationController
     if @card.save # update_attributes(params[:card], :as => :mover)
       process_card
       set_last_edit @card
-      @card.comments.each do |comm| 
+      @card.comments.each do |comm|
         comm.cardset = @cardset2
         comm.save
       end
       @cardset1.log :kind=>:card_move_out, :user=>current_user, :object_id=>@card.id, :text=>@cardset2.name
       @cardset2.log :kind=>:card_move_in, :user=>current_user, :object_id=>@card.id, :text=>@cardset1.name
-      
+
       if (@card2 = @card.link)
         @card2.cardset = @card.cardset  # no logs needed for secondary cards
         @card2.save
       end
-      
+
       @cardset = @cardset1
       expire_all_cardset_caches
       @cardset = @cardset2
@@ -280,7 +283,7 @@ class CardsController < ApplicationController
       render :action => "edit"
     end
   end
-  
+
   def set_link_fields
     case @card.multipart
       when Card.FLIP1
@@ -288,27 +291,27 @@ class CardsController < ApplicationController
         @card.link.parent = @card
         @card.link.cardset = @card.cardset
         @card.link.user = @card.user
-        @card.link.save! :validate => false 
+        @card.link.save! :validate => false
       when Card.SPLIT1
         @card.link.multipart = Card.SPLIT2
         @card.link.parent = @card
         @card.link.cardset = @card.cardset
         @card.link.user = @card.user
-        @card.link.save! :validate => false 
+        @card.link.save! :validate => false
       when Card.DFCFRONT
         @card.link.multipart = Card.DFCBACK
         @card.link.parent = @card
         @card.link.cardset = @card.cardset
         @card.link.user = @card.user
-        @card.link.save! :validate => false 
+        @card.link.save! :validate => false
     end
   end
-  
+
   # GET /cards/1/mockup - via Ajax
   def mockup
     @printable = true
     @embedded = true
-    @card2 = @card.link 
+    @card2 = @card.link
   end
 
   # DELETE /cards/1
@@ -329,7 +332,7 @@ class CardsController < ApplicationController
       # Horrible MVC violation, but I just can't get .js.erb files to render
       # Can only destroy cards via JS from the cardlist view
       format.js   do
-        render :text => "$('card_row_#{params[:id]}').visualEffect('Fade', {'queue':'parallel'})" 
+        render :text => "$('card_row_#{params[:id]}').visualEffect('Fade', {'queue':'parallel'})"
       end
     end
   end

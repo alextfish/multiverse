@@ -1,5 +1,7 @@
 class CardsetsController < ApplicationController
-  
+  # Allow serializers the use of the _url helpers
+  serialization_scope :view_context
+
   before_filter :except => [:index, :new, :create, :list] do
     @cardset = Cardset.find(params[:id])
     require_permission_to_view(@cardset)
@@ -18,8 +20,8 @@ class CardsetsController < ApplicationController
   after_filter :only => [:create, :update, :destroy, :import_data, :generate_skeleton] do
     expire_cardset_recentchanges_line_cache
   end
-  
-  
+
+
   def nocache_param_index
     if params.has_key?(:nocache)
       Cardset.all.each do |cs|
@@ -29,15 +31,15 @@ class CardsetsController < ApplicationController
       @cardset = nil
     end
   end
-  
+
   # All static views
   # caches_action :visualspoiler, :layout => false
   # caches_action :cardlist, :layout => false
   # caches_action :skeleton, :layout => false
   # caches_action :show, :layout => false
-                              
-  # GET /cardsets             
-  # GET /cardsets.xml         
+
+  # GET /cardsets
+  # GET /cardsets.xml
   def index
     @cardsets = Cardset.all
     globalState = GlobalState.instance
@@ -48,13 +50,13 @@ class CardsetsController < ApplicationController
       end
     end
   end
-  
+
   # GET /cardsets/list.json
   def list
     @cardsets = Cardset.includes([:configuration, :user]).where("configurations.visibility in ('anyone', 'signedin')").references(:configuration)
     if stale?(:last_modified => @cardsets.first.configuration.updated_at, :etag => "cardsets_list_json")
       respond_to do |format|
-        format.json
+        format.json { render json: @cardsets, each_serializer: CardsetSummarySerializer, root: false }
       end
     end
   end
@@ -66,7 +68,7 @@ class CardsetsController < ApplicationController
       respond_to do |format|
         format.html # show.html.erb
         format.xml  { render :xml => @cardset }
-        format.json 
+        format.json { render json: @cardset, root: false }
       end
     end
   end
@@ -78,8 +80,8 @@ class CardsetsController < ApplicationController
       respond_to do |format|
         format.html # cardlist.html.erb
         format.xml  { render :xml => @cardset.cards }   # ??
-        format.text { render }  
-        format.csv  { render }  
+        format.text { render }
+        format.csv  { render }
       end
     end
   end
@@ -88,7 +90,7 @@ class CardsetsController < ApplicationController
   def visualspoiler
     fresh_when :last_modified => @cardset.last_edit_log.updated_at, :etag => "cardset_#{@cardset.id}_visualspoiler_p#{params[:page] || ""}_s#{params[:section] || ""}"
   end
-  
+
   def wholevisualspoiler
   end
 
@@ -100,7 +102,7 @@ class CardsetsController < ApplicationController
   # GET /cardsets/1/todo
   def todo
   end
-  
+
   # GET /cardsets/1/todo
   def skeleton
     @skeleton = @cardset.skeleton
@@ -119,7 +121,7 @@ class CardsetsController < ApplicationController
     end
   end
 
-  def booster 
+  def booster
     flat = params.has_key?(:flat)
     begin
       @booster, err_message, @booster_info = @cardset.make_booster(flat)
@@ -140,16 +142,16 @@ class CardsetsController < ApplicationController
     if success
       expire_all_cardset_caches
       changed_cards.each do |card|
-        set_last_edit card 
+        set_last_edit card
       end
       @cardset.log :kind=>:cardset_import, :user=>current_user, :object_id=>@cardset.id, :text=>log_text
-      redirect_to @cardset, :notice => message 
+      redirect_to @cardset, :notice => message
     else
       flash.now[:error] = message
       render :import
     end
   end
-  
+
   # POST /cardsets/1/generate_skeleton
   def generate_skeleton
     Rails.logger.info "Generating skeleton for #{@cardset.name}"
@@ -190,9 +192,9 @@ class CardsetsController < ApplicationController
 
     if ok
       expire_all_cardset_caches
-      set_last_edit @cardset 
+      set_last_edit @cardset
       @cardset.log :kind=>:cardset_create, :user=>current_user, :object_id=>@cardset.id
-      redirect_to @cardset, :notice => 'Cardset was successfully created.' 
+      redirect_to @cardset, :notice => 'Cardset was successfully created.'
     else
       render :action => "new"
     end
@@ -204,9 +206,9 @@ class CardsetsController < ApplicationController
     ok &= @cardset.configuration.update_attributes(params[:configuration])
     if ok
       expire_all_cardset_caches
-      set_last_edit @cardset 
+      set_last_edit @cardset
       @cardset.log :kind=>:cardset_options, :user=>current_user, :object_id=>@cardset.id
-      redirect_to @cardset, :notice => 'Cardset was successfully updated.' 
+      redirect_to @cardset, :notice => 'Cardset was successfully updated.'
     else
       render :action => "edit"
     end
