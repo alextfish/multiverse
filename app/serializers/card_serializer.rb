@@ -24,13 +24,13 @@ class CardSerializer < ActiveModel::Serializer
   end
 
   def supertypes
-    object.supertype.split(/\s+/)
+    (object.supertype || "").split(/\s+/)
   end
   def types
-    object.cardtype.split(/\s+/)
+    (object.cardtype || "").split(/\s+/)
   end
   def subtypes
-    object.subtype.split(/\s+/)
+    (object.subtype || "").split(/\s+/)
   end
 
   def text
