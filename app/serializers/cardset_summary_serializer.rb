@@ -1,5 +1,5 @@
 class CardsetSummarySerializer < ActiveModel::Serializer
-  attributes :name, :code, :sourceURL
+  attributes :name, :code, :sourceURL, :owner
 
   attribute :id, key: :multiverseID
   attribute :updated_at, key: :lastChange
