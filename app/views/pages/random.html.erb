@@ -1,7 +1,14 @@
 <h1><%= link_to (@title = "Random Cards"), random_path %></h1>
 <p>
-  <% numcards = Card.nonsecondary.count
-     num_to_show = [numcards, 15].min
+  <% default_num_to_show = 15
+     max_num_to_show = 50
+     numcards = Card.nonsecondary.count
+     num_to_show = params[:count].to_i 
+     if num_to_show <= 0
+         num_to_show = default_num_to_show
+     end
+     # Max out at smaller of 50 and number of available cards
+     num_to_show = [num_to_show, numcards, max_num_to_show].min
      chosencards = select_random_visible_cards(num_to_show, Card.nonsecondary)
      %>
   There are <%= numcards %> cards in Multiverse right now<% if numcards > 0 %>, including:
