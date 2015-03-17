@@ -75,5 +75,7 @@ config.active_record.whitelist_attributes = false
     
     # Prevent initializing application and connecting to the database during precompilation. Heroku requires this to be false.
     config.assets.initialize_on_precompile = false
+    
+    config.middleware.use Rack::Pratchett
   end
 end

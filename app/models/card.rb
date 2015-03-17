@@ -852,6 +852,6 @@ class Card < ActiveRecord::Base
   end
   
   def self.known_watermarks
-    known_watermarks = ["White Mana", "Blue Mana", "Black Mana", "Red Mana", "Green Mana"] + %w{Boros Selesnya Golgari Dimir Izzet Gruul Orzhov Azorius Simic Rakdos Mirran Phyrexian Abzan Jeskai Sultai Mardu Temur Conspiracy}
+    known_watermarks = ["White Mana", "Blue Mana", "Black Mana", "Red Mana", "Green Mana"] + %w{Boros Selesnya Golgari Dimir Izzet Gruul Orzhov Azorius Simic Rakdos Mirran Phyrexian Abzan Jeskai Sultai Mardu Temur Dromoka Ojutai Silumgar Kolaghan Atarka Conspiracy}
   end
 end

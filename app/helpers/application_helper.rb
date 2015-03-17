@@ -322,6 +322,7 @@ module ApplicationHelper
     # "http://www.wizards.com/global/images/magic/general/#{image_name}.jpg"
     image_name = cardname.gsub(" ", '+').downcase
     "http://gatherer.wizards.com/Handlers/Image.ashx?type=card&name=#{image_name}"
+    # "http://mtgimage.com/card/#{cardname}.jpg"
   end
   def cardset_card_image(cardset, cardname, cardset_cardnames_and_codes, cardset_cards_from_name_or_code)
     if cardset_cardnames_and_codes.include?(cardname)
