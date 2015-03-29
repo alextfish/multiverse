@@ -6,6 +6,7 @@ class CommentsController < ApplicationController
   before_filter :only => [:create] do
     if !signed_in?
       ensure_not_spam
+      ensure_captcha_matches
     end
   end
   before_filter :only => [:edit, :destroy] do
@@ -108,7 +109,7 @@ class CommentsController < ApplicationController
   end
   
   def edit
-    Rails.logger.info "Edititng comment #{@comment.id}: body is #{@comment.body} (#{@comment.body.length} chars)"
+    Rails.logger.info "Editing comment #{@comment.id}: body is #{@comment.body} (#{@comment.body.length} chars)"
   end
 
   # PUT /comments/1

@@ -27,6 +27,13 @@
     <%= f.label :password_confirmation, "Confirm password" %><br />
     <%= f.password_field :password_confirmation %>
   </div>
+  <% if @user.new_record? %>
+    <div class="field">
+      Please answer this question (the last captcha you'll see on Multiverse):
+      <br/>
+      <%= render :partial => "shared/captcha_field" %>
+    </div>
+  <% end %>
   <div class="actions">
     <div class="button_outer"><div class="button_inner">
       <%= f.submit @title %>

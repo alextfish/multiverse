@@ -11,6 +11,16 @@ class ApplicationController < ActionController::Base
     end
   end
   
+  def ensure_captcha_matches
+    unless params[:captcha_card]
+      redirect_to spam_path and return
+    end
+    if !Captcha.check_answer(params)
+      flash[:error] = "Captcha failed. Please try the captcha again."
+      redirect_to :back
+    end
+  end
+  
   private
 
     # Redirect to the appropriate domain i.e. example.com
@@ -21,4 +31,5 @@ class ApplicationController < ActionController::Base
       new_url = "#{request.protocol}#{domain_to_redirect_to}#{request.fullpath}"
       redirect_to new_url, status: :moved_permanently if should_redirect
     end
+
 end

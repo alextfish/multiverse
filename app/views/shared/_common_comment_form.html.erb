@@ -6,13 +6,18 @@
     <% else   # Can only be posting a new anonymous comment %>
       <%= @f.label :user_name, "Post comment in the name of:" %><br />
       <%= @f.text_field :user_name, :value => Comment.DEFAULT_USER_NAME, maxlength: 40 %>
-      <br/>(You won't be able to edit your comments unless you <%= link_to "sign in", signin_path %> before posting)
     <% end %>
     <%= render :partial => "shared/markdown_short" %>
   </div>
   <div class="field">
     <%= @f.text_area :body, :rows => "6" %>
   </div>
+  <% if !signed_in? %>
+    <div class="field">
+      <%= render :partial => "shared/captcha_field" %>
+      <br/>(<%= link_to "Signed-in", signin_path %> users don't get captchas and can edit their comments)
+    </div>
+  <% end %>
   <div class="actions">
     <% submit_text = @comment.new_record? ? "Post comment" : "Update comment" %>
     <div class="button_outer"><div class="button_inner">

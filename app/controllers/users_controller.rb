@@ -7,7 +7,11 @@ class UsersController < ApplicationController
   before_filter :only => [:new, :create] do
     redirect_to :back if signed_in?
   end
-
+  before_filter :only => [:create] do
+    if !signed_in?
+      ensure_captcha_matches
+    end
+  end
 
   # GET /users
   # GET /users.xml
