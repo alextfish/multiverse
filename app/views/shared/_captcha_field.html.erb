@@ -1,0 +1,7 @@
+<% captcha = Captcha.get_question 
+   captcha_card = captcha[0]
+   captcha_question = captcha[1] %>
+<%= captcha_question %>
+<%= format_links("[[[#{captcha_card}]]]", @cardset).html_safe %>
+<%= hidden_field_tag "captcha_card", captcha_card %>
+<%= text_field_tag "captcha_answer", "", {style: "width: 3em", maxlength: 2} %>
