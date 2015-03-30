@@ -1609,7 +1609,7 @@ $Button_Focus_Highlight: #E7EDF0;
 $Button_Clicked: $Artifact_DFC_Bar; 
 $Button_Clicked_Highlight:$Artifact_DFC_Bar_Highlight;
 div.button_inner {
-  & > input, & > button, & > a {
+  & > input, & > button {
     border: none;
     @extend .cardtitlebar;
     /* Mirroring .pinline_box > div */
@@ -1628,8 +1628,10 @@ div.button_inner {
       @include gradient_horz_highlight($Button_Clicked, $Button_Clicked_Highlight);
     }
   }
-  & > a {
-    border-top: 1px solid black;
-    border-bottom: 1px solid black;
+  & > a {  
+    padding: 1px 3px;
+    display: inline-block;
+    text-decoration: none;
+    @include elliptical_corners(4px, 8px);
   }
 }
