@@ -15,9 +15,12 @@
   <%= form_for(@card, :url => process_move_card_path(@card)) do |f| %>
     <%= f.collection_select :cardset_id, valid_cardsets, :id, :name %>
     <%= hidden_field_tag "special", "move" %>
+    <br/>
     <div class="button_outer"><div class="button_inner">
       <%= f.submit "Move card" %>
+    </div></div>
     <div class="button_outer"><div class="button_inner">
-    <%= link_to "Cancel", :back %>
+      <%= link_to "Cancel", :back, { class: "no_tooltip" } %>
+    </div></div>
   <% end %>
 <% end %>

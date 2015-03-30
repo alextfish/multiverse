@@ -1608,22 +1608,28 @@ $Button_Focus: #D7DDE2;
 $Button_Focus_Highlight: #E7EDF0;
 $Button_Clicked: $Artifact_DFC_Bar; 
 $Button_Clicked_Highlight:$Artifact_DFC_Bar_Highlight;
-div.button_inner > input, div.button_inner > button {
-  border: none;
-  @extend .cardtitlebar;
-  /* Mirroring .pinline_box > div */
-  @include elliptical_corners(4px, 8px);
-  padding: 3px 8px 2px 8px;
-  /* Mirroring .Artifact .cardtitlebar */
-  background-color: $ArtifactTitlebar; /* pre-M15: #B0C4C8; */
-  @include gradient_horz_highlight($ArtifactTitlebar, $ArtifactTitlebarHighlight);
-  
-  &:hover, &:focus {
-    background-color: $Button_Focus;
-    @include gradient_horz_highlight($Button_Focus, $Button_Focus_Highlight);
+div.button_inner {
+  & > input, & > button, & > a {
+    border: none;
+    @extend .cardtitlebar;
+    /* Mirroring .pinline_box > div */
+    @include elliptical_corners(4px, 8px);
+    padding: 3px 8px 2px 8px;
+    /* Mirroring .Artifact .cardtitlebar */
+    background-color: $ArtifactTitlebar; /* pre-M15: #B0C4C8; */
+    @include gradient_horz_highlight($ArtifactTitlebar, $ArtifactTitlebarHighlight);
+    
+    &:hover, &:focus {
+      background-color: $Button_Focus;
+      @include gradient_horz_highlight($Button_Focus, $Button_Focus_Highlight);
+    }
+    &:active {
+      background-color: $Button_Clicked; 
+      @include gradient_horz_highlight($Button_Clicked, $Button_Clicked_Highlight);
+    }
   }
-  &:active {
-    background-color: $Button_Clicked; 
-    @include gradient_horz_highlight($Button_Clicked, $Button_Clicked_Highlight);
+  & > a {
+    border-top: 1px solid black;
+    border-bottom: 1px solid black;
   }
 }
