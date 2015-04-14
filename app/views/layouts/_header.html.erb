@@ -1,6 +1,6 @@
 <header>
   <%= link_to_unless_current logo, root_path do
-    image_tag("multiverse_logo_big.png", :alt => "Multiverse", :class => "square")
+    image_tag("multiverse_logo_big.png", :alt => "Multiverse", :class => "logo")
   end %>
   <nav>
     <ul>
@@ -13,6 +13,7 @@
         </form>
         <% "end" %>
       </li>
+      <span class="break_if_mobile">
       <% if signed_in? %>
         <li class="subsequent"><%= link_to current_user.name, current_user %></li>
         <% if (decklist = current_user.active_decklist).blank? %>
@@ -23,6 +24,7 @@
       <% else %>
         <li class="subsequent"><%= link_to "Sign in", signin_path %></li>
       <% end %>
+      </span>
     </ul>
   </nav>
 </header>

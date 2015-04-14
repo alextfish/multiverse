@@ -13,7 +13,7 @@ $mq-mobile-landscape	: 640px !default;
   }
 }
 // Everything larger than a mobile
-@mixin desktop-only {
+@mixin not-mobile {
 	@media only screen and (min-width : $mq-mobile-landscape + 1) {
 		@content;
 	}
@@ -27,9 +27,18 @@ a > img:hover, a > img:active, a > img:focus { background-color: #fff; }
 .flash  { margin-left: 2px; width: 50%; }
 .error  { color: #600; background-color: #f99; border: 1px solid #600; }
 .notice { color: #00a; background-color: #bbf; border: 1px solid #00a; }
+@include mobile-only {
+  .flash {
+    width: 100%;
+  }
+  div.content > ul > li {
+    margin-top: 0.25em;
+    margin-bottom: 0.25em;
+  }
+}
 
-@include desktop-only {
-  div.content {
+@include not-mobile {
+  body > div.content {
     margin-left: 15px;
     margin-right: 15px;
   }
@@ -49,14 +58,6 @@ a > img:hover, a > img:active, a > img:focus { background-color: #fff; }
               margin-top: 0px; }
 .infobox p { margin: 2px; }
 
-.cardcell { vertical-align: top;
-            padding-top: 10px; }
-
-.card_controls_below { text-align: center; }
-/* .card_rotate_link { font-size: larger; }
-.card_edit_link { font-size: larger; }
-.expand_text_link { font-size: larger; } */
-.card_move_link, .card_delete_link { font-size: smaller; }
 
 .setviews { border: 1px solid #aaa;
             margin: 2px;
@@ -151,7 +152,9 @@ div.newfeatures { border: 1px solid black; margin: auto; text-align: center;
 .logdetails     { font-style: italic; }
 /* .cardhistory    { height: 500px; overflow: auto; } */
 
-.commentlist    { margin-right: 60px; margin-left: 20px; }
+@include not-mobile {
+  .commentlist    { margin-right: 60px; margin-left: 20px; }
+}
 .commentlist div.comment { border-bottom: 1px solid #888; 
                          margin-bottom: 4px; }
 li.recent_item div.comment { border-bottom: none;
@@ -173,9 +176,15 @@ li.recent_item { border-top: 1px solid black;
 
 form { display: inline; }
 
-textarea#comment_body { height: 8em; width: 500px; }
-
-.big_comment_form textarea#comment_body { height: 20em; width: 800px; }
+textarea#comment_body { 
+  height: 8em; width: 500px; 
+}
+.big_comment_form textarea#comment_body { 
+  height: 20em; width: 800px; 
+}
+@include mobile-only {
+  textarea#comment_body, .big_comment_form textarea#comment_body { width: 97%; }
+}
 
 .commentbody > p { margin-top: 0px; }
 
@@ -203,16 +212,6 @@ textarea#details_page_body { width: 90%; height: 30em; }
 div.config_section { margin: 4px; }
 div.config_subsection { margin-left: 24px; }
 input#cardset_description { width: 30em; }
-form.search_form input { width: 20em; }
-form.search_form input#cardset_description { width: 20em; }
-form.search_form input[type="checkbox"] { 
-  width: auto; 
-  margin: 7px 3px 0 3px;
-}
-form.search_form input.restricted { 
-  width: 18em; 
-  float: right;
-}
 
 div.user_selectors td { text-align:center; vertical-align: top; }
 div.user_selectors select { width: 150px; height: 200px; }
@@ -232,6 +231,33 @@ margin-bottom: 10px; }
 table.skeleton_generate input { width: 3em; }
 
 /***** Card display *****/
+
+.cardcell { vertical-align: top;
+            padding-top: 10px; }
+
+@include not-mobile {
+  .fixed_outer {
+    position: absolute;
+  }
+  .fixed_inner {
+    position: fixed;
+  }
+  .card_controls_below { 
+    text-align: center; 
+  }
+  .card_move_link, .card_delete_link { 
+    font-size: smaller; 
+  }
+}
+@include mobile-only {
+  table.grouping, table.grouping > tr, table.grouping > tbody > tr, td.cardcell, td.card_comments {
+    display: block;
+  }
+}
+
+/* .card_rotate_link { font-size: larger; }
+.card_edit_link { font-size: larger; }
+.expand_text_link { font-size: larger; } */
 
 div#mockup { 
   padding-top: 4px; 
@@ -276,6 +302,7 @@ div#mockup {
   color: #999;
 }
 
+
 /***** Cardlist *****/
 
 .controls { 
@@ -304,16 +331,51 @@ th.manacost {
 
 /***** Search *****/
 /* Advanced search */
+form.search_form input { width: 20em; }
+form.search_form input#cardset_description { width: 20em; }
+form.search_form input[type="checkbox"] { 
+  width: auto; 
+  margin: 7px 3px 0 3px;
+}
+form.search_form input.restricted { 
+  width: 18em; 
+  float: right;
+}
 td.search_cell {
   vertical-align: top;
+  border: 1px solid #888;
 }
 td.search_cell div.search_submit {
   text-align: center;
+}
+table.advanced_search {
+  border: 1px solid #888;
+}
+table.search_fields td:first-child {
+  width: 8em;
+}
+@include mobile-only {
+  table.advanced_search {
+    border: none;
+  }
+  table.advanced_search, table.advanced_search > tr, td.search_cell {
+    display: block;
+  }
+  td.search_cell {
+    padding-bottom: 1em;
+    border-bottom: 1px solid #888;
+  }
+  form.search_form input { width: 15em; }
+  form.search_form input#cardset_description { width: 15em; }
+  form.search_form input.restricted { width: 13em; }
 }
 
 /* Results */
 td.textcell, td.costcell {
   padding-left: 4px;
+}
+td.ptcell {
+  text-align: center;
 }
 strong.highlight {
   background-color: yellow;
@@ -378,12 +440,18 @@ table.decklist .decklist_card {
 /**** Nav ****/
 /* Navigation */
 
+header {
+  margin-bottom: 1em;
+}
 header nav {
   float: right;
 }
 @include mobile-only {
   header nav {
     float: none;
+  }
+  input#q {
+    width: 8em;
   }
 }
 
@@ -425,6 +493,14 @@ nav ul li.subsequent:before
   content: "| ";
   padding: 0px;
   margin: 0px;
+}
+@include mobile-only {
+  span.break_if_mobile {
+    display: block;
+  }
+  nav ul span.break_if_mobile li:first-child:before {
+    content: "";
+  }
 }
 
 nav a {
@@ -563,4 +639,13 @@ textarea {
 #error_explanation ul li {
   font-size: 12px;
   list-style: square;
+}
+
+img.logo {
+  width: 229px;
+}
+@include mobile-only {
+  img.logo {
+    width: 100%;
+  }
 }

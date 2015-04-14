@@ -12,6 +12,9 @@ class UsersController < ApplicationController
       ensure_captcha_matches
     end
   end
+  before_filter do
+    @mobile_friendly = true
+  end
 
   # GET /users
   # GET /users.xml

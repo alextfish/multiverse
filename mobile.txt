@@ -41,3 +41,9 @@ div#featuredbox{
     background: url(highres_background.jpg) center center no-repeat; /* high res image that's double the size/ resolution of the original's */
   }
 }
+
+View that should just work: 
+Card move
+Comment edit
+
+Notable views needing mobile enhancement: 

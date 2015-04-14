@@ -13,6 +13,9 @@
     <% if request.fullpath == "/" %>
       <meta name="google-site-verification" content="Id1E1rEbQHoKR5dpkTdfno09vXYBXzJgjbEUQ0hdSlE" />
     <% end %>
+    <% if @mobile_friendly %>
+      <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <% end %>
   </head>
   <% end %>
   <body>

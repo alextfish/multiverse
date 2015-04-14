@@ -45,7 +45,7 @@ class Comment < ActiveRecord::Base
   def check_links
     # "+?" = not greedy
     Rails.logger.info "Checking body for bad links"
-    body.gsub!(/\(\((.+?)\)\)/) {|link_contents| fix_internal_link(link_contents, $1)}
+    body.gsub!(/\(\(([^(].*?)\)\)/) {|link_contents| fix_internal_link(link_contents, $1)}
     ############# COMMENTED OUT: the is_printed_card_name regexp
     ############# causes errors on production server!
     # body.gsub!(/\[\[\[(.+?)\]\]\]/) {|link_contents| fix_external_link(link_contents, $1)}

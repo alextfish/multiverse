@@ -41,6 +41,7 @@ class CardsetsController < ApplicationController
   # GET /cardsets
   # GET /cardsets.xml
   def index
+    @mobile_friendly = true
     @cardsets = Cardset.all
     globalState = GlobalState.instance
     if params.has_key?(:nocache) || stale?(:last_modified => globalState.lastedit, :etag => "recent_changes")

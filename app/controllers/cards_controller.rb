@@ -96,6 +96,7 @@ class CardsController < ApplicationController
   # GET /cards/1
   # GET /cards/1.xml
   def show
+    @mobile_friendly = true
     @card2 = @card.link
     @comment = Comment.new(:card => @card, :cardset => @card.cardset)
 
@@ -135,6 +136,7 @@ class CardsController < ApplicationController
   end
 
   def move
+    @mobile_friendly = true
   end
 
   # GET /cards/1/edit

@@ -109,6 +109,7 @@ class CommentsController < ApplicationController
   end
   
   def edit
+    @mobile_friendly = true
     Rails.logger.info "Editing comment #{@comment.id}: body is #{@comment.body} (#{@comment.body.length} chars)"
   end
 

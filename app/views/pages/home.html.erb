@@ -1,8 +1,8 @@
-<p>
+<p class="text">
   Multiverse is a database for custom <b>Magic: the Gathering</b> card sets.
   <br><%= link_to "Find out more", about_path %>
 </p>
-<p>
+<p class="text">
  <% cache("site_stats", :expires_in => 12.hours) do %>
   <% numsets = Cardset.count
      num_to_show = [numsets, 12].min 
@@ -31,10 +31,10 @@
 
 <%= render :partial => "shared/new_features", :locals => { :news_type => :link } %>
 
-<p>
+<p class="text">
   You might like to <%= link_to "see a random selection", random_path %> of all the cards on Multiverse.
 </p>
-<p>
+<p class="text">
   There are several community cardsets that are open for anyone to create cards into:
   <ul>
     <li><b><a href="http://www.magicmultiverse.net/cardsets/2">Testing</a></b> for creating test cards and playing around
@@ -46,7 +46,7 @@
     <li><b><a href="http://www.magicmultiverse.net/cardsets/474">Conversation</a></b> is for discussion threads about general topics related to Magic or design rather than a specific user-created card.
   </ul>
 </p>
-<p>
+<p class="text">
   <% if signed_in? %>
     Or if none of those suit your needs, you can <%= link_to "create your own cardset now", new_cardset_path %>!
   <% else %>

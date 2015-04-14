@@ -1,6 +1,7 @@
 class SearchesController < ApplicationController
 
   def advanced
+    @mobile_friendly = true
     @title = "Search"
     if params[:search_cardset]
       params[:restrict_cardset_check_card] = true
@@ -36,6 +37,7 @@ class SearchesController < ApplicationController
     end
     @query_hash = inputs.clone
     hide_type_string = false
+    conditions_extra = nil
     case @object_type
       when "cardset"
         # Fields are all valid SQL fields: just use multi_search
@@ -47,8 +49,8 @@ class SearchesController < ApplicationController
         # Fields are all valid SQL fields: just use multi_search
         valid_keys = ["body", "user_id", "cardset_id"]
       when "card"
-        # Field "types" needs processing, and the underscores need removing
-        valid_keys = ["name", "rulestext", "flavourtext", "user_id", "cardset_id"]
+        # Fields "types" and "frame2" need processing, and the underscores need removing
+        valid_keys = ["name", "rulestext", "flavourtext", "user_id", "cardset_id", "frame", "power", "toughness"]
         if !inputs["types"].blank?
           # Assemble a string for the full type line in DB-independent fashion
           type_string = db_concat(:"cards.supertype", " ", :"cards.cardtype", " - ", :"cards.subtype")
@@ -59,6 +61,11 @@ class SearchesController < ApplicationController
         end
         # Now remove "types" from the inputs (as it'll be present-but-blank if it wasn't specified)
         inputs.delete("types")
+        if !inputs["frame2"].blank?
+          # A second frame input. Note an extra frame term.
+          conditions_extra = ["frame", inputs["frame2"], false]
+        end
+        inputs.delete("frame2")
         
       else 
         # Unknown object search type
@@ -68,9 +75,11 @@ class SearchesController < ApplicationController
     if !(inputs.keys - valid_keys).empty?
       raise "Unexpected #{@object_type} search field found. Fields were: #{inputs.keys.join(", ")}"
     end
+    # conditions is an array like:
+    # [[field, value, exact], [field, value, exact]...]
     conditions = inputs.map do |key, val| 
       val.blank? ? nil : [key, val, false]
-    end.compact
+    end.append(conditions_extra).compact
     object_symbol = (@object_type + "s").to_sym # because helpers aren't available here
     @to_show[object_symbol] = multi_search(object_symbol, conditions)
     @query_conditions = inputs
@@ -196,7 +205,7 @@ class SearchesController < ApplicationController
                     permission_to? :view, card.cardset
                   end
         when :details_pages
-          out = DetailsPage.includes([ :card, { :cardset => :configuration }]).where( condition ).select do |dp|
+          out = DetailsPage.includes([ { :cardset => :configuration }]).where( condition ).select do |dp|
                     permission_to? :view, dp.cardset
                   end
         when :comments

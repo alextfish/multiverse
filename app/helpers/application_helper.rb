@@ -1,6 +1,6 @@
 module ApplicationHelper
   def logo
-    image_tag("multiverse_logo.png", :alt => "Multiverse", :class => "square")
+    image_tag("multiverse_logo_big.png", :alt => "Multiverse", :class => "logo")
   end
 
   def cardset_links(cardsets)

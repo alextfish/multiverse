@@ -95,6 +95,8 @@
       <th class="manacost">Cost</th>
       <th class="card_text">Card text</th>
       <% if show_flavourtext %><th>Flavour text</th><% end %>
+      <th class="card_power">Pow</th>
+      <th class="card_toughness">Tgh</th>
     </tr>
     <% cards.each do |card| %>
       <tr><td><b><%= link_to_card card, highlight(card.individual_name, name_highlight) %></b></td>
@@ -105,6 +107,8 @@
       <% if show_flavourtext %>
         <td class="textcell"><%= highlight(format_card_text(card, :flavourtext), flavour_highlight) %></td>
       <% end %>
+      <td class="ptcell"><%= card.power %></td>
+      <td class="ptcell"><%= card.toughness %></td>
     <% end %>
   </table>
 <% end %>

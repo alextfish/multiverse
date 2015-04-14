@@ -2,10 +2,24 @@
 <p>Enter one or more strings to search for:</p>
   <% searchable_text_fields = {
       "cardset"      => ["name", "description"],
-      "card"         => ["name", "types", "rules_text", "flavour_text"],
+      "card"         => ["name", "types", "rules_text", "flavour_text", "power", "toughness"],
       "details_page" => ["title", "body"],
       "comment"      => ["body"]
     } 
+    frames = [
+      "White", "Blue", "Black", "Red", "Green",
+      # "White-Blue", "White-Black", "White-Red", "White-Green", "Blue-Black", "Blue-Red", "Blue-Green", "Black-Red", "Black-Green", "Red-Green",
+      "Colourless", "Multicolour", "Hybrid",
+      "Artifact", "Land", "Planeswalker",
+      "Plane", "Scheme", # "Vanguard",
+    ]
+    dropdowns = {
+      "card" => {
+        "frame" => frames.zip(frames.map {
+            |s| s.downcase.gsub /[^a-z]/, ""
+          })
+      }
+    }
     restrictions = {
       "cardset"      => ["user"],
       "card"         => ["user", "cardset"],
@@ -53,7 +67,7 @@
   // update checkboxes on document load to handle things like back button causing visible content to be hidden
   document.observe("dom:loaded", handleAllRestricts);
 </script>
-<table border="1px solid #888">
+<table class="advanced_search">
   <% text_fields_order.each_slice(2) do |these_fields| %>
   <tr>
     <% these_fields.each do |object_type| %>
@@ -61,7 +75,7 @@
       <%= form_tag("/search", :class => "search_form", :method => "get") do %>
         <h3><%= object_type.humanize.pluralize %></h3>
         <% object_field_name = object_type.underscore %>
-        <table>
+        <table class="search_fields">
           <% searchable_text_fields[object_type].each do |field| %>
             <% field_name = field.delete("_") %>
             <% input_id = "#{object_field_name}[#{field_name}]" %>
@@ -73,13 +87,21 @@
                 params[object_field_name.to_sym][field_name.to_sym] %>
             </td></tr>
           <% end %>
+          <% dropdowns[object_type] && dropdowns[object_type].each do |field_name, values| %>
+            <% input_id = "#{object_field_name}[#{field_name}]" %>
+            <tr><td>
+              <%= label_tag input_id, field_name.humanize + ":" %>
+            </td><td>
+              <%= select object_field_name, field_name, options_for_select(values), {include_blank: true}, {class: "search_dropdown"}  %>
+            </td></tr>
+          <% end %>
           <% if restrictions[object_type].include? "user" %>
             <% restrict_s = "restrict_user_check_#{object_field_name}" 
             visible = params[restrict_s.to_sym] || false
             %>
             <tr><td><%= label_tag restrict_s, "Restrict by user:" %>
             <td><%= check_box_tag restrict_s, "yes", false, :onclick => "handleSearchRestrict(this)", :class => "restriction" %><span id="restrict_user_<%= object_field_name %>" <% if !visible %>style="visibility: hidden;"<% end %>>
-              <%= collection_select "#{object_field_name}", :user_id, valid_users, :id, :name, :class => "restricted", :disabled => "true", :selected => default_user  %>
+              <%= collection_select object_field_name, :user_id, valid_users, :id, :name, :class => "restricted", :disabled => "true", :selected => default_user  %>
             </span>
           <% end %>
           <% if restrictions[object_type].include? "cardset" %>

@@ -1,6 +1,7 @@
 <% @title = @card.printable_name %>
 <% new_comment = @comment # store, because we`ll be overwriting "@comment" to show previous comments %>
 
+     <%= render "cardsets/setviews" %>
 
 <% tab_display = {}
   if @card.cardset.configuration.frame == "image" && !@card.image_url.blank?
@@ -14,7 +15,7 @@
   show_this_tab = " active-tab-body"
   # this lot isn't necessary if fabtabulous works, but in no-JS browsers it lets them display
 %>
-<table border="0" itemscope itemtype="http://schema.org/ItemPage"> <!-- grouping table -->
+<table class="grouping" border="0" itemscope itemtype="http://schema.org/ItemPage"> 
  <tr>
   <td class="cardcell" style="position: relative; height: 400px;"> <!-- card -->
    <div id="card_fixed_wrapper_outer"><div id="card_fixed_wrapper_inner">
@@ -79,9 +80,8 @@
      </div>
   </td> <!-- end of card -->
 
-  <td> <!-- controls, comments etc -->
+  <td class="card_comments"> <!-- controls, comments etc -->
      <% @cardset = Cardset.find(@card.cardset_id) %>
-     <%= render "cardsets/setviews" %>
 
      <% if @card.cardset.configuration.card_show_code %>
        <p><b>Code:</b>
@@ -132,8 +132,8 @@ function resizeCardWrapper() {
     var outer_td = middle_div.parentNode;
     var myWidth = inner_div.getWidth();
     outer_td.style.width = myWidth + "px";
-    middle_div.style.position = "absolute";
-    inner_div.style.position = "fixed";
+    middle_div.addClassName("fixed_outer");
+    inner_div.addClassName("fixed_inner");
   });
 }
 // -- And the associated onload trigger
