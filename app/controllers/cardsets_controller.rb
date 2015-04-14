@@ -97,6 +97,7 @@ class CardsetsController < ApplicationController
 
   # GET /cardsets/1/recent
   def recent
+    @mobile_friendly = true
     fresh_when :last_modified => @cardset.last_edit_log.updated_at, :etag => "cardset_#{@cardset.id}_recent"
   end
 
