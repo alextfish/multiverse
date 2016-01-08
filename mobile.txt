@@ -47,3 +47,6 @@ Card move
 Comment edit
 
 Notable views needing mobile enhancement: 
+Cardset front page
+Visual spoiler (?)
+Cardlist (??)

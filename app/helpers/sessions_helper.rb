@@ -134,6 +134,7 @@ module SessionsHelper
   
   def redirect_back(noticehash)
     Rails.logger.info "Returning to previous - #{noticehash[:notice]}"
+    flash[:error] = noticehash[:notice] # Redirect back doesn't have a parameter to display the flash
     if request.env["HTTP_REFERER"]
       redirect_to :back
     else

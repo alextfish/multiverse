@@ -218,7 +218,7 @@ class Card < ActiveRecord::Base
   mana_symbols += COLOUR_LETTERS.map {|s| "{#{s}/2}" }
   mana_symbols += COLOUR_LETTERS.map {|s| "{#{s}/3}" }
   mana_symbols += COLOUR_LETTERS.map {|s| "{P#{s}}" }
-  mana_symbols += ( COLOUR_LETTERS + %w{1000000 100 10 11 12 13 14 15 16 17 18 19 20 -3 1 2 3 4 5 6 7 8 9 0 X Y T Q S C ?} ) .map {|s| "{#{s}}" }
+  mana_symbols += ( COLOUR_LETTERS + %w{1000000 100 10 11 12 13 14 15 16 17 18 19 20 -3 1 2 3 4 5 6 7 8 9 0 X Y T Q S C CHAOS ?} ) .map {|s| "{#{s}}" }
   MANA_SYMBOLS = mana_symbols
 
   def self.mana_symbols_extensive

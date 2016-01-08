@@ -23,7 +23,7 @@ Fabtabs.prototype = {
       this.onActivate = null;
     }
     this.menu = $A(this.element.getElementsByTagName('a'));
-    this.show($(initial_tab));    // this.getInitialTab());
+    this.show($(initial_tab) || this.menu.first);    // this.getInitialTab());
     this.menu.each(this.setupTab.bind(this));
   },
   setupTab : function(elm) {

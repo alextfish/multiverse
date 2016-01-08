@@ -1,7 +1,9 @@
 module CardsHelper
 
   FORMAT_SUBSTITUTIONS = {
-    /(^|[:.]\s+)\bUEOT\b/i => "Until end of turn",
+    /^UEOT\b/i => "Until end of turn",
+    /(?<=[:.][)](\s))\s*\bUEOT\b/i => "\1Until end of turn",   # Positive Lookbehind for [:.][)]\s+ , obeying "lookbehind restrictions"
+    /(?<=[:.](\s))\s*\bUEOT\b/i => "\1Until end of turn",   # Positive Lookbehind for [:.]\s+ , obeying lookbehind restrictions
     /\bUEOT\b/i => "until end of turn",
     /\bEOT\b/i => "end of turn",
     /\bETBs\b/ => "enters the battlefield",

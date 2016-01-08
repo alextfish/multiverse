@@ -43,6 +43,12 @@
     </tr>
     <tr>
       <td>
+        <% if !signed_in? %>
+          <div class="field">
+            <%= render :partial => "shared/captcha_field" %>
+            <br/>(<%= link_to "Signed-in", signin_path %> users don't get captchas)
+          </div>
+        <% end %>
         <div class="button_outer"><div class="button_inner">
           <%= f.submit %>
         </div>

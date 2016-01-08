@@ -148,7 +148,7 @@ function update_frame(card_id) {
     if (num_colours > 0 && cardtype.search(/Artifact/) >- 1) {
       outer += "Coloured_Artifact ";
     }
-    if (isPlaneswalker()) {
+    if (isPlaneswalker(this_card)) {
       outer += "Planeswalker ";
     }
     if (isToken()) {
@@ -329,16 +329,15 @@ function updateFrameAndMultipart(){
   update_frame("card");
  
   // Recalculate trad-frame special classes (token, planeswalker)
-  
-  if (isPlaneswalker()) {
-    $$(".card").each(function(card) {
+  // Individual half-cards may or may not be planeswalkers...
+  $$(".card").each(function(card) {
+    if (isPlaneswalker(card)) {
       card.addClassName("Planeswalker");
-    });
-  } else {
-    $$(".card").each(function(card) {
+    } else {
       card.removeClassName("Planeswalker");
-    });
-  };
+    }
+  });
+  // ...but both halves of a multipart card gain or lose tokenness together
   if (isToken()) {
     $$(".card").each(function(card) {
       card.addClassName("token");
@@ -350,10 +349,10 @@ function updateFrameAndMultipart(){
   };
 }
 
-function isPlaneswalker() {
+function isPlaneswalker(card) {
   // Only applies to card edit form
   var new_frame = $("card_structure_display").value;
-  var cardtype = $("card").select(".type_field.cardtype")[0].value;
+  var cardtype = card.select(".type_field.cardtype")[0].value;
   return (new_frame == "Planeswalker" || cardtype.search(/Planeswalker/)>-1);
 }
 function isToken() {

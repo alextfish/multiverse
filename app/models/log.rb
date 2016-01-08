@@ -19,7 +19,7 @@
 class Log < ActiveRecord::Base
   belongs_to :cardset
   belongs_to :user
-  HIGHEST_LOG_KIND = 23
+  HIGHEST_LOG_KIND = 24
   def Log.HIGHEST_LOG_KIND
     HIGHEST_LOG_KIND
   end
@@ -30,7 +30,7 @@ class Log < ActiveRecord::Base
     case sym
       when :cardset_create then           1
       when :card_create then              2
-      when :card_edit then                3
+      when :card_edit then                3 # text: edit comment
       when :comment_card then             4
       when :details_page_create then      5
       when :details_page_edit then        6
@@ -38,19 +38,20 @@ class Log < ActiveRecord::Base
       when :comment_cardset then          8
       when :cardset_options then          9
       when :cardset_delete then          10
-      when :card_delete then             11
+      when :card_delete then             11  # text: card name
       when :details_page_delete then     12
       when :comment_delete then          13
       when :mechanic_create then         14
       when :mechanic_edit then           15
       when :mechanic_delete then         16
-      when :cardset_import then          17
+      when :cardset_import then          17  # text: some statistics
       when :comment_edit then            18
       when :skeleton_generate then       19
       when :skeleton_edit then           20
-      when :card_move_out then           21
-      when :card_move_in then            22
+      when :card_move_out then           21  # text: new cardset name
+      when :card_move_in then            22  # text: old cardset name
       when :card_create_and_comment then 23
+      when :card_activate then           24  # text: "activated"/"deactivated"
       # when added new log types, update the definition of HIGHEST_LOG_KIND above
       else
         raise "Unknown log kind specified: #{sym}"
@@ -120,6 +121,8 @@ class Log < ActiveRecord::Base
         specific ? ["moved the card ", " from #{self.cardset ? self.cardset.name : "a cardset"} into #{self.text}"] : "moved a card out"
       when Log.kind(:card_move_in)
         specific ? ["moved the card ", " from #{self.text} into #{self.cardset ? self.cardset.name : "a cardset"}"] : "moved a card in"
+      when Log.kind(:card_activate)
+        specific ? "#{self.text} cards in " : "#{self.text} cards"
       else
         raise "Unknown log kind #{self.kind} found in log #{self.id}"
     end
@@ -155,7 +158,7 @@ class Log < ActiveRecord::Base
     # e.g. for the log for creating a card that was later deleted
     case self.kind
       # cardsets
-      when Log.kind(:cardset_create), Log.kind(:cardset_options), Log.kind(:cardset_import)
+      when Log.kind(:cardset_create), Log.kind(:cardset_options), Log.kind(:cardset_import), Log.kind(:card_activate)
         cardset = Cardset.find_by_id(self.object_id)
         return cardset
       when Log.kind(:cardset_delete)

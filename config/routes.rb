@@ -45,6 +45,7 @@ Multiverse::Application.routes.draw do
       get 'todo', 'booster', 'comments'
       get 'skeleton'
       post 'import_data', 'generate_skeleton'
+      post 'activate'
     end
   end
 

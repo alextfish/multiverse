@@ -203,6 +203,7 @@ class CardsController < ApplicationController
         # Log the creation before the comment
         log = @cardset.log :kind=> :card_create_and_comment, :user=>current_user, :object_id=>@card.id
         comment = @card.comments.build(:user => current_user, :body => params[:initial_comment])
+        comment.cardset = @cardset # fixes C42123
         comment.save!
         # Store a crosslink from the create_and_comment log to the comment ID
         log.text = comment.id
@@ -275,6 +276,7 @@ class CardsController < ApplicationController
         @card2.save
       end
 
+      # Expire caches for *both* cardsets
       @cardset = @cardset1
       expire_all_cardset_caches
       @cardset = @cardset2

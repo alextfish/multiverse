@@ -3,6 +3,7 @@
    "if frame_links is not nil we also require frames_link_text, an array of [letter, descriptive text] pairs"
 %>
 
+<p class="nonprinting">
 <% frame_toggle_letters = Card.frame_code_letters.select {|l| present_frame_letters.include?(l)} %>
 <% if frame_toggle_letters.any? %>
  <% if frame_links.nil? %>
@@ -26,3 +27,4 @@
   <% Card.rarity_letters.select {|l| present_rarity_letters.include?(l)}.each do |letter| %>
     <span class="rarity_<%= letter %>_toggle skeleton_letter_toggle code_shown" onclick="toggle_rarity_letter('<%= letter %>')"><%= letter %></span>
   <% end %>
+</p>

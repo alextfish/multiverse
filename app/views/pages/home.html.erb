@@ -9,10 +9,10 @@
      sets_to_show = select_random(num_to_show, Cardset.all)%>
   There are <%= link_to "#{numsets} cardsets", cardsets_path %> in Multiverse right now<% if numsets > 0 %>, including:
     <ul>
-    <% sets_to_show.each do |cardset| %>
+    <% sets_to_show.each do |cardset| %><% "fixes C24212" %>
       <% set_viewable = permission_to? :view, cardset %>
-      <li><b><%= link_to cardset.name, cardset %></b> by <%= link_to cardset.user.name, cardset.user %>
       <% if set_viewable %>
+        <li><b><%= link_to cardset.name, cardset %></b> by <%= link_to cardset.user.name, cardset.user %>
         (<%= cardset.cards.nonsecondary.count %> cards,
          <%= link_to "last activity", recent_cardset_path(cardset) %> 
          <% if !(action = cardset.recent_action).nil? %>

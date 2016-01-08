@@ -68,7 +68,6 @@
     <% end %>
   </div>
   <% cache(:action => "visualspoiler", :iterator => @cardset.memcache_iterator, :action_suffix => "frame_buttons") do %>
-  <p class="nonprinting">
     <% present_rarity_letters = cards_to_show.map &:rarity_letter
        if showing_all
          frame_links = nil
@@ -85,7 +84,6 @@
        end
     %>
     <%= render :partial => "card_category_buttons", :locals => { :present_frame_letters => card_frame_letters, :present_rarity_letters => present_rarity_letters, :frame_links => frame_links, :frames_link_text => frames_link_text } %>
-  </p>
  
   <% end %>
   <span class="nonprinting"><%= will_paginate cards_to_show, :params => {:section => params[:section]} %></span>

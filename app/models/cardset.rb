@@ -254,6 +254,27 @@ class Cardset < ActiveRecord::Base
     /(?:>[(]?)([#{rarity_initials}])([A-Z])([0-9][0-9])/
   end
   
+  def build_name_and_code_lookup_table
+    cardset_cardnames_and_codes = []
+    cardset_cards_from_name_or_code = {}
+    self.cards.each do |card|
+      if card.name
+        cardset_cardnames_and_codes << card.name
+        cardset_cards_from_name_or_code[card.name] = card
+        if card.split? && card.primary? && !card.link.name.blank?
+          # Allow links to "Fire // Ice" as well as "Ice"
+          cardset_cardnames_and_codes << card.printable_name
+          cardset_cards_from_name_or_code[card.printable_name] = card
+        end
+      end
+      if card.code
+        cardset_cardnames_and_codes << card.code
+        cardset_cards_from_name_or_code[card.code] = card
+      end
+    end
+    return [cardset_cardnames_and_codes, cardset_cards_from_name_or_code]
+  end
+  
   def get_skeleton_row(code)
     if !skeleton
       return nil
@@ -267,6 +288,19 @@ class Cardset < ActiveRecord::Base
     line1 = skeleton.body.lines.find {|line| line =~ /^[|](.*[|])+/ } || ""    # first line with bars
     line2 = skeleton.body.lines.find {|line| line =~ /^[|]([:-]*[|])+/ } || "" # first line with bars separated only by colons and dashes
     line1 + line2
+  end
+  def get_skeleton_cards
+    code_regexp = /\(\(\(-([^)]*)\)\)\)/
+    skeleton_card_codes = skeleton.body.lines.map { |line| 
+      matches = line.match(code_regexp)
+      matches && matches[1]
+    }
+    cardnames_and_codes, cards_from_name_or_code = build_name_and_code_lookup_table
+    skeleton_cards = skeleton_card_codes.select {|code|
+      cardnames_and_codes.include? code
+    }.map {|code| 
+      cards_from_name_or_code[code]
+    }
   end
   
   def generate_skeleton(params)

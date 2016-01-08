@@ -98,7 +98,7 @@ module ApplicationHelper
       my_symbol.reverse!
     end
     my_symbol.gsub!(/S/, "snow")
-    my_symbol.gsub!(/C/, "chaos")
+    my_symbol.gsub!(/CHAOS/, "chaos")
     my_symbol.gsub!(/T/, "tap")
     my_symbol.gsub!(/Q/, "untap")
     my_symbol.gsub!(/\?/, "question")
@@ -202,23 +202,7 @@ module ApplicationHelper
     # If there are any double-paren links
     if cardset && any_internal_links
       # Build lookup tables so we don't need to do lots of cards.find_by_name
-      cardset_cardnames_and_codes = []
-      cardset_cards_from_name_or_code = {}
-      cardset.cards.each do |card|
-        if card.name
-          cardset_cardnames_and_codes << card.name
-          cardset_cards_from_name_or_code[card.name] = card
-          if card.split? && card.primary? && !card.link.name.blank?
-            # Allow links to "Fire // Ice" as well as "Ice"
-            cardset_cardnames_and_codes << card.printable_name
-            cardset_cards_from_name_or_code[card.printable_name] = card
-          end
-        end
-        if card.code
-          cardset_cardnames_and_codes << card.code
-          cardset_cards_from_name_or_code[card.code] = card
-        end
-      end
+      cardset_cardnames_and_codes, cardset_cards_from_name_or_code = cardset.build_name_and_code_lookup_table
     end
 
     text_out = text_in

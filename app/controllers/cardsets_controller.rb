@@ -9,6 +9,9 @@ class CardsetsController < ApplicationController
   before_filter :only => [:new, :create] do
     require_any_login
   end
+  before_filter :only => [:activate] do
+    require_permission_to_edit(@cardset)
+  end
   before_filter :only => [:edit, :update, :destroy, :todo, :generate_skeleton] do
     require_permission_to_admin(@cardset)
   end
@@ -17,7 +20,7 @@ class CardsetsController < ApplicationController
   end
   before_filter :except => [:index] { nocache_param }
   before_filter :only => [:index] { nocache_param_index }
-  after_filter :only => [:create, :update, :destroy, :import_data, :generate_skeleton] do
+  after_filter :only => [:create, :update, :destroy, :import_data, :generate_skeleton, :activate] do
     expire_cardset_recentchanges_line_cache
   end
 
@@ -32,19 +35,13 @@ class CardsetsController < ApplicationController
     end
   end
 
-  # All static views
-  # caches_action :visualspoiler, :layout => false
-  # caches_action :cardlist, :layout => false
-  # caches_action :skeleton, :layout => false
-  # caches_action :show, :layout => false
-
   # GET /cardsets
   # GET /cardsets.xml
   def index
     @mobile_friendly = true
     @cardsets = Cardset.all
     globalState = GlobalState.instance
-    if params.has_key?(:nocache) || stale?(:last_modified => globalState.lastedit, :etag => "recent_changes")
+    if params.has_key?(:nocache) || !flash.empty? || stale?(:last_modified => globalState.lastedit, :etag => "recent_changes")
       respond_to do |format|
         format.html # index.html.erb
         format.xml  { render :xml => @cardsets }
@@ -55,7 +52,7 @@ class CardsetsController < ApplicationController
   # GET /cardsets/list.json
   def list
     @cardsets = Cardset.includes([:configuration, :user]).where("configurations.visibility in ('anyone', 'signedin')").references(:configuration)
-    if stale?(:last_modified => @cardsets.first.configuration.updated_at, :etag => "cardsets_list_json")
+    if params.has_key?(:nocache) || !flash.empty? || stale?(:last_modified => @cardsets.first.configuration.updated_at, :etag => "cardsets_list_json")
       respond_to do |format|
         format.json { render json: @cardsets, each_serializer: CardsetSummarySerializer, root: false }
       end
@@ -65,7 +62,7 @@ class CardsetsController < ApplicationController
   # GET /cardsets/1
   # GET /cardsets/1.xml
   def show
-    if stale?(:last_modified => @cardset.last_edit_log.updated_at, :etag => @cardset)
+    if params.has_key?(:nocache) || !flash.empty? || stale?(:last_modified => @cardset.last_edit_log.updated_at, :etag => @cardset)
       respond_to do |format|
         format.html # show.html.erb
         format.xml  { render :xml => @cardset }
@@ -77,7 +74,7 @@ class CardsetsController < ApplicationController
   # GET /cardsets/1/cardlist
   # GET /cardsets/1/cardlist.xml
   def cardlist
-    if params.has_key?(:nocache) || stale?(:last_modified => @cardset.last_edit_log.updated_at, :etag => "cardset_#{@cardset.id}_cardlist")
+    if params.has_key?(:nocache) || !flash.empty? || stale?(:last_modified => @cardset.last_edit_log.updated_at, :etag => "cardset_#{@cardset.id}_cardlist")
       respond_to do |format|
         format.html # cardlist.html.erb
         format.xml  { render :xml => @cardset.cards }   # ??
@@ -89,7 +86,9 @@ class CardsetsController < ApplicationController
 
   # GET /cardsets/1/visualspoiler
   def visualspoiler
-    fresh_when :last_modified => @cardset.last_edit_log.updated_at, :etag => "cardset_#{@cardset.id}_visualspoiler_p#{params[:page] || ""}_s#{params[:section] || ""}"
+    if params.has_key?(:nocache) || !flash.empty? || stale?(:last_modified => @cardset.last_edit_log.updated_at, :etag => "cardset_#{@cardset.id}_visualspoiler_p#{params[:page] || ""}_s#{params[:section] || ""}")
+      render
+    end
   end
 
   def wholevisualspoiler
@@ -98,7 +97,9 @@ class CardsetsController < ApplicationController
   # GET /cardsets/1/recent
   def recent
     @mobile_friendly = true
-    fresh_when :last_modified => @cardset.last_edit_log.updated_at, :etag => "cardset_#{@cardset.id}_recent"
+    if params.has_key?(:nocache) || !flash.empty? || stale?(:last_modified => @cardset.last_edit_log.updated_at, :etag => "cardset_#{@cardset.id}_recent")
+      render
+    end
   end
 
   # GET /cardsets/1/todo
@@ -108,7 +109,9 @@ class CardsetsController < ApplicationController
   # GET /cardsets/1/todo
   def skeleton
     @skeleton = @cardset.skeleton
-    fresh_when :last_modified => @cardset.last_edit_log.updated_at, :etag => "cardset_#{@cardset.id}_skeleton_rev20141003"
+    if params.has_key?(:nocache) || !flash.empty? || stale?(:last_modified => @cardset.last_edit_log.updated_at, :etag => "cardset_#{@cardset.id}_skeleton_rev20141003")
+      render
+    end
   end
 
   # GET /cardsets/1/import
@@ -165,6 +168,52 @@ class CardsetsController < ApplicationController
     else # there's currently only one way generate_skeleton can return false: if the user didn't specify any new fields
       flash[:error] = "No new skeleton rows generated"
       redirect_to skeleton_cardset_path(@cardset)
+    end
+  end
+
+  # POST /cardsets/1/activate
+  def activate
+    case params["mode"]
+      when "activate_all_skeleton"
+        @cardset.get_skeleton_cards.each &:activate_card
+        destination = skeleton_cardset_path(@cardset)
+        notice = "Activated all cards in skeleton"
+        action = "activated"
+      when "deactivate_nonskeleton"
+        nonskeleton_cards = @cardset.cards - @cardset.get_skeleton_cards
+        nonskeleton_cards.each &:deactivate_card
+        destination = skeleton_cardset_path(@cardset)
+        notice = "Deactivated all cards not in skeleton"
+        action = "deactivated"
+      when "activate_all"
+        @cardset.cards.each &:activate_card
+        destination = cardlist_cardset_path(@cardset)
+        notice = "Activated all cards"
+        action = "activated"
+      when "deactivate_all"
+        @cardset.cards.each &:deactivate_card
+        destination = cardlist_cardset_path(@cardset)
+        notice = "Deactivated all cards"
+        action = "deactivated"
+      else
+        redirect_to :back
+    end
+    @cardset.log :kind=>:card_activate, :user=>current_user, :object_id=>@cardset.id, :text=>action
+    expire_cardset_visualspoiler_cache
+    expire_cardset_cardlist_cache
+    redirect_to destination, :notice => notice
+  end
+  
+  def activate_card(card)
+    if !card.active
+      card.active = true
+      card.save!
+    end
+  end
+  def deactivate_card(card)
+    if card.active
+      card.active = false
+      card.save!
     end
   end
 

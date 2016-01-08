@@ -350,6 +350,19 @@
       <% if !present_frame_letters.blank? %>
         <%= render :partial => "card_category_buttons", :locals => { :present_frame_letters => present_frame_letters, :present_rarity_letters => present_rarity_letters, :frame_links => nil} %>
       <% end %>
+      <% if !@cardset.configuration.card_show_code %>
+        Note: Skeletons work most effectively if 
+      <%= link_to "the cardset is configured to use card codes", edit_cardset_path(@cardset) %>.
+      <% end %>
+      <% if @cardset.configuration.card_show_active %>
+        <div class="button_outer"><div class="button_inner">
+          <%= button_to "Mark all cards in skeleton as active", activate_cardset_path(@cardset), params: { mode: :activate_all_skeleton}, confirm: "Set active=true on all cards in skeleton?" %>
+        </div></div>
+        <div class="button_outer"><div class="button_inner">
+          <%= link_to "Mark all cards not in skeleton as inactive", activate_cardset_path(@cardset, mode: "deactivate_nonskeleton"), { rel: "nofollow", confirm: "Set active=false on all cards that aren't in the skeleton?" } %>
+        </div></div>
+      <% end %>
+      
       <% "add pipes to starts of skeleton lines that need them" %>
       <%= format_skeleton_table(format_all_markup(@skeleton.body.gsub(/^([^|]*[|].*)$/) { "|#{$&}" }, @cardset)) %>
     </div>
