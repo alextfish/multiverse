@@ -90,7 +90,7 @@ class CommentsController < ApplicationController
     if !permission_to?(:comment, @cardset)
       redirect_to :back, :error => @cardset.permission_message(:comment)
     else
-      @comment = Comment.new(params[:comment])
+      @comment = Comment.new(comment_creation_params)
       @comment.set_default_status!
 
       ok = @comment.save
@@ -120,7 +120,7 @@ class CommentsController < ApplicationController
     old_addr = @comment.addressed?
     old_hili = @comment.highlighted?
     
-    @comment.update_attributes(params[:comment])
+    @comment.update_attributes(comment_update_params)
     new_addr = @comment.addressed?
     new_hili = @comment.highlighted?
     
@@ -154,4 +154,14 @@ class CommentsController < ApplicationController
 
     redirect_to parent_view(@comment)
   end
+  
+  private
+    # Rails 4 definition of accessible params
+    def comment_creation_params
+      params.require(:comment).permit(:cardset_id, :card_id, :user_id, :user_name, :posttime, :body, :status)
+    end
+    def comment_update_params
+      params.require(:comment).permit(:body, :status)
+    end
+    
 end

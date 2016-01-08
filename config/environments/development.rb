@@ -27,6 +27,9 @@ Multiverse::Application.configure do
   config.log_level = :info
   ##### Try to avoid crashing
   #config.log_level = :warn
+  
+  # Throw errors early in dev if params are filtered out by Rails 4
+  config.action_controller.action_on_unpermitted_parameters = :raise
 
 
   if Rails::VERSION::STRING >= '3.1'

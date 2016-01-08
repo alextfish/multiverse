@@ -227,9 +227,11 @@ class Cardset < ActiveRecord::Base
   def Cardset.add_news_lists
     kinds_to_not_show = Log.kinds_to_not_show(:cardset_recent)
     Cardset.all.each do |cs|
-      cs.news_list ||= NewsList.new
-      recent_logs = cs.logs.reject{ |l| kinds_to_not_show.include?(l.kind) }
-      recent_logs.take(NewsList.MAX_LENGTH + 1).reverse.each {|l| cs.news_list.add_log(l)}
+      if !cs.news_list
+        cs.news_list = NewsList.new
+        recent_logs = cs.logs.reject{ |l| kinds_to_not_show.include?(l.kind) }
+        recent_logs.take(NewsList.MAX_LENGTH + 1).reverse.each {|l| cs.news_list.add_log(l)}
+      end
     end
   end
   
