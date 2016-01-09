@@ -97,8 +97,8 @@ module ApplicationHelper
     if %w{wr wg uw ug bu bw rb ru gr gb w2 u2 b2 r2 g2 w3 u3 b3 r3 g3 wp up bp rp gp}.include? my_symbol.downcase
       my_symbol.reverse!
     end
-    my_symbol.gsub!(/S/, "snow")
     my_symbol.gsub!(/CHAOS/, "chaos")
+    my_symbol.gsub!(/S/, "snow")
     my_symbol.gsub!(/T/, "tap")
     my_symbol.gsub!(/Q/, "untap")
     my_symbol.gsub!(/\?/, "question")

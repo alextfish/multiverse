@@ -1125,6 +1125,7 @@ img.colour_indicator {
 /***** Colours *****/
 $Colourless_Card: #ccc6cc;
 $Colourless_Text: #f2ecf2;
+$Colourless_Title: #eee9ee;
 $White_Card: #eae1c8; /* #efe8d4; and before that, #FBF9EA; */
 $White_Pinline: #fffef7; /* #F2EFEA; */
 $White_Bar: #fffff9;
@@ -1185,10 +1186,11 @@ $Land_Colourless_DFC_Text: #D8CFC8;
 
 .Colourless.card, .Colourless .cardart  { background-color: $Colourless_Card; }
 .Colourless .pinline { background-color: #ddd; }
-.Colourless .cardtitlebar, .Colourless .cardtypebar { background-color: #eee9ee; }
+/* For colourless only, we split type and title, for devoid purposes */
+.Colourless .cardtitlebar { background-color: $Colourless_Title; }
 .Colourless .cardtext, .Colourless .pinline_ptbox { background: $Colourless_Text !important; }
 .dfc .part2.Colourless {
-  .cardtitlebar, .cardtypebar { background-color: $Colourless_DFC_Bar; }
+  .cardtitlebar { background-color: $Colourless_DFC_Bar; }
   .cardtext { background: $Colourless_DFC_Text !important; }
   .pinline_ptbox  { background-color:$Colourless_DFC_Bar !important; }
 }
@@ -1425,6 +1427,19 @@ $ArtifactTitlebarHighlight: #d6e0e6;
 .Hybrid .cardart {
   background-color: #eeeeee;
 }
+
+/* Now the second half of colourless, for devoid purposes */
+.Colourless .cardtypebar { 
+  background-color: $Colourless_Title; 
+  @include gradient_horz_highlight($Colourless_Title, $Colourless_Title);
+}
+.dfc .part2.Colourless {
+  .cardtypebar { 
+    background-color: $Colourless_DFC_Bar; 
+    @include gradient_horz_highlight($Colourless_DFC_Bar, $Colourless_DFC_Bar);
+  }
+}
+
 
 /***** Dominion *****/
 .Dominion.card {
