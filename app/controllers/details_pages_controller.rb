@@ -40,7 +40,7 @@ class DetailsPagesController < ApplicationController
 
   # POST /details_pages
   def create
-    @details_page = @cardset.details_pages.build(params[:details_page])
+    @details_page = @cardset.details_pages.build(dp_create_params)
 
     if @details_page.save
       set_last_edit @details_page
@@ -56,10 +56,7 @@ class DetailsPagesController < ApplicationController
   # PUT /details_pages/1.js
   def update
     @details_page = DetailsPage.find(params[:id])
-    # Don't allow cardset moves via update action
-    dp_params = params[:details_page].delete_if {|key, value| key == "cardset_id" } 
-    
-    Rails.logger.warn(dp_params)
+    dp_params = dp_update_params
 
     if dp_params[:order]
       # Do something completely different for reorderings
@@ -90,4 +87,14 @@ class DetailsPagesController < ApplicationController
 
     redirect_to(@cardset)
   end
+  
+  private
+    # Rails 4 definition of accessible params
+    def dp_create_params
+      params.require(:details_page).permit(:title, :body, :order, :last_edit_by, :cardset_id)
+    end
+    # Don't allow cardset moves via update action
+    def dp_update_params
+      params.require(:details_page).delete_if {|key, value| key == "cardset_id" }.permit(:title, :body, :order, :last_edit_by)
+    end
 end
