@@ -357,13 +357,13 @@
       <% if @cardset.configuration.card_show_active %>
       
         <form action="<%= activate_cardset_path(@cardset) %>" method="post">
-          <%= hidden_field_tag :mode, :value => "activate_all_skeleton" %>
+          <%= hidden_field_tag :mode, "activate_all_skeleton" %>
           <div class="button_outer"><div class="button_inner">
             <%= submit_tag "Mark all cards in skeleton as active" , :confirm => "Set active=true on all cards in the skeleton?" %>
           </div></div>
         </form>
         <form action="<%= activate_cardset_path(@cardset) %>" method="post">
-          <%= hidden_field_tag :mode, :value => "deactivate_nonskeleton" %>
+          <%= hidden_field_tag :mode, "deactivate_nonskeleton" %>
           <div class="button_outer"><div class="button_inner">
             <%= submit_tag "Mark all cards not in skeleton as inactive" , :confirm => "Set active=false on all cards that aren't in the skeleton?" %>
           </div></div>

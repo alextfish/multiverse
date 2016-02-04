@@ -173,7 +173,7 @@ class CardsetsController < ApplicationController
 
   # POST /cardsets/1/activate
   def activate
-    case params["mode"]["value"]
+    case params["mode"]
       when "activate_all_skeleton"
         @cardset.get_skeleton_cards.each &:activate_card
         destination = skeleton_cardset_path(@cardset)
