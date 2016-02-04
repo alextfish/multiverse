@@ -526,7 +526,7 @@ module ApplicationHelper
             return log.past_tense_verb(false)
           end
         # For cardsets, just give name and path to the object
-        when Log.kind(:cardset_create), Log.kind(:cardset_options), Log.kind(:cardset_import), Log.kind(:card_delete), Log.kind(:details_page_delete)
+        when Log.kind(:cardset_create), Log.kind(:cardset_options), Log.kind(:cardset_import), Log.kind(:card_delete), Log.kind(:details_page_delete), Log.kind(:card_activate)
           if obj
             return log.past_tense_verb(true) + link_to(obj.name, obj)
           else

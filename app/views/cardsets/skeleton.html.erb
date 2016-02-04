@@ -355,12 +355,19 @@
       <%= link_to "the cardset is configured to use card codes", edit_cardset_path(@cardset) %>.
       <% end %>
       <% if @cardset.configuration.card_show_active %>
-        <div class="button_outer"><div class="button_inner">
-          <%= button_to "Mark all cards in skeleton as active", activate_cardset_path(@cardset), params: { mode: :activate_all_skeleton}, confirm: "Set active=true on all cards in skeleton?" %>
-        </div></div>
-        <div class="button_outer"><div class="button_inner">
-          <%= link_to "Mark all cards not in skeleton as inactive", activate_cardset_path(@cardset, mode: "deactivate_nonskeleton"), { rel: "nofollow", confirm: "Set active=false on all cards that aren't in the skeleton?" } %>
-        </div></div>
+      
+        <form action="<%= activate_cardset_path(@cardset) %>" method="post">
+          <%= hidden_field_tag :mode, :value => "activate_all_skeleton" %>
+          <div class="button_outer"><div class="button_inner">
+            <%= submit_tag "Mark all cards in skeleton as active" , :confirm => "Set active=true on all cards in the skeleton?" %>
+          </div></div>
+        </form>
+        <form action="<%= activate_cardset_path(@cardset) %>" method="post">
+          <%= hidden_field_tag :mode, :value => "deactivate_nonskeleton" %>
+          <div class="button_outer"><div class="button_inner">
+            <%= submit_tag "Mark all cards not in skeleton as inactive" , :confirm => "Set active=false on all cards that aren't in the skeleton?" %>
+          </div></div>
+        </form>
       <% end %>
       
       <% "add pipes to starts of skeleton lines that need them" %>
