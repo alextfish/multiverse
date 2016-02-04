@@ -198,6 +198,7 @@ class CardsetsController < ApplicationController
       else
         redirect_to :back
     end
+    Rails.logger.info "#{notice} - redirecting to '#{destination}'"
     @cardset.log :kind=>:card_activate, :user=>current_user, :object_id=>@cardset.id, :text=>action
     expire_cardset_visualspoiler_cache
     expire_cardset_cardlist_cache
