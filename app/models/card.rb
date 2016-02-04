@@ -92,6 +92,14 @@ class Card < ActiveRecord::Base
     end
   end
 
+  def activate_card
+    self.active = true;
+    self.save_without_timestamping!
+  end
+  def deactivate_card
+    self.active = false;
+    self.save_without_timestamping!
+  end
   def primary_card
     secondary? ? parent : self
   end
