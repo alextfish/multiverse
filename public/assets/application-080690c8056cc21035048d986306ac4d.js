@@ -11160,10 +11160,10 @@ function detect_colours(cost, colours, num_colours) {
                 case 2: inner = "Land " + affiliated_colours.join("").toLowerCase(); break;
                 case 3: case 4: case 5: inner = "Land multicolour"; break;
               }
-            } else {
+            } else { 
               // Nonland: either Artifact or Colourless
-              inner = ( cardtype.search(/Artifact/)>-1 ? "Artifact" : "Colourless" );
-            }
+              inner = ( cardtype.search(/Artifact/)>-1 ? "Artifact" : "Colourless" ); 
+            } 
             break;
 
   }
