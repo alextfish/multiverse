@@ -6,7 +6,7 @@
  <% cache("site_stats", :expires_in => 12.hours) do %>
   <% numsets = Cardset.count
      num_to_show = [numsets, 12].min 
-     sets_to_show = select_random(num_to_show, Cardset.all)%>
+     sets_to_show = select_random(num_to_show, Cardset.all.includes(:configuration, :user))%>
   There are <%= link_to "#{numsets} cardsets", cardsets_path %> in Multiverse right now<% if numsets > 0 %>, including:
     <ul>
     <% sets_to_show.each do |cardset| %><% "fixes C24212" %>

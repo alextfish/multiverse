@@ -9329,91 +9329,6 @@ Fabtabs.prototype = {
   }
 }
 ;
-/*
-*
-* Copyright (c) 2007 Andrew Tetlaw
-*
-* Permission is hereby granted, free of charge, to any person
-* obtaining a copy of this software and associated documentation
-* files (the "Software"), to deal in the Software without
-* restriction, including without limitation the rights to use, copy,
-* modify, merge, publish, distribute, sublicense, and/or sell copies
-* of the Software, and to permit persons to whom the Software is
-* furnished to do so, subject to the following conditions:
-*
-* The above copyright notice and this permission notice shall be
-* included in all copies or substantial portions of the Software.
-*
-* THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND,
-* EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF
-* MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND
-* NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS
-* BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN
-* ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN
-* CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
-* SOFTWARE.
-* *
-*
-*
-* FastInit
-* http://tetlaw.id.au/view/javascript/fastinit
-* Andrew Tetlaw
-* Version 1.4.1 (2007-03-15)
-* Based on:
-* http://dean.edwards.name/weblog/2006/03/faster
-* http://dean.edwards.name/weblog/2006/06/again/
-* Help from:
-* http://www.cherny.com/webdev/26/domloaded-object-literal-updated
-*
-*/
-
-var FastInit = {
-    onload : function() {
-        if (FastInit.done) { return; }
-        FastInit.done = true;
-        for(var x = 0, al = FastInit.f.length; x < al; x++) {
-            FastInit.f[x]();
-        }
-    },
-    addOnLoad : function() {
-        var a = arguments;
-        for(var x = 0, al = a.length; x < al; x++) {
-            if(typeof a[x] === 'function') {
-                if (FastInit.done ) {
-                    a[x]();
-                } else {
-                    FastInit.f.push(a[x]);
-                }
-            }
-        }
-    },
-    listen : function() {
-        if (/WebKit|khtml/i.test(navigator.userAgent)) {
-            FastInit.timer = setInterval(function() {
-                if (/loaded|complete/.test(document.readyState)) {
-                    clearInterval(FastInit.timer);
-                    delete FastInit.timer;
-                    FastInit.onload();
-                }}, 10);
-        } else if (document.addEventListener) {
-            document.addEventListener('DOMContentLoaded', FastInit.onload, false);
-        } else if(!FastInit.iew32) {
-            if(window.addEventListener) {
-                window.addEventListener('load', FastInit.onload, false);
-            } else if (window.attachEvent) {
-                return window.attachEvent('onload', FastInit.onload);
-            }
-        }
-    },
-    f:[],done:false,timer:null,iew32:false
-};
-/*@cc_on @*/
-/*@if (@_win32)
-FastInit.iew32 = true;
-document.write('<script id="__ie_onload" defer src="' + ((location.protocol == 'https:') ? '//0' : 'javascript:void(0)') + '"><\/script>');
-document.getElementById('__ie_onload').onreadystatechange = function(){if (this.readyState == 'complete') { FastInit.onload(); }};
-/*@end @*/
-FastInit.listen();
 /**
  * dropDownMenu v0.5 sw edition
  * An easy to implement dropDown Menu for Websites, that may be based on styled list tags
@@ -11188,35 +11103,13 @@ function update_frame(card_id) {
     var inner;
     if (cardframe != "Auto") {
       inner = cardframe;
+      if(cardframe == "Colourless" && num_colours > 0) {
+        // Add devoid colours
+        inner = "Colourless " + detect_colours(cost, colours, num_colours);
+      }
     } else {
       // calculate frame
-      switch ( num_colours ) {
-        case 1: inner = colours.join(""); break;
-        case 3: case 4: case 5: inner = "Multicolour"; break;
-        case 2: inner = (cost.search(/[({][^)}]{2,}[)}]/)>-1 ? "Hybrid" : "Multicolour"); break;
-        // this case 2 is buggy for Twinclaws cases, but meh
-        case 0: if (cardtype.search(/Land/)>-1) {
-                  // Detect land colour affiliation
-                  var cardtext = this_card.select(".rulestextfield")[0].value;
-                  var affiliated_colours = [];
-                  ["White", "Blue", "Black", "Red", "Green", "Multicolour"].each(function(this_colour) {
-                    if (cardtext.search(colour_affiliation_regexps[this_colour])>-1 || cardsubtype.search(colour_affiliation_regexps[this_colour])>-1 ) {
-                      affiliated_colours.push(this_colour);
-                    }
-                  });
-                  switch ( affiliated_colours.length ) {
-                    case 0: inner = "Land"; break;
-                    case 1: inner = "Land " + affiliated_colours[0].toLowerCase(); break;
-                    case 2: inner = "Land " + affiliated_colours.join("").toLowerCase(); break;
-                    case 3: case 4: case 5: inner = "Land multicolour"; break;
-                  }
-                } else { 
-                  // Nonland: either Artifact or Colourless
-                  inner = ( cardtype.search(/Artifact/)>-1 ? "Artifact" : "Colourless" ); 
-                } 
-                break;
-
-      }
+      inner = detect_colours(cost, colours, num_colours);
     }
     if (card_id == "card2" && inner == "Colourless" && cardframe != "Colourless") {
       // get card 1 instead
@@ -11243,6 +11136,38 @@ function update_frame(card_id) {
   this_card.className = universalClass + newClass;
   
   cardTrueFrameField.value = newTrueFrame;
+}
+
+function detect_colours(cost, colours, num_colours) {
+  var inner;
+  switch ( num_colours ) {
+    case 1: inner = colours.join(""); break;
+    case 3: case 4: case 5: inner = "Multicolour"; break;
+    case 2: inner = (cost.search(/[({][^)}]{2,}[)}]/)>-1 ? "Hybrid" : "Multicolour"); break;
+    // this case 2 is buggy for Twinclaws cases, but meh
+    case 0: if (cardtype.search(/Land/)>-1) {
+              // Detect land colour affiliation
+              var cardtext = this_card.select(".rulestextfield")[0].value;
+              var affiliated_colours = [];
+              ["White", "Blue", "Black", "Red", "Green", "Multicolour"].each(function(this_colour) {
+                if (cardtext.search(colour_affiliation_regexps[this_colour])>-1 || cardsubtype.search(colour_affiliation_regexps[this_colour])>-1 ) {
+                  affiliated_colours.push(this_colour);
+                }
+              });
+              switch ( affiliated_colours.length ) {
+                case 0: inner = "Land"; break;
+                case 1: inner = "Land " + affiliated_colours[0].toLowerCase(); break;
+                case 2: inner = "Land " + affiliated_colours.join("").toLowerCase(); break;
+                case 3: case 4: case 5: inner = "Land multicolour"; break;
+              }
+            } else { 
+              // Nonland: either Artifact or Colourless
+              inner = ( cardtype.search(/Artifact/)>-1 ? "Artifact" : "Colourless" ); 
+            } 
+            break;
+
+  }
+  return inner;
 }
 
 function get_colour_indicator(this_card) {
@@ -11860,7 +11785,7 @@ function deselectAllText() {
 
 
 
-
+// For debugging, don't //= require fastinit
 
 
 

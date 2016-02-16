@@ -9,11 +9,14 @@
      end
      # Max out at smaller of 50 and number of available cards
      num_to_show = [num_to_show, numcards, max_num_to_show].min
-     chosencards = select_random_visible_cards(num_to_show, Card.nonsecondary)
+     chosen_cards = select_random_visible_cards(num_to_show, Card.includes(:cardset).nonsecondary)
+     # Preload these cards
+     chosen_card_ids = chosen_cards.map{|c| "#{c.id}"}.join(", ");
+     chosen_cards = Card.eager_load(:link,:parent).includes([:comments, cardset: :mechanics]).where("cards.id in (#{chosen_card_ids})")
      %>
   There are <%= numcards %> cards in Multiverse right now<% if numcards > 0 %>, including:
      
-       <% chosencards.each_with_index do |card, index| %>
+       <% chosen_cards.each_with_index do |card, index| %>
          <% @card = card
             @cardset = @card.cardset %>
          <div class="CardRenderInline">

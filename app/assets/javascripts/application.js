@@ -22,7 +22,7 @@
 //= require dragdrop
 //= require droplicious
 //= require fabtabulous
-//= require fastinit
+// For debugging, don't //= require fastinit
 //= require menu
 //= require moment.min
 //= require prototip

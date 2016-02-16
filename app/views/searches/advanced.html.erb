@@ -28,7 +28,7 @@
     }
     text_fields_order = ["cardset", "details_page", "card", "comment"]
     
-   valid_cardsets = Cardset.select { |cs| permission_to?(:view, cs) }
+   valid_cardsets = Cardset.includes(:configuration).select { |cs| permission_to?(:view, cs) }
    valid_cardsets = valid_cardsets.sort_by &:name 
    valid_users = User.all.sort_by &:name
    default_user = current_user ? current_user.id : ""

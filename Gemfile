@@ -73,6 +73,8 @@ gem 'active_model_serializers', '~> 0.8.0'
 group :development do
   # gem 'annotate-models', '1.0.4' - seems to have disappeared!
   # gem 'utf8-cleaner' - just don't type pound signs in source code...
+  gem 'meta_request'
+  gem 'bullet'
 end
 
 gem 'cloudinary'

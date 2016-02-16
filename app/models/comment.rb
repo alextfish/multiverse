@@ -20,7 +20,7 @@ class Comment < ActiveRecord::Base
   belongs_to :cardset#, touch: true
   belongs_to :user
 
-  default_scope { order("comments.created_at") }
+  default_scope { includes(:user).order("comments.created_at") }
 
   # Validate there's either a user name or a user ID
   attr_accessor :by_signed_in_user

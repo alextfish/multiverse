@@ -24,7 +24,7 @@ class Log < ActiveRecord::Base
     HIGHEST_LOG_KIND
   end
   validates_inclusion_of :kind, :in => (1..HIGHEST_LOG_KIND)
-  default_scope { order('logs.datestamp DESC') }
+  default_scope { order('logs.datestamp DESC') }   #includes(:user). doesn't seem necessary
   
   def Log.kind(sym)
     case sym

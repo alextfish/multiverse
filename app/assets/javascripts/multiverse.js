@@ -157,35 +157,13 @@ function update_frame(card_id) {
     var inner;
     if (cardframe != "Auto") {
       inner = cardframe;
+      if(cardframe == "Colourless" && num_colours > 0) {
+        // Add devoid colours
+        inner = "Colourless " + detect_colours(cost, colours, num_colours);
+      }
     } else {
       // calculate frame
-      switch ( num_colours ) {
-        case 1: inner = colours.join(""); break;
-        case 3: case 4: case 5: inner = "Multicolour"; break;
-        case 2: inner = (cost.search(/[({][^)}]{2,}[)}]/)>-1 ? "Hybrid" : "Multicolour"); break;
-        // this case 2 is buggy for Twinclaws cases, but meh
-        case 0: if (cardtype.search(/Land/)>-1) {
-                  // Detect land colour affiliation
-                  var cardtext = this_card.select(".rulestextfield")[0].value;
-                  var affiliated_colours = [];
-                  ["White", "Blue", "Black", "Red", "Green", "Multicolour"].each(function(this_colour) {
-                    if (cardtext.search(colour_affiliation_regexps[this_colour])>-1 || cardsubtype.search(colour_affiliation_regexps[this_colour])>-1 ) {
-                      affiliated_colours.push(this_colour);
-                    }
-                  });
-                  switch ( affiliated_colours.length ) {
-                    case 0: inner = "Land"; break;
-                    case 1: inner = "Land " + affiliated_colours[0].toLowerCase(); break;
-                    case 2: inner = "Land " + affiliated_colours.join("").toLowerCase(); break;
-                    case 3: case 4: case 5: inner = "Land multicolour"; break;
-                  }
-                } else { 
-                  // Nonland: either Artifact or Colourless
-                  inner = ( cardtype.search(/Artifact/)>-1 ? "Artifact" : "Colourless" ); 
-                } 
-                break;
-
-      }
+      inner = detect_colours(cost, colours, num_colours);
     }
     if (card_id == "card2" && inner == "Colourless" && cardframe != "Colourless") {
       // get card 1 instead
@@ -212,6 +190,38 @@ function update_frame(card_id) {
   this_card.className = universalClass + newClass;
   
   cardTrueFrameField.value = newTrueFrame;
+}
+
+function detect_colours(cost, colours, num_colours) {
+  var inner;
+  switch ( num_colours ) {
+    case 1: inner = colours.join(""); break;
+    case 3: case 4: case 5: inner = "Multicolour"; break;
+    case 2: inner = (cost.search(/[({][^)}]{2,}[)}]/)>-1 ? "Hybrid" : "Multicolour"); break;
+    // this case 2 is buggy for Twinclaws cases, but meh
+    case 0: if (cardtype.search(/Land/)>-1) {
+              // Detect land colour affiliation
+              var cardtext = this_card.select(".rulestextfield")[0].value;
+              var affiliated_colours = [];
+              ["White", "Blue", "Black", "Red", "Green", "Multicolour"].each(function(this_colour) {
+                if (cardtext.search(colour_affiliation_regexps[this_colour])>-1 || cardsubtype.search(colour_affiliation_regexps[this_colour])>-1 ) {
+                  affiliated_colours.push(this_colour);
+                }
+              });
+              switch ( affiliated_colours.length ) {
+                case 0: inner = "Land"; break;
+                case 1: inner = "Land " + affiliated_colours[0].toLowerCase(); break;
+                case 2: inner = "Land " + affiliated_colours.join("").toLowerCase(); break;
+                case 3: case 4: case 5: inner = "Land multicolour"; break;
+              }
+            } else {
+              // Nonland: either Artifact or Colourless
+              inner = ( cardtype.search(/Artifact/)>-1 ? "Artifact" : "Colourless" );
+            }
+            break;
+
+  }
+  return inner;
 }
 
 function get_colour_indicator(this_card) {

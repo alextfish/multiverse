@@ -60,4 +60,22 @@ Multiverse::Application.configure do
     #config.active_record.auto_explain_threshold_in_seconds = 0.5
     ActiveRecord::Base.logger = Logger.new(STDOUT)
   end
+  
+  config.after_initialize do
+    Bullet.enable = true
+    Bullet.alert = false
+    Bullet.bullet_logger = true
+    Bullet.console = true
+    Bullet.growl = false
+    Bullet.rails_logger = true
+    #Bullet.honeybadger = false
+    Bullet.bugsnag = false
+    Bullet.airbrake = false
+    Bullet.rollbar = false
+    Bullet.add_footer = true
+    # Bullet.stacktrace_includes = [ 'your_gem', 'your_middleware' ]
+    # Bullet.stacktrace_excludes = [ 'their_gem', 'their_middleware' ]
+    # Bullet.slack = { webhook_url: 'http://some.slack.url', foo: 'bar' }
+    # Bullet.add_whitelist :type => :n_plus_one_query, :class_name => "Post", :association => :comments
+  end
 end

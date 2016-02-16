@@ -45,6 +45,10 @@ class Card < ActiveRecord::Base
   belongs_to :parent, :class_name => "Card", :inverse_of => :link
   accepts_nested_attributes_for :link, :reject_if => proc { |attributes| attributes["rulestext"].blank? && attributes["name"].blank? }
   belongs_to :user
+  
+  scope :active,       -> { where(active: true) }
+  scope :nonsecondary, -> { where("cards.multipart NOT IN (?, ?, ?)", Card.SPLIT2, Card.FLIP2, Card.DFCBACK) }   # see also .secondary? below
+  
   # has_many :highlighted_comments, :class_name => 'Comment', :conditions => ['status = ?', COMMENT_HIGHLIGHTED]
   # has_many :unaddressed_comments, :class_name => 'Comment', :conditions => ['status = ?', COMMENT_UNADDRESSED]
 
@@ -168,7 +172,11 @@ class Card < ActiveRecord::Base
     COLOUR_LETTERS
   end
 
-  COLOUR_PAIRS = Card.colours.combination(2).to_a
+  COLOUR_PAIRS = [["White", "Blue"], ["White", "Black"],
+    ["Blue", "Black"], ["Blue", "Red"],
+    ["Black", "Red"], ["Black", "Green"],
+    ["Red", "Green"], ["Red", "White"],
+    ["Green", "White"], ["Green", "Blue"]];
   def self.colour_pairs
     COLOUR_PAIRS
   end
@@ -266,6 +274,7 @@ class Card < ActiveRecord::Base
     rarity + fc_pair
   end
   @@colour_regexps = [/w/i, /u/i, /b/i, /r/i, /g/i]
+  @@hybrid_regexp = /[({][wubrg1-9](\/)?[wubrg1-9][)}]/i
   @@nonhybrid_colour_regexps = [
     /(^|[^\/{(])w|[({]w[})]/i,  # match w either at the start ^, or after anything other than / { (
     /(^|[^\/{(])u|[({]u[})]/i,
@@ -285,16 +294,21 @@ class Card < ActiveRecord::Base
       re.match(cost) ? true : false
     end
   end
-  def colour_letters_in_cost
-    colours_in_cost.zip(Card.colour_letters).map {|boo, col| (boo ? col.downcase : "")}
-  end
   def num_colours
     colours_in_cost.count{|x|x}
+  end
+  def colour_letters_in_cost
+    colours_in_cost.zip(Card.colour_letters).map {|boo, col| (boo ? col.downcase : "")}
   end
   def colour_strings_present
     out = (@@colour_regexps.zip(Card.colours)).map do |re, colour|
       re.match(cost) ? colour : nil
     end.compact
+  end
+  def nonhybrid_colours_in_cost
+    @@nonhybrid_colour_regexps.reduce(0) do |total, re|
+      re.match(cost) ? total+1 : total
+    end
   end
 
   def display_class
@@ -324,9 +338,15 @@ class Card < ActiveRecord::Base
     end
     # Add gold pinlines
     if self.num_colours == 2
+      # Hybrid or gold?
+      cardclass << " " + (nonhybrid_colours_in_cost >= 2 ? "Multicolour" : "Hybrid")
       cardclass << " " + self.colour_strings_present.join("").downcase
     elsif self.num_colours == 0 && self.parent && self.parent.num_colours == 2
       cardclass << " " + self.parent.colour_strings_present.join("").downcase
+    end
+    # Add devoid colours
+    if cardclass == "Colourless" && self.num_colours > 0
+      cardclass << " " + self.single_card_calculated_frame
     end
 
     if self.is_token?
@@ -567,9 +587,7 @@ class Card < ActiveRecord::Base
       when 2      # Two-colour: distinguish between gold and hybrid
                   # We say a card for 1W(W/U)U is gold, but 1W(W/G) is hybrid
         # Count the number of colours present outside hybrid symbols
-        colours_present = @@nonhybrid_colour_regexps.reduce(0) do |total, re|
-          re.match(cost) ? total+1 : total
-        end
+        colours_present = nonhybrid_colours_in_cost
         if colours_present >= 2
           return "Multicolour"
         else
@@ -732,9 +750,10 @@ class Card < ActiveRecord::Base
   def secondary?
    [Card.SPLIT2, Card.FLIP2, Card.DFCBACK].include?(self.multipart)
   end
-  def Card.nonsecondary
-    select {|c| !c.secondary?}
-  end
+  
+  #def Card.nonsecondary
+  #  select {|c| !c.secondary?}
+  #end
   def cardframe_class
     nontraditional_frame? ? frame.downcase : split? ? "split" : flip? ? "flip" : dfc? ? "dfc" : ""
   end

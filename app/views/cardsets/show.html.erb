@@ -9,7 +9,7 @@
 
 <% cache(:action => "show", :action_suffix => "infobox") do %>
 
-  <% @allmycards = @cardset.cards.nonsecondary %>
+  <% @allmycards = @cardset.cards.includes([:cardset, :link, :parent, comments: [:card, :user]]).nonsecondary %>
   <% @myactivecards = @cardset.public_cards %>
   <% @owner = @cardset.user %>
   <% @sorted_comments = @cardset.all_comments.sort { |c1,c2| c2.recency <=> c1.recency } %>
@@ -123,7 +123,7 @@
   <% end %>
 
 
-  <% recentcards = Card.order("updated_at DESC").where(:cardset_id => @cardset.id).limit(5).reject {|c| c.secondary? } %>
+  <% recentcards = Card.nonsecondary.includes(:cardset).order("updated_at DESC").where(:cardset_id => @cardset.id).limit(5) %>
 
   <p>
     <% if !recentcards.empty? %>

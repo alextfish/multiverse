@@ -29,7 +29,7 @@ class Cardset < ActiveRecord::Base
   has_one :last_edit_log, :class_name => "Log", :dependent => :destroy
   has_many :decklists, :dependent => :destroy
   
-  default_scope { order("cardsets.updated_at DESC") }
+  default_scope { includes(:configuration).order("cardsets.updated_at DESC") }
 
   validates_length_of :name, :within => 2..40
   validate do |cardset|
@@ -44,7 +44,7 @@ class Cardset < ActiveRecord::Base
     out = {}
     out[:by_category] = Hash.new(0)
     out[:by_rarity] = Hash.new(0)
-    cards.nonsecondary.each do |card|
+    cards.nonsecondary.eager_load(:link,:parent).each do |card|
       out[:by_category][card.category || "unspecified"] += 1
       out[:by_rarity][card.rarity || "unspecified"] += 1
     end
@@ -57,12 +57,12 @@ class Cardset < ActiveRecord::Base
     #card_comments = Comment.includes(:card).where("cards.cardset_id = ?", self.id).references(:card)
     #cardset_comments = Comment.where("cardset_id = ?", self.id)
     #(cardset_comments + card_comments)
-    self.comments
+    self.comments.includes(:user, :card)
   end
   
   def cardset_level_comments
-    # Includes only individual comments
-    cardset_comments = Comment.where("cardset_id = ? AND card_id IS NULL", self.id)
+    # Includes only comments without a card
+    cardset_comments = Comment.includes(:user, :cardset).where("cardset_id = ? AND card_id IS NULL", self.id)
   end
   
   def log(in_hash)
@@ -128,13 +128,13 @@ class Cardset < ActiveRecord::Base
   
   def public_cards
     if configuration.card_show_active
-      self.cards.nonsecondary.select {|c| c.active}
+      self.cards.nonsecondary.active
     else
       self.cards.nonsecondary
     end
   end
   def listable_cards # For cardlists that should include nonactive cards
-    Card.includes(:comments, :user).where("cardset_id = ?", self.id).select {|c| !c.secondary?}
+    Card.includes(:comments, :user).nonsecondary.where("cardset_id = ?", self.id)
   end 
   def draftable_cards # Include secondary cards as their own records for JSON purposes
     if configuration.card_show_active

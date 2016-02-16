@@ -46,6 +46,11 @@
   background: -webkit-gradient(linear, right top, left bottom, from($startend), color-stop(0.5, $middle), to($startend));
   background: -moz-linear-gradient(right top, $startend, $middle, $startend);
 }
+@mixin gradient_vert($start, $end) {
+  filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#{$start}', endColorstr='#{$end}', GradientType=0);
+  background: -webkit-gradient(linear, left top, left bottom, from($start), to($end));
+  background: -moz-linear-gradient(top,  $start,  $end);
+}
 @mixin gradient_vert_important($start, $end) {
   filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#{$start}', endColorstr='#{$end}', GradientType=0) !important;
   background: -webkit-gradient(linear, left top, left bottom, from($start), to($end)) !important;
@@ -201,6 +206,8 @@ div.card_loading {
   min-height: $CardHeight - $CardPaddingTop - $CardPaddingBottom - $M15PaddingBottom;
   height: $CardHeight - $CardPaddingTop - $CardPaddingBottom - $M15PaddingBottom;
   width: $CardWidth - $CardPaddingLeft - $CardPaddingRight;
+}
+.card, .Colourless.Hybrid.card:before {
   @include elliptical_corners_asymmetric(4px, 4px, 20px, 20px);
 }
 /* Cards without M15 rounding: tokens, schemes, flip cards */
@@ -230,11 +237,14 @@ div.card_loading {
   width: $CardWidth;
   text-align: center;
 }
-/* Avoid setting position: relative on pinlines - it prevents the card name bar floating above the foil overlay */
 .pinline { z-index: 1; }
 .pinline_box { padding: 2px;}
 .pinline_sides { padding-left: 2px; padding-right: 2px; }
 .pinline_sidesbottom { padding-left: 2px; padding-right: 2px; padding-bottom: 2px; }
+/* Avoid setting position: relative on pinlines for the name box - it prevents the card name bar floating above the foil overlay */
+.pinline_sides, .pinline_sidesbottom, .pinline_box.typebox {
+    position: relative;
+}
 .split {
   .pinline_box { padding: 1px;}
   .pinline_sides { padding-left: 1px; padding-right: 1px; }
@@ -276,23 +286,41 @@ div.card_loading {
   font: bold 9pt serif; padding-top: 1px; /* padding-bottom: 1px; */ 
   position: relative;
 }
-.cardtitlebar:after, .cardtypebar:after {
+.cardtitlebar:before, .cardtypebar:before, .cardtitlebar:after, .cardtypebar:after {
   content: " ";
-  width: 96%;
-  border-top: 1px solid #eee;
+  width: 97%;
   height: 2px;
   position: absolute;
-  top: 0px;
   left: 3px;
 }
+.cardtitlebar:before, .cardtypebar:before {
+  border-top: 1px solid rgba(255,255,255,0.8);
+  top: 0px;
+}
+.cardtitlebar:after, .cardtypebar:after {
+  border-top: 1px solid rgba(88,88,88,0.5);
+  bottom: -2px;
+}
+.dfc .part2 .cardtitlebar:before, .dfc .cardtypebar:before {
+  border-top-color: rgba(255, 255, 255, 0.4);
+}
+.dfc .part2 .cardtitlebar:after, .dfc .cardtypebar:after {
+  border-top-color: rgba(0,0,0,0.5);
+}
+.Plane, .Scheme, .Vanguard {
+  & .cardtitlebar, & .cardtypebar {
+    &:before, &:after {
+      content: ""; /* doesn't work to hide it? */
+      border-color: transparent;
+    }
+  }
+}
+    
 .form .cardtitlebar {
   min-width: 300px;
 }
 .form.split .cardtitlebar {
   min-width: inherit;
-}
-.dfc .part2 .cardtitlebar:after, .dfc .part2 .cardtypebar:after, .token .cardtitlebar:after, .token .cardtypebar:after {
-  border-top-color: rgba(255, 255, 255, 0.4);
 }
 .plane .cardtypebar:after {
   border-top: none;
@@ -301,6 +329,12 @@ div.card_loading {
 
 .cardname { float: left;
    position: relative; z-index: +5;  /* so that foils' names are still clickable */
+}
+.cardname a {
+    text-decoration-color: rgba(0, 0, 0, .5);
+}
+.cardname a:hover {
+    text-decoration: underline;
 }
 .cardmanacost { float: right; padding-right: 3px; }
 .cardart_container, .cardtext_container { 
@@ -1133,6 +1167,8 @@ img.colour_indicator {
 
 /***** Colours *****/
 $Colourless_Card: #ccc6cc;
+$Colourless_Pinline: #ddd;
+$Colourless_PinlineBox: #ccc;
 $Colourless_Text: #f2ecf2;
 $Colourless_Title: #eee9ee;
 $White_Card: #eae1c8; /* #efe8d4; and before that, #FBF9EA; */
@@ -1194,8 +1230,7 @@ $Land_Colourless_DFC_Text: #D8CFC8;
 .dfc .part2 .cardtitlebar, .dfc .part2 .cardtypebar, .dfc .part2 .pinline_ptbox { color: #fff; }
 
 .Colourless.card, .Colourless .cardart  { background-color: $Colourless_Card; }
-.Colourless .pinline { background-color: #ddd; }
-/* For colourless only, we split type and title, for devoid purposes */
+/* For colourless only, we split type and title, for devoid purposes. Title is here above the coloured cards, so it gets overridden by them. Type is below the colours, so that it overrides them. */
 .Colourless .cardtitlebar { background-color: $Colourless_Title; }
 .Colourless .cardtext, .Colourless .pinline_ptbox { background: $Colourless_Text !important; }
 .dfc .part2.Colourless {
@@ -1229,59 +1264,47 @@ $ArtifactTitlebarHighlight: #d6e0e6;
   .pinline_ptbox, .ptbox  { background-color: $Artifact_DFC_Bar !important; }
 }
 
-.White.card, .White .cardart  { background-color: $White_Card;
-/* @include gradient_vert_important(#fcf9f0, #e3d9bb); */
-}
-.White .pinline, .Land.white .pinline { background-color: $White_Pinline; }
-.White .cardtitlebar, .White .cardtypebar { background-color: $White_Bar; }
-.White .cardtext, .White .pinline_ptbox { background: $White_Text !important; }
-.dfc .part2.White, .dfc .part2.Land.white {
-  .cardtitlebar, .cardtypebar { background-color: $White_DFC_Bar; }
-  .cardtext { background: $White_DFC_Text !important; }
-  .pinline_ptbox  { background-color:$White_DFC_Bar !important; }
-}
+<%
+Card.colours.each do |thisColour|
+  thiscolour = thisColour.downcase;
+%>
 
-.Blue.card, .Blue .cardart  { background-color: $Blue_Card; /* #5bf; */ }
-.Blue .pinline, .Land.blue .pinline { background-color: $Blue_Pinline; }
-.Blue .cardtitlebar, .Blue .cardtypebar { background-color: $Blue_Bar;
-  @include gradient_horz_highlight(#B7CEDA, #C8DCE4);}
-.Blue .cardtext, .Blue .pinline_ptbox { background: $Blue_Text !important; }
+  .<%= thisColour %>.card, .<%= thisColour %> .cardart { 
+    background-color: $<%= thisColour %>_Card; 
+  }
+  .<%= thisColour %> .pinline, .Land.<%= thiscolour %> .pinline { 
+    background-color: $<%= thisColour %>_Pinline; 
+  }
+  .<%= thisColour %> .cardtitlebar, .<%= thisColour %> .cardtypebar { 
+    background-color: $<%= thisColour %>_Bar; 
+  }
+  .<%= thisColour %> .cardtext, .<%= thisColour %> .pinline_ptbox { 
+    background: $<%= thisColour %>_Text !important; 
+  }
+  .dfc .part2.<%= thisColour %>, .dfc .part2.Land.<%= thiscolour %> {
+    .cardtitlebar, .cardtypebar { background-color: $<%= thisColour %>_DFC_Bar; }
+    .cardtext { background: $<%= thisColour %>_DFC_Text !important; }
+    .pinline_ptbox  { background-color:$<%= thisColour %>_DFC_Bar !important; }
+  }
+  /* Devoid */
+  .card.Colourless.<%= thisColour %>.card {
+    background: -webkit-gradient(linear, left top, left bottom, from($<%= thisColour %>_Card), color-stop(0.2, $Colourless_Card), to($Colourless_Card));
+  }
+  .card.Colourless.<%= thisColour %> .cardart {
+      background: -webkit-gradient(linear, left top, left bottom, from($<%= thisColour %>_Card), color-stop(0, $Colourless_Card), to($Colourless_Card));
+  }
+
+<%
+end
+%>
+
+/* Gradients for blue and gold */
+.Blue .cardtitlebar, .Blue .cardtypebar { 
+  @include gradient_horz_highlight(#B7CEDA, #C8DCE4); }
 .dfc .part2.Blue, .dfc .part2.Land.blue {
-  .cardtitlebar, .cardtypebar { background-color: $Blue_DFC_Bar; 
+  .cardtitlebar, .cardtypebar { 
     @include gradient_horz_highlight(#2a84b6, #4d95c1);
   }
-  .cardtext { background: $Blue_DFC_Text !important; }
-  .pinline_ptbox  { background-color:$Blue_DFC_Bar !important; }
-}
-
-.Black.card, .Black .cardart  { background-color: $Black_Card; }
-.Black .pinline, .Land.black .pinline { background-color: $Black_Pinline; }
-.Black .cardtitlebar, .Black .cardtypebar { background-color: $Black_Bar; }
-.Black .cardtext, .Black .pinline_ptbox { background: $Black_Text !important; }
-.dfc .part2.Black, .dfc .part2.Land.black { 
-  .cardtitlebar, .cardtypebar { background-color: $Black_DFC_Bar; }
-  .cardtext { background: $Black_DFC_Text !important; }
-  .pinline_ptbox  { background-color:$Black_DFC_Bar !important; }
-}
-
-.Red.card, .Red .cardart  { background-color: $Red_Card; /* #f76; */ }
-.Red .pinline, .Land.red .pinline { background-color: $Red_Pinline; }
-.Red .cardtitlebar, .Red .cardtypebar { background-color: $Red_Bar; }
-.Red .cardtext, .Red .pinline_ptbox { background: $Red_Text !important; }
-.dfc .part2.Red, .dfc .part2.Land.red {
-  .cardtitlebar, .cardtypebar { background-color: $Red_DFC_Bar; }
-  .cardtext { background: $Red_DFC_Text !important; }
-  .pinline_ptbox  { background-color:$Red_DFC_Bar !important; }
-}
-
-.Green.card, .Green .cardart { background-color: $Green_Card; /* #6b7 */}
-.Green .pinline, .Land.green .pinline { background-color: $Green_Pinline; }
-.Green .cardtitlebar, .Green .cardtypebar { background-color: $Green_Bar; }
-.Green .cardtext, .Green .pinline_ptbox { background: $Green_Text !important; /* #efe; */}
-.dfc .part2.Green, .dfc .part2.Land.green {
-  .cardtitlebar, .cardtypebar { background-color: $Green_DFC_Bar; }
-  .cardtext { background: $Green_DFC_Text !important; }
-  .pinline_ptbox  { background-color:$Green_DFC_Bar !important; }
 }
 
 .Multicolour, .Multicolour .cardart { background-color: $Multicolour_Background; /*#DAC87C;*/ }
@@ -1295,6 +1318,13 @@ $ArtifactTitlebarHighlight: #d6e0e6;
 }
 .Multicolour .pinline_ptbox { background: #C6AF71 !important; }
 .Multicolour .ptbox { background: #C6AF71 !important; }
+
+.card.Colourless.Multicolour.card {
+    background: -webkit-gradient(linear, left top, left bottom, from($Multicolour_Background), color-stop(0.2, $Colourless_Card), to($Colourless_Card));
+}
+.card.Colourless.Multicolour .cardart {
+    background: -webkit-gradient(linear, left top, left bottom, from($Multicolour_Background), color-stop(0, $Colourless_Card), to($Colourless_Card));
+}
 
 .dfc .part2.Multicolour, .dfc .part2.Land.multicolour {
   .cardtitlebar, .cardtypebar { 
@@ -1315,7 +1345,7 @@ $ArtifactTitlebarHighlight: #d6e0e6;
 } 
 
 .Land, .Land.Coloured_Artifact {  /*#A4968E*/; 
-@include gradient_vert_important(#DECCC1, #6A514A); 
+  @include gradient_vert_important(#DECCC1, #6A514A); 
 }
 .Land .cardart { background-color: #b9aea2; }
 .Land .pinline { background-color: #d7cDbF /*C7BDAF*/; }
@@ -1323,106 +1353,54 @@ $ArtifactTitlebarHighlight: #d6e0e6;
   background-color: $Land_Colourless_Bar; 
 }
 .Land .cardtext, .Land .pinline_ptbox { background-color: $Land_Text; /* #eee6df; */}
-.Land .bottombox, .Land .cardtext_container, .Land .cardart_container,  { background: transparent; }
+.Land .bottombox, .Land .cardtext_container, .Land .cardart_container { background: transparent; }
 
-.Land.white {
-  .cardtitlebar, .cardtypebar { background-color: $Land_White_Bar; }
-  .cardtext, .pinline_ptbox { background-color: $Land_White_Text; }
+
+<%
+Card.colours.each do |thisColour|
+  thiscolour = thisColour.downcase;
+%>
+
+.Land.<%= thiscolour %> {
+  .cardtitlebar, .cardtypebar { background-color: $Land_<%= thisColour %>_Bar; }
+  .cardtext, .pinline_ptbox { background-color: $Land_<%= thisColour %>_Text; }
 }
 
-.Land.blue {
-  .cardtitlebar, .cardtypebar { background-color: $Land_Blue_Bar; }
-  .cardtext, .pinline_ptbox { background-color: $Land_Blue_Text; }
-}
+<%
+end
+%>
 
-.Land.black {
-  .cardtitlebar, .cardtypebar { background-color: $Land_Black_Bar; }
-  .cardtext, .pinline_ptbox { background-color: $Land_Black_Text; }
-}
 
-.Land.red {
-  .cardtitlebar, .cardtypebar { background-color: $Land_Red_Bar; }
-  .cardtext, .pinline_ptbox { background-color: $Land_Red_Text; }
-}
+<%
+Card.colour_pairs.each do |thisColourPair|
+  Colour1, Colour2 = thisColourPair;
+  colour1, colour2 = Colour1.downcase, Colour2.downcase;
+  colour1colour2 = colour1 + colour2;
+  colour2colour1 = colour2 + colour1;
+%>
 
-.Land.green {
-  .cardtitlebar, .cardtypebar { background-color: $Land_Green_Bar; }
-  .cardtext, .pinline_ptbox { background-color: $Land_Green_Text; }
-}
-
+.<%= colour1colour2 %> .pinline { @include gradient_horz_padded($<%= Colour1 %>_Pinline, $<%= Colour2 %>_Pinline); }
+.<%= colour2colour1 %> .pinline { @include gradient_horz_padded($<%= Colour1 %>_Pinline, $<%= Colour2 %>_Pinline); }
 /* .Land.whiteblue .cardtitlebar, .Land.whiteblue .cardtypebar { @include gradient_horz($Land_White_Bar, $Land_Blue_Bar); } */
-.Land.whiteblue .pinline { @include gradient_horz_padded($White_Pinline, $Blue_Pinline); }
-.Land.whiteblue .cardtext { @include gradient_horz_padded($Land_White_Text, $Land_Blue_Text); }
 
-.whiteblue .pinline { @include gradient_horz_padded($White_Pinline, $Blue_Pinline); }
-.whiteblack .pinline { @include gradient_horz_padded($White_Pinline, $Black_Pinline); }
-.blueblack .pinline { @include gradient_horz_padded($Blue_Pinline, $Black_Pinline); }
-.bluered .pinline { @include gradient_horz_padded($Blue_Pinline, $Red_Pinline); }
-.blackred .pinline { @include gradient_horz_padded($Black_Pinline, $Red_Pinline); }
-.redgreen .pinline { @include gradient_horz_padded($Red_Pinline, $Green_Pinline); }
-.redwhite .pinline, .whitered .pinline { @include gradient_horz_padded($Red_Pinline, $White_Pinline); }
-.blackgreen .pinline { @include gradient_horz_padded($Black_Pinline, $Green_Pinline); }
-.greenwhite .pinline, .whitegreen .pinline { @include gradient_horz_padded($Green_Pinline, $White_Pinline); }
-.greenblue .pinline, .bluegreen .pinline { @include gradient_horz_padded($Green_Pinline, $Blue_Pinline); }
+.Hybrid.<%= colour1colour2 %> { @include gradient_horz_padded($<%= Colour1 %>_Card, $<%= Colour2 %>_Card); }
+.Hybrid.<%= colour2colour1 %> { @include gradient_horz_padded($<%= Colour1 %>_Card, $<%= Colour2 %>_Card); }
 
-.Land.whiteblue .cardtext { @include gradient_horz_padded($Land_White_Text, $Land_Blue_Text); }
-.Land.whiteblack .cardtext { @include gradient_horz_padded($Land_White_Text, $Land_Black_Text); }
-.Land.blueblack .cardtext { @include gradient_horz_padded($Land_Blue_Text, $Land_Black_Text); }
-.Land.bluered .cardtext { @include gradient_horz_padded($Land_Blue_Text, $Land_Red_Text); }
-.Land.blackred .cardtext { @include gradient_horz_padded($Land_Black_Text, $Land_Red_Text); }
-.Land.blackgreen .cardtext { @include gradient_horz_padded($Land_Black_Text, $Land_Green_Text); }
-.Land.redgreen .cardtext { @include gradient_horz_padded($Land_Red_Text, $Land_Green_Text); }
-.Land.redwhite .cardtext, .Land.whitered .cardtext { @include gradient_horz_padded($Land_Red_Text, $Land_White_Text); }
-.Land.greenwhite .cardtext, .Land.whitegreen .cardtext { @include gradient_horz_padded($Land_Green_Text, $Land_White_Text); }
-.Land.greenblue .cardtext, .Land.bluegreen .cardtext { @include gradient_horz_padded($Land_Green_Text, $Land_Blue_Text); }
+/* Bottom half of flip card has mirrored hybrid colouring */
+.flip .part2.Hybrid.<%= colour1colour2 %> { @include gradient_horz_padded($<%= Colour2 %>_Card, $<%= Colour1 %>_Card ); }
+.flip .part2.Hybrid.<%= colour2colour1 %> { @include gradient_horz_padded($<%= Colour2 %>_Card, $<%= Colour1 %>_Card ); }
 
-.Hybrid.whiteblue { @include gradient_horz_padded($White_Card, $Blue_Card); }
-.Hybrid.whiteblack { @include gradient_horz_padded($White_Card, $Black_Card); }
-.Hybrid.blueblack { @include gradient_horz_padded($Blue_Card, $Black_Card); }
-.Hybrid.bluered { @include gradient_horz_padded($Blue_Card, $Red_Card); }
-.Hybrid.blackred { @include gradient_horz_padded($Black_Card, $Red_Card); }
-.Hybrid.blackgreen { @include gradient_horz_padded($Black_Card, $Green_Card); }
-.Hybrid.redgreen { @include gradient_horz_padded($Red_Card, $Green_Card); }
-.Hybrid.redwhite, .Hybrid.whitered { @include gradient_horz_padded($Red_Card, $White_Card); }
-.Hybrid.greenwhite, .Hybrid.whitegreen { @include gradient_horz_padded($Green_Card, $White_Card); }
-.Hybrid.greenblue, .Hybrid.bluegreen { @include gradient_horz_padded($Green_Card, $Blue_Card); }
+.<%= colour1colour2 %> .cardtext { @include gradient_horz_padded($<%= Colour1 %>_Text, $<%= Colour2 %>_Text); }
+.<%= colour2colour1 %> .cardtext { @include gradient_horz_padded($<%= Colour1 %>_Text, $<%= Colour2 %>_Text); }
+.Land.<%= colour1colour2 %> .cardtext { @include gradient_horz_padded($Land_<%= Colour1 %>_Text, $Land_<%= Colour2 %>_Text); }
+.Land.<%= colour2colour1 %> .cardtext { @include gradient_horz_padded($Land_<%= Colour1 %>_Text, $Land_<%= Colour2 %>_Text); }
 
-.flip .part2.Hybrid.whiteblue  { @include gradient_horz_padded($Blue_Card , $White_Card ); }
-.flip .part2.Hybrid.whiteblack { @include gradient_horz_padded($Black_Card, $White_Card ); }
-.flip .part2.Hybrid.blueblack  { @include gradient_horz_padded($Black_Card, $Blue_Card  ); }
-.flip .part2.Hybrid.bluered    { @include gradient_horz_padded($Red_Card  , $Blue_Card  ); }
-.flip .part2.Hybrid.blackred   { @include gradient_horz_padded($Red_Card  , $Black_Card ); }
-.flip .part2.Hybrid.blackgreen { @include gradient_horz_padded($Green_Card, $Black_Card ); }
-.flip .part2.Hybrid.redgreen   { @include gradient_horz_padded($Green_Card, $Red_Card   ); }
-.flip .part2.Hybrid.redwhite,   .flip .part2.Hybrid.whitered { @include gradient_horz_padded(  $White_Card, $Red_Card  ); }
-.flip .part2.Hybrid.greenwhite, .flip .part2.Hybrid.whitegreen { @include gradient_horz_padded($White_Card, $Green_Card); }
-.flip .part2.Hybrid.greenblue,  .flip .part2.Hybrid.bluegreen { @include gradient_horz_padded( $Blue_Card , $Green_Card); }
+.dfc .part2.<%= colour1colour2 %> .cardtext { @include gradient_horz_padded($<%= Colour1 %>_DFC_Text, $<%= Colour2 %>_DFC_Text); }
+.dfc .part2.<%= colour2colour1 %> .cardtext { @include gradient_horz_padded($<%= Colour1 %>_DFC_Text, $<%= Colour2 %>_DFC_Text); }
 
-.dfc .part2 {
-  &.whiteblue .cardtext { @include gradient_horz_padded($White_DFC_Text, $Blue_DFC_Text); }
-  &.whiteblack .cardtext { @include gradient_horz_padded($White_DFC_Text, $Black_DFC_Text); }
-  &.blueblack .cardtext { @include gradient_horz_padded($Blue_DFC_Text, $Black_DFC_Text); }
-  &.bluered .cardtext { @include gradient_horz_padded($Blue_DFC_Text, $Red_DFC_Text); }
-  &.blackred .cardtext { @include gradient_horz_padded($Black_DFC_Text, $Red_DFC_Text); }
-  &.blackgreen .cardtext { @include gradient_horz_padded($Black_DFC_Text, $Green_DFC_Text); }
-  &.redgreen .cardtext { @include gradient_horz_padded($Red_DFC_Text, $Green_DFC_Text); }
-  &.redwhite .cardtext, &.whitered .cardtext { @include gradient_horz_padded($Red_DFC_Text, $White_DFC_Text); }
-  &.greenwhite .cardtext, &.whitegreen .cardtext { @include gradient_horz_padded($Green_DFC_Text, $White_DFC_Text); }
-  &.greenblue .cardtext, &.bluegreen .cardtext { @include gradient_horz_padded($Green_DFC_Text, $Blue_DFC_Text); }
-}
-
-
-.whiteblue .cardtext { @include gradient_horz_padded($White_Text, $Blue_Text); }
-.whiteblack .cardtext { @include gradient_horz_padded($White_Text, $Black_Text); }
-.blueblack .cardtext { @include gradient_horz_padded($Blue_Text, $Black_Text); }
-.bluered .cardtext { @include gradient_horz_padded($Blue_Text, $Red_Text); }
-.blackred .cardtext { @include gradient_horz_padded($Black_Text, $Red_Text); }
-.blackgreen .cardtext { @include gradient_horz_padded($Black_Text, $Green_Text); }
-.redgreen .cardtext { @include gradient_horz_padded($Red_Text, $Green_Text); }
-.redwhite .cardtext, .whitered .cardtext { @include gradient_horz_padded($Red_Text, $White_Text); }
-.greenwhite .cardtext, .whitegreen .cardtext { @include gradient_horz_padded($Green_Text, $White_Text); }
-.greenblue .cardtext, .bluegreen .cardtext { @include gradient_horz_padded($Green_Text, $Blue_Text); }
-
+<%
+end
+%>
 
 .Hybrid .cardtitlebar, .Hybrid .cardtypebar {
   background: #D2CCC0;
@@ -1448,6 +1426,34 @@ $ArtifactTitlebarHighlight: #d6e0e6;
     @include gradient_horz_highlight($Colourless_DFC_Bar, $Colourless_DFC_Bar);
   }
 }
+.Colourless .pinline {
+  background-color: $Colourless_Pinline;
+  background-image: none;
+}
+.Colourless .pinline_box {
+  background-color: $Colourless_PinlineBox;
+  @include gradient_vert(#ddd, #aaa); 
+}
+/* Hybrid + Devoid = two gradients. Fake it with a :before div. */
+.card.Colourless.Hybrid {
+  position: relative;
+  z-index: 1;
+}
+.card.Colourless.Hybrid:before {
+  content: " ";
+  height: 99%; /* works on split, normal, form */
+  width: 100%;
+  background-color: $Colourless_Card;
+  background: -webkit-gradient(linear, left top, left bottom, from(rgba(255,255,255,0)), color-stop(0.3, $Colourless_Card), color-stop(0.9, $Colourless_Card), to(rgba(255,255,255,0))); /* fade out at the bottom for the curves to collector info */
+  z-index: 0;
+  display: block;
+  position: absolute;
+  left: 0px;
+}
+.form.card.Colourless.Hybrid:before {
+  height: 430px;
+}
+
 
 
 /***** Dominion *****/
@@ -1541,7 +1547,7 @@ td.form_info_cell { color: #666; }
 .split #card2wrapper, .flip #card2wrapper, .dfc #card2wrapper { display: inline-block; }
 
 /***** Skeletons *****/
-.skeleton_letter_toggle.code_shown.rarity_C_toggle, .skeleton_letter_toggle.code_shown#rarity_B_toggle, .skeleton_letter_toggle.code_shown.rarity_T_toggle { @extend .cardrarity.common; }
+.skeleton_letter_toggle.code_shown.rarity_C_toggle, .skeleton_letter_toggle.code_shown.rarity_B_toggle, .skeleton_letter_toggle.code_shown.rarity_T_toggle { @extend .cardrarity.common; }
 .skeleton_letter_toggle.code_shown.rarity_U_toggle { @extend .uncommon; }
 .skeleton_letter_toggle.code_shown.rarity_R_toggle { @extend .rare; }
 .skeleton_letter_toggle.code_shown.rarity_M_toggle { @extend .mythic; }

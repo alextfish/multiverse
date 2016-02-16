@@ -12,7 +12,7 @@
 <span class="helptext">Generated at <%= format_datetime_absolute Time.now %></span>
 
 <% page_beyond_1 = (!params[:page].nil? && params[:page]>"1") %>
-<% all_cardsets = Cardset.includes(:user, :configuration).order("updated_at DESC") %><% 
+<% all_cardsets = Cardset.includes(:user, :configuration, :logs).order("updated_at DESC") %><% 
 "!--
 .sort_by { |cs|
   if permission_to? :view, cs

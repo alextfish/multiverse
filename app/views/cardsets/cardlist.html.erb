@@ -22,7 +22,7 @@
 
 <% cache(:action => "cardlist", :action_suffix => cache_suffix) do %>
 
-<% all_cards = @cardset.listable_cards %>
+<% all_cards = @cardset.listable_cards.includes(:cardset) %>
 
 <div class="controls">
   <% present_frame_letters = all_cards.map &:category_letter

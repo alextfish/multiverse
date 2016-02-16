@@ -161,7 +161,7 @@ class CommentsController < ApplicationController
       params.require(:comment).permit(:cardset_id, :card_id, :user_id, :user_name, :posttime, :body, :status)
     end
     def comment_update_params
-      params.require(:comment).permit(:body, :status)
+      params.require(:comment).delete_if {|key, value| ["cardset_id", "user_id"].include? key }.permit(:body, :status)
     end
     
 end

@@ -6,7 +6,8 @@
 <% use_proper_list = (!params[:page].nil? && params[:page]>"1") %>
 <% kinds_to_not_show = Log.kinds_to_not_show(:cardset_recent) %>
 <% if use_proper_list %>
-   <% items_to_show = @cardset.logs.reject{ |l| kinds_to_not_show.include?(l.kind) }.paginate :page => params[:page] || 1, :per_page => NewsList.MAX_LENGTH %>
+  <% require "will_paginate/array" %>
+  <% items_to_show = @cardset.logs.reject{ |l| kinds_to_not_show.include?(l.kind) }.paginate :page => params[:page] || 1, :per_page => NewsList.MAX_LENGTH %>
 <% else %>
   <% items_to_show = @cardset.news_list.get_logs.reverse %>
 <% end %>
