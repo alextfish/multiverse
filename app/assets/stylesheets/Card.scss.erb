@@ -51,6 +51,12 @@
   background: -webkit-gradient(linear, left top, left bottom, from($start), to($end));
   background: -moz-linear-gradient(top,  $start,  $end);
 }
+@mixin gradient_vert_20($start, $mid, $end) {
+  filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#{$start}', endColorstr='#{$end}', GradientType=0);
+  background: -webkit-gradient(linear, left top, left bottom, from($start), color-stop(0.2, $mid), to($end));
+  background: -moz-linear-gradient(top, $start, $mid, $mid, $mid, $end);
+  background: linear-gradient(to bottom, $start, $mid 20%, $end);
+}
 @mixin gradient_vert_important($start, $end) {
   filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#{$start}', endColorstr='#{$end}', GradientType=0) !important;
   background: -webkit-gradient(linear, left top, left bottom, from($start), to($end)) !important;
@@ -1288,10 +1294,11 @@ Card.colours.each do |thisColour|
   }
   /* Devoid */
   .card.Colourless.<%= thisColour %>.card {
-    background: -webkit-gradient(linear, left top, left bottom, from($<%= thisColour %>_Card), color-stop(0.2, $Colourless_Card), to($Colourless_Card));
+    @include gradient_vert_20($<%= thisColour %>_Card, $Colourless_Card, $Colourless_Card); 
   }
   .card.Colourless.<%= thisColour %> .cardart {
-      background: -webkit-gradient(linear, left top, left bottom, from($<%= thisColour %>_Card), color-stop(0, $Colourless_Card), to($Colourless_Card));
+    background-color: $Colourless_Card;
+    /*  background: -webkit-gradient(linear, left top, left bottom, from($<%= thisColour %>_Card), color-stop(0, $Colourless_Card), to($Colourless_Card)); */
   }
 
 <%
@@ -1320,10 +1327,11 @@ end
 .Multicolour .ptbox { background: #C6AF71 !important; }
 
 .card.Colourless.Multicolour.card {
-    background: -webkit-gradient(linear, left top, left bottom, from($Multicolour_Background), color-stop(0.2, $Colourless_Card), to($Colourless_Card));
+  @include gradient_vert_20($Multicolour_Background, $Colourless_Card, $Colourless_Card); 
 }
 .card.Colourless.Multicolour .cardart {
-    background: -webkit-gradient(linear, left top, left bottom, from($Multicolour_Background), color-stop(0, $Colourless_Card), to($Colourless_Card));
+  background-color: $Colourless_Card;
+  /*  background: -webkit-gradient(linear, left top, left bottom, from($Multicolour_Background), color-stop(0, $Colourless_Card), to($Colourless_Card)); */
 }
 
 .dfc .part2.Multicolour, .dfc .part2.Land.multicolour {
@@ -1444,7 +1452,8 @@ end
   height: 99%; /* works on split, normal, form */
   width: 100%;
   background-color: $Colourless_Card;
-  background: -webkit-gradient(linear, left top, left bottom, from(rgba(255,255,255,0)), color-stop(0.3, $Colourless_Card), color-stop(0.9, $Colourless_Card), to(rgba(255,255,255,0))); /* fade out at the bottom for the curves to collector info */
+  @include gradient_vert_20(rgba(255,255,255,0), $Colourless_Card, $Colourless_Card);
+  /* background: -webkit-gradient(linear, left top, left bottom, from(), color-stop(0.3, $Colourless_Card), color-stop(0.9, $Colourless_Card), to(rgba(255,255,255,0))); /* fade out at the bottom for the curves to collector info */
   z-index: 0;
   display: block;
   position: absolute;
