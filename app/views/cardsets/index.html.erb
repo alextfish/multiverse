@@ -49,7 +49,7 @@
      <td class="cardset_owner"><%= link_to @cardset.user.name, @cardset.user %></td>
      <td  class="cardset_access"><%= access %></td>
      <% if set_viewable %>
-       <td class="cardset_numcards"><%= @cardset.cards.count %></td>
+       <td class="cardset_numcards"><%= @cardset.cards.nonsecondary.count %></td>
        <td class="cardset_activity">
          <% @log = @cardset.recent_action  %>
          <span style="display:none;"><%= "%08d" % index %></span><!-- for sorting -->

@@ -153,6 +153,8 @@ class CardsController < ApplicationController
     if @card.calculated_frame == @card.frame
       frame = @card.frame = "Auto"
       Rails.logger.info "Using Auto frame"
+    elsif @card.frame =~ /^Colourless/
+      frame = "Colourless" # devoid is implicit
     else
       Rails.logger.info "Not using Auto frame as calculated_frame is '#{@card.calculated_frame}' but frame is '#{@card.frame}'..."
     end
@@ -166,6 +168,8 @@ class CardsController < ApplicationController
       if @card.link.calculated_frame == @card.link.frame
         @card.link.frame = "Auto"
         Rails.logger.info "Using Auto frame for secondary card"
+      elsif @card.link.frame =~ /^Colourless/
+        @card.link.frame = "Colourless" # devoid is implicit
       end
       @card.link.frame_display = @card.link.frame
     end
