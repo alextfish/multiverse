@@ -37,19 +37,23 @@
   filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#{$start}', endColorstr='#{$end}', GradientType=1);
   background: -webkit-gradient(linear, left top, right top, from($start), to($end));
   background: -moz-linear-gradient(left,  $start,  $end);
+  background: linear-gradient(to right, $start, $end);
 }
 @mixin gradient_horz_highlight($startend, $middle) {
   background: -webkit-gradient(linear, left top, right top, from($startend), color-stop(0.5, $middle), to($startend));
   background: -moz-linear-gradient(left, $startend, $middle, $startend);
+  background: linear-gradient(to right, $startend, $middle 50%, $startend);
 }
 @mixin gradient_diag_highlight($startend, $middle) {
   background: -webkit-gradient(linear, right top, left bottom, from($startend), color-stop(0.5, $middle), to($startend));
   background: -moz-linear-gradient(right top, $startend, $middle, $startend);
+  background: linear-gradient(to left bottom, $startend, $middle 50%, $startend);
 }
 @mixin gradient_vert($start, $end) {
   filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#{$start}', endColorstr='#{$end}', GradientType=0);
   background: -webkit-gradient(linear, left top, left bottom, from($start), to($end));
   background: -moz-linear-gradient(top,  $start,  $end);
+  background: linear-gradient(to bottom, $start, $end);
 }
 @mixin gradient_vert_20($start, $mid, $end) {
   filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#{$start}', endColorstr='#{$end}', GradientType=0);
@@ -60,21 +64,25 @@
 @mixin gradient_vert_important($start, $end) {
   filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#{$start}', endColorstr='#{$end}', GradientType=0) !important;
   background: -webkit-gradient(linear, left top, left bottom, from($start), to($end)) !important;
-  background: -moz-linear-gradient(top,  $start,  $end) !important;
+  background: -moz-linear-gradient(top,  $start, $end) !important;
+  background: linear-gradient(to bottom, $start, $end) !important;
 }
 @mixin gradient_vert_highlight($startend, $middle) {
   background: -webkit-gradient(linear, left top, left bottom, from($startend), color-stop(0.5, $middle), to($startend));
   background: -moz-linear-gradient(top, $startend, $middle, $startend);
+  background: linear-gradient(to bottom, $startend, $middle 50%, $startend);
 }
 @mixin gradient_horz_padded($start, $end) {
   filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#{$start}', endColorstr='#{$end}', GradientType=1);
   background: -webkit-gradient(linear, left top, right top, from($start), color-stop(0.4, $start), color-stop(0.6, $end), to($end));
   background: -moz-linear-gradient(left, $start, $start, $end, $end);
+  background: linear-gradient(to right, $start, $start 40%, $end 60%, $end);
 }
 @mixin twotone_horz($left, $right) {
   filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#{$left}', endColorstr='#{$right}', GradientType=1);
   background: -webkit-gradient(linear, left top, right top, from($left), color-stop(0.5, $left), color-stop(0.5, $right), to($right));
   background: -moz-linear-gradient(left, $left, $left, $right, $right);
+  background: linear-gradient(to right, $left, $left 50%, $right 50%, $right);
 }
 @mixin round_corners($radius) {
   -moz-border-radius:    $radius;
@@ -1173,6 +1181,7 @@ img.colour_indicator {
 
 /***** Colours *****/
 $Colourless_Card: #ccc6cc;
+$Colourless_Card_Semitransparent: rgba(204, 198, 204, 0.7);
 $Colourless_Pinline: #ddd;
 $Colourless_PinlineBox: #ccc;
 $Colourless_Text: #f2ecf2;
@@ -1452,6 +1461,7 @@ end
   height: 99%; /* works on split, normal, form */
   width: 100%;
   background-color: $Colourless_Card;
+  background-color: $Colourless_Card_Semitransparent;
   @include gradient_vert_20(rgba(255,255,255,0), $Colourless_Card, $Colourless_Card);
   /* background: -webkit-gradient(linear, left top, left bottom, from(), color-stop(0.3, $Colourless_Card), color-stop(0.9, $Colourless_Card), to(rgba(255,255,255,0))); /* fade out at the bottom for the curves to collector info */
   z-index: 0;

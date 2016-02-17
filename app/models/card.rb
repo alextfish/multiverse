@@ -152,11 +152,11 @@ class Card < ActiveRecord::Base
   end
 
   def get_history
-    possible_logs = Log.where(object_id: id)
+    possible_logs = Log.includes(:cardset).where(object_id: id)
     my_logs = possible_logs.select{|l| l.return_object == self}
     logs_to_not_show = Log.kinds_to_not_show(:card_history)
     my_logs.reject!{|l| logs_to_not_show.include? l.kind}
-    out = (comments + my_logs).sort_by &:recency
+    out = (comments.includes(:cardset) + my_logs).sort_by &:recency
   end
   def get_creation_log
     possible_logs = Log.where("object_id = ? AND kind IN (?)", id, [Log.kind(:card_create), Log.kind(:card_create_and_comment)])

@@ -259,7 +259,7 @@ class Cardset < ActiveRecord::Base
   def build_name_and_code_lookup_table
     cardset_cardnames_and_codes = []
     cardset_cards_from_name_or_code = {}
-    self.cards.each do |card|
+    self.cards.eager_load(:link).each do |card|
       if card.name
         cardset_cardnames_and_codes << card.name
         cardset_cards_from_name_or_code[card.name] = card
