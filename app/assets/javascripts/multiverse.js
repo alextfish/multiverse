@@ -159,11 +159,11 @@ function update_frame(card_id) {
       inner = cardframe;
       if(cardframe == "Colourless" && num_colours > 0) {
         // Add devoid colours
-        inner = "Colourless " + detect_colours(cost, colours, num_colours);
+        inner = "Colourless " + detect_colours(this_card, cost, colours, num_colours, cardtype, cardsubtype);
       }
     } else {
       // calculate frame
-      inner = detect_colours(cost, colours, num_colours);
+      inner = detect_colours(this_card, cost, colours, num_colours, cardtype, cardsubtype);
     }
     if (card_id == "card2" && inner == "Colourless" && cardframe != "Colourless") {
       // get card 1 instead
@@ -192,7 +192,7 @@ function update_frame(card_id) {
   cardTrueFrameField.value = newTrueFrame;
 }
 
-function detect_colours(cost, colours, num_colours) {
+function detect_colours(this_card, cost, colours, num_colours, cardtype, cardsubtype) {
   var inner;
   switch ( num_colours ) {
     case 1: inner = colours.join(""); break;

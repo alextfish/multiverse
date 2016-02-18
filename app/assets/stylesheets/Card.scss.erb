@@ -685,15 +685,23 @@ div.dfc div.part2.Planeswalker div.ptbox_container div.pinline_ptbox {
 /* .token.card { height: 262px;} */
 .token.card.form { height: inherit; }
 .token .cardname, .token .cardname a {
-  color: #ba8;
-  text-shadow: #ff9 1px -1px;
+  color: #ee9;
+  text-shadow: #C5A86F 1px 0px;
+  /* color: #ba8;
+  text-shadow: #ff9 1px -1px; */
 }
 .token .cardname {
-  float: none; display: inline;
+  float: none;
   padding-right: 2px; /* to balance the text-shadow */
-  /* changed for M15: text-transform: uppercase; */
-  font-variant: small-caps;
+  /* changed back from   font-variant: small-caps; */
+  text-transform: uppercase; 
+  letter-spacing: 0.5px;
 }
+/* First-letter doesn't work for multi-word tokens 
+.token .cardname:first-letter {
+  font-size: 14px;
+} */
+
 .token .cardtitlebar {
   background-color: #000 !important;
   background: #000 !important;
@@ -708,7 +716,8 @@ div.dfc div.part2.Planeswalker div.ptbox_container div.pinline_ptbox {
   margin: auto;
 }
 .token.form  .pinline.namebox {
-  width: inherit;}
+  width: inherit;
+}
 .token .cardtitlebar {
   border-bottom: 1px solid #ff9;
 }
