@@ -87,3 +87,4 @@ gem 'actionpack-action_caching'
 gem 'non-stupid-digest-assets'
 
 gem 'rack-pratchett'
+gem 'mime-types', '1.25.1'
