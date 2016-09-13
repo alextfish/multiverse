@@ -84,7 +84,7 @@ gem 'protected_attributes'
 gem 'rails-observers'
 gem 'actionpack-page_caching'
 gem 'actionpack-action_caching'
-gem 'non-stupid-digest-assets'
+gem 'non-stupid-digest-assets', '1.0.4'
 
 gem 'rack-pratchett'
 gem 'mime-types', '1.25.1'
