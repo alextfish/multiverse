@@ -84,7 +84,11 @@ gem 'protected_attributes'
 gem 'rails-observers'
 gem 'actionpack-page_caching'
 gem 'actionpack-action_caching'
-gem 'non-stupid-digest-assets', '1.0.4'
+gem 'non-stupid-digest-assets', '1.0.4'   # higher needs Ruby2
 
 gem 'rack-pratchett'
-gem 'mime-types', '1.25.1'
+
+group :production do        # higher versions than these need Ruby2
+  gem 'mime-types', '1.25.1'   
+  gem 'rest-client', '~> 1.7.2'   
+end
