@@ -147,6 +147,7 @@ module ApplicationHelper
     my_text.html_safe
   end
 
+  # Man, this is horrible code
   def fishify(text)
     text.gsub!( "0", "zznofish" )
     text.gsub!( "1", "zzonefish" )

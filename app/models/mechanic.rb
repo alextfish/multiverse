@@ -26,6 +26,9 @@ class Mechanic < ActiveRecord::Base
   def Mechanic.one_param
     "([^\\]]*)"
   end
+  def hide_params?   # Do I contain "\1" or "\2" etc anywhere in my name (expansion)?
+    (self.name =~ /[\\][\d]/).present?
+  end
   def regexps
     if attributes[:regexps].nil?
       sep = " "                    # "|"
@@ -36,10 +39,10 @@ class Mechanic < ActiveRecord::Base
           target = self.name 
        when 1
           src_main = src_start + sep + Mechanic.one_param
-          target = self.name + ' \\1'
+          target = (self.hide_params? ? self.name : self.name + ' \\1')
        when 2
           src_main = src_start + sep + Mechanic.one_param + sep + Mechanic.one_param
-          target = self.name + ' \\1 - \\2'
+          target = (self.hide_params? ? self.name : self.name + ' \\1 - \\2')
       end
       # Rails.logger.info "Compiling regexp from " + src_main + "\\(\\)\\]"
       src_no_reminder =  Regexp.new(src_main + "\\(\\)\\]")

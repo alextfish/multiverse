@@ -145,7 +145,8 @@ function update_frame(card_id) {
       if ( colours[i] != "") num_colours++;
     }
     var outer = "";
-    if (num_colours > 0 && cardtype.search(/Artifact/) >- 1) {
+    if (cardtype.search(/Artifact/) >- 1)
+      if (num_colours > 0 || cardtype.search(/Land/) > -1) {
       outer += "Coloured_Artifact ";
     }
     if (cardsubtype.search(/Vehicle/) >- 1 && cardframe != 'Artifact') {

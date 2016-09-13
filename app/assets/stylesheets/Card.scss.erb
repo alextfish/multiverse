@@ -1274,7 +1274,7 @@ $ArtifactTitlebarHighlight: #d6e0e6;
 .Artifact .pinline { background-color: $ArtifactPinline; }
 .Artifact .pinline_ptbox { background-color: #9CB7BE; }
 .Artifact .ptbox { background-color: #A8BFC7; }
-.Artifact .cardtitlebar, .Artifact .cardtypebar, .Land.Coloured_Artifact .cardtitlebar, .Land.Coloured_Artifact .cardtypebar  {
+.Artifact .cardtitlebar, .Artifact .cardtypebar {
    background: $ArtifactTitlebar; 
    @include gradient_horz_highlight($ArtifactTitlebar, $ArtifactTitlebarHighlight);
    /* pre-M15: @include gradient_vert_highlight(#B0C4C8, #D2D7DB); */
@@ -1377,6 +1377,12 @@ end
 .Land, .Land.Coloured_Artifact {  /*#A4968E*/; 
   @include gradient_vert_important(#DECCC1, #6A514A); 
 }
+.Land.Coloured_Artifact .cardtitlebar, .Land.Coloured_Artifact .cardtypebar  {
+   /* Copying .Artifact .cardtitlebar & .Artifact .cardtypebar above 
+      Needs to be down here for C42507 */
+   background: $ArtifactTitlebar; 
+   @include gradient_horz_highlight($ArtifactTitlebar, $ArtifactTitlebarHighlight);
+   }
 .Land .cardart { background-color: #b9aea2; }
 .Land .pinline { background-color: #d7cDbF /*C7BDAF*/; }
 .Land .cardtitlebar, .Land .cardtypebar { 
