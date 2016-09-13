@@ -478,7 +478,7 @@ color: white; background: $PurpleBorder;
 }
 
 .cardtitlebar, .cardtypebar, .ptbox, .loyalty {
-  font-family: Beleren;
+  font-family: Beleren, Times New Roman, serif;
 }
 .cardtext {
   /* font-family: MPlantin; */
@@ -1230,6 +1230,9 @@ $Land_Colourless_Bar: #D8CFC8;
 $Land_Text: #D8CFC8;
 $Multicolour_Text: #ffd;
 $Multicolour_Background: #CAB86C;
+$Vehicle_Background: #953;
+$Vehicle_Highlight: #a47439;
+$Vehicle_PTBox: #b74;
 
 $White_DFC_Bar: #887b6b;
 $White_DFC_Text: #beb7a7;
@@ -1287,6 +1290,7 @@ $ArtifactTitlebarHighlight: #d6e0e6;
   .cardtext { background: $Artifact_DFC_Text !important; }
   .pinline_ptbox, .ptbox  { background-color: $Artifact_DFC_Bar !important; }
 }
+
 
 <%
 Card.colours.each do |thisColour|
@@ -1439,6 +1443,21 @@ end
 }
 .Hybrid .cardart {
   background-color: #eeeeee;
+}
+
+.Vehicle {
+    background-color: $Vehicle_Background;
+    background-image: 
+      repeating-linear-gradient(to bottom,
+        transparent, transparent 7%, #aaa 0, #aaa 1px, #888 8%, #555 10%, #444 11%),
+      linear-gradient(to bottom, $Vehicle_Background, $Vehicle_Highlight 40%, $Vehicle_Background 90%, $Vehicle_Background);
+}
+.Vehicle .ptbox, .Vehicle .notptbox {
+    background-color: $Vehicle_Background;
+    color: white;
+}
+.Vehicle .pinline_ptbox {
+    background-color: $Vehicle_PTBox !important;
 }
 
 /* Now the second half of colourless, for devoid purposes */

@@ -9,7 +9,7 @@
     <title><% if Rails.env.development? %>MV Dev<% elsif request.domain =~ /staging/ %>MV Staging<% else %>Multiverse<% end %>: <%= @title %></title>
     
     <link rel="shortcut icon" href="/favicon.ico" />
-	  <link rel="author" href="humans.txt" />
+	  <link rel="author" href="/humans.txt" />
     <% if request.fullpath == "/" %>
       <meta name="google-site-verification" content="Id1E1rEbQHoKR5dpkTdfno09vXYBXzJgjbEUQ0hdSlE" />
     <% end %>

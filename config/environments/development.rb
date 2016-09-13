@@ -48,7 +48,8 @@ Multiverse::Application.configure do
     config.assets.debug = true  # doubles up execution if application.js is compiled :/
     
     # Dodge precompiled assets
-    #config.assets.prefix = "/dev-assets"
+    config.assets.prefix = "/dev-assets"
+    # was commented out; trying re-enabling on 2016-02-25
     
     config.serve_static_assets = true
 

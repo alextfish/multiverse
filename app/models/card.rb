@@ -186,7 +186,7 @@ class Card < ActiveRecord::Base
   end
 
   DISPLAY_FRAMES =
-    Card.colours + ["Artifact", "Multicolour", "Colourless"] +
+    Card.colours + ["Artifact", "Artifact - Vehicle", "Multicolour", "Colourless"] +
     Card.colour_pairs.map { |pair| "Hybrid #{pair.join('-').downcase}" } +
     ["Land (colourless)"] +
     Card.colours.map { |col| "Land (#{col.downcase})" } +
@@ -316,6 +316,7 @@ class Card < ActiveRecord::Base
       # Frames with no other display options
       return self.frame
     end
+    # Calculate frame unless it's been overridden
     if self.frame.nil? || self.frame == "Auto"
       if self.new_record? && self.link.present? && !self.link.new_record?
         cardclass = "" << self.link.calculated_frame
@@ -326,11 +327,16 @@ class Card < ActiveRecord::Base
       cardclass = "" << self.frame
     end
     cardclass.gsub!(/[()-]/, "")
+    # Everything from here downwards is enforced (not overrideable)
+    # Add detected type frames
     if self.is_planeswalker?
       cardclass << " Planeswalker"
     end
-    if self.cardtype =~ /Artifact/ && self.frame != "Artifact"
-      cardclass << " Coloured_Artifact"
+    if self.cardtype =~ /Artifact/ 
+      non_artifact_frames = self.frame.gsub(/Artifact/,"").gsub(/Vehicle/,"").strip
+      if non_artifact_frames != ""
+        cardclass << " Coloured_Artifact"
+      end
     end
     # If a flip-half has nothing by this point, remove Colourless class and inherit from parent
     if cardclass == "Colourless" && (self.multipart == Card.FLIP2 || self.multipart == Card.DFCBACK)
@@ -463,7 +469,7 @@ class Card < ActiveRecord::Base
       ""
     else
       frame_to_check = (frame!="Auto" ? frame : calculated_frame)
-      frame_to_check.gsub! /(Planeswalker|Coloured_Artifact|token)/i, ""
+      frame_to_check.gsub! /(Planeswalker|Coloured_Artifact|Vehicle|token)/i, ""
       frame_to_check.strip!
       case frame_to_check
         when /^(White|Blue|Black|Red|Green)$/
@@ -520,6 +526,7 @@ class Card < ActiveRecord::Base
     
     f.gsub! /Planeswalker/i, ""
     f.gsub! /Coloured_Artifact/i, ""
+    f.gsub! /Vehicle/i, ""
     f.strip!
 
     case f
@@ -553,6 +560,9 @@ class Card < ActiveRecord::Base
   def is_token?
     rarity == "token" || frame =~ /Token/i
   end
+  def is_vehicle?
+    cardtype =~ /Vehicle/ || frame =~ /Vehicle/i
+  end
 
   def is_planeswalker?
     cardtype =~ /Planeswalker/ || frame =~ /Planeswalker/i
@@ -578,23 +588,23 @@ class Card < ActiveRecord::Base
     case num_colours
       when 1      # Monocolour is the simplest case
         case cost
-          when /w/i then return "White"
-          when /u/i then return "Blue"
-          when /b/i then return "Black"
-          when /r/i then return "Red"
-          when /g/i then return "Green"
+          when /w/i then out = "White"
+          when /u/i then out = "Blue"
+          when /b/i then out = "Black"
+          when /r/i then out = "Red"
+          when /g/i then out = "Green"
         end
       when 2      # Two-colour: distinguish between gold and hybrid
                   # We say a card for 1W(W/U)U is gold, but 1W(W/G) is hybrid
         # Count the number of colours present outside hybrid symbols
         colours_present = nonhybrid_colours_in_cost
         if colours_present >= 2
-          return "Multicolour"
+          out = "Multicolour"
         else
-          return "Hybrid " + colour_strings_present.join("").downcase
+          out = "Hybrid " + colour_strings_present.join("").downcase
         end
       when 3..5  # Multicolour is easy
-        return "Multicolour"
+        out = "Multicolour"
       when 0     # Colourless is either artifact, land, or neither, based on type
         if /land/i.match(cardtype) # Land
           # Could try to detect the text box here, but that's really fiddly to get right
@@ -607,20 +617,25 @@ class Card < ActiveRecord::Base
           end
           case land_colours.length
             when 0
-              return "Land (colourless)" # "Land" #
+              out = "Land (colourless)" # "Land" #
             when 1
-              return "Land (#{land_colours[0].downcase})" # "Land " + land_colours[0] #
+              out = "Land (#{land_colours[0].downcase})" # "Land " + land_colours[0] #
             when 2
-              return "Land (#{land_colours[0].downcase}-#{land_colours[1].downcase})" # "Land " + land_colours.join("").downcase #
+              out = "Land (#{land_colours[0].downcase}-#{land_colours[1].downcase})" # "Land " + land_colours.join("").downcase #
             when 3..5
-              return "Land (multicolour)" # "Land multicolour" #
+              out = "Land (multicolour)" # "Land multicolour" #
           end
         elsif /artifact/i.match(cardtype)
-          return "Artifact"
+          out = "Artifact"
         else
-          return "Colourless"
+          out = "Colourless"
         end
     end
+    # Add detected type frames (overrideable)
+    if self.is_vehicle?
+      out += " Vehicle"
+    end
+    out
   end
 
   def show_whole_card_image?

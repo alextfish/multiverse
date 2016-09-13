@@ -73,8 +73,9 @@ config.active_record.whitelist_attributes = false
     # Version of your assets, change this if you want to expire all your assets
     config.assets.version = '1.0'
     
-    # Prevent initializing application and connecting to the database during precompilation. Heroku requires this to be false.
-    config.assets.initialize_on_precompile = false
+    ## Prevent initializing application and connecting to the database during precompilation. Heroku requires this to be false.
+    #config.assets.initialize_on_precompile = false
+    # "The config.assets.initialize_on_precompile option has been removed is and not needed for Rails 4." - https://devcenter.heroku.com/articles/getting-started-with-rails4
     
     config.middleware.use Rack::Pratchett
   end

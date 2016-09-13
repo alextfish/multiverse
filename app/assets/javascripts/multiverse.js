@@ -148,6 +148,9 @@ function update_frame(card_id) {
     if (num_colours > 0 && cardtype.search(/Artifact/) >- 1) {
       outer += "Coloured_Artifact ";
     }
+    if (cardsubtype.search(/Vehicle/) >- 1 && cardframe != 'Artifact') {
+      outer += "Vehicle ";
+    }
     if (isPlaneswalker(this_card)) {
       outer += "Planeswalker ";
     }
