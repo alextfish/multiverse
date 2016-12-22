@@ -16,10 +16,9 @@
       <span class="break_if_mobile">
       <% if signed_in? %>
         <li class="subsequent"><%= link_to current_user.name, current_user %></li>
-        <% if (decklist = current_user.active_decklist).blank? %>
-          <li class="subsequent"><%= link_to "Sign out", signout_path, :method => :delete %></li>
-        <% else %>
-          <li class="subsequent decklists"><%= link_to decklist.name, decklist %></li>
+        <% if (decklist = current_user.active_decklist).present? %>
+          <li class="subsequent decklists"><%= link_to decklist.name, decklist %> (<span id="decklist_num_cards"><%= decklist.num_cards %></span>)
+          </li>
         <% end %>
       <% else %>
         <li class="subsequent"><%= link_to "Sign in", signin_path %></li>

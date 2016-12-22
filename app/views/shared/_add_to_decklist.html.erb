@@ -1,0 +1,18 @@
+<% if signed_in? && Decklist.enabled? %>
+  <div class="decklists">
+    <% if (decklist = current_user.active_decklist).present? %>
+      <% if (deck_card = decklist.deck_cards.where(card_id: @card.id)).present? %>
+        Already in <%= decklist.name %> x<%= deck_card.first.count %>
+      <% else %>          
+        <%= form_for(decklist.deck_cards.build) do |f| %>
+          <%= f.hidden_field :decklist_id, :value => decklist.id %>
+          <%= f.hidden_field :card_id, :value => @card.id %>
+          <%= f.submit "Add", class: "button" %>
+          to <%= link_to decklist.name, decklist %>
+          x 
+          <%= f.select :count, [1, 2, 3, 4], {:selected => 1}, :class => "decklist_add_num", :onclick => "expand_hover(this)", :onfocus => "expand_hover(this)" %>
+        <% end %>
+      <% end %>
+    <% end %>
+  </div>
+<% end %>

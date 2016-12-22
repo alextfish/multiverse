@@ -1,0 +1,36 @@
+<%= form_for(@decklist) do |f| %>
+  <% errors = @decklist.errors %>
+  <% if errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(errors.count, "error") %> prohibited this decklist from being saved:</h2>
+
+      <ul>
+      <% errors.full_messages.each do |msg| %>
+        <li><%= msg %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="field">
+    <%= f.label :name, "Decklist name" %><br />
+    <%= f.text_field :name %>
+    <span class="helptext">(required)</span>
+  </div>
+  <div class="field">
+    <%= f.label :description, "Description" %><br />
+    <%= f.text_area :description, :width => "50em" %>
+      <div class="helptext">(optional; you can fill this in later)      </div>
+  </div>
+  <div class="field">
+    <%= f.label :name, "Visibility" %><br />
+    <%= f.select :status, Decklist::VISIBILITY_VALUES %>
+    <span class="helptext">(you can change this later)</span>
+  </div>
+      
+  <div class="actions">
+    <div class="button_outer"><div class="button_inner">
+      <%= f.submit "Save decklist and add some cards" %>
+    </div></div>
+  </div>
+<% end %>

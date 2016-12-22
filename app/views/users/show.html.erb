@@ -6,7 +6,20 @@
 <% if Decklist.enabled? %>
 <div class="decklists user_list">
 <h3>Decklists</h3>
-<p><%= @user.name %> has created <%= pluralize(@user.decklists.count, "decklist") %><% if @user.decklists.empty? %>.<% else %>: <% @user.decklists.each do |deck| %><%= link_to deck, deck.name %><% end %><% end %></p>
+<% decklists = @user.decklists.includes(:deck_wizards_cards, :deck_cards => :card) %>
+<p><%= @user.name %> has created <%= pluralize(decklists.count, "decklist") %><% if decklists.empty? %>.<% else %>: 
+  <ul>
+  <% decklists.each do |deck| %>
+    <li><%= link_to deck.name, deck %> (<%= pluralize(deck.num_cards, "cards") %>)
+    <% if deck.active? %>
+      (active)
+    <% else %>
+      <%= link_to "make active", "" %>
+    <% end %>
+  <% end %>
+  </ul>
+<% end %></p>
+
 <% if @user == current_user %>
   <p><%= link_to "Create new decklist", new_decklist_path %></p>
 <% end %>

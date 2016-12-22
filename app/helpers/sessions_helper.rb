@@ -40,15 +40,19 @@ module SessionsHelper
       redirect_back :notice => "Only moderators are permitted to access that."
     end
   end
-  def require_permission_to(action, cardset)
-    if !permission_to?(action, cardset)
-      if !signed_in?
-        interrupt_for_login :notice => cardset.permission_message(action) and return false
-      else
-        redirect_back :notice => cardset.permission_message(action) and return false
-      end
-    else
+  def require_permission_to(action, obj)
+    if permission_to?(action, obj)
       return true
+    else
+      # Permission denied.
+      Rails.logger.info "Permission denied to #{action} #{obj.inspect}"
+      # Should we interrupt or redirect back, and what notice to issue
+      message = obj.permission_message(action)
+      if !signed_in?
+        interrupt_for_login :notice => message and return false
+      else
+        redirect_back :notice => message and return false
+      end
     end
   end
   def require_permission_to_edit_comment(comment)
@@ -71,43 +75,74 @@ module SessionsHelper
     require_permission_to(:admin, cardset)
   end
 
-  def permission_to?(action, cardset)
+  def permission_to?(action, obj)
     # This needs to be in sessions_helper because the model doesn't have access to methods like signed_in?
-    if cardset.nil?
+    if obj.nil?
       return false
     end
-    case action
-      when :comment
-        permitted_people = cardset.configuration.commentability
-      when :view
-        permitted_people = cardset.configuration.visibility
-      when :edit
-        permitted_people = cardset.configuration.editability
-      when :admin
-        permitted_people = cardset.configuration.adminability
-      when :delete
-        permitted_people = "justme"
-      else
-        raise "Bad input to permission_to?(#{action})"
-    end
-    case permitted_people.to_s
-      when "anyone"
+    
+    if obj.is_a? Cardset
+      # Cardset permissions
+      cardset = obj
+      case action
+        when :comment
+          permitted_people = cardset.configuration.commentability
+        when :view
+          permitted_people = cardset.configuration.visibility
+        when :edit
+          permitted_people = cardset.configuration.editability
+        when :admin
+          permitted_people = cardset.configuration.adminability
+        when :delete
+          permitted_people = "justme"
+        else
+          raise "Bad input to permission_to?(#{action})"
+      end
+      case permitted_people.to_s
+        when "anyone"
+          out = true
+        when "signedin"
+          out = signed_in?
+        when "admins"
+          out = signed_in_as_admin?(cardset)
+        when "justme"
+          out = signed_in_as_owner?(cardset)
+        when "selected"
+          return cardset.configuration.permitted_users(action).include?(current_user.name)
+        else
+          raise "Unexpected value of configuration property in action #{action}: \"#{permitted_people}\""
+      end
+    elsif obj.is_a? Decklist
+      # Decklist permissions
+      decklist = obj
+      Rails.logger.info decklist.inspect
+      if decklist.user == current_user || signed_in_as_moderator?
+        # Owner and admin can do anything
         out = true
-      when "signedin"
-        out = signed_in?
-      when "admins"
-        out = signed_in_as_admin?(cardset)
-      when "justme"
-        out = signed_in_as_owner?(cardset)
-      when "selected"
-        return cardset.configuration.permitted_users(action).include?(current_user.name)
-      else
-        raise "Unexpected value of configuration property in action #{action}: \"#{permitted_people}\""
+        return true
+      end
+      # OK, we're not the owner.
+      case action
+        when :view  # Published and non-private
+          out = decklist.viewable? && decklist.published?
+        when :edit  # Editable
+          out = decklist.editable?
+        when :admin # Only owner/admin
+          out = false
+        when :delete # Only owner/admin
+          out = false
+      end
+    else
+      raise "Unexpected input to permission_to?(#{obj})"
     end
+    out
   end
 
   def permission_to_edit?(comment)
     signed_in_as_moderator? || (current_user && comment.user && current_user.id == comment.user.id)
+  end
+  def can_edit_decklist(decklist)
+    decklist.user == current_user || decklist.editable?  
   end
   def show_comment_admin_status?
     TODO

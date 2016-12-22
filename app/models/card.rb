@@ -39,7 +39,7 @@ class Card < ActiveRecord::Base
   has_many :decklists, :through => :deck_cards
   
   attr_accessor :foil, :blank, :frame_display, :structure_display  # not saved
-  attr_protected :foil # :cardset_id
+  attr_protected :foil
   
   belongs_to :link, :class_name => "Card", :inverse_of => :parent
   belongs_to :parent, :class_name => "Card", :inverse_of => :link
@@ -234,7 +234,7 @@ class Card < ActiveRecord::Base
   mana_symbols += COLOUR_LETTERS.map {|s| "{#{s}/2}" }
   mana_symbols += COLOUR_LETTERS.map {|s| "{#{s}/3}" }
   mana_symbols += COLOUR_LETTERS.map {|s| "{P#{s}}" }
-  mana_symbols += ( COLOUR_LETTERS + %w{1000000 100 10 11 12 13 14 15 16 17 18 19 20 -3 1 2 3 4 5 6 7 8 9 0 X Y T Q S C CHAOS ?} ) .map {|s| "{#{s}}" }
+  mana_symbols += ( COLOUR_LETTERS + %w{1000000 100 10 11 12 13 14 15 16 17 18 19 20 -3 1 2 3 4 5 6 7 8 9 0 X Y T Q S C CHAOS E ?} ) .map {|s| "{#{s}}" }
   MANA_SYMBOLS = mana_symbols
 
   def self.mana_symbols_extensive
@@ -687,7 +687,8 @@ class Card < ActiveRecord::Base
     :subtype => "Plains",
     :frame => "Land white",
     :rarity => "basic",
-    :watermark => "{White Mana}"
+    :watermark => "{White Mana}",
+    :code => 73963
   )
   ISLAND = Card.new(
     :name => "Island",
@@ -696,7 +697,8 @@ class Card < ActiveRecord::Base
     :subtype => "Island",
     :frame => "Land blue",
     :rarity => "basic",
-    :watermark => "{Blue Mana}"
+    :watermark => "{Blue Mana}",
+    :code => 73951
   )
   SWAMP = Card.new(
     :name => "Swamp",
@@ -705,7 +707,8 @@ class Card < ActiveRecord::Base
     :subtype => "Swamp",
     :frame => "Land black",
     :rarity => "basic",
-    :watermark => "{Black Mana}"
+    :watermark => "{Black Mana}",
+    :code => 73973
   )
   MOUNTAIN = Card.new(
     :name => "Mountain",
@@ -714,7 +717,8 @@ class Card < ActiveRecord::Base
     :subtype => "Mountain",
     :frame => "Land red",
     :rarity => "basic",
-    :watermark => "{Red Mana}"
+    :watermark => "{Red Mana}",
+    :code => 73958
   )
   FOREST = Card.new(
     :name => "Forest",
@@ -723,7 +727,8 @@ class Card < ActiveRecord::Base
     :subtype => "Forest",
     :frame => "Land green",
     :rarity => "basic",
-    :watermark => "{Green Mana}"
+    :watermark => "{Green Mana}",
+    :code => 73946
   )
   def Card.basic_land
     [PLAINS, ISLAND, SWAMP, MOUNTAIN, FOREST]

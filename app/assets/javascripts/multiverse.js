@@ -201,8 +201,13 @@ function detect_colours(this_card, cost, colours, num_colours, cardtype, cardsub
   switch ( num_colours ) {
     case 1: inner = colours.join(""); break;
     case 3: case 4: case 5: inner = "Multicolour"; break;
-    case 2: inner = (cost.search(/[({][^)}]{2,}[)}]/)>-1 ? "Hybrid" : "Multicolour"); break;
-    // this case 2 is buggy for Twinclaws cases, but meh
+    case 2: if (cost.search(/[({][^)}]{2,}[)}]/)>-1 || cost.search('[a-zA-Z][/][a-zA-Z]')>-1) {
+              inner = "Hybrid";
+            } else {
+              inner = "Multicolour";
+            }
+            break;
+            // this case 2 is buggy for Twinclaws cases, but meh
     case 0: if (cardtype.search(/Land/)>-1) {
               // Detect land colour affiliation
               var cardtext = this_card.select(".rulestextfield")[0].value;
@@ -797,6 +802,20 @@ function selectCardLink(cardId) {
   $(linkid).focus();
   setTimeout("selectTextIn('"+linkid+"')", 10);
 }
+
+// ------------ Decklists
+function update_decklist_count(numCards) {
+  var el = document.getElementById("decklist_num_cards");
+  el.innerHTML = numCards;
+}
+function expand_hover(inner_select) {
+  var popupPreview = inner_select.up(".prototip");
+  if (!popupPreview.getAttribute("expanded")) {
+    popupPreview.style.height = popupPreview.getHeight() + 100 + "px";
+    popupPreview.setAttribute("expanded", true);
+  }
+}
+
 
 // (Functions below are from CoderZone.org)
 function selectTextIn(objId) {

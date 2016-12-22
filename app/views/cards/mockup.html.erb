@@ -12,4 +12,5 @@
     <span id="<%= linkid %>" tabindex=0 onblur="$('<%= hintid %>').hide();">(((C<%= @card.id %>)))</span><span id="<%= hintid %>">
     <br>Press Ctrl-C to copy link code</span>
   </div>
+  <%= render :partial => "shared/add_to_decklist" %>
 </div>

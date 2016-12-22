@@ -23,9 +23,25 @@
 
 <body class="fourohfour">
   <!-- This file lives in public/404.html -->
+  
+<header>
+  <a href="/"><img alt="Multiverse" class="logo" src="www.magicmultiverse.net/assets/multiverse_logo_big.png" /></a>
+  <nav>
+    <ul>
+      <li class="first"><a href="/cardsets">Recent updates</a></li>
+      <li class="subsequent"><a href="/advanced_search">Search:</a>
+        <form action="/quicksearch" method="get">
+          <input id="q" name="q" type="text" />
+        </form>
+      </li>
+    </ul>
+  </nav>
+</header>
+
   <div class="fourohfour_dialog">
     <h1>The page you were looking for doesn't exist.</h1>
-    <p>You may have mistyped the address or the page may have moved.</p>
+    <p>You may have mistyped the address or the page may have moved.
+    <br/>Sorry about that.</p>
   </div>
 </body>
 </html>

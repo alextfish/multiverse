@@ -108,6 +108,22 @@ img.CardImage        { display: inline-block; /* height: 318px; */ }
   margin-top: 2px;
 }
 
+.linky_button {
+  background: none;
+  border: none;
+  /* text-decoration: underline; */
+  cursor: pointer;
+  padding: 1px 1px;
+  margin: 0px 2px;
+}
+input.linky_button:hover, input.linky_button:focus, input.linky_button:active {
+  color: #fff;
+  background-color: #000;
+}
+.linky_button.plus, .linky_button.minus {
+  background-color: rgba(255, 255, 255, 0.5);
+}
+
 /***** Recent Changes *****/
 
 th.cardset_activity {

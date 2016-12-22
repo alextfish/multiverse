@@ -1,0 +1,7 @@
+<% new_count = @deck_card.count %>
+document.getElementById("c<%= @card.id %>_deck_count").innerHTML = <%= new_count %>;
+document.getElementById("c<%= @card.id %>_plus_deck_card_count").value = <%= new_count + 1 %>;
+document.getElementById("c<%= @card.id %>_minus_deck_card_count").value = <%= new_count - 1 %>;
+<% if @decklist.active? %>
+  update_decklist_count(<%= @decklist.num_cards %>);
+<% end %>

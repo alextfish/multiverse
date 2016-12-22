@@ -1,13 +1,11 @@
 To fix:
-
-Skeleton rows on card new/edit aren't formatted right
+* Find big {C} symbol and put it in images/mana/large - similarly {PR} etc
 
 Bugs to fix before push:
 * Tabbing past "watermark none" sends a request for /cards/1234/undefined. 
 
 To test before push:
-* Changing each of to each of:
- - DFC, split, flip, forced-planeswalker, forced-token, coloured artifact, colourless artifact, two-colour-gold, three-colour-gold
+
 
 Bugs:
 * Forced token with forced colour (possibly also with DFC?) can get its database frame set to "token Red token", and thus lose its frame setting to "Auto", because frame_display comes back as "token Red"

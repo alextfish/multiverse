@@ -161,8 +161,9 @@ DEPENDENCIES
   json (~> 1.7.7)
   memcachier
   meta_request
+  mime-types (= 1.25.1)
   newrelic_rpm
-  non-stupid-digest-assets
+  non-stupid-digest-assets (= 1.0.4)
   pg
   protected_attributes
   prototype-rails (>= 4.0.0)
@@ -173,6 +174,7 @@ DEPENDENCIES
   rails_12factor
   rails_stdout_logging
   rdiscount
+  rest-client (~> 1.7.2)
   sass-rails (~> 4.0.0)
   sqlite3-ruby
   thin

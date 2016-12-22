@@ -2,6 +2,7 @@
 <html>
 <head>
   <title>Multiverse: Something went wrong (500)</title>
+  <link href="http://www.magicmultiverse.net/assets/application.css" media="all" rel="stylesheet" />
   <style type="text/css">
     body { background-color: #fff; color: #666; text-align: center; font-family: arial, sans-serif; }
     div.dialog {
@@ -18,27 +19,17 @@
 
 <body>
   <!-- This file lives in public/500.html -->
-  <header>
-  <%= link_to_unless_current logo, root_path do
-    image_tag("multiverse_logo_big.png", :alt => "Multiverse", :class => "square")
-  end %>
+
+<header>
+  <a href="/"><img alt="Multiverse" class="logo" src="http://www.magicmultiverse.net/assets/multiverse_logo_big.png" /></a>
   <nav>
     <ul>
-      <li class="first"><%= link_to "Recent updates", cardsets_path %></li>
-      <li class="subsequent"><%= link_to "Search:", advanced_search_path %>
-        <% 'form_tag("/quicksearch", :method => "get") do' 
-        %>
-        <form action="<%= quicksearch_path %>" method="get">
-          <%= text_field_tag "q", @quicksearch_query %>
+      <li class="first"><a href="/cardsets">Recent updates</a></li>
+      <li class="subsequent"><a href="/advanced_search">Search:</a>
+        <form action="/quicksearch" method="get">
+          <input id="q" name="q" type="text" />
         </form>
-        <% "end" %>
       </li>
-      <% if signed_in? %>
-      <li class="subsequent">Signed in as <%= link_to current_user.name, current_user %></li>
-      <li class="subsequent"><%= link_to "Sign out", signout_path, :method => :delete %></li>
-      <% else %>
-      <li class="subsequent"><%= link_to "Sign in", signin_path %></li>
-      <% end %>
     </ul>
   </nav>
 </header>

@@ -103,12 +103,12 @@ module ApplicationHelper
     my_symbol.gsub!(/Q/, "untap")
     my_symbol.gsub!(/\?/, "question")
     my_symbol.gsub!(/inf.*/i, "Infinity")
-    "/assets/mana/mana_#{my_symbol}.png"
+    "/assets/mana/large/mana_#{my_symbol}.png"  # these are all still <20k
     # "http://gatherer.wizards.com/Handlers/Image.ashx?size=small&name=#{my_symbol}&type=symbol"
   end
   MANA_SYMBOL_TARGETS = Hash.new
   Card.mana_symbols_extensive.each { |sym|
-    MANA_SYMBOL_TARGETS[sym] = ActionController::Base.helpers.image_tag(self.mana_symbol_url(sym), :alt=>sym, :title=>sym)
+    MANA_SYMBOL_TARGETS[sym] = ActionController::Base.helpers.image_tag(self.mana_symbol_url(sym), :alt=>sym, :title=>sym, :class=>:mana)
   }
 
 

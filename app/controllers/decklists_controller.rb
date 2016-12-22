@@ -3,6 +3,12 @@ class DecklistsController < ApplicationController
     if params[:cardset_id]
       @cardset = Cardset.find(params[:cardset_id])
     end
+    if params[:id]
+      @decklist = Decklist.find(params[:id])
+    end
+  end
+  before_filter :only => [:edit, :update, :destroy] do
+    require_permission_to_edit(@decklist)
   end
   #before_filter :only => [:new, :create, :edit, :update, :destroy] do
   #  require_permission_to_admin @cardset
@@ -15,17 +21,15 @@ class DecklistsController < ApplicationController
 
   # GET /decklists/1
   def show
-    @decklist = Decklist.find(params[:id])
   end
 
   # GET /decklists/1/edit
   def edit
-    @decklist = Decklist.find(params[:id])
   end
 
   # POST /decklists
   def create
-    params[:decklist][:status] = Decklist::INACTIVE
+    params[:decklist][:status] = Decklist::DEFAULT_STATUS
     if @cardset
       @decklist = @cardset.decklists.build(params[:decklist])
     else
@@ -42,14 +46,35 @@ class DecklistsController < ApplicationController
 
   # PUT /decklists/1
   def update
-    @decklist = Decklist.find(params[:id])
-
     if @decklist.update_attributes(params[:decklist])
-      set_last_edit @decklist 
-      @cardset.log :kind=>:cardset_options, :user=>current_user, :object_id=>@cardset.id
+      #set_last_edit @decklist 
+      #@cardset.log :kind=>:decklist_edit, :user=>current_user, :object_id=>@decklist.id
       redirect_to @decklist
     else
       render :action => "edit"
     end
+  end
+  def add_lands
+    this_basic = Card.basic_land.select {|basic| basic.name == params[:basic]}.first
+    if this_basic.present?
+      @decklist.add_wizards_card(this_basic.name, 4, Decklist.basic_land_section)
+      respond_to do |format|
+        format.html { redirect_to @decklist }
+        format.js
+      end
+    end
+  end
+  
+  # All card_adding/card_removing/etc methods should call @decklist.reset_stats
+  def add_card
+    decklist.deck_cards.create(card_id: params[:card_id])
+  end
+
+  # DELETE /decklists/1
+  def destroy
+    @decklist.destroy
+    #@cardset.log :kind=>:decklist_delete, :user=>current_user, :object_id=>@decklist.id
+
+    redirect_to(@cardset || current_user)
   end
 end

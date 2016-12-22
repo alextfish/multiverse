@@ -26,6 +26,7 @@ Multiverse::Application.routes.draw do
       get 'move'
       patch 'process_move'
       get 'mockup'
+      get 'decklists'
     end
   end
 
@@ -52,6 +53,13 @@ Multiverse::Application.routes.draw do
 
   resources :users 
   resources :decklists, :only => [:new, :create, :destroy, :edit, :update, :show]
+  resources :decklists do
+    member do
+      post 'add_lands'
+    end
+  end
+  resources :deck_cards, :only => [:create, :destroy, :update]
+  resources :deck_wizards_cards, :only => [:create, :destroy, :update]
 
   resources :sessions, :only => [:new, :create, :destroy]
 

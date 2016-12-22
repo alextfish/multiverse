@@ -394,6 +394,7 @@ div.card_loading {
 $CardTextHeight: 105px; /* up for M15 from 95px; */
 .cardtext { position: relative; /* to make watermarks centre correctly */
             min-height: $CardTextHeight;
+            font-family: Arial, Verdana, Helvetica, sans-serif; /* match prototip tooltips */
             padding: 2px; }
 .rulestext_wrapper { z-index: 2; position: relative; }
 .rulestext, .flavourtext {}
@@ -507,7 +508,7 @@ color: white; background: $PurpleBorder;
 
 /* Mana symbol sizes */
 .cardmanacost img { width: 14px; height: 14px; /*vertical-align: middle;*/}
-.cardtext  img { height: 1em; vertical-align: middle; }
+.cardtext  img, img.mana { height: 1em; vertical-align: middle; }
 /*
 .cardtext  img { width: 13px; height: 13px; vertical-align: middle; }
 .minitext  img { width: 12px; height: 12px; }
@@ -1216,15 +1217,15 @@ $Green_Pinline: #483;
 $Green_Bar: #cdc;
 $Green_Text: #DEEADE;
 $Land_White_Bar: #fffff6;
-$Land_White_Text: #ffc;
+$Land_White_Text: #eeb;
 $Land_Blue_Bar: #afcfff;
 $Land_Blue_Text: #99c5ff;
 $Land_Black_Bar: #cfc9c3;
 $Land_Black_Text: #bbb;
 $Land_Red_Bar: #ffd0c0;
-$Land_Red_Text: #f98;
+$Land_Red_Text: #fa8;
 $Land_Green_Bar: #dfd;
-$Land_Green_Text: #cfc;
+$Land_Green_Text: #c8e7c8;
 $Artifact_Text: #D5DDE0;
 $Land_Colourless_Bar: #D8CFC8;
 $Land_Text: #D8CFC8;
@@ -1661,13 +1662,10 @@ div.wizardsimage {
 }
 
 /* Buttons - in here because they mimic cards */
-
+/* General card-title-like-ness */
 
 div.button_outer {
   display: inline-block; /* fit to content, don't stretch to fill parent */
-  /* Mirroring .Artifact .pinline - @extend can't copy series of selectors */ 
-  background-color: $ArtifactPinline;
-  
   /* Mirroring .pinline: */
   /* Mirroring .pinline_box: */
   padding: 2px;
@@ -1676,6 +1674,7 @@ div.button_outer {
   border-bottom: 1px solid black;
   @include elliptical_corners(6px, 12px);
 }
+
 div.button_outer div.button_inner {
   /* Mirroring .pinline_box: */
   /* Mirroring .pinline_box > div: */
@@ -1687,15 +1686,34 @@ div.button_outer div.button_inner {
   padding-top: 0;
   padding-bottom: 0;
 }
-$Button_Focus: #D7DDE2;
-$Button_Focus_Highlight: #E7EDF0;
-$Button_Clicked: $Artifact_DFC_Bar; 
-$Button_Clicked_Highlight:$Artifact_DFC_Bar_Highlight;
 div.button_inner {
   & > input, & > button, & > a {
     @extend .cardtitlebar;
     /* Mirroring .pinline_box > div */
     @include elliptical_corners(4px, 8px);
+  }
+  & > input, & > button {
+    border: none;
+    padding: 3px 8px 2px 8px;
+  }
+  & > a {
+    padding: 2px 8px;
+    display: inline-block;
+    text-decoration: none;
+  }
+}
+
+/* Default artifact style for most buttons: */
+div.button_outer {
+  /* Mirroring .Artifact .pinline - @extend can't copy series of selectors */ 
+  background-color: $ArtifactPinline; 
+}
+$Button_Focus: #D7DDE2;
+$Button_Focus_Highlight: #E7EDF0;
+$Button_Clicked: $Artifact_DFC_Bar; 
+$Button_Clicked_Highlight: $Artifact_DFC_Bar_Highlight;
+div.button_inner {
+  & > input, & > button, & > a {
     /* Mirroring .Artifact .cardtitlebar */
     background-color: $ArtifactTitlebar; /* pre-M15: #B0C4C8; */
     @include gradient_horz_highlight($ArtifactTitlebar, $ArtifactTitlebarHighlight);
@@ -1710,13 +1728,24 @@ div.button_inner {
 @include gradient_horz_highlight($Button_Clicked, $Button_Clicked_Highlight);
     }
   }
-  & > input, & > button {
-    border: none;
-    padding: 3px 8px 2px 8px;
-  }
-  & > a {
-    padding: 2px 8px;
-    display: inline-block;
-    text-decoration: none;
+}
+
+<% Card.colours.each do |thisColour| %>
+div.button_outer.button_<%= thisColour %> {
+  background-color: $<%= thisColour %>_Pinline;
+}
+.button_<%= thisColour %> div.button_inner {
+  & > input, & > button, & > a {
+    background-image: none;
+    background-color: $Land_<%= thisColour %>_Bar;
+    &:hover, &:focus {
+      background-color: $Land_<%= thisColour %>_Text;
+      color: black;
+    }
+    &:active {
+      background-color: $<%= thisColour %>_DFC_Bar; 
+      color: white;
+    }
   }
 }
+<% end %>
