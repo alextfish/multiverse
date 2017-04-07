@@ -54,12 +54,13 @@ Multiverse::Application.routes.draw do
   resources :users 
   resources :decklists, :only => [:new, :create, :destroy, :edit, :update, :show]
   resources :decklists do
+    resources :deck_cards,         shallow: true, :only => [:create, :destroy, :update]   
+    # "shallow" => create (and index and new if they were here) are scoped, destroy/update (and show and edit) are top-level
+    resources :deck_wizards_cards, shallow: true, :only => [:create, :destroy, :update]
     member do
       post 'add_lands'
     end
   end
-  resources :deck_cards, :only => [:create, :destroy, :update]
-  resources :deck_wizards_cards, :only => [:create, :destroy, :update]
 
   resources :sessions, :only => [:new, :create, :destroy]
 

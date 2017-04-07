@@ -46,10 +46,27 @@ class Decklist < ActiveRecord::Base
   end
   def sections
     all_secs = deck_cards.map{ |dc| dc.section } + deck_wizards_cards.map{ |dc| dc.section }
+    # Now add Sideboard and Maybeboard, at the *end*
+    if (!published? || all_secs.include?("Maybeboard"))
+      all_secs = all_secs - ["Sideboard", "Maybeboard"]
+      all_secs.concat(["Sideboard", "Maybeboard"])
+    else
+      all_secs = all_secs - ["Sideboard"]
+      all_secs.concat(["Sideboard"])
+    end
     all_secs.uniq
   end
   def Decklist.basic_land_section
     "Land"
+  end
+  def Decklist.extra_classes(section)
+    if section == "Sideboard"
+      "sideboard"
+    elsif section == "Maybeboard"
+      "maybeboard"
+    else
+      ""
+    end
   end
   def num_cards
     # Shows in the permanent display, so don't calculate all the stats for this
@@ -61,9 +78,10 @@ class Decklist < ActiveRecord::Base
       deck_card.count += count
       deck_card.save!
     else
-      deck_cards.create(card_id: card.id, count: count, section: section)
+      deck_card = deck_cards.create(card_id: card.id, count: count, section: section)
     end
     reset_stats
+    return deck_card
   end
   def set_card_count(card, num)
     deck_card = deck_cards.find_by(card_id: card.id)
@@ -88,9 +106,10 @@ class Decklist < ActiveRecord::Base
     else
       gatherer_id = (isnum ? wiz_card : 0)
       name = (isnum ? "" : wiz_card)
-      deck_wizards_cards.create(gatherer_id: gatherer_id, name: name, count: count, section: section)
+      dwc = deck_wizards_cards.create(gatherer_id: gatherer_id, name: name, count: count, section: section)
     end
     reset_stats
+    return dwc
   end
   
   #? attr_accessor :stats
@@ -131,6 +150,6 @@ class Decklist < ActiveRecord::Base
   end
   
   def Decklist.enabled?
-    !Rails.env.production?
+    false # !Rails.env.production?
   end
 end

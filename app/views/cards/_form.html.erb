@@ -22,13 +22,14 @@
       MULTIPART_SPLIT1     = <%= Card.SPLIT1 %>;
       MULTIPART_FLIP1      = <%= Card.FLIP1 %>;
       MULTIPART_DFCFRONT   = <%= Card.DFCFRONT %>;
+      MULTIPART_SPLITBACK1 = <%= Card.SPLITBACK1 %>;
      </script>
      <% 
       default_structure = @card.structure_display
       
-      structure_select_options = options_for_select([["Normal", Card.STANDALONE], ["Split", Card.SPLIT1], ["Flip", Card.FLIP1], ["Double-Faced", Card.DFCFRONT], ["Scheme", "Scheme"], ["Plane", "Plane"]], default_structure)
+      # structure_select_options = options_for_select([["Normal", Card.STANDALONE], ["Split", Card.SPLIT1], ["Flip", Card.FLIP1], ["Splitback", Card.SPLITBACK1], ["Double-Faced", Card.DFCFRONT], ["Scheme", "Scheme"], ["Plane", "Plane"]], default_structure)
       
-      structure_select_options = [["Normal", Card.STANDALONE], ["Split", "multipart_#{Card.SPLIT1}"], ["Flip", "multipart_#{Card.FLIP1}"], ["Double-Faced", "multipart_#{Card.DFCFRONT}"], ["Planeswalker", "Planeswalker"], ["Scheme", "Scheme"], ["Plane", "Plane"], ["Token", "Token"]]
+      structure_select_options = [["Normal", Card.STANDALONE], ["Split", "multipart_#{Card.SPLIT1}"], ["Flip", "multipart_#{Card.FLIP1}"], ["Splitback", "multipart_#{Card.SPLITBACK1}"], ["Double-Faced", "multipart_#{Card.DFCFRONT}"], ["Planeswalker", "Planeswalker"], ["Scheme", "Scheme"], ["Plane", "Plane"], ["Token", "Token"]]
       ', ["Vanguard", "Vanguard"], ["Emblem", "Emblem"]]'
       %>
      <%= outer_form.select :structure_display, structure_select_options, {:selected => default_structure }, 

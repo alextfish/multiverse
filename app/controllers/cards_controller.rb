@@ -312,6 +312,12 @@ class CardsController < ApplicationController
         @card.link.cardset = @card.cardset
         @card.link.user = @card.user
         @card.link.save! :validate => false
+      when Card.SPLITBACK1
+        @card.link.multipart = Card.SPLITBACK2
+        @card.link.parent = @card
+        @card.link.cardset = @card.cardset
+        @card.link.user = @card.user
+        @card.link.save! :validate => false
     end
   end
 

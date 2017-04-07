@@ -47,7 +47,7 @@ class Card < ActiveRecord::Base
   belongs_to :user
   
   scope :active,       -> { where(active: true) }
-  scope :nonsecondary, -> { where("cards.multipart NOT IN (?, ?, ?)", Card.SPLIT2, Card.FLIP2, Card.DFCBACK) }   # see also .secondary? below
+  scope :nonsecondary, -> { where("cards.multipart NOT IN (?, ?, ?)", Card.SPLIT2, Card.FLIP2, Card.DFCBACK, Card.SPLITBACK2) }   # see also .secondary? below
   
   # has_many :highlighted_comments, :class_name => 'Comment', :conditions => ['status = ?', COMMENT_HIGHLIGHTED]
   # has_many :unaddressed_comments, :class_name => 'Comment', :conditions => ['status = ?', COMMENT_UNADDRESSED]
@@ -77,7 +77,9 @@ class Card < ActiveRecord::Base
   def Card.FLIP2;      4; end
   def Card.DFCFRONT;   5; end
   def Card.DFCBACK;    6; end
-  validates_inclusion_of :multipart, :in => [nil, Card.STANDALONE, Card.SPLIT1, Card.SPLIT2, Card.FLIP1, Card.FLIP2, Card.DFCFRONT, Card.DFCBACK]
+  def Card.SPLITBACK1; 7; end
+  def Card.SPLITBACK2; 8; end
+  validates_inclusion_of :multipart, :in => [nil, Card.STANDALONE, Card.SPLIT1, Card.SPLIT2, Card.FLIP1, Card.FLIP2, Card.DFCFRONT, Card.DFCBACK, Card.SPLITBACK1, Card.SPLITBACK2]
 
   def regularise_fields
     # Enforce rarity; default rarity
@@ -128,7 +130,7 @@ class Card < ActiveRecord::Base
     else # printable name for a multipart card
       primary_name = primary_card.individual_name
       secondary_name = secondary_card.individual_name
-      if split?
+      if split? || splitback?
         name_out = primary_name + " // " + secondary_name
       else
         name_out = individual_name # primary_name
@@ -370,7 +372,7 @@ class Card < ActiveRecord::Base
       self.frame
     elsif self.multipart?
       # Note "double-faced" rather than "dfc" as per http://mtgjson.com/
-      split? ? "split" : flip? ? "flip" : dfc? ? "double-faced" : "UNKNOWN MULTIPART MODE"
+      split? ? "split" : flip? ? "flip" : dfc? ? "double-faced" : splitback? ? "split" : "UNKNOWN MULTIPART MODE"
     elsif self.is_token?
       "token"
     else
@@ -514,7 +516,7 @@ class Card < ActiveRecord::Base
   end
 
   def category
-    if split?
+    if split? || splitback?
       f = primary_card.frame || primary_card.calculated_frame
       f2 = secondary_card.frame || secondary_card.calculated_frame
       if f != f2
@@ -656,7 +658,7 @@ class Card < ActiveRecord::Base
   end
 
   def separator
-    if self.split?
+    if self.split? || self.splitback?
       " // "
     elsif self.flip? || self.dfc?
       "<br>&#8209;&#8209;&#8209;&#8209;<br>".html_safe
@@ -753,7 +755,7 @@ class Card < ActiveRecord::Base
   end
 
   def multipart?
-   [Card.SPLIT1, Card.SPLIT2, Card.FLIP1, Card.FLIP2, Card.DFCFRONT, Card.DFCBACK].include?(self.multipart)
+   [Card.SPLIT1, Card.SPLIT2, Card.FLIP1, Card.FLIP2, Card.DFCFRONT, Card.DFCBACK, Card.SPLITBACK1, Card.SPLITBACK2].include?(self.multipart)
   end
   def split?
    [Card.SPLIT1, Card.SPLIT2].include?(self.multipart)
@@ -764,18 +766,21 @@ class Card < ActiveRecord::Base
   def dfc?
    [Card.DFCFRONT, Card.DFCBACK].include?(self.multipart)
   end
+  def splitback?
+   [Card.SPLITBACK1, Card.SPLITBACK2].include?(self.multipart)
+  end
   def primary?
-   [Card.SPLIT1, Card.FLIP1, Card.DFCFRONT].include?(self.multipart)
+   [Card.SPLIT1, Card.FLIP1, Card.DFCFRONT, Card.SPLITBACK1].include?(self.multipart)
   end
   def secondary?
-   [Card.SPLIT2, Card.FLIP2, Card.DFCBACK].include?(self.multipart)
+   [Card.SPLIT2, Card.FLIP2, Card.DFCBACK, Card.SPLITBACK2].include?(self.multipart)
   end
   
   #def Card.nonsecondary
   #  select {|c| !c.secondary?}
   #end
   def cardframe_class
-    nontraditional_frame? ? frame.downcase : split? ? "split" : flip? ? "flip" : dfc? ? "dfc" : ""
+    nontraditional_frame? ? frame.downcase : split? ? "split" : flip? ? "flip" : dfc? ? "dfc" : splitback? ? "splitback" : ""
   end
   def tooltip_shape
     if cardset.configuration.frame == "image"

@@ -1,1 +1,4 @@
 $("c<%= params[:id] %>_row").visualEffect("Fade", {"queue":"parallel"});
+<% if @decklist.active? %>
+  update_decklist_count(<%= @decklist.num_cards %>);
+<% end %>

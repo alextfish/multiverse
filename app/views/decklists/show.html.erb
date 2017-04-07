@@ -19,74 +19,60 @@ decklist by <%= link_to @decklist.user, @decklist.user %>)
   <p><%= format_all_markup(@decklist.description, @decklist.cardset) %></p>
 <% end %>
 
-<table class="decklist">
-  <tr>
+<div id="debug"></div>
+<table class="decklist" id="decklist_table">
+  <!-- tr>
+    <th class="decklist_reorder">
     <th class="decklist_count">Count
     <th class="decklist_card">Card
     <th class="decklist_operations">
-  </tr>
-  <% numcols = 2
-     maindeck_sections = sections - ["sideboard"] %>
-  <% maindeck_sections.each do |section| %>
-    <tr>
-      <td colspan="<%= numcols %>"><%= section %>
+  </tr -->
+  <% numcols = 5 %>
+  <% sections.each do |section| %>
+    <tbody draggable="false" id="sec<%= section && section.parameterize %>" class="decklist_section <%= Decklist.extra_classes(section) %>" ondragstart="dragStart(event, 'section')">
+    <tr id="sec<%= section && section.parameterize %>_header" class="decklist_section_header" ondragenter="dragMoveIntoSection(event)">
+      <td class="drag_handle" onMouseOver="makeThisSectionDraggable(this)" onMouseOut="makeThisSectionNotDraggable(this)"><div id="sec<%= section && section.parameterize %>_drag">&#x2725;</div>
+      <td colspan="<%= numcols - 1 %>"><%= section || "Main" %>
     </tr>
-    <% 
-       deck_cards.select {|dc| dc.section == section }.each do |deck_card| 
-       card = deck_card.card %>
-    <tr id="c<%= deck_card.id %>_row">
-      <td class="nowrap">
-        <%= form_for deck_card, :namespace => "c#{card.id}_minus", :remote => true do |f| 
-          %><%= f.hidden_field :count, :value => (deck_card.count - 1) 
-          %><%= f.submit " - ", class: "linky_button minus" 
-        %><% end 
-        %><span id="c<%= card.id %>_deck_count"><%= deck_card.count %></span
-        ><%= form_for deck_card, :namespace => "c#{card.id}_plus", :remote => true do |f| 
-          %><%= f.hidden_field :count, :value => (deck_card.count + 1) 
-          %><%= f.submit " + ", class: "linky_button plus" %>
-        <% end %>
-      <td>
-        <%= link_to_card card %>
-      
-    </tr>
+    <% deck_cards.select {|dc| dc.section == section }.each do |deck_card| %>
+      <% @deck_card = deck_card
+         @card = @deck_card.card %>
+      <%= render "shared/deck_card_row" %>
     <% end %>
+    
     <% @decklist.deck_wizards_cards.select {|dwc| dwc.section == section }.each do |deck_wizards_card| %>
-    <tr id="wc<%= deck_wizards_card.id %>_row">
-      <td class="nowrap">
-        <%= form_for deck_wizards_card, :namespace => "wc#{deck_wizards_card.id}_minus", :remote => true do |f| 
-          %><%= f.hidden_field :count, :value => (deck_wizards_card.count - 1) 
-          %><%= f.submit " - ", class: "linky_button minus" 
-        %><% end 
-        %><span id="wc<%= deck_wizards_card.id %>_deck_count"><%= deck_wizards_card.count %></span
-        ><%= form_for deck_wizards_card, :namespace => "wc#{deck_wizards_card.id}_plus", :remote => true do |f| 
-          %><%= f.hidden_field :count, :value => (deck_wizards_card.count + 1) 
-          %><%= f.submit " + ", class: "linky_button plus" %>
-        <% end %>
-      <td><%= wizards_card_link(deck_wizards_card.name, deck_wizards_card.name).html_safe %>
-    </tr>
+      <% @deck_wizards_card = deck_wizards_card %>
+      <%= render "shared/deck_wizards_card_row" %>
     <% end %>
   <% end %>
-  <% if maindeck_sections.empty? %>
+  <% if sections.empty? %>
     <tr>
       <td colspan="<%= numcols %>">No cards in this decklist yet...
     </tr>
   <% end %>
 </table>
 
+<!--script>
+$A(document.querySelectorAll(".decklist_section_header td.drag_handle")).each(function(e){
+  e.addEventListener("mouseover", makeThisSectionDraggable);
+  e.addEventListener("mouseout", makeThisSectionDraggable);
+})
+</script-->
+
 <p>
   Add cards to deck:
   <br/>
   
-  <ul class="cardtabs" id="addtabs">
+  <!--ul class="cardtabs" id="addtabs">
     <li><a href="#basiclands" id="basiclands_link">Basic lands</a></li>
     <li><a href="#wizards"    id="wizards_link">Wizards</a></li>
     <% if @decklist.cardset.present? %>
       <li><a href="#cardset"  id="cardset_link"><%= @decklist.cardset.name %></a></li>
     <% end %>
     <li><a href="#multiverse" id="multiverse_link">Multiverse</a></li>
-  </ul>
-
-  <div id="basiclands" class="onetab active-tab-body"><a name="basiclands"></a>
+  </ul-->
+<table><tr><td>
+  <div id="basiclands" class="inline section"><a name="basiclands"></a>
     <%= form_tag action: :add_lands, id: @decklist do %>
     <div class="actions">
       <% lands_colours = [["Plains", "White"], ["Island", "Blue"], ["Swamp", "Black"], ["Mountain", "Red"], ["Forest", "Green"]] 
@@ -100,17 +86,27 @@ decklist by <%= link_to @decklist.user, @decklist.user %>)
     </div>
     <% end %>
   </div>
-  <div id="wizards" class="onetab"><a name="plaincard"></a>
-    Wizards cards
+<td>
+  <div id="wizards" class="inline section"><a name="plaincard"></a>
+    Add printed Wizards cards:
+    <br/>
+    <% new_deck_wizards_card = @decklist.deck_wizards_cards.build %>
+    <%= form_for [@decklist, new_deck_wizards_card], :remote => true do |f| 
+      %><%= f.text_field :name %><%= f.submit " Add ", class: "linky_button" %>
+    <% end %>
   </div>
   <% if @decklist.cardset.present? %>
-    <div id="cardset" class="onetab"><a name="cardset"></a>
+  <td>
+    <div id="cardset" class="inline section"><a name="cardset"></a>
       Cards from <%= @decklist.cardset.name %>
     </div>
   <% end %>
-  <div id="multiverse" class="onetab"><a name="multiverse"></a>
+<td>
+  <div id="multiverse" class="inline section"><a name="multiverse"></a>
     Multiverse
   </div>
+</table>
+  
 </p>
 <script type="text/javascript">
   var onClickTrigger;
@@ -130,8 +126,8 @@ decklist by <%= link_to @decklist.user, @decklist.user %>)
   <% if permission_to?(:delete, @decklist) %>
     Or you could <% delete_text = "Delete the decklist"
     # (@decklist.published? ? "Delete the decklist" : "Discard the draft decklist")
-       action = (@decklist.published? ? "delete the decklist" : "discard the draft decklist") %>.
-    <%= link_to delete_text, @decklist, :data => { :confirm => "Really #{action} #{@decklist.name}?" }, :method => :delete %>
+       action = (@decklist.published? ? "delete the decklist" : "discard the draft decklist") %>
+    <%= link_to delete_text, @decklist, :data => { :confirm => "Really #{action} #{@decklist.name}?" }, :method => :delete %>.
   <% end %>
 </p>
 

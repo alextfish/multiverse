@@ -17,13 +17,21 @@
   /* Internet Explorer */
   filter: progid:DXImageTransform.Microsoft.BasicImage(rotation=2);
 }
-@mixin rotate_90 {
+@mixin rotate_minus90 {
   /* Safari */
   -webkit-transform: rotate(-90deg);
   /* Firefox */
   -moz-transform: rotate(-90deg);
   /* Internet Explorer */
   filter: progid:DXImageTransform.Microsoft.BasicImage(rotation=1);
+}
+@mixin rotate_plus90 {
+  /* Safari */
+  -webkit-transform: rotate(90deg);
+  /* Firefox */
+  -moz-transform: rotate(90deg);
+  /* Internet Explorer */
+  filter: progid:DXImageTransform.Microsoft.BasicImage(rotation=3);
 }
 @mixin hide_but_allow_children {
   position: absolute;
@@ -167,7 +175,7 @@ $LargePortraitCardHeight: 2 * $CardWidth;
 .innercardborder { width: $CardWidth; min-height: $CardHeight; }
 .flip .innercardborder { min-height: 0px; height: auto; }
 .split .innercardborder { width: auto; min-height: $CardWidth; height: $CardWidth; }
-
+.splitback .innercardborder { min-height: 0; height: 120px; width: auto; }
 
 img.tooltip_image.portrait {
   /* We force it to size down */
@@ -259,7 +267,7 @@ div.card_loading {
 .pinline_sides, .pinline_sidesbottom, .pinline_box.typebox {
     position: relative;
 }
-.split {
+.split, .splitback {
   .pinline_box { padding: 1px;}
   .pinline_sides { padding-left: 1px; padding-right: 1px; }
   .pinline_sidesbottom { padding-left: 1px; padding-right: 1px; padding-bottom: 1px; }
@@ -332,8 +340,19 @@ div.card_loading {
     
 .form .cardtitlebar {
   min-width: 300px;
+  table {
+    width: 100%;
+    td.card_cost_container {
+      width: 100%;
+      text-align: right;
+      input#card_cost {
+          text-align: right;
+      }
+    }
+  }
 }
-.form.split .cardtitlebar {
+
+.form.split .cardtitlebar, .form.splitback .cardtitlebar {
   min-width: inherit;
 }
 .plane .cardtypebar:after {
@@ -507,7 +526,7 @@ color: white; background: $PurpleBorder;
 .flavourtext i, .flavourtext em { font-style: normal; }
 
 /* Mana symbol sizes */
-.cardmanacost img { width: 14px; height: 14px; /*vertical-align: middle;*/}
+.cardmanacost img, .cardmanacost img.mana { width: 14px; height: 14px; /*vertical-align: middle;*/}
 .cardtext  img, img.mana { height: 1em; vertical-align: middle; }
 /*
 .cardtext  img { width: 13px; height: 13px; vertical-align: middle; }
@@ -748,13 +767,13 @@ div.dfc div.part2.Planeswalker div.ptbox_container div.pinline_ptbox {
 
 /***** Split / Flip / Double-Faced Cards *****/
 
-.split.cardborder { min-height: $SmallLandscapeCardHeight; width: $SmallLandscapeCardWidth;}
+.split.cardborder { min-height: $SmallLandscapeCardHeight; width: $SmallLandscapeCardWidth; }
 .dfc.form .card { width: $CardFormWidth; }
 .split.form#cardborder { width: 500px; }
-.split .card { min-height: 180px; height: 180px; padding-top: 2px; padding-bottom: 2px;}
+.split .card { min-height: 180px; height: 180px; padding-top: 2px; padding-bottom: 2px; }
 
 .split .part1, .split .part2 { display: inline-block; width: 139px;}
-.split .innercardborder, .dfc .innercardborder { display: inline-block; }
+.split .innercardborder, .dfc .innercardborder, .splitback .innercardborder { display: inline-block; }
 .dfc .part1,   .dfc .part2 { display: inline-block; }
 .split .innercard2, .dfc .innercard2 { float: right;}
 .split.form .part1, .split.form .part2 { width: 240px;}
@@ -772,9 +791,51 @@ div.dfc div.part2.Planeswalker div.ptbox_container div.pinline_ptbox {
 .split .bottombox { margin-bottom: -2px; font-size: 7pt; }
 .split .pinlinebox { padding: 1px; }
 
+.splitback .card.part1 { 
+    padding-top: 2px; padding-bottom: 2px; 
+    min-height: 140px; height: 140px; } /* actual height 160px, but this is the border curve */
+.splitback .card.part2 { 
+    min-width: 120px; width: 120px;
+    min-height: 195px; height: 195px;
+    padding-top: 2px; padding-bottom: 2px;
+    padding-left: 0; padding-right: 0;
+    }
+.splitback .innercard2 { 
+}
+.splitback .part2 {
+    @include rotate_plus90;
+    position: absolute;
+    left: +48px;
+    top: 120px;
+    border-radius: 25px;
+}
+.splitback .part1 .cardart { min-height: 60px; }
+.splitback .part1 .cardart img { height: 60px; }
+.splitback .part2 .cardart { min-height: 66px; }
+.splitback .part2 .cardart img { width: 116px; height: 66px; }
+.splitback .part1 .cardtext { min-height: 38px; font-size: 8pt; }
+.splitback .part2 .cardtext { min-height: 75px; font-size: 8pt; }
+.splitback .part2 .namebox { margin-top: 4px; }
+.splitback .part1 .bottombox { top: 128px; }
+.splitback .part1 .bottombox .ptbox_container { top: -140px; }
+.splitback .part1 .hologram_container { width: 24px; top: -6px; }
+.splitback .part1 .hologram { width: 20px; height: 10px; margin: 1px 2px; }
+.splitback .part2 .hologram_container, .splitback .part2 .artist { display: none; }
+
 .split.form .cardrarity { /* top: 27px; */ left: 0px; }
 .split input { width: 100px; }
 .split input[type="checkbox"] { width: auto; }
+
+.splitback.form textarea.rulestextfield { height: 3em; }
+.splitback.form textarea.flavourtextfield { height: 2em; }
+.splitback.form .bottombox { top: auto; }
+.splitback.form .part1 .bottombox .ptbox_container { top: auto; }
+.splitback.form .part2 { 
+  position: relative; 
+  top: 60px; 
+  left: 135px; /* sometimes only 70px needed, but on narrow pages 135px needed to avoid going off screen */
+  width: auto; 
+}
 
 .flip .card, .form .flip .card { min-height: 0px; height: auto !important; }
 .flip .part1 .cardart_container { @include hide_but_allow_children; }
@@ -804,11 +865,18 @@ div.dfc div.part2.Planeswalker div.ptbox_container div.pinline_ptbox {
   @include rotate_180;
 }
 .split.rotated {
-  @include rotate_90;
+  @include rotate_minus90;
   left: -50px;
   top: 50px;
   margin-bottom: 100px;
   margin-right: -100px;
+}
+.splitback.rotated {
+  @include rotate_minus90;
+  left: 50px;
+  top: -50px;
+  /* margin-bottom: -100px;  */ /* commented out so that the "Rotate" link doesn't move around */
+  margin-right: 100px;
 }
 
 .flip.form .part1 .cardtext_container { position: relative; top: -64px; }
@@ -1598,7 +1666,7 @@ td.form_info_cell { color: #666; }
 .Black .artist_area label, .Hybrid.blackgreen .artist_area label, .Hybrid.blackred .artist_area label { color: #fff; }
 
 #card2wrapper { display: none; }
-.split #card2wrapper, .flip #card2wrapper, .dfc #card2wrapper { display: inline-block; }
+.split #card2wrapper, .flip #card2wrapper, .dfc #card2wrapper, .splitback #card2wrapper { display: inline-block; }
 
 /***** Skeletons *****/
 .skeleton_letter_toggle.code_shown.rarity_C_toggle, .skeleton_letter_toggle.code_shown.rarity_B_toggle, .skeleton_letter_toggle.code_shown.rarity_T_toggle { @extend .cardrarity.common; }

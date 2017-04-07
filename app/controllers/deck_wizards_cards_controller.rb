@@ -7,7 +7,7 @@ class DeckWizardsCardsController < ApplicationController
     end
     if params[:decklist_id]
       @decklist = Decklist.find(params[:decklist_id])
-    elsif params[:deck_wizards_card][:decklist_id]
+    elsif params[:deck_wizards_card] && params[:deck_wizards_card][:decklist_id]
       @decklist = Decklist.find(params[:deck_wizards_card][:decklist_id])
     elsif @deck_wizards_card
       @decklist = @deck_wizards_card.decklist
@@ -22,8 +22,10 @@ class DeckWizardsCardsController < ApplicationController
   end
 
   def create
-    count = params[:deck_wizards_card][:count]
-    @decklist.add_card(@card, count)
+    name = params[:deck_wizards_card][:name]
+    count = params[:deck_wizards_card][:count] || 1
+    section = params[:deck_wizards_card][:section] || "Main"
+    @deck_wizards_card = @decklist.add_wizards_card(name, count, section)
     respond_to do |format|
       format.html { redirect_to @decklist }
       format.js

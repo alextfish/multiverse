@@ -1,0 +1,22 @@
+<tr id="c<%= @deck_card.id %>_row" draggable="true" ondragenter="dragMoveTrHere(event)" ondragstart="dragStart(event, 'row')">
+  <td class="deck_row_padding">
+  <td class="drag_handle"
+    ><div id="c<%= @deck_card.id %>_drag">&#x2725;</div>
+  <td class="nowrap">
+    <%= form_for @deck_card, :namespace => "c#{@card.id}_minus", :remote => true, :html => { :class => "decklist_minus", :onsubmit => "adjust_deck_count(this, -1)" } do |f|
+      %><%= f.hidden_field :count, :value => @deck_card.count, class: "deck_card_count" 
+      %><%= f.submit " - ", class: "linky_button minus" 
+    %><% end 
+    %><span id="c<%= @card.id %>_deck_count" class="deck_card_count"><%= @deck_card.count %></span
+    ><%= form_for @deck_card, :namespace => "c#{@card.id}_plus", :remote => true, :html => { :class => "decklist_plus", :onsubmit => "adjust_deck_count(this, +1)" } do |f| 
+      %><%= f.hidden_field :count, :value => @deck_card.count, class: "deck_card_count"
+      %><%= f.submit " + ", class: "linky_button plus" %>
+    <% end %>
+  <td>
+    <%= link_to_card @card %>
+  <td>
+    <%= form_for @deck_card, :namespace => "c#{@card.id}_destroy", :remote => true, :html => { :class => "decklist_x", :onsubmit => "hide_deck_row(this)" } do |f| 
+      %><%= f.submit " x ", class: "linky_button x" %>
+    <% end %>
+  
+</tr>

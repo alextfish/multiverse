@@ -1,0 +1,12 @@
+var newRowID = "wc<%= @deck_wizards_card.id %>_row";
+if (!document.getElementById(newRowID)) {
+  var tableBody = document.getElementById("decklist_table").down("tbody");
+  var newRow = tableBody.insertRow(tableBody.rows.length);
+  newRow.style.display = "none";
+  newRow.outerHTML = '<%= escape_javascript(render "shared/deck_wizards_card_row" ) %>';
+  setTimeout('document.getElementById("' + newRowID + '").visualEffect("Appear")', 10);
+  setTimeout('createWizardsTooltip(document.getElementById("' + newRowID + '").down("a.wizardscard"))', 10);
+}
+<% if @decklist.active? %>
+  update_decklist_count(<%= @decklist.num_cards %>);
+<% end %>

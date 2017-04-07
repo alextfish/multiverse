@@ -42,7 +42,7 @@
        <%= render :partial => "shared/prettycard", :locals => { :link => false } %>
      </div>
      <% show_expand_link = true %>
-     <% show_rotate_link = @card.flip? || @card.split? %>
+     <% show_rotate_link = @card.flip? || @card.split? || @card.splitback? %>
      <% show_edit_link = permission_to?(:edit, @card.cardset) %>
      <% show_move_link = permission_to?(:admin, @card.cardset) %>
      <% show_delete_link = permission_to?(:delete, @card.cardset) %>

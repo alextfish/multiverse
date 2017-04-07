@@ -4,9 +4,10 @@
       <% if (deck_card = decklist.deck_cards.where(card_id: @card.id)).present? %>
         Already in <%= decklist.name %> x<%= deck_card.first.count %>
       <% else %>          
-        <%= form_for(decklist.deck_cards.build) do |f| %>
+        <%= form_for([decklist, decklist.deck_cards.build]) do |f| %>
           <%= f.hidden_field :decklist_id, :value => decklist.id %>
           <%= f.hidden_field :card_id, :value => @card.id %>
+          <%= f.hidden_field :section, :value => "Main" %>
           <%= f.submit "Add", class: "button" %>
           to <%= link_to decklist.name, decklist %>
           x 

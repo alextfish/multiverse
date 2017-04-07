@@ -90,9 +90,10 @@ img.CardImage        { display: inline-block; /* height: 318px; */ }
   }
 }
 
+$decklists-color: #fb6;
 .decklists {
-  background-color: #fa6;
-  border: 1px solid #fa6;
+  background-color: $decklists-color;
+  border: 1px solid $decklists-color;
   /* border-color: #ffbd88 #dd955b #dd955b #ffbd88; */
   border-color: #facba5 #dd955b #be8456 #ffbd88;
 }
@@ -116,12 +117,31 @@ img.CardImage        { display: inline-block; /* height: 318px; */ }
   padding: 1px 1px;
   margin: 0px 2px;
 }
-input.linky_button:hover, input.linky_button:focus, input.linky_button:active {
+.decklists.main input.linky_button:hover, input.linky_button:focus, input.linky_button:active {
   color: #fff;
   background-color: #000;
 }
-.linky_button.plus, .linky_button.minus {
+.decklists.main .linky_button {
   background-color: rgba(255, 255, 255, 0.5);
+}
+
+td.deck_row_padding {
+  visibility: hidden;
+}
+td.drag_handle {
+  width: 1em;
+}
+td.drag_handle div {
+  cursor: move;
+}
+.decklist_section {
+  background-color: lighten($decklists-color, 10%);
+}
+.decklist_section.sideboard {
+  background-color: darken($decklists-color, 10%);
+}
+.decklist_section.maybeboard {
+  background-color: darken($decklists-color, 20%);
 }
 
 /***** Recent Changes *****/
