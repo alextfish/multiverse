@@ -1,7 +1,8 @@
-To fix:
-* Find big {C} symbol and put it in images/mana/large - similarly {PR} etc
+To fix before push:
+* Find big {C} symbol and put it in images/mana/large - similarly {PR} etc, {X}, {-3}, {3/R}, {?}
 
-Bugs to fix before push:
+
+Other bugs:
 * Tabbing past "watermark none" sends a request for /cards/1234/undefined. 
 
 To test before push:

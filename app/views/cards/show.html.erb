@@ -18,6 +18,7 @@
 <table class="grouping" border="0" itemscope itemtype="http://schema.org/ItemPage"> 
  <tr>
   <td class="cardcell" style="position: relative; height: 400px;"> <!-- card -->
+   <div id="cardcell_width_sizer"></div>
    <div id="card_fixed_wrapper_outer"><div id="card_fixed_wrapper_inner">
      <ul class="cardtabs" id="tabs">
       <% if !@card.image_url.blank? %>
@@ -47,7 +48,7 @@
      <% show_move_link = permission_to?(:admin, @card.cardset) %>
      <% show_delete_link = permission_to?(:delete, @card.cardset) %>
      <% if show_expand_link || show_rotate_link || show_edit_link || show_move_link || show_delete_link %>
-       <div class="card_controls_below">
+       <div class="card_controls_below <%= @card.rotates_to_become_wider? ? "widthfixed" : "" %>">
          <% if show_rotate_link %>
            <%= link_to_function "Rotate", "rotate_card()", :class => "card_rotate_link no_tooltip" %>
          <% end %>
@@ -131,8 +132,10 @@ function resizeCardWrapper() {
   $$('#card_fixed_wrapper_inner').each(function(inner_div) {
     var middle_div = inner_div.parentNode;
     var outer_td = middle_div.parentNode;
+    var sizer_div = outer_td.down("#cardcell_width_sizer");
     var myWidth = inner_div.getWidth();
     outer_td.style.width = myWidth + "px";
+    sizer_div.style.width = myWidth + "px"; // makes it more likely to hold that size when the comments get wide
     middle_div.addClassName("fixed_outer");
     inner_div.addClassName("fixed_inner");
   });

@@ -281,6 +281,9 @@ table.skeleton_generate input { width: 3em; }
   .card_controls_below { 
     text-align: center; 
   }
+  .card_controls_below.widthfixed { 
+    width: 200px;
+  }
   .card_move_link, .card_delete_link { 
     font-size: smaller; 
   }

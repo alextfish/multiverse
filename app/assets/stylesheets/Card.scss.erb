@@ -526,7 +526,7 @@ color: white; background: $PurpleBorder;
 .flavourtext i, .flavourtext em { font-style: normal; }
 
 /* Mana symbol sizes */
-.cardmanacost img, .cardmanacost img.mana { width: 14px; height: 14px; /*vertical-align: middle;*/}
+.cardmanacost img, .cardmanacost img.mana { width: 14px; height: 14px; vertical-align: top; }
 .cardtext  img, img.mana { height: 1em; vertical-align: middle; }
 /*
 .cardtext  img { width: 13px; height: 13px; vertical-align: middle; }
@@ -773,7 +773,8 @@ div.dfc div.part2.Planeswalker div.ptbox_container div.pinline_ptbox {
 .split .card { min-height: 180px; height: 180px; padding-top: 2px; padding-bottom: 2px; }
 
 .split .part1, .split .part2 { display: inline-block; width: 139px;}
-.split .innercardborder, .dfc .innercardborder, .splitback .innercardborder { display: inline-block; }
+.split .innercardborder, .dfc .innercardborder { display: inline-block; } /* beside each other */
+.splitback .innercardborder { display: block; } /* on top of each other */
 .dfc .part1,   .dfc .part2 { display: inline-block; }
 .split .innercard2, .dfc .innercard2 { float: right;}
 .split.form .part1, .split.form .part2 { width: 240px;}
@@ -791,9 +792,10 @@ div.dfc div.part2.Planeswalker div.ptbox_container div.pinline_ptbox {
 .split .bottombox { margin-bottom: -2px; font-size: 7pt; }
 .split .pinlinebox { padding: 1px; }
 
+.cardborder.splitback { height: 300px; }
 .splitback .card.part1 { 
     padding-top: 2px; padding-bottom: 2px; 
-    min-height: 140px; height: 140px; } /* actual height 160px, but this is the border curve */
+    min-height: 153px; height: 153px; } /* actual height 160px, but this is the border curve */
 .splitback .card.part2 { 
     min-width: 120px; width: 120px;
     min-height: 195px; height: 195px;
@@ -801,20 +803,21 @@ div.dfc div.part2.Planeswalker div.ptbox_container div.pinline_ptbox {
     padding-left: 0; padding-right: 0;
     }
 .splitback .innercard2 { 
+    height: 177px;
 }
 .splitback .part2 {
     @include rotate_plus90;
     position: absolute;
     left: +48px;
-    top: 120px;
+    top: 140px;
     border-radius: 25px;
 }
 .splitback .part1 .cardart { min-height: 60px; }
 .splitback .part1 .cardart img { height: 60px; }
 .splitback .part2 .cardart { min-height: 66px; }
-.splitback .part2 .cardart img { width: 116px; height: 66px; }
-.splitback .part1 .cardtext { min-height: 38px; font-size: 8pt; }
-.splitback .part2 .cardtext { min-height: 75px; font-size: 8pt; }
+.splitback .part2 .cardart img { max-width: 116px; max-height: 66px; }
+.splitback .part1 .cardtext { min-height: 55px; font-size: 8pt; }
+.splitback .part2 .cardtext { min-height: 75px; height: 75px; font-size: 8pt; } /* include min- to override the blanket .cardtext rule */
 .splitback .part2 .namebox { margin-top: 4px; }
 .splitback .part1 .bottombox { top: 128px; }
 .splitback .part1 .bottombox .ptbox_container { top: -140px; }
@@ -826,16 +829,42 @@ div.dfc div.part2.Planeswalker div.ptbox_container div.pinline_ptbox {
 .split input { width: 100px; }
 .split input[type="checkbox"] { width: auto; }
 
-.splitback.form textarea.rulestextfield { height: 3em; }
+.splitback.form.cardborder { height: auto; }
+.splitback.form .part1 { width: 400px; }
+.splitback.form .cardtext { height: auto; }
+.splitback.form .part1 textarea.rulestextfield { height: 3em; }
+.splitback.form .part2 textarea.rulestextfield { height: 6em; }
 .splitback.form textarea.flavourtextfield { height: 2em; }
 .splitback.form .bottombox { top: auto; }
 .splitback.form .part1 .bottombox .ptbox_container { top: auto; }
-.splitback.form .part2 { 
-  position: relative; 
-  top: 60px; 
-  left: 135px; /* sometimes only 70px needed, but on narrow pages 135px needed to avoid going off screen */
-  width: auto; 
+/* For editing, we turn the innercardborder into a DFC-style actual black border */
+.splitback.form .innercardborder#card2wrapper {
+  -webkit-transform: rotate(90deg);
+  position: relative;
+  left: 20px;
+  top: 20px;
+  @include round_corners($BorderWidth);
+  border-width: $BorderWidth;
+  border-style: solid; 
+  border-width: 1px;
+  padding: $BorderWidth - 1;
 }
+.blackborder.splitback.form .innercardborder#card2wrapper { border-color: black; background-color: black; }
+.silverborder.splitback.form .innercardborder#card2wrapper { border-color: $SilverBorder; background-color: $SilverBorder; }
+.goldborder.splitback.form .innercardborder#card2wrapper { border-color: $GoldBorder; background-color: $GoldBorder; }
+.purpleborder.splitback.form .innercardborder#card2wrapper { border-color: $PurpleBorder; background-color: $PurpleBorder; }
+.whiteborder.splitback.form .innercardborder#card2wrapper { border-color: black; background-color: white; }
+
+.splitback.form .innercardborder#card2wrapper .card.part2  {
+  -webkit-transform: rotate(0);
+  top: 0;
+  left: 0;
+  position: relative;
+  width: auto; 
+  height: auto;
+  padding-bottom: 10px;
+}
+
 
 .flip .card, .form .flip .card { min-height: 0px; height: auto !important; }
 .flip .part1 .cardart_container { @include hide_but_allow_children; }

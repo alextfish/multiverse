@@ -54,4 +54,11 @@ class Mechanic < ActiveRecord::Base
       attributes[:regexps]
     end
   end
+  def Mechanic.wizards_mechanics
+    if (cs = Cardset.find_by_name("Wizards Mechanics"))
+      cs.mechanics
+    else
+      []
+    end
+  end
 end

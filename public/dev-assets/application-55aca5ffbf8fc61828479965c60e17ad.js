@@ -10955,6 +10955,8 @@ C_idealFlipTextBoxHeight = 40+2+2;
 C_idealSplitTextBoxHeight = 65+2+2;
 C_idealPlaneTextBoxHeight = 72;
 C_idealSchemeTextBoxHeight = 108;
+C_idealSplitbackTextBox1Height = 55;
+C_idealSplitbackTextBox2Height = 75;
 C_idealTextBoxHeight = 109; // was 99;
 
 // ------------ Skeletons
@@ -11147,8 +11149,13 @@ function detect_colours(this_card, cost, colours, num_colours, cardtype, cardsub
   switch ( num_colours ) {
     case 1: inner = colours.join(""); break;
     case 3: case 4: case 5: inner = "Multicolour"; break;
-    case 2: inner = (cost.search(/[({][^)}]{2,}[)}]/)>-1 ? "Hybrid" : "Multicolour"); break;
-    // this case 2 is buggy for Twinclaws cases, but meh
+    case 2: if (cost.search(/[({][^)}]{2,}[)}]/)>-1 || cost.search('[a-zA-Z][/][a-zA-Z]')>-1) {
+              inner = "Hybrid";
+            } else {
+              inner = "Multicolour";
+            }
+            break;
+            // this case 2 is buggy for Twinclaws cases, but meh
     case 0: if (cardtype.search(/Land/)>-1) {
               // Detect land colour affiliation
               var cardtext = this_card.select(".rulestextfield")[0].value;
@@ -11211,10 +11218,11 @@ function update_card_rarity(rarity_in) {
     this_div.removeClassName("mythic");
     this_div.addClassName(new_rarity);
   });
-  
-  if ($("cardborder").hasClassName("split") || $("cardborder").hasClassName("dfc")) {
-   $("card_rarity").value = rarity_in;
-   $("card_link_attributes_rarity").value = rarity_in;
+
+  var cardborder = $("cardborder");
+  if (cardborder.hasClassName("split") || cardborder.hasClassName("dfc") || cardborder.hasClassName("splitback")) {
+    $("card_rarity").value = rarity_in;
+    $("card_link_attributes_rarity").value = rarity_in;
   }
   // Add or remove token frame if necessary
   updateFrameAndMultipart();
@@ -11235,18 +11243,26 @@ function updateFrameAndMultipart(){
     // Specify it for the server
     $("card_multipart").value = new_frame.substring(multipartPrefix.length);
     
+    // Remove multipart classes
+    $("cardborder").removeClassName("split").removeClassName("flip").removeClassName("dfc").removeClassName("splitback");
+    
     // Now apply multipart setting
     if (new_frame == multipartPrefix + MULTIPART_SPLIT1) {
       $("cardborder").addClassName("split");
-      $("cardborder").removeClassName("flip").removeClassName("dfc");
       $("card_link_attributes_rarity").value = $("card_rarity").value;
       $("rotate_link").hide();
       $("cardborder").removeClassName("rotated");
       //get_colour_indicator($("card2")).setValue(false);
          // work around Chrome bug
+    } else if (new_frame == multipartPrefix + MULTIPART_SPLITBACK1) {
+      $("cardborder").addClassName("splitback");
+      $("card_link_attributes_rarity").value = $("card_rarity").value;
+      $("rotate_link").show();
+      $("cardborder").removeClassName("rotated");
+      //get_colour_indicator($("card2")).setValue(false);
+         // work around Chrome bug
     } else if (new_frame == multipartPrefix + MULTIPART_DFCFRONT) {
       $("cardborder").addClassName("dfc");
-      $("cardborder").removeClassName("flip").removeClassName("split");
       $("card_link_attributes_rarity").value = $("card_rarity").value;
       $("rotate_link").hide();
       $("cardborder").removeClassName("rotated");
@@ -11254,15 +11270,12 @@ function updateFrameAndMultipart(){
          // work around Chrome bug
     } else if (new_frame == multipartPrefix + MULTIPART_FLIP1) {
       $("cardborder").addClassName("flip");
-      $("cardborder").removeClassName("split").removeClassName("dfc");
       $("rotate_link").show();
       //get_colour_indicator($("card2")).setValue(false);
     }
     
   } else {
     // The new setting is not multipart. 
-    // Remove multipart classes
-    $("cardborder").removeClassName("split").removeClassName("flip").removeClassName("dfc");
     $("rotate_link").hide();
     $("cardborder").removeClassName("rotated");
     // and specify not multipart
@@ -11420,14 +11433,39 @@ function shrinkType(typeDiv) { //, rarityDiv) {
 }
 
 function shrinkTextBox(textDiv, frameType) {
-  var wiggleRoom = (frameType=="planeswalker" ? 5 : 0);
-  var desiredHeight = (frameType == "normal" ? C_idealTextBoxHeight : frameType=="flip" ? C_idealFlipTextBoxHeight : frameType=="split" ? C_idealSplitTextBoxHeight : frameType=="plane" ?  C_idealPlaneTextBoxHeight : frameType=="scheme" ?  C_idealSchemeTextBoxHeight :  C_idealTextBoxHeight );
+  var wiggleRoom = (frameType=="planeswalker" ? 5 : 
+                    frameType=="splitback" ? 4 : 
+                    0);
+  var desiredHeight;
+  if (frameType=="splitback") {
+    var cardDiv = textDiv.up(".card");
+    if (cardDiv.hasClassName("part1")) { 
+      desiredHeight = C_idealSplitbackTextBox1Height;
+    } else {
+      desiredHeight = C_idealSplitbackTextBox2Height;
+      textDiv = textDiv.down(".rulestext_wrapper");
+    }
+  } else {
+    desiredHeight = (frameType == "normal" ? C_idealTextBoxHeight :
+                     frameType=="flip" ? C_idealFlipTextBoxHeight : 
+                     frameType=="split" ? C_idealSplitTextBoxHeight : 
+                     frameType=="plane" ?  C_idealPlaneTextBoxHeight : 
+                     frameType=="scheme" ?  C_idealSchemeTextBoxHeight : 
+                     C_idealTextBoxHeight );
+  }
   var currentFontSize = textDiv.getStyle("fontSize");
   var currentFontSizeNumber = parseInt(currentFontSize);
   var currentFontSizeUnits = currentFontSize.slice(-2); // assumes "px" or "pt"
   var textSizeOK = textDiv.getHeight() <= desiredHeight + wiggleRoom;
   if (textSizeOK) {
     // It started out OK: let's try to centre stuff
+    if (!textDiv.hasClassName("rulestext_wrapper")) { textDiv = textDiv.down(".rulestext_wrapper"); }
+    wiggleRoom = 5; // every cardtext has padding at least 2 top + 2 bottom
+    var currentHeight = textDiv.getHeight();
+    var extraMargin = Math.floor((desiredHeight - currentHeight - wiggleRoom) / 2);
+    if (extraMargin > 0) {
+      textDiv.style.marginTop = extraMargin + "px";
+    }
   } else {
     // It's stretched: shrink stuff
     for(var i=0; !textSizeOK && i>-5; i-=0.25) {
@@ -11471,6 +11509,8 @@ function shrinkCardBits(cardDiv) {
       frameType = "flip";
     } else if (cardOuterFrame.hasClassName("split")) {
       frameType = "split";
+    } else if (cardOuterFrame.hasClassName("splitback")) {
+      frameType = "splitback";
     } else if (cardOuterFrame.hasClassName("scheme")) {
       frameType = "scheme";
     } else if (cardOuterFrame.hasClassName("plane")) {
@@ -11571,10 +11611,12 @@ function createWizardsCardImage(src) {
 }
 // Add tooltips for Wizards cards
 document.observe('dom:loaded', function() {
-  $$('a.wizardscard[name]').each(function(element) {
-    new Tip(element, createWizardsCardImage(element.name), chooseTooltipParams(element));
-  });
+  $$('a.wizardscard[name]').each(createWizardsTooltip);
 });
+function createWizardsTooltip(element) {
+  // Element is an <a>
+  new Tip(element, createWizardsCardImage(element.name), chooseTooltipParams(element));
+};
 function chooseTooltipParams(element) {
   var requiredOffset;
   if (element.hasClassName("dfc") || element.hasClassName("plane")) {
@@ -11744,7 +11786,107 @@ function selectCardLink(cardId) {
   setTimeout("selectTextIn('"+linkid+"')", 10);
 }
 
+// ------------ Decklists
+function update_decklist_count(numCards) {
+  // Update the count at top-right showing total cards in the one currently-active decklist
+  var el = document.getElementById("decklist_num_cards");
+  el.innerHTML = numCards;
+}
+function expand_hover(inner_select) {
+  var popupPreview = inner_select.up(".prototip");
+  if (!popupPreview.getAttribute("expanded")) {
+    popupPreview.style.height = popupPreview.getHeight() + 100 + "px";
+    popupPreview.setAttribute("expanded", true);
+  }
+}
+function adjust_deck_count(form, delta) {
+  // Works on both DeckCard and DeckWizardsCard forms
+  var newTrueValue = parseInt(form.down("input.deck_card_count").value) + delta;
+  var parent = form.up();
+  var shownSpan = parent.down("span.deck_card_count");
+  // Update the shown number to N
+  shownSpan.innerHTML = newTrueValue;
+  // Update the forms
+  parent.down("form.decklist_minus").down("input.deck_card_count").value = newTrueValue;
+  parent.down("form.decklist_plus").down("input.deck_card_count").value = newTrueValue;
+}
+
+// Drag-and-drop rows and sections
+
+function makeThisSectionDraggable(sec) { 
+  // First, make all other sections un-draggable
+  $$(".decklist_section").each(function(s){s.draggable=false;})
+  sec.up("tbody").draggable = true; 
+}
+function makeThisSectionNotDraggable(sec) { 
+  sec.up("tbody").draggable = false; 
+}
+
+var elBeingDragged;
+
+function dragStart(ev, elCategory) {
+  elBeingDragged = ev.target;
+  ev.dataTransfer.effectAllowed = "move";
+  ev.dataTransfer.setData("text", "Can't get anything useful through here");
+}
+function cancel(ev) {
+  if (ev.preventDefault) {
+    ev.preventDefault();
+  }
+  return false;
+}
+// Based on https://jsfiddle.net/cmpenney/6rx6u2kf/
+function dragMoveTrHere(ev) {
+  // Being dropped on an individual row
+  // Reject if it's a whole section being moved
+  if (elBeingDragged.nodeName == "TBODY") { return; }
+  var targetelem = $(ev.target);
+  if (targetelem.nodeName != "TR") {
+   targetelem = targetelem.up("tr");
+  }  
+
+  if (isbefore(elBeingDragged, targetelem)) {
+    targetelem.parentNode.insertBefore(elBeingDragged, targetelem);
+  } else {
+    targetelem.parentNode.insertBefore(elBeingDragged, targetelem.nextSibling);
+  }
+}
+function dragMoveIntoSection(ev) {
+  var targetTbody = $(ev.target);
+  if (targetTbody.nodeName != "TBODY") {
+    targetTbody = targetTbody.up("tbody");
+  }  
+  if (elBeingDragged.nodeName == "TBODY") { 
+    // Move source section above target section
+    targetTable = targetTbody.parentNode; // up to the table
+    targetTable.insertBefore(elBeingDragged, targetTbody);
+  } else {
+    // Move source card row into target section
+    targetTbody.insertBefore(elBeingDragged, targetTbody.children[1]); // after the header row
+  }
+}
+function dropHere(ev) {
+  if (elBeingDragged.nodeName == "TBODY") { 
+    // Save this section's order 
+    //TODO
+  } else {
+    // Save this row's section and position
+    //TODO
+  }
+}
+function isbefore(a, b) {
+    if (a.parentNode == b.parentNode) {
+        for (var cur = a; cur; cur = cur.previousSibling) {
+            if (cur === b) {
+                return true;
+            }
+        }
+    }
+    return false;
+}
+
 // (Functions below are from CoderZone.org)
+
 function selectTextIn(objId) {
   deselectAllText();
   if (document.selection) {
@@ -11753,16 +11895,19 @@ function selectTextIn(objId) {
   range.select();
   }
   else if (window.getSelection) {
-  var range = document.createRange();
-  range.selectNode(document.getElementById(objId));
-  window.getSelection().addRange(range);
+    var range = document.createRange();
+    range.selectNode(document.getElementById(objId));
+    window.getSelection().addRange(range);
   }
 }
 
 function deselectAllText() {
-  if (document.selection) document.selection.empty(); 
-  else if (window.getSelection)
-              window.getSelection().removeAllRanges();
+  if (document.selection) { 
+    document.selection.empty(); 
+  }
+  else if (window.getSelection) {
+    window.getSelection().removeAllRanges();
+  }
 }
 ;
 // This is a manifest file that'll be compiled into application.js, which will include all the files

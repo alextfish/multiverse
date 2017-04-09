@@ -47,7 +47,7 @@ class Card < ActiveRecord::Base
   belongs_to :user
   
   scope :active,       -> { where(active: true) }
-  scope :nonsecondary, -> { where("cards.multipart NOT IN (?, ?, ?)", Card.SPLIT2, Card.FLIP2, Card.DFCBACK, Card.SPLITBACK2) }   # see also .secondary? below
+  scope :nonsecondary, -> { where("cards.multipart NOT IN (?, ?, ?, ?)", Card.SPLIT2, Card.FLIP2, Card.DFCBACK, Card.SPLITBACK2) }   # see also .secondary? below
   
   # has_many :highlighted_comments, :class_name => 'Comment', :conditions => ['status = ?', COMMENT_HIGHLIGHTED]
   # has_many :unaddressed_comments, :class_name => 'Comment', :conditions => ['status = ?', COMMENT_UNADDRESSED]
@@ -347,7 +347,7 @@ class Card < ActiveRecord::Base
     # Add gold pinlines
     if self.num_colours == 2
       # Hybrid or gold?
-      cardclass << " " + (nonhybrid_colours_in_cost >= 2 ? "Multicolour" : "Hybrid")
+      #cardclass << " " + (nonhybrid_colours_in_cost >= 2 ? "Multicolour" : "Hybrid")
       cardclass << " " + self.colour_strings_present.join("").downcase
     elsif self.num_colours == 0 && self.parent && self.parent.num_colours == 2
       cardclass << " " + self.parent.colour_strings_present.join("").downcase
@@ -774,6 +774,9 @@ class Card < ActiveRecord::Base
   end
   def secondary?
    [Card.SPLIT2, Card.FLIP2, Card.DFCBACK, Card.SPLITBACK2].include?(self.multipart)
+  end
+  def rotates_to_become_wider?
+    self.splitback? 
   end
   
   #def Card.nonsecondary
