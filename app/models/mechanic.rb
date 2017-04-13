@@ -45,8 +45,8 @@ class Mechanic < ActiveRecord::Base
           target = (self.hide_params? ? self.name : self.name + ' \\1 - \\2')
       end
       # Rails.logger.info "Compiling regexp from " + src_main + "\\(\\)\\]"
-      src_no_reminder =  Regexp.new(src_main + "\\(\\)\\]")
-      src_with_reminder =  Regexp.new(src_main + "\\]")
+      src_no_reminder =  Regexp.new(src_main + "\\(\\)\\]", true) # true -> ignore-case
+      src_with_reminder =  Regexp.new(src_main + "\\]",     true)
       target_no_reminder = target 
       target_with_reminder = target + (self.reminder.blank? ? "" : " (#{self.reminder})")
       attributes[:regexps] = [src_no_reminder, src_with_reminder, target_no_reminder, target_with_reminder]
@@ -55,7 +55,7 @@ class Mechanic < ActiveRecord::Base
     end
   end
   def Mechanic.wizards_mechanics
-    if (cs = Cardset.find_by_name("Wizards Mechanics"))
+    if (cs = Cardset.find_by_name("Wizards Mechanics")) && (cs.user_id == 1)
       cs.mechanics
     else
       []

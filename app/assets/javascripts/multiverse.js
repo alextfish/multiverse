@@ -767,26 +767,35 @@ function shrinkTooltipCardBits(cardDiv) {
 
 // ------------ Expand/shrink text
 function expand_text() {
- $$(".card").each(function(card){
-   textbox = card.select(".cardtext")[0];
-   if (/font-size/.match(textbox.getAttribute('style'))) {
-     // "Expand": remove size, and set
-     // button to "Expand further"
-     textbox.style.fontSize = "";
-     $("expand_text_link").innerHTML = "Expand further";
-   } else if (!textbox.hasClassName("enlarged")) {
-     // "Expand further": add enlarged
-     // class, and set button to "Shrink"
-     textbox.addClassName("enlarged");
-     $("expand_text_link").innerHTML = "Shrink text";
-   } else {
-     // Shrink again, and set button text
-     // to "Expand text"
-     textbox.removeClassName("enlarged");
-     shrinkCardBits(card);
-     $("expand_text_link").innerHTML = "Expand text";
-   }
- });
+  $$(".card").each(function(cardDiv){
+    var textDiv = cardDiv.down(".cardtext");
+    var setColourToo = false;
+    if (cardDiv.hasClassName("part2") && cardDiv.up(".cardborder").hasClassName("splitback")) { 
+      setColourToo = true;
+      bgColor = textDiv.getStyle("background-color");
+      textDiv = textDiv.down(".rulestext_wrapper");
+    }
+   
+    if (/font-size/.match(textDiv.getAttribute('style'))) {
+      // "Expand": remove size, and set
+      // button to "Expand further"
+      textDiv.style.fontSize = "";
+      if (setColourToo) { textDiv.style.backgroundColor = bgColor; }
+      $("expand_text_link").innerHTML = "Expand further";
+    } else if (!textDiv.hasClassName("enlarged")) {
+      // "Expand further": add enlarged
+      // class, and set button to "Shrink"
+      textDiv.addClassName("enlarged");
+      $("expand_text_link").innerHTML = "Shrink text";
+    } else {
+      // Shrink again, and set button text
+      // to "Expand text"
+      textDiv.removeClassName("enlarged");
+      if (setColourToo) { textDiv.style.backgroundColor = ""; }
+      shrinkCardBits(cardDiv);
+      $("expand_text_link").innerHTML = "Expand text";
+    }
+  });
 }
 
 function changeCardZoom(multiplyingFactor) { 
