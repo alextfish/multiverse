@@ -131,8 +131,8 @@
        Enter <%= link_to "mechanics", cardset_mechanics_path(@cardset) %> like this:
        <% @cardset.mechanics.all.each do |mech| %>
          <% src_no_reminder, src_with_reminder, target_no_reminder, target_with_reminder = mech.regexps
-         string_with_reminder = src_with_reminder.inspect.sub(Mechanic.one_param, "AA").sub(Mechanic.one_param, "BB").gsub(/\\|\//, "")
-         string_no_reminder = src_no_reminder.inspect.sub(Mechanic.one_param, "AA").sub(Mechanic.one_param, "BB").gsub(/\\|\//, "") %>
+         string_with_reminder = src_with_reminder.inspect.sub(Mechanic.one_param, "AA").sub(Mechanic.one_param, "BB").gsub(/\\|\//, "").sub(/\]i/, "]")
+         string_no_reminder   =   src_no_reminder.inspect.sub(Mechanic.one_param, "AA").sub(Mechanic.one_param, "BB").gsub(/\\|\//, "").sub(/\]i/, "]") %>
          <br><code><%= string_with_reminder %></code> for <%= mech.name %>
          <% if !mech.reminder.blank? %>
            <br><code><%= string_no_reminder %></code> for <%= mech.name %> without reminder text

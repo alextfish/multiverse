@@ -174,23 +174,16 @@ module ApplicationHelper
     text.gsub!( "zzninefish" ,  "9" )
   end
 
-  def format_mechanics(text, cardset)
-    text_out = text
+  def format_mechanics(text_in, cardset)
+    text_out = text_in
     if text_out =~ /\[/  # Only try mechanic gsubs if there are any [
       cardset && cardset.mechanics.each do |mech|
-        src_no_reminder, src_with_reminder, target_no_reminder, target_with_reminder = mech.regexps
-        # Rails.logger.info [src_no_reminder, src_with_reminder, target_no_reminder, target_with_reminder].join(" --- ")
-        # Need the two following lines to be ordered by stricter first
-        # e.g. [Bushido 1()] is best parsed as a no-reminder w param 1 than a with-reminder w param 1()
-        text_out.gsub! src_no_reminder, target_no_reminder
-        text_out.gsub! src_with_reminder, target_with_reminder
+        text_out = mech.apply(text_out)
       end
     end
-    if text_out =~ /\[/  # Only try mechanic gsubs if there are any [
+    if text_out =~ /\[/  # Only try Wizards mechanic gsubs if there are still any [
       Mechanic.wizards_mechanics.each do |mech|
-        src_no_reminder, src_with_reminder, target_no_reminder, target_with_reminder = mech.regexps
-        text_out.gsub! src_no_reminder, target_no_reminder
-        text_out.gsub! src_with_reminder, target_with_reminder
+        text_out = mech.apply(text_out)
       end
     end
     text_out

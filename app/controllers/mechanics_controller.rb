@@ -20,6 +20,7 @@ class MechanicsController < ApplicationController
   # GET /mechanics/1/edit
   def edit
     @mechanic = Mechanic.find(params[:id])
+    @mechanic.reminder = @mechanic.displayed_reminder
   end
 
   # POST /mechanics

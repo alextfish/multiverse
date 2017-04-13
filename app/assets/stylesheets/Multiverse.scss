@@ -215,11 +215,14 @@ form { display: inline; }
 textarea#comment_body { 
   height: 8em; width: 500px; 
 }
+div.mechanic textarea {
+  width: 400px;
+}
 .big_comment_form textarea#comment_body { 
   height: 20em; width: 800px; 
 }
 @include mobile-only {
-  textarea#comment_body, .big_comment_form textarea#comment_body { width: 97%; }
+  textarea#comment_body, .big_comment_form textarea#comment_body, div.mechanic textarea { width: 97%; }
 }
 
 .commentbody > p { margin-top: 0px; }

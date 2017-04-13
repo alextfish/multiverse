@@ -11,7 +11,7 @@
   <div class="mechanic">
     <div>
       <span class="mechanic_name" title="Playtest name: <%= @mechanic.codename %>"><%= @mechanic.name %></span>:
-      <span class="mechanic_reminder"><%= format_mana_symbols(@mechanic.reminder) %></span>
+      <span class="mechanic_reminder"><%= format_mana_symbols(@mechanic.displayed_reminder) %></span>
       <%
         mechanic_cards = @cardset.cards.select { |c| c.rulestext =~ src_no_reminder || c.rulestext =~ src_with_reminder }
         mechanic_index_span = "mechanic_#{index}"
@@ -21,9 +21,9 @@
           <%= link_to_function "(show)",
             visual_effect(:toggle_blind, mechanic_index_span, :duration => 0.5),
             :class => "no_tooltip"%>
-          <% show_mechanic_cards = 'style="display:none;"'; %>
+          <% show_mechanic_cards = "style='display:none;'"; %>
         <% else %>
-          <% show_mechanic_cards = ''; %>
+          <% show_mechanic_cards = ""; %>
         <% end %>
         <span id="<%= mechanic_index_span %>" <%= show_mechanic_cards %>>
           <%= mechanic_cards.map {|card| link_to card.printable_name, card}.join(", ").html_safe %>
