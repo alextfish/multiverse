@@ -349,7 +349,7 @@ class Card < ActiveRecord::Base
       # Hybrid or gold?
       #cardclass << " " + (nonhybrid_colours_in_cost >= 2 ? "Multicolour" : "Hybrid")
       cardclass << " " + self.colour_strings_present.join("").downcase
-    elsif self.num_colours == 0 && self.parent && self.parent.num_colours == 2
+    elsif self.num_colours == 0 && secondary? && self.parent.num_colours == 2
       cardclass << " " + self.parent.colour_strings_present.join("").downcase
     end
     # Add devoid colours
