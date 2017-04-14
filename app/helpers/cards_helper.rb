@@ -4,14 +4,14 @@ module CardsHelper
     /^UEOT\b/i => "Until end of turn",
     /(?<=[:.][)](\s))\s*\bUEOT\b/i => "\1Until end of turn",   # Positive Lookbehind for [:.][)]\s+ , obeying "lookbehind restrictions"
     /(?<=[:.](\s))\s*\bUEOT\b/i => "\1Until end of turn",   # Positive Lookbehind for [:.]\s+ , obeying lookbehind restrictions
-    /\bUEOT\b/i => "until end of turn",
-    /\bEOT\b/i => "end of turn",
-    /\bETBs\b/ => "enters the battlefield",
-    /\bETB\b/ => "enter the battlefield",
-    /\bOTB\b/ => "onto the battlefield",
-    /\bCIPs\b/ => "comes into play",
-    /\bCIP\b/ => "come into play",
-    /\bCMC\b/ => "converted mana cost",
+    /\b(?<!\\)UEOT\b/i => "until end of turn",        # Negative Lookbehind for \ 
+    /\b(?<!\\)EOT\b/i => "end of turn",               # Negative Lookbehind for \ 
+    /\b(?<!\\)ETBs\b/i => "enters the battlefield",   # Negative Lookbehind for \ 
+    /\b(?<!\\)ETB\b/i => "enter the battlefield",     # Negative Lookbehind for \ 
+    /\b(?<!\\)OTB\b/i => "onto the battlefield",      # Negative Lookbehind for \ 
+    /\b(?<!\\)CIPs\b/i => "comes into play",          # Negative Lookbehind for \ 
+    /\b(?<!\\)CIP\b/i => "come into play",            # Negative Lookbehind for \ 
+    /\b(?<!\\)CMC\b/i => "converted mana cost",       # Negative Lookbehind for \ 
     " // " => "\n",
   }
   MARKUP_SUBSTITUTIONS = {
@@ -30,6 +30,7 @@ module CardsHelper
   AFTER_SUBSTITUTIONS = {
     ": until" => ": Until",
     /^until/ => "Until",
+    /\\(?=UEOT|EOT|ETBs|ETB|OTB|CIPs|CIP|CMC)/i => "" # Remove the escaping \
   }
   CARDNAME_ALIASES_REGEXP = /(CARDNAME|~this~|~)/
 
