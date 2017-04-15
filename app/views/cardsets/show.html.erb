@@ -130,8 +130,8 @@
       Recently active cards: (<%= link_to "all recent activity", recent_cardset_path %>)    
      <% recentcards.each do |card| %>
        <% @card = card %>
-       <div class="CardRenderInline">
-         <%= render :partial => "shared/card", :locals => { :link => true } %>
+       <div class="card_comment_group">
+         <%= render :partial => "shared/card", :locals => { :link => true, :classes => "" } %>
          <%= render :partial => "shared/cardcommentcount" %>
        </div>
      <% end %>

@@ -3,7 +3,7 @@
 
 <% if params[:is_preview] %>
   <p>Preview:
-  <%= render :partial => "shared/card", :locals => { :link => false } %>
+  <%= render :partial => "shared/card", :locals => { :link => false, classes: "" } %>
   <br>These changes are not yet saved!
   </p>
 <% end %>

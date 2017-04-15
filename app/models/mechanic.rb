@@ -87,10 +87,12 @@ class Mechanic < ActiveRecord::Base
   end
   
   def Mechanic.wizards_mechanics
-    if (cs = Cardset.find_by_name("Wizards Mechanics")) && (cs.user_id == 1)
-      cs.mechanics
+    if @wizards_mechanics
+      @wizards_mechanics
+    elsif (cs = Cardset.find_by_name("Wizards Mechanics")) && (cs.user_id == 1)
+      @wizards_mechanics = cs.mechanics
     else
-      []
+      @wizards_mechanics = []
     end
   end
   

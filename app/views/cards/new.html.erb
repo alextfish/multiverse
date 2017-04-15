@@ -4,7 +4,7 @@
 
 <% if params[:is_preview] %>
   <p>Preview:
-  <%= render :partial => "shared/card", :locals => { :link => false } %>
+  <%= render :partial => "shared/card", :locals => { :link => false, :classes => "" } %>
   <br>This card is not yet saved!
   </p>
 <% end %>

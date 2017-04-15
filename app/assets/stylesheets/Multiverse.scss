@@ -71,7 +71,7 @@ a > img:hover, a > img:active, a > img:focus { background-color: #fff; }
 
 /***** Templates used in multiple places *****/
 
-div.CardRenderInline { 
+div.CardRenderInline, div.card_comment_group { 
   display: inline-block; vertical-align: top;
   zoom: 100%; -moz-transform: scale(1);
   @media screen {

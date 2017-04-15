@@ -28,7 +28,7 @@
         <% @card = card %>
         <td>
           <% do_link = !@card.cardset.nil? %>
-          <%= render :partial => "shared/card", :locals => {:link => do_link} %>
+          <%= render :partial => "shared/card", :locals => {:link => do_link, :classes => ""} %>
         </td>
       <% end %>
     </tr>

@@ -170,6 +170,7 @@ class Card < ActiveRecord::Base
     ["White", "Blue", "Black", "Red", "Green"]
   end
   COLOUR_LETTERS = %w{W U B R G}
+  COLOUR_LETTERS_INC_C = %w{W U B R G C}
   def self.colour_letters
     COLOUR_LETTERS
   end
@@ -222,7 +223,7 @@ class Card < ActiveRecord::Base
   # First the misformed ones
   mana_symbols += COLOUR_LETTERS.map {|s| "{2/#{s}}" }
   mana_symbols += COLOUR_LETTERS.map {|s| "{3/#{s}}" }
-  mana_symbols += COLOUR_LETTERS.map {|s| "{#{s}P}" }
+  mana_symbols += COLOUR_LETTERS_INC_C.map {|s| "{#{s}P}" }
   mana_symbols += (0..4).map do |i1|
     i1a = (i1+3).modulo(5)
     i1b = (i1+4).modulo(5)
@@ -235,7 +236,7 @@ class Card < ActiveRecord::Base
   end.flatten
   mana_symbols += COLOUR_LETTERS.map {|s| "{#{s}/2}" }
   mana_symbols += COLOUR_LETTERS.map {|s| "{#{s}/3}" }
-  mana_symbols += COLOUR_LETTERS.map {|s| "{P#{s}}" }
+  mana_symbols += COLOUR_LETTERS_INC_C.map {|s| "{P#{s}}" }
   mana_symbols += ( COLOUR_LETTERS + %w{1000000 100 10 11 12 13 14 15 16 17 18 19 20 -3 1 2 3 4 5 6 7 8 9 0 X Y T Q S C CHAOS E ?} ) .map {|s| "{#{s}}" }
   MANA_SYMBOLS = mana_symbols
 

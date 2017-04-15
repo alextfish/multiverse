@@ -1,11 +1,16 @@
+<% # "locals: link (bool, should we hyperlink?) and classes (string, extra classes on the CardRenderInline" %>
 <% conf = @cardset.configuration # Requires @cardset defined as well as @card! %>
 <% if conf.frame == "image" && !@card.image_url.blank? %>
-   <div><%= image_tag(@card.image_url, :class=>(@embedded ? "tooltip_image #{@card.tooltip_shape}" : "")) %></div>
+  <div class="<%= classes %>"><%= image_tag(@card.image_url, :class=>(@embedded ? "tooltip_image #{@card.tooltip_shape}" : "")) %></div>
 <% elsif conf.frame == "prettycard" || conf.frame == "image" %>
-   <%= render :partial => "shared/prettycard", :locals => { :link => link } %>
+  <div class="CardRenderInline <%= classes %>">
+    <%= render :partial => "shared/prettycard", :locals => { :link => link } %>
+  </div>
 <% elsif conf.frame == "plain" %>
-   <%= render :partial => "shared/plaincard" %>
+  <div class="<%= classes %>">
+    <%= render :partial => "shared/plaincard" %>
+  </div>
 <% else %>
-  I"m sorry, somehow this card's frame has got into a state that Multiverse can"t display.
-  The cardset's frame setting is "<%= conf.frame %>" which is a <%= conf.frame.class %>
+  <div>I'm sorry, somehow this card's frame has got into a state that Multiverse can't display.
+  The cardset's frame setting is "<%= conf.frame %>" which is a <%= conf.frame.class %></div>
 <% end %>

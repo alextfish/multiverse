@@ -1,7 +1,5 @@
 To fix before push:
-* Find big {C} symbol and put it in images/mana/large - similarly {PR} etc, {X}, {-3}, {3/R}, {?}
-* Firefox splitback form
-* Abbreviations non-case-sensitive
+* Look for big {C} symbol and put it in images/mana/large - similarly {PR} etc, {X}, {-3}, {3/R}, {?}
 
 Other bugs:
 * Tabbing past "watermark none" sends a request for /cards/1234/undefined. 

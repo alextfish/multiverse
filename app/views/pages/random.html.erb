@@ -19,12 +19,10 @@
        <% chosen_cards.each_with_index do |card, index| %>
          <% @card = card
             @cardset = @card.cardset %>
-         <div class="CardRenderInline">
-           <%= render :partial => "shared/card", :locals => { :link => true } %>
-           from <%= link_to @cardset.name, @cardset %>
-           <br>
-           <%= render :partial => "shared/cardcommentcount" %>
-         </div>
+         <%= render :partial => "shared/card", :locals => { :link => true, :classes => "" } %>
+         from <%= link_to @cardset.name, @cardset %>
+         <br>
+         <%= render :partial => "shared/cardcommentcount" %>
        <% end %>
   <% end %>
   
