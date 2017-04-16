@@ -3,42 +3,61 @@
     <table><tr>
       <td class="mechanic_label">
         <%= f.label :name %>
-        <br> e.g. "Suspend"
+        <div class="helptext">e.g. "Suspend"</div>
       </td>
       <td>
         <%= f.text_field :name %>
       </td>
+      <td class="longer_help">
+        This is the mechanic's name as you want it to appear on cards when viewed by visitors.
+      </td>
     </tr><tr>
       <td class="mechanic_label">
         <%= f.label :codename %>
-        <br> e.g. "Delay"; can be same as name
+        <div class="helptext">e.g. "Delay"; can be same as name</div>
       </td>
       <td>
         <%= f.text_field :codename %>
       </td>
+      <td class="longer_help">
+        This is what you type into a card's text box to include the mechanic on that card. It can be the same as the Name.
+        <br>Or you could use this to save yourself typing if the mechanic is long or hard to spell, for example.
     </tr><tr>
       <td class="mechanic_label">
         <%= f.label :parameters %>
-          <br>e.g. 0 for Convoke, 1 for Cycling, 2 for Suspend
+        <div class="helptext">e.g. 0 for Convoke, 1 for Cycling, 2 for Suspend</div>
       </td>
       <td>
         <%= f.select :parameters, (0..2) %>
       </td>
+      <td class="longer_help">
+        How many separate variables follow the mechanic's name when it's used?
+        <br>Convoke   (e.g. <%= format_links("[[[Chord of Calling]]]", @cardset).html_safe %>) has no parameters - the reminder text follows straight after the mechanic.
+        <br>Cycling   (e.g. <%= format_links("[[[Expunge]]]"         , @cardset).html_safe %>) has 1 parameter: <%= format_mana_symbols("{3}") %>.
+        <br>Reinforce (e.g. <%= format_links("[[[Hunting Triad]]]"   , @cardset).html_safe %>) has 2 parameters: 3 and <%= format_mana_symbols("{3}{G}") %>.
+      </td>
     </tr><tr>
       <td colspan="2">
         <%= f.label :reminder %>
-          <br>
-        e.g. "Rather than cast this spell from your hand, you may pay \2 and exile it with \1 time counters on it."
-          <br>
+        <div class="helptext">e.g. "Rather than cast this spell from your hand, you may pay PARAM2 and exile it with PARAM1 time counters on it."</div>
         <%= f.text_area :reminder %>
+      </td>
+      <td class="longer_help">
+        The reminder text that will appear on cards. Multiverse automatically puts it in italics and inside parentheses. 
+        <br/>To mention the parameters, you can type <b>PARAM1</b> or <b>PARAM2</b>.
+        <br/>To convert a parameter number to words, type <b>PARAM1ASWORDS</b> or <b>PARAM2ASWORDS</b>.
+        <br/>e.g. Cycling would have Reminder "<b>PARAM1</b>, Discard this card: draw a card."
+        <br/>e.g. Reinforce would have Reminder "<b>PARAM2</b>, Discard this card: Put <b>PARAM1ASWORDS</b> +1/+1 counters on target creature."
       </td>
     </tr><tr>
       <td colspan="2">
         <%= f.label :description %>
-          <br>
-        e.g. "This is a mechanic used to represent spells that are slower than normal."
-          <br>
+        <div class="helptext">e.g. "Reinforce is a mechanic that lets spells and creatures have an alternate mode as a combat trick."</div>
         <%= f.text_area :description %>
+      </td>
+      <td class="longer_help">
+        This is where you can put any explanation or discussion of the mechanic. 
+        <br>Whatever goes here will be shown to visitors who look at the cardset's mechanics page.
       </td>
     </tr>
     <tr>
