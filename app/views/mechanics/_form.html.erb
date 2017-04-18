@@ -1,6 +1,8 @@
+<style>tr.odd { background-color: #eee; }</style>
+
 <div class="mechanic">
   <%= form_for([@cardset, @mechanic]) do |f| %>
-    <table><tr>
+    <table style="border-collapse: collapse;"><tr>
       <td class="mechanic_label">
         <%= f.label :name %>
         <div class="helptext">e.g. "Reinforce"</div>
@@ -11,7 +13,7 @@
       <td class="longer_help">
         This is the mechanic's name as you want it to appear on cards when viewed by visitors.
       </td>
-    </tr><tr>
+    </tr><tr class="odd">
       <td class="mechanic_label">
         <%= f.label :codename %>
         <div class="helptext">e.g. "CounterUp"; can be same as name</div>
@@ -33,11 +35,11 @@
       <td class="longer_help">
         How many separate variables follow the mechanic's name when it's used?
         <br>Convoke   (e.g. <%= format_links("[[[Chord of Calling]]]", @cardset).html_safe %>) has no parameters - the reminder text follows straight after the mechanic.
-        <br>Cycling   (e.g. <%= format_links("[[[Expunge]]]"         , @cardset).html_safe %>) has 1 parameter: <%= format_mana_symbols("{3}") %>.
+        <br>Cycling   (e.g. <%= format_links("[[[Expunge]]]"         , @cardset).html_safe %>) has 1 parameter: <%= format_mana_symbols("{2}") %>.
         <br>Reinforce (e.g. <%= format_links("[[[Hunting Triad]]]"   , @cardset).html_safe %>) has 2 parameters: 3 and <%= format_mana_symbols("{3}{G}") %>.
       </td>
-    </tr><tr>
-      <td colspan="2">
+    </tr><tr class="odd">
+      <td colspan="2" style="padding-right:1em;">
         <%= f.label :reminder %>
         <div class="helptext">e.g. "PARAM2, Discard this card: Put PARAM1ASWORDS +1/+1 counters on target creature."</div>
         <%= f.text_area :reminder %>
