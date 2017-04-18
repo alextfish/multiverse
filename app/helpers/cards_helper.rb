@@ -35,7 +35,7 @@ module CardsHelper
   CARDNAME_ALIASES_REGEXP = /(CARDNAME|~this~|~)/
 
   def textbox_chars_displayed(card, attribute)
-    text = format_card_text(card, attribute, false, true, false)
+    text = format_card_text(card, attribute, false, true, false) # treat linebreaks and {R} as 1-3 chars each
     text.length
   end
   def format_card_text(card, attribute, markup = true, escape = true, mana = nil)
