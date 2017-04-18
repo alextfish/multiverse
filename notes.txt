@@ -7,3 +7,7 @@ rake assets:clean && rake assets:precompile
 set RAILS_ENV=production
 rake assets:clean && rake assets:precompile
 rake cloudinary:sync_static
+git add .
+git commit -am ""
+git push heroku master
+heroku restart
