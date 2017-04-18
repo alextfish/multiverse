@@ -11433,23 +11433,39 @@ function shrinkType(typeDiv) { //, rarityDiv) {
 }
 
 function shrinkTextBox(textDiv, frameType) {
-  var wiggleRoom = (frameType=="planeswalker" ? 5 : 0);
-  var desiredHeight = (frameType == "normal" ? C_idealTextBoxHeight :
-                       frameType=="flip" ? C_idealFlipTextBoxHeight : 
-                       frameType=="split" ? C_idealSplitTextBoxHeight : 
-                       frameType=="plane" ?  C_idealPlaneTextBoxHeight : 
-                       frameType=="scheme" ?  C_idealSchemeTextBoxHeight : 
-                       frameType=="splitback" ? (textDiv.up(".card").hasClassName("part1") ? 
-                                                 C_idealSplitbackTextBox1Height : 
-                                                 C_idealSplitbackTextBox2Height
-                                                 ) : 
-                       C_idealTextBoxHeight );
+  var wiggleRoom = (frameType=="planeswalker" ? 5 : 
+                    frameType=="splitback" ? 4 : 
+                    0);
+  var desiredHeight;
+  if (frameType=="splitback") {
+    var cardDiv = textDiv.up(".card");
+    if (cardDiv.hasClassName("part1")) { 
+      desiredHeight = C_idealSplitbackTextBox1Height;
+    } else {
+      desiredHeight = C_idealSplitbackTextBox2Height;
+      textDiv = textDiv.down(".rulestext_wrapper");
+    }
+  } else {
+    desiredHeight = (frameType == "normal" ? C_idealTextBoxHeight :
+                     frameType=="flip" ? C_idealFlipTextBoxHeight : 
+                     frameType=="split" ? C_idealSplitTextBoxHeight : 
+                     frameType=="plane" ?  C_idealPlaneTextBoxHeight : 
+                     frameType=="scheme" ?  C_idealSchemeTextBoxHeight : 
+                     C_idealTextBoxHeight );
+  }
   var currentFontSize = textDiv.getStyle("fontSize");
   var currentFontSizeNumber = parseInt(currentFontSize);
   var currentFontSizeUnits = currentFontSize.slice(-2); // assumes "px" or "pt"
   var textSizeOK = textDiv.getHeight() <= desiredHeight + wiggleRoom;
   if (textSizeOK) {
     // It started out OK: let's try to centre stuff
+    if (!textDiv.hasClassName("rulestext_wrapper")) { textDiv = textDiv.down(".rulestext_wrapper"); }
+    wiggleRoom = 5; // every cardtext has padding at least 2 top + 2 bottom
+    var currentHeight = textDiv.getHeight();
+    var extraMargin = Math.floor((desiredHeight - currentHeight - wiggleRoom) / 2);
+    if (extraMargin > 0) {
+      textDiv.style.marginTop = extraMargin + "px";
+    }
   } else {
     // It's stretched: shrink stuff
     for(var i=0; !textSizeOK && i>-5; i-=0.25) {
@@ -11697,26 +11713,37 @@ function shrinkTooltipCardBits(cardDiv) {
 
 // ------------ Expand/shrink text
 function expand_text() {
- $$(".card").each(function(card){
-   textbox = card.select(".cardtext")[0];
-   if (/font-size/.match(textbox.getAttribute('style'))) {
-     // "Expand": remove size, and set
-     // button to "Expand further"
-     textbox.style.fontSize = "";
-     $("expand_text_link").innerHTML = "Expand further";
-   } else if (!textbox.hasClassName("enlarged")) {
-     // "Expand further": add enlarged
-     // class, and set button to "Shrink"
-     textbox.addClassName("enlarged");
-     $("expand_text_link").innerHTML = "Shrink text";
-   } else {
-     // Shrink again, and set button text
-     // to "Expand text"
-     textbox.removeClassName("enlarged");
-     shrinkCardBits(card);
-     $("expand_text_link").innerHTML = "Expand text";
-   }
- });
+  $$(".card").each(function(cardDiv){
+    var textDiv = cardDiv.down(".cardtext");
+    var setColourToo = false;
+    if (cardDiv.hasClassName("part2") && cardDiv.up(".cardborder").hasClassName("splitback")) { 
+      setColourToo = true;
+      bgColor = textDiv.getStyle("background-color");
+      textDiv = textDiv.down(".rulestext_wrapper");
+    }
+   
+    if (/font-size/.match(textDiv.getAttribute('style'))) {
+      // "Expand": remove size, and set
+      // button to "Expand further"
+      textDiv.style.fontSize = "";
+      if (setColourToo) { textDiv.style.backgroundColor = bgColor; }
+      $("expand_text_link").innerHTML = "Expand further";
+      cardDiv.up(".cardborder").addClassName("expanded");
+    } else if (!textDiv.hasClassName("enlarged")) {
+      // "Expand further": add enlarged
+      // class, and set button to "Shrink"
+      textDiv.addClassName("enlarged");
+      $("expand_text_link").innerHTML = "Shrink text";
+    } else {
+      // Shrink again, and set button text
+      // to "Expand text"
+      textDiv.removeClassName("enlarged");
+      cardDiv.up(".cardborder").removeClassName("expanded");
+      if (setColourToo) { textDiv.style.backgroundColor = ""; }
+      shrinkCardBits(cardDiv);
+      $("expand_text_link").innerHTML = "Expand text";
+    }
+  });
 }
 
 function changeCardZoom(multiplyingFactor) { 

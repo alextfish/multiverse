@@ -45,13 +45,11 @@ class Mechanic < ActiveRecord::Base
   end
   
   def apply(text_out)
-    src_no_reminder, src_with_reminder, target_no_reminder, target_with_reminder = self.regexps
+    sources, targets = self.regexps
     
-    # Rails.logger.info [src_no_reminder, src_with_reminder, target_no_reminder, target_with_reminder].join(" --- ")
-    # Need the two following lines to be ordered by stricter first
-    # e.g. [Bushido 1()] is best parsed as a no-reminder w param 1 than a with-reminder w param 1()
-    text_out.gsub! src_no_reminder, target_no_reminder
-    text_out.gsub! src_with_reminder, target_with_reminder
+    sources.zip(targets).each do |source, target|
+      text_out.gsub! source, target
+    end
     if text_out && convert_to_words?
       text_out.gsub!( /([\d]+)ASWORDS/ ) { |match|
         match.gsub($&, Mechanic.num_to_words($1.to_i))
@@ -63,24 +61,36 @@ class Mechanic < ActiveRecord::Base
   def regexps
     if attributes[:regexps].nil?
       sep = " "
-      src_start = "\\[#{self.codename}"
+      codename_Upper = self.codename[0].upcase   + self.codename[1..9999];
+      codename_lower = self.codename[0].downcase + self.codename[1..9999];
+      sources_start = [codename_Upper, codename_lower].map {|s| "\\[" + s};
+      
+      name_Upper = self.name[0].upcase   + self.name[1..9999];
+      name_lower = self.name[0].downcase + self.name[1..9999];
+      targets_start = [name_Upper, name_lower];
+      
       case self.parameters 
         when 0
-          src_main = src_start
-          target = self.name 
-       when 1
-          src_main = src_start + sep + Mechanic.one_param
-          target = (self.hide_params? ? self.name : self.name + ' \\1')
-       when 2
-          src_main = src_start + sep + Mechanic.one_param + sep + Mechanic.one_param
-          target = (self.hide_params? ? self.name : self.name + ' \\1 - \\2')
+          sources_main = sources_start;
+          targets_main = targets_start;
+        when 1
+          sources_main = sources_start.map {|s| s + sep + Mechanic.one_param };
+          targets_main = targets_start.map {|t| (self.hide_params? ? t : t + ' \\1') };
+        when 2
+          sources_main = sources_start.map {|s| s + sep + Mechanic.one_param + sep + Mechanic.one_param };
+          targets_main = targets_start.map {|t| (self.hide_params? ? t : t + ' \\1 - \\2') };
       end
-      # Rails.logger.info "Compiling regexp from " + src_main + "\\(\\)\\]"
-      src_no_reminder =  Regexp.new(src_main + "\\(\\)\\]", true) # true -> ignore-case
-      src_with_reminder =  Regexp.new(src_main + "\\]",     true)
-      target_no_reminder = target 
-      target_with_reminder = target + (self.reminder.blank? ? "" : " (#{self.reminder})")
-      attributes[:regexps] = [src_no_reminder, src_with_reminder, target_no_reminder, target_with_reminder]
+      # Need the two following lines to be ordered by stricter first
+      # e.g. [Bushido 1()] is best parsed as a no-reminder w param 1 than a with-reminder w param 1()
+      sources_no_reminder   = sources_main.map {|s| Regexp.new(s + "\\(\\)\\]", false) }; # false -> case-sensitive (don't ignore case)
+      sources_with_reminder = sources_main.map {|s| Regexp.new(s +       "\\]", false) };
+      
+      targets_no_reminder = targets_main;
+      targets_with_reminder = targets_main.map {|t| t + (self.reminder.blank? ? "" : " (#{self.reminder})") };
+      
+      sources = sources_no_reminder + sources_with_reminder
+      targets = targets_no_reminder + targets_with_reminder
+      attributes[:regexps] = [sources, targets]
     else
       attributes[:regexps]
     end

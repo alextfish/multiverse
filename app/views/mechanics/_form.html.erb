@@ -3,7 +3,7 @@
     <table><tr>
       <td class="mechanic_label">
         <%= f.label :name %>
-        <div class="helptext">e.g. "Suspend"</div>
+        <div class="helptext">e.g. "Reinforce"</div>
       </td>
       <td>
         <%= f.text_field :name %>
@@ -14,18 +14,18 @@
     </tr><tr>
       <td class="mechanic_label">
         <%= f.label :codename %>
-        <div class="helptext">e.g. "Delay"; can be same as name</div>
+        <div class="helptext">e.g. "CounterUp"; can be same as name</div>
       </td>
       <td>
         <%= f.text_field :codename %>
       </td>
       <td class="longer_help">
-        This is what you type into a card's text box to include the mechanic on that card. It can be the same as the Name.
+        This is what you type into a card's text box inside square brackets to include the mechanic on that card. It can be the same as the Name.
         <br>Or you could use this to save yourself typing if the mechanic is long or hard to spell, for example.
     </tr><tr>
       <td class="mechanic_label">
         <%= f.label :parameters %>
-        <div class="helptext">e.g. 0 for Convoke, 1 for Cycling, 2 for Suspend</div>
+        <div class="helptext">e.g. 0 for Aftermath or Living Weapon, 1 for Cycling or Embalm, 2 for Suspend or Reinforce</div>
       </td>
       <td>
         <%= f.select :parameters, (0..2) %>
@@ -39,7 +39,7 @@
     </tr><tr>
       <td colspan="2">
         <%= f.label :reminder %>
-        <div class="helptext">e.g. "Rather than cast this spell from your hand, you may pay PARAM2 and exile it with PARAM1 time counters on it."</div>
+        <div class="helptext">e.g. "PARAM2, Discard this card: Put PARAM1ASWORDS +1/+1 counters on target creature."</div>
         <%= f.text_area :reminder %>
       </td>
       <td class="longer_help">
@@ -76,7 +76,25 @@
   <% end # form %>
 </div>
 <div>
-In card text or details pages, write the mechanic's code name between square brackets, like "[Crittercast]", "[Bushido 1]" or "Delay 4 {2}{R}{R}]". It will be expanded to the mechanic's name plus reminder text, such as "Suspend 4 &ndash; <%= format_mana_symbols("{2}{R}{R}") %>. <i>(Rather than cast this spell from your hand,...)</i>" 
-<br>To expand a mechanic's name but not its reminder text, include parentheses at the end of the square brackets: "[Crittercast()]", "Delay 9 {R}()]".
-<br> If the reminder text needs to come later in the sentence, use one mechanic for the rules text and a separate mechanic for the reminder text. If you need different versions of the reminder text in different circumstances, use multiple mechanics with different codenames but the same display name.
+<p>
+  <b>Using mechanics:</b>
+  <br>In card text or details pages, write the mechanic's code name between square brackets, like "[Crittercast]", "[Bushido 1]" or "Delay 4 {2}{R}{R}]". It will be expanded to the mechanic's name plus reminder text, such as "Suspend 4 &ndash; <%= format_mana_symbols("{2}{R}{R}") %>. <i>(Rather than cast this spell from your hand,...)</i>" 
+  <br>To expand a mechanic's name but not its reminder text, include parentheses at the end of the square brackets: "[Crittercast()]", "Delay 9 {R}()]".
+  <br>If the reminder text needs to come later in the sentence, use one mechanic for the rules text and a separate mechanic for the reminder text. If you need different versions of the reminder text in different circumstances, use multiple mechanics with different codenames but the same display name.
+</p>
+<p><b>Using ability words</b>
+  <br>To use ability words 
+  such as <i>Raid</i> (e.g. <%= format_links("[[[Timely Hordemate]]]", @cardset).html_safe %>)
+  or <i>Battalion</i> (e.g. <%= format_links("[[[Boros Elite]]]"     , @cardset).html_safe %>),
+  use an empty Reminder (since you want no italicised reminder text), and include the italics formatting (asterisks) on each side of the Name. So <i>Raid</i> would have Name <code>*Raid*</code>.
+</p>
+<p><b>Using keyword actions</b>
+  <br>With keyword actions
+  such as Scry (e.g. <%= format_links("[[[Temple of Epiphany]]]", @cardset).html_safe %>)
+  or Detain    (e.g. <%= format_links("[[[Martial Law]]]",        @cardset).html_safe %>)
+  you usually want the reminder text to come later in the sentence, rather than straight after the keyword. There are several ways to do this.
+  <br>You can use one Multiverse mechanic for the keyword action (e.g. Name "detain" and empty Reminder) and another mechanic for the reminder text (empty Name and Reminder "Until your next turn, ...").
+  <br>You can use a mechanic with 1 "parameter" that is the rest of the sentence. (e.g. with Name "detain" and Codename "detain", you'd enter "[detain target creature an opponent controls]", and have reminder text "Until your next turn, that creature...")
+  <br>Or you can store some frequently used phrasings in the mechanic expansion. (e.g. with Name "detain target creature an opponent controls. " and Codename "detain1OppCtr", <%= format_links("[[[Martial Law]]]",        @cardset).html_safe %> would be entered "At the beginning of your upkeep, [detain1OppCtr]")
+</p>
 </div>

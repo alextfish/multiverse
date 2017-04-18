@@ -782,6 +782,7 @@ function expand_text() {
       textDiv.style.fontSize = "";
       if (setColourToo) { textDiv.style.backgroundColor = bgColor; }
       $("expand_text_link").innerHTML = "Expand further";
+      cardDiv.up(".cardborder").addClassName("expanded");
     } else if (!textDiv.hasClassName("enlarged")) {
       // "Expand further": add enlarged
       // class, and set button to "Shrink"
@@ -791,6 +792,7 @@ function expand_text() {
       // Shrink again, and set button text
       // to "Expand text"
       textDiv.removeClassName("enlarged");
+      cardDiv.up(".cardborder").removeClassName("expanded");
       if (setColourToo) { textDiv.style.backgroundColor = ""; }
       shrinkCardBits(cardDiv);
       $("expand_text_link").innerHTML = "Expand text";

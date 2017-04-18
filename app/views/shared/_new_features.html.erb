@@ -1,6 +1,6 @@
 <%
-  update_date = Time.gm(2014, 9,27,21,13,57);
-  update_title = "New site name, new frames, new architecture";
+  update_date = Time.gm(2014, 4,17,01,06,57);
+  update_title = "Aftermath frames; Wizards mechanics supported; and mechanics are easier and better";
 
 news_latest_update = {
   :date => update_date,
@@ -10,6 +10,19 @@ news_latest_update = {
 
 ----
 ### #{update_title}
+#### Sunday 16th of April, 2017
+
+Multiverse now supports "splitback" frames, as seen on <i>Amonkhet</i>'s cards with aftermath such as Failure to Comply, or new creations like . "Splitback" is an option in the top-of-card Frame dropdown like split cards.
+
+Also, I thought you'd probably want to include Aftermath with reminder text on many of your splitback cards. So every set now has access to all official Wizards keyword mechanics. If you just want to include "Aftermath, cascade, convoke" without reminder text then you don't need to take notice of this, but if you want to include the official Wizards reminder text for aftermath, cascade, banding or anything, you can just enclose the mechanic in square brackets like you'd do with a cardset-specific mechanic. "[Aftermath] // [Cascade]" will fill up a splitback card's text box with reminder text, but you can do that if you want.
+
+In order to make Wizards mechanics work, I needed to add <a href="http://www.magicmultiverse.net/cards/72019">another feature people have been asking for</a> - converting numbers in mechanics into words. So now [Devour 2] can expand to "with two +1/+1 counters on it" rather than the ugly "with 2 +1/+1 counters on it". You can now do this in your own mechanics as well, of course. 
+That allows almost every Wizards keyword mechanic. The exceptions, which aren't implemented, are Offering, Forecast, and Amplify (which don't fit the layout of Multiverse mechanics) and Haunt and Sunburst (which have wildly varying reminder text as they're each two mechanics in one).
+
+That's it for this update (along with a few bug fixes). Although development of the site has been pretty slow for years, there have been some updates in the past two-and-a-half years for which I didn't make news postings. <a href="http://www.magicmultiverse.net/cards/74340">Vehicle frames</a> and <a href="http://www.magicmultiverse.net/cards/63320">Devoid frames</a> are supported; some pages are mobile-friendly (still not all of them though, sorry); many bugs have been fixed. And I have been working on parts of a larger feature that's not finished yet, but might appear any month now :)
+
+----
+### New site name, new frames, new architecture
 #### Sat Sep 27 21:13:57 2014
 
 We have a shiny new domain name! Welcome to MagicMultiverse.net! 
@@ -29,7 +42,7 @@ A major new feature was rolled out today, one that people have been asking for f
 
 At the moment the list of cards returned is just the standard search results view. But I have plans to allow you to view any selection of cards, such as search results, in the sortable cardlist or visual spoiler formats.
 
-It's pretty hard to find time to work on Multiverse at the moment, while my evenings are still disrupted by [Zoe](http://magicmultiverse.net/cards/29170), but I hope to be able to get fixes in before too long for a few of the recently reported bugs. 
+It's pretty hard to find time to work on Multiverse at the moment, while my evenings are still disrupted by #{ format_links("<a href='http://magicmultiverse.net/cards/29170'>Zoe</a>" , Cardset.find_by_id(474)) }, but I hope to be able to get fixes in before too long for a few of the recently reported bugs. 
 
 As always, if you have any bugs to report or features to suggest, the [Multiverse Feedback Repository](http://magicmultiverse.net/cardsets/145) is the place for it.
 
