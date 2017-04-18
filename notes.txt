@@ -1,6 +1,9 @@
 Rails tips:
 
+ # in dev:
+rake assets:clean && rake assets:precompile
 
-rake assets:clean
-rake assets:precompile
+ # before deploy:
+set RAILS_ENV=production
+rake assets:clean && rake assets:precompile
 rake cloudinary:sync_static
