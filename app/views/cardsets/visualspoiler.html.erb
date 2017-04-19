@@ -20,7 +20,7 @@
       showing_all = false
     else
       "we need to do the work up front"
-      cards_to_show = @cardset.public_cards.eager_load(link: [{cardset: :mechanics}]).includes((:comments => :user), cardset: :mechanics)
+      cards_to_show = @cardset.public_cards.eager_load(link: [{cardset: :mechanics}]).includes(comments: :user, cardset: :mechanics)
       num_cards_to_show = cards_to_show.count 
       card_frame_letters = cards_to_show.map &:category_letter
        

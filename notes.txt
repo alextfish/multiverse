@@ -3,7 +3,7 @@ Rails tips:
  # in dev:
 rake assets:clean && rake assets:precompile
 
- # before deploy:
+ # to deploy:
 set RAILS_ENV=production
 rake assets:clean && rake assets:precompile
 rake cloudinary:sync_static
@@ -11,3 +11,9 @@ git add .
 git commit -am ""
 git push heroku master
 heroku restart
+
+
+ # to push to Github:
+luanch Git Bash
+$ eval "$(ssh-agent -s)"
+$ ssh-add ~/.ssh/id_rsa
