@@ -1,17 +1,17 @@
 # The has_many association gives this a bunch of methods:
 # cards(force_reload = false)
-# cards<<(object, …)   / cards.push(card)
-# cards.delete(object, …)
+# cards<<(object, ...)   / cards.push(card)
+# cards.delete(object, ...)
 # cards=objects
 # card_ids
 # card_ids=ids
 # cards.clear   - blanks the decklist, doesn't delete cards
 # cards.empty?
 # cards.size
-# cards.find(…)
-# cards.where(…)
-# cards.exists?(…)
-# cards.build(attributes = {}, …)
+# cards.find(...)
+# cards.where(...)
+# cards.exists?(...)
+# cards.build(attributes = {}, ...)
 # cards.create(attributes = {})
 
 class Decklist < ActiveRecord::Base
@@ -150,6 +150,6 @@ class Decklist < ActiveRecord::Base
   end
   
   def Decklist.enabled?
-    false # !Rails.env.production?
+    !Rails.env.production?
   end
 end

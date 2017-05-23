@@ -87,6 +87,7 @@ gem 'actionpack-action_caching'
 gem 'non-stupid-digest-assets', '1.0.4'   # higher needs Ruby2
 
 gem 'rack-pratchett'
+gem 'randumb'
 
 group :production do        # higher versions than these need Ruby2
   gem 'mime-types', '1.25.1'   

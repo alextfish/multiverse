@@ -90,19 +90,21 @@ module ApplicationHelper
     embed_card_renders(markdown_text.to_html).html_safe
   end
 
+  # Using .freeze on all constants that are used inside tight loops, i.e. potentially many times per card on a big visual spoiler
+  WRONG_ORDER_MANA_SYMBOLS = %w{wr wg uw ug bu bw rb ru gr gb w2 u2 b2 r2 g2 w3 u3 b3 r3 g3 wp up bp rp gp}.map &:freeze
   def self.mana_symbol_url ( symbol )
     my_symbol = "" << symbol
-    my_symbol.gsub!(/[\{\}\(\)\/]/, "")
+    my_symbol.gsub!(/[\{\}\(\)\/]/.freeze, "".freeze)
     # Reverse the wrong-order pairs
-    if %w{wr wg uw ug bu bw rb ru gr gb w2 u2 b2 r2 g2 w3 u3 b3 r3 g3 wp up bp rp gp}.include? my_symbol.downcase
+    if WRONG_ORDER_MANA_SYMBOLS.include? my_symbol.downcase
       my_symbol.reverse!
     end
-    my_symbol.gsub!(/CHAOS/, "chaos")
-    my_symbol.gsub!(/S/, "snow")
-    my_symbol.gsub!(/T/, "tap")
-    my_symbol.gsub!(/Q/, "untap")
-    my_symbol.gsub!(/\?/, "question")
-    my_symbol.gsub!(/inf.*/i, "Infinity")
+    my_symbol.gsub!(/CHAOS/.freeze, "chaos".freeze)
+    my_symbol.gsub!(/S/.freeze, "snow".freeze)
+    my_symbol.gsub!(/T/.freeze, "tap".freeze)
+    my_symbol.gsub!(/Q/.freeze, "untap".freeze)
+    my_symbol.gsub!(/\?/.freeze, "question".freeze)
+    my_symbol.gsub!(/inf.*/i.freeze, "Infinity".freeze)
     "/assets/mana/large/mana_#{my_symbol}.png"  # these are all still <20k
     # "http://gatherer.wizards.com/Handlers/Image.ashx?size=small&name=#{my_symbol}&type=symbol"
   end
@@ -126,7 +128,7 @@ module ApplicationHelper
       target.downcase!
       sym0 = Regexp.escape(sym)
       #sym1 = sym0.tr("{}", "()")
-      sym2 = sym0.delete("/")
+      sym2 = sym0.delete("/".freeze)
       #sym3 = sym1.delete("/")
       #any_symbol = ("(#{sym0}|#{sym1}|#{sym2}|#{sym3})")
       any_symbol = ("(#{sym0}|#{sym2})")
@@ -140,7 +142,7 @@ module ApplicationHelper
       Card.mana_symbols_extensive.each do |sym|
         target = MANA_SYMBOL_TARGETS[sym]
         fishify(target)
-        sym_bare = sym.delete("{}").upcase
+        sym_bare = sym.delete("{}".freeze).upcase
         my_text.gsub!( sym_bare, target )
       end
     end
@@ -150,39 +152,39 @@ module ApplicationHelper
 
   # Man, this is horrible code
   def fishify(text)
-    text.gsub!( "0", "zznofish" )
-    text.gsub!( "1", "zzonefish" )
-    text.gsub!( "2", "zztwofish" )
-    text.gsub!( "3", "zzthreefish" )
-    text.gsub!( "4", "zzfourfish" )
-    text.gsub!( "5", "zzfivefish" )
-    text.gsub!( "6", "zzsixfish" )
-    text.gsub!( "7", "zzsevenfish" )
-    text.gsub!( "8", "zzeightfish" )
-    text.gsub!( "9", "zzninefish" )
+    text.gsub!( "0".freeze, "zznofish".freeze )
+    text.gsub!( "1".freeze, "zzonefish".freeze )
+    text.gsub!( "2".freeze, "zztwofish".freeze )
+    text.gsub!( "3".freeze, "zzthreefish".freeze )
+    text.gsub!( "4".freeze, "zzfourfish".freeze )
+    text.gsub!( "5".freeze, "zzfivefish".freeze )
+    text.gsub!( "6".freeze, "zzsixfish".freeze )
+    text.gsub!( "7".freeze, "zzsevenfish".freeze )
+    text.gsub!( "8".freeze, "zzeightfish".freeze )
+    text.gsub!( "9".freeze, "zzninefish".freeze )
   end
 
   def unfishify(text)
-    text.gsub!( "zznofish"   ,  "0" )
-    text.gsub!( "zzonefish"  ,  "1" )
-    text.gsub!( "zztwofish"  ,  "2" )
-    text.gsub!( "zzthreefish",  "3" )
-    text.gsub!( "zzfourfish" ,  "4" )
-    text.gsub!( "zzfivefish" ,  "5" )
-    text.gsub!( "zzsixfish"  ,  "6" )
-    text.gsub!( "zzsevenfish",  "7" )
-    text.gsub!( "zzeightfish",  "8" )
-    text.gsub!( "zzninefish" ,  "9" )
+    text.gsub!( "zznofish"   .freeze,  "0".freeze )
+    text.gsub!( "zzonefish"  .freeze,  "1".freeze )
+    text.gsub!( "zztwofish"  .freeze,  "2".freeze )
+    text.gsub!( "zzthreefish".freeze,  "3".freeze )
+    text.gsub!( "zzfourfish" .freeze,  "4".freeze )
+    text.gsub!( "zzfivefish" .freeze,  "5".freeze )
+    text.gsub!( "zzsixfish"  .freeze,  "6".freeze )
+    text.gsub!( "zzsevenfish".freeze,  "7".freeze )
+    text.gsub!( "zzeightfish".freeze,  "8".freeze )
+    text.gsub!( "zzninefish" .freeze,  "9".freeze )
   end
 
   def format_mechanics(text_in, cardset)
     text_out = text_in
-    if text_out =~ /\[/  # Only try mechanic gsubs if there are any [
+    if text_out =~ /\[/.freeze  # Only try mechanic gsubs if there are any [
       cardset && cardset.mechanics.each do |mech|
         text_out = mech.apply(text_out)
       end
     end
-    if text_out =~ /\[/  # Only try Wizards mechanic gsubs if there are still any [
+    if text_out =~ /\[/.freeze  # Only try Wizards mechanic gsubs if there are still any [
       Mechanic.wizards_mechanics.each do |mech|
         text_out = mech.apply(text_out)
       end
@@ -290,11 +292,11 @@ module ApplicationHelper
         card = cardset_cards_from_name_or_code[actual_code]
         link_to_card(card, "#{actual_code} #{card.name}")
       else
-        link_to "(#{actual_code})", new_card_path(:cardset_id => cardset.id, :code => actual_code)
+        link_to "(#{actual_code})", new_card_path(:cardset_id => cardset.id, :code => actual_code), :rel => "nofollow"
       end
     elsif link_content =~ Card.code_regexp
       # Link to a (valid & safe) code that doesn't yet exist: offer to create it
-      link_to "(#{link_content})", new_card_path(:cardset_id => cardset.id, :code => link_content)
+      link_to "(#{link_content})", new_card_path(:cardset_id => cardset.id, :code => link_content), :rel => "nofollow"
     else
       "\(\(\(#{link_content})))"
     end
@@ -388,15 +390,20 @@ module ApplicationHelper
      chosen
   end
 
-  def select_random_visible_cards(num_to_choose, cards_array)
-     chosen = []
-     while chosen.length < num_to_choose
-       candidate = cards_array.sample # i.e. random element
-       if permission_to?(:view, candidate.cardset) && !chosen.include?(candidate)
-         chosen << candidate
-       end
-     end
-     chosen
+  def select_random_visible_cards(num_to_choose, cards_scope)
+    chosen = []
+    tries = 0
+    while chosen.length < num_to_choose && tries < 10
+      tries++
+      num_remaining = num_to_choose - chosen.length
+      candidates = cards_scope.random(num_remaining)
+      candidates.each do |candidate|
+        if permission_to?(:view, candidate.cardset) && !chosen.include?(candidate)
+          chosen << candidate
+        end
+      end
+    end
+    chosen
   end
 
   #### Link helpers

@@ -26,7 +26,7 @@
           <% show_mechanic_cards = ""; %>
         <% end %>
         <span id="<%= mechanic_index_span %>" <%= show_mechanic_cards %>>
-          <%= mechanic_cards.map {|card| link_to card.printable_name, card}.join(", ").html_safe %>
+          <%= mechanic_cards.map {|card| link_to_card card, card.printable_name}.join(", ").html_safe %>
         </span>
       </span>
     </div>

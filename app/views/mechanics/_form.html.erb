@@ -86,17 +86,19 @@
 </p>
 <p><b>Using ability words</b>
   <br>To use ability words 
-  such as <i>Raid</i> (e.g. <%= format_links("[[[Timely Hordemate]]]", @cardset).html_safe %>)
+  such as <i>Raid</i> (e.g. <%= cardlink_mardu_skullhunter = format_links("[[[Mardu Skullhunter]]]", @cardset).html_safe %>)
   or <i>Battalion</i> (e.g. <%= format_links("[[[Boros Elite]]]"     , @cardset).html_safe %>),
   use an empty Reminder (since you want no italicised reminder text), and include the italics formatting (asterisks) on each side of the Name. So <i>Raid</i> would have Name <code>*Raid*</code>.
+  <br/>You can also include common sections of rules text in the Name. So you could have a mechanic with Codename "RaidETB" and Name all of: <code>*Raid* - When ~ enters the battlefield, if you attacked with a creature this turn, </code>
+  <br/>Then <%= cardlink_mardu_skullhunter %> would be entered "[RaidETB] target opponent discards a card."
 </p>
 <p><b>Using keyword actions</b>
   <br>With keyword actions
   such as Scry (e.g. <%= format_links("[[[Temple of Epiphany]]]", @cardset).html_safe %>)
-  or Detain    (e.g. <%= format_links("[[[Martial Law]]]",        @cardset).html_safe %>)
+  or Detain    (e.g. <%= cardlink_martial_law = format_links("[[[Martial Law]]]",        @cardset).html_safe %>)
   you usually want the reminder text to come later in the sentence, rather than straight after the keyword. There are several ways to do this.
   <br>You can use one Multiverse mechanic for the keyword action (e.g. Name "detain" and empty Reminder) and another mechanic for the reminder text (empty Name and Reminder "Until your next turn, ...").
   <br>You can use a mechanic with 1 "parameter" that is the rest of the sentence. (e.g. with Name "detain" and Codename "detain", you'd enter "[detain target creature an opponent controls]", and have reminder text "Until your next turn, that creature...")
-  <br>Or you can store some frequently used phrasings in the mechanic expansion. (e.g. with Name "detain target creature an opponent controls. " and Codename "detain1OppCtr", <%= format_links("[[[Martial Law]]]",        @cardset).html_safe %> would be entered "At the beginning of your upkeep, [detain1OppCtr]")
+  <br>Or you can store some frequently used phrasings in the mechanic expansion. (e.g. with Name "detain target creature an opponent controls. " and Codename "detain1OppCtr", <%= cardlink_martial_law %> would be entered "At the beginning of your upkeep, [detain1OppCtr]")
 </p>
 </div>

@@ -59,11 +59,11 @@ class Card < ActiveRecord::Base
   # end
 
   DEFAULT_RARITY = "none"
-  STRING_FIELDS = ["name","cost","supertype","cardtype","subtype","rarity","rulestext","flavourtext","code","frame","art_url","artist","image_url","watermark","power","toughness"]
+  STRING_FIELDS = ["name","cost","supertype","cardtype","subtype","rarity","rulestext","flavourtext","code","frame","art_url","artist","image_url","watermark","power","toughness"].map &:freeze
   def self.string_fields
       STRING_FIELDS
   end
-  LONG_TEXT_FIELDS = ["rulestext", "flavourtext"]
+  LONG_TEXT_FIELDS = ["rulestext", "flavourtext"].map &:freeze
   (STRING_FIELDS-LONG_TEXT_FIELDS).each do |field|
     validates field.to_sym, :length     => { :maximum => 255 }
   end
@@ -165,9 +165,15 @@ class Card < ActiveRecord::Base
     # Log.find(:all, :conditions => ["object_id = ? AND kind IN (?)", id, [Log.kind(:card_create), Log.kind(:card_create_and_comment)]])
     my_log = possible_logs.find{|l| l.return_object == self}
   end
+  
+  
+  KNOWN_WATERMARKS = (["White Mana", "Blue Mana", "Black Mana", "Red Mana", "Green Mana"] + %w{Boros Selesnya Golgari Dimir Izzet Gruul Orzhov Azorius Simic Rakdos Mirran Phyrexian Abzan Jeskai Sultai Mardu Temur Dromoka Ojutai Silumgar Kolaghan Atarka Conspiracy Planeswalker}).map &:freeze
+  def self.known_watermarks
+    KNOWN_WATERMARKS
+  end
 
   def self.colours
-    ["White", "Blue", "Black", "Red", "Green"]
+    ["White", "Blue", "Black", "Red", "Green"].map &:freeze
   end
   COLOUR_LETTERS = %w{W U B R G}
   COLOUR_LETTERS_INC_C = %w{W U B R G C}
@@ -179,7 +185,7 @@ class Card < ActiveRecord::Base
     ["Blue", "Black"], ["Blue", "Red"],
     ["Black", "Red"], ["Black", "Green"],
     ["Red", "Green"], ["Red", "White"],
-    ["Green", "White"], ["Green", "Blue"]];
+    ["Green", "White"], ["Green", "Blue"]].map {|cv| cv.map &:freeze};
   def self.colour_pairs
     COLOUR_PAIRS
   end
@@ -189,31 +195,32 @@ class Card < ActiveRecord::Base
   end
 
   DISPLAY_FRAMES =
-    Card.colours + ["Artifact", "Artifact - Vehicle", "Multicolour", "Colourless"] +
+    (Card.colours + ["Artifact", "Artifact - Vehicle", "Multicolour", "Colourless"] +
     Card.colour_pairs.map { |pair| "Hybrid #{pair.join('-').downcase}" } +
     ["Land (colourless)"] +
     Card.colours.map { |col| "Land (#{col.downcase})" } +
     Card.colour_pairs.map { |pair| "Land (#{pair.join('-').downcase})" } +
     ["Land (multicolour)"]
+	).map &:freeze
   def self.display_frames
     DISPLAY_FRAMES
   end
-  FRAMES = DISPLAY_FRAMES.map { |f| f.gsub(/[()-]/,'') }
+  FRAMES = DISPLAY_FRAMES.map { |f| f.gsub(/[()-]/,'') }.map &:freeze
   def self.frames
     FRAMES
   end
 
   def self.rarities
-    %w{none common uncommon rare mythic basic token}
+    %w{none common uncommon rare mythic basic token}.map &:freeze
   end
   def self.supertypes
-    %w{Legendary Basic World Snow Ongoing Token}
+    %w{Legendary Basic World Snow Ongoing Token}.map &:freeze
   end
   def self.category_order
-    %w{Colourless White Blue Black Red Green Multicolour Hybrid Split Artifact Land Scheme Plane Vanguard unspecified}
+    %w{Colourless White Blue Black Red Green Multicolour Hybrid Split Artifact Land Scheme Plane Vanguard unspecified}.map &:freeze
   end
   def self.frame_code_letters
-    %w{C W U B R G M Z H S A L E P V}
+    %w{C W U B R G M Z H S A L E P V}.map &:freeze
   end
   def self.frames_and_letters
     {"C"=>"Colourless", "W"=>"White", "U"=>"Blue", "B"=>"Black", "R"=>"Red", "G"=>"Green", "M"=>"Multicolour", "H"=>"Hybrid", "S"=>"Split", "A"=>"Artifact", "L"=>"Land", "E"=>"Scheme", "P"=>"Plane", "V"=>"Vanguard"}
@@ -238,7 +245,7 @@ class Card < ActiveRecord::Base
   mana_symbols += COLOUR_LETTERS.map {|s| "{#{s}/3}" }
   mana_symbols += COLOUR_LETTERS_INC_C.map {|s| "{P#{s}}" }
   mana_symbols += ( COLOUR_LETTERS + %w{1000000 100 10 11 12 13 14 15 16 17 18 19 20 -3 1 2 3 4 5 6 7 8 9 0 X Y T Q S C CHAOS E ?} ) .map {|s| "{#{s}}" }
-  MANA_SYMBOLS = mana_symbols
+  MANA_SYMBOLS = mana_symbols.map &:freeze
 
   def self.mana_symbols_extensive
     MANA_SYMBOLS
@@ -249,8 +256,8 @@ class Card < ActiveRecord::Base
   colour_codes_pattern = "[CWUBRGMZHSAL]"
   code_numbers_pattern = "[0-9][0-9]"
   regexp_string = rarity_pattern + colour_codes_pattern + code_numbers_pattern
-  CODE_REGEXP = Regexp.new(regexp_string)
-  BAR_CODE_REGEXP = Regexp.new("-" + regexp_string)
+  CODE_REGEXP = Regexp.new(regexp_string).freeze
+  BAR_CODE_REGEXP = Regexp.new("-" + regexp_string).freeze
   def self.code_regexp
     CODE_REGEXP
   end
@@ -276,21 +283,21 @@ class Card < ActiveRecord::Base
     end
     rarity + fc_pair
   end
-  @@colour_regexps = [/w/i, /u/i, /b/i, /r/i, /g/i]
+  @@colour_regexps = [/w/i, /u/i, /b/i, /r/i, /g/i].map &:freeze
   @@hybrid_regexp = /[({][wubrg1-9](\/)?[wubrg1-9][)}]/i
   @@nonhybrid_colour_regexps = [
     /(^|[^\/{(])w|[({]w[})]/i,  # match w either at the start ^, or after anything other than / { (
     /(^|[^\/{(])u|[({]u[})]/i,
     /(^|[^\/{(])b|[({]b[})]/i,
     /(^|[^\/{(])r|[({]r[})]/i,
-    /(^|[^\/{(])g|[({]g[})]/i]
+    /(^|[^\/{(])g|[({]g[})]/i].map &:freeze
   @@colour_affiliation_regexps = [
     ["White", /(\([Ww]\)|\{[Ww]\}|[Pp]lains)/],
     ["Blue",  /(\([Uu]\)|\{[Uu]\}|[Ii]sland)/],
     ["Black", /(\([Bb]\)|\{[Bb]\}|[Ss]wamp)/],
     ["Red",   /(\([Rr]\)|\{[Rr]\}|[Mm]ountain)/],
     ["Green", /(\([Gg]\)|\{[Gg]\}|[Ff]orest)/],
-  ]
+  ].map &:freeze
 
   def colours_in_cost
     out = @@colour_regexps.map do |re|
@@ -471,7 +478,8 @@ class Card < ActiveRecord::Base
     if !colour_indicator
       ""
     else
-      frame_to_check = (frame!="Auto" ? frame : calculated_frame)
+      frame_to_check = (frame=="Auto" ? calculated_frame :           # obvious
+                        frame=="Hybrid" ? calculated_frame : frame)  # if frame is explicitly "Hybrid", find the colours from mana cost
       frame_to_check.gsub! /(Planeswalker|Coloured_Artifact|Vehicle|token)/i, ""
       frame_to_check.strip!
       case frame_to_check
@@ -747,7 +755,7 @@ class Card < ActiveRecord::Base
     self.nontraditional_frame? || self.multipart?
   end
   # Specific frames which don't have colour or mana cost
-  NONTRADITIONAL_FRAMES = ["Scheme", "Plane", "Vanguard", "Emblem"]
+  NONTRADITIONAL_FRAMES = ["Scheme", "Plane", "Vanguard", "Emblem"].map &:freeze
   def Card.nontraditional_frames
     NONTRADITIONAL_FRAMES
   end
@@ -859,9 +867,9 @@ class Card < ActiveRecord::Base
   end
 
   SUPERTYPES_AND_REGEXPS = Card.supertypes.map do |supertype|
-    [supertype, Regexp.new(supertype, true)]   # true -> case-insensitive
+    [supertype.freeze, Regexp.new(supertype, true).freeze]   # true -> case-insensitive
   end
-  SUBTYPE_DELIMITERS = [" -- ", " - ", "--", "-"]
+  SUBTYPE_DELIMITERS = [" -- ", " - ", "--", "-"].map &:freeze
   def canonicalise_types
     # Move supertypes to correct places
     SUPERTYPES_AND_REGEXPS.each do |this_supertype, this_regexp|
@@ -905,9 +913,5 @@ class Card < ActiveRecord::Base
       self.user = self.get_user
       self.save_without_timestamping!
     end
-  end
-  
-  def self.known_watermarks
-    known_watermarks = ["White Mana", "Blue Mana", "Black Mana", "Red Mana", "Green Mana"] + %w{Boros Selesnya Golgari Dimir Izzet Gruul Orzhov Azorius Simic Rakdos Mirran Phyrexian Abzan Jeskai Sultai Mardu Temur Dromoka Ojutai Silumgar Kolaghan Atarka Conspiracy}
   end
 end

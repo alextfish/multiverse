@@ -1,7 +1,7 @@
 <tr id="wc<%= @deck_wizards_card.id %>_row" draggable="true" ondragenter="dragMoveTrHere(event)" ondragstart="dragStart(event, 'row')">
   <td class="deck_row_padding">
   <td class="drag_handle"
-    ><div id="c<%= @deck_card.id %>_drag">&#x2725;</div>
+    ><div id="c<%= @deck_wizards_card.id %>_drag">&#x2725;</div>
   <td class="nowrap">
     <%= form_for @deck_wizards_card, :namespace => "wc#{@deck_wizards_card.id}_minus", :remote => true, :html => { :class => "decklist_minus", :onsubmit => "adjust_deck_count(this, -1)" } do |f| 
       %><%= f.hidden_field :count, :value => @deck_wizards_card.count, class: "deck_card_count"

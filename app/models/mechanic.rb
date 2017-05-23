@@ -26,15 +26,19 @@ class Mechanic < ActiveRecord::Base
   
   before_save :canonicalise_params
   
+  ONE_PARAM_REGEXP = "([^\\]]*)".freeze
   def Mechanic.one_param
-    "([^\\]]*)"
+    ONE_PARAM_REGEXP
   end
+  BACKSLASH_DIGIT_REGEXP = /[\\][\d]/.freeze
   def hide_params?   # Do I contain "\1" or "\2" etc anywhere in my name (expansion)?
-    (self.name =~ /[\\][\d]/).present?
+    (self.name =~ BACKSLASH_DIGIT_REGEXP).present?
   end
+  BACKSLASH_DIGIT_AS_WORDS_REGEXP = /[\\][\d]ASWORDS/.freeze
   def convert_to_words? 
-    (self.reminder =~ /[\\][\d]ASWORDS/)
+    (self.reminder =~ BACKSLASH_DIGIT_AS_WORDS_REGEXP)
   end
+  
   def canonicalise_params
     # Convert any supplied PARAM1 in name or reminder to \1 for internal matching
     self.name.gsub!     /PARAM(?<digit>\d)/, "\\\\\\k<digit>" # literal backslash, then the digit we matched
@@ -90,7 +94,7 @@ class Mechanic < ActiveRecord::Base
       
       sources = sources_no_reminder + sources_with_reminder
       targets = targets_no_reminder + targets_with_reminder
-      attributes[:regexps] = [sources, targets]
+      attributes[:regexps] = [sources.map(&:freeze), targets.map(&:freeze)]
     else
       attributes[:regexps]
     end
@@ -108,37 +112,37 @@ class Mechanic < ActiveRecord::Base
   
   # Number-to-word code from http://stackoverflow.com/a/26220538/28234
   NUMBERS_TO_NAME = {
-    1000000 => "million",
-    1000 => "thousand",
-    100 => "hundred",
-    90 => "ninety",
-    80 => "eighty",
-    70 => "seventy",
-    60 => "sixty",
-    50 => "fifty",
-    40 => "forty",
-    30 => "thirty",
-    20 => "twenty",
-    19 => "nineteen",
-    18 => "eighteen",
-    17 => "seventeen", 
-    16 => "sixteen",
-    15 => "fifteen",
-    14 => "fourteen",
-    13 => "thirteen",              
-    12 => "twelve",
-    11 => "eleven",
-    10 => "ten",
-    9 => "nine",
-    8 => "eight",
-    7 => "seven",
-    6 => "six",
-    5 => "five",
-    4 => "four",
-    3 => "three",
-    2 => "two",
-    1 => "one"
-  }
+    1000000 => "million".freeze,
+    1000 => "thousand"  .freeze,
+    100 => "hundred"    .freeze,
+    90 => "ninety"      .freeze,
+    80 => "eighty"      .freeze,
+    70 => "seventy"     .freeze,
+    60 => "sixty"       .freeze,
+    50 => "fifty"       .freeze,
+    40 => "forty"       .freeze,
+    30 => "thirty"      .freeze,
+    20 => "twenty"      .freeze,
+    19 => "nineteen"    .freeze,
+    18 => "eighteen"    .freeze,
+    17 => "seventeen"   .freeze,
+    16 => "sixteen"     .freeze,
+    15 => "fifteen"     .freeze,
+    14 => "fourteen"    .freeze,
+    13 => "thirteen"    .freeze,
+    12 => "twelve"      .freeze,
+    11 => "eleven"      .freeze,
+    10 => "ten"         .freeze,
+    9 => "nine"         .freeze,
+    8 => "eight"        .freeze,
+    7 => "seven"        .freeze,
+    6 => "six"          .freeze,
+    5 => "five"         .freeze,
+    4 => "four"         .freeze,
+    3 => "three"        .freeze,
+    2 => "two"          .freeze,
+    1 => "one"          .freeze
+  }.freeze
   def Mechanic.num_to_words(int)
     str = ""
     NUMBERS_TO_NAME.each do |num, name|
@@ -151,8 +155,8 @@ class Mechanic < ActiveRecord::Base
         return str + "#{name} " + num_to_words(int%num)
       elsif int/num > 0
         return str + num_to_words(int/num) + " #{name} " + ((rem=num_to_words(int%num)).blank? ? "" : "and " + rem)
-      elsif int < 0 
-        str << 'minus ' 
+      elsif int < 0
+        str << "minus "
         int = int * -1
       end
     end
